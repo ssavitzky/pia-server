@@ -1,5 +1,5 @@
 ### website.make
-# $Id: website.make,v 1.2 1999-07-14 22:26:28 steve Exp $
+# $Id: website.make,v 1.3 1999-07-14 23:03:39 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -64,6 +64,7 @@ RCP= scp
 RSH= ssh
 
 ftp:: $(FILES) $(IMAGES)
+	@[ -z $(HOST) ] && echo NO HOST FOR FTP TRANSFER && false
 	{ grep -s ftp .cvsignore } || echo ftp >> .cvsignore
 	@echo cd $(DOTDOT)				 > ftp
 	@[ "$(MYNAME)x" = "x" ] || echo mkdir $(MYNAME)	>> ftp
@@ -74,6 +75,7 @@ ftp:: $(FILES) $(IMAGES)
 	[ "$(HOST)x" = "x" ] || $(FTP) $(HOST) < ftp > ftp.log
 
 rcp:: $(FILES) $(IMAGES)
+	@[ -z $(HOST) ] && echo NO HOST FOR RCP TRANSFER && false
 	{ grep -s rcp .cvsignore } || echo rcp >> .cvsignore
 	-$(RSH) $(HOST) mkdir $(DOTDOT)/$(MYNAME)
 	$(RCP) $? $(HOST):$(DOTDOT)/$(MYNAME)
