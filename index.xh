@@ -21,8 +21,13 @@
   <td valign="center">
     <table cellspacing="0" cellpadding="0" border="0" valign="center">
     <tr><th valign="top" align="right" width="170"></th>
-        <td valign="top"></td></tr>
-   <if><agent-running name="Admin"/><then>
+        <td valign="top"></td>
+    </tr>
+    <note> The following stanza (Admin) is condition'ed out because it's not
+	  very useful anymore.  If you add useful stuff to the Admin agent, by
+	  all means put it back.
+    </note>
+   <if><!-- agent-running name="Admin"/ --><then>
     <tr><th valign="top" align="right" width="170">
 	    <a href="~Admin"><b>Admin:</b></a>&nbsp;
 	</th>
@@ -38,7 +43,9 @@
     <!-- It is no longer necessary, since the config file can do it.    -->
     <tr><th valign="top" align="right" width="170"><a href="&PIA:rootPath;-"><b>Files:</b></a>&nbsp;
 	</th>
-        <td valign="top"> <a href="&PIA:rootPath;Agents/">Apps</a>
+        <td valign="top">
+      		<a href="&PIA:rootPath;Apps/">Apps</a>
+      		<a href="&PIA:rootPath;Agents/">Agents</a>		
 		<a href="&PIA:rootPath;Samples/">Samples</a>
 		<a href="&PIA:rootPath;Doc/doclist.html">Docs</a>
 		<a href="&PIA:rootPath;Tagsets">Tagsets</a>
@@ -48,7 +55,7 @@
     </tr>
   <if><get name="agentNames"/><then>	
     <tr><th valign="top" align="right" width="170">
-             <a href="&PIA:rootPath;Agents/"><b>Apps:</b></a>&nbsp;
+             <a href="&PIA:rootPath;Agents/"><b>Agents:</b></a>&nbsp;
 	</th><td valign="top"> 
             <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
               <do name="a"><set name="href">/~<get name="foo"/>/</set>
@@ -123,5 +130,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.23 2000-08-23 00:42:34 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.24 2000-10-16 17:32:47 steve Exp $" />
 </p></body></html>
