@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.2 2000-06-23 17:33:34 steve Exp $
+#	$Id: woad-index.pl,v 1.3 2000-06-24 00:44:28 steve Exp $
 # Create WOAD index files.
 #
 
@@ -206,9 +206,9 @@ print STDERR "indexing $sources$rec -> $root$project \n";
 
 open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
 
-print PATHINDEX '<namespace name="sourcePathIndex">', "\n";
+print PATHINDEX '<index>', "\n";
 indexDir($sources, "/");
-print PATHINDEX '</namespace>', "\n";
+print PATHINDEX '</index>', "\n";
 
 close (PATHINDEX);
 
@@ -332,6 +332,8 @@ sub indexFile {
 
 	} else {
 	    $type = "unknown";	# could actually call `file` here.
+	    $ftype = `file -b $pf`;
+	    $entry{"dscr"} = "(?) $ftype";
 	}
     }
 
@@ -399,5 +401,5 @@ sub globalIndices {
 ###### Utilities ########################################################
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.2 2000-06-23 17:33:34 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.3 2000-06-24 00:44:28 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
