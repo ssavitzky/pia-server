@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.27 1999-07-09 01:51:57 wolff Exp $
+// $Id: GenericAgent.java,v 1.28 1999-07-14 20:27:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -359,9 +359,9 @@ public class GenericAgent extends BasicNamespace
     parseOptions(opts);
     basicInitialization();
 
-    ToAgent loader = new ToAgent(this);
-    loader.setContext(cxt);
     Tagset     ts = (Tagset) tagsets.at("xhtml");
+    ToAgent loader = new ToAgent(this, ts);
+    loader.setContext(cxt);
     TopContext tp = env.subDocument(in, cxt, loader, ts);
     // It's up to the subDocument processor to switch tagsets.
     Processor p = tp.subProcess(tp.getInput(), loader, this);
