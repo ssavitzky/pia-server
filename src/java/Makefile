@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.12 1999-09-22 00:44:37 steve Exp $
+#	$Id: Makefile,v 1.13 2000-01-25 16:53:05 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -49,6 +49,7 @@ PIAPACKAGENAMES= \
 	org.risource.dps.active \
 	org.risource.dps.handle \
 	org.risource.dps.input \
+	org.risource.dps.namespace \
 	org.risource.dps.output \
 	org.risource.dps.parse \
 	org.risource.dps.process \
