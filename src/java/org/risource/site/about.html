@@ -9,7 +9,8 @@
   <li> <a href="../pia/about.html">../pia/about.html</a>
   <li> <a href="to-do.html">to-do.html</a>
   <li> <a href="../pia/to-do.html">../pia/to-do.html</a>
-  <li> <a href="../../../../../Doc/Notes/steve/naming.html">Steve's notes</a>
+  <li> <a href="../../../../../Doc/Notes/steve/naming.html">Steve's notes on
+       naming</a> 
 </ul>
 
 <h2>Introduction</h2>
@@ -32,11 +33,15 @@
 <p> The information that defines the structure (configuration) of a site is
     <em>also</em> defined using XML, but configuration information is kept (at
     least conceptually) separate from other metadata in order to simplify the
-    implementation and increase versatility.
+    implementation and increase versatility.  The XML used for configuration
+    files is similar to the W3C's Resource Description Format and the IETF's
+    WebDAV properties, and is perhaps a little closer to the former.
+
 
 <h2>Class Structure</h2>
 
-<p> There are three interfaces in the <code>org.risource.site</code> package:
+<p> There are four main interfaces in the <code>org.risource.site</code>
+    package: 
 
 <ol>
   <li> <a href="Resource.java">Resource</a>: the generic interface for any
@@ -44,6 +49,8 @@
   <li> <a href="Document.java">Document</a>: the interface for document (leaf)
        resources.
   <li> <a href="Root.java">Root</a>: the interface for the root of a site. 
+  <li> <a href="Realizable.java">Realizable</a>: the interface for resources
+       that can be copied from a ``virtual'' location to a ``real'' one.
 </ol>
 
 <p> The interfaces follow the the <strong>Composite</strong> pattern as
@@ -85,7 +92,8 @@
 <p> The ``File'' classes are (comparatively) lightweight objects that contain
     no configuration information or associated XML metadata -- everything is
     derived from the underlying file or directory.  (<code>FileRoot</code> is
-    shown in parentheses because it is not presently implemented.)
+    shown in parentheses because it is not presently implemented, but we will
+    need it eventually.)
 
 <p> One may well ask why the interface is called Resource and the
     implementation is called Subsite rather than the other way around, or
@@ -235,7 +243,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.7 1999-09-22 16:41:20 steve Exp $</b><br>
+<b>$Id: about.html,v 1.8 1999-09-24 00:28:33 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
