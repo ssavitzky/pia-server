@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.7 1999-03-28 23:26:35 steve Exp $
+// $Id: FileAccess.java,v 1.8 1999-04-13 18:00:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -78,8 +78,12 @@ public class FileAccess {
   ************************************************************************/
 
   /** If this flag is true, fix &lt;BASE&gt; tags in HTML files.  Expensive. */
-
   public static boolean FIX_BASE = false;
+
+  /** If this flag is true, supply a &lt;BASE&gt; tag in directories. 
+   *	bad for localhost, but fixes href's in HEADER.html.
+   */
+  public static boolean DIR_BASE = true;
 
   public static String filesep = System.getProperty("file.separator");
 
@@ -297,7 +301,7 @@ public class FileAccess {
       String allurls = sortList.join("\n");
 
       String html = "\n" + "<HTML>\n<HEAD>" + "<TITLE>" + mypath + "</TITLE>"
-	//	+ "<BASE href=\"" + mybase + "\">"
+	+ (DIR_BASE? "<BASE href=\"" + mybase + "\">" : "")
 	+ "</HEAD>\n<BODY>" + head
 	+ "<h3><a href=\"/" + agent.type() + "/" + agent.name() + "\">/" 
 	  + agent.type() + "/" + agent.name() + ":</a> " + mypath + "</h3>"
