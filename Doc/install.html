@@ -27,17 +27,21 @@ Document List</a>.</p>
 <p>
 You need the following software to run the PIA:</p>
 <ul>
-<li><code>Java JRE 1.1.3</code> or higher is needed to create and
-run applications. <br><code>JDK</code> is needed to modify the PIA
-code. <code>JDK</code> can be obtained from <code>
-<a href = "http://www.javasoft.com">http://www.javasoft.com</a></code></li>
+<li> Java (A Java Runtime Environment, <code>JRE 1.1.3</code> or higher, is
+     needed to use the software.  Programmers wishing to modify the code will
+     need a Java Development Kit <code>JDK</code>.) Java can be obtained from <code>
+     <a href = "http://www.javasoft.com">java.sun.com</a></code> (direct links
+     to <a
+     href=http://www.javasoft.com/products/jdk/1.2/jre/index.html>JRE</a> or
+     <a href=http://www.javasoft.com/products/jdk/1.2/>JDK</a>)</li>
 <li>An operating system that supports sockets and long filenames.<br>We
-have tested the PIA on Linux (Red Hat 4.2), Windows 9X, and Solaris
-on SPARC.  It also seems to run under Java 2.0, but this has not been
-tested extensively.  It does not seem to work on the Macintosh because of
-differences in file handling.</li>
-<li>The <code>tar</code> and <code>gunzip</code> utilities.<br>
-These are required for unpacking the files.</li></ul>
+have run the PIA software on Linux (Red Hat 4.2 with the <a
+     href=http://www.blackdown.org/>blackdown.org</a> JDK), Windows 9X, and
+     Solaris on SPARC.  It does not seem to work on the Macintosh
+     because of differences in file handling.</li>
+<li>Utilities for unpacking the files (<code>tar</code> and
+     <code>gunzip</code> on unix, <code> winzip </code> on Windows)<br>
+ </li></ul>
 
 
 <h2><a name = "Obtaining">Obtaining the Files</a></h2>
@@ -68,33 +72,34 @@ Extract the files using <code>tar</code>.  For example:
 <blockquote><code>tar xvf pia_src</code></blockquote>
 
 <p>
-This creates the directory <code>PIA/</code> under your current directory. (The default
-environment variables below assume this is your home directory.)</p>
+This creates the directory <code>PIA/</code> under your current directory. </p>
 
 <table border=1>
 <caption> Directory Structure (inside the PIA directory)</caption>
 <tr><th>Agents <th>Config <th> Contrib <th> bin <th> lib <th> src 
-<tr><td>The Agents directory contains subdirectories for each standard agent.
+<tr><td valign=top>The Agents directory contains subdirectories for each standard agent.
 Each agent directory contains the collection of XML files (active pages) that work together
 to form an application. The Agents directory also contains default XML files
 for standard pages, like the home page of an agent.
-<td>The Config directory contains configuration information stored in the
+<td valign=top>The Config directory contains configuration information stored in the
      form of property files.  Look here to permanently change things like
      ports, proxy information, etc.
-<td>The Contrib directory is used for contributed agents and other files
+<td valign=top>The Contrib directory is used for contributed agents and other files
      that are not a part of the standard release.
- <td> bin contains the programs that actually run the PIA software either
+ <td valign=top> bin contains the programs that actually run the PIA software either
      as a web server (<code> pia, pia.bat </code> or as a command line filter
     <code> process </code>.  Note that pia and process run under unix only.)
-<td> lib contains the precompiled java libraries needed to run the
+<td valign=top> lib contains the precompiled java libraries needed to run the
      software.
- <td> src/java/ contains the java source files used in the PIA software.
+ <td valign=top> src/java/ contains the java source files used in the PIA software.
      <strong> If you want to set the classpath by hand, set it to
 	      <code>PIA/src/java/</code> </strong> not PIA/src!
-     (Note that it is possible to implement the PIA in other languages -- a src/perl does exists but is not currently being distributed.)  The code we developed is in <code>crc/*</code> corresponding to <code>crc.*</code> package names.  (This may change to org.risource.*).
-org and misc contain externally developed code referenced by the PIA software
-and included with the distribution for convenience.
-<code>src/app</code> contains the source for a few utility applications. 
+      The  main code is in <code>src/java/crc/*</code> corresponding to
+      <code>crc.*</code>  package names.  (CRC stands for California Research
+      Center.  This will soon change to org.risource.*)<p>
+<code>src/org and src/misc</code> contain code referenced by the PIA software
+and included for convenience.
+<code>src/app</code> contains a few utility applications. 
 </table>
 
 <h3 id = "CHDCECIE">Setting Up</h3>
@@ -104,9 +109,12 @@ PIA uses two environment variables:</p>
 <ul><li><var>PIA_DIR</var> indicates the location of the PIA directory just installed.</li>
 
 <li><var>USR_DIR</var> indicates the location to which the PIA writes
-its data files.</li></ul><p>On Unix, <var>PIA_DIR</var> defaults <kbd>$HOME/pia</kbd>, if the pia is installed
-somewhere else, you must set this variable.On Windows, <var>PIA_DIR</var> defaults to
-<code><var>drivename</var>:\pia</code>.</p>
+its data files.</li></ul>
+
+<p>The scripts in the bin directory that run the software attempt to set the
+<var>PIA_DIR</var> variable based on the location of the script or the current
+working directory.  You may have to explicitly set this variable to the
+location of the PIA directory you just installed (e.g. <code>PIA_DIR=~/PIA</code>).</p>
 
 <p>
 <var>USR_DIR</var> is automatically created by the PIA. You are free to reset its location
@@ -134,14 +142,16 @@ is convenient to put the directory <code>pia/bin</code> into your
 shell's search path. 
 </p>
 
-<h2><a name = "Running">Running the PIA</a></h2>
+<h2><a name = "Running">Running the PIA </a></h2>
 
 <p>On UNIX, once you have set up the <code><var>PIA_DIR</var></code> 
 and <code><var>USR_DIR</var></code> environment
 variables, you can launch the PIA with the command: <code>PIA_DIR/bin/pia.</code>This
 is a one-line shell script that runs <em>pia_wrapper</em>. A complete
 list of command-line options can be found by running <kbd>PIA_DIR/bin/pia
--?</kbd> at the shell prompt.</p>
+-?</kbd> at the shell prompt.</p> Note that the <code>process</code> command
+allows the PIA software to be used as a unix filter for processing HTML and
+XML documents.
 
 <p>Under Windows 95 and NT, launch the PIA with the command: <code>PIA_DIR/bin/pia.bat</code>.</p>
 
@@ -149,11 +159,15 @@ list of command-line options can be found by running <kbd>PIA_DIR/bin/pia
 variables. It is equivalent to the following:<kbd>java -classpath <var>CPATH</var> crc.pia.Pia
 -root <var>PIA_DIR</var> -u <var>PIA_HOME</var></kbd></p>
 
-<p>Note the <code>-root</code> and <code>-u</code> options. The <code>-p</code> option
-can be used to set the port (default is 8888 to allow normal users to run the
-PIA.  Set to 80 if you don't like URL's like http://HOST:8888).</p><h2>Using the PIA</h2>
+<p>Note the <code>-root</code> and <code>-u</code> options. The
+<code>-p</code> option can be used to set the port (default is 8888, a
+non-priveleged port that allows normal user logins to run the PIA on Unix
+boxes.  You may set the port to 80 if you don't like including the port number
+in URL's of the form http://HOST:8888).</p>
 
-<p>The PIA is essentially a Web server. Assuming you are running on a machine
+<h2>Using the PIA</h2>
+
+<p>The PIA acts essentially as a Web server. Assuming you are running on a machine
 called <code>PiaHOST</code> using <code>piaPORT</code>, simply browse
 to <code>http://piaHOST:piaPORT</code> </p>
 
@@ -163,7 +177,7 @@ work.</p><h2><a name = "Questions">Questions, Problems, or Comments</a></h2><p>Y
 can check for known bugs by going to 
 <code><a href = "http://www.RiSource.org/PIA/">http://www.risource.org/PIA/</a></code></p>
 <p>
-Questions, problems and comments should be directed to <code>pia-bugs@risource.org</code>.
+Questions, problems and comments should be directed to <code><a href=mailto:pia-bugs@risource.org>PIA-bugs@risource.org</a></code>.
 </p>
 <hr>
 <p><b>Copyright 1999 Ricoh Silicon Valley</b></p>
