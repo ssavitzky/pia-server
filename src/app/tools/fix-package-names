@@ -1,0 +1,7 @@
+#!/bin/sh
+# Hack to fix up package names
+find .  '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \
+	-o -name '*.tex' \
+        -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f \
+    -exec grep -q -i 'crc\.' {} \; -print \
+    -exec perl -p -i -e 's@crc\.@org.risource\.@g' {} \; 
