@@ -225,7 +225,9 @@
 	<table bgcolor="white" border="3">
 	  <tr>
 	    <th bgcolor="#cccccc"> filename </th>
-	    <th bgcolor="#cccccc"> title/<em>description</em> </th>
+	    <th bgcolor="#cccccc"> title/<em>description</em>
+	        <a href="/.Woad/help#directories">[help]</a>
+	    </th>
 	  </tr>
 	  &dirIndex;
 	</table>
@@ -346,5 +348,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.18 2000-07-28 22:30:07 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.19 2000-08-23 00:00:20 steve Exp $" />
 </body></html>
