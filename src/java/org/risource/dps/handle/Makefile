@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.11 1999-07-13 01:27:42 bill Exp $
+# 	$Id: Makefile,v 1.12 1999-09-22 00:35:39 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -88,13 +88,8 @@ XHTM_HANDLERS = \
 	formHandler.java \
 	processHandler.java
 
-### These handlers can affect the operation of the PIA
 
-PIA_HANDLERS= \
-	submitHandler.java
-
-
-HANDLERS = $(PRIM_HANDLERS) $(XHTM_HANDLERS) $(PIA_HANDLERS)
+HANDLERS = $(PRIM_HANDLERS) $(XHTM_HANDLERS)
 FILES = $(BASE_CLASSES) $(HANDLERS) Loader.java
 
 include $(TOPDIR)/makefiles/file.make
