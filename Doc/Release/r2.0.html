@@ -48,6 +48,17 @@
   <li> A few minor improvements to the tag language have been made, most
        notably the &lt;insert&gt; sub-element of &lt;extract&gt;.
 
+  <li> A bug in setting the content length header for proxied pages has been
+       modified has been patched.  Using the PIA as a proxy with the toolbars
+       turned on should no longer cause problems with pages getting truncated.
+
+  <li> The unix batch files in PIA/bin (pia, process, pia_wrapper) have been
+       modified to work properly with or without having a classpath setting.  
+       (Without a classpath, it's best run with PIA/src/java as your current
+       directory.)
+       The Windows batch file PIA/bin/pia.bat (piajdk.bat no longer needed) 
+       no longer touches classpath, but changes directory to PIA/src/java and runs
+       from there.
 </ol>
 
 <h3>Release 2.0.3</h3>
@@ -230,7 +241,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.16 1999-04-13 18:32:43 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.17 1999-04-13 23:38:41 wolff Exp $</b><br>
 </body></html>
 
 
