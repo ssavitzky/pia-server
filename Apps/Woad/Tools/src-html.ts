@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.7 2000-10-06 06:28:43 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.8 2000-10-06 06:55:29 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -415,7 +415,7 @@
 <!-- not clear whether we always want to make the listing <small>. -->
 <if>&wrap;
     <then><get expand="yes" name="content"/></then>
-    <else><small><pre><expand>&content;</expand></pre></small></else>
+    <else><small><pre><get expand="yes" name="content"/></pre></small></else>
 </if>
   </else>
 </if>
@@ -467,6 +467,12 @@
 <h3>Structural elements</h3>
 
 <define entity="sc"><value>#ff9933</value></define>
+
+<define element="html" syntax="quoted">
+  <action mode="defer-content"><hide><let name="atts">&attributes;</let>
+    </hide><elt-b tag="html" tc="&sc;"><expand><get name="content" /><hide>
+    </hide></expand></elt-b></action>
+</define>
 
 <define element="head" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
