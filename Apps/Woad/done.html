@@ -223,13 +223,51 @@ See also:
        (2000-10-19)
   </li>
 
+  <li> 2000-10-27 <b>Impr</b> shallow parsing <br />
+       <a href="ftp://fas.sfu.ca/pub/cs/TR/1998/CMPT1998-17.html">REX: XML
+       Shallow Parsing with Regular Expressions</a> provides the regexp needed
+       to mark up an XML file as a listing.  OTOH it's within epsilon of what
+       we're already doing in AbstractParser.
+       (2000-08-11) <br />
+       -- Current implementation of TextParser is different from either, but
+	  it seems to work pretty well.
+  </li>
+
+  <li> 2000-10-30 ~ <b>Impr</b> xref C code using LXR <br />
+       Why re-invent the wheel? <a href="http://lxr.linux.no/">LXR</a> looks
+       great, and it's in PERL.  GPL.  Doesn't grok Makefile, html or perl,
+       though. 
+       (2000-08-07)<br />
+       -- not necessary because shallow parsing and indexing are working OK.
+  </li>
+
+  <li> ~ <b>Impr</b> Full-text source indexing <br />
+       <a href="http://webglimpse.org/">Glimpse</a> is what
+       <a href="http://lxr.linux.no/">LXR</a> uses.  Unfortunately it's
+       free only to nonprofits.  An earlier version
+       (4.0) was free; may be available from the CVS tree.  See
+       <a href="http://ls6.cs.uni-dortmund.de/ir/projects/freeWAIS-sf/">
+       FreeWAIS-sf</a> for a possible alternative.  The original
+       <a href="ftp://ftp.cnidr.org/pub/NIDR.tools/freewais/">FreeWAIS</a>
+       doesn't seem to have been worked on since 1996.  List of full-text
+       indexers in <a href="http://dmoz.org/Computers/Software/Information_Retrieval/Fulltext/">DMOZ</a>.
+       <a href="http://sunsite.Berkeley.EDU/SWISH-E/">SWISH-E</a> also possible.
+       <a href="http://hotwired.lycos.com/webmonkey/code/97/16/index2a.html">
+       This article</a> has useful info about doing it in PERL.  Turns out
+       that Swish and Glimpse are what Harvest calls "brokers" and BOTH are
+       included in the Harvest distro.  But the Glimpse in the current Harvest
+       distro is still non-free.
+       (2000-08-07)<br />
+       -- not necessary because shallow parsing and indexing are working OK.
+  </li>
+       
 </ol>
 
 
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.17 2000-10-20 23:55:12 steve Exp $</b><br>
+<b>$Id: done.html,v 1.18 2000-11-04 00:00:28 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
