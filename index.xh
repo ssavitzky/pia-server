@@ -25,23 +25,27 @@
    <if><agent-running name="Admin"/><then>
     <tr><th valign="top" align="right" width="170">
 	    <a href="~Admin"><b>Admin:</b></a>&nbsp;
-	</th><td valign="top">
+	</th>
+        <td valign="top">
 	    <a href="~Admin/list-agents">List apps</a> 
 	    <a href="frames">Browse tree</a><br />
 	    <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 	      <then><a href="~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
-    </td></tr></then></if>
+        </td>
+    </tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
     <!-- It is no longer necessary, since the config file can do it.    -->
     <tr><th valign="top" align="right" width="170"><a href="&PIA:rootPath;-"><b>Files:</b></a>&nbsp;
-	</th><td valign="top"> <a href="&PIA:rootPath;Agents/">Apps</a>
+	</th>
+        <td valign="top"> <a href="&PIA:rootPath;Agents/">Apps</a>
 		<a href="&PIA:rootPath;Samples/">Samples</a>
 		<a href="&PIA:rootPath;Doc/doclist.html">Docs</a>
 		<a href="&PIA:rootPath;Tagsets">Tagsets</a>
       		(<a href="&PIA:rootPath;lib/">lib</a>)
 		<a href="&PIA:rootPath;src/">Sources</a>
-        </td></tr>
+        </td>
+    </tr>
   <if><get name="agentNames"/><then>	
     <tr><th valign="top" align="right" width="170">
              <a href="&PIA:rootPath;Agents/"><b>Apps:</b></a>&nbsp;
@@ -94,7 +98,7 @@
     <tr> <th align="right"> view: &nbsp;</th>
 	 <td bgcolor="#99ccff">&nbsp; 
 	     <a href="&SITE:sourcePrefix;/">
-		<font color="#0000ff" face="helvetica, sans-serif">sources
+		<font color="#0000ff" face="helvetica, sans-serif">source
 	     </font></a>
 	   <if><get name="SITE:notesPrefix" /> <then>
 	     || <a href="&SITE:notesPrefix;/">
@@ -119,5 +123,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.22 2000-07-25 22:20:13 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.23 2000-08-23 00:42:34 steve Exp $" />
 </p></body></html>
