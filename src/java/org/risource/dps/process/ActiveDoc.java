@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.4 1999-03-23 23:32:01 steve Exp $
+//	$Id: ActiveDoc.java,v 1.5 1999-03-24 19:05:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.4 1999-03-23 23:32:01 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.5 1999-03-24 19:05:51 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -180,11 +180,13 @@ public class ActiveDoc extends TopProcessor {
       if (transaction.test("agent-request") ||
 	   transaction.test("agent-response")) {
 
+	// === need agent-name, agent-type, agent-path features.
 	String aname = transaction.getFeatureString("agent");
 	String atype = transaction.getFeatureString("agent-type");
 
 	define("transAgentName", aname);
-	define("transAgentType", atype); 
+	define("transAgentType", atype);
+	// === this will cause problems:  need agent.
 	if (aname.equals(atype)) {
 	  define("transAgentPath", "/"+aname);
 	} else {
@@ -220,7 +222,7 @@ public class ActiveDoc extends TopProcessor {
     if (agent.name().equals(agent.type())) {
       define("agentPath", "/"+agent.name());
     } else {
-      define("agentPath", "/"+agent.type()+"/"+agent.name());
+      define("agentPath", agent.pathName());
     }
 
    define("agentNames", resolver.agentNames());
