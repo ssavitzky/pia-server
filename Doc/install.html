@@ -53,13 +53,11 @@
 </p>
 
 <blockquote><small>
-
-<p> You can unpack the <code>tar</code> archive wherever
-    you want the PIA to be installed; typically this will be your home
-    directory, or possibly <code>/usr/local</code> or a subdirectory of
-    <code>/usr/local/src</code> on a Unix system.
+<p> <var>PIA_HOME</var> will typically be in your home directory at this
+    point.  On a Unix or Linux system you may eventually want to move it to a
+    shared location -- <code>/usr/local</code> or a subdirectory of
+    <code>/usr/local/src</code>, for example.
 </p>
-
 </small></blockquote>
 
 
@@ -68,16 +66,22 @@
 <h1><a name="Quick">Quick Start</a></h1>
 
 <big>
-<p>Change your working directory to be the <var>PIA_HOME</var> directory
-(e.g. <code>cd PIA </code>).
-
-
-<p>You can now start the PIA Web server from the command line:<br /> 
-<code>&gt; bin/pia Doc</code> <br />
-
-Where the directory passed on the command line (<code>Doc</code>, in this
-case) is the root directory for the files to be served by the PIA Web server.
+<p> If you are feeling lucky, you can now start the PIA with the command:
 </p>
+
+<pre>./PIA/bin/pia ./PIA/Doc</pre>
+
+<blockquote><small>
+<p> You should see some initialization messages ending with<br>
+    <tt>&nbsp;Point your browswer to &lt;URL:&nbsp;some&nbsp;URL&gt;</tt><br>
+    which indicates that the server is up and running.
+</p>
+<p> Assuming all went well, you can now click on the following link: <a
+    href="http://localhost:8888/">http://localhost:8888/</a> to point your
+    browser at the PIA, which is now running as an ordinary web server,
+    serving up its own online documentation from the directory you gave it on
+    the command line.
+</small></blockquote>
 
 <p> If that didn't work, try reading the next section on <a
     href="#Setup">Initial Setup</a>, possibly followed by the section on <a
@@ -85,30 +89,48 @@ case) is the root directory for the files to be served by the PIA Web server.
     <a href="using.html">Using the PIA</a>
 </p>
 
-<blockquote><small>
-(As explained below, you can also specify a configuration file instead of the
-root directory.)  "<code>bin/pia</code>" is a simple wrapper that starts up a
-java program; you should see some initialization messages ending with "Point
-your browswer to <a href=http://localhost:8888/>http://localhost:8888/</a>"
-which indicates that the server is up and running.
-</small></blockquote>
-
-<p> The PIA is more than just a web server: you can also build complete
-    applications out of active web pages.  To start the PIA with its full
-    complement of standard applications, use the command:
+<p> If it <em>did</em> work, you should now try to start the PIA in its
+    <em>default</em> configuration, with its full complement of standard
+    sample applications -- the PIA is more than just a web server: you can
+    also build complete applications out of active web pages, and we provide a
+    few examples.  Try the command:
 </p>
 
-<pre>&gt; bin/pia</pre>
+<pre>./PIA/bin/pia</pre>
 
-<blockquote> You can now browse to <a
-href=http://localhost:8888/>http://localhost:8888/</a> -- this is the
-recommended method for getting acquainted with the capabilities of the PIA.
-In particular, <code>Agents/Tutorial </code> and <code>Samples</code> (<a
-href=http://localhost:8888/Agents/Tutorial/>http://localhost:8888/Agents/Tutorial/</a>
-<a href=http://localhost:8888/Samples/>http://localhost:8888/Samples/</a>)
-demonstrate the unique properties of the PIA server side markup language.
+<p> Browse to <a href="http://localhost:8888/Doc/install.html"
+    >http://localhost:8888/Doc/install.html</a> to continue reading this
+    document.
+</p>
 
-</blockquote>
+<blockquote><small> The next section will explain what's happening, but the
+  bottom line is that the PIA has looked in its default root directory,
+  <code><var>PIA_HOME</var></code>, read the default configuration file there,
+  <code>_subsite.xcf</code>, and set itself up as an application server.  You
+  can also specify the PIA's complete configuration in a single file; some
+  examples can be found in <a
+  href="../Config/Site/"><code>Config/Site/</code></a>.
+</small></blockquote>
+
+<p> At this point, you can do one of three things:
+</p>
+
+<ol>
+  <li> Go on to the next section to find out how to set up your environment
+       variables to make the PIA easier to use.
+  <li> Read the <a href="doclist.html">online documentation</a>.
+  <li> Play with the <a href="http://localhost:8888/">PIA</a> some more.<br>
+
+       <small> This is the recommended method for getting acquainted with the
+       capabilities of the PIA.  In particular, <a href="/Agents/Tutorial/">
+       <code>/Agents/Tutorial/</code></a> and <a
+       href="/Samples/"><code>/Samples/</code></a>) demonstrate the unique
+       properties of the PIA's server side XML-based markup language, while <a
+       href="/Agents/SimpleCalendar"><code>/Agents/SimpleCalendar</code></a>
+       represents a typical application.
+       </small>
+</ol>
+
 
 </big>
 
@@ -357,7 +379,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.23 1999-10-26 17:16:26 steve Exp $</i><br>
+<i>$Id: install.html,v 1.24 1999-10-26 22:53:02 steve Exp $</i><br>
 
 
 </body></html>
