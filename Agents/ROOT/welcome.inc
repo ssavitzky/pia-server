@@ -8,11 +8,11 @@
     know that.
 
 <p> You can find out more about this <em>particular</em> PIA server from the
-    <a href="/Admin">Admin</a> agent, which is used to perform server
+    <a href="/~Admin">Admin</a> agent, which is used to perform server
     management functions.  You can find out about its implementation from the
     <a href="/Doc/API/internals.html">API</a> (Application Programming
     Interface) Manual, and by directly studying the <a
-    href="/PIA/src/java/org/risource">source code</a>, all of which is online.
+    href="/src/java/org/risource">source code</a>, all of which is online.
 
 <p> You can find out more about the PIA framework and its role in information
     applications from the online documentation described in the table below,
@@ -24,4 +24,4 @@
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
     may not be running yet.
 <p>
-<!-- $Id: welcome.inc,v 1.6 1999-05-06 20:38:23 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.7 1999-09-22 23:50:16 steve Exp $ -->

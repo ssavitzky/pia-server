@@ -13,7 +13,8 @@
 	<a href="/Doc/Release/">Release Notes:</a> </th>
     <td>
 	||&nbsp;<a href="/Doc/Release/r2.0.html"><strong>2.0</strong></a> 
-	||&nbsp;<a href="/PIA/README">README</a>
+	||&nbsp;<a href="/README">README</a>
+	||&nbsp;<a href="/LICENSE">LICENSE</a>
         ||&nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a> 
         ||&nbsp;<a href="/Doc/FAQ/">/FAQs/</a>
     </td>
@@ -42,4 +43,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.10 1999-07-09 20:54:40 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.11 1999-09-22 23:50:16 steve Exp $"/>
