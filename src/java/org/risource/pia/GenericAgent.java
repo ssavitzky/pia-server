@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.8 1999-03-25 00:46:11 steve Exp $
+// $Id: GenericAgent.java,v 1.9 1999-03-26 01:29:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,6 +37,8 @@ import java.io.OutputStream;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.risource.Version;
 
 import org.risource.pia.Agent;
 import org.risource.pia.agent.AgentMachine;
@@ -981,9 +983,17 @@ public class GenericAgent implements Agent, Registered, Serializable {
    *	an agent's documents might be found.
    */
   public List documentSearchPath() {
+    return documentSearchPath(false);
+  }
+
+  /** 
+   * Return a list of File objects refering to directories in which 
+   *	an agent's documents might be found.
+   */
+  public List documentSearchPath(boolean forWriting) {
 
     /* If we have already found the list, just return it. */
-    if (documentFileList != null) return documentFileList;
+    if (!forWriting && documentFileList != null) return documentFileList;
 
     List path = new List();
 
@@ -997,15 +1007,16 @@ public class GenericAgent implements Agent, Registered, Serializable {
      */
 
     if (userDirectory() != null) path.push(userDiFile);
-    if (homeDirectory() != null) path.push(homeDirFile);
+    if (!forWriting && homeDirectory() != null) path.push(homeDirFile);
 
-    if (typeAgent() != null) path.append(typeAgent().documentSearchPath());
-    else {
+    if (typeAgent() != null) {
+      path.append(typeAgent().documentSearchPath(forWriting));
+    } else {
       path.push(Pia.instance().usrAgentsDir());
-      path.push(Pia.instance().piaAgentsDir());
+      if (!forWriting) path.push(Pia.instance().piaAgentsDir());
     }
 
-    documentFileList = path;
+    if (!forWriting) documentFileList = path;
     return path;
   }
 
@@ -1014,7 +1025,6 @@ public class GenericAgent implements Agent, Registered, Serializable {
    */
   public List dataSearchPath() {
     List path = new List();
-    if (userDirectory() != null) path.push(userDirFile);
     path.push(dataDirectory());
     return path;
   }
@@ -1072,7 +1082,6 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
     // Remove a leading /~, indicating the data directory, from the path
     //	This indicates the agent's data directory.
-
     if (path.startsWith("/~/")) {
       path = path.substring(2);
       wasData = true;
@@ -1085,9 +1094,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
     //	=== For the moment accept a path starting with just name()
     if (path.startsWith(mypath) || path.startsWith("/" + name())) {
       if (path.startsWith(mypath))
-	path = path.substring(mypath.length() + 1);
+	path = path.substring(mypath.length());
       else
-	path = path.substring(name().length() + 1);
+	path = path.substring(name().length());
       hadName = true;
     }
 
@@ -1099,6 +1108,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
       wasData = true;
     }
 
+    if (path.startsWith("/")) path = path.substring(1);
     if (wasData) {
       if_path = new List();
       if_path.push(dataDirectory());
@@ -1139,6 +1149,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
     Transaction response = new HTTPResponse( trans, false );
     response.setStatus( 200 ); 
+    response.setHeader("Server", Version.SERVER);
     response.setContentType( "text/html" );
     response.setContentObj( c );
     response.startThread();
@@ -1165,6 +1176,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
     Content c = new ProcessedContent(this, file, path, proc,
 				     trans, response, res);
     response.setStatus( 200 ); 
+    response.setHeader("Server", Version.SERVER);
     response.setContentType( resultType(file) );
     response.setContentObj( c );
     response.startThread();

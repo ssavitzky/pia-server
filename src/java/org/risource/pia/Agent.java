@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.5 1999-03-24 20:47:38 steve Exp $
+// $Id: Agent.java,v 1.6 1999-03-26 01:29:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -215,6 +215,12 @@ public interface Agent extends Tabular {
    * @return a list of File objects refering to directories to search.
    */
   public List documentSearchPath();
+
+  /** The agent's document directory search path. 
+   *
+   * @return a list of File objects refering to directories to search.
+   */
+  public List documentSearchPath(boolean forWriting);
 
 
   /**

@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.6 1999-03-24 20:49:49 steve Exp $
+//	$Id: ActiveDoc.java,v 1.7 1999-03-26 01:29:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.6 1999-03-24 20:49:49 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.7 1999-03-26 01:29:04 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -233,21 +233,45 @@ public class ActiveDoc extends TopProcessor {
   ** External Entities:
   ************************************************************************/
 
-  /** Locate a resource accessible as a file. */
+  /** Locate a resource accessible as a file.
+   *  The following prefixes are recognized:
+   *  <dl>
+   *	<dt> <code>file:</code>
+   *	<dd> forces the remainder of the path to be taken as a native
+   *		path, and used as-is.
+   *	<dt> <code>pia:</code>
+   *	<dd> Interprets the path using 
+   *		<a href="org.risource.pia.FileAccess#systemFileName">
+   *		org.risource.pia.FileAccess.systemFileName</a>
+   *
+   *	<dt> <code>/</code>
+   *	<dd> Interprets the path like a URL passed to the PIA.
+   *	<dt> other
+   *	<dd> paths are relative to the current agent.
+   * </dl>
+   * @see org.risource.pia.FileAccess#systemFileName
+   */
   public File locateSystemResource(String path, boolean forWriting) {
     if (path.startsWith("file:")) {
-      // Just remove the "file:" prefix.
-      path = path.substring(5);
-    }
-    if (path.startsWith("/")) {
-      // Path starting with "/" is relative to document root
-      path = agent.findDocument(path, resourceSearch, forWriting);
+      // file: is handled by systemFileName
+      return new File(org.risource.pia.FileAccess.systemFileName(path));
+    } else if (path.startsWith("pia:")) {
+      path = path.substring(4);
+      // pia: Strip the "pia:" and handle the rest with systemFileName
+      return new File(org.risource.pia.FileAccess.systemFileName(path));
+    } else if (path.startsWith("/")) {
+      // Path starting with "/" is relative to document root (PIA)
+      // Figure out which agent gets it.  Gripe if we can't find one.
+      Agent a = resolver.agentFromPath(path);
+      if (a == null) return null;
+      // Use that agent to look up the path.  Seems only fair.
+      path = a.findDocument(path, resourceSearch, forWriting);
       return (path == null)? null : new File(path);
     } else if (path.indexOf(":") >= 0) {
       // URL: fail.
       return null;
     } else {
-      // Path not starting with "/" is relative to documentBase.
+      // Path not starting with "/" is relative to documentBase (agent).
       if (path.startsWith("./")) path = path.substring(2);
       if (documentBase != null) path = documentBase + path;
       path = agent.findDocument(path, resourceSearch, forWriting);
@@ -261,12 +285,22 @@ public class ActiveDoc extends TopProcessor {
     "html", "xml", "htm", "txt", 
   };
 
+  /** Determine whether a resource name is a remote path. 
+   *	In our case, paths starting with <code>pia:</code> as well as  
+   *	<code>file:</code> are considered system paths.
+   *
+   * @see org.risource.pia.FileAccess#systemFileName
+   */
+  protected boolean isRemotePath(String path) {
+    return (!path.startsWith("pia:") && super.isRemotePath(path));    
+  }
+
   /** Determine whether a resource name is special. 
-   *	In our case, paths starting with <code>pia:</code> require
-   *	special handling.
+   *	In our case, paths starting with <code>pia::</code> require
+   *	special handling, and should be sent to the resolver.
    */
   protected boolean isSpecialPath(String path) {
-    return (path.startsWith("pia:"));    
+    return (path.startsWith("pia::"));    
   }
 
   /** Hook on which to hang any specialized paths supported by a subclass. */
