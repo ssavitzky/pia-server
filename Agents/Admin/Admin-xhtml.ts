@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.13 1999-06-26 00:47:27 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.14 1999-07-09 20:54:35 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -296,15 +296,15 @@
   <action>
     <table cellspacing=0 cellpadding=0 align=center border=0>
     <tr><th width=170 valign=center><get name="A100"/></th>
-    <td valign=center>
-      <table cellspacing=0 cellpadding=0 align=center border=0>
-      <tr> <!-- need an image to fix the size -->
-    <pre><i><text pad align=right width=15>Index</text>	Home</i>
-    <repeat list="&agentNames;" entity="li"
-	   ><text pad align=right width=15><a href="/&li;/"><b>&li;/</b></a
-	   ></text>	<agent-home link agent="&li;">
-    </repeat></pre>
-    </table>
+      <td valign=center>
+	<table cellspacing=0 cellpadding=0 align=center border=0>
+	<tr> <!-- need an image to fix the size -->
+      <pre><i><text pad align=right width=15>Index</text>	Home</i>
+      <repeat list="&agentNames;" entity="li"
+	     ><text pad align=right width=15><a href="/&li;/"><b>&li;/</b></a
+	     ></text>	<agent-home link agent="&li;"/>
+      </repeat></pre></tr>
+    </table></td></tr>
     </table>
   </action>
 </define>
@@ -320,7 +320,7 @@
 	  <code>home</code>.
     </doc>
   </define>
-  <action><set name="page"><get name="attributes:page"></set>
+  <action><set name="page"><get name="attributes:page"/></set>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr><th align=center valign=center nowrap width=170><get name="A100"/>
     <td>
@@ -400,9 +400,9 @@
     </doc>
   </define>
   <action>
-<hr>
+<hr/>
 <nav-bar/>
-<hr>
+<hr/>
 <a href="/&AGENT:name;"><get name="AGENT:name"/></a> agent on
 <if><test exact  match='pia'><get name="piaUSER"/></test>
     <then> the </then>
@@ -414,7 +414,7 @@
 <hr>
 <set name=myear><subst match="/.* " result=", "><extract>
     &attributes;<name>cvsid<eval/><text split>&list;</text> 3
-    </extract> </set>
+    </extract> </subst></set>
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b><get name="RiSource.org"/>/<get name="RiSource.org.pia"/></b>&gt;.<br>
 <em><extract><get name="attributes"/><name>cvsid<eval/></extract></em>
@@ -424,6 +424,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.13 1999-06-26 00:47:27 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.14 1999-07-09 20:54:35 steve Exp $</b><br />
 </tagset>
 

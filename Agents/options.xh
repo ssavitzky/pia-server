@@ -26,20 +26,23 @@
 		    </if></set>
 
 <sub-head page='options'>
-    <tr><th></th><td>
-        <if><status src='initialize.xh' item='exists' />
-            <then><a href='initialize'>[re-initialize]</a></then></if>
-        </td></tr>
-    <tr><th></th><td><a href='&agentHome;/'>Agent documents</a>
-	        <a href='/~/Agents&AGENT:pathName;/'>(Customized)</a>
+    <tr><th> </th>
+        <td><if><status src='initialize.xh' item='exists' />
+                <then><a href='initialize'>[re-initialize]</a></then></if>
+        </td>
+    </tr>
+    <tr><th> </th>
+        <td><a href='&agentHome;/'>Agent documents</a>
+	        <a href='/~/Agents&AGENT:pathName;/'>(Customized)</a></td>
+    </tr>
   
   <if>&AGENT:criteria;<then>
-    <tr><th align='right'> criteria:&nbsp;
-        </th><td>&AGENT:criteria;
-  </td></tr></then></if>
+    <tr><th align='right'> criteria:&nbsp;</th>
+        <td>&AGENT:criteria;</td></tr></then>
+  </if>
   <if>&AGENT:doNotRemove;<then></then><else>
-    <tr><th align='right'>
-        </th><td><form action='/Admin/remove-agent' method='POST'>
+    <tr><th align='right'></th>
+        <td><form action='/Admin/remove-agent' method='POST'>
 	      <table><tr><td bgcolor=silver>
               <input name='agent' value='&agentName;' type='hidden' />
               <input type='submit' value='Remove &agentName; Agent' />
@@ -55,7 +58,7 @@
                <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat></td></tr></then>
   </if>
-</td></tr></sub-head>
+</sub-head>
 
 <hr />
 <nav-bar />
@@ -184,7 +187,7 @@
 <form action="options#formatting" method='POST'>
   <table cellspacing="0" border="0" width="90%" align="center">
     <tr><th bgcolor="silver" width="10%">
-	    <input type='submit' name="formatting" value="  Set  " /> </td>
+	    <input type='submit' name="formatting" value="  Set  " /> </th>
 	<th bgcolor="silver" align="left" width="90%"> Formatting Options </th>
 	<td bgcolor="silver">&nbsp;&nbsp;</td>
     </tr>
@@ -242,7 +245,7 @@
 <form action="options#locks" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="locks" value="*** Set" /> </td>
+          <input type='submit' name="locks" value="*** Set" /> </th>
       <th bgcolor="silver" align="left" width="90%"> Locks *** </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -276,6 +279,7 @@
       set this permanently is with the <b>doNotOverwrite</b> checkbox in the
       <b>Save</b> form, because if you set it in <em>this</em> form you will
       not be able to save the agent.
+  </p>
 </verbosePage>
 
 <h3><a name="attrs">Attributes</a></h3>
@@ -338,7 +342,7 @@
 <form action="options#hooks" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="hooks" value=" Set " /> </td>
+          <input type='submit' name="hooks" value=" Set " /> </th>
       <th bgcolor="silver" align="left" width="90%"> Hooks </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -474,5 +478,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.9 1999-06-22 22:53:14 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.10 1999-07-09 20:54:32 steve Exp $' />
 </body></html>
