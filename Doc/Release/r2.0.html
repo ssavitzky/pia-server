@@ -20,6 +20,42 @@
 
 
 <h2><a name="announce">Release Announcements</a></h2>
+<h3>Release 2.0.8</h3>
+
+<p> As promised, this release includes a list of things that ought to be fixed
+    before Release 2.1; it can be found in <a href="r2.1.to-do.html">
+    <code>r2.1.to-do.html</code> </a>.
+
+<p> 
+
+<h4>Changes since 2.0.7</h4>
+
+<ol>
+  <li> The major change since 2.0.7 is a new location for tagset definitions,
+       or rather a new pair of locations.  Tagsets that are <em>essential</em>
+       for the functioning of the PIA or the <code>process</code> command are
+       now in the <code><a href="../../lib/">PIA/lib/</a></code> directory.
+       Tagsets that are only used in the default configuration of the PIA
+       server, and that are expected to be customized for new applications,
+       are in <code><a href="../../Tagsets/">PIA/Tagsets/</a></code>.
+
+  <li> The <code><a href="../../src/java/org/risource/site/">site</a></code>
+       package now supports ``prefixes'' (for example ``<code>file:</code>'',
+       ``<code>root:</code>'' and ``<code>pia:</code>'') on pathnames.
+
+  <li> The XHTML files in the PIA are now proper parsed external entities; the
+       incorrect DTD's they once contained have been replaced by
+       <code>&lt;make&gt;</code> elements that <em>output</em> a DTD.  Note
+       that XHTML files are <em>not</em> complete XML documents.  This is a
+       deliberate design choice: it means that any appropriate DTD can be
+       provided separately. 
+
+  <li> A new agent/application has been added: <a
+       href="/Agents/Proxie/buster/">/Agents/Proxie/buster/</a>.  This handy
+       application ``busts'' selected HTTP requests by redirecting them to
+       someplace innocuous.  It is shipped <em>disabled</em> by default.
+</ol>
+
 <h3>Release 2.0.7 (Storm Warnings!)</h3>
 
 <p> This release incorporates the changes that were foreshadowed in 2.0.6.
@@ -523,5 +559,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.0.html,v 1.32 1999-10-28 18:26:45 steve Exp $</b><br>
+<b>$Id: r2.0.html,v 1.33 1999-12-14 19:03:02 steve Exp $</b><br>
 </body></html>
