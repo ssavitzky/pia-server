@@ -26,7 +26,8 @@
 	</th><td valign="top">
 	    <a href="/~Admin/list-agents">list</a> <if> <then>/
 	    <a href="/~Admin/installers">install</a> / 
-	    <a href="/~Admin/remove-agent">remove</a> </then></if> agents.<br />
+	    <a href="/~Admin/remove-agent">remove</a> </then></if>
+	    applications.<br />
 	    <if><test exact="exact" match="pia">&user.name;</test>
 	      <then><a href="/~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
@@ -34,10 +35,17 @@
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
     <!-- It is no longer necessary, since the config file can do it.    -->
     <tr><th valign="top" align="right" width="170"><a href="/-"><b>Files:</b></a>&nbsp;
-	</th><td valign="top"> <a href="/Agents/">Agents</a>
-	    <a href="/Doc/doclist.html">Documentation</a>
-	    <a href="/src/">source code</a>
-      </td></tr>
+	</th><td valign="top"> <a href="/Agents/">Applications</a>
+		<a href="/Doc/doclist.html">Documents</a>
+		<a href="/src/">Source code</a>
+        </td></tr>
+    <tr><th valign="top" align="right" width="170"><a href="/Agents/"><b>Apps:</b></a>&nbsp;
+	</th><td valign="top"> 
+            <repeat><foreach entity="foo"><get name="agentnames"/></foreach>
+              <do name="a"><set name="href">/~<get name="foo"/>/</set>
+		  <get name="foo"/></do>
+            </repeat><br>
+        </td></tr>
     <if><agent-running name="History"/><then>
 	    <tr><th valign="top" align="right">
 		    <a href="/~History"><b>History:</b></a>&nbsp;
@@ -54,9 +62,9 @@
   </table>
 </td></tr></table>
 <hr />
-<include src="/Agents/ROOT/welcome.inc"/>
+<include src="/welcome.inc"><include src="/Agents/ROOT/welcome.inc"/></include>
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.9 1999-11-05 01:11:56 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.10 1999-11-16 18:49:46 steve Exp $" />
 </p></body></html>
