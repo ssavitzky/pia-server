@@ -31,7 +31,7 @@ data files that are output from the agent.
 <tr><td><a href='/&AGENT:name;~'>/&AGENT:name;~</a></td>
 <td>Agent home directory:  </td>
 </tr>
-<tr><td> <a href='&AGENT:name;/~/'>&AGENT:name;/~/</a></td>
+<tr><td> <a href='/&AGENT:name;/~/'>/&AGENT:name;/~/</a></td>
 <td>Agent data directory.  This will be empty if no
 data directory has been created for &AGENT:name;.</td>
 </tr>
@@ -52,6 +52,6 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.1 1999-04-01 22:50:46 pgage Exp $' />
+<footer cvsid='$Id: options.xh,v 1.2 1999-04-15 22:02:11 pgage Exp $' />
 
 </body></html>
