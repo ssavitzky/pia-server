@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.3 1999-09-22 00:17:12 steve Exp $
+//	$Id: SiteDoc.java,v 1.4 1999-10-04 17:40:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.3 1999-09-22 00:17:12 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.4 1999-10-04 17:40:47 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -146,9 +146,12 @@ public class SiteDoc extends TopProcessor {
     // These are done by super.initializeEntities()
     // define("LOC", getLocConfig());
     // define("PROPS", getDocConfig());
+    // define("SITE", getRootConfig());
 
     define("PIA", Pia.instance().properties());
+    define("ENV", System.getProperties());
     define("AGENTS", Pia.resolver().getAgentTable());
+
     Transaction transaction = getTransaction();
     if (transaction != null) {
       define("TRANS", "TRANSACTION", transaction);
@@ -160,7 +163,6 @@ public class SiteDoc extends TopProcessor {
 	define("FORM", "FORM", req.getParameters());
       }
     }
-
   }
 
   /** Initialize the entities that correspond to entities in the old
@@ -190,15 +192,13 @@ public class SiteDoc extends TopProcessor {
     }
 
     Pia pia = Pia.instance();
-    define("PIA", pia.properties());
 
-    define("piaHOST", pia.properties().getProperty(Pia.PIA_HOST));
-    define("piaHOST", pia.properties().getProperty(Pia.PIA_HOST));
-    define("piaPORT", pia.properties().getProperty(Pia.PIA_PORT));
-    define("piaDIR", pia.properties().getProperty(Pia.PIA_ROOT));
-
-    define("usrDIR", pia.properties().getProperty(Pia.USR_ROOT));
-
+    /* === these can go away after a decent interval
+    define("piaHOST", pia.getProperty("host"));
+    define("piaPORT", pia.getProperty("port"));
+    define("piaHOME", pia.getProperty("home"));
+    define("piaROOT", pia.getProperty("root"));
+    */
   }
 
   /** Initialize entities that differ for each hook called on a transaction. */

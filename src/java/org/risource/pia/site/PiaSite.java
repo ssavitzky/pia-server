@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: PiaSite.java,v 1.2 1999-09-22 23:51:08 steve Exp $
+//	$Id: PiaSite.java,v 1.3 1999-10-04 17:40:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.TopProcessor;
+import org.risource.dps.namespace.PropertyTable;
 
 import org.risource.ds.*;
 import org.risource.pia.*;
@@ -40,7 +41,7 @@ import java.util.Enumeration;
 /**
  * A specialized Site for use in the PIA.
  *
- * @version $Id: PiaSite.java,v 1.2 1999-09-22 23:51:08 steve Exp $
+ * @version $Id: PiaSite.java,v 1.3 1999-10-04 17:40:47 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -80,8 +81,10 @@ public class PiaSite extends Site {
    * @param configTagsetName the tagset to use for loading configuration files.
    */
   public PiaSite(String realLoc, String virtualLoc, String defaultDir,
-	      String configFileName, String configTagsetName) {
+		 String configFileName, String configTagsetName,
+		 PropertyTable props) {
     super(realLoc, virtualLoc, defaultDir, configFileName, 
-	  ((configTagsetName != null)? configTagsetName : "pia-config"));
+	  ((configTagsetName != null)? configTagsetName : "pia-config"),
+	  props);
   }
 }

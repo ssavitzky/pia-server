@@ -1,5 +1,5 @@
 // Logger.java
-// $Id: Logger.java,v 1.4 1999-03-12 19:29:24 steve Exp $
+// $Id: Logger.java,v 1.5 1999-10-04 17:40:30 steve Exp $
 // From: Id: CommonLogger.java,v 1.12 1996/10/01 18:45:00 abaird 
 
 /*****************************************************************************
@@ -25,7 +25,7 @@
 // Please first read the full copyright statement in file COPYRIGHT.html
 //
 // Logger.java -- modified from CommonLogger; does not inherit from any class
-// $Id: Logger.java,v 1.4 1999-03-12 19:29:24 steve Exp $
+// $Id: Logger.java,v 1.5 1999-10-04 17:40:30 steve Exp $
 // (c) COPYRIGHT Ricoh California Research Center, 1997.
 
 package org.risource.pia;
@@ -165,7 +165,7 @@ public class Logger {
      */
 
     protected String getFileName (String def) {
-	    File root_dir = pia.usrRootDir();
+	    File root_dir = new File(pia.getProperty("root"));
 	    if ( root_dir == null ) {
 		String msg = "unable to get the pia root directory\n";
 		throw new PiaRuntimeException (this

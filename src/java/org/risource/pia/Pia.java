@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.15 1999-09-23 00:09:40 steve Exp $
+// $Id: Pia.java,v 1.16 1999-10-04 17:40:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,6 +54,8 @@ import org.risource.ds.List;
 import org.risource.site.*;
 import org.risource.pia.site.*;
 
+import org.risource.dps.namespace.*;
+
 import org.risource.pia.Configuration;
 
  /**
@@ -64,7 +66,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.15 1999-09-23 00:09:40 steve Exp $
+  * @version $Id: Pia.java,v 1.16 1999-10-04 17:40:31 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -101,112 +103,52 @@ public class Pia implements Tabular {
    */
   public static final String PROXY_AUTH_ENC = "_proxy-auth-encode";
 
-  /**
-   * Property name of path of pia properties file.
-   */
-  public static final String PIA_PROP_PATH = "pia.profile";
+  /************************************************************************
+  ** Static Data:
+  ************************************************************************/
 
-  /**
-   * Property name of URL of pia doc
-   */
-  public static final String PIA_DOCURL = "pia.docurl";
+  private static Pia    instance	= null;
+  private static Logger logger 		= null;
 
-  /**
-   * Property name of pia's top-level install directory.
-   */
-  public static final String PIA_ROOT = "pia.piaroot";
-
-  /**
-   * Property name of port the PIA is accessed through.
-   */
-  public static final String PIA_PORT = "pia.port";
-
-  /**
-   * Property name of port the PIA listens on.  May differ from PIA_PORT
-   *	if PIA_PORT is what a proxy server is listening to.
-   */
-  public static final String REAL_PORT = "pia.realport";
-
-  /**
-   * Property name of this host
-   */
-  public static final String PIA_HOST = "pia.host";
-
-  /**
-   * Property name of user's pia state directory (normally ~/.pia)
-   */
-  public static final String USR_ROOT = "pia.usrroot";
-
-  /**
-   * Property name of debugging flag
-   */
-  public static final String PIA_DEBUG = "pia.debug";
-
-  /**
-   * Property name of verbose flag
-   */
-  public static final String PIA_VERBOSE = "pia.verbose";
-
-  /**
-   * Property name of pia logger class
-   */
-  public static final String PIA_LOGGER = "pia.logger";
-
-  /**
-   * Property name of pia request timeout
-   */
-  public static final String PIA_REQTIMEOUT = "pia.reqtimeout";
+  // always print to screen or file if debugToFile is on
+  // it used to be possible to set this from the properties
+  private static boolean debugToFile= false;
 
   /** 
-   * Property name of default configuration file name
+   *  the verbosity level.
    */
-  public static final String CONFIG_FILE_NAME = "pia.cfgfile";
+  protected static int verbosity = 0;
 
-  /** 
-   * Property name of site configuration file path
+  /**
+   * the site root.  
+   *
+   *<p> Note that this could easily be changed to have type Root
+   *	instead of Site, but at the moment there seems to be no 
+   *	good reason to do this, since Site is the only implementation.
    */
-  public static final String SITE_CONFIG_PATH = "pia.sitecfg";
+  protected static Site rootResource = null;
 
-  /** 
-   * Property name of initialization document path
-   */
-  public static final String INIT_DOC_PATH = "pia.initdoc";
+  protected static SiteMachine siteMachine = null;
 
   /************************************************************************
   ** Private fields:
   ************************************************************************/
 
-  private Piaproperties properties 	= null;
+  private Properties properties 	= null;
+  private PropertyTable siteProperties	= null;
+  private Properties specified		= null;
 
-  private static Pia    instance	= null;
-  private String  	docurl		= null;
-  private static Logger logger 		= null;
+  private String  piaHomePath 		= null;
+  private String  piaRootPath		= null;
 
-  private String  piaRootStr 		= null;
-  private File    piaRootDir    	= null;
-  
-  private String  usrRootStr		= null;
-  private File    usrRootDir 		= null;
-  
   private String  url        = null;
   private String  host       = null;
   private int     port       = 8888;
   private int	  realPort   = 8888;
   private int     reqTimeout = 50000;
 
-  private static boolean verbose = false;
-  private static boolean debug   = false;  
-  // always print to screen or file if debugToFile is on
-  private static boolean debugToFile= false;
-
   private Table proxies          = new Table();
   private List  noProxies        = new List();
-
-  private String piaAgentsStr    = null;
-  private File   piaAgentsDir    = null;
-
-  private String usrAgentsStr 	= null;
-  private File   usrAgentsDir 	= null;
 
   private String configFileName = "_subsite.xcf";
   private String siteConfigPath = null;
@@ -250,22 +192,6 @@ public class Pia implements Tabular {
    */
   protected Resolver resolver;
 
-  /** 
-   *  the verbosity level.
-   */
-  protected static int verbosity = 0;
-
-  /**
-   * the site root.  
-   *
-   *<p> Note that this could easily be changed to have type Root
-   *	instead of Site, but at the moment there seems to be no 
-   *	good reason to do this, since Site is the only implementation.
-   */
-  protected static Site rootResource = null;
-
-  protected static SiteMachine siteMachine = null;
-
 
   /************************************************************************
   ** Access to Components:
@@ -286,7 +212,7 @@ public class Pia implements Tabular {
   /**
    * @return global properties.
    */
-  public Piaproperties properties(){
+  public Properties properties(){
     return properties;
   }
 
@@ -310,41 +236,6 @@ public class Pia implements Tabular {
    *	proceed in its absence. 
    */
   public static boolean adminStarted=false;
-
-  /**
-   * @return the URL for the documentation
-   */
-  public String docUrl(){
-    return docurl;
-  } 
-
- /**
-   * @return a File object representing the root directory
-   */
-  public File piaRootDir(){
-    return piaRootDir;
-  }  
-
-  /**
-   * @return the root directory path-- i.e ~/PIA
-   */
-  public String piaRoot(){
-    return piaRootStr;
-  }  
-
-  /**
-   * @return the user directory path -- i.e ~/.pia
-   */
-  public String usrRoot(){
-    return usrRootStr;
-  }  
-
-  /**
-   * @return a File object for the user directory path -- i.e ~/.pia
-   */
-  public File usrRootDir(){
-    return usrRootDir;
-  }  
 
 
   /**
@@ -383,65 +274,20 @@ public class Pia implements Tabular {
     return reqTimeout;
   }
  
-  /** @return the debug flag */
-  public static boolean debug() {
-    return debug;
+  /** @return the debuggin pseudo-flag. */
+  public static final boolean debug() {
+    return verbosity > 1;
+  }
+
+  /** @return the verbose pseudo-flag. */
+  public static final boolean verbose() {
+    return verbosity > 0 && (verbosity & 1) != 0;
   }
 
   /** @return the verbose flag */
-  public static boolean verbose() {
-    return verbose;
-  }
-
-  /** @return the verbose flag */
-  public static int getVerbosity() {
+  public static final int getVerbosity() {
     return verbosity;
   }
-
-  /**
-   * @toggle debug flag 
-   */
-  public static void debug(boolean onoff){
-    debug = onoff;
-  } 
-
-  /**
-   * @toggle debug to file flag
-   * true if you want debug message to trace file.
-   * Note: this method will not print to file if the Pia is not running
-   */
-  public static void debugToFile(boolean onoff){
-    debugToFile = onoff;
-  } 
-
- /**
-   * @return the directory path where agents live
-   */
-  public String piaAgents(){
-    return piaAgentsStr;
-  } 
-
-  /**
-   * @return a File object for the directory where agents live
-   */
-  public File piaAgentsDir(){
-    return piaAgentsDir;
-  } 
-
-  /**
-   * @return the directory where user agents live
-   */
-  public String usrAgents(){
-    return usrAgentsStr;
-  } 
-
-
-  /**
-   * @return the directory where user agents live
-   */
-  public File usrAgentsDir(){
-    return usrAgentsDir;
-  } 
 
   /**
    * @return the table that maps protocols onto proxy URL's.
@@ -474,11 +320,76 @@ public class Pia implements Tabular {
     properties.put(key, v);
   }
 
+  public String getProperty(String key) { return getProperty(key, null); }
+
   /** Return an enumeration of all the  keys. */
   public Enumeration keys() {
     return properties.keys();
   }
 
+  /**
+   * Get this property value, as a boolean.
+   * @param name The name of the property to be fetched.
+   * @param def The default value, if the property isn't defined.
+   * @return A Boolean instance.
+   */
+  public boolean getBoolean(String name, boolean def) {
+    String v = getProperty(name, null);
+    if ( v != null )
+      return "true".equalsIgnoreCase(v) ? true : false ;
+    return def ;
+  }
+
+  /**
+   * Set this property value, as a boolean.
+   * @param name The name of the property to be defined.
+   * @param def The value to define.
+   */
+  public void setBoolean(String name, boolean def) {
+    setProperty(name, def? "true" : "false");
+  }
+
+  /**
+   * Get this property value, as an integer.
+   * @param name The name of the property to be fetched.
+   * @param def The default value, if the property isn't defined.
+   * @return An integer value.
+   */
+  public int getInteger(String name, int def) {
+    String v = getProperty(name, null);
+    if ( v != null ) {
+      try {
+	if (v.startsWith("0x")) {
+	  return Integer.valueOf(v.substring(2), 16).intValue();
+	}
+	if (v.startsWith("#")) {
+	  return Integer.valueOf(v.substring(1), 16).intValue();
+	}
+	return Integer.valueOf(v).intValue();
+      } catch (NumberFormatException e) {
+      }
+    }
+    return def ;
+  }
+
+  /**
+   * Set this property value, as an integer.
+   * @param name The name of the property to be defined.
+   * @param def The value to define.
+   */
+  public void setInteger(String name, int def) {
+   setProperty(name, "" + def);
+  }
+
+
+  public String getProperty(String key, String def) {
+    return properties.getProperty(key, def);
+  }
+
+  public void setProperty(String key, String value) {
+    if (value != null) properties.put(key, value);
+    else properties.remove(key);
+  }
 
   /************************************************************************
   ** Error Reporting and Messages:
@@ -486,7 +397,7 @@ public class Pia implements Tabular {
 
   /**
    * Fatal system error -- print message and throw runtime exception.
-   * Do a stacktrace.
+   * Do a stacktrace.  ONLY CALLED IN ACCEPTOR!
    */
   public static void errSys(Exception e, String msg){
     System.err.println("Pia: " + msg);
@@ -497,7 +408,7 @@ public class Pia implements Tabular {
 
   /**
    * Print warning message
-   *
+   *  ONLY CALLED IN RESOLVER!
    */
   public static void warningMsg( String msg ){
     System.err.println( msg );
@@ -505,19 +416,23 @@ public class Pia implements Tabular {
 
   /**
    * Print warning message
-   *
+   *  ONLY CALLED IN ACCEPTOR!
    */
   public static void warningMsg(Exception e, String msg ){
     System.err.println( msg );
     e.printStackTrace();
   }
 
+  public static void report(int level, String msg) {
+    if (level <= verbosity) System.err.println(msg);
+  }
+
   /** 
    * Display a message to the user if the "verbose" flag is set.
    */
   public static void verbose(String msg) {
-    if (debug) debug(msg);
-    else if (verbose) System.err.println(msg);
+    if (debug()) debug(msg);
+    else if (verbose()) System.err.println(msg);
   }
 
   /**
@@ -526,7 +441,7 @@ public class Pia implements Tabular {
    */
   public static void debug( String msg )
   {
-    if (!debug) return;
+    if (!debug()) return;
     if( logger != null && debugToFile )
 	logger.trace ( msg );
     else
@@ -538,7 +453,7 @@ public class Pia implements Tabular {
    * an object
    */
   public static void debug(Object o, String msg) {
-    if (!debug) return;
+    if (!debug()) return;
     if( logger != null && debugToFile )
 	logger.trace ("[" +  o.getClass().getName() + "]-->" + msg );
     else
@@ -551,8 +466,8 @@ public class Pia implements Tabular {
    *	if verbose.
    */
   public static void debug( String msg, String vmsg ) {
-    if (!debug) return;
-    if (verbose) msg = (msg == null)? vmsg : msg + vmsg;
+    if (!debug()) return;
+    if (verbose()) msg = (msg == null)? vmsg : msg + vmsg;
     if (msg == null) return;
     if( logger != null && debugToFile )
 	logger.trace ( msg );
@@ -565,8 +480,8 @@ public class Pia implements Tabular {
    *	 an object, with an extra message if verbose.
    */
   public static void debug(Object o, String msg, String vmsg) {
-    if (!debug) return;
-    if (verbose) msg = (msg == null)? vmsg : msg + vmsg;
+    if (!debug()) return;
+    if (verbose()) msg = (msg == null)? vmsg : msg + vmsg;
     if (msg == null) return;
     if( logger != null && debugToFile )
 	logger.trace ("[" +  o.getClass().getName() + "]-->" + msg );
@@ -607,6 +522,7 @@ public class Pia implements Tabular {
 
   /**
    * Get the server URL.
+   *	Only called in HTTPRequest for computing full request URL
    */
 
    public String url() {
@@ -618,7 +534,6 @@ public class Pia implements Tabular {
        }		
      return url ;
   }
-
 
   /************************************************************************
   ** Initialization:
@@ -708,25 +623,27 @@ public class Pia implements Tabular {
     try {
       thisHost = InetAddress.getLocalHost().getHostName();
     }catch (UnknownHostException e) {
-      thisHost = null;
+      thisHost = "localhost";
     }
 
     /* Set global variables from properties. */
 
-    verbose 		= properties.getBoolean(PIA_VERBOSE, false);
-    debug		= properties.getBoolean(PIA_DEBUG, false);
-    piaRootStr		= properties.getProperty(PIA_ROOT, null);
-    usrRootStr 		= properties.getProperty(USR_ROOT, null);
-    host 		= properties.getProperty(PIA_HOST, thisHost);
-    port 		= properties.getInteger(PIA_PORT, port);
-    realPort		= properties.getInteger(REAL_PORT, port);
-    reqTimeout 		= properties.getInteger(PIA_REQTIMEOUT, 60000);
-    loggerClassName 	= properties.getProperty(PIA_LOGGER, loggerClassName);
-    docurl 		= properties.getProperty(PIA_DOCURL, docurl);
+    verbosity		= getInteger("verbosity", 0);
+    piaHomePath		= getProperty("home", null);
+    piaRootPath		= getProperty("root", null);
+    host 		= getProperty("host", thisHost);
+    port 		= getInteger("port", port);
+    realPort		= getInteger("realport", port);
+    reqTimeout 		= getInteger("req_timeout", 60000);
+    //loggerClassName 	= getProperty(PIA_LOGGER, loggerClassName);
 
-    siteConfigPath   = properties.getProperty(SITE_CONFIG_PATH, siteConfigPath);
-    configFileName   = properties.getProperty(CONFIG_FILE_NAME, configFileName);
-    initDocPath	     = properties.getProperty(INIT_DOC_PATH, initDocPath);
+    siteConfigPath   = getProperty("site", siteConfigPath);
+    configFileName   = getProperty("configfile", configFileName);
+    initDocPath	     = getProperty("initalize", initDocPath);
+
+    /* Handle -v and -d flags, which affect the verbosity. */
+    if (getProperty("debug", null) != null) verbosity += 2;
+    if (getProperty("verbose", null) != null) verbosity += 1;
 
     /* Set proxy tables from properties that end in "_proxy" */
     initializeProxies(); 
@@ -742,53 +659,109 @@ public class Pia implements Tabular {
     /* Try to find the PIA's root directory.  If it doesn't exist, 
      *	complain.
      */
-    piaRootDir = new File( piaRootStr );
-    if (piaRootDir.exists() && piaRootDir.isDirectory()) {
-      piaRootStr = piaRootDir.getAbsolutePath();
+    File piaHomeDir = new File( piaHomePath );
+    if (piaHomeDir.exists() && piaHomeDir.isDirectory()) {
+      piaHomePath = piaHomeDir.getAbsolutePath();
     } else {
-      piaRootStr = null;
-      throw new PiaInitException("Cannot locate PIA's root directory.");
+      piaHomePath = null;
+      warningMsg("Cannot locate PIA's home directory -- proceeding.");
+    }
+
+    /* Try to find the site configuration file, if specified.
+     *	It may turn out to be a directory, in which case assume
+     *	that it was meant to be the root.
+     */
+    if (siteConfigPath != null) {
+      File f = new File(siteConfigPath);
+      if (f.exists() && f.isDirectory()) {
+	warningMsg("Specified site configuration file is a directory.");
+	if (piaRootPath == null) {
+	  piaRootPath = siteConfigPath;
+	  siteConfigPath = null;
+	  warningMsg("... assuming you meant it to be the root.");
+	} else {
+	  report(-2, "Since root is already specified, this is an error.");
+	  System.exit(1);
+	}
+      }
     }
     
-    //  /pia/Agents -- the root for Agent directories
-    piaAgentsStr = piaRootStr + filesep + "Agents";
-    piaAgentsDir = new File( piaAgentsStr );
-
-    /* Try to find the user's PIA state directory.   */
-
-    usrRootDir = new File( usrRootStr );
-    if ((usrRootDir.exists() || usrRootDir.mkdir())
-	&& usrRootDir.isDirectory() && usrRootDir.canWrite()) {
-      usrRootStr = usrRootDir.getAbsolutePath();
-    } else if (usrRootDir.exists() && ! usrRootDir.isDirectory()) {
-      throw new PiaInitException(usrRootStr + " is not a directory");
-    } else if (usrRootDir.exists() && ! usrRootDir.canWrite()) {
-      throw new PiaInitException("Cannot write into user's PIA directory "
-				 + usrRootStr);
+    /* Try to find the ``root'' (state) directory. */
+  
+    File piaRootDir = (piaRootPath == null)? null : new File( piaRootPath );
+    if (piaRootDir == null) {
+      warningMsg("No root directory specified.");
+    } else if ((piaRootDir.exists() || piaRootDir.mkdir())
+	&& piaRootDir.isDirectory() && piaRootDir.canWrite()) {
+      piaRootPath = piaRootDir.getAbsolutePath();
+    } else if (piaRootDir.exists() && ! piaRootDir.isDirectory()) {
+      report(-2, "Specified root " + piaRootPath + " is not a directory.");
+      System.exit(1);
+    } else if (piaRootDir.exists() && ! piaRootDir.canWrite()) {
+      warningMsg("Specified root " + piaRootPath + " cannot be written.");
     } else {
-      throw new PiaInitException("Cannot locate or create user's PIA directory "
-				 + usrRootStr);
+      warningMsg("Cannot locate or create root directory " + piaRootPath);
+    }
+
+    if (piaRootPath == null && piaHomePath == null) {
+      report(-2, "Either a PIA home or a valid root must be specified.");
+      System.exit(1);
     }
 	
-    usrAgentsStr = usrRootStr + filesep + "Agents";
-    usrAgentsDir = new File( usrAgentsStr );
+    // Now set the properties that had to be computed.
 
-    /* Now set the properties that defaulted. */
-
-    properties.setBoolean(PIA_VERBOSE, verbose);
-    properties.setBoolean(PIA_DEBUG, debug);
-    properties.setProperty(PIA_ROOT, piaRootStr);
-    properties.setProperty(USR_ROOT, usrRootStr);
-    properties.setProperty(PIA_HOST, host);
-    properties.setInteger(PIA_PORT, port);
-    properties.setInteger(REAL_PORT, realPort);
-    properties.setInteger(PIA_REQTIMEOUT, reqTimeout);
-    properties.setProperty(PIA_LOGGER, loggerClassName);
-    properties.setProperty(SITE_CONFIG_PATH, siteConfigPath);
-    properties.setProperty(CONFIG_FILE_NAME, configFileName);
-    properties.setProperty(INIT_DOC_PATH, initDocPath);
+    setInteger("verbosity", verbosity);
+    setProperty("home", piaHomePath);
+    setProperty("root", piaRootPath);
+    setProperty("host", host);
+    setInteger("port", port);
+    setInteger("realport", realPort);
+    setInteger("req_timeout", reqTimeout);
+    //setProperty(PIA_LOGGER, loggerClassName);
+    setProperty("site", siteConfigPath);
+    setProperty("configfile", configFileName);
+    setProperty("initialize", initDocPath);
 
     url = url();
+  }
+
+  /** Reset any properties that were changed in the site config. file, but
+   *	NOT overridden on the command line.
+   *
+   *<p> It's an open question of whether the command-line overrides,
+   *	which are usually temporary, ought to be reflected back into the
+   *	configuration file. 
+   */
+  protected void handleSiteProps() {
+    for (int i = 0; i < piaPropTable.length; ++i) {
+      String p = siteProperties.getProperty(piaPropTable[i]);
+      String q = specified.getProperty(piaPropTable[i]);
+      if (p == null) {
+	// This property was not specified in the file, so use the default 
+      } else if (q != null) {
+	// This property was specified on the command line, 
+	// which overrides whatever was in the config file.
+      } else {
+	setProperty(piaPropTable[i], p);
+      }
+    }
+    resetProperties();
+  }
+
+  /** Reset variables from the properties. */
+  public void resetProperties() {
+
+    verbosity		= getInteger("verbosity", verbosity);
+    piaHomePath		= getProperty("home", piaHomePath);
+    piaRootPath		= getProperty("root", piaRootPath);
+    host 		= getProperty("host", host);
+    port 		= getInteger("port", port);
+    realPort		= getInteger("realport", realPort);
+    reqTimeout 		= getInteger("req_timeout", reqTimeout);
+    //loggerClassName 	= getProperty(PIA_LOGGER, loggerClassName);
+    //siteConfigPath   = getProperty("site", siteConfigPath);
+    configFileName   = getProperty("configfile", configFileName);
+    initDocPath	     = getProperty("initalize", initDocPath);
   }
 
   protected void createPiaSite() {
@@ -798,15 +771,22 @@ public class Pia implements Tabular {
 
     File cfgFile = (siteConfigPath == null)? null : new File(siteConfigPath);
     if (cfgFile != null && !cfgFile.canRead()) {
-      System.err.println("Cannot open initialization file " + siteConfigPath);
+      System.err.println("Cannot read initialization file " + siteConfigPath);
       System.exit(-1);
     }
 
-    rootResource = new PiaSite(usrRootStr, piaRootStr, null, 
-			       configFileName, "pia-config");
+    /* make a new property table.  Could initialize from cmd line, 
+     *	but whether to do that requires some thought.
+     */
+    siteProperties = new PropertyTable("/");
+    
+    rootResource = new PiaSite(piaRootPath, piaHomePath, null, 
+			       configFileName, "pia-config", siteProperties);
     rootResource.setVerbosity(getVerbosity());
     if (siteConfigPath == null) rootResource.loadConfig() ;
     else rootResource.loadConfigFile(cfgFile);
+
+    handleSiteProps();
 
     Resource init = rootResource.locate(initDocPath, false, null);
     Document initDoc = (init == null)? null : init.getDocument();
@@ -821,7 +801,6 @@ public class Pia implements Tabular {
    *
    *<ol>
    *	<li> Create the Site
-   *	<li> Load the Agents
    *	<li> Start the Accepter
    *</ol>
    */
@@ -928,7 +907,7 @@ public class Pia implements Tabular {
       return instance;
     else{
       String[] args = new String[1];
-      args[0] ="PIA_DIR=../../../..";
+      args[0] ="PIA_HOME=../../../..";
       main(args);		// fake a call to main (GAAK!)
       return instance;
     }
@@ -936,7 +915,7 @@ public class Pia implements Tabular {
 
 
   static void reportProps(Properties p, String msg) {
-    if (verbose) {
+    if (verbose()) {
       if (msg != null) verbose(msg);
       Enumeration e =  p.propertyNames();
       while( e.hasMoreElements() ){
@@ -961,32 +940,56 @@ public class Pia implements Tabular {
 
     Pia pia = new Pia();
     pia.commandLine = args;
-    pia.debug = false;
     pia.debugToFile = false;
-    pia.properties = new Piaproperties(System.getProperties());
+    pia.properties = new Properties();
+
+    pia.setProperty("user.name", System.getProperty("user.name"));
+    pia.setProperty("user.dir", System.getProperty("user.dir"));
+    pia.setProperty("user.home", System.getProperty("user.home"));
 
     /** Configure it. */
 
-    Configuration config = Configuration.loadConfig(pia.setupClassName);
+    Configuration config
+      = new Configuration(piaEnvTable, piaOptTable, pia.properties);
+
     if (config.configure(args)) {
       System.out.println("PIA version " + org.risource.Version.VERSION);
+      System.out.println("Usage: pia [-option | attr=value]* site-config?" );
       config.usage();
 
       /** Continue with the initialization if the user requested props. */
 
-      verbose = pia.properties.getBoolean("pia.verbose", false);
+      boolean verbose = pia.getBoolean("pia.verbose", false);
       if (verbose) {
 	pia.reportProps(pia.properties, "Properties");
       }
       System.exit(1);
     }
 
-    if (pia.properties.getBoolean("pia.print-version", false)) {
+    switch (config.otherArguments.nItems()) {
+    case 0:
+      break;
+    case 1:
+      if (pia.get("site") != null) {
+	System.err.println("filename argument taken as -site;"
+			   + " can't specify both.");
+	System.exit(1);
+      }
+      pia.setProperty("site", config.otherArguments.at(0).toString()) ;
+      break;
+    default: 
+      System.err.println("Too many extra arguments specified.");
+      System.exit(1);
+    }
+
+    if (pia.getBoolean("p-version", false)) {
         System.out.println("PIA version " + org.risource.Version.VERSION);
 	System.exit(0);
     }
 
-    /** Initialize it from its properties. */
+    /** Initialize PIA from its properties. */
+    pia.specified = config.specified;
+
     if (! pia.initialize()) System.exit(1);
 
     verbose("PIA version " + org.risource.Version.VERSION);
@@ -1001,5 +1004,43 @@ public class Pia implements Tabular {
       System.exit(1);
     }
   }
+
+  /************************************************************************
+  ** Configuration tables:
+  ************************************************************************/
+
+  /** PIA environment table: */
+  protected static String[] piaEnvTable = {
+    "USER",	"user.name",
+    "HOME",	"user.home",
+    "PIA_HOME",	"home",
+    "PIA_ROOT",	"root",
+    "PIA_PORT",	"port",
+    "REAL_PORT", "realport",
+  };
+
+  /** PIA option table: */
+  protected static String[] piaOptTable = {
+    "-version", "p-version",  	"bool", 	null,
+    "-d",	"debug",	"bool",		null,
+    "-v",	"verbose",	"bool",		null,
+    "-verbosity", "verbosity",	"number",	"0",
+    "-verb",	"verbosity",	"number",	"0",
+    "-home",	"home",		"dir",		null,
+    "-p",	"port",		"number",	"8888",
+    "-port",	"port",		"number",	"8888",
+    "-real",	"realport", 	"number",	"8888",
+    "-root",	"root",		"dir",		null,
+    "-host",	"host", 	"name",		null,
+    "-config",	"configfile",	"file",		"_subsite.xcf",
+    "-site",	"site",		"file",		null,
+    "", 	"", 		"other", 	null,
+  };
+
+  /** PIA property table: */
+  protected static String[] piaPropTable = {
+    "verbosity", "home", "port", "realport", "root", "host", "configfile",
+    "http_proxy", "ftp_proxy", "gopher_proxy", "no_proxy",
+  };
 
 }

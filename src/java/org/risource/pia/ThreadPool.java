@@ -1,5 +1,5 @@
 // ThreadPool.java
-// $Id: ThreadPool.java,v 1.3 1999-03-12 19:29:38 steve Exp $
+// $Id: ThreadPool.java,v 1.4 1999-10-04 17:40:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,8 +26,6 @@ package org.risource.pia;
 import org.risource.ds.UnaryFunctor;
 import org.risource.pia.Athread;
 import java.util.Vector;
-import org.risource.pia.Piaproperties;
-
 
 public class ThreadPool{
   /**
@@ -48,8 +46,6 @@ public class ThreadPool{
   int              maxThreads = 50;
 
   Vector freeList = null;
-
-  Piaproperties props;
 
   public static final int MAXTHREADCOUNT = 50;
 
@@ -105,8 +101,7 @@ public class ThreadPool{
     group = new ThreadGroup( TP_NAME );
 
     //get pool properities from Pia
-    this.props = Pia.instance().properties();
-    maxThreads = props.getInteger(MAXTHREADS, MAXTHREADCOUNT);
+    maxThreads = Pia.instance().getInteger(MAXTHREADS, MAXTHREADCOUNT);
    
     freeList = new Vector();
 

@@ -1,5 +1,5 @@
 //  HTTPrequest.java
-// $Id: HTTPRequest.java,v 1.12 1999-09-22 00:28:56 steve Exp $
+// $Id: HTTPRequest.java,v 1.13 1999-10-04 17:40:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.io.PrintStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.StringReader;
-import java.util.Properties;
+
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
@@ -310,7 +310,7 @@ public class  HTTPRequest extends Transaction {
     // Requires properties http_proxy-auth = userid:passwd
     // Set http_proxy-auth-encode = non-null to encode the auth string.
     if (proxy != null) {
-      Properties props = Pia.instance().properties();
+      Pia props = Pia.instance();
       String auth = props.getProperty(protocol()+"_proxy-auth");
       if (auth != null) {
 	if (props.getProperty(protocol()+"_proxy-auth-encode") != null) {

@@ -11,26 +11,29 @@
 
 <h3>See Also:</h3>
 <ul>
+  <li> <a href="to-do.html">This package's <code>to-do</code> file</a>
   <li> <a href="../site/about.html">About the Site Resource Package</a> in
        <a href="../site/"><code>../site/</code></a>
-  <li> <a href="../dps/about.html">About the DPS</a> in
+  <li> <a href="../dps/about.html">About the Document Processing System</a> in
        <a href="../dps/"><code>../dps/</code></a>
+  <li> <a href="../../../../../Doc/Notes/steve/naming.html">Steve's notes on
+       naming</a> 
 </ul>
 
 <h2>Recent Changes</h2>
 
-<p> As of 9/9/99 (End Of File Day -- seems appropriate) I am starting to make
+<p> As of 9/9/99 (End Of File Day -- seems appropriate) I started to make
     major changes in the implementation of Agents and the PIA core server.  As
     of 9/22 they are checked in on the <em>internal</em> CVS server and open
     for general hacking.  Nevertheless some of the former Agents are very much
-    ``under construction.''
+    ``under construction,'' and much of the documentation is out of date.
 
-<p> The main change is that Agents no longer handle Transactions directly
+<p> The main change is that agents no longer handle Transactions directly
     under most circumstances (the old <code>handle</code> method will still be
-    there so that a specialized agent can handle transactions if it has to.  A
-    cache agent might do this, for example.)  Agents <em>do not</em> handle
-    transactions directed at their ``home URL'' -- these are handled by a new
-    object, the ``Site Machine'' (class <code><a
+    there so that a specialized agent <code>can</code> handle transactions if
+    it has to.  A cache agent might do this, for example.)  Agents <em>do
+    not</em> handle transactions directed at their ``home URL'' -- these are
+    handled by a new object, the ``Site Machine'' (class <code><a
     href="site/SiteMachine.java">org.risource.pia.site.SiteMachine</a></code>),
     which uses the <a href="../site/about.html">Site Resource Package</a>.
 
@@ -76,10 +79,43 @@
     <code>PIA/Agents/ROOT</code>, with the actual agent directories
     virtualized, and the documentation virtualized read-only.
 
+<h3>Environment Variables and the Command Line</h3>
+
+<p> In order to initialize the PIA, we need a site configuration file and
+    two directories:
+
+<ol>
+  <li> <code>PIA_HOME</code> -- the PIA's install directory.  This is the
+       directory formerly called "PIA_DIR".
+  <li> <code>PIA_ROOT</code> -- the <em>real</em> root of the PIA's site, into
+       which things can be written.  Formerly called <code>USR_DIR</code>.
+</ol>
+
+<p> In general we also need a <em>virtual</em> root, but this can be
+    specified in the configuration file either relative to
+    <code>PIA_HOME</code> or as an absolute file.  In almost all standard
+    cases it <em>is</em> <code>PIA_HOME</code>, so there's little point in
+    creating an environment variable for it. 
+
+<p> The directories can be specified in the command line, in environment
+    variables, or as attributes of the top-level <code>Container</code>
+    element in the site-configuration file.  Other configuration attributes,
+    including host name and port, can only be specified in the configuration
+    file or on the command line (with the
+    <code><var>name</var>=<var>value</var></code> syntax usual for attributes).
+
+<p> The last item on the command line is either a filename (the configuration
+    file) or a directory (the real root).  In the latter case, the
+    configuration is read from <code>_subsite.xcf</code> in the root.
+
+<p> A small number of other things have to be dragged in from the environment,
+    including the user's name and home directory, PATH, the X DISPLAY, proxy
+    variables, and a few other items that Java doesn't handle properly.
+
 
 <h2>Design Decisions</h2>
 
-<h3>Agent Alternativess</h3>
+<h3>Agent Alternatives</h3>
 
 <p> There are four plausible implementations for Agents:
 
@@ -133,7 +169,7 @@
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.7 1999-09-22 16:54:47 steve Exp $</b><br>
+<b>$Id: about.html,v 1.8 1999-10-04 17:40:31 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

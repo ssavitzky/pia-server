@@ -1,5 +1,5 @@
 // Configuration.java
-// $Id: Configuration.java,v 1.5 1999-09-22 00:28:54 steve Exp $
+// $Id: Configuration.java,v 1.6 1999-10-04 17:40:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,40 +58,73 @@ import org.risource.ds.Table;
 class Configuration {
 
   /************************************************************************
+  ** Construction:
+  ************************************************************************/
+
+  public Configuration() {
+    this(defaultEnvTable, defaultOptTable);
+  }
+
+  public Configuration(String[]envTable, String[]optTable) {
+    this(envTable, optTable, System.getProperties());
+  }
+
+  public Configuration(String[]envTable, String[]optTable, Properties props) {
+    this.envTable = envTable;
+    this.optTable = optTable;
+    properties = props;
+  }
+
+  /************************************************************************
   ** Tables:
   ************************************************************************/
 
   /** The properties under construction. */
   public Properties properties;
 
+  /** The properties that are explicitly specified on the command line.
+   *	We need this in order to tell which properties received default
+   *	values. 
+   *
+   *<p>	In the PIA we need to process the command line in order to locate
+   *	the configuration file, which we then process.  But we need to have
+   *	options specified on the command line options <em>override</em> 
+   *	whatever is specified in the configuration file.
+   */
+  public Properties specified = new Properties();
+
   /** The original command line arguments. */
   public String[] commandLine;
 
   /** Any unprocessed command-line arguments. */
-  public List commandLineTail = new List();
+  public List otherArguments = new List();
 
   /** Any unrecognized command-line arguments. */
   public List unrecOptions = new List();
 
   /** A list of environment variables and corresponding property names. */
-  public String[] envTable = {
-    "USER",	"user.name",
-    "HOME",	"user.home",
-  };
+  public String envTable[];
 
   /** A list of command-line options and corresponding property name,
    *	type, and default value.  Type is either "string" if a string
    *	follows the option, "bool" if only the option's presence is
-   *	significant, "tail" if the option (usually a filename) is to
-   *	be added to commandLineTail, and "rest" if the rest of the
-   *	command line is to be collected and put into commandLineTail.
+   *	significant, "other" if the option (usually a filename) is to
+   *	be added to otherArguments, and "rest" if the rest of the
+   *	command line is to be collected and put into otherArguments.
    *	Anything else is treated as "string".<p>
    *
    *	The null string as the option name matches any option that
    *	does not start with "-".  
    */
-  public String[] optTable = {
-    "", "", "tail", null,	// default is to save only filenames.
+  public String optTable[];
+
+  public static String[] defaultEnvTable = {
+    "USER",	"user.name",
+    "HOME",	"user.home",
+  };
+
+  public static String[] defaultOptTable = {
+    "", "", "other", null,	// default is to save only filenames.
   };
 
   /************************************************************************
@@ -224,17 +257,20 @@ class Configuration {
 	++i;
 	String value = (i < args.length)? args[i] : "";
 	properties.put(prop, value);
-      } else if (type.equals("tail")) {
-	commandLineTail.push(opt);
+	specified.put(prop, value);
+      } else if (type.equals("other")) {
+	otherArguments.push(opt);
       } else if (type.equals("rest")) {
 	for ( ; i < args.length; ++i) 
-	  commandLineTail.push(args[i]);
+	  otherArguments.push(args[i]);
       } else if (type.equals("bool")) {
 	properties.put(prop, "true");
+	specified.put(prop, "true");
       } else {
 	++i;
 	String value = (i < args.length)? args[i] : "";
 	properties.put(prop, value);
+	specified.put(prop, value);
       } 
       
     }
