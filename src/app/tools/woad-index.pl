@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.5 2000-07-19 00:47:44 steve Exp $
+#	$Id: woad-index.pl,v 1.6 2000-08-10 17:31:02 steve Exp $
 # Create WOAD index files.
 #
 
@@ -30,8 +30,12 @@ $project	= "";
 $sourcePrefix	= ".source";
 $sourceSuffix	= ".notes";
 $wordPrefix	= ".words";
+$words		= "/$wordPrefix";
 
-$prune		= '[0-9]+';	# pattern for directories to prune
+$prune		= '[0-9]+';	         # pattern for directories to prune
+$ids		= '[-_0-9A-Za-z]';       # start chars for XML identifiers
+$idc		= '[-.:_0-9A-Za-z]';     # interior chars for XML identifiers
+$id		= "$ids($idc*$ids)?";    # pattern for XML identifiers
 
 ### Filename and extension classifiers:
 #	Each maps the extension or name onto a type description.
@@ -134,7 +138,7 @@ $prune		= '[0-9]+';	# pattern for directories to prune
 #	ref		a "reference" to a word, consisting of an 
 #			  anonymous hash containing the reference data.
 
-#   Context maps:
+#   Context maps: (=== we probably won't use this ===)
 #
 #	Each context map is a hash table that maps keywords (or something)
 #	in some specific context onto arrays of refs.
@@ -144,6 +148,15 @@ $prune		= '[0-9]+';	# pattern for directories to prune
 %fragments	= ();		# maps HTML fragment identifiers
 %identifiers	= ();		# maps identifiers in various languages
 %notes		= ();
+
+#   Keyword context maps:
+#
+#	Each maps a context name into a big string, which becomes the content
+#	of the appropriate index file. 
+
+%defs		= ();		# context map for word definitions
+%docs		= ();		# context map for word documentation
+%uses		= ();		# context map for word usage
 
 #   File Index:
 #
@@ -296,7 +309,8 @@ sub indexFile {
 	$mtime, $ctime, $blksiz, $blks) = stat $absPath;
 
     # file index entry
-    my %entry = ("name" => $f, "size" => $size, "mtime" => $mtime);
+    my %entry = ("name" => $f, "path" => $woadPath,
+		 "size" => $size, "mtime" => $mtime);
 
     if (-d $absPath) {		# Fill out entry for directory
 	$type = "dir";
@@ -384,16 +398,33 @@ sub indexMarkupFile {
     # note that we will use $$entry{"key"} to access entry items.
 
     my $title = '';
+    my $line  = 0;
+    my $element = '';
+
+    my $path = $$entry{"path"};
 
     open (FILE, $pf);
     while (<FILE>) {
+	++$line;
 	# This really ought to use an HTML/XML parser.  Punt for now.
-	if ($title eq '' && /\<title\>(.*)\<\/title\>/i) { $title = $1; }
-
+	if ($title eq '' && /\<title\>(.*)\<\/title\>/i) { 
+	    $title = $1;
+	} elsif ($title eq '' && /\<title\>(.*)$/i) { 
+	    # === _really_ want a parser here -- this is a kludge.
+	    $title = $1;
+	} elsif ($title eq '' && /\<tagset.+name=["']($id)['"]/) {
+	    $title = "Tagset \"$1\"";
+	}
+	if (/\<define\s+element=["']($id)['"]/) {
+	    indexDef($1, 'tags', $path, $line, "$1", $_);
+	    $element = "$1";
+	} elsif (/\<define\s+attribute=["']($id)['"]/) {
+	    indexDef($1, 'tags', $path, $line, "$element.$1", $_);
+	}
     }
     close FILE;
 
-    if ($title) { $$entry{"title"} = $title; }
+    if ($title ne '') { $$entry{"title"} = $title; }
 }
 
 sub indexTextFile {
@@ -403,8 +434,51 @@ sub indexTextFile {
 
 sub indexCodeFile {
     my ($pf, $entry) = (@_);
+
+    open (FILE, $pf);
+    while (<FILE>) {
+    
+    }
+    close FILE;
+}
+
+###### Create word index entry ########################################
+
+### indexDef(word, context, file, lineNr, name, shortDef)
+#	index a word definition.  The "name" parameter is the HTML fragment
+#	name that we expect the word to have in a listing.
+#
+sub indexDef {
+    my ($word, $context, $path, $line, $name, $def) = (@_);
+    $def = stringify($def);
+    my $entry = "<Def word='$word' path='$path' line='$line' "
+	      . "name='$name'>$def</Def>\n";
+    $defs{$context} .= $entry;
+    # === Append to $context/$word/defs.wi as well ===
+    # === it's possible, even likely, that a database _would_ be better ===
+}
+
+### indexDoc(word, context, file, lineNr, name, shortDef)
+#	index documentation for a word (e.g., a javadoc or tsdoc listing).
+#
+sub indexDoc {
+    my ($word, $context, $path, $line, $name, $def) = (@_);
+    $def = stringify($def);
+    $docs{$context} .= "<Doc word='$word' path='$path' line='$line' "
+	             . "name='$name'>$def</Def>\n";
+}
+
+### indexUse(word, context, file, lineNr, name)
+#	index a word use. 
+#   === Presently not done: don't know where to put it.  BIG. ===
+#
+sub indexUse {
+    my ($word, $context, $path, $line, $name) = (@_);
+    $uses{$context} .= "<Ref word='$word' path='$path' line='$line' "
+	             . "name='$name' />\n";
     
 }
+
 
 ###### Output the global indices ########################################
 
@@ -412,12 +486,56 @@ sub indexCodeFile {
 #	output the global indices.
 #
 sub globalIndices {
+    my ($context);
 
+    for (my @keys = sort(keys(%defs)), my $k = 0; $k < @keys; ++$k) {
+	$context = $keys[$k];
+	$dir = "$root$project$words/$context";
+	print STDERR "defs for $context -> $dir/defs.wi\n";
+	mkdir ($dir, 0777);
+	open (INDEX, ">$dir/defs.wi");
+	print INDEX join ("\n", sort(split /\n/, $defs{$context}));
+	close (INDEX);
+    }
+    for (my @keys = sort(keys(%docs)), my $k = 0; $k < @keys; ++$k) {
+	$context = $keys[$k];
+	$dir = "$root$project$words/$context";
+	print STDERR "docs for $context -> $dir/docs.wi\n";
+	mkdir ($dir, 0777);
+	open (INDEX, ">$dir/docs.wi");
+	print INDEX $docs{$context};
+	close (INDEX);
+    }
+    for (my @keys = sort(keys(%uses)), my $k = 0; $k < @keys; ++$k) {
+	$context = $keys[$k];
+	$dir = "$root$project$words/$context";
+	print STDERR "uses for $context -> $dir/uses.wi\n";
+	mkdir ($dir, 0777);
+	open (INDEX, ">$dir/uses.wi");
+	print INDEX $uses{$context};
+	close (INDEX);
+    }
+    
 }
 
 
 ###### Utilities ########################################################
 
-sub version {
-    return q'$Id: woad-index.pl,v 1.5 2000-07-19 00:47:44 steve Exp $ ';		# put this last because the $'s confuse emacs.
+### stringify(string)
+#	entity-encode "string"
+#
+sub stringify {
+    my ($s) = (@_);
+    $s =~ s/^\s*//;
+    $s =~ s/\s*$//;
+    $s =~ s/\&/\&amp\;/g;
+    $s =~ s/\</\&lt\;/g;
+    $s =~ s/\>/\&gt\;/g;
+
+    return($s);
 }
+
+sub version {
+    return q'$Id: woad-index.pl,v 1.6 2000-08-10 17:31:02 steve Exp $ ';		# put this last because the $'s confuse emacs.
+}
+
