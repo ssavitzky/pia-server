@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.10 1999-07-14 20:20:53 steve Exp $
+//	$Id: AbstractParser.java,v 1.11 1999-09-08 00:13:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.10 1999-07-14 20:20:53 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.11 1999-09-08 00:13:07 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -94,7 +94,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    *	roughly doubles the speed of the parser!
    */
   public void setReader(Reader aReader) { 
-    if (aReader instanceof BufferedReader) in = (BufferedReader) in;
+    if (aReader instanceof BufferedReader) in = (BufferedReader) aReader;
     else				   in = new BufferedReader(aReader);
   }
 
