@@ -68,8 +68,34 @@ Extract the files using <code>tar</code>.  For example:
 <blockquote><code>tar xvf pia_src</code></blockquote>
 
 <p>
-This creates the directory <code>pia/</code> under your current directory. (The default
+This creates the directory <code>PIA/</code> under your current directory. (The default
 environment variables below assume this is your home directory.)</p>
+
+<table border=1>
+<caption> Directory Structure (inside the PIA directory)</caption>
+<tr><th>Agents <th>Config <th> Contrib <th> bin <th> lib <th> src 
+<tr><td>The Agents directory contains subdirectories for each standard agent.
+Each agent directory contains the collection of XML files (active pages) that work together
+to form an application. The Agents directory also contains default XML files
+for standard pages, like the home page of an agent.
+<td>The Config directory contains configuration information stored in the
+     form of property files.  Look here to permanently change things like
+     ports, proxy information, etc.
+<td>The Contrib directory is used for contributed agents and other files
+     that are not a part of the standard release.
+ <td> bin contains the programs that actually run the PIA software either
+     as a web server (<code> pia, pia.bat </code> or as a command line filter
+    <code> process </code>.  Note that pia and process run under unix only.)
+<td> lib contains the precompiled java libraries needed to run the
+     software.
+ <td> src/java/ contains the java source files used in the PIA software.
+     <strong> If you want to set the classpath by hand, set it to
+	      <code>PIA/src/java/</code> </strong> not PIA/src!
+     (Note that it is possible to implement the PIA in other languages -- a src/perl does exists but is not currently being distributed.)  The code we developed is in <code>crc/*</code> corresponding to <code>crc.*</code> package names.  (This may change to org.risource.*).
+org and misc contain externally developed code referenced by the PIA software
+and included with the distribution for convenience.
+<code>src/app</code> contains the source for a few utility applications. 
+</table>
 
 <h3 id = "CHDCECIE">Setting Up</h3>
 <p>
