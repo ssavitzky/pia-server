@@ -168,21 +168,21 @@
        <red>(This is temporary, caused by a deficiency in command-line
        decoding.)</red>
   </dd>
-  <dt> <code>prefix=<em>path</em></code>
+  <dt> <code>offset=<em>path</em></code>
   </dt>
-  <dd> Sets the ``<em>target prefix</em>'' -- the path, relative to the
+  <dd> Sets the ``<em>document offset</em>'' -- the path, relative to the
        application's root directory, at which the <em>target server's document
        root</em> is located.  For example, if you wanted the top level to be
        <code>/usr/local/apache</code> and the document root was under that in
        <code>/usr/local/apache/htdocs</code>, you would use
        ``<code>offset=/htdocs</code>''. 
   </dd>
-  <dt> <code>offset=<em>path</em></code>
+  <dt> <code>aliases=<em>/alias ...</em></code><br />
+       <code>offsets=<em>/offset ...</em></code>
   </dt>
-  <dd> Sets the ``<em>document offset</em>'' -- the path, relative to the
-       source root, at which the actual documents are located.
-       <red>(<ss>WOAD</ss> cannot yet properly map URL's into virtual source
-       directories, e.g. <code>cgi-bin</code>.)</red>
+  <dd> Sets the aliases and corresponding offsets of virtual directories such
+       as <code>/cgi-bin</code>.  Currently the offsets have to be relative to
+       the source root. 
   </dd>
 </dl>
 
@@ -404,5 +404,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.16 2000-10-06 17:46:13 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.17 2000-10-06 18:08:53 steve Exp $" />
 </p></body></html>
