@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.9 1999-06-25 00:24:40 steve Exp $
+# 	$Id: Makefile,v 1.10 1999-06-26 00:44:41 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -47,6 +47,7 @@ PRIM_HANDLERS = \
 	  valueHandler.java \
 	expandHandler.java \
 	extractHandler.java \
+	getHandler.java \
 	headersHandler.java \
 	hideHandler.java \
 	ifHandler.java \
@@ -54,6 +55,7 @@ PRIM_HANDLERS = \
 	  elsfHandler.java \
 	  thenHandler.java \
 	includeHandler.java \
+	letHandler.java \
 	logicalHandler.java \
 	namespaceHandler.java \
 	nodeBuilder.java \
@@ -70,6 +72,7 @@ PRIM_HANDLERS = \
 	  untilHandler.java \
 	  foreachHandler.java \
 	  forHandler.java \
+	setHandler.java \
 	statusHandler.java \
 	substHandler.java \
 	tagsetHandler.java \
@@ -77,12 +80,6 @@ PRIM_HANDLERS = \
 	textHandler.java \
 	debugHandler.java \
 	urlHandler.java 
-
-### Additional actions for StandAlone XML
-
-XXML_HANDLERS = \
-	getHandler.java \
-	setHandler.java 
 
 ### Additional handlers for extended HTML
 
@@ -96,7 +93,7 @@ PIA_HANDLERS= \
 	submitHandler.java
 
 
-HANDLERS = $(PRIM_HANDLERS) $(XXML_HANDLERS) $(XHTM_HANDLERS) $(PIA_HANDLERS)
+HANDLERS = $(PRIM_HANDLERS) $(XHTM_HANDLERS) $(PIA_HANDLERS)
 FILES = $(BASE_CLASSES) $(HANDLERS) Loader.java
 
 include $(TOPDIR)/makefiles/file.make
