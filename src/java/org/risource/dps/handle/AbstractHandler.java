@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.9 1999-07-14 20:20:10 steve Exp $
+//	$Id: AbstractHandler.java,v 1.10 1999-08-31 21:30:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.9 1999-07-14 20:20:10 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.10 1999-08-31 21:30:29 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -253,6 +253,10 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
    */
   public boolean isChildOf(String tag) { return true; }
 
+  /** Return true if the handler class loader must create a new instance
+   *	for each use. 
+   */
+  public boolean uniquify() { return false; }
 
   /************************************************************************
   ** Convenience Functions:

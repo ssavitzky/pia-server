@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	$Id: Loader.java,v 1.8 1999-06-26 00:44:40 steve Exp $
+//	$Id: Loader.java,v 1.9 1999-08-31 21:30:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -107,7 +107,12 @@ public class Loader {
 
     AbstractHandler h = (AbstractHandler) handlerCache.at(name);
     if (h != null && syntax != 0) h.setSyntaxCode(syntax);
-    if (h != null) return h;
+    if (h != null) {
+      if (! h.uniquify()) return h;
+      else try { 
+	return (AbstractHandler) h.getClass().newInstance();
+      } catch (Exception e) {}
+    }
 
     h = (GenericHandler) loadHandler(name, syntax, false);
     if (h == null && defaultOK) {
@@ -127,7 +132,12 @@ public class Loader {
 
     AbstractHandler h = (AbstractHandler) handlerCache.at(cname);
     if (h != null && syntax != 0) h.setSyntaxCode(syntax);
-    if (h != null) return h;
+    if (h != null) {
+      if (! h.uniquify()) return h;
+      else try { 
+	return (AbstractHandler) h.getClass().newInstance();
+      } catch (Exception e) {}
+    }
 
     Class c = NameUtils.loadClass(cname, "org.risource.dps.handle.");
     if (c == null) {

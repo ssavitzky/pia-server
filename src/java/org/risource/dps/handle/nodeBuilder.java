@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.4 1999-08-31 21:10:36 steve Exp $
+//	$Id: nodeBuilder.java,v 1.5 1999-08-31 21:30:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.4 1999-08-31 21:10:36 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.5 1999-08-31 21:30:30 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -137,11 +137,8 @@ public class nodeBuilder extends GenericHandler {
     syntaxCode = NORMAL;  		// EMPTY, QUOTED, 0 (check)
   }
 
-  /** nodeBuilder uses the presence of children as a flag.  
-   *	We need a new one every time.  (Well, not the first time, but
-   *	it's not worth wasting a flag on.)
+  /** We use children to distinguish <code>make</code> from <code>do</code>,
+   *	so we need a unique instance every time. 
    */
-  nodeBuilder(ActiveElement e) {
-    return new nodeBuilder();
-  }
+  public boolean uniquify() { return true; }
 }
