@@ -10,7 +10,7 @@
   </tr>
   <tr>  <td width=20>&nbsp;</td> 
     <th align=right valign=top bgcolor=silver>
-	<a href="/Doc/Release/">Release Notes:</a> </th>
+	This Release: </th>
     <td>
 	||&nbsp;<a href="/Doc/Release/r2.0.html"><strong>2.0</strong></a> 
 	||&nbsp;<a href="/README">README</a>
@@ -22,7 +22,7 @@
   </tr>
   <tr>	 <td>&nbsp;</td> 
     <th align=right valign=top bgcolor=silver>
-	<a href="/Doc/">Documentation:</a> </th>
+	Other Documents: </th>
     <td>
 	||&nbsp;<a href="/Doc/doclist.html">Index</a> 
 	||&nbsp;<a href="/Doc/intro.html">Introduction</a> 
@@ -32,7 +32,7 @@
     <td bgcolor=silver>&nbsp;</td> 
   </tr>
   <tr>	 <td>&nbsp;</td> 
-    <th align=right valign=top bgcolor=silver>Links:</th>
+    <th align=right valign=top bgcolor=silver>On the Web:</th>
     <td>
 	||&nbsp;<a href="http://www.RiSource.org/">[www.RiSource.org]</a>
 	 (&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
@@ -43,4 +43,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.12 1999-09-24 00:24:00 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.13 1999-09-30 23:51:09 steve Exp $"/>

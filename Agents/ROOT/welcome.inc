@@ -34,7 +34,7 @@
     href="http://www.RiSource.org/PIA"><code>/www.RiSource.org/PIA</code></a>.
     You can obtain updates and additional open-source software from <a
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
-    You can find a running PIA  working demonstration  server at <a
+    You can find a running PIA  demonstration  server at <a
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>.
 </p>
-<!-- $Id: welcome.inc,v 1.11 1999-09-30 15:29:13 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.12 1999-09-30 23:51:09 steve Exp $ -->

@@ -3,16 +3,15 @@
 <a href="../">[..]</a>
 <a href="#files">[files]</a><p>
 
-This directory contains severalkinds of configuration information:
+This directory contains several kinds of configuration information:
 
 <ol>
-  <li> <a href="pia">PIA `property' files.</a>
   <li> <a href="#site">Site</a> configurations, for various arrangements
        of the PIA server's ``website'' (URL hierarchy).
   <li> <a href="#env">Environment</a> configurations, for various operating
        systems and environments. 
-  <li> the ``<a href="#sdk">Software Development Kit</a>'', consisting of
-       makefiles and other configuration files. 
+  <li> The ``<a href="#sdk">Software Development Kit</a>'', consisting of
+       makefiles and possibly other development-related files. 
 </ol>
 
 
@@ -20,13 +19,10 @@ This directory contains severalkinds of configuration information:
 
 <h3><a name="pia">PIA Configuration Files</a></h3>
 <dl>
-  <dt> <a href="pia.props"><code>pia.props</code></a>
-  <dd> A typical set of properties.  Copy into your PIA user directory
-       (<code>~/.pia/Config</code> on Unix) and edit to your liking.
-       
-  <dt> <a href="pia.props.proxied"><code>pia.props.proxied</code></a>
-  <dd> This is a property file designed for use in a PIA that is accessed
-       through a proxy such as Apache.
+  <dt> <a href="proxy.xcf"><code>proxy.xcf</code></a>
+  <dd> This is a <em>sample</em> configuration file designed to be included in
+       a PIA that is accessed through a proxy such as Apache.  It is unlikely
+       to work unmodified in your environment. 
 </dl>
 
 <h3><a name="site">Site Configuration Files</a></h3>
@@ -40,8 +36,11 @@ This directory contains severalkinds of configuration information:
 <h3><a name="env">Operating Systems &amp; Environments</a></h3>
 <dl>
   <dt> <a href="unix/">unix/</a>
-  <dd> Configuration files for Unix or Linux users.  Currently contains
-       an Apache configuration file. 
+  <dd> Configuration files for Unix or Linux users.  Currently contains an
+       Apache configuration file that can be used to invisibly proxy requests
+       to a PIA.  This is an easy way to make a PIA server visible on port 80,
+       which is normally a priviledged port that only processes owned by the
+       superuser can listen on.
 </dl>
 
 <h3><a name="sdk">Software Development Kit</a></h3>
@@ -58,5 +57,5 @@ This directory contains severalkinds of configuration information:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 1999-09-23 00:07:25 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.5 1999-09-30 23:51:17 steve Exp $</b>
 <a name="files"><hr></a>

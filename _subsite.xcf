@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.3 1999-09-24 22:06:44 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.4 1999-09-30 23:50:57 steve Exp $ -->
 
 <Container> <!-- Get all attributes from the environment. -->
 
@@ -18,9 +18,10 @@
   <Resource	name="pia-xhtml.ts"
 		virtual="src/java/org/risource/dps/tagset/pia-xhtml.ts" />
 
-  <doc> This is the standard default configuration that you get if no
+  <note> This is the standard default configuration that you get if no
 	configuration file or root directory is specified on the pia command
-	line.  The real root will be $USR_DIR, if it exists. 
-  </doc>
+	line, or if no configuration file is found in the specified root.  The
+	real root will be $PIA_ROOT, if it exists.
+  </note>
 
 </Container>
