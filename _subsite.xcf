@@ -1,22 +1,14 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-22 00:51:03 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-09-24 00:23:13 steve Exp $ -->
 
 <Container>
-  <Map ext="html"	type="text/html"				/>
-  <Map ext="htm"	type="text/html"				/>
-  <Map ext="gif"	type="image/gif"				/>
-  <Map ext="jpeg"	type="image/jpeg"				/>
-  <Map ext="jpg"	type="image/jpeg"				/>
-  <Map ext="png"	type="image/png"				/>
-  <Map ext="xbm"	type="image/x-xbitmap"				/>
-  <Map ext="exe"	type="application/octet-stream"			/>
-  <Map ext="tgz"	type="application/octet-stream"			/>
+  <!-- Include the standard extension map. -->
+  <include src="Config/Site/extensions.xci"/>
 
-  <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
-
-  <Resource	name="initialize.xh"	hidden="yes" />
-
-  <!-- virtual container (link) -->
+  <!-- virtual container (link) for the icons. -->
   <Container	name="Icon"	virtual="Agents/ROOT/Icon" />
+
+  <!-- Links to other root resources. -->
+  <Resource	name="robots.txt"	virtual="Agents/ROOT/robots.txt" />
 
 </Container>

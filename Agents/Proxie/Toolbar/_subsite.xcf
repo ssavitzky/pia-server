@@ -1,0 +1,17 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-09-24 00:23:20 steve Exp $ -->
+
+<Container>
+  <!-- Toolbar doesn't need any agents; it's just a bundle of documents. -->
+  <Resource name="controls.inc">
+    <!-- This used to be an entity in the AGENT namespace.  Now it's just a
+         document, albeit an imaginary one.  
+      -->
+    <DOCUMENT> <!-- Generic Toolbar controls: -->
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+<a href='&pia;/&AGENT:path;/' target='_top'>[~]</a>
+<a href='&pia;&AGENT:path;/hide?hide=true' target='_top'>[X]</a>
+<a href='&pia;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a>
+    </DOCUMENT>
+  </Resource>
+</Container>

@@ -4,10 +4,10 @@
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
 <sub-head page='home'>
-    <tr><th></th><td><a href='/History/~'>/History/~</a> /
-		<a href='/History/~/&year;'>&year;</a> /
-		<a href='/History/~/&year;/&month;'>&month;</a> /
-		<a href='/History/~/&year;/&month;/&day;.html'>&day;</a>
+    <tr><th></th><td><a href='/~History/DATA/'>DATA</a> /
+		<a href='/~History/DATA/&year;/'>&year;</a> /
+		<a href='/~History/DATA/&year;/&month;/'>&month;</a> /
+		<a href='/~History/DATA/&year;/&month;/&day;.html'>&day;</a>
 </td></tr></sub-head>
 
 <if><agent-running name='History'>
@@ -19,64 +19,65 @@
         </form>
   </else>
 </if>
-<p>
 
 <hr />
-<a href='/'>PIA</a> | <a href='/Admin'>Admin</a> |
-<a href='/Toolbar'>Toolbar</a> | <a href='/History'>History</a> |
-<a href='/History/~/'>/History/~</a>
-		<a href='/History/~/&year;'>&year;</a> /
-		<a href='/History/~/&year;/&month;'>&month;</a> /
-		<a href='/History/~/&year;/&month;/&day;.html'>&day;</a>
+<a href='/'>PIA</a> | <a href='/~Admin'>Admin</a>
+ | <a href='/Agents/Proxie/Toolbar/'>Toolbar</a>
+ | <a href='/~History'>~History</a> /
+	<a href='/~History/DATA/'>DATA</a> /
+	<a href='/~History/DATA/&year;/'>&year;</a> /
+	<a href='/~History/DATA/&year;/&month;/'>&month;</a> /
+	<a href='/~History/DATA/&year;/&month;/&day;.html'>&day;</a>
 <hr />
 
-</p><p>The <code>&agentName;</code> agent puts information into the history
-database, which is located in <a href='/History/~'>/History/~</a>, the History
-agent's data directory.  Most <a href='/Toolbar/'>Toolbar</a> agents put a
-small control bar at the top of each page that refers to the history database.
+<p> The <code>&agentName;</code> agent puts information into the history
+    database, which is located in <a href='/~History/DATA'>/~History/DATA</a>,
+    the History agent's data directory.  Most <a
+    href='/Agents/Proxie/Toolbar/'>Toolbar</a> agents put a small control bar at the top
+    of each page that refers to the history database.
+</p>
 
-</p><p>The History control bar looks like this:<br />
+<p>The History section of the control bar looks like this:<br />
 <dl>
-  <dt> <expand><get agent='History' name='controls' /></expand>
+  <dt> <include src="controls.inc" />
   </dt><dd> 
        <dl compact='compact'>
-	 <dt> Hist
-	 </dt><dd> -&gt; <a href='/History'>/History</a>, the History Agent's home
-	      page  
-	 </dd><dt> *
-	 </dt><dd> -&gt; <a href='/History/~'>/History/~</a>, the History Agent's
-	      data directory.
-	 </dd><dt> &year; / &month; /
-	 </dt><dd> -&gt; the directories for this year and month.
-	 </dd><dt> &day;
-	 </dt><dd> -&gt; <a href='/History/~/&year;/&month;/&day;.html'>/History/~/&year;/&month;/&day;.html</a>, the history file for
-	      today. 
-	 </dd><dt> &time;
-	 </dt><dd> -&gt; <a href='/History/~/last.html'>/History/~/last.html</a>, the
-	      headers and other information for the most-recently-viewed page.
-       </dd></dl>
+	 <dt> Hist </dt>
+	 <dd> -&gt; <a href='/History'>/History</a>, the History Agent's
+	      home page </dd>
+	 <dt> * </dt>
+	 <dd> -&gt; <a href='/~History/DATA'>/~History/DATA</a>, the History
+	      Agent's data directory. </dd>
+	 <dt> &year; / &month; /
+	      </dt>
+	 <dd> -&gt; the directories for this year and month. </dd>
+	 <dt> &day; </dt>
+	 <dd> -&gt; <a href='/~History/DATA/&year;/&month;/&day;.html'>/~History/DATA/&year;/&month;/&day;.html</a>, 
+	      the history file for today. </dd>
+	 <dt> &time; </dt>
+	 <dd> -&gt; <a href='/~History/DATA/last.html'>/~History/DATA/last.html</a>, 
+	      the headers and other information for the most-recently-viewed
+	      page. </dd>
+       </dl>
 </dd></dl>
 
 </p><h3>Files:</h3>
 <ul>
-  <li>History directory: <a href='/History/~'>/History/~</a>
-  </li><li>Page info: <a href='/History/~/last.html'>/History/~/last.html</a>
-  </li><li>Last link: <a href='/History/~/last.link'>/History/~/last.link</a>
+  <li>History directory: <a href='/~History/DATA'>/~History/DATA</a>
+  </li><li>Page info: <a href='/~History/DATA/last.html'>/~History/DATA/last.html</a>
+  </li><li>Last link: <a href='/~History/DATA/last.link'>/~History/DATA/last.link</a>
 </li></ul>
 
 <p>The ``last link'' file is particularly useful; the following Emacs code
 lets you define a key that inserts a link to the last page you visited:
 
-<blockquote><pre><!--  listing doesn't work for some reason  -->
+<blockquote><pre>
 (global-set-key "\C-Cy"   'generic-insert-last-link)
 (defun generic-insert-last-link ()
   "Insert a link to the last page visited into the buffer"
   (interactive)
-  (insert-file-contents "~/.pia/History/last.link") )
+  (insert-file-contents "&usrDIR;/Agents/Proxie/History/DATA/last.link") )
 </pre></blockquote>
-
-(Windows users will have to change the file in the last line to
- <code>&usrDIR;/History/last.link</code>).
 
 </p><h3>Directory Format</h3>
 
@@ -114,5 +115,5 @@ sorting files by date very easy.  <p>
 <pre><protect result='result' markup='markup'>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid='$Id: home.xh,v 1.6 1999-05-06 20:36:53 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.7 1999-09-24 00:23:17 steve Exp $' />
 </body></html>

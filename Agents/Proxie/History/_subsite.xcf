@@ -1,10 +1,13 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-22 00:46:14 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-09-24 00:23:17 steve Exp $ -->
 
 <Container>
   <AGENT name="History" criteria="response proxy-response">
     <initialize><user-message>History agent initializing</user-message>
-       <output directory="directory" dst="DATA" /><!--   create DATA dir.   -->
+	<output directory="directory" dst="DATA" /><!-- create DATA dir. -->
+	<!-- define some entities -->
+	<set name="AGENT:pia">http://&piaHOST;:&piaPORT;</set>
+	<set name="AGENT:dd">http://&piaHOST;:&piaPORT;/~&AGENT:name;/DATA</set>
     </initialize>
     <action>
      <set name="ct"><get name="TRANS:Content-type" /></set>
@@ -21,7 +24,7 @@
 	       <output dst="DATA/last.html">&date; &time; <a href="&url;">&url; : &title;</a>
 <dl>
   <dt> <b>Link:</b>
-  </dt><dd> <protect result="result" markup="markup"><a href="&url;">&url; : &title;</a></protect>
+  </dt><dd> <pre><protect result="result" markup="markup"><a href="&url;">&url; : &title;</a></protect></pre>
   </dd><dt> <b>Reply Header</b>
   </dt><dd> <pre><get name="TRANS:HEADERS" /></pre>
   </dd><dt> <b>Request Header</b>
@@ -39,12 +42,11 @@
     <!-- This used to be an entity in the AGENT namespace.  Now it's just a
          document, albeit an imaginary one.  
       -->
-    <DOCUMENT>
-        <!--   from History agent:   -->
-<set name="pia">http://&piaHOST;:&piaPORT;</set>
-[<a href="&pia;/History" target="_top">Hist</a>
- <a href="&pia;/History/~/" target="_top">*</a>/<a href="&pia;/History/~/&year;/" target="_top">&year;</a>/<a href="&pia;/History/~/&year;/&month;/" target="_top">&month;</a>/<a href="&pia;/History/~/&year;/&month;/&day;.html" target="_top">&day;</a>
- <a href="&pia;/History/~/last.html" target="_top">&time;</a>]
+    <DOCUMENT><!--   from History agent:   -->
+<set name="dd">http://&piaHOST;:&piaPORT;/~History/DATA</set>
+[<a href="&AGENT:pia;/~History/" target="_top">Hist</a>
+ <a href="&dd;/" target="_top">*</a>/<a href="&dd;/&year;/" target="_top">&year;</a>/<a href="&dd;/&year;/&month;/" target="_top">&month;</a>/<a href="&dd;/&year;/&month;/&day;.html" target="_top">&day;</a>
+ <a href="&dd;/last.html" target="_top">&time;</a>]
     </DOCUMENT>
   </Resource>
 </Container>

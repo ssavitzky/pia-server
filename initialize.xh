@@ -14,8 +14,9 @@
    init:	<status item="path" src="/Agents/Proxie" />
    init:	<status item="path" src="/Agents/Proxie/Toolbar" />
    init:	<status item="path" src="/Agents/Proxie/History" />
+   init:	<status item="path" src="/Agents/Proxie/remoteTools" />
 </user-message>
 <hr/>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.xh,v 1.1 1999-09-22 00:51:04 steve Exp $</b><br/>
+<b>$Id: initialize.xh,v 1.2 1999-09-24 00:23:13 steve Exp $</b><br/>
 </body></html>
