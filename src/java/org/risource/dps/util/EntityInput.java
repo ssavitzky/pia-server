@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.7 1999-07-14 20:21:22 steve Exp $
+//	$Id: EntityInput.java,v 1.8 2000-10-05 19:09:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.7 1999-07-14 20:21:22 steve Exp $
+ * @version $Id: EntityInput.java,v 1.8 2000-10-05 19:09:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -74,6 +74,7 @@ public class EntityInput extends TreeEntity {
   /** Get the node's value as an Input. 
    */
   public Input fromValue(Context cxt) { 
+    //System.err.println("fromValue called in EntityInput");
     if (nodeValue != null) return new FromNodeList(getValueNodes(cxt));
     return getWrappedInput();
   }
@@ -83,6 +84,7 @@ public class EntityInput extends TreeEntity {
    * <p> There will be problems if this is called while reading the value.
    */
   public ActiveNodeList getValueNodes(Context cxt) {
+    //System.err.println("getValueNodes called in EntityInput");
     if (nodeValue != null || wrappedInput == null) return nodeValue;
     ToNodeList out = new ToNodeList(null); // === possibly bogus
     Input in = fromValue(cxt);
@@ -98,9 +100,9 @@ public class EntityInput extends TreeEntity {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValueNodes(Context cxt, ActiveNodeList newValue) {
-    super.setValueNodes(cxt, newValue);
-    wrappedInput = null;
+  public void setValueNodes(ActiveNodeList newValue) {
+    wrappedInput = null; nodeValue = null;
+    super.setValueNodes(newValue);
   }
 
   /************************************************************************
