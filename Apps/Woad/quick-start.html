@@ -4,7 +4,8 @@
 </head><body bgcolor="#99ccff">
 <h1><font face="sans-serif, Helvetica">WOAD</font> Quick Start</h1>
 
-<h2><a name="running">Running <font face="sans-serif, Helvetica">Woad</font></a></h2>
+<h2><a name="running">Running <font face="sans-serif, Helvetica">
+    Woad</font></a></h2> 
 
 <p> To run <font face="sans-serif, Helvetica">WOAD</font> on a directory that
     contains HTML documents: 
@@ -20,7 +21,7 @@
 
 <p> If the documents are in a subdirectory, e.g.,
     ``<code>.../<em>subdir</em></code>'', add
-    ``<code>prefix=/<em>subdir</em></code>''
+    ``<code>offset=/<em>subdir</em></code>''
 </p>
 
 <p> <font face="sans-serif, Helvetica">WOAD</font>'s annotations and indices
@@ -36,17 +37,21 @@
 </p>
 
 <pre>
-    ~/PIA/src/app/tools/woad-index.pl source=/home/httpd/html 
+    ~/PIA/src/app/tools/woad-index.pl source=/home/httpd/html -y
     woad source=/home/httpd/html target=localhost:80
 </pre>
 
-<p> If you want to see the <code>cgi-bin</code> and <code>icons</code>
+<p> The <code>-y</code> appended to the index command makes a cross-reference
+    index for definitions, but not their uses.  If you have <em>lots</em> of
+    space or a small web site, change the <code>-y</code> to <code>-x</code>.
+    If you want to see the <code>cgi-bin</code> and <code>icons</code>
     directories as well, use:
 </p>
 
 <pre>
-    ~/PIA/src/app/tools/woad-index.pl source=/home/httpd prefix=/html
-    woad source=/home/httpd prefix=/html target=localhost:80 
+    ~/PIA/src/app/tools/woad-index.pl source=/home/httpd offset=/html -y
+    woad source=/home/httpd offset=/html target=localhost:80 \
+         aliases="/cgi-bin,/icons" offsets="/cgi-bin,/icons"
 </pre>
 
 <p> On a Windows machine you currently have to substitute</p>
@@ -61,7 +66,7 @@
 </pre>
 
 <p> Adding a <code>-x</code> option to that command will also build a
-    cross-reference index.  <font color="red">WARNING: This is a space and
+    cross-reference index.  <font color="#cc0000">WARNING: This is a space and
     memory hog!  It currently takes 240MB of RAM to build the index, and 170MB
     of disk to store it.</font>  If you <em>don't</em> index your PIA, the PIA
     will use the public WOAD server for its source viewing.
@@ -129,5 +134,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: quick-start.html,v 1.6 2000-10-06 17:46:13 steve Exp $</b><br>
+<b>$Id: quick-start.html,v 1.7 2000-10-06 18:02:30 steve Exp $</b><br>
 </body></html>
