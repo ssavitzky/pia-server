@@ -1,5 +1,5 @@
 ////// ToWriter.java: Token output Stream to Writer
-//	$Id: ToWriter.java,v 1.4 1999-04-07 23:21:40 steve Exp $
+//	$Id: ToWriter.java,v 1.5 1999-05-07 23:33:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,12 +31,13 @@ import org.w3c.dom.*;
 import java.util.NoSuchElementException;
 import java.io.Writer;
 import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
  * Output a Token stream to a Writer (character output stream). <p>
  *
- * @version $Id: ToWriter.java,v 1.4 1999-04-07 23:21:40 steve Exp $
+ * @version $Id: ToWriter.java,v 1.5 1999-05-07 23:33:49 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor
@@ -48,7 +49,19 @@ public class ToWriter extends ToExternalForm {
   ** State:
   ************************************************************************/
 
-  protected Writer destination = null;
+  protected BufferedWriter destination = null;
+
+  public Writer getWriter() { return destination; }
+  protected void setWriter(Writer w) {
+    destination = (w instanceof BufferedWriter)
+      ? (BufferedWriter) w : new BufferedWriter(w);
+  }
+
+  public void close() {
+    try {
+      destination.close();
+    } catch (IOException e) {}
+  }
 
 
   /************************************************************************
@@ -67,11 +80,11 @@ public class ToWriter extends ToExternalForm {
 
   /** Construct an Output given a destination Writer */
   public ToWriter(Writer dest) {
-    destination = dest;
+    setWriter(dest);
   }
 
   /** Construct an Output given a destination filaname.  Opens the file. */
   public ToWriter(String filename) throws java.io.IOException {
-    destination = new FileWriter(filename);
+    setWriter(new FileWriter(filename));
   }
 }
