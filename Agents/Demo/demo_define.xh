@@ -1,10 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//3.2">
-<html>
-<head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<html><head>
+<title>Define Elements and Entities Demo</title>
 </head>
-
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Define Elements and Entities</header>
 
 <h2>Define Elements and Entities Demo</h2>
 The <a name="define_demo">define element handler</a> shows how to define some elements and
@@ -101,7 +100,7 @@ how it may be used in an XML document.
 <!-- Result is unseen -->
 <define entity=tomorrow><value>Saturday</define>
 <p>
-<b> Input: </b>Tomorrow is: &amptomorrow;
+<b> Input: </b>Tomorrow is: &amp;tomorrow;
 <p>
 <b> Result:</b>Tomorrow is: &tomorrow;
 <p>
@@ -110,7 +109,7 @@ how it may be used in an XML document.
 <br>
 <br>
 
-<footer>
+<footer cvsid="$Id: demo_define.xh,v 1.2 1999-03-10 21:18:30 steve Exp $">
 </body></html>
 
 
