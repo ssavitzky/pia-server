@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.9 1999-10-13 18:19:53 steve Exp $
+//	$Id: tagsetHandler.java,v 1.10 1999-11-11 18:32:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.9 1999-10-13 18:19:53 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.10 1999-11-11 18:32:49 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -140,22 +140,25 @@ public class tagsetHandler extends GenericHandler {
 
     // Construct a new tagset.  
     // 	  === Clone the specified PARENT tagset, if any.
-    BasicTagset newTagset = ("HTML".equals(parentTSname))
+    BasicTagset newTagset = /* ("HTML".equals(parentTSname))
       ? new HTML_ts("TAGSET", name, n.getAttrList(), null)
-      : new BasicTagset("TAGSET", name, n.getAttrList(), null);
+      :*/ new BasicTagset("TAGSET", name, n.getAttrList(), null);
 
-    if (parentTSname != null && ! "HTML".equals(parentTSname)) {
-      Tagset parentTS = tproc.loadTagset(parentTSname);
+    if (parentTSname == null) {
+      parentTagset = new BasicTagset("TAGSET", name, n.getAttrList(), null);
+//  } else if ("HTML".equals(parentTSname)) {
+
+    } else {
+      parentTagset = tproc.loadTagset(parentTSname);
 	//org.risource.dps.tagset.Loader.require(parentTSname);
       cxt.debug("Loading tagset=" + parentTSname + 
-		((parentTS == null)? " FAILED" : " OK"));
-      if (parentTS == null) {
+		((parentTagset == null)? " FAILED" : " OK"));
+      if (parentTagset == null) {
 	reportError(in, cxt, "Cannot load parent tagset " + parentTSname);
       } else {
-	newTagset.setParent(parentTS);
+	newTagset.setParent(parentTagset);
       }
-    }
-
+    } 
 
     // Handle the inclusions.
     if (inclusions != null) {
@@ -178,6 +181,9 @@ public class tagsetHandler extends GenericHandler {
     if (parserTSname != null) {
       // load the specified parserTagset (TAGSET attribute)
       // Make it the current tagset in the parser.
+      if (recursive) {
+	reportError(in, cxt, "TAGSET and RECURSIVE attrs are incompatible.");
+      }
       if (parserTSname.equals("tagset")) parserTagset = new tagset();
       else parserTagset = tproc.loadTagset(parserTSname);
 	// org.risource.dps.tagset.Loader.require(parserTSname);
@@ -185,19 +191,16 @@ public class tagsetHandler extends GenericHandler {
 		   ((parserTagset == null)? " FAILED" : " OK"));
       if (parserTagset == null) {
 	reportError(in, cxt, "Cannot load parser tagset " + parserTSname);
+	setParserTagset(top, parentTagset);
       } else {
 	setParserTagset(top, parserTagset);
       }      
-    }
-
-    //	If the tagset is non-recursive, just replace in TopProcessor (below).
-    //  If it's recursive, we have to copy it into the Parser.
-
-    if (recursive) {
-      if (parserTSname != null) {
-	reportError(in, cxt, "TAGSET and RECURSIVE attrs are incompatible.");
-      }
+    } else if (recursive) { 
+      // If the tagset is recursive, set it in the parser.
       setParserTagset(top, newTagset);
+    } else {
+      // Otherwise parse with the parent tagset.
+      setParserTagset(top, parentTagset);
     }
 
     // Load the tagset. 

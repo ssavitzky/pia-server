@@ -1066,9 +1066,24 @@ If 4th node is there, returns "four".
        (1999-11-09) <br>
        -- turned out to be due to doing too much at parse time. 
 
+  <li> <b>Impr</b> Tagset inheritance by reference; copy on write. <br>
+       In some cases, Tagsets should merely reference their parents, not
+       include them.  In particular, this should be done when a non-tagset
+       document contains &lt;define&gt; tags.
+       (1999-04-07) <br>
+
+  <li> <b>Bug</b> recursive <code>define entity</code> broken <br>
+       Defining an entity in terms of other entities doesn't work in a tagset,
+       even if it's recursive.
+       (1999-07-14) <br>
+       -- There are actually two problems here:  1. entities defined in the
+	  tagset aren't available when processing it.  One can easily argue,
+	  however, that this is correct behavior.  2. entities need to be
+	  expanded in the value of an entity being expanded.
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.38 1999-11-09 23:18:00 steve Exp $</b><br>
+<b>$Id: done.html,v 1.39 1999-11-11 18:32:45 steve Exp $</b><br>
 </body></html>

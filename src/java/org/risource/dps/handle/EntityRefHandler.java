@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.5 1999-11-04 22:33:42 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.6 1999-11-11 18:32:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,8 +28,7 @@ import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
-import org.risource.dps.util.Index;
-import org.risource.dps.util.Copy;
+import org.risource.dps.util.*;
 
 import org.risource.ds.Table;
 
@@ -38,7 +37,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.5 1999-11-04 22:33:42 steve Exp $
+ * @version $Id: EntityRefHandler.java,v 1.6 1999-11-11 18:32:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -91,6 +90,7 @@ public class EntityRefHandler extends AbstractHandler {
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
   public int getActionCode() {
+    //System.err.println((active? "active " : "passive ") + "entity");
     if (active) {
       return Action.ACTIVE_NODE;
     } else return Action.PUT_NODE;
@@ -106,6 +106,7 @@ public class EntityRefHandler extends AbstractHandler {
       return;
     }
     String name = n.getNodeName();
+    //System.err.println("fetching value for " + name);
     ActiveNodeList value;
     if (simple) {
       value = (namepart != null)
@@ -125,7 +126,8 @@ public class EntityRefHandler extends AbstractHandler {
     if (value == null) {
       out.putNode(n);
     } else {
-      Copy.copyNodes(value, out);
+      //Copy.copyNodes(value, out);
+      Expand.expandNodes(aContext, value, out);
     }
   }
 
@@ -141,6 +143,7 @@ public class EntityRefHandler extends AbstractHandler {
    *	PASSIVE for them.
    */
   public Action getActionForNode(ActiveNode n) {
+    if (!active) return this; // passive entities are all alike.
     ActiveEntityRef ent = (ActiveEntityRef)n;
     String name = ent.getNodeName();
     // === An indexed name really wants a new handler with namepart and space

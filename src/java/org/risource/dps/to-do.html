@@ -16,6 +16,18 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> Entity def's aren't available in a tagset <br>
+       Therefore set's, etc. won't work.
+       (1999-11-11) <br>
+
+  <li> <b>Bug</b> Passive entities don't seem to be recognized. <br>
+       (1999-11-11) <br>
+
+  <li> <b>Bug</b> Entity expansion shouldn't expand passives <br>
+       Right now it uses Expand.expandNodes, which doesn't check for
+       passives.
+       (1999-11-11) <br>
+
   <li> <b>Impr</b> Delete TreeExternal.close*put. <br>
        ConnectHandler should just close the Input or Output.  Requires a
        check. 
@@ -86,11 +98,6 @@ See also:
        (1999-07-14) <br>
 
   <li> <b>Hole</b> ToProcessor untested. <br>
-       (1999-07-14) <br>
-
-  <li> <b>Bug</b> recursive <code>define entity</code> broken <br>
-       Defining an entity in terms of other entities doesn't work in a tagset,
-       even if it's recursive.
        (1999-07-14) <br>
 
   <li> <b>Bug</b> &lt;text encode&gt; broken on markup <br>
@@ -263,12 +270,6 @@ See also:
        be extended with methods that return Input's instead of Node's.  Output
        needs Document-like methods to output nodes without having to create
        them first. 
-       (1999-04-07) <br>
-
-  <li> <b>Impr</b> Tagset inheritance by reference; copy on write. <br>
-       In some cases, Tagsets should merely reference their parents, not
-       include them.  In particular, this should be done when a non-tagset
-       document contains &lt;define&gt; tags.
        (1999-04-07) <br>
 
   <li> <b>Impr</b> Timestamps in tagsets <br>
@@ -628,5 +629,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.41 1999-11-09 23:18:00 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.42 1999-11-11 18:32:46 steve Exp $</b><br>
 </body></html>
