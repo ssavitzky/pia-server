@@ -23,26 +23,54 @@
 <blockquote><em>
   This section enumerates my plans for the immediate future.  Numbers in
   parentheses give the current priority for the first few changes.  (x)
-  indicates an ongoing activity.
+  indicates an ongoing activity, (!) a completed one.
 </em></blockquote>
+
+<h3>Goals</h3>
+<dl>
+  <dt> Support PIA application developers
+  <dd> by continuing to improve the functionality, useability, and
+       understandability of the PIA and DPS.
+
+  <dt> Leverage existing technology (making PIA a sustainable technology) 
+  <dd> by adhering to existing standards, including XML, HTML, SAX, and DOM,
+       as much as possible.
+
+  <dt> Make PIA useful in other contexts
+  <dd> by providing simple API's that allow PIA technology to be incorporated
+       into existing standards-based applications, including Apache and
+       Servlet-based servers.
+
+</dl>
 
 <h3>Language</h3>
 <dl>
-  <dt> (1) Entity elimination
+  <dt> (!) Make it unnecessary to use entities as local variables
   <dd> The idea is to define a constructor for elements, so that we don't have
-       to use entities as variables.  This will require a fair amount of grunt
-       work to fix all the <code>.xh</code> files.  An alternative requiring
-       more work would be to add an attribute to any element that indicates
-       that more attributes are contained in the content.
+       to use entities to refer to variables.  This will require a fair amount
+       of grunt work to fix all the <code>.xh</code> files.  An alternative
+       requiring more work would be to add an attribute to any element that
+       indicates that more attributes are contained in the content.
+
+       <p>In any case, it will still be possible to use entities defined
+       <em>before processing the document</em>, since the parser will be using
+       the TopContext as its entity manager.  We can enforce this behavior by
+       <em>always</em> looking up entities at parse time, and always in the top
+       context.  This will cover most of the more common cases, and will make
+       the processor more efficient as well.
+
   <dt> <code>#FIXED</code> attributes
   <dd> XML allows attribute values to be specified in the DTD.  This is used
        for namespaces, for example.  In the DPS, we could use this as a way of
        decorating ordinary DOM nodes with the information needed by the DPS;
        e.g. a handler hash table with keys in a <code>DPS:handler</code>
        attribute.
+
   <dt> <code>Namespaces</code>
   <dd> Along the way we need to support XML namespaces; in particular DPS and
-       PIA namespaces. 
+       PIA namespaces.  The PIA's current namespaces should properly be called
+       ``entity namespaces'' or ``variable namespaces'', and the documentation
+       should be updated to reflect this. 
 </dl>
 
 <h3>DPS</h3>
@@ -52,16 +80,19 @@
        Processor, which have accumulated a certain amount of cruft).  It might
        be desirable to move some of the interfaces used internally
        (e.g. Action) down into subdirectories.
-  <dt> (3) Standard interfaces
-  <dd> ToSAX, FromDOM, ToDOM.  Add SAXProxy wrapper for Processor.  It may be
-       desirable to use the packages <code>org.risource.sax</code> and
+  <dt> (2) Standard interfaces
+  <dd> ToSAX, FromDOM, ToDOM.  Add SAXProxy wrapper for Processor.  We will
+       use the packages <code>org.risource.sax</code> and
        <code>org.risource.dom</code> (which already exists) for these, in
        order to give a clean separation between the ``user-level'' API's and
-       the internal ones.
+       the internal ones.  Ideally there should also be a stream interface at
+       this level; it's not clear what to call it.
   <dt> (4) Cursor cleanup
   <dd> Improve the Cursor interface to the point where it can be used without
-       creating Node instances in most cases.
-  <dt> (5) Processor cleanup / event interface
+       creating Node instances in most cases.  <code>getNode(level)</code> is
+       only used to implement <code>retainTree</code> in BasicParser, and
+       there are other ways to do it.
+  <dt> (3) Processor cleanup / event interface
   <dd> The idea is not only to simplify Processor, but to add an event-driven
        interface to it, the better to handle SAX parsers and similar
        push-driven interfaces.
@@ -86,13 +117,7 @@
 
 <h3>Other</h3>
 <dl>
-  <dt> (x) Think about HTML/SGML support
-  <dd> We need to carefully think through the extent to which the PIA is going
-       to continue to support HTML and SGML as well as XML.  As long as the
-       Web consists primarily of HTML, and as long as we want to be able to
-       process documents from outside sources, it seems folly to abandon HTML
-       and SGML altogether. 
-  <dt> (2) PIA command line
+  <dt> (1) PIA command line
   <dd> The PIA's command-line processing needs to be simplified; it's
        currently a kludge.  It should be possible to load agents from the
        command line.
@@ -348,7 +373,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.8 1999-06-22 18:38:50 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.9 1999-06-25 00:23:17 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

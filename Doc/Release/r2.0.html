@@ -17,6 +17,31 @@
 
 
 <h2><A NAME="announce">Release Announcements</A></h2>
+<h3>Release 2.0.6</h3>
+
+<p> This release includes a slightly-revised language that is more readable
+    and totally XML-compliant.  In addition, several of the interfaces have
+    been cleaned up, and extended to the point where the DPS can be dropped
+    into any SAX or DOM application as a document-processing extension.
+
+<h4>Changes since 2.0.5:</h4>
+
+<ol>
+  <li> Eliminated the need for entities as variables, clearing the way for use
+       with SGML and XML parsers, most of which substitute entities ``up
+       front''.  Entities defined in a document's environment, e.g. PIA: and
+       the tagset, will still work; they behave like ``traditional''
+       entities. 
+  <li> Central to eliminating entities is a new tag, &lt;element&gt; (or,
+       equivalently, &lt;E&gt;), for constructing an element and then
+       processing it. 
+  <li> Most tags have been extended to take XML-style attributes as well as
+       HTML-style ones (for example, &lt;numeric op="add"&gt; instead of
+       &lt;numeric add="add"&gt;). 
+  <li> The DPS (Document Processing System) can now be used with any DOM or
+       SAX implementation.
+</ol>
+
 <h3>Release 2.0.5</h3>
 
 <p> This release includes the ability to save and restore Agent state in XML
@@ -309,7 +334,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.23 1999-06-04 22:48:58 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.24 1999-06-25 00:23:23 steve Exp $</b><br>
 </body></html>
 
 
