@@ -1,0 +1,17 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-09-22 00:46:07 steve Exp $ -->
+
+<Container>
+
+  <Map ext="xh"		type="text/html"	tagset="Admin-xhtml"	/>
+
+  <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin">
+     <initialize><user-message>Admin agent initialized</user-message>
+     </initialize>
+     <!-- The content will never be expanded.  This agent exists only as a
+	  marker, so that ~Admin works and the admin-specific tags have a way
+	  of security-checking their directory.
+       -->
+  </AGENT>
+
+</Container>

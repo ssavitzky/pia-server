@@ -1,6 +1,0 @@
-<!DOCTYPE AGENT SYSTEM "Admin-agent">
-<!-- $Id: AGENT.xml,v 1.2 1999-07-19 16:30:46 bill Exp $ -->
-
-<AGENT name='Tutorial' path='/' type='Tutorial' pathName='/Tutorial'>
-  <bind name='onStart'>on</bind>
-</AGENT>
