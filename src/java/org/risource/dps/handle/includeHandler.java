@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.13 2000-06-07 19:09:57 steve Exp $
+//	$Id: includeHandler.java,v 1.14 2000-06-07 23:42:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.13 2000-06-07 19:09:57 steve Exp $
+ * @version $Id: includeHandler.java,v 1.14 2000-06-07 23:42:41 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -122,7 +122,7 @@ public class includeHandler extends GenericHandler {
       }
     }
 
-    if (tsname.equals("")) {
+    if ("".equals(tsname)) {
       LineNumberReader lnr = new LineNumberReader(rdr);
       String line;
       do {
