@@ -11,6 +11,9 @@
     <name all="all">img</name>
 </extract>
 
+<hr/><font color="crimson">(the "errors" below result from Yahoo's HTML not
+conforming to strict XML end-tag rules... no problem)
+
 </body>
 </html>  
 

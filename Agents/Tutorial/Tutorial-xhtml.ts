@@ -20,7 +20,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.4 1999-08-18 23:17:54 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.5 1999-08-19 00:18:09 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -92,8 +92,8 @@
 
             <tr><td>Click  <b>Process</b> to see the PIA server process the
             code below and display the results in 
-              the frame above. Try out some modifications, or undo them with
-              <b>Restore</b>.</td></tr>
+              the frame above. Try out some modifications, or 
+              <b>Restore</b> the original text below.</td></tr>
 
              <tr>
                <td align='center'>

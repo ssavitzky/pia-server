@@ -81,11 +81,17 @@
                      &lt;/if> </code>
          </pre>
 
+         <p>
          Such syntactic restrictions may chafe, but they have a big advantage:
          any properly-nested PIA document is guaranteed, upon processing, to
          yield a properly-nested HTML or XML document.  So there is no risk
          (as there is with ordinary CGI scripts) that a perfectly legal
-         program will produce illegal HTML.
+         program will produce illegal HTML.</p>
+
+     <p> On the other hand, XML does require end-tags everywhere, even in
+	 singleton tags like <code>&lt;input /></code> or
+	 <code>&lt;br/></code>...so it looks a little different from
+	 HTML. </p>
 
 
 <p>   <a name="demos"><b> The demos </b></a> </p>
