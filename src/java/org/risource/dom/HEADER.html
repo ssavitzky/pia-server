@@ -6,17 +6,26 @@
 
 <p> This package, <code>org.risource.dom</code>, contains classes and
     interfaces that constitute a simplified API for programmers who wish to
-    use the DPS as part of an application based on the World Wide Web
+    use the DPS as part of an application that also uses the World Wide Web
     Consortium's <a href="../../w3c/dom">DOM</a> (Document Object Model).
 </p>
 
 <blockquote><em>
-  Originally this package simply contained a complete implementation of (an
-  earlier version of) the DOM, and <a href="../dps/active">dps.active</a>
+  Originally this package simply contained a complete implementation of an
+  early draft of the DOM, and <a href="../dps/active">dps.active</a>
   extended it.  Now that the ``official'' interfaces are in <a
   href="../../w3c/dom"><code>org.w3c.dom</code></a> we have taken the
   opportunity to correct the situation.
 </em></blockquote>
+
+<p> At the moment, <code><a href="../dps/tree/">../dps/tree/</a></code>
+    contains an implementation of the interfaces of DOM level 1, as extended
+    in <code><a href="../dps/active/">../dps/active/</a></code>.  Much of the
+    behavior, however, is considerably different from what the DOM
+    specification requires, and at some point it can reasonably be expected
+    that the PIA may abandon all pretense of being DOM-compatible in its
+    internal representation.
+</p>
 
 <h2>See Also</h2>
 
@@ -34,12 +43,12 @@
        and processed using the DPS.
   <dt> <a href="../dps/tree/">org.risource.dps.tree</a>
   <dd> Classes that <em>implement</em> the DOM Core and Active interfaces, for
-       use in building parse trees.
+       use in building parse trees.  
 </dl>
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.5 1999-07-14 20:11:24 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.6 1999-10-06 23:31:16 steve Exp $</b>
 <a name="files"><hr></a>
 
 
