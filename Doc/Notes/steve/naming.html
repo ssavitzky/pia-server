@@ -3,286 +3,288 @@
 <title>The Naming of Names</title>
 <link rev="made" href="mailto:steve@rsv.ricoh.com">
 </head><body>
-<h1>The Naming of Names</h1>
+<h1>The Naming of Names (Again)</h1>
+<h2>Yet Another Great Renaming</h2>
 
-<p> Essentially everything proposed in this document has been completed at
-    this point; it is now primarily of historical significance.
+<blockquote><em>
+  For the previous (January-July 1999) version of this file, see
+  <a href="Archives/naming.html">Archives/naming.html</a>.
+</em></blockquote>
+
+<h2>Parts of the PIA</h2>
+
+<h3>That Was The Web That Was</h3>
+
+<p> Up until now we have been regarding the PIA as a two-part system:  a
+    specialized web server based on ``agents'', and a document processing
+    engine used to implement active documents.  Agents, in turn, <em>also</em>
+    had two aspects:  the ability to ``act on'' selected server transactions,
+    and the ability to ``satisfy'' or ``handle'' transactions to particular
+    URL's.
+
+<p> All that is changed now, or soon will be.  A new millenium is upon us.
+
+<blockquote>
+    And what rough beast, its hour come 'round at last,<br>
+    Slouches toward Bethlehem to be born?
+
+    <p align=right><em>The Second Coming</em> by W. B. Yeats</p>
+</blockquote>
+
+
+<h3>The New World Order</h3>
+
+<p> The PIA should now be regarded as a three-part system.
+
+<ol>
+  <li> As before, the mapping from SGML tags to corresponding actions is done
+       by the document-processing engine, the DPS.
+
+  <li> Also as before, the mapping from HTTP transactions to Agents that act
+       on them is done by the Resolver.  The difference is that Agents no
+       longer have anything to do with the mapping from URL's to documents or
+       from (active) documents to tagsets.
+
+  <li> The third component of the PIA is the mapping from URL's to documents.  
+       Since agents are no longer associated with this process, it will
+       significantly simplify the Agent interface.
+</ol>
+
+<h2>The PIA Site and its Sub-Sites</h2>
+
+<p> A PIA server appears to the browser as a directory tree.  The top level of
+    this tree is called the PIA's ``<dfn>site</dfn>'', and any subtree of a
+    site is called a ``<dfn>subsite</dfn>''.
+
+<p> The top level <em>directory</em> corresponding to a PIA site is called the
+    site's ``<dfn>root</dfn>''.  To a first approximation, every top-level
+    subsite of the PIA corresponds to a subdirectory of the root, and so on
+    down the tree.  Each subsite directory contains a
+    <code>subsite.config</code> file that describes its configuration.
+
+<dl>
+  <dt> <b>Note:</b>
+  <dd> We probably want to reconsider the name <code>subsite.config</code>.
+       It would, of course, be a configurable parameter, but we ought to make
+       a good choice for the default. 
+</dl>
+
+<p> Many subsites in a working PIA are associated with agents; whether one
+    chooses to refer to the <code>History</code> <em>agent</em> or the
+    <code>/History</code> <em>subsite</em> depends a lot on which aspect you
+    want to talk about.
+
+<p> Similarly, many subsites contain both active documents (e.g. the forms
+    used to configure and control an agent or group of agents) and data files.
+    The convention is for the data files to be contained in a sub-subsite
+    called <code>.../DATA/</code>. 
+
+<p> Here is where the first-approximation equivalence between subsites and
+    subdirectories breaks down:  it's possible for a subsite or a document to
+    be ``virtual'' -- located in another place in the filesystem.  For
+    example, one might want to make a photo album accessible by anonymous FTP,
+    in which case one might make <code>/home/ftp/pub</code> appear in the
+    site hierarchy as a virtual subsite of <code>/Photo-album</code> with the
+    URL <code>/Photo-album/DATA</code> or <code>/Photo-album/Photos</code>.
+
+<h3>PIA Startup</h3>
+
+<p> The PIA starts up and looks for a suitable configuration file, using the
+    following search list:
+
+<ol>
+  <li> The command line, which may specify <em>either</em> the configuration
+       file itself, or the site root directory.
+  <li> The $PIA_CONFIG environment variable
+  <li> The $PIA_ROOT environment variable, specifying the site root.
+  <li> A file called <code>pia.config</code> or <code>.pia-config</code> in
+       one of the following places:
+       <ol>
+	 <li> the user's home directory
+	 <li> the current directory
+	 <li> $PIA_DIR ($PIA_HOME ?)
+	 <li> .. relative to the binary of the <code>pia</code> command; it is
+	      expected that this will be ...<code>/PIA</code>.
+       </ol>
+</ol>
+
+<p> <code>PIA/pia-config</code> will, of course, exist; it will designate
+    <code>PIA/MySite</code> as the site root.  On a multi-user system, if
+    PIA/MySite is not in the user's home directory or is not writable by the
+    user, the pia's home page will contain a form for making a copy.
+
+
+<h3>Site Creation</h3>
+
+<p> One way to create a site, of course, would be to blindly copy
+    <code>PIA/MySite</code> out of the installation.  This sidesteps the
+    question of how <code>MySite</code> gets created in the first place.
+
+<p> The obvious way to create <em>any</em> subsite directory is to start with
+    a <em>virtual</em> subsite (or, equivalently, a reference to a subsite
+    directory) and <em>realize</em> it.  This process consists of the
+    following steps:
+
+<ol>
+  <li> Create the real directory
+  <li> Copy a <code>site.config</code> file if it has one.
+  <li> Create a <em>modified</em> <code>subsite.config</code> file that puts
+       the original directory in the default search path, but copies
+       everything else.
+  <li> Create a new <code>README.html</code> file containing the date, user's
+       name, and the pathname of the original directory.
+</ol>
+
+<p> One can go on to recursively realize more documents and subsites at this
+    point. 
+
+
+<h3>Documents and Sheaves</h3>
+
+<p> The set of documents and subsites bound together at a subsite is called a
+    ``<dfn>sheaf</dfn>'' of documents.  A sheaf is distinguished from a
+    directory in that it may contain virtual and imaginary entries as well as
+    real ones. 
+
+<p> A directory's <code>subsite.config</code> file contains the following:
+
+<ol>
+  <li> Inherited variables.  These correspond pretty much to the current Agent
+       state, and are inherited by (i.e. accessible to) all active documents
+       underneath the subsite.  These include things like the extension
+       mapping. 
+  <li> Subsite variables.  These are inherited, but modified according to depth.
+       These include things like the default directory:  the default directory
+       in a subdirectory is the corresponding subdirectory of the parent's
+       default directory.  They come in three flavors: 
+       <ol>
+	 <li> those that are modified by prepending <code>../</code>; these
+	      are mainly used for relative paths to external entities,
+	      tagsets, and the like. 
+	 <li> those that are modified by appending the name of the current
+	      real directory (the URL suffix). 
+	 <li> those that are modified by appending the name of the current
+	      default directory.
+       </ol>
+       (It may be possible to find a less general mechanism for dealing with
+       these problems.)
+  <li> Local variables.  These contain meta-information associated with the
+       subsite directory, and are not inherited.  
+  <li> Document descriptors.  Strictly speaking these are contained in a local
+       variable (perhaps called SHEAF); they describe any virtual or imaginary
+       documents and subsites.  Note that <em>real</em> documents and subsites
+       do not need to be described explicitly unless they have non-default
+       attributes. 
+</ol>
+
+<p> It's important to note that if any of the variables associated with a
+    virtual subsite is changed, the subsite (and all of its parents) must be
+    realized at that point, in order to have a suitable real directory in
+    which to store the modified <code>subsite.config</code> file.
+
+<p> Note that information about a subsite is actually contained in three
+    places that have to be merged:
+
+<ol>
+  <li> its <code>subsite.conf</code> file
+  <li> its <em>parent's</em> <code>subsite.conf</code> file
+  <li> its parent's <em>directory</em>. 
+</ol>
+
+<h2>Subsite and Document Types</h2>
+
+<p> Subsites and documents are distinguished along three axes:
+<ol>
+  <li> Reality -- the extent to which they correspond to real subdirectories
+       or real files descended from the root.
+  <li> Activity -- the extent to which they are processed by tagsets, and the
+       extent to which these tagsets can influence the state and behavior of
+       the PIA.
+  <li> Visibility -- the extent to which they are visible outside the PIA.
+</ol>
+
+
+<h3>Real, Virtual, and Imaginary</h3>
+
+<p> There are three different kinds of subsite:
+
+<ol>
+  <li> <em>Real</em> subsites.  <br>
+       A <em>real</em> subsite corresponds to an actual subdirectory
+       descending from the site's root directory.  A real subsite may contain
+       a <code>subsite.config</code> file, an XML file that describes the
+       contents of the subsite and how they are to be processed.  In
+       particular, it defines the mapping between filenames and tagsets.
+  <li> <em>Virtual</em> subsites. <br>
+       A <em>virtual</em> subsite is something like a symbolic link: it
+       consists of a real directory, containing a <code>subsite.config</code>
+       file, but it is not a descendent of the root.  Instead, it is ``bound
+       in'' or ``mounted'' by means of an entry in its parent's
+       <code>subsite.config</code> file.  A Virtual subsite can be effectively
+       ``realized'' by simply copying it into its real parent. 
+  <li> <em>Imaginary</em> subsites <br>
+       An <em>imaginary</em> subsite is <em>completely</em> ``unreal'' -- it
+       does not correspond to a real directory anywhere, but is constructed by
+       a program out of thin air.  This is somewhat like the "/proc"
+       filesystem on Linux. 
+</ol>
+
+<p> Similarly, a single subsite may consist of a combination of real, virtual,
+    and imaginary <em>documents</em>.  Note that even a real subsite may
+    contain virtual files, for example files taken from a directory full of
+    defaults.  Such virtual documents and subsites can be specified either
+    individually by name, or collectively by means of a <em>search path</em>.
+
+<p> For example, the directory listing of a file with no
+    <code>index.html</code> file is an imaginary file, as is the error
+    document returned by a web server when a non-existent file is requested.
+
+<h3>Active and Passive</h3>
+
+<p> Another way of distinguishing subsites, completely orthogonal to the
+    reality axis, is the activity axis.
+
+<ol>
+  <li> <em>Active</em> subsites<br>
+       May contain their own <code>subsite.config</code> file, as may any
+       active descendent.  
+  <li> <em>Passive</em> subsites<br>
+       are ``locked'' -- any <code>subsite.config</code> file they or any of
+       their descendents may contain is ignored, and only ``safe'' tagsets may
+       be used to process files in them.  Data directories, for example, are
+       almost invariably passive; otherwise someone who knew the PIA's naming
+       conventions might be able to deposit an XML virus in a cache (for
+       example) and have it executed. 
+</ol>
+
+<p> (At some point we may want to distinguish two levels of passivity:
+    processed only by safe tagsets, and totally unprocessed.)
+
+<p> Documents are also distinguished by activity:
+
+<ul>
+  <li> <em>Active</em> files <br>
+       are processed by some tagset before being delivered to a browser.
+  <li> <em>Passive</em> files <br>
+       are delivered to a browser without processing. 
+</ul>
+
+
+<h3>Visible and Invisible</h3>
+
+<p> Finally, documents and even subsites may be distinguished by whether they
+    are visible or invisible from a browser.  Note that it is perfectly
+    meaningful for a subsite (even a virtual one) to be invisible -- this just
+    means that it can be accessed from an active document (e.g. as an external
+    entity or through an <code>&lt;include&gt;</code> tag) but not by the
+    user. 
 
 <h2>Agents</h2>
 
-<h3>Agency -&gt; Admin, Agency/ROOT -&gt; ROOT</h3>
-
-<blockquote><strong>Completed 1999-02-09.</strong></blockquote>
-
-<p> It has been pointed out that our use of Agency is ambiguous.  We need to
-    change it; Admin has been proposed.  There is also a problem in that the
-    Agency agent is really doing four things:
-
-<ol>
-  <li> Administration.  Clearly <code>Admin</code>
-  <li> Handling the root pages.  Pretty clearly a new agent called
-       <code>Default</code>, <code>PIA</code>, or <code>ROOT</code>.
-  <li> Serving default icons, and so on. <code>ROOT/Icon</code>.
-       An alternative would be a separate <code>Icon</code> agent; putting it
-       under ROOT means that it doesn't show up on agent listings.
-  <li> Handling requests directed at agents (in its <code>actOn</code>
-       method).  Possibly this should be done in the Resolver, or possibly
-       in <code>ROOT</code>. 
-</ol>
-
-<p> Both <code>ROOT</code> and <code>Admin</code> could be constructed by
-    copying the code for <code>Agency</code>.
-
-<p> <code>ROOT</code> seems to be preferred at the moment.  Note that it ought
-    to be possible to <em>register</em> the default (root) agent.  Note that
-    an appliance's main agent might typically do so.
-
-
-<h3>Spy -&gt; Toolbar</h3>
-
-<blockquote><strong>Completed 1999-02-04.</strong></blockquote>
-
-<p>... or possibly <code>Tools</code>.  <code>cia</code> and
-    <code>fbi</code> would become <code>remoteTools</code> and
-    <code>localTools</code> respectively.
-
-<p> With <code>Toolbar</code> as the main agent, <code>cia</code> became
-    <code>remote</code> and <code>fbi</code> became <code>localFile</code>,
-    documented as applying only to local <em>(passive) files</em> and not
-    active pages.
-
-<h3>PIA/Doc, etc.</h3>
-
-<p> <code>ROOT</code> should handle these.  It might actually have a suitable
-    <code>actOn</code> method in XHTML.
-
-<p> It seems possible that the <em>only</em> differences between a DOFS agent
-    and a regular one might end up being:
-<ol>
-  <li> how you get to the agent's control pages. 
-  <li> how it maps file extensions into mime types, and which ones are
-       active (and with which tagsets).  This could be done with a namespace. 
-</ol>
-
-<p> Under this scheme, an agent would have both a ``home'' directory and a
-    ``root'' directory, and also both a ``home'' and a ``root'' tagset.
-
-<h2>Mapping Agent URL's to Directories</h2>
-
-<h3>Currently:</h3>
-
-<p> The following URL's refer to an agent's directories:
-
-<table width="90%" align=center border=1>
-  <tr> <th align=left> URL <th align=left> Directory <th align=left> description
-  <tr> <td valign=top> <code>/<em>name</em></code> 
-       <td valign=top> <code>pia/Agents/<em>name</em></code>
-       <td> an agent's ``root'' directory; normally the same as its ``home''
-            directory  unless it's a DOFS agent
-  <tr> <td valign=top> <code>/<em>type</em>/<em>name</em></code>
-       <td valign=top> <code>pia/Agents/<em>type</em>/<em>name</em></code>
-       <td> an agent's home directory if <code><em>type</em></code>
-	    is not the same as <code><em>name</em></code>
-  <tr> <td valign=top> <code>/~<em>name</em></code>
-       <td valign=top> <code>.pia/<em>name</em></code>
-       <td> an agent's data directory
-  <tr> <td valign=top> <code>/My/Agents/<em>name</em></code>
-       <td valign=top> <code>.pia/Agents/<em>name</em></code>
-       <td> an agent's user directory, containing the overrides for the files
-	    in the agent's home directory. 
-  <tr> <td valign=top> <code>/My</code>
-       <td valign=top> <code>.pia</code>
-       <td> DOFS agent referring to the root of the data directories
-
-<tr> <th align=left> URL <th align=left> mapped to:
-       <th align=left> description
-  <tr> <td valign=top> <code>/<em>path</em></code> 
-       <td valign=top> <code>/Agency/ROOT/<em>name</em></code>
-       <td> a file ``in the root'', handled by <code>Agency</code>
-  <tr> <td valign=top> <code>/<em>badfile</em></code> 
-       <td valign=top> 
-       <td> missing root file, handled by <code>Agency</code>
-  <tr> <td valign=top> <code>/<em>bad/path</em></code> 
-       <td valign=top> 
-       <td> missing agent, handled by the Resolver.
-</table>
-
-<h3>Proposed:</h3>
-
-<blockquote>
-  <strong>Completed 1999-02-09.</strong><p>
-  For the moment, <code>/<em>type</em>/<em>name</em></code> is still working. 
-</blockquote>
-
-<table width="90%" align=center border=1>
-  <tr> <th align=left> URL <th align=left> Directory <th align=left> Entity
-       <th align=left> description
-  <tr> <td valign=top> <code>/<em>name</em></code> 
-       <td valign=top> <code>pia/Agents/<em>name</em></code><br>
-       <td valign=top> <code>AGENT:root</code>
-       <td> an agent's ``root'' directory; normally the same as its ``home''
-            directory unless redirected by setting <code>AGENT:root</code>
-  <tr> <td valign=top> <code>/<em>name</em>~</code>
-       <td valign=top> <code>pia/Agents/<em>name</em></code><br>
-       <td valign=top> <code>AGENT:home</code>
-       <td> an agent's home directory, where its <code>.xh</code> files live.
-  <tr> <td valign=top> <code>/~<em>name</em></code>
-       <td valign=top> <code>.pia/<em>name</em></code><br>
-       <td valign=top> <code>AGENT:data</code>
-       <td> an agent's (default?) data directory
-  <tr> <td valign=top> <code>/<em>name</em>/~</code>
-       <td valign=top> <code>.pia/<em>name</em></code><br>
-       <td valign=top> <code>AGENT:data</code>
-       <td> an agent's data directory (allows agent to remap)
-  <tr> <td valign=top> <code>/~Agents/<em>name~</em></code>
-       <td valign=top> <code>.pia/Agents/<em>name</em></code><br>
-       <td valign=top> <code>AGENT:home</code>
-       <td> an agent's user directory, with user overrides for its code.
-  <tr> <td valign=top> <code>/~</code>
-       <td valign=top> <code>.pia</code><br>
-       <td valign=top> <code>PIA:userDIR</code>
-       <td> the root of the data directories; effectively an alias for
-            <code>/~ROOT</code>
-  <tr> <th align=left> URL <th align=left> mapped to <th align=left> Entity
-       <th align=left> description
-  <tr> <td valign=top> <code>/<em>path</em></code>
-       <td valign=top> <code>/ROOT/<em>path</em></code><br>
-       <td valign=top> <code>PIA:rootAgent</code>
-       <td valign=top> a file ``in the root''
-  <tr> <td valign=top> <code>/<em>badfile</em></code> 
-       <td valign=top> 
-       <td valign=top> 
-       <td> missing root file, handled by ROOT
-  <tr> <td valign=top> <code>/<em>bad/path</em></code> 
-       <td valign=top> 
-       <td valign=top> 
-       <td> missing agent, handled ROOT.
-</table>
-
-<p> The only really drastic changes here are:
-<ol>
-  <li> Going from <code>/<em>type</em>/<em>name</em></code> to
-       <code><em>name</em>~</code> to designate the ``home'' directory.  It
-       will simplify the lookup considerably.
-  <li> Changing from <code>/My/</code> to <code>/~/</code>.  It has to be
-       treated specially because <code>/~~</code> seems ambiguous -- is it
-       home or data?  It is better to regard <code>/~</code> as simply an
-       alias for <code>~ROOT</code> -- the root agent's data directory.  This
-       neatly sidesteps the need for a separate DOFS agent for it.
-</ol>
-
-<p> An alternative scheme would be to changing the meaning of
-    <code>~</code> from ``data home'' to ``code home'', and consistently use
-    <code>/~/</code> as the root of the data directories.  This is a little
-    more consistent with Unix usage, and would remove the ambiguity about the
-    meaning of <code>/~~</code>, but represents a significantly larger
-    change. 
-
-<p> Another way of looking at an agent's ``root'' directory is that it might
-    be <em>either</em> its home or its data directory.  Hence, for a DOFS
-    agent, the root is the data directory, not the home.
-
-<p> Ideally, a missing file should be handled by mapping it to a URL in
-    the ROOT agent.  This will require the ability of DPS code to set the
-    HTTP result code, which is not possible yet.
-
-<h3>``Mounting'':</h3>
-
-<blockquote>
-  <strong>Completed 1999-03-23.</strong><p>
-  For the moment, <code>/<em>type</em>/<em>name</em></code> is still working. 
-</blockquote>
-
-<p> It would be desirable to ``mount'' agents anywhere in the agent tree.  A
-    ``mounted'' agent would have the following URL's:
-
-<table width="90%" align=center border=1>
-  <tr> <th align=left> URL <th align=left> Directory
-       <th align=left> description
-  <tr> <td valign=top> <code>/<em>path</em>/<em>name</em></code> 
-       <td valign=top> <code>pia/Agents/<em>path</em>/<em>name</em></code> 
-       <td valign=top> root directory
-  <tr> <td valign=top> <code>/<em>path</em>/<em>name</em>~</code>
-       <td valign=top> <code>pia/Agents/<em>path</em>/<em>name</em></code> 
-       <td valign=top> home directory
-  <tr> <td valign=top> <code>/~/<em>path</em>/<em>name</em></code><br>
-		       <code>/<em>path</em>/<em>name</em>/~</code>
-       <td valign=top> <code>.pia/<em>path</em>/<em>name</em></code> 
-       <td valign=top> data directory
-  <tr> <td valign=top> <code>/~/<em>path</em>/<em>name</em>~</code>
-       <td valign=top> <code>.pia/Agents/<em>path</em>/<em>name</em></code> 
-       <td valign=top> user directory
-</table>
-
-<p> Agents need the following attributes:
-
-<dl>
-  <dt> <b>name</b>
-  <dd> the base name
-  <dt> <b>type</b>
-  <dd> An agent from which forms are inherited.
-  <dt> <b>path</b>
-  <dd> An agent's mount point in the URL hierarchy.  The path from the
-       ``base'' (<code>PIA/Agents</code> or <code>~/Agents</code>) to the
-       agent's code or user directory is normally equal to
-       <code><em>path</em>/<em>name</em></code>; it is probably not necessary
-       to permit the directory and URL paths to differ.
-
-       <p>
-
-  <dt> <b>home-dir</b>
-  <dd> the <em>full</em> path to the code <em>directory</em>.  Specifies
-       <em>only</em> the agent's code directory, not the user directory.
-  <dt> <b>user-dir</b>
-  <dd> the path to the user directory.  Probably <em>very</em> rarely used.
-  <dt> <b>data-dir</b>
-  <dd> the path to the data directory.
-</dl>
-
-<p> In specifying paths, we should allow the following prefixes:
-
-<dl compact>
-  <dt> <code>~/</code>
-  <dd> The user's home directory (currently the only one allowed)
-  <dt> <code>./</code>
-  <dd> (or any relative path) the PIA agent directory
-  <dt> <code>../</code>
-  <dd> the PIA home directory <code>&amp;piaDIR;</code>, as in
-       <code>../Contrib/...</code> 
-  <dt> <code>/~/</code>
-  <dd> The PIA user directory <code>&amp;usrDIR;</code>
-</dl>
-
-<p> Currently, an agent's ``name'' has to be unique.  Under this scheme, it
-    only has to be unique with the path prefix.  This changes
-    <code>findDocument</code> somewhat.
-
-<p> Considerable effort will be involved in this change, because presently the
-    <code><em>name</em></code> is used as the key for the agent table.
-
-
-<h2>Tagsets</h2>
-
-Tagsets need a <code>prefix</code> (namespace) attribute as well as a
-<code>name</code> attribute.  They ought to be separate for several reasons:
-
-<ol>
-  <li> Several tagsets can share a namespace.  For example, <code>dps:</code>
-       is shared by <code>basic</code>, <code>xhtml</code>, and
-       <code>xxml</code>.
-
-  <li> The <code>name</code> is usually derived from the DTD name, which in
-       turn is supposed to be derived from the tag of the top element.
-
-  <li> A tagset like <code>pia-xhtml</code> should have a <code>name</code> of
-       <code>xhtml</code> (the DTD from which it is derived) and a
-       <code>prefix</code> (namespace) of <code>pia:</code>.
-</ol>
-
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.7 1999-05-25 23:07:21 steve Exp $</b><br>
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
+<b>$Id: naming.html,v 1.8 1999-07-22 01:12:26 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
