@@ -1,7 +1,6 @@
 <!DOCTYPE    html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Generic Options Page for &agentName;</title>
-<link rev='made' href='mailto:wolff@crc.ricoh.com' />
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>&agentName; agent options</header>
 
@@ -424,7 +423,7 @@
     create a new agent. 
 </p>
 
-<pre><protect result markup> &AGENT;</protect></pre>
+<pre><font size="-1"><protect result markup> &AGENT;</protect></font></pre>
 <hr />
 <set entity='entity' name='title'>Options Page</set>
 
@@ -470,6 +469,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.6 1999-05-20 20:28:04 steve Exp $' />
-
+<footer cvsid='$Id: options.xh,v 1.7 1999-05-25 23:05:28 steve Exp $' />
 </body></html>
