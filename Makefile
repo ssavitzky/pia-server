@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.29 1999-08-09 18:24:45 steve Exp $
+#	$Id: Makefile,v 1.30 1999-08-20 00:08:27 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -73,7 +73,7 @@ CVS_RMT  = /home/cvsroot
 # rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
 #   4. "make src-release"
 #	If part of this fails, it breaks down into these substeps:
-#	make do_checkout build_release tar_file copy_src_dir
+#	make do_checkout build_release tar_file
 #   5. upload tar file: "make upload" works if running under ssh-agent. 
 #   6. Fix RiSource.org/PIA/{latest.html, downloading.html}
 
@@ -83,8 +83,8 @@ CVS_RMT  = /home/cvsroot
 ###   3. tar_file	The entire directory is tarred up.
 
 src-release:: do_checkout build_release tar_file
-	echo 'Build complete.  Your next step is "make upload"'
-	echo '"make copy_src_dir" is now optional'
+	@echo 'Build complete.  Your next step is "make upload".'
+	@echo '"make copy_src_dir" is now optional'
 
 ### Commands:
 
