@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.15 1999-10-14 21:47:41 steve Exp $
+//	$Id: Subsite.java,v 1.16 1999-10-15 17:15:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.15 1999-10-14 21:47:41 steve Exp $
+ * @version $Id: Subsite.java,v 1.16 1999-10-15 17:15:42 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -67,6 +67,9 @@ public class Subsite extends ConfiguredResource implements Resource {
   
   /** Name of the directory's home document. */
   protected String homeDocumentName = null;
+
+  /** Name of listing document. */
+  protected String listingName = "-";
 
   /** Table that maps filename suffix into tagset.  
    *
@@ -155,6 +158,14 @@ public class Subsite extends ConfiguredResource implements Resource {
   public String getHomeDocumentName() {
     return (homeDocumentName != null)? homeDocumentName
       : (base != null)? base.getHomeDocumentName() : "home";
+  }
+
+  public String getListingName() {
+    return listingName;
+  }
+
+  public boolean isListingName(String name) {
+    return name.equals(listingName) || name.equals(".");
   }
 
   /************************************************************************
@@ -364,7 +375,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     Resource doc = locate(getHomeDocumentName(), false, null);
     return (doc != null && ! doc.isContainer())
       ? doc.getDocument()
-      : new Listing(getName(), this, file);
+      : new Listing(getListingName(), this, file);
   }
 
   /************************************************************************
@@ -403,12 +414,12 @@ public class Subsite extends ConfiguredResource implements Resource {
     Resource child = (Resource)subsiteCache.at(name);
     if (child != null) return child;
 
-    if (name.equals(".")) {
+    if (isListingName(name)) {
       if (childConfigCache != null) {
 	ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
 	if (cfg != null) return configureChild(name, cfg);
       } 
-      return new Listing(getName(), this, file);
+      return new Listing(getListingName(), this, file);
     }
 
     File f = null;
@@ -589,8 +600,9 @@ public class Subsite extends ConfiguredResource implements Resource {
     ActiveElement cfg = null;
     Resource result = null;
     Object loc = childLocationCache.at(name);
-    if (name.equals(".") && (loc == null || !(loc instanceof ActiveElement))) {
-      return new Listing(getName(), this, file);
+    if (isListingName(name)
+	&& (loc == null || !(loc instanceof ActiveElement))) {
+      return new Listing(getListingName(), this, file);
     } else if (loc == null) {			// No location -- it's a dud.
       return null;
     } else if (loc instanceof Resource) { 	// location is a resource.
@@ -736,6 +748,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     File vfile = (getVirtualLoc() == null)
       ? null : new File(getVirtualLoc(), name);
     if (container) {
+      // === should probably just make the Subsite and tell _it_ to realize.
       rfile.mkdirs();
       if (!rfile.exists() && !rfile.isDirectory()) {
 	getRoot().report(-2, "Cannot create directory " + name 
@@ -762,9 +775,22 @@ public class Subsite extends ConfiguredResource implements Resource {
       if (!base.realize()) return false;
       // replace file with a new one under its (realized) parent. 
       file = new File(new File(base.getRealPath()), getName());
+      file.mkdirs();
+      if (! file.exists() || ! file.isDirectory()) {
+	file = null;
+	return false;
+      }
+      prepareRealDirectory();
       real = true;
     }
     return isReal();
+  }
+
+  /** Put into a newly-created real directory whatever it is we need to 
+   *	put there.
+   */
+  public void prepareRealDirectory() {
+
   }
 
   /************************************************************************

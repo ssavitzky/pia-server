@@ -73,6 +73,46 @@ See also:
        property entity with that name.  Maybe the known ones, too.
        (1999-09-09) <br>
 
+  <li> <b>Bug</b> pure-virtual document gives null pointer exc. <br>
+       ... which is not surprising, since there's no way to specify its
+       content at the moment.
+       (1999-09-09) <br>
+
+  <li> <b>Bug</b> Subsite doesn't inherit files properly <br>
+       Need to set real, virtual, and default files properly.  Currently
+       <code>file</code> gets the virtual location if the real one doesn't
+       exist. 
+       (1999-09-09) <br>
+
+  <li> <b>Impr</b> Want a way to get generic listing.<br>
+       The simplest way would be a virtual child called ``<code>.</code>'';
+       this can be constructed using the default ``<code>.xh</code>'',
+       defaulting to a Listing if it's not present.
+       (1999-09-08) <br>
+
+  <li> <b>Goal</b> Implement and integrate with PIA <br>
+       <ol>
+	 <li> [1999-09-02] finish implementing, mainly the loading of config
+	      files.  
+	 <li> [1999-09-03] Add to PIA as access for non-Agent paths.
+	 <li> simplify <code>org.risource.pia.Agent</code> and use
+	      <code>org.risource.site.Site</code> for all documents. 
+       </ol>
+       (1999-08-23) goal: 09-03<br>
+
+  <li> <b>Note</b> Document should set up Processor somehow. <br>
+       There's no good way now to negotiate between a Processor and a Document
+       to set up the <em>optimum</em> kind of Input or to decide whether the
+       Document wants to drive the Processor as an Output. 
+       (1999-08-20) <br>
+
+  <li> <b>Hole</b> Metadata becomes entity bindings. <br>
+       The DOC: namespace for a resource probably ought to be
+       <em>precisely</em> its XML metadata, with the configuration added in
+       using some application-specific mapping (i.e. it needs to be different
+       for WebDAV).
+       (1999-08-20) <br>
+
   <li> 1999-10-12 <b>Bug</b> Namespace properties don't work <br>
        (1999-10-08) <br>
 
@@ -105,7 +145,7 @@ See also:
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.7 1999-10-14 21:47:42 steve Exp $</b><br>
+<b>$Id: done.html,v 1.8 1999-10-15 17:15:43 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
