@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.18 2000-06-07 19:09:22 steve Exp $
+//	$Id: defineHandler.java,v 1.19 2000-10-05 19:09:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.18 2000-06-07 19:09:22 steve Exp $
+ * @version $Id: defineHandler.java,v 1.19 2000-10-05 19:09:03 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -235,6 +235,7 @@ class define_element extends defineHandler {
       // === need to set parent nodes in handler. ===
       ts.setHandlerForTag(tagname, h);
     }
+    // === The correct thing would have been to copy attrs from action to h
     if (h != null && action != null) {
       String mode = action.getAttribute("mode");
       if (mode == null ||
@@ -248,6 +249,12 @@ class define_element extends defineHandler {
 		 mode.equalsIgnoreCase("append-content")) {
 	h.setPassTag(true);
 	h.setPassContent(true);
+      } else if (mode.equalsIgnoreCase("defer") ||
+		 mode.equalsIgnoreCase("defer-content")) {
+	h.setDeferContent(true);
+      } else if (mode.equalsIgnoreCase("before") ||
+		 mode.equalsIgnoreCase("before-content")) {
+	h.setDeferContent(true);
       } else if (mode.equalsIgnoreCase("silent")) {
 	h.setPassTag(true);
 	h.setPassContent(true);

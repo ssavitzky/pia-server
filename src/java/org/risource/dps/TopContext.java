@@ -1,5 +1,5 @@
 ////// TopContext.java: Top Context interface
-//	$Id: TopContext.java,v 1.6 1999-09-22 00:33:36 steve Exp $
+//	$Id: TopContext.java,v 1.7 2000-10-05 19:09:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.net.URL;
  *	be done, for example, in order to insert a sub-document into the
  *	processing stream.  Even the ``root'' context may have a parent.
  *
- * @version $Id: TopContext.java,v 1.6 1999-09-22 00:33:36 steve Exp $
+ * @version $Id: TopContext.java,v 1.7 2000-10-05 19:09:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -139,6 +139,17 @@ public interface TopContext extends Processor {
    * @param tsname the tagset name.  If null, returns the current tagset. 
    */
   public Tagset loadTagset(String tsname);
+
+  /** Load a handler by name.  Called by org.risource.dps.handle.Loader
+   *	to load a handler that is not in its cache.  Note that handlers
+   *    can be preloaded into the cache by the application, by calling
+   *    org.risource.dps.handle.Loader.defHandle
+   *
+   * @param name the name of the handler to load.
+   * @see org.risource.dps.handle.Loader
+   * @see org.risource.dps.handle.Loader.defHandle
+   */
+  // === public Handler loadHandler(String name);
 
   /** Process a new subdocument. 
    * 

@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.12 2000-06-07 19:09:22 steve Exp $
+//	$Id: GenericHandler.java,v 1.13 2000-10-05 19:09:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.12 2000-06-07 19:09:22 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.13 2000-10-05 19:09:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -86,6 +86,8 @@ public class GenericHandler extends BasicHandler {
   protected boolean hideExpansion = false;
   protected boolean passTag = false;
   protected boolean passContent = false;
+  protected boolean deferContent = false;
+  protected boolean beforeContent = false;
 
   /** If <code>true</code>, the tag is passed through. */
   public boolean passTag() { return passTag; }
@@ -96,6 +98,16 @@ public class GenericHandler extends BasicHandler {
   public boolean passContent() { return passContent; }
   /** If <code>true</code>, the content is passed through. */
   public void setPassContent(boolean value) { passContent = value; }
+ 
+  /** If <code>true</code>, the content is expanded lazily. */
+  public boolean deferContent() { return deferContent; }
+  /** If <code>true</code>, the content is expanded lazily. */
+  public void setDeferContent(boolean value) { deferContent = value; }
+ 
+  /** If <code>true</code>, the content is processed after expansion. */
+  public boolean beforeContent() { return beforeContent; }
+  /** If <code>true</code>, the content is processed after expansion. */
+  public void setBeforeContent(boolean value) { beforeContent = value; }
  
   /** If <code>true</code>, the expansion is hidden. */
   public boolean hideExpansion() { return hideExpansion; }
@@ -148,6 +160,8 @@ public class GenericHandler extends BasicHandler {
     if (!in.hasChildren()) {
       empty = true;
       // aContext.debug("   no children...\n");
+    } else if (beforeContent || deferContent) {
+      // content processing is deferred, so we do nothing here
     } else if (textContent) {
 	content = expandContent
 	  ? Expand.getProcessedText(in, aContext)
@@ -190,6 +204,8 @@ public class GenericHandler extends BasicHandler {
     //aContext.debug("in action for " + in.getNode());
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
+    BasicEntityTable ents = null;
+    ActiveNodeList wrapper = new TreeNodeList();
 
     // === We shouldn't ever have to copy the children here.
     // === Instead, make a special EntityTable that can construct the element
@@ -208,8 +224,14 @@ public class GenericHandler extends BasicHandler {
       //    === This may want to go into defaultAction ===
 
       Tagset ts = aContext.getTopContext().getTagset();
-      BasicEntityTable ents = new BasicEntityTable(e.getTagName());
-      ents.setValueNodes(aContext, "content", content, ts);
+      ents = new BasicEntityTable(e.getTagName());
+      if (deferContent) {
+	in.toFirstChild();
+	ents.setBinding("content", new EntityInput("content", in));
+      } else {
+	ents.setValueNodes(aContext, "content", content, ts);
+      }
+      if (beforeContent) ents.setValueNodes(aContext, "wrapper", wrapper, ts);
       ents.setValueNodes(aContext, "tagname",
 			 Create.createNodeList(e.getTagName()), ts);
       ents.setValueNodes(aContext, "element", new TreeNodeList(element), ts);
@@ -227,6 +249,41 @@ public class GenericHandler extends BasicHandler {
       out.startNode(element);
       Copy.copyNodes(content, out);
       out.endElement(e.isEmptyElement() || e.implicitEnd());
+    }
+    if (beforeContent) {
+      wrapper = ents.getValueNodes(aContext, "wrapper");
+      String wrapTag = null;
+      if (wrapper != null && wrapper.getLength() != 0)
+	wrapTag = wrapper.toString();
+
+      if (wrapTag != null && "#skip".equalsIgnoreCase(wrapTag)) {
+	if (in.hasChildren()) {
+	  Copy.copyChildren(in, new DiscardOutput());
+	}
+      } else if (wrapTag != null && "#hide".equalsIgnoreCase(wrapTag)) {
+	if (in.hasChildren()) {
+	  if (expandContent) {
+	    Processor p = aContext.subProcess(in, new DiscardOutput(), ents);
+	    p.processChildren();
+	  } else {
+	    Copy.copyChildren(in, new DiscardOutput());
+	  }
+	}
+      } else {
+	if (wrapTag != null) out.startElement(wrapTag, null);
+	if (in.hasChildren()) {
+	  Processor p = aContext.subProcess(in, out, ents);
+	  if (expandContent) {
+	    p.processChildren();
+	  } else {
+	    ((org.risource.dps.process.BasicProcessor)p).copyChildren();
+	  }
+	}
+	if (wrapTag != null) out.endNode();
+      }
+
+      content = ents.getValueNodes(aContext, "content");
+      if (content != null) Copy.copyNodes(content, out);
     }
   }
 

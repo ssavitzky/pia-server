@@ -16,6 +16,14 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Hole</b> streaming lazy evaluation of entities would be nice. <br />
+       Currently, expanding an EntityRef involves constructing an intermediate
+       NodeList even if the EntityRef could provide an Input.  This is
+       because there's no way for an Input to perform processing.  It might be
+       sufficient for a Processor to expand entities on its input by pushing
+       them onto an input stack.
+       (2000-10-05)<br />
+  </li>
   <li> <b>Hole</b> maintain tagset dependencies <br />
        invalidate timestamps of dependents when reloading a tagset.
        (2000-07-20) <br />
@@ -375,11 +383,6 @@ See also:
        "/RHServer/persist.out" when running from an agent.
        (1999-01-26) <br>
 
-  <li> <b>Impr</b> passthrough action for elements. <br>
-       Not at all clear how best to do this.  One possibility is lazy
-       evaluation of &amp;element;.
-       (1998-10-12) <br>
-
   <li> <b>Hole</b> Data structure elements <br>
        &lt;headers&gt;, &lt;url&gt;, etc.  need to convert text content to XML
        format, and need to output as text.
@@ -496,7 +499,8 @@ Results: &lt;pre&gt;cat                                                         
   <li> <b>Bug:</b> Tagsets don't hack resource names correctly. <br>
        Need to decide between Class and ClassLoader conventions.  ClassLoader
        requires slashes; Class prepends module name.  Need the prepend, then
-       change dots to slashes (probably in <code>org.risource.util.NameUtils</code>).
+       change dots to slashes (probably in
+       <code>org.risource.util.NameUtils</code>). 
        (1998-08-12)<br>
 
   <li> <b>Bug:</b> Can't <em>use</em> a tagset. <br>
@@ -568,12 +572,6 @@ Results: &lt;pre&gt;cat                                                         
        -- <code>subProcess</code> clears <code>free</code>; caller does
 	  <code>p.cleanup()</code> when finished to restore it.
 
-  <li> <b>Impr:</b> <code>Filter</code> parse tree input <br> 
-       Filter should  be able to read a serialized parse tree.
-       (1998-06-15) <br>
-       -- It should do so if the input file ends in ``<code>.xho</code>'' or
-          ``<code>.xxo</code>''.
-       
   <li> <b>Impr:</b> <code>NamedActiveNode</code> values <br>
        Named nodes should have defined, assigned and default values. Only
        defined value should be the children; it would be used for the
@@ -619,5 +617,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.50 2000-07-25 22:17:30 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.51 2000-10-05 19:09:00 steve Exp $</b><br>
 </body></html>
