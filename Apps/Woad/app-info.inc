@@ -6,9 +6,12 @@
   <tr>
     <td bgcolor="#99ccff"> &nbsp; </td>
     <th colspan="2" align="left" bgcolor="#99ccff">
-        <ss>WOAD</ss> Application Information
+	<table width="100%" border="0">
+          <tr><th align="left" ><ss>WOAD</ss> Application Information</th>
+              <td align="right"><a href="about#parameters">[help]</a></td>
+	  </tr>
+	</table>
     </th>
-    <td bgcolor="#99ccff"> <a href="about#parameters">[help]</a> </td>
   </tr>
   <tr>
     <th bgcolor="silver"> <em>parameter</em> </th>
@@ -55,9 +58,12 @@
   <tr>
     <td bgcolor="#99ccff"> &nbsp; </td>
     <th colspan="2" align="left" bgcolor="#99ccff">
-        <ss>WOAD</ss> Tree Structure Parameters
+	<table width="100%" border="0">
+          <tr><th align="left" ><ss>WOAD</ss>  Tree Structure Parameters</th>
+              <td align="right"><a href="about#parameters">[help]</a></td>
+	  </tr>
+	</table>
     </th>
-    <td bgcolor="#99ccff"> <a href="about#parameters">[help]</a> </td>
   </tr>
   <tr>
     <th bgcolor="silver"> <em>parameter</em> </th>
@@ -97,4 +103,4 @@
 
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.5 2000-07-19 00:43:22 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.6 2000-07-21 22:55:39 steve Exp $">
