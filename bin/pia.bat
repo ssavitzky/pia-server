@@ -81,7 +81,7 @@ REM example: path=%path%;%JDKHOME%\bin
 REM cd to PIA\src\java directory as there is no explicit CLASSPATH
 
 echo Changing directories to %PIACLASSES%
-cd /d %PIACLASSES%
+cd  %PIACLASSES%
 
 echo Running java org.risource.pia.Pia -vroot %PIAHOME% -root %UHOME% -home %PIAHOME%
 REM may need to change java to jre
