@@ -1,5 +1,5 @@
 ###### dps/input/Makefile:	Implementations of Output interface
-# 	$Id: Makefile,v 1.7 1999-11-06 01:14:49 steve Exp $
+# 	$Id: Makefile,v 1.8 2000-05-02 21:20:50 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -30,7 +30,6 @@ TOPDIR=../../../..
 TO_NODES = \
 	ActiveOutput.java \
 	ToAttributeList.java \
-	ToDocument.java \
 	ToNodeList.java \
 	ToNamespace.java \
 	ToProperties.java \
