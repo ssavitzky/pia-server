@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.9 1999-05-07 23:28:09 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.10 1999-05-11 01:28:01 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -228,11 +228,9 @@
 	</td></tr>
     <tr><th align=right>
 	     <xopt page="&attributes:page;"
-		   pages="config shutdown">&blue-dot;</xopt> </th>
-	<td> <xa href="config" page="&attributes:page;">Configure</xa>
-	     <if><test exact match='pia'>&piaUSER;</test>
-	         <then><a href="shutdown">shut down</a>
-	     </if> PIA
+		   pages="config control">&blue-dot;</xopt> </th>
+	<td> <xa href="config" page="&attributes:page;">Configure</xa> /
+	     <xa href="control" page="&attributes:page;">Control</xa> PIA
 	</td></tr>
     <tr><th valign=top align=right>
 	     <xopt page="&attributes:page;"
@@ -301,7 +299,8 @@
 <set name=myear><subst match="/.* " result=", "><extract>
     &attributes;<name>cvsid<eval/><text split>&list;</text> 3
     </extract> </set>
-<b>Copyright &copy; &myear; Ricoh Silicon Valley</b><br>
+<b>Copyright &copy; &myear; Ricoh Silicon Valley</b>.
+   Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><extract>&attributes;<name>cvsid<eval/></extract></em>
 
   </action>
@@ -309,6 +308,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.9 1999-05-07 23:28:09 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.10 1999-05-11 01:28:01 steve Exp $</b><br />
 </tagset>
 

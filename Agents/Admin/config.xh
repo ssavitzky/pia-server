@@ -6,11 +6,15 @@
 <header show-date='yes'>Edit PIA Configuration Settings</header>
 <sub-head page='config' />
 <hr />
-This page lets you edit PIA configuration variables.  The default values are 
-found in <code><var>PIA_DIR</var>/Config/pia.props</code>.  If you choose
-to edit any of these values, they will be written to 
-<code><var>USR_DIR</var>/Config/pia.props</code>.
-
+<p> This page lets you edit PIA configuration variables.  The default values
+    are found in <code><var>PIA_DIR</var>/Config/pia.props</code>.  If you
+    choose to edit any of these values, they will be written to
+    <code><var>USR_DIR</var>/Config/pia.props</code>, and will be read in the
+    next time the PIA is started.  To change one of these values
+    <em>immediately</em>, use the ``<a
+    href="control"><code>control</code></a>'' page. 
+</p>
+<hr />
 <if><get name='FORM:submission' /> <then>
 	<!--  Create the directory if it does not already exist  -->
 	<output directory='directory' dst='/~/Config'></output>
@@ -45,61 +49,59 @@ to edit any of these values, they will be written to
 </if>
 
 <form action='/Admin/config' method='POST'>
-<TABLE cols='2'>
-<TR>
-<TH align='right'><B><U>Property</U></B></TH>
+<table cellspacing="0" border="0">
+  <tr><td bgcolor="silver">
+          <input type='submit' name='submission' value="Write" /> </td>
+      <th bgcolor="silver" align=left> Properties to configuration file</th>
+  </tr>
+  <tr><td valign="top" >
+      <td>
+	  <TABLE>
+	  <TR>
+	  <TH align='right'><B><U>Property</U></B></TH>
+	  <TH align='left'><B><U>Value</U></B></TH>
+	  </TR>
 
-<TH align='left'><B><U>Value</U></B></TH>
-</TR>
+	  <TR>
+	  <TD align='right'>pia.root</TD>
+	  <TD><input type='text' name='piaroot' value='&proot;' /></TD><TD></TD>
+	  </TR>
 
-<TR>
-<TD align='right'>pia.root</TD>
+	  <TR>
+	  <TD align='right'>pia.usrroot</TD>
+	  <TD><input type='text' name='piausrroot' value='&puroot;' /></TD><TD></TD>
+	  </TR>
 
-<TD><input type='text' name='piaroot' value='&proot;' /></TD><TD></TD>
-</TR>
+	  <TR>
+	  <TD align='right'>pia.port</TD>
+	  <TD><input type='text' name='piaport' value='&pport;' /></TD><TD></TD>
+	  </TR>
 
-<TR>
-<TD align='right'>pia.usrroot</TD>
+	  <TR>
+	  <TD align='right'>pia.debug</TD>
+	  <TD><input type='text' name='piadebug' value='&pdebug;' /></TD><TD></TD>
+	  </TR>
 
-<TD><input type='text' name='piausrroot' value='&puroot;' /></TD><TD></TD>
-</TR>
+	  <TR>
+	  <TD align='right'>pia.verbose</TD>
+	  <TD><input type='text' name='piaverbose' value='&pverbose;' /></TD><TD></TD>
+	  </TR>
 
-<TR>
-<TD align='right'>pia.port</TD>
+	  <TR>
+	  <TD align='right'>pia.logger</TD>
+	  <TD><input type='text' name='pialogger' value='&plogger;' /></TD><TD></TD>
+	  </TR>
 
-<TD><input type='text' name='piaport' value='&pport;' /></TD><TD></TD>
-</TR>
-
-<TR>
-<TD align='right'>pia.debug</TD>
-
-<TD><input type='text' name='piadebug' value='&pdebug;' /></TD><TD></TD>
-</TR>
-
-<TR>
-<TD align='right'>pia.verbose</TD>
-
-<TD><input type='text' name='piaverbose' value='&pverbose;' /></TD><TD></TD>
-</TR>
-
-<TR>
-<TD align='right'>pia.logger</TD>
-
-<TD><input type='text' name='pialogger' value='&plogger;' /></TD><TD></TD>
-</TR>
-
-<TR>
-<TD align='right'>pia.reqtimeout</TD>
-
-<TD><input type='text' name='piareqtimeout' value='&preqtimeout;' /></TD><TD></TD>
-</TR>
-</TABLE>
-
-<CENTER>
-<input type='submit' name='submission' value='Submit' /> 
-</CENTER>
+	  <TR>
+	  <TD align='right'>pia.reqtimeout</TD>
+	  <TD><input type='text' name='piareqtimeout' value='&preqtimeout;' /></TD><TD></TD>
+	  </TR>
+	  </TABLE>
+      </td>
+  </tr>
+</table>
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.2 1999-05-07 23:28:15 steve Exp $' />
+<footer cvsid='$Id: config.xh,v 1.3 1999-05-11 01:28:03 steve Exp $' />
 </body></html>

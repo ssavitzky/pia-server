@@ -1,0 +1,135 @@
+<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Control the PIA</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header show-date='yes'>Control the PIA</header>
+<sub-head page="control" />
+<hr />
+<p> This page lets you directly control the PIA.  Any forms submitted from
+    this page take effect <em>immediately.</em>  Some of these parameters can
+    be saved as defaults, to be set whenever the PIA is started.  This is done
+    on the ``<a href="config"><code>Configure</code></a>'' page.
+</p>
+<hr />
+
+<h2>Immediate Actions</h2>
+
+<p> Forms in this section lets you take immediate actions to control the
+    running of the PIA.  (=== under construction ===)
+</p>
+
+<!-- === shutdown; checkpoint; ... -->
+
+<form action="control">
+<table border=0 cellspacing="0" width="90%">
+  <if>&FORM:msg;
+      <then><user-message>&FORM:text;</user-message>
+	    <set name="doit">&time;</set>
+	    <set name="text">&FORM:text;</set>
+      </then>
+      <else><set name="doit">do it!</set>
+	    <set name="text"></set></else>
+  </if>
+  <tr><th bgcolor="silver">
+          <input type="submit" name="msg" value="&doit;"/> </th>
+      <td bgcolor="silver">
+          Put a message into the PIA's log file or output stream.</td>
+  </tr>
+  <tr><th> text: </th>
+      <td><input name="text" size="50" value="&text;" />
+  </tr>
+</table>  
+</form>
+
+<form action="control">
+<table border=0 cellspacing="0" width="90%">
+  <if>&FORM:exitConfirmed;
+      <then><user-message>Shutting down PIA at &time;</user-message>
+	    <set name="doit">&time;</set>
+	    <set name="bg">red</set>
+	    <set name="msg">SHUTTING DOWN at &time;</set>
+	    <set name="exit">SHUTTING DOWN</set>
+	    <submit-forms><!-- causes a null pointer exception! -->
+		<form action="control" type="POST">
+		  <input type="hidden" name="exitNow" value="NOW"/>
+		</form>
+	    </submit-forms>
+      </then>
+      <else-if>&FORM:exit;
+      <then><set name="doit">Confirm:</set>
+	    <set name="bg">red</set>
+	    <set name="msg">Really exit the PIA server?</set>
+	    <set name="exit">exitConfirmed</set>
+      </then></else-if>
+      <else-if>&FORM:exitNow;
+      <then><user-message>Confirmed: shutting down PIA at &time;</user-message>
+	    <!-- === really do it === -->
+      </then></else-if>
+      <else><set name="doit">do it!</set>
+	    <set name="bg">silver</set>
+	    <set name="msg">Shut down (exit) the PIA server.</set>
+	    <set name="exit">exit</set></else>
+  </if>
+  <tr><th bgcolor="#c40026" width="10%">
+          <input type="submit" name="&exit;" value="&doit;"/> </th>
+      <td bgcolor="&bg;" width="90%">&nbsp;&msg;</td>
+  </tr>
+</table>  
+</form>
+
+<hr />
+<h2>Parameters</h2>
+
+<p> This form lets you change some of the internal parameters of the PIA.
+    More will be added later.
+</p>
+
+<if><get name='FORM:submission' /> <then>
+	<!-- Set values to user entries -->
+	<set name='PIA:pia.debug'>&FORM:piadebug;</set>
+	<set name='PIA:pia.verbose'>&FORM:piaverbose;</set>
+	<set name='PIA:pia.reqtimeout'>&FORM:piareqtimeout;</set>
+</then>
+</if>
+
+<form action='/Admin/config' method='POST'>
+<table cellspacing="0" border="0">
+  <tr><td bgcolor="silver">
+          <input type='submit' name='submission' value="Change" /> </td>
+      <th bgcolor="silver" align=left> PIA parameters. </th>
+  </tr>
+  <tr><td valign="top" >
+      <td>
+	  <TABLE>
+	  <TR>
+	  <TH align='right'><B><U>Property</U></B></TH>
+
+	  <TH align='left'><B><U>Value</U></B></TH>
+	  </TR>
+
+	  <TR>
+	  <TD align='right'>pia.debug</TD>
+	  <TD><input type='text' name='piadebug' value='&PIA:pia.debug;' /></TD>
+	  <TD>true/false</TD>
+	  </TR>
+
+	  <TR>
+	  <TD align='right'>pia.verbose</TD>
+	  <TD><input type='text' name='piaverbose' value='&PIA:pia.verbose;' /></TD>
+	  <TD>true/false</TD>
+	  </TR>
+
+	  <TR>
+	  <TD align='right'>pia.reqtimeout</TD>
+	  <TD><input type='text' name='piareqtimeout' value='&PIA:pia.reqtimeout;' /></TD>
+	  <TD>milliseconds</TD>
+	  </TR>
+	  </TABLE>
+      </td>
+  </tr>
+</table>
+</form>
+
+
+<footer cvsid='$Id: control.xh,v 1.1 1999-05-11 01:28:05 steve Exp $' />
+</body></html>
