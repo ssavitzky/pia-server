@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.3 2000-08-24 22:55:59 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.4 2000-10-05 19:02:56 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -34,7 +34,7 @@
 	because some tagsets (e.g. HTML) are case-insensitive, so every tag
 	defined here may get case-smashed.
   </doc>
-  <action>
+  <action mode="defer-content">
 <html><hide>
   <if>&FORM:code;<then><set name="FORM:tsdoc">tsdoc</set></then></if>
   <set name="VAR:format"><if> &FORM:nested; <then>nested</then>

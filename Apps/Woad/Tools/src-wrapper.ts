@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.4 2000-09-30 00:09:03 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.5 2000-10-05 19:02:56 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -29,12 +29,12 @@
 
 <h2>Document Wrapper</h2>
 
-<define element="-document-" quoted="yes" >
+<define element="-document-" quoted="yes" ><!--  -->
   <doc> This is the outside wrapper.  Note that the tagname must be lowercase
 	because some tagsets (e.g. HTML) are case-insensitive, so every tag
 	defined here may get case-smashed.
   </doc>
-  <action>
+  <action mode="defer-content">
 <html><hide>
   <if>&FORM:code;<then><set name="FORM:tsdoc">tsdoc</set></then></if>
   <set name="VAR:format"><if> &FORM:nested; <then>nested</then>
