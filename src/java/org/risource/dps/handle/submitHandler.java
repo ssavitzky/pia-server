@@ -1,5 +1,5 @@
 ////// submitHandler.java: <submit> Handler implementation
-//	$Id: submitHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
+//	$Id: submitHandler.java,v 1.6 1999-05-18 20:18:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.pia.Pia;
  *
  * <p> The intent is for this to be equivalent to the old <submit-forms> tag. 
  *
- * @version $Id: submitHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
+ * @version $Id: submitHandler.java,v 1.6 1999-05-18 20:18:56 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -112,6 +112,11 @@ public class submitHandler extends GenericHandler {
       // Set default encoding type if not specified
       if (encType == null) {
 	encType = "application/x-www-form-urlencoded";
+      }
+      if (method == null) method = "GET";
+      if (! url.startsWith("http:") &&
+	  ! url.startsWith("/")) {
+	url = a.pathName() + "/" + url;
       }
 
       // Initialize content type for submission
