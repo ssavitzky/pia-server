@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.7 1999-04-23 00:29:52 steve Exp $
+// $Id: Pia.java,v 1.8 1999-05-06 20:44:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.7 1999-04-23 00:29:52 steve Exp $
+  * @version $Id: Pia.java,v 1.8 1999-05-06 20:44:32 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -829,12 +829,10 @@ public class Pia implements Tabular {
     resolver     = new Resolver();
     Transaction.resolver = resolver;
     
-    // === This should really to through the installAgent code in Admin.
-
     // Create the Root agent, and make its data directory the USR_ROOT
-    rootAgent = new Root(rootAgentName, null);
-    ((GenericAgent)rootAgent).put(Root.data_dir_name, usrRootStr);
+    rootAgent = new Root(rootAgentName, usrRootStr);
 
+    // Create the Admin agent.  Its initialize.xh file loads everything else.
     adminAgent = new Admin(adminAgentName, null);
 
     resolver.registerAgent( rootAgent );
@@ -843,8 +841,8 @@ public class Pia implements Tabular {
     try{
       accepter = new Accepter( realPort );
     }catch(IOException e){
-      System.out.println("Can not create Accepter: " + e.getMessage());
-      System.out.println(  "  Try using a different port number:\n" 
+      System.err.println("Can not create Accepter: " + e.getMessage());
+      System.err.println(  "  Try using a different port number:\n" 
 			 + "    pia -port nnnn\n"
 			 + "  8000+your user ID is a good choice.");
       System.exit(1);
