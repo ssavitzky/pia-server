@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.21 2000-06-02 23:17:34 steve Exp $
+//	$Id: Subsite.java,v 1.22 2000-06-14 17:08:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.21 2000-06-02 23:17:34 steve Exp $
+ * @version $Id: Subsite.java,v 1.22 2000-06-14 17:08:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -69,7 +69,10 @@ public class Subsite extends ConfiguredResource implements Resource {
   protected String homeDocumentName = null;
 
   /** Name of listing document. */
-  protected String listingName = "-";
+  protected String indexDocumentName = null;
+
+  /** Path to listing document. */
+  protected String indexDocumentPath = null;
 
   /** Table that maps filename suffix into tagset.  
    *
@@ -157,12 +160,18 @@ public class Subsite extends ConfiguredResource implements Resource {
       : (base != null)? base.getHomeDocumentName() : "home";
   }
 
-  public String getListingName() {
-    return listingName;
+  public String getIndexDocumentName() {
+    return (indexDocumentName != null)? indexDocumentName
+      : (base != null)? base.getIndexDocumentName() : "-";
   }
 
-  public boolean isListingName(String name) {
-    return name.equals(listingName) || name.equals(".");
+  public String getIndexDocumentPath() {
+    return (indexDocumentPath != null)? indexDocumentPath
+      : (base != null)? base.getIndexDocumentPath() : null;
+  }
+
+  public boolean isIndexDocumentName(String name) {
+    return name.equals(getIndexDocumentName()) || name.equals(".");
   }
 
   /************************************************************************
@@ -263,6 +272,16 @@ public class Subsite extends ConfiguredResource implements Resource {
     // <HomeDocumentName>
     else if (tag.equals("HomeDocumentName")) {
       homeDocumentName = item.contentString();
+    }
+
+    // <IndexDocumentName>
+    else if (tag.equals("IndexDocumentName")) {
+      indexDocumentName = item.contentString();
+    }
+
+    // <IndexDocumentPath>
+    else if (tag.equals("IndexDocumentPath")) {
+      indexDocumentPath = item.contentString();
     }
 
     // <Ext>
@@ -376,7 +395,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     Resource doc = locate(getHomeDocumentName(), false, null);
     return (doc != null && ! doc.isContainer())
       ? doc.getDocument()
-      : new Listing(getListingName(), this, file);
+      : new Listing(getIndexDocumentName(), this, file);
   }
 
   /************************************************************************
@@ -415,12 +434,12 @@ public class Subsite extends ConfiguredResource implements Resource {
     Resource child = (Resource)subsiteCache.at(name);
     if (child != null) return child;
 
-    if (isListingName(name)) {
+    if (isIndexDocumentName(name)) {
       if (childConfigCache != null) {
 	ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
 	if (cfg != null) return configureChild(name, cfg);
       } 
-      return new Listing(getListingName(), this, file);
+      return new Listing(getIndexDocumentName(), this, file);
     }
 
     File f = null;
@@ -624,9 +643,9 @@ public class Subsite extends ConfiguredResource implements Resource {
     ActiveElement cfg = null;
     Resource result = null;
     Object loc = childLocationCache.at(name);
-    if (isListingName(name)
+    if (isIndexDocumentName(name)
 	&& (loc == null || !(loc instanceof ActiveElement))) {
-      return new Listing(getListingName(), this, file);
+      return new Listing(getIndexDocumentName(), this, file);
     } else if (loc == null) {			// No location -- it's a dud.
       return null;
     } else if (loc instanceof Resource) { 	// location is a resource.

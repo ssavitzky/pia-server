@@ -1,5 +1,5 @@
 ////// Listing.java -- simple listing of a container document
-//	$Id: Listing.java,v 1.6 2000-04-14 23:06:59 steve Exp $
+//	$Id: Listing.java,v 1.7 2000-06-14 17:08:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.net.URL;
  *  <p>	A Listing is a virtual container; this means that one can control
  *	the format of a listing by specifying a sub-document.
  *
- * @version $Id: Listing.java,v 1.6 2000-04-14 23:06:59 steve Exp $
+ * @version $Id: Listing.java,v 1.7 2000-06-14 17:08:02 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -53,6 +53,13 @@ import java.net.URL;
  * @see org.w3c.dom
  */
 public class Listing extends FileResource implements Document {
+
+  /************************************************************************
+  ** Local data:
+  ************************************************************************/
+
+  Subsite location = null;
+  Document indexDoc = null;
 
   /************************************************************************
   ** Formatting flags:
@@ -107,12 +114,17 @@ public class Listing extends FileResource implements Document {
   }
 
   /** Returns the name of the preferred tagset for processing the document. */
-  public String getTagsetName() { return base.getTagsetNameFor("./"); }
+  public String getTagsetName() {
+    if (indexDoc != null) return indexDoc.getTagsetName();
+    return base.getTagsetNameFor("./");
+  }
 
 
   /************************************************************************
   ** Tree Navigation:
   ************************************************************************/
+
+  public String getName() { return "-"; }
 
   /** Returns a Resource that refers to a named child.
    * @return <code>null</code> because documents have no children.
@@ -272,6 +284,7 @@ public class Listing extends FileResource implements Document {
   /** @return a <code>BufferedInputStream</code> for accessing the document.
    */
   public BufferedInputStream documentInputStream() {
+    if (indexDoc != null) return indexDoc.documentInputStream();
     return
       new BufferedInputStream(new StringBufferInputStream(getListingString()));
   }
@@ -279,6 +292,7 @@ public class Listing extends FileResource implements Document {
   /** @return a <code>LineNumberReader</code> for accessing the document.
    */
   public LineNumberReader documentReader() {
+    if (indexDoc != null) return indexDoc.documentReader();
     return new LineNumberReader(new StringReader(getListingString()));
   }
 
@@ -301,6 +315,7 @@ public class Listing extends FileResource implements Document {
    *	Returns <code>null</code> if the resource is not readable.
    */
   public Input documentInput() {
+    if (indexDoc != null) return indexDoc.documentInput();
     String tsname = getTagsetName();
     Tagset ts = loadTagset(tsname);
     Parser p = ts.createParser();
@@ -362,15 +377,29 @@ public class Listing extends FileResource implements Document {
   ** Construction:
   ************************************************************************/
 
+  protected void locateListingDoc() {
+    if (base instanceof Subsite) {
+      location = (Subsite) base;
+      if (location.getIndexDocumentPath() != null) {
+	Resource index = location.locate(location.getIndexDocumentPath(),
+					 false, null);
+	if (index != null) indexDoc = index.getDocument();
+      }
+    }
+  }
+
   public Listing(String name, AbstractResource parent) {
     super(name, parent, null);
+    locateListingDoc();
   }
 
   public Listing(String name, AbstractResource parent, File f) {
     super(name, parent, f);
+    locateListingDoc();
   }
 
   public Listing(ConfiguredResource parent, ActiveElement config) {
     super(null, parent, false, config);
+    locateListingDoc();
   }
 }
