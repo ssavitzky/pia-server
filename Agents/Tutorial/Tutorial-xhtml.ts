@@ -20,7 +20,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.3 1999-08-02 22:46:51 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.4 1999-08-18 23:17:54 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -153,7 +153,8 @@
 	   alert("Sorry, order invalid... try again.")
 	   return false
 	}
-     }           end hiding -->
+     }
+        // end hiding -->
      </SCRIPT>
 
   </action>
