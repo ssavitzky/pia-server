@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.7 1999-03-18 20:42:59 pgage Exp $
+#	$Id: Makefile,v 1.8 1999-03-18 21:47:52 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -29,7 +29,7 @@ REL_PIA_DIR = $(HOME)/src_release/PIA
 DEST_DIR    = /home/pgage/test_rel	# /pia1/pia for an actual release
 TAR_NAME    = pia_src$(VERSION)
 CREATE_CVS_TAG = 0			# set to 1 to cvs rtag the release
-TODAY       = `date '+%D'`		# get today's date in a form used by cvs
+TODAY       = date '+%D'		# get today's date in a form used by cvs
 
 SUBDIRS= src bin lib Doc
 
@@ -122,12 +122,16 @@ src.tar:	prep_rel_dir
 
 # export based on today's date or latest version
 dated_src.tar:
-	prep_rel_dir
-	cd $(REL_DIR); cvs export -f -D $(TODAY) PIA
+	make prep_rel_dir
+	cd $(REL_DIR); cvs export -f -D 3/19/99 PIA
 	cd $(REL_PIA_DIR); make prep_rel
 	cd $(REL_DIR); tar czf $(TAR_NAME).tgz PIA; cp $(TAR_NAME).tgz $(DEST_DIR)
 	cd $(DEST_DIR);  rm pia_src.tgz; ln -s $(TAR_NAME).tgz pia_src.tgz
 	cd $(DEST_DIR); mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
+
+# this does not get latest version
+testtest:
+	cd $(REL_DIR); cvs export -f -D `date '+%D'` PIA
 
 
 ###
