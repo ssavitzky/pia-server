@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.2 1999-10-07 23:37:03 bill Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.3 1999-10-08 18:52:08 bill Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -44,7 +44,7 @@
      </define>
 
 
-     <?-- strip off leading zeros from single-digit positive numbers --?>
+     <!-- strip off leading zeros from single-digit positive numbers -->
      <define element="numstrip">
          <action><text trim="yes">
             <if><test greater="9">&content;</test>
@@ -64,7 +64,7 @@
 <define element="readoneevent">
    <action>
 
-               <?-- assign names "my[---]" to values for easy testing --?>
+               <!-- assign names "my[---]" to values for easy testing -->
 	       <set name="myTime"><text trim="yes">
 		   <extract><from>&li;</from>
 		       <name all="all">start-time</name>
@@ -105,7 +105,7 @@
 <define element="pluckintervals">
    <action>
      <hide>
-	<?-- set FORM:[-]Interval attributes from file, for edit boxes--?>
+	<!-- set FORM:[-]Interval attributes from file, for edit boxes-->
 	<set name="FORM:dayInterval"><text trim="yes">
 	    <extract><from>&li;</from>
 		<name all="all">dayinterval</name>
@@ -131,7 +131,7 @@
 	    </extract>
 	</text></set>
 
-        <?-- set the radio-selection choice from which tag is present --?>
+        <!-- set the radio-selection choice from which tag is present -->
         <if><get name="FORM:dayInterval" />
            <then><set name="FORM:interval">Days</set></then>
         </if>
@@ -142,7 +142,7 @@
            <then><set name="FORM:interval">Weeks</set></then>
         </if>
 
-        <?-- if radio "interval" still not filled up, set it to "None" --?>
+        <!-- if radio "interval" still not filled up, set it to "None" -->
         <if><get name="FORM:interval" />
            <else><set name="FORM:interval">None</set></else>
         </if>
@@ -155,11 +155,11 @@
     <doc> Show today's date as a link to editing that day </doc>
 
     <action>
-       <?-- encapsulate whole date into a smaller package --?>
+       <!-- encapsulate whole date into a smaller package -->
        <set name="todaypack">
               <date>&day;</date><month>&month;</month><year>&year;</year>
        </set>
-        <?-- show  today's date as link to the day --?>
+        <!-- show  today's date as link to the day -->
 <h2> Today is  
           <weekday>&todaypack;</weekday>,
                  <a href="home.xh?newDay=&myDay;&newMonth=&myMonth;&newYear=&year;&Add=submit"><weekday monthname="yes">&todaypack;</weekday>
@@ -195,7 +195,7 @@
 	       <td valign="middle"><font  size="6">&mthname;</font> &nbsp;</td>
 	     </then>
 	     <else>
-	         <td valign="middle"><a  href="grid.xh?newDay=15&amp;newMonth=&mth;&amp;newYear=&myYear;&amp;Add=submit">&mthname;
+	         <td valign="middle"><a  href="grid.xh?newDay=15&newMonth=&mth;&newYear=&myYear;&Add=submit">&mthname;
 	         </a> &nbsp; </td>
 	     </else>
 	   </if>
@@ -204,24 +204,24 @@
 
         </tr>
         <tr>
-	       <td valign="middle" ><a href="grid.xh?newDay=15&amp;newMonth=&myMonth;&amp;newYear=&startyr;&amp;Add=submit"><small>&startyr;</small>  </a>  &nbsp;</td>
+	       <td valign="middle" ><a href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&startyr;&Add=submit"><small>&startyr;</small>  </a>  &nbsp;</td>
 
 	       <td align="center" valign="middle" colspan="10" >
                   <font size="5">&myYear;</font>
  	       </td>
-               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&amp;newMonth=&myMonth;&amp;newYear=&stopyr;&amp;Add=submit"><small>&stopyr;</small>  </a>  </td>
+               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&stopyr;&Add=submit"><small>&stopyr;</small>  </a>  </td>
 
          </tr>
         <tr>
-	       <td valign="middle" ><a href="grid.xh?newDay=15&amp;newMonth=&myMonth;&amp;newYear=&startyr;&amp;Add=submit&wholeYear=yes"><small>all</small>  </a>  &nbsp;</td>
+	       <td valign="middle" ><a href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&startyr;&Add=submit&wholeYear=yes"><small>all</small>  </a>  &nbsp;</td>
 
 	       <td align="center" valign="middle" colspan="10" >
 		   <a
-		   href="grid.xh?newDay=15&amp;newMonth=&myMonth;&amp;newYear=&myYear;&amp;Add=submit&wholeYear=yes"><font
+		   href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&myYear;&Add=submit&wholeYear=yes"><font
 		   size="5">all</font>
 		   </a>
  	       </td>
-               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&amp;newMonth=&myMonth;&amp;newYear=&stopyr;&amp;Add=submit&wholeYear=yes"><small>all</small>  </a>  </td>
+               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&stopyr;&Add=submit&wholeYear=yes"><small>all</small>  </a>  </td>
 
          </tr>
       </table>
@@ -233,7 +233,7 @@
      <define element="event-table">
 	 <doc> takes an event file and prints it in table form </doc>
 
-	     <?-- sort the events for this day by start-time --?>
+	     <!-- sort the events for this day by start-time -->
            <action><text trim="yes">
 	     <set name="sortedlist">
 	       <extract>
@@ -246,7 +246,8 @@
 	     <table >
 		 <tr>
 		    <td>
-		      <a href="home.xh?newDay=&myDay;&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">&myDay; </a>
+		      <a
+		      href="home.xh?newDay=&myDay;&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">&myDay; </a>
 		    </td>
 		 </tr>
 		 <repeat><foreach>&sortedlist;</foreach>
@@ -288,11 +289,11 @@
                sources.
          </doc>
          <action><hide>
-             <?-- get the file(s) --?>
+             <!-- get the file(s) -->
 
 	     <set name="filename">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;/Events</set>
 
-	     <?-- read out file (possibly empty) --?>
+	     <!-- read out file (possibly empty) -->
 	     <set name="eventfile" >
 		<extract>
 		    <from><soft-include src="&filename;"/></from>
@@ -300,7 +301,7 @@
 		</extract>
 	     </set>
 
-             <?-- look for repeating events --?>
+             <!-- look for repeating events -->
 	     <set name="longdaytoday">
 		    <weekday longday="yes">
 			  <date>&attributes:newday;
@@ -309,7 +310,7 @@
 		    </weekday>
 	     </set>
 
-             <?-- by day, looping over 1-6 day intervals --?>
+             <!-- by day, looping over 1-6 day intervals -->
        <set name="moreEvents" >
 	 <repeat start="1" stop="6" entity="days">
              <set name="repeatFile">
@@ -361,7 +362,7 @@
        </set>
 
 
-             <?-- by week, looping over 1-4 week intervals --?>
+             <!-- by week, looping over 1-4 week intervals -->
 	     <set name="wkdayname"><weekday>
 		    <date>&attributes:newday;
                     </date><month>&attributes:newmonth;</month>
@@ -421,7 +422,7 @@
 
        </set>
 
-       <?--- now months --?>
+       <!--- now months -->
        <set name="monthtoday">
               <weekday monthnum="yes">
 		    <date>&attributes:newday;
@@ -486,7 +487,7 @@
       </set>
 
 
-       <?--- finally by year --?>
+       <!--- finally by year -->
        <set name="mthname"><text trim="yes">
               <weekday monthname="yes">
 		    <date>&attributes:newday;
@@ -505,7 +506,7 @@
             
        </set>
 
-          <?-- concatenate all events together, then sort --?>
+          <!-- concatenate all events together, then sort -->
           <set name="eventfile" >
              &eventfile; &moreEvents;
           </set>
@@ -531,7 +532,7 @@
         <action><text trim="yes">
     <hide>
 
-        <?-- Everthing tries to fill up fileName --?>
+        <!-- Everthing tries to fill up fileName -->
         <set name="filedir"> </set>
 
 	 <set name="weeknum"><text trim="yes">
@@ -554,7 +555,7 @@
 	    </then>
 	 </if>
 
-         <?-- misc day intervals --?>
+         <!-- misc day intervals -->
 	 <set name="daynum"><text trim="yes">
 	    <extract>
 	       <from>&content;</from>
@@ -568,7 +569,7 @@
 	    </then>
 	 </if>
 
-         <?-- months --?>
+         <!-- months -->
 	 <set name="monthnum"><text trim="yes">
 	    <extract>
 	       <from>&content;</from>
@@ -639,7 +640,7 @@
                    </find-event-file>
               </text></set>
 
-              <?-- find fields to be matched in the old interval-event --?>
+              <!-- find fields to be matched in the old interval-event -->
               <set name="oldPlace"><text trim="yes">
 		 <extract>
 		   <from>&content;</from>
@@ -669,15 +670,15 @@
 		 </extract>
               </text></set>
 
-               <?-- read out whole day's events prior to overwriting,  --?>
+               <!-- read out whole day's events prior to overwriting,  -->
 	       <set name="allEvents">
 		   <extract>
 		       <from>
                            <include src="&filedir;/Events" />
 		       </from>
 		       <name>event</name>
-                       <?-- go through events to find one to replace --?>
-                       <?-- match most fields (delete if not replacing) --?>
+                       <!-- go through events to find one to replace -->
+                       <!-- match most fields (delete if not replacing) -->
                        <repeat>
                           <foreach>&list;</foreach>
                             <if>
@@ -722,8 +723,8 @@
 		   </extract>
 	       </set>
 
-              <?-- finally, overwrite the repeat file with the new copy, in
-                   which the undesired event is missing --?>
+              <!-- finally, overwrite the repeat file with the new copy, in
+                   which the undesired event is missing -->
 	      <output dst="&filedir;/Events" >
 		  &allEvents;
 	      </output>
@@ -779,7 +780,7 @@
              </if>
 
 
-             <?--overwrite nonrepeating file if oldinterval wasn't repeating --?>
+             <!--overwrite nonrepeating file if oldinterval wasn't repeating -->
              <if><test not="yes">
                    <extract>
                       <from><get name="oldInterval" /></from>
@@ -787,7 +788,7 @@
                    </extract>
                   </test>
                  <then>
-		    <?-- store nonrepeating events in ordinary directories --?>
+		    <!-- store nonrepeating events in ordinary directories -->
 		    <set name="nonrepeating">
 		       <repeat>
 			  <foreach>&content;</foreach>
@@ -805,13 +806,13 @@
 
 		    <set name="filedir">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;</set>
 
-			 <?-- create output directory just in case --?>
+			 <!-- create output directory just in case -->
 			 <output dst="&filedir;" directory="yes" />
 
-			 <?-- creating a whole new event ==> appending file --?>
+			 <!-- creating a whole new event ==> appending file -->
 			 <if>	<get name="attributes:appendevent" /> 
 			     <then>
-				 <?-- append new data to file --?>
+				 <!-- append new data to file -->
 				 <output dst="&filedir;/Events" append="append">
 				    <get name="nonrepeating" />
 				 </output>
@@ -819,7 +820,7 @@
 			 </if>
 			 <if>	<get name="attributes:rewriteevent" /> 
 			     <then>
-				 <?-- overwrite file --?>
+				 <!--  overwrite file --> 
 				 <output dst="&filedir;/Events" >
 				   <get name="nonrepeating" />
 				</output>
