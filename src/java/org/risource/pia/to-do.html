@@ -28,6 +28,12 @@ See also:
 
 <h2>Main List</h2>
 <ol>
+  <li> <b>Bug</b> Synchronization problem with POST req. <br>
+       When responding to a POST on a sufficiently fast machine, the socket
+       gets closed (presumably by the HTTPRequest) before the response is
+       finished writing.
+       (1999-06-23) <br>
+
   <li> <b>Hole</b> Makefiles should work from DOS <br>
        That means that there should be recursive targets that don't use the
        shell.
@@ -145,7 +151,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.19 1999-06-17 01:06:29 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.20 1999-06-23 22:24:12 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
