@@ -1,35 +1,43 @@
-<?-- the tag definitions below can be incorporated into a "tagset" if
-      desired --?>
-
-<define element="todaytag" >
-  <doc> This sample tag expands to show today's date </doc>
-  <action>
-     Today is &dayname; , &monthname; &day; &year;
-  </action>
-</define>
-
-<define element="myfont">
-   <doc>Wraps a user-selected font around text. </doc>
-   <action>
-      <font size="+4" color="green"><b> &content; </b></font>
-    </action>
-</define>
-
 
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html> <head> 
 <title>Sample File-handling Demo</title>
 </head>
-<<<<<<< home.xh
 
-<myfont> I am the Hello World demo</myfont>
+<myfont> I am the File-handling demo</myfont> <br/>
+
+This page does several file-handling operations in succession.<br/>
+
+1) It creates a directory named &user.name; [now]<br/>
+
+   <output dst="&user.name;" directory="yes" />
+<hr/>
+
+2) It creates a file in that directory named &dayname; with a simple message
+[now] <br/>
+
+   <output dst="&user.name;/&dayname;"> This file was written on
+    &dayname;, &monthname; &day;, &year; for &user.name; </output>
+
+<hr/>
+
+3) It reads out that file [now] <br/>
+
+   <font color="green">
+        <include src="&user.name;/&dayname;" />
+   </font>
+    <hr/>
+
+4) And then, just for kicks, it tries reading a non-existent file with two
+different warning styles: <br/>
+
+   (i) <include src="no-such-file" >Oops, file not found</include>
 
 <br />
 
-<todaytag />
+   (ii) <include src="no-such-file" />
 
-
-<!-- here is a comment which will appear in the browser -->
-<?-- here is a comment which won't appear in the browser --?>
+   <show-errors />
+<br />
 
 </body></html> 
