@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.42 2000-06-02 23:33:13 steve Exp $
+#	$Id: Makefile,v 1.43 2000-08-30 23:24:13 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 1
-MINOR       = 3
+MINOR       = 4
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
@@ -218,6 +218,24 @@ sidebar.html: all-dirs.log
 all-dirs.log::
 	find . -type d \! -name CVS -print  | sort > all-dirs.log
 
+
+############################################################################# 
+###
+### WOAD indices:
+###
+###	my-woad-index 	constructed in $HOME/.pia
+###	
+###	One would like to ship a WOAD index with the PIA, but it's almost
+###	impossible without forcing the use of the pre-built index as the
+###	WOAD root.  Also, it requires the use of subdirectories that start
+###	with ".", which some OS's may not support.  Bad idea.
+###
+
+my-woad-index::
+	perl src/app/tools/woad-index.pl source=. root=$$HOME/.pia
+
+
+############################################################################# 
 ###
 ### Old stuff.
 ###
@@ -226,5 +244,6 @@ all-dirs.log::
 ###	all that has been renamed Makefile.cdrom, checked in, and then removed.
 ###	If you want it, you can retrieve it from the Attic using CVS.
 ###
+############################################################################# 
 
 ###### End of Makefile #####################################################
