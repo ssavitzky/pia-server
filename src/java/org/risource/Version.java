@@ -1,5 +1,5 @@
 // Version.java
-// $Id: Version.java,v 1.5 1999-03-13 01:08:12 steve Exp $
+// $Id: Version.java,v 1.6 1999-03-26 01:28:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,18 +31,39 @@ package org.risource;
  *
  * <p> Note that this is currently not changed from PIA/Makefile
  *
- * @version $Id: Version.java,v 1.5 1999-03-13 01:08:12 steve Exp $
+ * @version $Id: Version.java,v 1.6 1999-03-26 01:28:36 steve Exp $
  * @see org.risource.pia.Setup
  */
 public interface Version {
+  /** The CVS ``vendor tag'' -- the top level of our CVS repository. 
+   *	In our case, this is ``PIA'' and serves to identify the product 
+   *	as well as the directory.
+   */
   public static final String VENDOR_TAG = "PIA";
+
+  /** The "release number" */
   public static final int    RELEASE    = 2;
+
+  /** The "major version number". */
   public static final int    MAJOR      = 0;
+
+  /** The "minor version number".  If 0, it may be omitted. */
   public static final int    MINOR      = 2;
+
+  /** The version-number suffix, e.g. "A" or "beta" */
   public static final String SUFFIX     = ""; // e.g. beta1 or whatever
+
+  /** The full version identification of the PIA. */
   public static final String VERSION    = RELEASE + "." + MAJOR
     + ((MINOR == 0)? "" : "." + MINOR) + SUFFIX;
+
+  /** The server identification string. */
+  public static final String SERVER	= VENDOR_TAG + "/" + VERSION;
+
+  /** The most recent CVS "tag" applied to this release. */
   public static final String CVS_TAG    = "$Name:  $";
+
+  /** The CVS revision of this file. */
   public static final String CVS_REV    =
-    "$Id: Version.java,v 1.5 1999-03-13 01:08:12 steve Exp $";
+    "$Id: Version.java,v 1.6 1999-03-26 01:28:36 steve Exp $";
 }
