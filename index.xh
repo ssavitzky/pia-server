@@ -46,9 +46,8 @@
       <else>
 	<th valign='top' align='right' width='170'><a href='/.'><b>Files:</b></a>&nbsp;
 	</th><td valign='top'> <a href='/Agents/'>Agents</a>
-	    <a href='/Agents/'>(custom)</a>
-	    <a href='/Doc/'>Doc</a>
-	    <a href='/src/'>src</a>
+	    <a href='/Doc/'>Documentation</a>
+	    <a href='/src/'>source code</a>
       </td></else></if><br /></tr>
     <if><agent-running name='History'>
         </agent-running><then>
@@ -68,5 +67,5 @@
 <hr />
 <include src='/Agents/ROOT/doc-grid.inc'> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.1 1999-09-22 00:51:03 steve Exp $' />
+<short-footer cvsid='$Id: index.xh,v 1.2 1999-09-22 23:50:03 steve Exp $' />
 </p></body></html>
