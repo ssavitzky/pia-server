@@ -71,7 +71,9 @@
     <set name="VAR:h2"><numeric op="sum">1 <get name="VAR:h2"/></numeric></set>
     <set name="VAR:h3">0</set>
     <set name="VAR:toc"><get name="VAR:toc"/>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-&h2;">&h2;: <text op="trim">&content;</text></a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-&h2;">&h2;: <text op="trim">
+	&content;
+	</text></a>
     </set>
     </hide> <a name="section-&h2;">&h2;:</a> <text op="trim">&content;</text><hide>
   </hide></action>
@@ -111,5 +113,5 @@
     </if></action>
 </define>
 
-<em>$Id: toc.ts,v 1.2 2000-05-23 21:47:07 steve Exp $</em>
+<em>$Id: toc.ts,v 1.3 2000-07-19 00:46:35 steve Exp $</em>
 </tagset>
