@@ -1,5 +1,5 @@
 // Root.java
-// $Id: Root.java,v 1.6 1999-06-14 20:57:24 steve Exp $
+// $Id: Root.java,v 1.7 1999-09-22 00:23:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,6 @@ import org.risource.ds.Table;
 import org.risource.ds.List;
 import org.risource.ds.Criterion;
 
-import org.risource.pia.GenericAgent;
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
 import org.risource.pia.Pia;
@@ -48,7 +47,7 @@ import org.risource.pia.Transaction;
 import org.risource.pia.Machine;
 import org.risource.pia.HTTPRequest;
 
-public class Root extends GenericAgent {
+public class Root extends Generic {
 
   // === The proxy stuff is almost certainly obsolete; 
   // === it was only used in Machine, and has been moved there.
@@ -126,12 +125,19 @@ public class Root extends GenericAgent {
     if (agent != null) {
       Pia.debug(this, "Agent found: " + agent.name());
       trans.toMachine( agent.machine() );
+    } else {
+      // this is now done by a default in Transaction.toMachine
+      // trans.toMachine( Pia.getSiteMachine());
+    }
+
+    /*
     } else if (isValidRootPath(path)) {
       Pia.debug(this, "Root path redirected to " + name());
       trans.toMachine(this.machine()); 
     } else {
       Pia.debug(this, "Agent not found");
     }
+    */
   }
 
   /** The directory (under ROOT) in which we keep root files. */

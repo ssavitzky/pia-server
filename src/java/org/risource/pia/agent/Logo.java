@@ -1,5 +1,5 @@
 // Logo.java
-// $Id: Logo.java,v 1.6 1999-05-20 20:21:03 steve Exp $
+// $Id: Logo.java,v 1.7 1999-09-22 00:23:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,6 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.risource.pia.PiaRuntimeException;
-import org.risource.pia.GenericAgent;
 import org.risource.pia.FormContent;
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
@@ -53,13 +52,12 @@ import org.risource.pia.Transaction;
 import org.risource.pia.Machine;
 import org.risource.pia.HTTPResponse;
 import org.risource.pia.Content;
-import org.risource.pia.FileAccess;
 
 import org.risource.util.Utilities;
 
 import org.w3c.www.http.HTTP;
 
-public class Logo extends GenericAgent {
+public class Logo extends Generic {
   /**
    * Respond to a request. 
    * 	Figure out whether it's for an image or an active document.
@@ -90,7 +88,7 @@ public class Logo extends GenericAgent {
       String redirUrlString = "http://gelion:8001"+path;
       String msg = "Extreme kludge: see "+redirUrlString;
       Content ct = new org.risource.content.text.StringContent(msg);
-      Transaction response = new HTTPResponse( Pia.thisMachine(),
+      Transaction response = new HTTPResponse( Pia.getSiteMachine(),
 					       request.fromMachine(),
 					       ct, false);
       response.setHeader("Location", redirUrlString);

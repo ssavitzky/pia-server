@@ -39,12 +39,12 @@ import org.w3c.dom.NodeList;
  * Output to an Agent.
  *
  * <p>	This class is used to construct an Agent, and in particular a
- *	GenericAgent.
+ *	Generic.
  *
- * @version $Id: ToAgent.java,v 1.3 1999-07-14 20:21:28 steve Exp $
+ * @version $Id: ToAgent.java,v 1.4 1999-09-22 00:23:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.pia.Agent
- * @see org.risource.pia.GenericAgent
+ * @see org.risource.pia.agent.Generic
  */
 public class ToAgent extends ToNamespace {
 
@@ -66,7 +66,7 @@ public class ToAgent extends ToNamespace {
   ** Construction:
   ************************************************************************/
   public ToAgent(Tagset ts) {
-    this(new GenericAgent(), ts);
+    this(new Generic(), ts);
   }
 
   public ToAgent(Agent a, Tagset ts) {

@@ -1,5 +1,5 @@
 ###### pia/agent/Makefile:	Agent handlers and related classes
-#	$Id: Makefile,v 1.6 1999-05-18 20:24:18 steve Exp $
+#	$Id: Makefile,v 1.7 1999-09-22 00:23:15 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,16 +27,14 @@ TOPDIR=../../../..
 
 OTHER = \
 	AgentMachine.java \
-	AgentInstallException.java \
+	AgentInstallException.java
+
+BOGUS = \
 	ToAgent.java
 
 AGENTS = \
-	Admin.java \
-	Root.java \
-	Dofs.java \
-	Logo.java \
-	Cache.java \
-	Camera.java
+	Generic.java \
+	Admin.java 
 
 HANDLERS = \
 	AgentBuilder.java \
@@ -53,21 +51,28 @@ include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies:
 
-Agency.class: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
+AgentBuilder.class: Generic.java ../Agent.java  \
+	../../dps/tree/TreeElement.java ../../dps/active/ActiveNode.java
+
+Generic.class: ../Agent.java ../Resolver.java ../Pia.java \
+	../Transaction.java ../Machine.java ../HTTPRequest.java \
+	../../dps/tree/TreeElement.java ../../dps/active/ActiveNode.java
+
+Agency.class: ../Agent.java Generic.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java ../HTTPRequest.java
 
-Admin.class: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
+Admin.class: ../Agent.java Generic.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java ../HTTPRequest.java
 
-Root.class: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
+Root.class: ../Agent.java Generic.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java ../HTTPRequest.java
 
-AgentMachine.java:  ../Agent.java ../GenericAgent.java ../Resolver.java \
+AgentMachine.java:  ../Agent.java Generic.java ../Resolver.java \
 	 ../Pia.java ../Content.java  ../../content/ByteStreamContent.java  \
 	../Transaction.java ../Machine.java ../HTTPResponse.java
 
-Dofs.java: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
+Dofs.java: ../Agent.java Generic.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java 
 
-Logo.java: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
+Logo.java: ../Agent.java Generic.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java ../HTTPResponse.java

@@ -1,5 +1,5 @@
 ////// agentHome.java:  Handler for <agent-home>
-//	$Id: agentHome.java,v 1.6 1999-04-13 00:58:16 steve Exp $
+//	$Id: agentHome.java,v 1.7 1999-09-22 00:23:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,11 +26,11 @@ package org.risource.pia.agent;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
-import org.risource.dps.process.ActiveDoc;
 import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeElement;
 
 import org.risource.pia.Agent;
+import org.risource.pia.site.SiteDoc;
 import org.risource.ds.List;
 
 /** Handler class for &lt;agent-home&gt tag 
@@ -39,23 +39,18 @@ public class agentHome extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, ActiveNodeList content) {
-    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
+    SiteDoc env = SiteDoc.getSiteDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;
     }
 
     Agent agent = env.getAgent(atts.getAttribute("agent"));
-    String pname = agent.pathName();
+    String pname = agent.getHomePath();
 
     boolean link = atts.hasTrueAttribute("link");
-    boolean type = atts.hasTrueAttribute("type");
 
     String home = pname;
-    if (type) {
-      home = agent.type();
-      if (home.equals(agent.name())) home = "/";
-    }
 
     if (link) {
       ActiveElement t = new TreeElement("a", null, null, null);

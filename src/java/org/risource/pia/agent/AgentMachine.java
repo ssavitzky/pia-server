@@ -1,5 +1,5 @@
 // AgentMachine.java
-// $Id: AgentMachine.java,v 1.5 1999-03-23 23:32:35 steve Exp $
+// $Id: AgentMachine.java,v 1.6 1999-09-22 00:23:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -128,7 +128,7 @@ public class AgentMachine extends Machine {
     Agent agnt = agent;
     if( agnt != null ){
       try{
-	agnt.respond(request, resolver);
+	// === unimplemented agnt.respond(request, resolver);
       }catch(PiaRuntimeException ue){
 	throw ue;
       }

@@ -1,5 +1,5 @@
 // Cache.java
-// $Id: Cache.java,v 1.5 1999-03-23 23:32:35 steve Exp $
+// $Id: Cache.java,v 1.6 1999-09-22 00:23:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,6 @@ import java.util.Locale;
 
 
 import org.risource.pia.PiaRuntimeException;
-import org.risource.pia.GenericAgent;
 import org.risource.pia.Content;
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
@@ -84,7 +83,7 @@ import org.w3c.www.http.HTTP;
   * agent start-up the cache will be built from the files
   * in today's subdirectory.
   */
-public class Cache extends GenericAgent {
+public class Cache extends Generic {
 
   String dataPath       = null;
   URL url               = null;

@@ -1,5 +1,5 @@
 // Agency.java
-// $Id: Agency.java,v 1.4 1999-03-23 23:32:34 steve Exp $
+// $Id: Agency.java,v 1.5 1999-09-22 00:23:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,6 @@ import org.risource.ds.Table;
 import org.risource.ds.List;
 import org.risource.ds.Criterion;
 
-import org.risource.pia.GenericAgent;
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
 import org.risource.pia.Pia;

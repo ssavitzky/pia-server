@@ -1,5 +1,5 @@
 // Dofs.java
-// $Id: Dofs.java,v 1.7 1999-04-30 23:38:05 steve Exp $
+// $Id: Dofs.java,v 1.8 1999-09-22 00:23:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,6 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.risource.pia.PiaRuntimeException;
-import org.risource.pia.GenericAgent;
 import org.risource.pia.FormContent;
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
@@ -63,7 +62,7 @@ import org.risource.util.Utilities;
 import org.risource.dps.namespace.*;
 
 import org.w3c.www.http.HTTP;
-public class Dofs extends GenericAgent {
+public class Dofs extends Agent {
   /**
    * Respond to a DOFS request. 
    * 	Figure out whether it's for a file or an active doc, and whether it's

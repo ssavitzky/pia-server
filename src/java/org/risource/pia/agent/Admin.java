@@ -1,5 +1,5 @@
 // Admin.java
-// $Id: Admin.java,v 1.6 1999-05-20 20:21:00 steve Exp $
+// $Id: Admin.java,v 1.7 1999-09-22 00:23:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,15 +40,13 @@ import org.risource.ds.Table;
 import org.risource.ds.List;
 import org.risource.ds.Criterion;
 
-import org.risource.pia.GenericAgent;
+import org.risource.site.*;
+
 import org.risource.pia.Resolver;
 import org.risource.pia.Agent;
 import org.risource.pia.Pia;
-import org.risource.pia.Transaction;
-import org.risource.pia.Machine;
-import org.risource.pia.HTTPRequest;
 
-public class Admin extends GenericAgent {
+public class Admin extends Generic {
   /**
    * This flag is set when the Admin agent is installed. 
    *	It exists so that certain handlers that depend on Admin can run
@@ -82,28 +80,16 @@ public class Admin extends GenericAgent {
 
     if( ht == null ) throw new NullPointerException("bad parameter Table ht\n");
     String name      = (String)ht.get("agent");
-    String type      = (String)ht.get("type");
     String className = (String)ht.get("class");
+    String docName   = (String)ht.get("state");
 
     if (name == null || name.equals(""))
       throw new AgentInstallException("No agent name");
 
-    if (type == null || type.equals(""))
-      type = name;
-
     /* Compute a plausible class name from the type. */
 
-    if (className == null){
-      char[] foo = new char[1]; 
-      foo[0] = type.charAt(0);
-
-      // Capitalize name.  
-      //	=== Should preserve case in rest of agent name ===
-      //	=== should use Util.javaName ===
-      String zname = (new String( foo )).toUpperCase();
-      if (type.length() > 1) zname += type.substring(1).toLowerCase();
-      className = "org.risource.pia.agent." + zname; 
-    } else if (className.length() > 0 && className.indexOf('.') < 0) {
+    if (className != null 
+	&& className.length() > 0 && className.indexOf('.') < 0) {
       className = "org.risource.pia.agent." + className; 
     }
 
@@ -113,28 +99,27 @@ public class Admin extends GenericAgent {
     if( className != null && className.length() > 0){
       try{
 	newAgent = (Agent) (Class.forName(className).newInstance()) ;
-	newAgent.name( name );
-	newAgent.type( type );
+	newAgent.setName( name );
       }catch(Exception ex){
+	throw new AgentInstallException("cannot load agent class" + ex);
       }
     }
 
-    /* If the class doesn't exist, use GenericAgent. */
+    /* If the class doesn't exist, use Generic. */
 
-    if (newAgent == null) newAgent = new GenericAgent(name, type);
+    if (newAgent == null) newAgent = new Generic(name, null);
 
     /* Install and initialize the new agent.  The Resolver actually 
        does the intialization, after installing the agent.
      */
 
-    newAgent.parseOptions(ht);
     installAgent( newAgent );
   }
   /**
    * Constructor.
    */
-  public Admin(String name, String type){
-    super(name, type);
+  public Admin(String name, Document doc){
+    super(name, doc);
     installed = true;
   }
 
@@ -142,14 +127,6 @@ public class Admin extends GenericAgent {
   public Admin() {
     super();
     installed = true;
-  }
-
-  /**
-   * initialize 
-   */
-  public void initialize() {
-    if (initialized) return;
-    super.initialize();
   }
 
 }

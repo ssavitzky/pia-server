@@ -1,5 +1,5 @@
 ////// agentInstall.java:  Handler for <agent-install>
-//	$Id: agentInstall.java,v 1.5 1999-04-07 23:22:25 steve Exp $
+//	$Id: agentInstall.java,v 1.6 1999-09-22 00:23:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,7 +26,8 @@ package org.risource.pia.agent;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
-import org.risource.dps.process.ActiveDoc;
+
+import org.risource.pia.site.SiteDoc;
 
 /** Handler class for &lt;agent-install&gt tag 
  */
@@ -34,7 +35,7 @@ public class agentInstall extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, ActiveNodeList content) {
-    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
+    SiteDoc env = SiteDoc.getSiteDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;

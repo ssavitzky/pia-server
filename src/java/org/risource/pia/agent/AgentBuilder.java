@@ -1,5 +1,5 @@
 ////// AgentBuilder.java: <namespace> Handler implementation
-//	$Id: AgentBuilder.java,v 1.3 1999-05-20 20:21:02 steve Exp $
+//	$Id: AgentBuilder.java,v 1.4 1999-09-22 00:23:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,9 +32,12 @@ import org.risource.dps.util.*;
 import org.risource.dps.namespace.*;
 import org.risource.dps.handle.GenericHandler;
 import org.risource.dps.tree.TreeAttrList;
-import org.risource.dps.process.ActiveDoc;
+import org.risource.dps.output.ToParseTree;
+
+import org.risource.site.*;
 
 import org.risource.pia.*;
+import org.risource.pia.site.*;
 import org.risource.ds.Tabular;
 
 /**
@@ -43,7 +46,7 @@ import org.risource.ds.Tabular;
  * <p>	Expand the content in a context that constructs a new Agent. 
  *	Install the Agent. 
  *
- * @version $Id: AgentBuilder.java,v 1.3 1999-05-20 20:21:02 steve Exp $
+ * @version $Id: AgentBuilder.java,v 1.4 1999-09-22 00:23:14 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -55,31 +58,42 @@ public class AgentBuilder extends GenericHandler {
 
   /** Action for &lt;AGENT&gt; node. */
   public void action(Input in, Context cxt, Output out) {
-    ActiveDoc env = ActiveDoc.getActiveDoc(cxt);
+    SiteDoc env = SiteDoc.getSiteDoc(cxt);
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     if (atts == null) atts = new TreeAttrList();
     String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
 
-    // Security check:  the current agent must be Admin.
-    //	 we make an exception if the Admin agent hasn't been started yet.
-    Agent admin = env.getAgent();
-    if (!(admin instanceof Admin) && Pia.adminStarted) {
-      reportError(in, cxt, "only works in the Admin agent");
-      return;
-    }
+    // The old security check doesn't work anymore.
+    //	 There's no Admin agent now.
 
+    // Make the AGENT node with the correct class. 
     Agent agent = makeAgent(in, cxt, name, atts);
-    agent.loadFrom(in, cxt, (Tabular)atts);
-    Pia.resolver().registerAgent( agent );
-    out.putNode((ActiveNode)agent);
+
+    // Set up the correct tagset for parsing the Agent's content.
+
+    Tagset     ts = agent.getTagset();
+    Output loader = new ToParseTree((ActiveNode)agent, ts);
+    TopContext tp = env.subDocument(in, cxt, loader, ts);
+    // It's up to the subDocument processor to switch tagsets.
+    Processor p = tp.subProcess(tp.getInput(), loader);
+
+    // Copy the children.  
+    //   === We would like to use processChildren, but it seems to expand 
+    //	 === things even inside of an <action> tag.  
+
+    Copy.copyChildren(tp.getInput(), loader);
+    //p.processChildren();
+    loader.endNode();
+    env.subDocumentEnd();
+
+    // Initialize the Agent
+    agent.initialize();
   }
 
-  /** Construct the agent. */
+  /** Construct the agent node. */
   protected Agent makeAgent(Input in, Context cxt, String name,
 			    ActiveAttrList atts) {
-    String type = atts.getAttribute("type");
-    if (type != null) type = type.trim();
     String className = atts.getAttribute("class");
     if (className != null) className = className.trim();
 
@@ -87,25 +101,34 @@ public class AgentBuilder extends GenericHandler {
       className = "org.risource.pia.agent." + className; 
     }
 
-    ActiveDoc env = ActiveDoc.getActiveDoc(cxt);
-    if (env == null) {
-      reportError(in, cxt, "PIA not running.");
-      return null;
-    }
+    TopContext env = cxt.getTopContext();
 
     Agent newAgent = null;
     if (className != null) {
       try{
 	newAgent = (Agent) (Class.forName(className).newInstance()) ;
-	newAgent.name( name );
-	newAgent.type( type );
+	newAgent.setName( name );
+	newAgent.setAttribute("class", className);
       }catch(Exception ex){
 	reportError(in, cxt, "Unable to load Agent class " + className);
       }
     }
     if (newAgent == null) {
-      newAgent = new GenericAgent(name, type);
+      newAgent = new Generic(name, env.getDocument());
     }
+
+    cxt.message(1, "Creating agent from " + env.getDocument().getPath(), 
+		2, false);
+
+    ActiveNodeList nl = (atts == null)? null : atts.asNodeList();
+    for (int i = 0; nl != null && i < nl.getLength(); i++) {
+      ActiveAttr at = (ActiveAttr) nl.activeItem(i);
+      newAgent.setAttributeNode(at);
+    }
+
+    Resource home = env.getDocument().getContainer();
+    newAgent.setHome((Subsite)home);
+    if (name != null) home.getRoot().registerAgentHome(name, home);
 
     return newAgent;
   }
