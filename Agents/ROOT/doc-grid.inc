@@ -41,7 +41,12 @@
     </td>
     <td bgcolor=silver>&nbsp;</td>  
   </tr>
-  <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
+  <tr> <td>&nbsp; </td>
+       <td align="right" bgcolor="silver" colspan=2>
+       <font size="-3">
+         "$Id: doc-grid.inc,v 1.18 2000-04-19 23:52:24 steve Exp $"</font>
+       </td> 
+       <td bgcolor=silver>&nbsp;</td>  
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.17 2000-04-18 21:33:35 steve Exp $"/>
+<!--  cvsid="$Id: doc-grid.inc,v 1.18 2000-04-19 23:52:24 steve Exp $"-->

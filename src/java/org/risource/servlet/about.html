@@ -28,8 +28,12 @@
 <p> So far, PIAServlet has only been tested in Apache-JServ and Sun's
     <code>servletrunner</code> in JSDK2.0.  Because <code>PIAServlet</code> is
     still <em>highly</em> experimental, it should be configured with a path to
-    a file that it uses as a log file.  Configuration files can be found in <a
-    href="../../../../../Config/Servlet/">PIA/Config/Servlet</a>.
+    a file that it uses as a log file.  Configuration files for JServ can be
+    found in <a href="../../../../../Config/Servlet/">PIA/Config/Servlet</a>.
+    If you run the PIA under <code>servletrunner</code> you <em>must</em> tell
+    it where to find the tagsets (the <code>home</code> initialization
+    parameter), otherwise it will fail with a null pointer exception whenever
+    it tries to load a tagset.
 </p>
 
 <p> The biggest problem with PIAServlet so far is that a Servlet is
@@ -50,6 +54,22 @@
        in your server.
   </li>
 </ol>
+
+<h2>Testing</h2>
+
+<p> Assuming you have JSDK2.0 and <code>servletrunner</code>, you can start
+    the server with the command:
+</p>
+<pre>
+ /usr/local/JSDK2.0/bin/servletrunner -r ~/PIA
+</pre>
+
+<p> and point your browser to:
+</p>
+<pre>
+ <a href="http://localhost:8080/servlet/org.risource.servlet.PIAServlet/"
+ >http://localhost:8080/servlet/org.risource.servlet.PIAServlet/</a>
+</pre>
 
 <h2>To-Do list</h2>
 
@@ -94,5 +114,5 @@
 
 <hr />
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
-<i>$Id: about.html,v 1.7 2000-04-19 01:09:42 steve Exp $</i><br />
+<i>$Id: about.html,v 1.8 2000-04-19 23:52:35 steve Exp $</i><br />
 </body></html>

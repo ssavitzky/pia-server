@@ -40,6 +40,7 @@
 		<a href="&PIA:rootPath;Samples/">Samples</a>
 		<a href="&PIA:rootPath;Doc/doclist.html">Docs</a>
 		<a href="&PIA:rootPath;Tagsets">Tagsets</a>
+      		(<a href="&PIA:rootPath;lib/">lib</a>)
 		<a href="&PIA:rootPath;src/">Sources</a>
         </td></tr>
   <if><get name="agentNames"/><then>	
@@ -70,11 +71,16 @@
   </if>
   <if><get name="PIA:servlet"/><then>
     <tr> <th valign="top" align="right"><b>Servlet:</b>&nbsp;</th>
-	 <td> <font size="-1"><code><get name="PIA:servlet"/></code></font>
-	      <br /> mounted at:
+	 <td> class name:
+	      <font size="-1"><code><get name="PIA:servlet"/></code></font>
+	      <br /> mounted at: <font size="-1">
 	      <a href="&PIA:rootPath;"><code>&PIA:rootPath;</code></a>
+	      </font><br /> files:
+	      <a href="src/java/org/risource/servlet/">source code</a>,
+	      <a href="Config/Servlet/">config files</a>
 	 </td>
     </tr>
+    </then>
   </if>
     <tr><td width="170">&nbsp;</td><td></td></tr>
   </table>
@@ -84,5 +90,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.16 2000-04-18 21:33:19 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.17 2000-04-19 23:52:16 steve Exp $" />
 </p></body></html>
