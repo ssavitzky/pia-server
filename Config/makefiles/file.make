@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-#   $Id: file.make,v 1.5 1999-11-09 23:23:11 steve Exp $
+#   $Id: file.make,v 1.6 1999-12-14 18:57:14 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -112,3 +112,5 @@ HEADER.html:
 	$(PROCESS) -t $(TAGSET) $< > $@
 	{ grep -s $@ .cvsignore } || echo $@ >> .cvsignore
 
+ts-clean::
+	rm -f *.tss *.tso *.obj
