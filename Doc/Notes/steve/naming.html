@@ -303,6 +303,11 @@
     something like <code>/History/History.agent</code>; the toolbar agents
     might be <code>*.agent</code> under <code>/Toolbar</code>.
 
+<p> Moreover, it is no longer necessary for an agent to be associated with the
+    Resolver; an agent is simply a piece of XML code that is executed in
+    response to something other than a direct request from the server.  In
+    particular, Cron can be an agent.
+
 <p> It will be possible to access agents by name by way of a namespace;
     e.g. <code>AGENTS:History</code>.  Note, however, that individual agents
     will not be mounted in URL space the way they are now -- there will just
@@ -373,7 +378,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.12 1999-07-24 00:14:11 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.13 1999-07-26 16:44:07 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
