@@ -1,5 +1,5 @@
 // Header.java
-// $Id: Headers.java,v 1.4 1999-03-12 19:49:57 pgage Exp $
+// $Id: Headers.java,v 1.5 1999-07-14 23:44:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -85,7 +85,7 @@ public class Headers {
       try{
 	MimeType mt = new MimeType( type );
 	zheaders.setContentType( mt );
-	org.risource.pia.Pia.debug(this,"Content type set to "+type);
+	//org.risource.pia.Pia.debug(this,"Content type set to "+type);
       }catch( MimeTypeFormatException e ){
 	throw new BadMimeTypeException("Bad mime type.");
       }
@@ -100,7 +100,7 @@ public class Headers {
     {
       if (zheaders != null) {
 	zheaders.setContentType(type);
-	org.risource.pia.Pia.debug(this,"Content type set to "+type.toString());
+	//org.risource.pia.Pia.debug(this,"Content type set to "+type.toString());
       }
     }
 
