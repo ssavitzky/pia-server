@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.12 2000-06-28 01:49:18 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.13 2000-06-29 01:57:18 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -347,14 +347,16 @@ Note that we only need these inside the PIA.
     </doc>
   </define>
   <action><if>
-        <test match="^[a-zA-Z]+[:]">&content;</test>
-	  <then></then>
-	<else-if><test match="^\.[/]?$">&content;</test>
-	  <then><get name="attributes:path"><get name="LOC:path" /></get>/</then></else-if>
-	<else-if><test match="^[/]">&content;</test>
-	  <then>&content;</then></else-if>
-	  <else><get name="attributes:path"><get name="LOC:path" /></get><hide>
-	        </hide>/&content;</else>
+	<test match="^[a-zA-Z]+[:]">&content;</test>
+	<then></then>
+      <else-if><test match="^\.[/]?$">&content;</test>
+	<then><get name="attributes:path"><get name="LOC:path" /></get>/</then>
+      </else-if>
+      <else-if><test match="^[/]">&content;</test>
+	<then>&content;</then></else-if>
+	<else><subst match="[/]+" result="/"><hide>
+	  </hide><get name="attributes:path"><get name="LOC:path" /></get><hide>
+	  </hide>/&content;</subst></else>
   </if></action>
 </define>
 
@@ -445,6 +447,126 @@ Note that we only need these inside the PIA.
   </if></action>
 </define>
 
+<h2>Note-listing components</h2>
+
+<!-- $Id: woad-xhtml.ts,v 1.13 2000-06-29 01:57:18 steve Exp $ -->
+
+<define element="rejectNote">
+  <doc> decide whether to omit a file from the notes listing
+  </doc>
+  <action>
+    <test not="not" match="\.ww$">&content;</test>
+  </action>
+</define>
+
+<doc> originally we did multiple includes for each note: gross.
+      Now we suck in the whole note (it's short) and put it in a global.
+     === do NOT do this with index files -- list them separately.
+</doc>
+
+<define element="load-note">
+  <action>
+    <set name="VAR:note">
+	<include quoted tagset="/.Woad/woad-web.ts" src="&content;" />
+    </set>
+  </action>
+</define>
+
+<define element="note-title" syntax="empty">
+  <action>
+    <extract><from><get name="VAR:note" /></from>
+	     <name all="all">title</name> <content /></extract>
+  </action>
+</define>
+
+<define element="note-content" syntax="empty">
+  <action>
+    <extract><from><get name="VAR:note" /></from>
+	     <name all="all">content</name> <content /></extract>
+  </action>
+</define>
+
+<define element="note-summary" syntax="empty">
+  <action>
+    <extract><from><get name="VAR:note" /></from>
+	     <name all="all">summary</name> <content /></extract>
+  </action>
+</define>
+
+<define element="describeIndex">
+  <doc> An index file's listing entry.	The content is the filename of the
+	index.
+  </doc>
+  <action><text op="trim">
+    <let name="basename"><subst match="\.wi$" result="">&content;</subst></let>
+    <em>( <ss>WOAD</ss> <hide>
+        </hide><a href="/.Woad/help.xh#&basename;">&basename;</a> file )</em> 
+  </text></action>
+</define>
+
+<define element="describeNote">
+  <doc> A note's listing entry: this contains the title (if any, boldfaced),
+	the summary (if any), and a [more] link if the note has additional
+	content.
+  </doc>
+  <action>
+    <load-note>&content;</load-note>
+    <if> <note-title /> <note-summary />
+	 <then> <if> <note-title />
+		     <then> <b><note-title /></b><br />
+		     </then>
+		</if>
+		<note-summary />
+		<if> <note-content />
+		     <then> <a href="&content;">[more]</a>
+		     </then>
+		</if>
+	</then>
+	<else> <em>( <ss>WOAD</ss> annotation file: untitled )</em>
+	</else>
+    </if>
+  </action>
+</define>
+
+<define element="uniquify">
+  <doc> Append a numeric suffix to the name in the content to make it unique.
+	Takes file list in <code>&amp;files;</code>.
+  </doc>
+  <action><hide>
+    <set name="n">001</set>
+    <repeat><while><extract><from>&files;</from>
+			    <key>&content;-&n;.ww</key></extract>
+	    </while>
+	    <set name="n"><numeric op="sum" pad="3">&n; 1</numeric></set>
+    </repeat>
+    </hide>&content;-&n;<hide>
+  </hide></action>
+</define>
+
+<define element="listNoteFiles">
+  <doc> This element sets the entities <code>files</code>,
+	<code>indexFiles</code>, and <code>noteFiles</code>.  The content is
+	the path to the directory containing the notes.
+  </doc>
+  <action>
+    <set name="VAR:files">
+      <text sort><status item="files" src="&content;" /></text>
+    </set>
+
+    <set name="VAR:indexFiles">
+      <extract><from>&files;</from><match>\.wi$</match></extract>
+    </set>
+
+    <set name="VAR:noteFiles">
+      <repeat><foreach entity="f">&files;</foreach>
+	 <if><rejectNote>&f;</rejectNote>
+	     <else>&f;</else>
+	 </if>
+      </repeat>
+    </set>
+  </action>
+</define>
+		     
 <h2>Page Components</h2>
 
 <h3>Utility tags for use in page components</h3>
@@ -675,6 +797,19 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<define element="tool-bar">
+  <doc> A toolbar or collection of useful forms and other gizmos.
+  </doc>
+  <action>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <form action="/.words/">
+	<td align="right"> look up: <input name="word" />
+	</td>
+    </form>
+    </table>
+  </action>
+</define>
+
 <define element="index-bar">
   <doc> A navigation bar used to index sections within a page.  Content is a
 	list of section names.  
@@ -684,17 +819,20 @@ Note that we only need these inside the PIA.
     </doc>
   </define>
   <action><a name="&attributes:name;"><hr /></a>
-    <table width="100%" border="2" cellpadding="3" cellspacing="0"
+    <table width="100%" border="2" cellpadding="0" cellspacing="0"
 	   bgcolor="99ccff">
-      <tr><td>
-	<repeat>
-	  <foreach><text op="trim"><get name="content"/></text></foreach>
-	  <xan name="&li;"><get name="attributes:name"/></xan>
-	</repeat>
-      </td></tr>
+      <tr>
+	<td> <repeat>
+	       <foreach><text op="trim"><get name="content"/></text></foreach>
+	       <xan name="&li;"><get name="attributes:name"/></xan>
+	     </repeat>
+	</td>
+      </tr>
     </table>
   </action>
 </define>
+
+    
 
 <define element="nav-bar">
   <doc> A navigation bar, usually placed just above the copyright notice in
