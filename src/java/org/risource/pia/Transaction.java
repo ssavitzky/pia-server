@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.8 1999-07-08 21:39:09 bill Exp $
+// $Id: Transaction.java,v 1.9 1999-07-20 01:09:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -688,6 +688,10 @@ public abstract class Transaction
 	  + "  You may need to change the proxy the PIA is using. \n";
 	throw new PiaRuntimeException (this, "initializeHeader", msg) ;
       }
+
+      while (firstLine.length() == 0
+	  || org.risource.dps.util.Test.isWhitespace(firstLine)) 
+	firstLine = input.readLine();
 
       if( firstLine.length() > 0 )
 	Pia.debug(this, "the firstline-->" + firstLine);

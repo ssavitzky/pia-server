@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.28 1999-07-14 20:27:33 steve Exp $
+// $Id: GenericAgent.java,v 1.29 1999-07-20 01:09:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -99,29 +99,57 @@ public class GenericAgent extends BasicNamespace
   public static String user_doc_dir_name = "user-dir";
   public static String data_dir_name = "data-dir";
 
-  /** Extensions of executable files.
-   *	Everything with <code><em>index</em>&gt;=firstDPSType</code> is
-   *	processed with the DPS. 
+  /** Extensions of executable files (default list).  
+   *	Currently only used by stripDestFile, which is a crock anyway.
    */
-  protected int firstDPSType = 1;
-  protected String executableTypes[] = {
-    "cgi", 	"xh",	  	"xx"};
-  protected String resultTypes[] = {
-    null, 	"text/html",	"text/xml"};
-  protected String tagsetNames[] = {
-    null, 	"xhtml", 	"xxml"};
+  protected static String executableTypes[] = {
+    "xh",       	"xx", 		"cgi"
+  };
 
+  /** Extensions of all files the Agent is supposed to know about. */
+  protected static String fileTypes[] = {
+    "xh",		"xx",		"cgi",		"inc",
+    "html",		"xml",		"htm",		"txt",
+  };
+  /** MIME Types corresponding to the file types. */
+  protected static String resultTypes[] = {
+    "text/html",	"text/xml",	"",		"",
+    "text/html", 	"text/xml", 	"text/html", 	"text/plain",};
+  /** Tagset to use for processing a file of this type.
+   *
+   *<p>	Entry of "#" means the user cannot request files of this type by URL;
+   *	entry of "" means no processing; entry starting with "!" indicates
+   *	a CGI.
+   */
+  protected static String tagsetNames[] = {
+    "xhtml", 		"xxml",		"!",		"#",
+    "",			"",		"",		"", 
+  };
+
+  /** Extension map unique to this agent. */
+  protected ActiveNodeList extensions = null;
+
+  /** Table that maps file suffix into tagset.  
+   *
+   *<p>	A ``tagset'' name that starts with ``<code>!</code>'' indicates an
+   *	external command to be run as a CGI script interperter.  For example,
+   *	<code>.pl</code> might be mapped into <code>!/usr/bin/perl</code>.
+   *	A simple ``<code>!</code>'' indicates a file that is directly 
+   *	executable.
+   */
+  protected Table tagsetMap   = null;
+
+  /** Table that maps file suffix into <em>result</em> MIME type. */
+  protected Table mimeTypeMap = null;
 
   /** A ``search path'' of filename suffixes for (possibly) executable files. */
-  protected String codeSearch[] = {
-    "xh", "xx", "cgi",
-    "html", "xml", "htm", "txt", 
-  };
+  protected List codeSearch;
 
-  /** A ``search path'' of filename suffixes for data files. */
-  protected String dataSearch[] = {
-    "html", "xml", "htm", "txt", 
-  };
+  /** A ``search path'' of filename suffixes for data files.
+   *	Note that this does not include <em>all</em> suffixes, only those
+   *	for which we want to check when no suffix is given on a URL.
+   */
+  protected List dataSearch;
 
   /** Suffix appended to the agent's name to get to its 'home page' */
   public String homePathSuffix = "/home";
@@ -388,6 +416,7 @@ public class GenericAgent extends BasicNamespace
     put("type", t);
     put("path", path());
     put("pathName", pathName());
+    processExtensions();
 
     if (initProcessor == null) {
       // Fake a request for the initialization file. 
@@ -737,6 +766,113 @@ public class GenericAgent extends BasicNamespace
   }
 
   /************************************************************************
+  ** File Extensions:
+  ************************************************************************/
+
+  /** Process new extensions list after it is set. */
+  protected void processExtensions() {
+    tagsetMap   = new Table();
+    mimeTypeMap = new Table();
+    codeSearch	= new List();
+    dataSearch  = new List();
+    if (extensions != null) {
+      for (int i = 0; i < extensions.getLength(); ++i) {
+	ActiveElement e = extensions.activeItem(i).asElement();
+	if (e == null) continue;
+
+	String ext = e.getAttribute("extension");
+	if (ext == null) ext = e.getAttribute("ext");
+	if (ext == null) ext = "";
+	String type = e.getAttribute("type");
+	if (type == null) type = "";
+	String ts = e.getAttribute("tagset");
+	if (ts == null) ts = "";
+
+	tagsetMap.put(ext, ts);
+	mimeTypeMap.put(ext, type);
+	if (! ts.startsWith("#")) {
+	  dataSearch.push(ext);
+	  if (ts.length() != 0) codeSearch.push(ext);
+	}
+      }
+    } 
+    // Now go through the defaults.  Omit anything already defined.
+    for (int i = 0; i < fileTypes.length; ++i) {
+      String ext = fileTypes[i];
+      String ts  = tagsetNames[i];
+      if (ts == null) ts = "";
+      if (tagsetMap.get(ext) != null) continue;
+      tagsetMap.put(ext, ts);
+      String type = resultTypes[i];
+      mimeTypeMap.put(ext, type);
+      if (! type.startsWith("#")) {
+	dataSearch.push(ext);
+	if (ts.length() != 0) codeSearch.push(ext);
+      }
+    }
+  }
+
+  /**
+   * Strip off destination file name for put.
+   *
+   * <p> In order for this to work, the URL must contain an explicit 
+   *	 filename extension.  The part <em>after</em> this extension is
+   *	 returned in agent.destFileName === not thread safe! ===.
+   *
+   * <p> === What it should really return is the index of the / that 
+   *	     separates the active document from the path extension!
+   *	     We should search for a document first; if not found, 
+   *	     look at prefixes until we find an executable one. 
+   *
+   * @return path with document or cgi
+   */
+  protected String stripDestFile(String path){
+    // If there is a destination file name after the active doc, strip it
+    destFileName = null;
+
+    for (int i = 0; i < executableTypes.length; ++i) {
+      String ext = "." + executableTypes[i] + "/";
+      int pos = path.indexOf(ext);
+      if( pos > 0 ){
+	destFileName = path.substring(pos+ext.length());
+	return path.substring(0, pos+ext.length());
+      }
+    }
+    return path;
+  }
+
+  /** Extract the extension from a (URL) path. */
+  protected static final String getExtension(String path) {
+    int i = path.lastIndexOf('.');
+    int j = path.lastIndexOf('/');
+    return (i < 0 || i <= j)? null : path.substring(i+1);
+  }
+
+  // === These all ought to operate on the path-prefix and the extension,
+  // === but that would be a significant change to the file-finding stuff.
+
+  protected boolean isDPSType(String path) {
+    String ext = getExtension(path);
+    Object x   = tagsetMap.get(ext);
+    String ts  = (x == null)? null : x.toString();
+    return ts != null && ts.length() > 0;
+  }
+
+  protected String resultType(String path) {
+    String ext = getExtension(path);
+    Object x   = mimeTypeMap.get(ext);
+    String typ = (x == null)? null : x.toString();
+    return (typ != null && typ.length() > 0)? typ : "text/html";
+  }
+
+  protected String tagsetName(String path) {
+    String ext = getExtension(path);
+    Object x   = tagsetMap.get(ext);
+    String ts  = (x == null)? null : x.toString();
+    return (ts != null && ts.length() > 0)? ts : null;
+  }
+
+  /************************************************************************
   ** File attributes:
   ************************************************************************/
 
@@ -1045,7 +1181,10 @@ public class GenericAgent extends BasicNamespace
 	if (value == null) return;
       }
       authPolicy = new Authenticator( "Basic", value.toString());
-      Pia.debug(this, "Setting  authentication passwordfile:=" +value);
+      Pia.debug(this, "Setting authentication password file:=" +value);
+    } else if (name.equals("extension-map")) {
+      extensions = (ActiveNodeList) value;
+      processExtensions();
     }
   }
 
@@ -1079,6 +1218,7 @@ public class GenericAgent extends BasicNamespace
     indirect("act-on");
     indirect("handle");
     indirect("authentication");
+    indirect("extension-map");
     indirect("home-dir", true);
     indirect("data-dir", true);
     indirect("user-dir", true);
@@ -1273,7 +1413,7 @@ public class GenericAgent extends BasicNamespace
   /**
    * Find a data file. 
    */
-  public String findDataFile(String path, String suffixPath[],
+  public String findDataFile(String path, List suffixPath,
 			     boolean forWriting) {
     // === should be similar to findDocument below, but with data dir
     
@@ -1283,7 +1423,7 @@ public class GenericAgent extends BasicNamespace
   /**
    * Find a filename relative to this Agent.
    */
-  public String findDocument(String path, String suffixPath[],
+  public String findDocument(String path, List suffixPath,
 			     boolean forWriting) {
     if ( path == null ) return null;
     List dirPath = forWriting? dataSearchPath(): documentSearchPath();
@@ -1437,55 +1577,6 @@ public class GenericAgent extends BasicNamespace
     return respondWithDocument(request, url.getFile(), res);
   }
 
-  /**
-   * Strip off destination file name for put.
-   *
-   * <p> In order for this to work, the URL must contain an explicit 
-   *	 filename extension.  The part <em>after</em> this extension is
-   *	 returned in agent.destFileName === not thread safe! ===.
-   *	 === What it should really return is the index of the / that 
-   *	 === separates the active document from the path extension!
-   *
-   * @return path with document or cgi
-   */
-  protected String stripDestFile(String path){
-    // If there is a destination file name after the active doc, strip it
-    destFileName = null;
-
-    for (int i = 0; i < executableTypes.length; ++i) {
-      String ext = "." + executableTypes[i] + "/";
-      int pos = path.indexOf(ext);
-      if( pos > 0 ){
-	destFileName = path.substring(pos+ext.length());
-	return path.substring(0, pos+ext.length());
-      }
-    }
-    return path;
-  }
-
-  protected boolean isDPSType(String path) {
-    for (int i = firstDPSType; i < executableTypes.length; ++i) {
-      if (path.endsWith("."+executableTypes[i])) return true;
-    }
-    return false;
-  }
-
-  protected String resultType(String path) {
-    for (int i = 0; i < executableTypes.length; ++i) {
-      if (path.endsWith("."+executableTypes[i])
-	  && resultTypes[i] != null) return resultTypes[i];
-    }
-    return "text/html";
-  }
-
-  protected String tagsetName(String path) {
-    for (int i = 0; i < executableTypes.length; ++i) {
-      if (path.endsWith("."+executableTypes[i])
-	  && resultTypes[i] != null) return tagsetNames[i];
-    }
-    return null;
-  }
-
   /** Perform any necessary rewriting on the given path. */
   protected String rewritePath(Transaction request, String path) {
     return path;
@@ -1532,19 +1623,24 @@ public class GenericAgent extends BasicNamespace
       return true; //not clear-returning true because response has been set
     }
       
-    if( file.endsWith(".cgi") ){
+    String tsname = tagsetName(file);
+    String mimetype = resultType(file);
+
+    if( tsname == null || tsname.length() == 0 ) {
+      FileAccess.retrieveFile(file, request, this);
+    } else if (tsname.startsWith("!")) {
       try{
 	execCgi( request, file );
       }catch(PiaRuntimeException ee ){
 	throw ee;
       }
-    } else if (isDPSType(file)) {
-      sendProcessedResponse(file, destFileName, request, res);
+    } else if (tsname.startsWith("#")) {
+      return false;
     } else {
-      FileAccess.retrieveFile(file, request, this);
+      sendProcessedResponse(file, destFileName, request, res);
     }
     return true;
-    }
+  }
 
   protected void execCgi( Transaction request, String file )
        throws PiaRuntimeException

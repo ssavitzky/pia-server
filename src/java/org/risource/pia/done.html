@@ -227,11 +227,19 @@ See also:
   <li> 1999-06-15 <b>Bug</b> Type agent inheritance might not be working <br>
        (1999-06-14) <br>
        -- but it seems to work, at least for the Toolbar and DOFS agents. 
+
+  <li> 1999-07-19 <b>Hole</b> per-Agent mappings for file extensions <br>
+       Need a way to specify tagset, MIME type for various extensions
+       (specifically <code>.html</code>).
+       (1999-07-14) [requested by Tim] <br>
+       -- &lt;bind name="AGENT:extension-map"&gt;
+              &lt;ext extension="html" type="text/html" tagset="foo" /&gt; ...
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.11 1999-06-17 01:06:28 steve Exp $</b><br>
+<b>$Id: done.html,v 1.12 1999-07-20 01:09:59 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

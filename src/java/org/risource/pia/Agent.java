@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.9 1999-04-30 23:37:52 steve Exp $
+// $Id: Agent.java,v 1.10 1999-07-20 01:09:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -233,13 +233,13 @@ public interface Agent extends Namespace {
    * Find an document, using an optional suffix search list and adjusting
    *	the directory search path according to whether writing is required.
    */
-  public String findDocument( String path, String suffixSearch[], 
+  public String findDocument( String path, List suffixSearch, 
 			       boolean forWriting );
 
   /**
    * Find a data file using an optional suffix search list. 
    */
-  public String findDataFile( String path, String suffixSearch[], 
+  public String findDataFile( String path, List suffixSearch, 
 			      boolean forWriting );
 
 
@@ -253,7 +253,8 @@ public interface Agent extends Namespace {
    * need to modify the URL in the request.  It can pass either a full
    * URL or a path.
    */
-  public void respond(Transaction trans, Resolver res) throws PiaRuntimeException;
+  public void respond(Transaction trans, Resolver res)
+    throws PiaRuntimeException;
 
   /**
    * Given a url string and content create a request transaction.

@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.15 1999-05-21 21:48:02 steve Exp $
+//	$Id: ActiveDoc.java,v 1.16 1999-07-20 01:09:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.15 1999-05-21 21:48:02 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.16 1999-07-20 01:09:41 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -272,7 +272,7 @@ public class ActiveDoc extends TopProcessor {
       Agent a = resolver.agentFromPath(path);
       if (a == null) return null;
       // Use that agent to look up the path.  Seems only fair.
-      path = a.findDocument(path, resourceSearch, forWriting);
+      path = a.findDocument(path, null, forWriting);
       return (path == null)? null : new File(path);
     } else if (path.indexOf(":") >= 0) {
       // URL: fail.
@@ -282,16 +282,10 @@ public class ActiveDoc extends TopProcessor {
       if (!path.startsWith("./")) {
 	path = agent.pathName() + "/" + path;
       }
-      path = agent.findDocument(path, resourceSearch, forWriting);
+      path = agent.findDocument(path, null, forWriting);
       return (path == null)? null : new File(path);
     }
   }
-
-  /** Search string that allows locateSystemResource to find .inc files. */
-  protected String resourceSearch[] = {
-    "xh", "xx", "inc", 
-    "html", "xml", "htm", "txt", 
-  };
 
   /** Determine whether a resource name is a remote path. 
    *	In our case, paths starting with <code>pia:</code> as well as  

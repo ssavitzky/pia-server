@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.10 1999-05-20 20:18:05 steve Exp $
+// $Id: FileAccess.java,v 1.11 1999-07-20 01:09:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -140,7 +140,7 @@ public class FileAccess {
   /** Find a file given a search-path of directories and a search-path of
    *	suffixes.
    */
-  public static String findFile(String path, List dirPath, String suffixPath[]){
+  public static String findFile(String path, List dirPath, List suffixPath){
     // Remove leading "/" because every directory name in the search path
     // ends with it. 
     if( path.startsWith("/") )	path = path.substring(1);
@@ -173,10 +173,11 @@ public class FileAccess {
 	else f = new File(fn.toString(), path);
 	Pia.debug("    trying -->"+ f.getPath());
 	if( f.exists() ) return f.getPath();
+	if (suffixPath == null) return null;
 
 	String wholepath = path+".";
-	for (int i = 0; i < suffixPath.length; ++i) {
-	  String xpath = wholepath + suffixPath[i];
+	for (int i = 0; i < suffixPath.nItems(); ++i) {
+	  String xpath = wholepath + suffixPath.at(i);
 	  if (fn instanceof File) f = new File((File)fn, xpath);
 	  else f = new File(fn.toString(), xpath);
 	  Pia.debug("    trying -->"+ f.getPath());
@@ -280,7 +281,7 @@ public class FileAccess {
 	}
 
 	if (all || !ignoreFile(zfile, filepath)) {
-	  entry = "<LI> <a href=\"" + mypath + zfile + "\">" + zfile + "</a>" ;
+	  entry = "<li> <a href=\"" + mypath + zfile + "\">" + zfile + "</a>" ;
 	  if ( f.isDirectory() )
 	    entry += " <a href=\"" + mypath + zfile + "/\">" + " / " + "</a>";
 
@@ -290,23 +291,23 @@ public class FileAccess {
 
       /* Java doesn't list "..", so include it here. */
 
-      entry = "<LI> <a href=\"" + mypath + ".." + "\">" + ".." + "</a>";
+      entry = "<li> <a href=\"" + mypath + ".." + "\">" + ".." + "</a>";
       entry += " <a href=\"" + mypath +  ".." + "/\">" + " / " + "</a>";
       entries.insert(Association.associate(entry, ".."));
 
-      if (head == null) head = "<H1>Directory listing of "+ mybase +"</H1>";
+      if (head == null) head = "<h1>Directory listing of "+ mybase +"</h1>";
 
       List sortList = new List();
       entries.ascendingValues(sortList);
       String allurls = sortList.join("\n");
 
-      String html = "\n" + "<HTML>\n<HEAD>" + "<TITLE>" + mypath + "</TITLE>"
-	+ (DIR_BASE? "<BASE href=\"" + mybase + "\">" : "")
-	+ "</HEAD>\n<BODY>" + head
+      String html = "\n" + "<html>\n<head>" + "<title>" + mypath + "</title>"
+	+ (DIR_BASE? "<base href=\"" + mybase + "\">" : "")
+	+ "</head>\n<body>" + head
 	+ "<h3><a href=\"/" + agent.type() + "/" + agent.name() + "\">/" 
 	  + agent.type() + "/" + agent.name() + ":</a> " + mypath + "</h3>"
 	+ "<h4><a href=\"file:" + path + "\">file:" + path + "</a></h4>"
-	+ "<UL>" + allurls + "</UL>" + "</BODY>\n</HTML>\n";
+	+ "<ul>" + allurls + "</ul>" + "</body>\n</html>\n";
 	  
       Content bs = new org.risource.content.text.Default(new StringReader(html));
       

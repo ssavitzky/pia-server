@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.7 1999-05-20 20:18:10 steve Exp $
+// $Id: HTTPResponse.java,v 1.8 1999-07-20 01:09:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -120,6 +120,13 @@ public class  HTTPResponse extends Transaction {
   {
     if( firstLine == null ){
       String msg = "firstLine is null...\n";
+      throw new PiaRuntimeException (this
+				     , "parseInitializationString"
+				     , msg) ;
+    }
+
+    if( org.risource.dps.util.Test.isWhitespace(firstLine) ){
+      String msg = "firstLine is empty...<pre>'" + firstLine + "'</pre>...\n";
       throw new PiaRuntimeException (this
 				     , "parseInitializationString"
 				     , msg) ;
