@@ -17,6 +17,152 @@
 
 
 <h2><a name="announce">Release Announcements</a></h2>
+<h3>Release 2.0.7 (Storm Warnings!)</h3>
+
+<p> This release incorporates the changes that were foreshadowed in 2.0.6.
+    <em>If you have been developing agents, they will need to be fixed!</em>
+
+<h4>Changes since 2.0.6</h4>
+
+<ol>
+  <li> The PIA has gone from having essentially two major components (the
+       <code><a href="../../src/java/org/risource/pia/">pia</a></code> server
+       engine and the <code><a
+       href="../../src/java/org/risource/dps/">dps</a></code> document
+       processor) to three, adding the <code><a
+       href="../../src/java/org/risource/site/">site</a></code> Site Resource
+       Package.  You can get a summary and overview by reading:
+       <ol>
+	 <li> <a href="../../src/java/org/risource/pia/about.html">About the
+	      PIA Core Engine</a> in the
+	      <a href="../../src/java/org/risource/pia/">org.risource.pia</a>
+	      package.
+	 <li> <a href="../../src/java/org/risource/site/about.html">About the
+	      Site Resource Package</a> in the
+	      <a href="../../src/java/org/risource/site/">org.risource.site</a>
+	      package.
+	 <li> <a href="../Notes/steve/naming.html">Notes on Naming</a> in
+	      <a href="../Notes/steve/">Steve's notes</a>
+       </ol>
+  <li> The main change, and it's a big one, is that Agents no longer play a
+       role in mapping URL's onto files.  The Site Resource Package does that
+       now.  Although each Agent still has a ``home directory'', accessible as
+       <code>~<em>name</em></code>, this is the <em>only</em> directory
+       associated with the agent.  Its data directory is simply a subdirectory
+       of its home directory.
+  <li> The old hack whereby a URL like <code>/Agent</code> got you a home page
+       while <code>/Agent/</code> (with a trailing slash) got you a generic
+       index is gone.  The generic index is still around, but it has its own
+       name now.  The trailing slash on directory names is back to being
+       optional, and just as with most servers you will save yourself a
+       redirection if you use it.
+  <li> The DOFS agent is gone.  In its place is a much simpler, but far more
+       flexible, technique that allows symbolic links (aliases) to be
+       positioned anywhere in the URL tree.  These links make it much easier
+       to incorporate pages, and agents, from elsewhere in the filesystem into
+       a working PIA.  There is no longer any need to develop agents or
+       applications in your <code>$HOME/.pia</code> directory and later move
+       them to <code>PIA/Agents</code>.
+  <li> The other agents that were nothing but placeholders in URL space are
+       also gone, since there is no need for a top-level directory to
+       correspond to an agent.
+  <li> The default top-level directory for a PIA-based server is the PIA
+       directory itself, which eliminates a lot of aliasing and other
+       problems.  Of course, nothing prevents a PIA-based application from
+       having a totally different root directory; that's <em>also</em> a lot
+       simpler to do than it used to be.  There is a mechanism that allows the
+       entire PIA directory to remain accessible to XHMTL pages while hiding
+       as much of it as necessary from the browser.
+  <li> The old <code>Agents</code> directory is still around; it really ought
+       to be called ``Agents and Other Applications'', but the old name just
+       <em>sounds better</em>, and besides the line between agents and other
+       applications is pretty fuzzy.  We could have renamed it
+       ``<code>Apps</code>'' but that would have broken many things.
+  <li> The user root directory (<code>$HOME/.pia</code> on a Unix system) is
+       no longer called ``<code>/~/</code>'', but it's still around.  It
+       contains a sort of ``shadow tree'' that parallels the PIA's main
+       directory tree rooted at PIA.  Shadow directories and files are created
+       on demand; all writes take place in the user directory tree.  This
+       provides an explicit mechanism that supports putting the PIA
+       distribution tree on a read-only medium such as a CD-ROM.
+  <li> The old way of referring to the History agent's data directory was
+       <code>/~/History</code>; it was located in  <code>.pia/History</code>.
+       User-modified forms for the History agent were located, confusingly, in
+       <code>.pia/Agents/Proxie/History</code>.  Now, the History agent's data
+       directory is referred to as <code>/~History/DATA</code> and is located
+       in <code>.pia/Agents/Proxie/History/DATA</code>, where one would expect
+       to find it.
+
+       <p>The following shell commands can be used to move your history on a
+       Unix machine:
+<pre>
+      cd ~/.pia
+      mkdir Agents/Proxie/History
+      mv History Agents/Proxie/History/DATA
+</pre>       
+
+       <p>A more elaborate script can be found in <a
+       href="../../src/app/tools/move-history-data"> 
+       <code>PIA/src/app/tools/move-history-data</code></a> in case you start
+       using the new PIA before realizing that your history data ought to have
+       been moved first.
+
+  <li> An arbitrary amount of XML metadata can be associated with resources
+       (files or directories), using per-directory XML configuration files
+       with the default name of <code>_subsite.xcf</code>.  This will
+       eventually be used to support <a
+       href="http://www.webdav.org/">WebDAV</a> ``properties''and similar
+       things.  Naturally, agents are <em>already</em> included in this
+       metadata.
+  <li> The entire PIA configuration can be specified in a single ``site
+       configuration file'', which can be located anywhere.  Multiple views of
+       the same directory tree are possible, and several examples are provided
+       in the <code><a href="../../Config/Site">Config/Site</a></code>
+       directory.
+  <li> An Agent is no longer a Namespace -- the implementation is
+       <em>much</em> simpler now.  The old <code>&amp;AGENT:;</code> construct
+       is still around, but refers to the agent's attribute list.  Most things
+       that used to be entities in the agent's namespace are now files (still
+       capable of being referred to as entities) in the agent's home
+       directory. 
+</ol>
+
+<p> The net effect is that the PIA's core engine has undergone a tectonic
+    shift from being a collection of agents that somehow managed to function
+    as a web server, to being a web server that does a pretty good job of
+    playing host to a collection of agents.  Removing the tight coupling
+    between URL-space naming and agents has improved both the server and the
+    agents. 
+
+<h4>Known Problems</h4>
+
+<p> Because of the extent of the changes in this release, many things are
+    still broken.  If you have been relying on the PIA to get your other work
+    done, please save a copy of your current working directory and put it
+    someplace safe!
+
+<ol>
+  <li> Several old agents have not even been looked at, especially
+       <code>BugReport</code>, <code>Swifty</code>, <code>View</code>, and
+       <code>Proxie/fileTools</code>.  The non-Agent applications
+       <code>Tutorial</code> and <code>Demo</code> are basically working,
+       blissfully unaware of the changes that whirl around them.
+  <li> Lots of pages in agents that <em>are</em> working (after a fashion) are
+       still full of broken links and obsolete code.  Many pages.  These
+       include <code>Admin</code>, <code>Proxie</code>, <code>Proxie</code>'s
+       sub-agents.  
+  <li> The ``help'' pages are almost totally broken at this point.
+  <li> Much of the documentation needs to be rewritten, including large parts
+       of 
+       <ol>
+	 <li>  <a href="../agents.html"><code>agents.html</code></a>
+	 <li>  <a href="../author.html"><code>author.html</code></a>
+	 <li>  <a href="../entities.html"><code>entities.html</code></a>
+	 <li>  <a href="../intro.html"><code>intro.html</code></a>
+       </ol>
+</ol>
+
+
 <h3>Release 2.0.6</h3>
 
 <p> This release includes a slightly-revised language that is more readable
@@ -193,8 +339,8 @@
        org/risource/test/dom, ds, and pia subdirectories. </li>
   <li> Pages have been added to the Demo agent to illustrate use of the
        debug and output handlers. </li>
-  <li> Precompiled zip and jar files have been removed from $PIA_DIR/lib.  
-       All classes are now accessed through the $PIA_DIR/src/java path.  
+  <li> Precompiled zip and jar files have been removed from $PIA_HOME/lib.  
+       All classes are now accessed through the $PIA_HOME/src/java path.  
        Also, due to Makefile changes, it is no longer necessary to add 
        this path to your CLASSPATH. </li>
   <li> A list of known bugs has been added to www.risource.org.  It is accessed
@@ -353,5 +499,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.26 1999-08-06 23:58:03 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.27 1999-10-04 17:43:43 steve Exp $</b><br>
 </body></html>
