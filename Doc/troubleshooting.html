@@ -9,6 +9,37 @@
 <p> Here are some frequently encountered problems:</p>
 
 <ul>
+  <li> <p> <strong>The <code>pia</code> batch file won't run on
+       Windows.</strong>  It has probably given you an error message involving
+       one of the environment variables.  Create a directory and set that
+       variable to it.
+       </p>
+  </li>
+  <li> <p> <strong>Java can't find the PIA's classes.</strong> This usually
+       means that <code>CLASSPATH</code> is set in your environment, and
+       doesn't have the PIA's classes in it.  Either unset
+       <code>CLASSPATH</code> (in which case the PIA's batch file or shell
+       script will set it correctly), or add
+       <code><em>PIAHOME</em>/src/java</code> to your <code>CLASSPATH</code>
+       environment variable.  </p>
+  </li>
+  <li> <p> <strong>How do I build the PIA on a Windows machine.</strong>  For
+       now, you're somewhat on your own.  Go into each subdirectory of
+       <code>PIA/src/java/org/risource</code>, and each sub-subdirectory, and
+       issue the command:
+       </p>
+       <pre>java -g *.java</pre>
+       <p> There will be a few errors, but these <em>should</em> be due to
+	   ``dead code'' -- old or incomplete files that are not normally
+	   compiled.  Try it anyway.
+       </p>
+       <p> Instead of <em>every</em> subdirectory, it may be enough to compile 
+	   in: <code>pia</code>, <code>pia\handle</code>,
+	   <code>pia\site</code>, <code>content</code>,
+	   <code>content\text</code>, <code>dps</code>,
+	   <code>dps\handle</code>, and <code>tf</code>
+       </p>
+  </li>
   <li>
 <p> <strong>The PIA doesn't seem to pay attention to changes in a file, or
     doesn't read or write a file where expected.</strong>  This usually
@@ -89,7 +120,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: troubleshooting.html,v 1.1 1999-10-20 17:23:27 bill Exp $</b><br>
+<b>$Id: troubleshooting.html,v 1.2 2000-03-02 04:20:05 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~bill/"
          ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
          >bill@rsv.ricoh.com</a>&gt;</address>

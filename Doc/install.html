@@ -86,7 +86,8 @@
 <p> If that didn't work, try reading the next section on <a
     href="#Setup">Initial Setup</a>, possibly followed by the section on <a
     href="using.html#Troubleshooting">Troubleshooting</a> in
-    <a href="using.html">Using the PIA</a>
+    <a href="using.html">Using the PIA</a>.  It's likely that all you need to
+    do is set the PIA_HOME and PIA_ROOT or HOME environment variables.
 </p>
 
 <p> If it <em>did</em> work, you should now try to start the PIA in its
@@ -238,12 +239,14 @@ PIA server would no longer have access to cvs-updated applications in the
     directory you just installed.
 </p>
 
-<p> The directory <var>PIA_ROOT</var> can be set on the command line with the <kbd>-root</kbd> option, or by
+<p> The directory <var>PIA_ROOT</var> can be set on the command line with the
+    <kbd>-root</kbd> option, or by 
     setting the environment variable <var>PIA_ROOT</var>.  On Unix, the
     default location for <var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On
-    Windows, the default directory is
+    Windows, the default directory is <code>%HOME%\pia</code> if
+    <var>HOME</var> is set, otherwise
     <code>c:\PIAUSERS\<var>username</var></code> (if a username is not
-    available <code> nobody</code> is used).
+    available <code> nobody</code> is used).  
 </p>
 
 <p> If you use the <kbd>-root</kbd> or <kbd>-home</kbd> command line option to
@@ -379,7 +382,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.24 1999-10-26 22:53:02 steve Exp $</i><br>
+<i>$Id: install.html,v 1.25 2000-03-02 04:20:05 steve Exp $</i><br>
 
 
 </body></html>
