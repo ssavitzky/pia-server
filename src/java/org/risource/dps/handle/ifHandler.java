@@ -1,5 +1,5 @@
 ////// ifHandler.java: Node Handler generic implementation
-//	$Id: ifHandler.java,v 1.4 1999-03-22 21:47:41 steve Exp $
+//	$Id: ifHandler.java,v 1.5 1999-03-25 17:00:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.util.*;
  *	<code>else</code> children.  
  *	<p>
  *
- * @version $Id: ifHandler.java,v 1.4 1999-03-22 21:47:41 steve Exp $
+ * @version $Id: ifHandler.java,v 1.5 1999-03-25 17:00:19 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -67,7 +67,7 @@ public class ifHandler extends GenericHandler {
     processConditional(in, aContext, out, content);
   }
 
-  public void processConditional(Input in, Context aContext, Output out,
+  public boolean processConditional(Input in, Context aContext, Output out,
 				 ParseNodeList content) {
     boolean trueCondition = false;
     NodeEnumerator enum = content.getEnumerator();
@@ -83,19 +83,20 @@ public class ifHandler extends GenericHandler {
 	if (cl == thenHandlerClass) {
 	  if (trueCondition) {
 	    Expand.processChildren(ct, aContext, out);
-	    return;
+	    return true;
 	  }
 	} else if (cl == elsfHandlerClass) {
 	  if (!trueCondition) {
 	    // else-if: just delegate to <else-if>'s (expanded) children.
-	    processConditional(in, aContext, out,
-			       Expand.processNodes(ct.getChildren(), aContext));
-	    return;
+	    if (processConditional(in, aContext, out,
+				   Expand.processNodes(ct.getChildren(),
+						       aContext)))
+	      return true;
 	  }
 	} else if (cl == elseHandlerClass) {
 	  if (!trueCondition) {
 	    Expand.processChildren(ct, aContext, out);
-	    return;
+	    return true;
 	  }
 	} else {
 	  trueCondition = true;
@@ -104,6 +105,7 @@ public class ifHandler extends GenericHandler {
 	trueCondition = true;
       }
     }
+    return false;
   }
 
   /************************************************************************
