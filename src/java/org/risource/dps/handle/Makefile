@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.15 1999-11-06 01:14:44 steve Exp $
+# 	$Id: Makefile,v 1.16 1999-11-16 18:48:36 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -81,12 +81,12 @@ PRIM_HANDLERS = \
 	textHandler.java \
 	debugHandler.java \
 	prettyHandler.java \
-	weekdayHandler.java \
 	urlHandler.java 
 
 ### Additional handlers for extended HTML
 
 XHTM_HANDLERS = \
+	dateHandler.java \
 	formHandler.java \
 	processHandler.java
 

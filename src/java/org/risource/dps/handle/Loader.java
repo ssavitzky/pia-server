@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	$Id: Loader.java,v 1.10 1999-11-09 01:18:47 steve Exp $
+//	$Id: Loader.java,v 1.11 1999-11-16 18:48:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -92,6 +92,7 @@ public class Loader {
     defHandle("text", new textHandler());
     defHandle("nodeBuilder", new nodeBuilder());
     defHandle("propertyBuilder", new propertyBuilder());
+    defHandle("date", new dateHandler());
   }
 
   /** Load an appropriate handler class and instantiate it. 

@@ -1,5 +1,5 @@
-////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.7 1999-10-11 21:52:47 steve Exp $
+////// dateHandler.java: <date> Handler implementation
+//	$Id: dateHandler.java,v 1.1 1999-11-16 18:48:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,11 @@ import org.risource.ds.List;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.SimpleTimeZone;
+
+import java.text.SimpleDateFormat;
 
 import org.risource.util.Julian;
 
@@ -42,6 +47,7 @@ import org.risource.dps.util.*;
 import org.risource.dps.output.*;
 
 
+import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeElement;
 import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeFragment;
@@ -54,21 +60,21 @@ import java.lang.StringBuffer;
 
 
 /**
- * Handler for &lt;weekday&gt; &lt;/&gt;  This tag outputs
- * the weekday associated with a given date (or nothing, if incorrect).
+ * Handler for &lt;date&gt; &lt;/&gt;  With no attributes, outputs a 
+ *	Unix-compatible date string.  Dispatches on the name of the tag
+ *	as well as the attribute.
  *
  * <p>	This code has been hacked by Steve Savitzky so that it works
  *	correctly under Java version 1.1; Calendar under 1.1 fails to
  *	recalculate the day-of-the-week after resetting the date.
- *	The rewrite involves 35-year-old Julian Day code originally by
- *	Abraham Savitzky.
+ *	The rewrite involves 35-year-old Julian Day code originally 
+ *	written in FORTRAN IV by Abraham Savitzky.
  *
- * @version $Id: weekdayHandler.java,v 1.7 1999-10-11 21:52:47 steve Exp $
+ * @version $Id: dateHandler.java,v 1.1 1999-11-16 18:48:36 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
-
-public class weekdayHandler extends GenericHandler {
+public class dateHandler extends GenericHandler {
 
   static int maxday[] = { 
     /* jan feb mar apr may jun jul aug sep oct nov dec */
@@ -97,26 +103,46 @@ public class weekdayHandler extends GenericHandler {
    *	We do our own date calculations, because some versions of Java
    *	get it wrong on some versions of libc. 
    */
-  static long origin = Julian.jday(1970, 1, 1);
+  static long epoch = Julian.jday(1970, 1, 1);
+
+  static long seconds_per_day = 60 * 60 * 24;
+
+  List monthNames = List.split("January February March April"
+			       + " May June July August"
+			       + " September October November December");
+
+  List dayNames = List.split("Sunday Monday Tuesday Wednesday"
+			     + " Thursday Friday Saturday");
 
   /************************************************************************
   ** Semantic Operations:
   ************************************************************************/
 
-  /** Action for &lt;weekday&gt; node.  Requires either a <unixdate> tag
+  /** Action for &lt;date&gt; node.  Requires either a <seconds> tag
       or all three of <date>, <month>, and <year> tags.  Expands to the
       named day-of-week with no attributes, or the named month (with 
       the "monthname" attribute nonempty), or the last day of month (with
-      "lastdate" attribute nonempty), or the (negative) day to start 
+      "lastday" attribute nonempty), or the (negative) day to start 
       printing a calandar (with "startsun").
 
    */
   public void action(Input in, Context cxt, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
 
-    // get subelements
+    String tag = in.getTagName();
+
+    // The current time, and variables for the date.
+
     int day = -1, month = -1, year = -1;
-    long unixdate = -1;
+    Date now = new Date();
+    long mstime = now.getTime(); 	// Java time in milliseconds
+    long seconds = mstime/1000; 	// Unix time in seconds
+    long jday = epoch + seconds / seconds_per_day;
+
+    // get subelements
+    // 	 We're looking for either <day> + <month> + <year>,
+    //	 <seconds>, <mstime>, or <julian>
+    if (content == null) content = new TreeNodeList();
     for (int i = 0; i < content.getLength(); ++i) {
 	
 	String name;
@@ -129,14 +155,14 @@ public class weekdayHandler extends GenericHandler {
 	Enumeration en;
 	Association as;
 
-	if (name.equalsIgnoreCase("date")
-	    || name.equalsIgnoreCase("day")){
+	if (name.equalsIgnoreCase("day")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    day = (int)( as.longValue() );
 	    }
+	    seconds = -1;
 	} else
 	if (name.equalsIgnoreCase("month")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
@@ -146,6 +172,7 @@ public class weekdayHandler extends GenericHandler {
 		    // let people input month at 1-12, not 0-11
 		    month = (int)( as.longValue() ) - 1;
 	    }
+	    seconds = -1;
 	} else
 	if (name.equalsIgnoreCase("year")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
@@ -154,30 +181,53 @@ public class weekdayHandler extends GenericHandler {
 		if ( as.isIntegral() )
 		    year = (int)( as.longValue() );
 	    }
+	    seconds = -1;
 	} else
-	if (name.equalsIgnoreCase("unixdate")){
+	if (name.equalsIgnoreCase("seconds")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
-		    unixdate =  as.longValue();
+		    seconds =  as.longValue();
+		mstime = seconds * 1000;
+		jday = epoch + seconds / seconds_per_day;
+	    }
+	} else
+	if (name.equalsIgnoreCase("mstime")){
+	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
+	    while( en.hasMoreElements() ){
+		as = (Association)en.nextElement();
+		if ( as.isIntegral() )
+		    mstime =  as.longValue();
+		seconds = mstime / 1000;
+		jday = epoch + seconds / seconds_per_day;
+	    }
+	} else
+	if (name.equalsIgnoreCase("julian")){
+	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
+	    while( en.hasMoreElements() ){
+		as = (Association)en.nextElement();
+		if ( as.isIntegral() )
+		    jday =  as.longValue();
+		seconds  = (jday - epoch) * seconds_per_day;
+		mstime   = seconds / 1000;
 	    }
 	}
     }
 
     // got all the available tags; now figure out what to return
-    if (unixdate < 0 && (day < 0 ||month < 0 || year < 0 )){
-	reportError(in, cxt,"weekday tag has missing day/month/year");
+    if (seconds < 0 && (day < 0 || month < 0 || year < 0 )){
+	reportError(in, cxt,"date tag has missing day/month/year");
 	return;
     }
     
-    // create the calendar, either by day/month/year or unixdate
-    Calendar theDay = new GregorianCalendar(year, month, day);
-    if (unixdate >= 0){
-	Date theTime = new Date( unixdate*1000 ); //unix gets seconds, not msec
+    // create the calendar, either by day/month/year or seconds
+    Calendar theDay = null;
+    if (seconds >= 0){
+	Date theTime = new Date( seconds*1000 ); //unix gets seconds, not msec
 	theDay = new GregorianCalendar( );
 	theDay.setTime(theTime);
-	long j = (unixdate / 86400) + origin;
+	long j = (seconds / seconds_per_day) + epoch;
 	month = Julian.month(j) - 1;
 	day   = Julian.day(j);
 	year  = Julian.year(j);
@@ -188,8 +238,13 @@ public class weekdayHandler extends GenericHandler {
 	    System.err.println("Java computes wrong day");
 	  if (year != theDay.get(Calendar.YEAR)) 
 	    System.err.println("Java computes wrong year");
-	  //System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
+	  //System.out.println(" " + seconds + "=" + year + "/" + month + "/" + date);
 	}
+    } else {
+      theDay = new GregorianCalendar(year, month, day);
+      jday = Julian.jday(year, month + 1, day);
+      seconds  = (jday - epoch) * seconds_per_day;
+      mstime   = seconds * 1000;
     }
 
     // Calendar in 1.1.3 is totally broken -- there is no way to recompute the 
@@ -204,48 +259,43 @@ public class weekdayHandler extends GenericHandler {
     if (day < minDay || day > maxDay ||
 	month < 0 /* theDay.getActualMinimum(Calendar.MONTH) */ ||
 	month > 11 /* theDay.getActualMaximum(Calendar.MONTH) */ ){
-	reportError(in, cxt,"weekday tag has illegal day/month/year");
+	reportError(in, cxt,"date tag has illegal day/month/year");
 	return;
     }
 
-    /** Note: Julian uses natural origins: Jan. 1 is 1/1 */
-    long jday = Julian.jday(year, month + 1, day);
+    /** Note: Julian uses natural day and month numbering: Jan. 1 is 1/1 */
+    //long jday = Julian.jday(year, month + 1, day);
     int wday = Julian.weekday(jday);
 
     //int wday = (theDay.get(Calendar.DAY_OF_WEEK)- Calendar.SUNDAY + 7) % 7;
-    List dayNames = List.split("Sunday Monday Tuesday Wednesday"
-				    + " Thursday Friday Saturday");
-    long unixDay = theDay.getTime().getTime() / 86400000L;
-    //    System.out.println(" " + longDay + "=" + year + "/" + month + "/" + day);
+    // System.out.println(" " + javaDay + "=" + year + "/" + month + "/" + day);
 
-    long longDay = jday - origin;
+    long longDay = jday - epoch;
+    long javaday = theDay.getTime().getTime() / 86400000L;
 
-    if (unixDay != longDay && cxt.getVerbosity() > 1) {
-      System.err.println("Warning: unixday=" + unixDay + " longDay=" + longDay);
+    Date theDate = new Date(mstime);
+    SimpleDateFormat fmt;
+
+    if (javaday != longDay && cxt.getVerbosity() >= 0) {
+      System.err.println("Warning: javaday=" + javaday + " longDay=" + longDay);
     }
-    String wkday = (String)dayNames.at( wday );
+
     // done with compuatation
 
-    // look at attributes for weekday
-    if (atts.hasTrueAttribute("lastdate") ){
-	ActiveNode outText;
-	outText = new TreeText( maxDay );
-	out.putNode(outText);
-	return;
-    } else
-    if (atts.hasTrueAttribute("longday") ){
-	ActiveNode outText;
-	outText = new TreeText( longDay );
-	out.putNode(outText);
-	return;
-    } else
-    if (atts.hasTrueAttribute("julian") ){
-	ActiveNode outText;
-	outText = new TreeText( jday );
-	out.putNode(outText);
-	return;
-    } else
-    if (atts.hasTrueAttribute("startsun") ){
+    // look at attributes for date
+    if (atts.hasTrueAttribute("lastday")) {
+      ActiveNode outText;
+      outText = new TreeText( maxDay );
+      out.putNode(outText);
+    } else if (atts.hasTrueAttribute("longday")) {
+      ActiveNode outText;
+      outText = new TreeText( longDay );
+      out.putNode(outText);
+    } else if (atts.hasTrueAttribute("julian")) {
+      ActiveNode outText;
+      outText = new TreeText( jday );
+      out.putNode(outText);
+    } else if (atts.hasTrueAttribute("startsun")) {
 	// find which day (negative!) to start Sunday on to get
 	// the first of the month on the right weekday (a printing issue)
       theDay.set(year, month, 1);
@@ -256,31 +306,36 @@ public class weekdayHandler extends GenericHandler {
 	outText = new TreeText( firstSun );
 	out.putNode(outText);
 	return;
-    } else
-    if (atts.hasTrueAttribute("monthname") ){
-	List monthNames= List.split("January February March April"
-				     + " May June July August"
-				     + " September October November December");
+    } else if (atts.hasTrueAttribute("monthname") ){
+      fmt = new SimpleDateFormat("MMMM");
+      putText(out, cxt, fmt.format(theDate));
 
-	String monthName = (String)monthNames.at( month );
-	ActiveNode outText;
-	outText = new TreeText( monthName );
-	out.putNode(outText);
-	return;
-    } else
-    if (atts.hasTrueAttribute("monthnum") ){
-	ActiveNode outText;
-        int outMonth = month + 1;
-	outText = new TreeText( outMonth );
-	out.putNode(outText);
-	return;
+     //String monthName = (String)monthNames.at( month );
+     //ActiveNode outText;
+     //outText = new TreeText( monthName );
+     //out.putNode(outText);
+
+    } else if (atts.hasTrueAttribute("monthnum") ){
+      ActiveNode outText;
+      int outMonth = month + 1;
+      outText = new TreeText( outMonth );
+      out.putNode(outText);
+    } else if (atts.hasTrueAttribute("format")) {
+      String format = atts.getAttribute("format");
+      fmt = new SimpleDateFormat(format);
+      putText(out, cxt, fmt.format(theDate));
+    } else if (atts.hasTrueAttribute("gmt")) {
+      fmt = new SimpleDateFormat("d MMM yyyy HH:mm:ss 'GMT'",
+						  Locale.US);
+      fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+      putText(out, cxt, fmt.format(theDate));
+    } else if (tag.equals("weekday")) {
+      fmt = new SimpleDateFormat("EEEE");
+      putText(out, cxt, fmt.format(theDate));
+    } else {
+      fmt = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy");
+      putText(out, cxt, fmt.format(theDate));
     }
-
-    // default is showing weekday
-    ActiveNode outText;
-    outText = new TreeText( wkday );
-    out.putNode(outText);
-
   }
     
 
