@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.18 2000-07-25 22:19:18 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.19 2000-07-25 22:47:47 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -476,7 +476,7 @@ Note that we only need these inside the PIA.
 
 <h2>Note-listing components</h2>
 
-<!-- $Id: woad-xhtml.ts,v 1.18 2000-07-25 22:19:18 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.19 2000-07-25 22:47:47 steve Exp $ -->
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing
@@ -718,14 +718,17 @@ Note that we only need these inside the PIA.
   </doc>
   <define attribute="path">
     <doc> If present, this overrides <code>xloc</code> as the path to the
-	  notes. 
+	  notes.
+    </doc>
   </define>
   <define attribute="color">
     <doc> Specifies the background color for the table cells.
+    </doc>
   </define>
   <define attribute="heading">
     <doc> If present, this is the content to display in the left column of a
 	  heading row.  If absent, no heading row is displayed.
+    </doc>
   </define>
   <action><hide>
       <let name="color"><get name="attributes:color">yellow</get></let>
@@ -755,7 +758,7 @@ Note that we only need these inside the PIA.
   <doc> Expands into the code that checks for and displays the page (URL)
 	notes corresponding to the source page being displayed.  The content
 	is the path to the notes. 
-  <doc>      
+  </doc>      
   <action>
     <if>&content;
       <then>
@@ -785,7 +788,7 @@ Note that we only need these inside the PIA.
       </then></if>
       </then>
     </if>
-  <action>
+  </action>
 </define>
 
 <define element="noteCreationForm">
