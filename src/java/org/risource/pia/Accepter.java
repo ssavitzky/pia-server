@@ -1,5 +1,5 @@
 // Accepter.java
-// $Id: Accepter.java,v 1.5 1999-07-08 19:20:51 wolff Exp $
+// $Id: Accepter.java,v 1.6 1999-09-15 17:34:24 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,7 @@ package org.risource.pia;
 
 import java.io.*;
 import java.net.*;
+import java.util.Date;
 
 import org.risource.pia.Transaction;
 import org.risource.pia.Machine;
@@ -131,8 +132,10 @@ public class Accepter extends Thread {
 
     Pia.debug( this, "connection from: " + hostName
 	       + " at: " + String.valueOf( port ) );
-    Pia.log( "connection from: " + hostName
-	     + " at: " + String.valueOf( port ) +"\n" );
+    Date today = new Date();
+    Pia.log( "connection from " + hostName
+	     + " at port " + String.valueOf( port )  +
+	     " on date " + today.toString() );
     
     createRequestTransaction(hostName, port, clientSocket);
 

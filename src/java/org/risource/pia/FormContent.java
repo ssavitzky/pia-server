@@ -1,5 +1,5 @@
-// FormContent.java
-// $Id: FormContent.java,v 1.4 1999-08-27 23:56:25 wolff Exp $
+f// FormContent.java
+// $Id: FormContent.java,v 1.5 1999-09-15 17:34:24 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -688,7 +688,7 @@ public class FormContent extends Properties implements InputContent {
    * @return original query string
    */
   public String queryString(){
-    Pia.debug(this , "queryString" );
+    Pia.debug(this , "FormContent: queryString" );
     // Thus, someone must have called setParameters(...) on HTTPRequest
     return queryString;
   }

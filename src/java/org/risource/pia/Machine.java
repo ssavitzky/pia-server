@@ -1,5 +1,5 @@
 // Machine.java
-// $Id: Machine.java,v 1.7 1999-07-08 21:39:08 bill Exp $
+// $Id: Machine.java,v 1.8 1999-09-15 17:34:25 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -133,6 +133,7 @@ public class Machine implements java.io.Serializable {
       try
       {
 	inputStream = socket.getInputStream();
+
 	return inputStream;
       }catch(IOException e){
 	Pia.debug( this, "Exception while getting socket input stream." );
@@ -155,6 +156,7 @@ public class Machine implements java.io.Serializable {
       try
       {
 	outputStream = socket.getOutputStream();
+
 	return outputStream;
       }catch(IOException e){
 	  Pia.debug(this, "Exception while getting socket output stream." );
@@ -169,8 +171,9 @@ public class Machine implements java.io.Serializable {
   * Closing socket.
   */
   public void closeConnection() {
+
       try {
-	if( inputStream != null ) inputStream.close();
+	  if( inputStream != null ) inputStream.close();
 	if( outputStream != null ) outputStream.close();
 	if( socket != null ) socket.close();
     }catch(IOException e) {
@@ -405,6 +408,7 @@ bytesRead=c.writeTo(out);
     zhost        = url.getHost();
     try{
       socket = new Socket(zhost, zport);
+
       outputStream = socket.getOutputStream();
       inputStream  = new BufferedInputStream( socket.getInputStream() );
 

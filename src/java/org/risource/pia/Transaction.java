@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.9 1999-07-20 01:09:57 steve Exp $
+// $Id: Transaction.java,v 1.10 1999-09-15 17:34:25 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -693,8 +693,10 @@ public abstract class Transaction
 	  || org.risource.dps.util.Test.isWhitespace(firstLine)) 
 	firstLine = input.readLine();
 
-      if( firstLine.length() > 0 )
+      if( firstLine.length() > 0 ){
 	Pia.debug(this, "the firstline-->" + firstLine);
+	Pia.log( " URL: " + firstLine + "\n");
+      }
       parseInitializationString( firstLine );
    
       headersObj  = hf.createHeader( in );

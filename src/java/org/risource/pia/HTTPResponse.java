@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.8 1999-07-20 01:09:55 steve Exp $
+// $Id: HTTPResponse.java,v 1.9 1999-09-15 17:34:25 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -351,7 +351,9 @@ public class  HTTPResponse extends Transaction {
     
     requestTran = t;
     fromMachine( from );
+    Pia.debug(this, "Constructor-- after fromMachine");
     toMachine(  t.fromMachine() );
+    Pia.debug(this, "Constructor-- after toMachine");
 
     startThread();
   }

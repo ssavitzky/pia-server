@@ -1,5 +1,5 @@
-//  Httprequest.java
-// $Id: HTTPRequest.java,v 1.10 1999-07-12 19:12:32 wolff Exp $
+f//  Httprequest.java
+// $Id: HTTPRequest.java,v 1.11 1999-09-15 17:34:24 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -278,12 +278,13 @@ public class  HTTPRequest extends Transaction {
 				       , msg) ;
       }
 
-      Pia.debug(this, "before set param");
       setParam();
-      Pia.debug(this, "after set param");
+
     }catch(IOException e){
       Pia.debug(this,  e.toString() );
     }
+
+
   }
 
 
@@ -554,15 +555,16 @@ public class  HTTPRequest extends Transaction {
 
     fc = (contentObj() instanceof FormContent)? (FormContent)contentObj()
                                               : new FormContent();
+
     if( queryString()!= null && mymethod.equalsIgnoreCase( "GET" ) ){
       String qs = queryString().substring( 1 );
       Pia.debug(this, "Before setting parameters, query string w/o ? is" + qs );
       fc.setParameters( qs );
     }else {
       if( mymethod.equalsIgnoreCase( "POST" )  )
-	fc.setParameters(null);
+	  fc.setParameters(null);
     }
-    
+
   }
   
 
@@ -775,7 +777,10 @@ public class  HTTPRequest extends Transaction {
       try{
 	  // make sure we have the header information
 	  if(headersObj ==  null) initializeHeader();
-	
+
+	  // need this to flush URL (logged in initializeHeader() ) onto log
+	Pia.log( "\n");	
+
 	  Pia.debug(this, "Got a head...");
 
 	  // and the content
