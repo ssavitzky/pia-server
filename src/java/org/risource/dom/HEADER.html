@@ -14,6 +14,39 @@
     Consortium's <a href="../../w3c/dom">DOM</a> (Document Object Model).
 </p>
 
+<h2>Annotated Contents</h2>
+
+<h3><a name="Classes">Classes</a></h3>
+
+<dl>
+  <dt> <a href="ToDocument.java">ToDocument</a>
+  </dt>
+  <dd> <a href="../dps/Output.java">Output</a> implementation that outputs to
+       a DOM document tree. 
+  </dd>
+</dl>
+
+
+<h2>See Also</h2>
+
+<dl>
+  <dt> <a href="../../w3c/dom"><code>org.w3c.dom</code></a>
+  <dd> The DOM interfaces.
+  <dt> <a href="http://www.w3.org/DOM/">www.w3.org/DOM/</a>
+  <dd> The official DOM web site.
+  <dt> <a href="../dps/"><code>org.risource.dps</code></a>
+  <dd> A general-purpose document-processing system for XML, HTML, and SGML
+       documents. 
+  <dt> <a href="../dps/active/"><code>org.risource.dps.active</code></a>
+  <dd> Interfaces that combine the DOM and ``Active'' interfaces.  Classes that
+       implement these interfaces can be efficiently traversed using cursors,
+       and processed using the DPS.
+  <dt> <a href="../dps/tree/"><code>org.risource.dps.tree</code></a>
+  <dd> Classes that <em>implement</em> the DOM Core and Active interfaces, for
+       use in building parse trees.  
+</dl>
+
+<h2>Note</h2>
 <blockquote><em>
   Originally this package simply contained a complete implementation of an
   early draft of the DOM, and <a href="../dps/active">dps.active</a>
@@ -31,28 +64,17 @@
     internal representation.
 </p>
 
-<h2>See Also</h2>
+<p> This says nothing about the PIA's <em>external</em> interfaces.  We remain
+    absolutely committed to keeping the PIA as compatible as possible with
+    published standards (although due to our limited resources, there will
+    inevitably be a time lag -- for example, we are just now getting around to
+    writing ToDocument after a year or so of neglect).
+</p>
 
-<dl>
-  <dt> <a href="../../w3c/dom">org.w3c.dom</a>
-  <dd> The DOM interfaces.
-  <dt> <a href="http://www.w3.org/DOM/">www.w3.org/DOM/</a>
-  <dd> The official DOM web site.
-  <dt> <a href="../dps/">org.risource.dps</a>
-  <dd> A general-purpose document-processing system for XML, HTML, and SGML
-       documents. 
-  <dt> <a href="../dps/active/">org.risource.dps.active</a>
-  <dd> Interfaces that combine the DOM and ``Active'' interfaces.  Classes that
-       implement these interfaces can be efficiently traversed using cursors,
-       and processed using the DPS.
-  <dt> <a href="../dps/tree/">org.risource.dps.tree</a>
-  <dd> Classes that <em>implement</em> the DOM Core and Active interfaces, for
-       use in building parse trees.  
-</dl>
 
 <hr>
 <b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.7 2000-04-20 22:35:44 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.8 2000-05-01 23:22:15 steve Exp $</b>
 <a name="files"><hr></a>
 
 

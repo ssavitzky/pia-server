@@ -25,27 +25,43 @@
 
 <h2>Annotated Contents</h2>
 
-<h3>Directories</h3>
+<h3>Package Directories</h3>
 <dl>
-  <dt> <a href="JP/">JP/</a> 
+  <dt> <a href="JP/"><code>JP</code></a> 
   <dd> Code from Japanese organizations and companies (i.e. entities in the
        <code>.jp</code> top-level domain).
-  <dt> <a href="misc/">misc/</a>
+  <dt> <x href="com/"><code>com</code></a>
+  <dd> Classes developed by commercial entities that have chosen to abide by
+       Sun's package naming conventions and also released Java code under an
+       open-source license compatible with ours, would go here.  So far, there
+       aren't any.
+  <dt> <a href="misc/"><code>misc</code></a>
   <dd> Classes developed elsewhere that do not specify a package. 
-  <dt> <a href="org/">org/</a>
+  <dt> <a href="org/"><code>org</code></a>
   <dd> Classes developed by organizations that have chosen to abide by Sun's
        package naming convention. (e.g. <code>org.w3c</code>...).
        <dl>
-	 <dt> <a href="org/risource">org/risource</a>
-	 <dd> Code from <a href="http://www.RiSource.org/">RiSource.org</a>
-	 <dt> <a href="org/w3c">org/w3c</a>
+	 <dt> <a href="org/risource"><code>org.risource</code></a>
+	 <dd> Code from <a href="http://www.RiSource.org/">
+	      <font color="#c40026" 
+                    face="Verdana, Arial, Helvetica, sans-serif"
+                    >Ri</font><font color="black"
+	                            face="Verdana, Arial, Helvetica, sans-serif"
+                    ><i>Source.org</i></font></a>
+	 <dt> <a href="org/w3c"><code>org.w3c</code></a>
 	 <dd> Code from the <a href="http://www.w3.org/">World Wide Web
 	      Consortium</a>.  This may eventually change to <code>w3</code>,
 	      depending on exactly which conventions the Consortium decides to
 	      follow. 
-	 <dt> <a href="org/xml">org/xml</a>
+	 <dt> <a href="org/xml"><code>org.xml</code></a>
 	 <dd> Code from <a href="http://xml.org/"><code>xml.org</code></a>.
        </dl>
+  </dd>
+</dl>
+
+<h3>Other Directories</h3>
+
+<dt>
   <dt> <a href="makefiles/">makefiles/</a>
   <dd> Makefiles
 </dl>
@@ -53,9 +69,10 @@
 <h3>Source Code and Class Files</h3>
 
 <p> This directory is the logically-correct place to put source code for
-    classes that do not have a package, and it is where the Java compiler will
-    put the <code>.class</code> files of such classes, no matter
-    <em>where</em> their sources are located in the tree.  
+    classes that do not have a package, and it is where the Java compiler
+    <em>will</em> put the <code>.class</code> files of such classes, no matter
+    where their sources are located in the tree.  Don't be surprised to find
+    <em>.class</em> files in this directory.
 </p>
 
 <h3>Log Files</h3>
@@ -140,6 +157,6 @@ wraps and keep multi-column listings under control.
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.6 2000-04-20 22:35:23 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.7 2000-05-01 23:22:05 steve Exp $</b>
 <a name="files"><hr></a>
 
