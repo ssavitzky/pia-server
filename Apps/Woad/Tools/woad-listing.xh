@@ -274,8 +274,7 @@
     <th bgcolor="#cccccc"> page title </th>
   </tr>
   <repeat>
-    <foreach><text op="sort" unique="unique">
-      <extract>&linksToPage;</foreach>
+    <foreach>&linksToPage;</foreach>
       <let name="absPath">
   	<fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
       <if> &absPath;
@@ -429,5 +428,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.9 2000-06-27 05:19:04 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.10 2000-06-27 18:37:51 steve Exp $" />
 </body></html>
