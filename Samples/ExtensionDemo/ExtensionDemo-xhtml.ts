@@ -18,8 +18,8 @@
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name=ExtensionDemo-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: ExtensionDemo-xhtml.ts,v 1.1 1999-10-14 22:29:06 bill Exp $</cvs-id>
+<tagset name="ExtensionDemo-agent" parent="/Tagsets/pia-xhtml" recursive="yes">
+<cvs-id>$Id: ExtensionDemo-xhtml.ts,v 1.2 1999-12-14 18:58:00 steve Exp $</cvs-id>
 
 
 <define element="todaytag" >

@@ -1,5 +1,5 @@
 ###### Doc/Tagset/demo Makefile:  Makes documentation pages from Demo agent.
-# 	$Id: Makefile,v 1.4 1999-10-26 22:54:33 steve Exp $
+# 	$Id: Makefile,v 1.5 1999-12-14 18:58:27 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ include $(MF_DIR)/file.make
 DOC_TS = tsdoc.ts
 
 .xh.html:
-	process -t pia-xhtml $< > $@
+	process -t $(PIA_DIR)/Tagsets/pia-xhtml $< > $@
 
 doc:: xh-doc
 
