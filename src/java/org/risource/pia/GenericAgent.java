@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.29 1999-07-20 01:09:48 steve Exp $
+// $Id: GenericAgent.java,v 1.30 1999-07-20 20:58:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -112,7 +112,7 @@ public class GenericAgent extends BasicNamespace
     "html",		"xml",		"htm",		"txt",
   };
   /** MIME Types corresponding to the file types. */
-  protected static String resultTypes[] = {
+  protected static String contentTypes[] = {
     "text/html",	"text/xml",	"",		"",
     "text/html", 	"text/xml", 	"text/html", 	"text/plain",};
   /** Tagset to use for processing a file of this type.
@@ -803,7 +803,7 @@ public class GenericAgent extends BasicNamespace
       if (ts == null) ts = "";
       if (tagsetMap.get(ext) != null) continue;
       tagsetMap.put(ext, ts);
-      String type = resultTypes[i];
+      String type = contentTypes[i];
       mimeTypeMap.put(ext, type);
       if (! type.startsWith("#")) {
 	dataSearch.push(ext);
@@ -851,18 +851,16 @@ public class GenericAgent extends BasicNamespace
   // === These all ought to operate on the path-prefix and the extension,
   // === but that would be a significant change to the file-finding stuff.
 
-  protected boolean isDPSType(String path) {
-    String ext = getExtension(path);
-    Object x   = tagsetMap.get(ext);
-    String ts  = (x == null)? null : x.toString();
-    return ts != null && ts.length() > 0;
-  }
+  // === actually, PIA should use XML map, not the property file it uses now.
 
-  protected String resultType(String path) {
+  /** Determine the content type for a path based on its extension. */
+  public String contentType(String path) {
     String ext = getExtension(path);
     Object x   = mimeTypeMap.get(ext);
     String typ = (x == null)? null : x.toString();
-    return (typ != null && typ.length() > 0)? typ : "text/html";
+    return (typ != null && typ.length() > 0)
+      ? typ
+      : FileAccess.defaultContentType(path, "text/plain");
   }
 
   protected String tagsetName(String path) {
@@ -1523,7 +1521,7 @@ public class GenericAgent extends BasicNamespace
 				     trans, response, res);
     response.setStatus( 200 ); 
     response.setHeader("Server", Version.SERVER);
-    response.setContentType( resultType(file) );
+    response.setContentType( contentType(file) );
     response.setContentObj( c );
     response.startThread();
   }
@@ -1624,7 +1622,7 @@ public class GenericAgent extends BasicNamespace
     }
       
     String tsname = tagsetName(file);
-    String mimetype = resultType(file);
+    String mimetype = contentType(file);
 
     if( tsname == null || tsname.length() == 0 ) {
       FileAccess.retrieveFile(file, request, this);

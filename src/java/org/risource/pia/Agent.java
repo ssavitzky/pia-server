@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.10 1999-07-20 01:09:44 steve Exp $
+// $Id: Agent.java,v 1.11 1999-07-20 20:58:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -241,6 +241,11 @@ public interface Agent extends Namespace {
    */
   public String findDataFile( String path, List suffixSearch, 
 			      boolean forWriting );
+
+  /** 
+   * Find a suitable content type for a path.
+   */
+  public String contentType(String path);
 
 
   /************************************************************

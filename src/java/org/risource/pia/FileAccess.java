@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.11 1999-07-20 01:09:46 steve Exp $
+// $Id: FileAccess.java,v 1.12 1999-07-20 20:58:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -373,7 +373,7 @@ public class FileAccess {
 	try{
 	  Pia.debug(agent, "Retrieving file :"+ filename );
 	  
-	  String contentType = contentType( filename );
+	  String contentType = agent.contentType( filename );
 	  if(contentType.indexOf("html") == -1 ){
 
 	    FileInputStream newdata = new FileInputStream(filename);
@@ -527,10 +527,10 @@ public class FileAccess {
   }
 
   /**
-   * Content type mapping given file name or URL
+   * Default content type mapping given file name or URL
    * If content type cannot be determined, return deflt
    */
-  public static String contentType(String fn, String deflt)
+  public static String defaultContentType(String fn, String deflt)
     {
       String lfilename = fn.toLowerCase();
       
@@ -557,9 +557,9 @@ public class FileAccess {
    * cannot be determined
    * (For backwards compatibility)
    */
-  public static String contentType(String fn)
+  public static String defaultContentType(String fn)
     {
-      return contentType(fn,"text/plain");
+      return defaultContentType(fn,"text/plain");
     }
 
 
