@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.11 1999-12-14 18:52:35 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.12 2000-06-08 23:16:02 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -41,4 +41,38 @@
        not really suitable for the default configuration.
     -->
 
+<!-- Woad tree -->
+
+  <sourceOffset>/.Tree</sourceOffset>
+  <Container name=".Tree" virtual="pia:/" suspect="true">
+    <HomeDocumentName>woad-index.wh</HomeDocumentName>
+    <ConfigFileName>_woad.xcf</ConfigFileName>
+
+    <!-- These are the tagsets used for woad's active documents: -->
+    <Ext name="wh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="ww"	type="text/html" tagset="/.Woad/woad-web"	/>
+
+    <!-- These are the tagsets used for formatting source code: -->
+    <Ext name="html"	type="text/html" tagset="/.Woad/src-html"	/>
+    <Ext name="xh"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="xcf"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="xci"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="xml"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="inc"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="ts" 	type="text/html" tagset="/.Woad/src-xhtml"	/>
+
+  </Container>
+
+<!-- Woad forms directory -->
+  <Container name=".Woad" virtual="pia:/Apps/Woad">
+    <doc> We put the Woad application directory into <code>/.Woad</code> so as
+	  to make it invisible in (most) directory listings.  Note that the
+	  extensions and so on are path-dependent, so that if we run across
+	  <code>Apps/Woad</code> as part of the source tree it will display
+	  properly as source.
+    </doc>
+    <HomeDocumentName>woad</HomeDocumentName>
+    <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="html"	type="text/html" tagset="HTML" 			/>
+  </Container>
 </Container>
