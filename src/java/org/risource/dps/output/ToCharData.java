@@ -1,5 +1,5 @@
 ////// ToCharData.java:  Output to Character data
-//	$Id: ToCharData.java,v 1.7 1999-11-04 22:33:52 steve Exp $
+//	$Id: ToCharData.java,v 1.8 1999-11-12 17:23:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to a String in <em>internal</em> form. <p>
  *
- * @version $Id: ToCharData.java,v 1.7 1999-11-04 22:33:52 steve Exp $
+ * @version $Id: ToCharData.java,v 1.8 1999-11-12 17:23:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToString
@@ -68,8 +68,8 @@ public class ToCharData extends ToExternalForm {
     if (aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE && expandEntities) {
       ActiveEntityRef e = (ActiveEntityRef)aNode;
       // === Should really check value in the entity itself as well ===
-      NodeList value = entityTable.getValueNodes(e.getNodeName());
-      if (value != null) write(value.toString());
+      Node value = entityTable.getBinding(e.getNodeName());
+      if (value != null) write(value.getNodeValue());
       else write(aNode.toString()); // === undef entity is problematic
     } else if (aNode.getNodeType() == Node.TEXT_NODE || 
 	       aNode.getNodeType() == Node.CDATA_SECTION_NODE) {
