@@ -1,0 +1,169 @@
+<html>
+<hide> <?-- first create zero-stripped month and day for display --?>
+       <?-- get default date as today --?>
+       <if><?-- check if form called this page  --?>
+           <get name="FORM:newYear" /> 
+	   <then>
+              <?-- get date submitted by form, overwriting above values --?>
+	      <set name="myYear"  >&FORM:newYear;</set>
+	      <set name="myMonth"  >&FORM:newMonth;</set>
+	      <set name="myDay" >&FORM:newDay;</set>
+	   </then>
+	   <else>
+	      <set name="myYear" >&year;</set>
+	      <set name="myMonth" ><numstrip>&month;</numstrip></set>
+	      <set name="myDay" ><numstrip>&day;</numstrip></set>
+	   </else>
+	</if>
+    <set name="todaypack">
+         <date>&day;</date><month>&month;</month><year>&year;</year>
+    </set>
+    <set name="mypack">
+          <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+    </set>
+</hide>
+  <head>
+    <title>Calendar for
+	   <weekday monthname="yes">&mypack;</weekday> &myyear;</title>
+  </head>
+  <body bgcolor="white">
+
+
+  <?-- Title --?>
+  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+    <tr><th align=left colspan=8><font size="+2">
+	    Calendar for 
+            <weekday monthname="yes">&mypack;</weekday> &myYear; </font>
+	</th>
+    <tr><th align=left colspan=8>&nbsp;
+	</th>
+        <td align="right" colspan=4>
+       <a href="home">Today</a> is 
+          <weekday>&todaypack;</weekday>,
+       <a href="month"><weekday monthname="yes">&todaypack;</weekday>
+           &day;, &year; </a>
+        </td>
+    </tr>
+  </table>
+  <?-- bar of links to nearby months and years --?>
+  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+    <tr>
+       <repeat entity="mth" start="1" stop="12"><text trim="yes">
+	   <set name="mthname">
+	       <weekday monthname="yes">
+		  <date>15</date><month>&mth;</month><year>&myYear;</year>
+	       </weekday>
+	   </set>
+	   <if><test equals="&myMonth;">&mth;</test>
+	     <then>
+	       <th valign="middle"> &nbsp;<font size="+2">&mthname;</font> &nbsp;</th>
+	     </then>
+	     <else>
+	         <td valign="center"><a  href="month.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;
+	         </a> &nbsp; </td>
+	     </else>
+	   </if>
+       </text></repeat>
+    </tr>
+  <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
+  <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
+
+    <tr><td align="left">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
+		&lastYear;</a>
+        </td>
+        <td align="left">
+          <a href="month.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
+		&lastYear;-&myMonth;</a>
+        </td>
+        <th align="center" colspan=8>
+		<font size="+2">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
+		&myYear;</a>
+	  </font>
+	</th>
+        <td align="right">
+          <a href="month.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
+		&nextYear;-&myMonth;</a>
+        </td>
+        <td align="right">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
+		&nextYear;</a>
+        </td>
+    </tr>
+  </table>
+
+  <hide>
+  <?-- flags and now-empty list for deciding to show events --?>
+  <?-- set name="wholeEventList"> </set --?>
+  </hide>
+
+	<table cellspacing="1"  cellpadding="2" border="0">
+
+            <tr>
+               <th><tt>--Sunday---</tt></th>
+               <th><tt>--Monday---</tt></th>
+               <th><tt>--Tuesday--</tt></th>
+               <th><tt>-Wednesday-</tt></th>
+               <th><tt>--Thursday-</tt></th>
+               <th><tt>--Friday---</tt></th>
+               <th><tt>-Saturday--</tt></th>
+            </tr>
+
+	    <set name="thisMonth">&myMonth;</set>
+
+	    <set name="offset"><weekday startsun="yes">
+                   <date>15</date><month>&thisMonth;</month>
+                   <year>&myYear;</year>
+            </weekday></set>
+	    <set name="lastday"><weekday lastdate="yes">
+                 <date>15</date><month>&thisMonth;</month>
+                 <year>&myYear;</year>
+            </weekday></set>
+
+	    <?-- week loop --?>
+	    <repeat start="&offset;" entity="m" stop="&lastday;" step="7">
+           
+	       <set name="stopDay"><numeric sum="sum">&m; 6</numeric></set>
+	       <tr>
+		 <?--  day loop --?>
+		   <repeat start="&m;" stop="&stopDay;"><text trim="yes">
+		       <set name="myDay">&n;</set>
+		       <if><logical op="and">
+                             <test equals="&day;" >&myDay;</test>
+                             <test equals="&month;">&myMonth;</test>
+                             <test equals="&year;">&myYear;</test>
+                           </logical>
+			   <then>
+			      <set name="daycolor">mistyrose</set>
+			   </then>
+			   <else>
+			   <set name="daycolor">azure</set>
+			   </else>
+		       </if>
+		       <if><daycheck testday="&myDay;" lastday="&lastday;" />
+			   <then>
+			       <set name="wholeEventList">
+				  <lookup newYear="&myYear;"
+					  newMonth="&thisMonth;"
+					  newDay="&myDay;"
+					  readFile="yes" />
+			       </set>
+
+				       <td valign="top"  bgcolor="&daycolor;">
+				       <event-table>&wholeEventList;
+				       </event-table></td>
+			   </then>
+			   <else><td /></else>
+		       </if>
+		   </text></repeat>
+	       </tr>
+	    </repeat>
+
+         </table>
+
+       <show-errors />
+
+
+  </body>
+</html>
