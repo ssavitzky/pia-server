@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.2 1999-09-24 00:23:17 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.3 1999-09-24 22:08:23 steve Exp $ -->
 
 <Container>
   <AGENT name="History" criteria="response proxy-response">
@@ -21,7 +21,11 @@
   </output>
 	       <output dst="DATA/last.link"><a href="&url;">&url; : &title;</a>
   </output>
-	       <output dst="DATA/last.html">&date; &time; <a href="&url;">&url; : &title;</a>
+	       <output dst="DATA/last.html"><html><head>
+<title>Last page visited by Proxy</title>
+</head><body>
+&date; &time; <a href="&url;">&url;</a>
+&title;
 <dl>
   <dt> <b>Link:</b>
   </dt><dd> <pre><protect result="result" markup="markup"><a href="&url;">&url; : &title;</a></protect></pre>
@@ -30,6 +34,7 @@
   </dd><dt> <b>Request Header</b>
   </dt><dd> <pre><get name="REQ:HEADERS" /></pre>
 </dd></dl>
+</body></html>
 </output>
        </then>
        <else><output append="append" dst="&fn;">&time; --&ct;- <a href="&url;">&url;</a><br />
