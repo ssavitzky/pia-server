@@ -1,5 +1,5 @@
 ////// AbstractNamespace.java: Node Lookup Table
-//	$Id: AbstractNamespace.java,v 1.3 1999-06-04 22:40:01 steve Exp $
+//	$Id: AbstractNamespace.java,v 1.4 1999-10-11 21:41:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: AbstractNamespace.java,v 1.3 1999-06-04 22:40:01 steve Exp $
+ * @version $Id: AbstractNamespace.java,v 1.4 1999-10-11 21:41:53 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -254,12 +254,26 @@ public abstract class AbstractNamespace extends TreeGeneric
 
   public String contentString() {
     String s = "\n";
-    for (ActiveNode n = getFirstActive(); n != null; n = n.getNextActive()) {
-      EntityIndirect e =
-	(n instanceof EntityIndirect)? (EntityIndirect)n : null;
-      if (e != null && e.getValueNodes() == null) continue;
-      if (e != null && e.getAttrName() != null)      continue;
-      s += "  " + n.toString() + "\n";
+    if (true) {
+      Enumeration keys = getNames();
+      while (keys.hasMoreElements()) {
+	ActiveNode n = getBinding(keys.nextElement().toString());
+	EntityIndirect e =
+	  (n instanceof EntityIndirect)? (EntityIndirect)n : null;
+	if (e != null && e.getValueNodes() == null) continue;
+	if (e != null && e.getAttrName() != null)      continue;
+	s += "  " + n.toString() + "\n";
+      }
+    } else {
+      // This no longer works because we explicitly allow a namespace
+      // to contain items from other trees (which may or may not be a bug).
+      for (ActiveNode n = getFirstActive(); n != null; n = n.getNextActive()) {
+	EntityIndirect e =
+	  (n instanceof EntityIndirect)? (EntityIndirect)n : null;
+	if (e != null && e.getValueNodes() == null) continue;
+	if (e != null && e.getAttrName() != null)      continue;
+	s += "  " + n.toString() + "\n";
+      }
     }
     return s;
   }
@@ -268,7 +282,7 @@ public abstract class AbstractNamespace extends TreeGeneric
   ** Construction:
   ************************************************************************/
 
-  public AbstractNamespace() { this("NAMESPACE", null); }
+  public AbstractNamespace() { this("namespace", null); }
   public AbstractNamespace(String tag, String name) {
     super(tag); 
     setName(name);
