@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.14 1999-09-22 00:36:37 steve Exp $
+//	$Id: TopProcessor.java,v 1.15 1999-10-04 17:35:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Enumeration;
 import java.text.DateFormat;
+import java.util.Properties;
 
 import java.io.PrintStream;
 import java.io.InputStream;
@@ -44,10 +45,7 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tree.*;
-import org.risource.dps.namespace.BasicEntityTable;
-import org.risource.dps.namespace.BasicNamespace;
-import org.risource.dps.namespace.EntityWrap;
-import org.risource.dps.namespace.NamespaceWrap;
+import org.risource.dps.namespace.*;
 
 import org.risource.site.*;
 
@@ -66,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.14 1999-09-22 00:36:37 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.15 1999-10-04 17:35:59 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -120,6 +118,11 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /** Get the current Document's location. */
   public Resource getDocumentLoc() { return location;  }
 
+  /** Get the current Document's Root. */
+  public Root getRoot() {
+    return location == null ? null : location.getRoot();
+  }
+
   /** Get the current Document's configuration. */
   public Namespace getDocConfig() {
     Resource doc = getDocument();
@@ -129,6 +132,11 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /** Get the current location's configuration. */
   public Namespace getLocConfig() {
     Resource loc = getDocumentLoc();
+    return (loc == null)? null : loc.getProperties();
+  }
+
+  public Namespace getRootConfig() {
+    Root loc = getRoot();
     return (loc == null)? null : loc.getProperties();
   }
 
@@ -411,6 +419,12 @@ public class TopProcessor extends BasicProcessor implements TopContext
     getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
   }
 
+  /** Make an entity-table entry for a property list. */
+  public void define(String n, Properties v) {
+    PropertyTable ns = new PropertyTable(n, v);
+    getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
+  }
+
   /** Make an entity-table entry for a Namespace. */
   public void define(String n, Namespace ns) {
     getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
@@ -488,6 +502,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
 
     define("LOC", getLocConfig());
     define("PROPS", getDocConfig());
+    define("SITE", getRootConfig());
 
     // Extract formatted information from today's Date.
     initializeDateEntities(new Date());
@@ -501,12 +516,11 @@ public class TopProcessor extends BasicProcessor implements TopContext
      *  pathExt  -- the path extension (i.e. path after the filename)
      */
 
-    define("piaUSER",		System.getProperty("user.name"));
-    define("piaHOME",		System.getProperty("user.home"));
+    define("user.name",		System.getProperty("user.name"));
+    define("user.home",		System.getProperty("user.home"));
+    define("user.dir",		System.getProperty("user.dir"));
     define("ERROR",		"" );
     define("VERBOSITY",		"0");
-
-    define("entityNames", 	"");
   }
 
   /************************************************************************
