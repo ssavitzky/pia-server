@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.18 1999-04-30 23:37:53 steve Exp $
+// $Id: GenericAgent.java,v 1.19 1999-05-06 20:43:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -243,6 +243,23 @@ public class GenericAgent extends BasicNamespace
   /** The Tagsets being used by this agent. */
   protected transient Tagset defaultTagset = null;
 
+  /** Running time in milliseconds; used for timings. */
+  protected transient long time;
+
+  protected void time() {
+    time = System.currentTimeMillis();
+  }
+
+  /** Return a string representing the number of seconds 
+   *	since <code>time()</code> or <code>timing()</code> was last called. 
+   */
+  protected String timing() {
+    long t = System.currentTimeMillis();
+    String s = "" + (t - time)/1000 + "." + ((t - time)%1000 + 5)/10;
+    time = t;
+    return s;
+  }
+
   /** Load a tagset for this agent.  
    */
   public Tagset loadTagset(ActiveDoc proc, String name) {
@@ -252,9 +269,13 @@ public class GenericAgent extends BasicNamespace
       if (ts != null) return ts;
     }
 
+    time();
     if (piaXHTMLtagset == null) {
       piaXHTMLtagset = proc.loadTagset("pia-xhtml");
       if (piaXHTMLtagset == null) piaXHTMLtagset = proc.loadTagset("xhtml");
+      
+      System.err.println(name() + " Loaded tagset '" + piaXHTMLtagset.getName()
+			 + "' in " + timing() + " seconds.");
     }
 
     // Note: this will no longer pick up tagset from type.
@@ -263,6 +284,9 @@ public class GenericAgent extends BasicNamespace
     if (ts == null && name.equals("xhtml")) ts = piaXHTMLtagset;
     if (ts == null) ts = proc.loadTagset("pia-" + name);
     if (ts == null) ts = proc.loadTagset(name);
+    if (ts != null && ts != piaXHTMLtagset) 
+      System.err.println(name() + " Loaded tagset '" + ts.getName()
+			 + "' in " + timing() + " seconds'.");
 
     if (tagsets == null) tagsets = new Table();
     if (ts != null) tagsets.at(name, ts);
@@ -352,7 +376,6 @@ public class GenericAgent extends BasicNamespace
 
     // Force tagsets to load if necessary. 
     if (piaXHTMLtagset == null || findDocument(name()+"-xhtml") != null) {
-      System.err.println(name() + " Loading tagset(s).");
       proc = makeDPSProcessor(req, res);
     }
 
@@ -360,6 +383,13 @@ public class GenericAgent extends BasicNamespace
     if (Pia.verbose()) dumpDebugInformation();
 
     initialized = true;
+    ActiveNodeList initHook = getValueNodes(null, "initialize");
+    if (initHook != null) {
+      proc.setInput(new org.risource.dps.input.FromNodeList(initHook));
+      proc.setOutput(new org.risource.dps.output.DiscardOutput());
+      proc.run();
+    }
+
     if (runInitFile) runInitFile();
   }
 
