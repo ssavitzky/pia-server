@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.16 1999-07-14 20:20:19 steve Exp $
+//	$Id: extractHandler.java,v 1.17 1999-08-11 20:36:05 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.16 1999-07-14 20:20:19 steve Exp $
+ * @version $Id: extractHandler.java,v 1.17 1999-08-11 20:36:05 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -415,9 +415,12 @@ class nameHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    String name = content.toString();
+    String name = null;
+    if (content != null)
+	name = content.toString();
     if (name != null) name = name.trim();
-    if (name == null) {
+
+    if (name == null || name.length() == 0) {
       extractNames(extracted, out); 
     } else if (name.startsWith("#")) {
       extractByType(name, extracted, out);
@@ -456,6 +459,7 @@ class name_recursive extends extract_subHandler {
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String key = content.toString();
+
     if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     if (key != null && key.startsWith("#")) {
@@ -669,6 +673,7 @@ class attrHandler extends extract_subHandler {
   attrHandler() { super(true, true); } // text only.
 }
 
+
 /** &lt;has-attr&gt;<em>n</em>&lt;/&gt; extracts every Element with given attr.
  */ 
 class hasAttrHandler extends extract_subHandler {
@@ -874,8 +879,12 @@ class replaceHandler extends extract_subHandler {
       for (int i = 0; i < len; ++i) {
 	ActiveNode item = extracted.activeItem(i);
 	if (item.getParentNode() != null) {
-	  item.getParentNode().replaceChild(item, content.item(0));
-	  out.putNode(item);
+	    for (int j = 0; j < content.getLength(); j++){
+		item.getParentNode().insertBefore(content.item(j).cloneNode(true), item);
+	    }
+	    item.getParentNode().removeChild(item);
+	    //item.getParentNode().replaceChild(item,  content.item(0));
+	    out.putNode(item);
 	} else {
 	  putList(out, content);
 	}
@@ -1041,8 +1050,8 @@ class appendHandler extends extract_subHandler {
  */
 class insertHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, ActiveNodeList content) {
-    int child = MathUtil.getInt(atts, "child", -1);
+			ActiveAttrList atts, ActiveNodeList content) { 
+   int child = MathUtil.getInt(atts, "child", -1);
     ActiveNodeList extracted = getExtracted(aContext);
     if (extracted == null) {
       reportError(in, aContext, "No list: possibly not inside <extract>");
