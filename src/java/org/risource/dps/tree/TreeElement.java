@@ -1,5 +1,5 @@
 ////// TreeElement.java -- implementation of ActiveElement
-//	$Id: TreeElement.java,v 1.1 1999-04-07 23:22:06 steve Exp $
+//	$Id: TreeElement.java,v 1.2 1999-04-23 00:22:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeElement.java,v 1.1 1999-04-07 23:22:06 steve Exp $
+ * @version $Id: TreeElement.java,v 1.2 1999-04-23 00:22:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -268,6 +268,7 @@ public class TreeElement extends TreeNode implements ActiveElement
   protected boolean isEmptyElement = false;
   protected boolean hasEmptyDelim = false;
   protected boolean implicitEnd = false;
+  protected boolean mixedContent = true;
 
   /** Returns <code>true</code> if the Element has no content. 
    *
@@ -306,13 +307,13 @@ public class TreeElement extends TreeNode implements ActiveElement
     if (value) isEmptyElement = true;
   }
 
-  /** Returns true if the Token corresponds to an Element which has content
-   *	but no end tag, because the end tag can be deduced from context.
+  /** Returns true if the Element has content but no end tag, 
+   *	because the end tag can be deduced from context.
    *
-   *	This flag is redundant given a valid DTD; it exists to take care
-   *	of the common case where the DTD is unknown or incomplete, or where
-   *	an effort needs to be made to preserve exact input formatting in
-   *	the parse tree. <p>
+   * <p> This flag is redundant given a valid DTD; it exists to take care
+   *	 of the common case where the DTD is unknown or incomplete, or where
+   *	 an effort needs to be made to preserve exact input formatting in
+   *	 the parse tree.
    *
    * === Strictly speaking it has to be turned off if a Text node is inserted
    *	 following this Element.
@@ -323,6 +324,15 @@ public class TreeElement extends TreeNode implements ActiveElement
   public void setImplicitEnd(boolean flag) { implicitEnd = flag; }
 
 
+  /** Set the flag that says whether mixed text and elements are permitted
+   *	in the content.
+   */
+  public void setMixedContent(boolean value) 	{ mixedContent = value; }
+
+  /** Returns true if mixed text and elements are permitted in the content.
+   *	Returns false if only elements are permitted.
+   */
+  public boolean hasMixedContent() { return mixedContent; }
 
   /************************************************************************
   ** Instance Variables:
@@ -467,7 +477,10 @@ public class TreeElement extends TreeNode implements ActiveElement
     if (attrs != null && attrs.getLength() > 0) {
       s += " " + attrs.toString();
     }
-    return s + (hasEmptyDelimiter() ? " /" : "") + ">";
+    if (hasEmptyDelimiter()) s += " /";
+    s += ">";
+    if (!mixedContent && hasChildNodes()) s += "\n";
+    return s;
   }
 
   /** Return the String equivalent of the Token's content or
@@ -483,9 +496,9 @@ public class TreeElement extends TreeNode implements ActiveElement
    */
   public String endString() {
     if (implicitEnd() || isEmptyElement()) return "";
-    else return "</" + (nodeName == null ? "" : nodeName) + ">";
+    else return ((mixedContent? "" : "\n")
+		 + "</" + (nodeName == null ? "" : nodeName) + ">");
   }
-
 
   /** Convert the elment to a String in external form..
    */

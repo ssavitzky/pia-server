@@ -1,5 +1,5 @@
 ###### dom/tree/Makefile:	DOM implementation classes
-# 	$Id: Makefile,v 1.1 1999-04-07 23:22:02 steve Exp $
+# 	$Id: Makefile,v 1.2 1999-04-23 00:22:17 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -67,10 +67,13 @@ TreeEntity.class: TreeNode.java TreeValue.java
 TreeEntityRef.class: TreeNode.java TreeValue.java
 TreePI.class: TreeNode.java TreeValue.java
 
-TreeComment.class: TreeNode.java
 TreeElement.class: TreeNode.java
-TreeText.class: TreeNode.java
+TreeGeneric.class: TreeNode.java TreeElement.java
+
+TreeText.class: TreeNode.java TreeCharData.java
+TreeComment.class: TreeNode.java TreeCharData.java
 
 TreeNodeMap.class: TreeNodeArray.java
 
 TreeNodeList.class: TreeNodeArray.java
+

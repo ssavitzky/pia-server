@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.5 1999-04-17 01:18:55 steve Exp $
+//	$Id: Tagset.java,v 1.6 1999-04-23 00:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import org.risource.dps.active.*;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.5 1999-04-17 01:18:55 steve Exp $
+ * @version $Id: Tagset.java,v 1.6 1999-04-23 00:21:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -104,11 +104,11 @@ public interface Tagset  {
   /** Get the binding (Entity node) of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveEntity getEntityBinding(String name);
+  public ActiveNode getBinding(String name);
 
   /** Bind an Entity.
    */
-  public void setEntityBinding(String name, ActiveEntity ent);
+  public void setBinding(String name, ActiveNode ent);
 
 
   /************************************************************************

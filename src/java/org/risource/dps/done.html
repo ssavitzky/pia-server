@@ -672,6 +672,13 @@ See also:
        -- not really a problem: XML requires quoting; a space is provided on
 	  output and is conventional on input.
 
+  <li> 1999-04-07 <b>Bug</b> If/elsf/else handlers do not work correctly.  
+	elsf clause always returns true.  See demo_if.xh. (1998-10-19)<br>
+
+  <li> 1999-04-08 <b>Bug:</b> NamespaceWrap doesn't return NodeList for
+       bindings <br> 
+       (1998-10-11) <br>
+
   <li> 1999-04-08 <b>Hole:</b> Major changes needed for new DOM. <br>
        Do this after Level 1 stabilizes.
        (1998-08-05)<br>
@@ -686,6 +693,20 @@ See also:
 	      DOM utilities.
        </ul>
 
+  <li> 1999-04-08 <b>Impr:</b> Add ActiveNode operations to
+       <code>Input</code>, etc. <br> 
+       Fully supporting <code>ActiveNode</code> as well as <code>Node</code>
+       everywhere in the DPS would give faster, simpler code.  It is already
+       impossible to use ordinary DOM Nodes in a Processor.
+       (1998-07-07) <br>
+       -- I'm not sure when this was fixed; probably as part of the DOM
+	  update. 
+
+  <li> 1999-04-08 <b>Hole:</b> <code>ParseTreeDocument</code>, DTD, &amp; XML
+       nodes. <br> 
+       ...are still unimplemented. 
+       (1998-06-18) <br>
+
   <li> 1999-04-15 <b>Bug</b> Using Entity instead of EntityRef <br>
        Parser is generating Entity nodes instead of EntityRef nodes for entity
        references.
@@ -699,11 +720,17 @@ See also:
        (1999-04-16) <br>
        -- The culprit was GenericHandler.
        
+  <li> 1999-04-16 <b>Bug</b> Extract that modifies structure should preserve
+       list <br> 
+       All of the structure-modifying sub-elements should simply return the
+       extracted list. 
+       (1999-04-16) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.7 1999-04-17 01:11:59 steve Exp $</b><br>
+<b>$Id: done.html,v 1.8 1999-04-23 00:21:26 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
 ////// Namespace.java: Node Handler Lookup Table interface
-//	$Id: Namespace.java,v 1.5 1999-04-17 01:18:52 steve Exp $
+//	$Id: Namespace.java,v 1.6 1999-04-23 00:21:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,11 +36,10 @@ import java.util.Enumeration;
  *	and/or children of some Node, called its <em>binding</em>.
  *
  * <p>	A Namespace is normally accessed through a name that ends in a 
- *	colon character.  It is not required to ``know'' its own name,
- *	however; it may simply be the value of that name in another 
- *	Namespace, or even <em>contained in</em> some name's value.
+ *	colon character.  For that reason a Namespace must have its own
+ *	name, since it is not necessarily associated with another Node.
  *
- * @version $Id: Namespace.java,v 1.5 1999-04-17 01:18:52 steve Exp $
+ * @version $Id: Namespace.java,v 1.6 1999-04-23 00:21:23 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -59,9 +58,29 @@ public interface Namespace {
 
   /** Add a new binding or replace an existing one.  Returns the old binding,
    *	if any.  Removes existing binding if the new binding is
-   *	<code>null</code>
+   *	<code>null</code>.
+   * @return the <em>old</em> binding, if any.
    */
   public ActiveNode setBinding(String name, ActiveNode binding);
+
+  /** Add a new binding or replace the <em>value of</em> an existing one. 
+   *
+   * <p> The new value will be copied if necessary.  This function allows a
+   *	 specialized Namespace to construct a binding of the proper type.
+   *
+   * @return the new or updated binding.
+   */
+  public ActiveNode setValueNodes(Context cxt, String name,
+				  ActiveNodeList value);
+
+  /** Obtain the <em>value of</em> an existing binding. 
+   *
+   * <p> This function allows a specialized Namespace to construct a value 
+   *	 rather than simply retrieving it from an existing binding.
+   *
+   * @return the value.
+   */
+  public ActiveNodeList getValueNodes(Context cxt, String name);
 
   /************************************************************************
   ** Information Operations:

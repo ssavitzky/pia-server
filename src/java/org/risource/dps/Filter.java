@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.6 1999-04-17 01:18:51 steve Exp $
+//	$Id: Filter.java,v 1.7 1999-04-23 00:21:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -149,7 +149,11 @@ public class Filter {
 
     if (debug) {
       dumpTagset(ts);
+    } else if (verbose) {
+      System.err.println("================================");
+      System.err.println(ts.toString());
     }
+
     if (in == null || out == null) System.exit(-1);
 
     /* Ask the Tagset for an appropriate parser, and set its Reader. */
@@ -170,6 +174,8 @@ public class Filter {
 	System.err.println(" " + name + "=" + v);
       }
       System.err.print("\n");
+    } else if (verbose &&  (ii.getNamespace(null) != null)) {
+      System.err.println(ii.getNamespace(null).toString());
     }
      
     ToParseTree outputTree = null;

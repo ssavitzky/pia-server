@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.10 1999-04-17 01:16:13 steve Exp $
+//	$Id: extractHandler.java,v 1.11 1999-04-23 00:21:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,7 @@ import org.risource.dps.output.ToNodeList;
 import org.risource.dps.tree.TreeEntity;
 import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.namespace.BasicEntityTable;
 
 import org.risource.ds.Association;
 import org.risource.ds.List;
@@ -46,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.10 1999-04-17 01:16:13 steve Exp $
+ * @version $Id: extractHandler.java,v 1.11 1999-04-23 00:21:40 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {

@@ -1,5 +1,5 @@
 // TreeAttrList.java
-// $Id: TreeAttrList.java,v 1.2 1999-04-17 01:19:43 steve Exp $
+// $Id: TreeAttrList.java,v 1.3 1999-04-23 00:22:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -160,8 +160,12 @@ public class TreeAttrList extends TreeNodeMap
     return super.setBinding(name, binding);
   }
 
-  public void setValueNodes(Context cxt, String name, ActiveNodeList value) {
-    setAttributeValue(name, value);
+  public ActiveNode setValueNodes(Context cxt, String name,
+				  ActiveNodeList value) {
+    TreeAttr attr = new TreeAttr(name, value);
+    //attr.setSpecified(value != null);
+    setBinding( name, attr );
+    return attr;
   }
   
   public Input getBindings() {

@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	$Id: Loader.java,v 1.4 1999-04-17 01:19:06 steve Exp $
+//	$Id: Loader.java,v 1.5 1999-04-23 00:21:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -90,6 +90,8 @@ public class Loader {
   }
 
   /** Load an appropriate handler class and instantiate it. 
+   *	If the class is not found and <code>defaultOK</code>, a
+   *	new <code>GenericHandler</code> is returned.
    */
   public static AbstractHandler loadHandler(String tag, String cname,
 				    int syntax, boolean defaultOK) {
@@ -112,6 +114,8 @@ public class Loader {
   }
 
   /** Load an appropriate handler class and instantiate it. 
+   *	If the class is not found and <code>defaultOK</code>, a
+   *	new <code>BasicHandler</code> is returned.
    */
   public static AbstractHandler loadHandler(String cname, int syntax,
 					    boolean defaultOK) {

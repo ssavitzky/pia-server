@@ -1,5 +1,5 @@
 // TreeValue.java
-// $Id: TreeValue.java,v 1.2 1999-04-17 01:19:51 steve Exp $
+// $Id: TreeValue.java,v 1.3 1999-04-23 00:22:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -127,6 +127,10 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
     //setChildren(newValue);
   }
 
+  public void setValueNodes(Context cxt, ActiveNodeList newValue) {
+    setValueNodes(newValue);
+  }
+
   /************************************************************************
   ** Constructors:
   ************************************************************************/
@@ -160,8 +164,9 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
    */
   public TreeValue(TreeValue attr, boolean copyChildren){
     super(attr, copyChildren);
-    setName( attr.getName() );
-    setValueNodes( attr.getValueNodes(null) );
+    nodeValue = attr.nodeValue;
+    names = attr.names;
+    isAssigned = attr.isAssigned;
   }
 
   /**

@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.6 1999-04-17 01:17:43 steve Exp $
+# 	$Id: Makefile,v 1.7 1999-04-23 00:21:22 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,8 +26,9 @@ TOPDIR=../../..
 
 PACKAGES = \
 	active \
-	input \
 	tree \
+	namespace \
+	input \
 	output \
 	util \
 	handle \

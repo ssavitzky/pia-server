@@ -1,5 +1,5 @@
 ////// ContextStack.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.6 1999-04-17 01:19:58 steve Exp $
+//	$Id: ContextStack.java,v 1.7 1999-04-23 00:22:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,13 +32,15 @@ import org.w3c.dom.NodeList;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.BasicProcessor;
+import org.risource.dps.namespace.BasicNamespace;
+import org.risource.dps.namespace.BasicEntityTable;
 
 /**
  * A stack frame for a linked-list stack of current nodes. 
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.6 1999-04-17 01:19:58 steve Exp $
+ * @version $Id: ContextStack.java,v 1.7 1999-04-23 00:22:35 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -57,7 +59,7 @@ public class ContextStack  implements Context {
     return new BasicProcessor(in, this, out, entities);
   }
 
-  public Processor subProcess(Input in, Output out, EntityTable entities) {
+  public Processor subProcess(Input in, Output out, Namespace entities) {
     return new BasicProcessor(in, this, out, entities);
   }
 
@@ -67,7 +69,7 @@ public class ContextStack  implements Context {
 
   protected Context 	stack = null;
   protected int 	depth = 0;
-  protected EntityTable entities = null;
+  protected Namespace	entities = null;
   protected Input 	input;
   protected Output 	output;
   protected int 	verbosity = 0;
@@ -80,13 +82,13 @@ public class ContextStack  implements Context {
  ** Accessors:
  ************************************************************************/
 
-  /** getEntities returns the most-local Entity namespace. */
-  protected Namespace getEntities() 	{ 
+  /** getBindings returns the most-local Entity namespace. */
+  protected Namespace getBindings() 	{ 
     return (entities == null && nameContext != null) 
       ? nameContext.getNamespace(null) 
       : entities;
   }
-  protected void setEntities(EntityTable bindings) { entities = bindings; }
+  protected void setBindings(Namespace bindings) { entities = bindings; }
 
   public Input getInput() 		{ return input; }
   public void  setInput(Input in) 	{ input = in; }
@@ -149,11 +151,7 @@ public class ContextStack  implements Context {
   public void setValueNodes(String name, ActiveNodeList value, boolean local) {
     Namespace ns = locateBinding(name, local);
     if (ns != null) {
-      ActiveNode binding = ns.getBinding(name);
-      binding.setValueNodes(this, value);
-      if (! (ns instanceof BasicNamespace)) ns.setBinding(name, binding);
-      // need to locate the binding and rebind it, because the namespace
-      // may be something special (like an Agent).
+      ns.setValueNodes(this, name, value);
     } else {
       if (entities == null && (local || nameContext == null))
 	entities = new BasicEntityTable();
@@ -193,7 +191,7 @@ public class ContextStack  implements Context {
     if (ns == null) {
       if (entities == null && (local || nameContext == null))
 	entities = new BasicEntityTable();
-      ns = getEntities();
+      ns = getBindings();
     } 
     ns.setBinding(name, ent);
   }
@@ -256,7 +254,7 @@ public class ContextStack  implements Context {
     entities = null;
   }
 
-  public ContextStack(Input in, Context prev, Output out, EntityTable ents) {
+  public ContextStack(Input in, Context prev, Output out, Namespace ents) {
     stack    	= prev;
     input    	= in;
     output   	= out;

@@ -1,5 +1,5 @@
 ////// TreeEntity.java -- implementation of ActiveEntity
-//	$Id: TreeEntity.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+//	$Id: TreeEntity.java,v 1.2 1999-04-23 00:22:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntity.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+ * @version $Id: TreeEntity.java,v 1.2 1999-04-23 00:22:23 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -139,7 +139,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
-    return "&";
+    return "  <ENTITY name='" + getName() + "'>";
   }
 
   /** Return the String equivalent of the Token's content or
@@ -147,14 +147,14 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
    *	with special significance, such as ampersand.
    */
   public String contentString() {
-    return getName();
+    return getValueNodes().toString();
   }
 
   /** Return the String equivalent of the Token's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
-    return ";";
+    return "</ENTITY>\n";
   }
 
 

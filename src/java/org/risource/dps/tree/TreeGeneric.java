@@ -1,5 +1,5 @@
 // TreeGeneric.java
-// $Id: TreeGeneric.java,v 1.2 1999-04-17 01:19:46 steve Exp $
+// $Id: TreeGeneric.java,v 1.3 1999-04-23 00:22:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -69,10 +69,10 @@ public class TreeGeneric extends TreeElement  {
   
   /** It is possible to set the tag name. */
   void setTagName(String value)		{ nodeName = value; }
-  
+
   /**
-   * Set attribute name.
-   * @param name attribute name.
+   * Set name -- <em>not</em> the tagname.
+   * @param name name.
    */
   public void setName(String name)	{ this.name = name; }
 
@@ -136,6 +136,11 @@ public class TreeGeneric extends TreeElement  {
 
   public TreeGeneric(String tag) {
     super(tag, null, null, null);
+  }
+
+  public TreeGeneric(String tag, String name) {
+    super(tag, null, null, null);
+    setName(name);
   }
 
   /**

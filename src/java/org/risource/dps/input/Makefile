@@ -1,5 +1,5 @@
 ###### dps/input/Makefile:	Implementations of the Input interface
-# 	$Id: Makefile,v 1.5 1999-04-07 23:21:34 steve Exp $
+# 	$Id: Makefile,v 1.6 1999-04-23 00:22:01 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ FILES = \
 	ActiveInput.java \
 	FromNodeList.java \
 	FromEnumeration.java \
+	FromNamespace.java \
 	FromParseTree.java 
 
 
@@ -37,5 +38,8 @@ include $(TOPDIR)/makefiles/file.make
 
 ActiveInput.class: ../Input.java ../util/CurrentActive.java
 FromParseTree.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
-FromNodeList.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
+FromNodeList.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java\
+	../active/ActiveNodeList.java
 FromEnumerator.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
+FromNamespace.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java\
+	../Namespace.java

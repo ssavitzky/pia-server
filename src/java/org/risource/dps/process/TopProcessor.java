@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.7 1999-04-17 01:19:33 steve Exp $
+//	$Id: TopProcessor.java,v 1.8 1999-04-23 00:22:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,6 +44,11 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeEntity;
+import org.risource.dps.namespace.BasicEntityTable;
+import org.risource.dps.namespace.BasicNamespace;
+import org.risource.dps.namespace.EntityWrap;
+import org.risource.dps.namespace.NamespaceWrap;
 
 import org.risource.ds.List;
 import org.risource.ds.Tabular;
@@ -60,7 +65,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.7 1999-04-17 01:19:33 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.8 1999-04-23 00:22:07 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -115,7 +120,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
 
   /** Get the binding (Entity node) of an entity, given its name. 
    *
-   * <p> Search the tagset if there is no binding in the current EntityTable.
+   * <p> Search the tagset if there is no binding in the current Namespace
    *	 Bindings in the tagset are considered local.
    *
    * @return <code>null</code> if the entity is undefined.
@@ -123,7 +128,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
   public ActiveNode getBinding(String name, boolean local) {
     ActiveNode ent = (entities == null)
       ? null : entities.getBinding(name);
-    if (ent == null && tagset != null) ent = tagset.getEntityBinding(name);
+    if (ent == null && tagset != null) ent = tagset.getBinding(name);
     //if (debug() && ent != null)
     //debug("Binding found for " + name + " " + ent.getClass().getName());
     return (local || ent != null || nameContext == null)
@@ -137,7 +142,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
     ActiveNode ent = (entities == null)
       ? null : entities.getBinding(name);
     if (ent != null) return entities;
-    ent = tagset.getEntityBinding(name);
+    ent = tagset.getBinding(name);
     if (ent != null) return tagset.getEntities();
     return (local || nameContext == null)
       ? null : nameContext.locateBinding(name, local);
@@ -362,8 +367,19 @@ public class TopProcessor extends BasicProcessor implements TopContext
 
   /** Make an entity-table entry for a lookup table. */
   public void define(String n, Tabular v) {
-    if (entities == null) entities = (new BasicEntityTable());
-    getLocalNamespace().setBinding(n, new NamespaceWrap(n, v));
+    NamespaceWrap ns = new NamespaceWrap(n, v);
+    getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
+  }
+
+  /** Make an entity-table entry for a node. */
+  public void define(String n, ActiveNode v) {
+    getLocalNamespace().setBinding(n, v);
+  }
+
+  /** Make an entity-table entry for a lookup table with a tag. */
+  public void define(String n, String tag, Tabular v) {
+    NamespaceWrap ns = new NamespaceWrap(tag, n, v);
+    getLocalNamespace().setBinding(n, new EntityWrap(n, ns));
   }
 
   /** Make an entity-table entry for a String. */
@@ -371,7 +387,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
     if (v == null)
       setValueNodes(n, new TreeNodeList(), false);
     else
-      setValueNodes(n, Create.createNodeList(v.toString()), false);
+      setValueNodes(n, new TreeNodeList(tagset.createActiveText(v.toString())), false);
   }
 
   /** Make an entity-table entry for a List. */
@@ -422,7 +438,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
   }
 
   public void initializeEntities() {
-    entities = new BasicEntityTable("DOC"); // top level is called "DOC"
+    entities = new BasicNamespace("DOC"); // top level is called "DOC"
 
     // Extract formatted information from today's Date.
     initializeDateEntities(new Date());
@@ -463,18 +479,18 @@ public class TopProcessor extends BasicProcessor implements TopContext
     top = this;
   }
 
-  public TopProcessor(Input in, Output out, EntityTable ents) {
+  public TopProcessor(Input in, Output out, Namespace ents) {
     super(in, null, out, ents);
     top = this;
   }
 
-  public TopProcessor(Input in, Context prev, Output out, EntityTable ents) {
+  public TopProcessor(Input in, Context prev, Output out, Namespace ents) {
     super(in, prev, out, ents);
     top = this;
   }
 
   public TopProcessor(Input in, Context prev, Output out, Tagset ts) {
-    this(in, prev, out, (EntityTable)null);
+    this(in, prev, out, (Namespace)null);
     setTagset(ts);
   }
 

@@ -1,5 +1,5 @@
 ////// EntityTable.java: Entity Lookup Table interface
-//	$Id: EntityTable.java,v 1.5 1999-04-17 01:18:50 steve Exp $
+//	$Id: EntityTable.java,v 1.6 1999-04-23 00:21:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,7 +23,6 @@
 
 package org.risource.dps;
 
-import org.risource.dps.active.ActiveEntity;
 import org.risource.dps.active.ActiveNodeList;
 
 import java.util.Enumeration;
@@ -31,9 +30,12 @@ import java.util.Enumeration;
 /**
  * The interface for a EntityTable -- a lookup table for values. 
  *
- *	Entities are named values that can be substituted into a document.
+ * <p> Note that we do not guarantee that the EntityTable contains only
+ *	entities, just that values can be obtained without a context.
+ *	<em>Setting</em> values still requires a context, because nodes
+ *	may have to be constructed.
  *
- * @version $Id: EntityTable.java,v 1.5 1999-04-17 01:18:50 steve Exp $
+ * @version $Id: EntityTable.java,v 1.6 1999-04-23 00:21:19 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.active.ActiveEntity
@@ -46,19 +48,10 @@ public interface EntityTable extends Namespace {
   ** Lookup Operations:
   ************************************************************************/
 
-  /** Look up a name and return the corresponding Entity. */
-  public ActiveEntity getEntityBinding(String name);
-
   /** Look up a name and return its value. 
    *	No context is required, because we can guarantee that the table
    *	contains only Entity nodes, which have values.
    */
   public ActiveNodeList getValueNodes(String name);
-
-  /** Set a value.  
-   *	A context is required because we may need its tagset
-   *	in order to construct a new binding.
-   */
-  public void setValueNodes(Context cxt, String name, ActiveNodeList value);
 
 }

@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.11 1999-04-17 01:19:31 steve Exp $
+//	$Id: ActiveDoc.java,v 1.12 1999-04-23 00:22:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,6 +40,7 @@ import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.w3c.dom.NodeList;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.active.ActiveNode;
 import org.risource.dps.handle.Loader;
 
 import org.risource.ds.List;
@@ -54,7 +55,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.11 1999-04-17 01:19:31 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.12 1999-04-23 00:22:04 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -138,17 +139,15 @@ public class ActiveDoc extends TopProcessor {
   public void initializeNamespaceEntities() {
 
     define("PIA", Pia.instance().properties());
-    if (agent != null) define("AGENT", agent);
-
     Transaction transaction = getTransaction();
     if (transaction != null) {
-      define("TRANS", transaction);
+      define("TRANS", "TRANSACTION", transaction);
       //define("HEADERS",transaction.getHeaders());
 
       Transaction req = transaction.requestTran();
-      define("REQ", req);
+      define("REQ", "TRANSACTION", req);
       if (req != null && req.hasQueryString()){
-	define("FORM", req.getParameters());
+	define("FORM", "FORM", req.getParameters());
       }
     }
 
@@ -187,7 +186,7 @@ public class ActiveDoc extends TopProcessor {
 	String apath = transaction.getFeatureString("agent-path");
 	String atype = transaction.getFeatureString("agent-type");
 
-	define("TRANS-AGENT", agent);
+	define("TRANS-AGENT", (Tabular)agent);
 	define("transAgentName", aname);
 	define("transAgentType", atype);
 	define("transAgentPath", apath);
@@ -217,7 +216,7 @@ public class ActiveDoc extends TopProcessor {
     // Set these even if we retrieved an entity table from the 
     // transaction -- the agent is (necessarily) different      
 
-    define("AGENT", agent);
+    define("AGENT", (Tabular)agent);
     define("agentName", agent.name());
     define("agentType", agent.type());
     define("agentPath", agent.path());
@@ -360,7 +359,7 @@ public class ActiveDoc extends TopProcessor {
 
   public ActiveDoc(Input in, Context cxt, Output out, Tagset ts,
 		   Agent a, Transaction req, Transaction resp, Resolver res) {
-    super(in, cxt, out, (EntityTable)null);
+    super(in, cxt, out, (Namespace)null);
     agent = a;
     request = req;
     response = resp;

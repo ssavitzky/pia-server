@@ -1,5 +1,5 @@
 // Tabular.java -- interface for tabular data
-// 	$Id: Tabular.java,v 1.3 1999-03-12 19:28:49 steve Exp $
+// 	$Id: Tabular.java,v 1.4 1999-04-23 00:22:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,19 +33,19 @@ import java.util.Enumeration;
  * 	<code>HashTable</code> and <code>Map</code>. This is in contrast with
  * 	the older <code>Stuff</code>, which is derived from Perl.
  *
- * @version $Id: Tabular.java,v 1.3 1999-03-12 19:28:49 steve Exp $
+ * @version $Id: Tabular.java,v 1.4 1999-04-23 00:22:49 steve Exp $
  * @author steve@rsv.ricoh.com
  * @see java.util.HashTable
  * @see org.risource.ds.Stuff
  */
 public interface Tabular {
   /** Access an individual item by name. */
-  Object get(String key);
+  public Object get(String key);
 
   /** Replace an individual named item with value <em>v</em>. */
-  void put(String key, Object v);
+  public void put(String key, Object v);
 
   /** Return an enumeration of all the  keys. */
-  Enumeration keys();
+  public Enumeration keys();
 }
 

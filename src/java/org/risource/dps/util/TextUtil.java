@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.5 1999-04-07 23:22:18 steve Exp $
+//	$Id: TextUtil.java,v 1.6 1999-04-23 00:22:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,7 @@ import org.risource.dps.output.*;
 import org.risource.dps.input.*;
 import org.risource.dps.tree.TreeEntity;
 import org.risource.dps.tree.TreeText;
+import org.risource.dps.namespace.BasicEntityTable;
 
 import org.risource.ds.Table;
 import org.risource.ds.List;
@@ -50,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.5 1999-04-07 23:22:18 steve Exp $
+ * @version $Id: TextUtil.java,v 1.6 1999-04-23 00:22:44 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -65,7 +66,7 @@ public class TextUtil {
   public static BasicEntityTable getCharacterEntities() { return charEnts; }
 
   static protected void dc(char c, String name) {
-    charEnts.addBinding(name, new TreeEntity(name, c));
+    charEnts.setBinding(name, new TreeEntity(name, c));
   }
 
   static {

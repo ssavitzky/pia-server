@@ -1,5 +1,5 @@
 ###### dps/util/Makefile:	DPS utility classes
-# 	$Id: Makefile,v 1.3 1999-03-12 19:28:22 steve Exp $
+# 	$Id: Makefile,v 1.4 1999-04-23 00:22:41 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,16 +27,10 @@ TOPDIR=../../../..
 FILES = $(CLASSES) $(UTILITIES)
 
 CLASSES = \
-	BasicNamespace.java \
-	NamespaceWrap.java \
 	EntityInput.java \
-	EntityWrap.java \
-	BasicEntityTable.java \
 	ContextStack.java \
 	CurrentActive.java \
 	CursorStack.java
-
-#	CurrentNode.java \
 
 UTILITIES = \
 	Copy.java \
@@ -55,7 +49,3 @@ include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies
 
-BasicEntityTable.class: BasicNamespace.java \
-	../Namespace.java ../EntityTable.java
-
-BasicNamespace.class: ../Namespace.java ../EntityTable.java

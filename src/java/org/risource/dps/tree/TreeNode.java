@@ -1,5 +1,5 @@
 // TreeNode.java
-// $Id: TreeNode.java,v 1.2 1999-04-17 01:19:47 steve Exp $
+// $Id: TreeNode.java,v 1.3 1999-04-23 00:22:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -219,7 +219,8 @@ public class TreeNode implements ActiveNode, Serializable {
   }
   
   public void setValueNodes(Context cxt, ActiveNodeList v) {
-    throw new DPSException(DOMException.NO_MODIFICATION_ALLOWED_ERR);
+    throw new DPSException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
+			   "Setting value of " + getClass().getName());
   }
 
   public ActiveNodeList getContent() {
@@ -577,27 +578,27 @@ public class TreeNode implements ActiveNode, Serializable {
   /**
    * The parent 
    */
-  protected TreeNode parent;
+  protected TreeNode parent = null;
 
   /**
    * Left sibling
    */
-  protected TreeNode prev;
+  protected TreeNode prev = null;
 
   /**
    * Right sibling 
    */
-  protected TreeNode next;
+  protected TreeNode next = null;
 
   /**
    * Reference to first child
    */
-  protected TreeNode head;
+  protected TreeNode head = null;
 
   /**
    * Reference to last child
    */
-  protected TreeNode tail;
+  protected TreeNode tail = null;
 
   /**
    * How many children do I have

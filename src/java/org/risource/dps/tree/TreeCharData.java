@@ -1,5 +1,5 @@
 ////// TreeCharData.java -- implementation of ActiveCharData
-//	$Id: TreeCharData.java,v 1.1 1999-04-07 23:22:03 steve Exp $
+//	$Id: TreeCharData.java,v 1.2 1999-04-23 00:22:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * An implementation of the ActiveCharData and CharacterData interfaces.
  *
- * @version $Id: TreeCharData.java,v 1.1 1999-04-07 23:22:03 steve Exp $
+ * @version $Id: TreeCharData.java,v 1.2 1999-04-23 00:22:19 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -66,6 +66,11 @@ public class TreeCharData extends TreeNode implements ActiveCharData {
   public String getNodeValue() 		{ return getData(); }
   public void   setNodeValue(String newData) { setData(data); }
 
+  /** CharData nodes evaluate to a NodeList containing the node. */
+  public ActiveNodeList getValueNodes(Context cxt) {
+    return new TreeNodeList(this);
+  }
+  
   public String substringData(int offset, int count) {
     return data.substring(offset, offset+count);
   }

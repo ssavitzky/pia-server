@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.6 1999-04-07 23:21:20 steve Exp $
+# 	$Id: Makefile,v 1.7 1999-04-23 00:21:37 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -61,6 +61,13 @@ PRIM_HANDLERS = \
 	protectHandler.java \
 	queryHandler.java \
 	repeatHandler.java \
+	  repeat_subHandler.java \
+	  firstHandler.java \
+	  finallyHandler.java \
+	  whileHandler.java \
+	  untilHandler.java \
+	  foreachHandler.java \
+	  forHandler.java \
 	statusHandler.java \
 	substHandler.java \
 	tagsetHandler.java \

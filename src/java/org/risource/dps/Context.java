@@ -1,5 +1,5 @@
 ////// Context.java: Document processing context interface
-//	$Id: Context.java,v 1.5 1999-04-17 01:18:48 steve Exp $
+//	$Id: Context.java,v 1.6 1999-04-23 00:21:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -67,7 +67,7 @@ import java.io.PrintStream;
  *		 represents a ``continuation.''
  *	</ul>
  *
- * @version $Id: Context.java,v 1.5 1999-04-17 01:18:48 steve Exp $
+ * @version $Id: Context.java,v 1.6 1999-04-23 00:21:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Handler
@@ -157,7 +157,7 @@ public interface Context {
    *	Commonly used to obtain an expanded version of the attributes
    *	and content of the parent's current node.
    */
-  public Processor subProcess(Input in, Output out, EntityTable entities);
+  public Processor subProcess(Input in, Output out, Namespace bindings);
 
   /************************************************************************
   ** Message Reporting:

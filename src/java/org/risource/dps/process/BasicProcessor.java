@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.5 1999-04-07 23:21:48 steve Exp $
+//	$Id: BasicProcessor.java,v 1.6 1999-04-23 00:22:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.tree.TreeElement;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.5 1999-04-07 23:21:48 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.6 1999-04-23 00:22:06 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -263,7 +263,7 @@ public class BasicProcessor extends ContextStack implements Processor {
 
   public BasicProcessor() {}
 
-  public BasicProcessor(Input in, Context prev, Output out, EntityTable ents) {
+  public BasicProcessor(Input in, Context prev, Output out, Namespace ents) {
     super(in, prev, out, ents);
   }
 

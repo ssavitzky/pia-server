@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.5 1999-04-17 01:15:45 steve Exp $
+//	$Id: GenericHandler.java,v 1.6 1999-04-23 00:21:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,7 @@ import org.w3c.dom.Element;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.namespace.BasicEntityTable;
 
 import org.risource.dps.output.DiscardOutput;
 import org.risource.dps.input.FromParseTree;
@@ -46,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.5 1999-04-17 01:15:45 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.6 1999-04-23 00:21:34 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
