@@ -33,12 +33,6 @@ See also:
   <li> <b>Check</b> locateChildFile for virtual links <br>
        (1999-09-28) <br>
 
-  <li> <b>Bug</b> MSIE thinks it knows what "." means! <br>
-       Stupid...  Maybe hyphen? Underscore?  Equal sign?
-       Test for FORM: namespace for parameters (may involve processing with a
-       special tagset), or make it a virtual container.  List entities?
-       (1999-09-23) <br>
-
   <li> <b>Bug</b> default= not relative to document. <br>
        ... so ".." ends up with /home or worse.
        (1999-09-23) <br>
@@ -99,7 +93,7 @@ See also:
        Could maybe do this with a virtual container, e.g. -v/foo.
        (1999-09-09) <br>
 
-  <li> <b>Impr</b> All resources need config and name fields.<br>
+  <li> <b>Impr</b> All resources need config and property fields.<br>
        This is most clearly seen in Listing.
        (1999-09-08) <br>
 
@@ -116,9 +110,10 @@ See also:
        <code>Description</code> elements, which are virtual bags.
        (1999-09-07) <br>
 
-  <li> <b>Impr</b> use pure DOM nodes for config<br>
+  <li> <b>Impr</b> use pure DOM nodes for config(?)<br>
        There may be cases in which it's convenient to use a different
-       representation for the configuration.
+       representation for the configuration.  Might actually be better to use
+       an Output.
        (1999-09-07) <br>
 
   <li> <b>Hole</b> Defaults in extension map <br>
@@ -146,7 +141,8 @@ See also:
 
   <li> <b>Bug</b> Subsite.locateChild needs work <br>
        Needs to have extension in inner loop, search path in outer.  Currently
-       it's the other way around.
+       it's the other way around because it's inherited from AbstractResource,
+       which doesn't have a search path.
        (1999-09-03) <br>
 
   <li> <b>Impr</b> Use &lt;container&gt; and &lt;document&gt; in cfg. <br>
@@ -169,12 +165,6 @@ See also:
   <li> <b>Impr</b> Generate metadata from extension <br>
        The tagset stuff should eventually be considered a special case of
        mapping metadata from a file's extension.
-       (1999-08-20) <br>
-
-  <li> <b>Hole</b> An Agent is a Document. <br>
-       The metadata associated with an agent (e.g. AGENT.XML) really needs to
-       be <em>just</em> a Document.  Whenever the agent's state changes it
-       just writes itself out.
        (1999-08-20) <br>
 
   <li> <b>Impr</b> generate README on realize <br>
@@ -230,5 +220,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.16 1999-10-15 17:15:43 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.17 1999-10-18 21:57:23 steve Exp $</b><br>
 </body></html>
