@@ -98,10 +98,12 @@
     </tr>
 </table>
 
+<!-- === at this point, include content of a HEADER.ww if there is one. -->
+
 <index-bar name="Notes">Notes Links Images Source Listing</index-bar>
 
 <define element="rejectNote">
-  <doc> decide whether to omit a note from the listing
+  <doc> decide whether to omit a file from the notes listing
   </doc>
   <action>
     <logical op="and">
@@ -111,35 +113,69 @@
   </action>
 </define>
 
-<define element="extract-title">
+<doc> originally we did multiple includes for each note: gross.
+      Now we suck in the whole note (it's short) and put it in a global.
+     === do NOT do this with index files -- list them separately.
+</doc>
+
+<define element="load-note">
   <action>
-    <extract><from><include quoted tagset="/.Woad/woad-web.ts" src="&content;" /></from>
+    <set name="VAR:note">
+	<include quoted tagset="/.Woad/woad-web.ts" src="&content;" />
+    </set>
+  </action>
+</define>
+
+<define element="note-title" syntax="empty">
+  <action>
+    <extract><from><get name="VAR:note" /></from>
 	     <name all="all">title</name> <content /></extract>
   </action>
 </define>
 
-<define element="summarize">
+<define element="note-content" syntax="empty">
   <action>
-    <extract><from><include  tagset="/.Woad/woad-web.ts" quoted src="&content;" /></from>
+    <extract><from><get name="VAR:note" /></from>
+	     <name all="all">content</name> <content /></extract>
+  </action>
+</define>
+
+<define element="note-summary" syntax="empty">
+  <action>
+    <extract><from><get name="VAR:note" /></from>
 	     <name all="all">summary</name> <content /></extract>
   </action>
 </define>
 
 <define element="describeNote">
-  <doc> come up with a good description for a note.
+  <doc> A note or index file's listing entry:  in the case of a note, this
+	contains the title (if any, boldfaced), the summary (if any), and a
+	[more] link if the note has additional content.	
   </doc>
   <action>
     <if> <test match="\.wi$">&content;</test>
 	 <then> <let name="basename">
 		     <subst match="\.wi$" result="">&content;</subst>
-		</let>( <ss>WOAD</ss> 
+		</let><em>( <ss>WOAD</ss> 
 			<a href="/.Woad/help.xh#&basename;">&basename;</a>
-			file ) 
+			file )</em> 
 	 </then>
-	 <else> <logical op="or">
-		  <extract-title>&attributes:src;/&content;</extract-title>
-	 	  ( <ss>WOAD</ss> annotation file: untitled )
-	 	</logical>
+	 <else> <load-note>&content;</load-note>
+		<if> <note-title /> <note-summary />
+		     <then> <if> <note-title />
+				 <then> <b><note-title /></b><br />
+				 </then>
+			    </if>
+			    <note-summary />
+			    <if> <note-content />
+				 <then> <a href="&content;">[more]</a>
+				 </then>
+			    </if>
+			    
+	 	     </then>
+		     <else> <em>( <ss>WOAD</ss> annotation file: untitled )</em>
+		     </else>
+		</if>
 	 </else>
     </if>
   </action>
@@ -150,7 +186,7 @@
   <input type="hidden" name="path" value="&LOC:path;" />
 <table bgcolor="white">
   <tr> <th bgcolor="#cccccc" width="150"> label </th>
-       <th bgcolor="#cccccc" colspan="2"> title / summary </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
   </tr>
 <repeat>
   <foreach entity="f">
@@ -159,40 +195,31 @@
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
   <if><rejectNote>&f;</rejectNote>
       <else>
-  	<tr><td align="left"><a href="&f;"><code>&label;</code></a></td>
-	    <td colspan="2">
-		 <describeNote src="&LOC:path;&tail;">&f;</describeNote>
+  	<tr><td align="left" valign="top">
+		<a href="&f;"><code>&label;</code></a>
+	    </td>
+	    <td colspan="2" valign="top">
+		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
 	    </td>
 	</tr>
-	<let name="summary"><summarize>&LOC:path;&tail;/&f;</summarize></let>
-	<if><get name="summary" />
-	    <then> <tr> <td align="right" valign="top">
-	      		    <a href="&f;">[more]</a>
-	      		</td>
-		        <td colspan="2"> <get name="summary" /> </td>
-		   </tr>
-	    </then>
-	</if>
       </else>
   </if>	  
 </repeat>
   <tr> <th bgcolor="#cccccc" width="150"> select label </th>
        <th bgcolor="#cccccc" colspan="2" align="left">
-    	    click to create note </th>
+    	    Note text.  </th>
   </tr>
-  <tr> <td>
+  <tr> <td valign="top">
     	  <select name="label"> 
 	       	   <option selected="selected">(other)</option>
 	       	   <option>bug</option>
 	       	   <option>note</option>
 	       	   <option>suggestion</option>
-	  </select>
+	  </select><br />
+ 	  <input name="create" value="Create Note" type="submit" />
        </td>
-       <td valign="top">
-	    <input name="op" value="Create New Note" type="submit" />
-       </td>
-       <td valign="top"> Existing notes can be viewed and edited by clicking
-            on their label. 
+       <td valign="top" colspan="2">
+	  <textarea name="summary" cols="60" rows="4"> </textarea>
        </td>
   </tr>
 </table>
@@ -430,5 +457,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.11 2000-06-28 01:49:22 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.12 2000-06-28 07:07:30 steve Exp $" />
 </body></html>

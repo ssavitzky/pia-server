@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.3 2000-06-28 01:49:18 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.4 2000-06-28 07:07:30 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -68,6 +68,7 @@
 		      title.  HTML markup is permitted.  Try to keep the
 		      summary short. 
 		 </td>
+	    </tr>
 	 </then>
 	 <else>
             <tr>
@@ -95,9 +96,12 @@
 		 <td> <input name="title" value="&content;" size="40"/> </td>
 	    </tr>
 	    <tr> <th> &nbsp; </th>
-		 <td> The title appears in listings as a one-line summary.  No
+		 <td> The title appears in listings as a one-line summary; it
+		      also shows up in the browser's title bar when you view a
+		      note as a separate web page.  Because of this, no
 		      HTML markup is permitted in the title.
 		 </td>
+	    </tr>
 	 </then>
 	 <else>
             <tr> <th bgcolor="#ffffff"><big><get name="content"/></big> </th>
