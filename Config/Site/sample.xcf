@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.5 1999-10-13 21:50:22 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.6 1999-11-12 17:22:42 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -87,13 +87,29 @@
 
   <!-- Create an agent. -->
  <if> true <then><!-- This demonstrates that if, etc. work in config files! -->
-   <AGENT criteria="request">
-     <initialize><user-message>report-request agent initialized</user-message>
-		 <!-- This agent has no name attribute, so it does not get
-		      registered as ~whatever at the top level.
+
+   <AGENT criteria="proxy-request" xname="ad-buster">
+     <initialize><user-message>&AGENT:xname; initialized</user-message>
+		 <!-- This agent has no "name" attribute, so it does not get
+		      registered as ~whatever at the top level.  "xname" is
+		      just a variable, local to the agent. 
 		   -->
+		 <set name="AGENT:pattern">doubleclick\.net|yimg\.com|ads\.lycos.com</set>
+<user-message>  pattern=&AGENT:pattern;</user-message>
      </initialize>
-     <user-message>requesting: &url;</user-message>
+     <doc> This agent takes any URL that matchs a particular pattern and
+	   rewrites it to point to a local image.  
+     </doc>
+     <action><user-message>req: &TRANS:url;</user-message>
+       <if><test match="&AGENT:pattern;">&TRANS:url;</test>
+	   <then>
+	     <set name="TRANS:url">&PIA:url;/Icon/1x1.xbm</set>
+	     <user-message>  -> &TRANS:url;</user-message>
+	   </then>
+       </if>
+     </action>
    </AGENT>
  </then></if>
+
+
 </Container>
