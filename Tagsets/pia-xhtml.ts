@@ -17,13 +17,15 @@
 <!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name="pia-xhtml" parent="xhtml" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.1 1999-12-14 18:28:09 steve Exp $</cvs-id>
+<tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
+<cvs-id>$Id: pia-xhtml.ts,v 1.2 1999-12-16 21:12:53 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
-
-This the version of the XHTML tagset used by default in the PIA.
+<doc> This the version of the XXML tagset used by default in the PIA.  Active
+      tags unique to the PIA are actually defined in <code>pia-tags</code>,
+      and are shared between <code>pia-xxml</code> and <code>pia-xhtml</code>.
+</doc>
 
 
 <h2>Form-Processing Tags</h2>
@@ -50,54 +52,6 @@ Note that we only need these inside the PIA.
        </define>
   </li>
 </ul>
-
-<h2>Legacy Tags</h2>
-
-<note author=steve> The use of <code>handler=legacy:xxx</code> was a
-   convenient temporary expedient but is no longer necessary. The cannonical
-   location for agent-specific handlers is in the <code>org.risource.pia.agent</code>
-   package.  More generic but PIA-specific handlers are in 
-   <code>org.risource.pia.handle</code>. 
-</note>
-
-<define element=agent-list handler=org.risource.pia.handle.agentList empty>
-  <doc> List agents, possibly those with a given type.
-  </doc>
-   <define attribute=type optional>
-      <doc> specifies the type of the agents to be listed.
-      </doc>
-   </define>
-   <define attribute=subs boolean optional>
-      <doc> If present, specifies that only sub-agents of the given type will
-	    be listed. 
-      </doc>
-   </define>
-</define>
-
-<define element=agent-running empty handler=org.risource.pia.handle.agentRunning>
-   <doc> Determine whether a given agent is currently running (installed in
-	 the PIA).
-   </doc>
-   <define attribute=name required>
-      <doc> specifies the name of the agent being queried.
-      </doc>
-      <note author=steve> It was once thought that this should be renamed
-	``agent'', but <em>nothing</em> else uses that, so it would be a
-	mistake. 
-      </note>
-   </define>
-</define>
-
-<define element=user-message handler=org.risource.pia.handle.userMessage>
-  <doc> Output a message to the user.
-  </doc>
-</define>
-
-<define element=trans-control handler=org.risource.pia.handle.transControl>
-  <doc> Make content into a transaction control.
-  </doc>
-</define>
-
 <h2>Page Components</h2>
 
 <h3>Graphics and pseudo-graphics</h3>

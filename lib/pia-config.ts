@@ -17,8 +17,8 @@
 <!-- Contributor(s): steve@rsv.ricoh.com                                    -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name="pia-config" parent="xxml"  recursive="yes">
-<cvs-id>$Id: pia-config.ts,v 1.1 1999-12-14 18:28:32 steve Exp $</cvs-id>
+<tagset name="pia-config" parent="xxml" include="pia-tags" recursive="yes">
+<cvs-id>$Id: pia-config.ts,v 1.2 1999-12-16 21:12:57 steve Exp $</cvs-id>
 
 <h1>PIA Configuration-file Tagset</h1>
 
