@@ -1,6 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- Begin Document Specific Declarations -->
-<!-- End Document Specific Declarations -->
 <html>
 <head>
 <title>PIA Application Author's Guide</title>
@@ -14,21 +12,22 @@
     PIA system. In particular it describes:
 </p>
 
-<font color="red" size="+4"> Steve-- assume anything outside a blockquote has
-been messed with and potentially screwed up.  </font>
-
 
 <ul>
   <li><a href="#Quick">Quick Start</a></li>
   <li><a href="#Apps">Applications and Agents</a></li>
   <li><a href="#Site">Web Site Structure</a></li>
-  <li><a href="#Files">Application files</a></li>
-  <li><a href="#Code">Application data structures and code</a></li>
+  <li><a href="#Files">File Names and Access</a></li>
+  <li><a href="#Code">Programming Issues</a></li>
   <li><a href="#Tips">Tips on application creation</a></li>
 </ul>
 
+<p> <font color=red> <strong>Warning!</strong>  Parts of this document are
+    still out of date.  Most of those parts are indicated in red; particularly
+    dubious sections are indented as well.  
+</font></p>
 
-<p>Active pages for sample applications are in the <code>/PIA/Agents/</code>
+<p>Active pages for sample applications are in the <code>PIA/Agents/</code>
 and <code>PIA/Samples/</code> directories. Feel free to use these files as a
 source of ideas and examples, and as a basis for creating new applications.</p>
 
@@ -77,18 +76,18 @@ tagsets are used.
 
 <h2><a name="Apps">Applications and Agents</a></h2>
 
-<p> The PIA is the ``Platform for Information Applications,'' so we need to
+<p> PIA stands for ``Platform for Information Applications,'' so we need to
     start by explaining exactly what an application <em>is</em> and how the
     user can access it.  The short answer is that an application is <em>any
     location in the PIA's web site that performs a service for the user by
     means of active documents.</em>
 </p>
 
-<p> The first time the user visits an application's directory, its local
-    configuration file, <code>_subsite.xcf</code>, is loaded (if it exists) to
-    give the application a chance to perform any necessary setup.  This
+<p> The first time the user visits an application's location, its local
+    configuration file, <code>_subsite.xcf</code>, is loaded (if it exists),
+    which gives the application a chance to perform any necessary setup.  This
     includes making the application's ``home directory'' available at the top
-    of the PIA's URL space as <code>/~<em>AppName</em></code>. 
+    of the PIA's URL space as <code>/~<em>AppName</em></code>.
 </p>
 
 <p> It is possible to pre-load applications by accessing them in the PIA's
@@ -143,110 +142,98 @@ tagsets are used.
     <var>/Agents/Proxie/History</var> as a prototype active application.
 </p>
 
+<h3>Naming Conventions</h3>
+
+<p> By convention, most application names are capitalized, but this is not
+    required. Name lookup is case-sensitive, and there may be good reasons to
+    prefer uppercase or lowercase names in some cases.  For example,
+    <code>fileTools</code> and <code>remoteTools</code> are really
+    ``sub-applications'' of <code>Toolbar</code>, and so have lowercase names.
+</p>
+
+<p> It is also conventionally true that the ``home directory'' of an
+    application (i.e. the name starting with <code>/~</code>) has the same
+    name as the application's own home directory, but this is <em>also</em>
+    not universally true.  For example, <code>/~Calendar</code> refers to the
+    application directory <code>/Agents/SimpleCalendar</code> -- the shortened
+    form is more generic, and makes it easy to replace
+    <code>SimpleCalendar</code> with something more complex without breaking
+    any links.
+</p>
+
 
 <h2><a name="Structure"></a>Web Site Structure</h2>
 
-<blockquote>
+<h3>Resources and Locations</h3>
 
-<strong>=== THIS SECTION IS ENTIRELY WRONG!===</strong>
-
-<p> Every application has a <em>name</em> and a <em>path</em>.  The file portion of
-    the application's URL consists of the path and name concatenated together; the
-    path always begins and ends with the slash (<code>/</code>) character (and
-    may consist of only one slash, and nothing else).  The combination of path
-    and name is called the application's <em>pathname</em>. 
+<p> When a PIA is running and in use it functions as a web server, so that it
+    looks to the user like a web site.  The user's view of the PIA is as a a
+    collection of documents, each with its own URL.  URL stands for
+    <em>Uniform Resource Locator</em>, so the technical term for something
+    ``addressed'' by a URL is a <em>Resource</em>.  The PIA follows this
+    terminology.
 </p>
 
-<p> An application's pathname can be combined with the tilde (<code>~</code>)
-    character in various ways to address its four directories:  root, home,
-    user, and data.  (In most cases the root and home directories are the
-    same.)
+<p> URL's form a branching structure called the ``<em>URL tree</em>'' (when
+    its structure is being emphasized) or ``<em>URL space</em>'' (to emphasize
+    the space-like uniformity of URL's).  This structure is at least partially
+    hidden from the user by the browser, which lets the user jump around at
+    random by clicking on links.  Only if the user glances at the browser's
+    ``location'' text box does the hierarchical nature of URL space become
+    apparent. 
 </p>
 
-<p> The base directories PIA_HOME and PIA_ROOT can be set on the
-    <code>pia</code> command line or in the corresponding environment
-    variables.  They are normally the root of the PIA directory tree (called
-    PIA and located wherever the PIA is installed in your system) and (on
-    Unix) a directory called <code>.pia</code> in your home directory.
+<p> The terminology for a resource that behaves like a directory, with other
+    resources contained inside it, is not particularly well-established.  Many
+    people use ``<em>Container</em>,'' but ``<em>Location</em>'' is also
+    popular.  The PIA actually uses both terms with slightly different
+    meanings: a ``location'' is a position in the URL tree, while a
+    ``container'' is the resource <em>located at</em> that position.  Location
+    is effectively a synonym for URL, while a directory in the filesystem is
+    a kind of container.
 </p>
 
-<p> In the table that follows, the leading and trailing slashes of the path
-    are shown explicitly for clarity. 
+<p> A resource that is not a container is called a ``<em>document</em>.''  A
+    document has both a location in the URL tree, and a container in the
+    resource tree.  Every container has an associated document that is shown
+    when the container's URL is requested.  By default this is a generic
+    listing of the container's contents; the default is usually overridden by
+    providing a ``home document'' (called <code>index.html</code> in most web
+    servers).  The PIA usually uses the name <code>home.xh</code> for this
+    document.
 </p>
 
-<table width="90%" align=center border=1>
-  <tr> <th align=left> URL </th>
-	<th align=left> Default Directory </th>
-	<th align=left> Entity </th>
-       <th align=left> Description </th>
-  </tr>
-  <tr> <td> <code>/<em>path</em>/<em>name</em></code>  			</td>
-       <td> <code>PIA_HOME/Agents/<em>path</em>/<em>name</em></code> 	</td> 
-       <td> &nbsp; 		</td>
-       <td> root directory 	</td>
-  </tr>
-  <tr> <td> <code>/<em>path</em>/<em>name</em>~</code> 			</td>
-       <td> <code>PIA_HOME/Agents/<em>path</em>/<em>name</em></code> 	</td> 
-       <td> AGENT:home-dir 	</td>
-       <td> home directory 	</td>
-  </tr>
-  <tr> <td> <code>/<em>path</em>/<em>name</em>/~</code> 		</td>
-       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
-       <td> AGENT:data-dir  	</td>
-       <td> data directory 	</td>
-  </tr>
-  <tr> <td> <code>/~<em>name</em></code> 		</td>
-       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
-       <td> AGENT:data-dir  	</td>
-       <td> data directory (deprecated)	</td>
-  </tr>
-  <tr> <td> <code>/~/Agents/<em>path</em>/<em>name</em></code> 		</td>
-       <td> <code>PIA_ROOT/Agents/<em>path</em>/<em>name</em></code> 	</td>
-       <td> AGENT:user-dir 	</td>
-       <td> data directory 	</td>
-  </tr>
-  <tr> <td> <code>/~/<em>path</em>/<em>name</em>~</code> 		</td>
-       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
-       <td> AGENT:data-dir 	</td>
-       <td> data directory 	</td>
-  </tr>
-</table>
-
-<p> The paths involving <code>/~/</code> are simply a consequence of the fact
-    that the ROOT agent's root directory is its data directory, and is mapped
-    to the PIA data directory.  There is normally no way to address the user
-    directory directly; files in it simply override (replace) corresponding
-    files in the home directory.
+<p> To make matters slightly more complicated, a PIA's web site is
+    <em>also</em> called a ``<em>Site</em>'', and each container resource
+    within it is called a ``<em>Subsite</em>.''  These terms refer to the
+    PIA's <em>particular implementation</em> of resources, in which several
+    directories (in the filesystem sense) may be overlaid to form a single
+    container.  (This is explained in the next subsection.)  
 </p>
 
-<p> The path <code>/~<em>name</em></code> is an older construct; it's
-    ambiguous if the path starts with the name of some other agent.  It is
-    still useful, however, because it follows the standard convention for
-    ``user directories'' on Unix systems and the Web.  You could, for example,
-    define an agent with your login name as its name; its data directory would
-    then look like your web home page.
-</p>
-
-<p> By convention, agent names intended to be seen at the top level of an
-    agent listing are capitalized, but this is not required. Name lookup is
-    case-sensitive, and there may be good reasons to prefer uppercase or
-    lowercase names in some cases. For example, DOFS is uppercase because it
-    is an acronym. Most agents with DOFS as their type have names that match
-    their corresponding root directory; for example, <code>/PIA</code>.  For
-    another example, <code>fileTools</code> and <code>remoteTools</code> are
-    sub-agents of <code>Proxie/Toolbar</code>, and so have lowercase names.
-</p>
-
-<p> For historical reasons, it is currently possible to address an agent by
-    its name (for example, <code>/<em>name</em></code> for the home directory)
-    even if it has a non-null path.  This will eventually disappear.
+<p> The distinctions here are totally invisible to the user, who sends the PIA
+    a URL (resource locator) and gets a document back in response.  They are,
+    however, important to the application author, and even more important to
+    the programmer.  The application author needs to know about subsites in
+    order to understand the otherwise inexplicable name
+    (<code>_subsite.xcf</code>) of the PIA's configuration files.  The
+    programmer will quickly discover that <code>Resource</code> is the name of
+    an <em>interface</em>, while <code>Subsite</code> is the name of one of
+    its <em>implementations</em>, in a language (Java) in which interfaces and
+    implementations have to have different names.
 </p>
 
 
+<h3>Files and Directories</h3>
 
-</blockquote>
 <font color="red">
-Bill's proposal here
+ This section needs a little work.
+</font>
+
+<p> Where is the "current working directory" for an active page?  If an active
+    page tries to read the file <var>../Agents/Foo</var>, where will the
+    processor look?  If it tries to write that file, where will it write?
+</p>
 
 <p> Every application (or "subsite") lives in a directory. In the simplest
     case, the directory has the same name as the application and is located
@@ -256,24 +243,27 @@ Bill's proposal here
     provide are in same-named directories under <var>PIA/Agents</var> and
     <var>PIA/Samples</var>. Various configuration files
     (<var>_subsite.xcf</var>) could tell the processor to look for the
-    application in other directories instead. </p>
+    application in other directories instead.
+</p>
 
-    <p>But in all cases, the application's URL always <i>looks</i> as if the
+<p> But in all cases, the application's URL always <i>looks</i> as if the
     application resides directly under the URL's root (the "slash" after the
     port number). So, for example, the <code>MyFirstPage</code> URL would be
     <var>http://piaHOST:8888/MyApps/MyFirstPage</var>, and the
     <code>HelloWorld</code> URL would be
     <var>http://piaHOST:8888/Samples/HelloWorld</var>, with no indication that
-    one lives under <var>.pia/</var> and the other under <var>PIA/</var>. </p>
+    one lives under <var>.pia/</var> and the other under <var>PIA/</var>.
+</p>
 
-    <p> The procesor has internal rules for deciding where to look for files
-	belonging to given a URL (in this example, the rule is "look in
-	<var>.pia/</var> before looking in <var>PIA/</var>").  But you can add
-	more rules via the configuration files, so that an application's
-	active pages, tagsets, subdirectories and so forth can reside
-	<i>anywhere</i>; you just need to make sure that a (real)
-	<var>_subsite.xcf</var> file under <var>PIA_ROOT</var> or
-	<var>PIA_HOME</var> tells the processor where the "anywhere" is. </p>
+<p> The procesor has internal rules for deciding where to look for files
+    belonging to given a URL (in this example, the rule is "look in
+    <var>.pia/</var> before looking in <var>PIA/</var>").  But you can add
+    more rules via the configuration files, so that an application's active
+    pages, tagsets, subdirectories and so forth can reside <i>anywhere</i>;
+    you just need to make sure that a (real) <var>_subsite.xcf</var> file
+    under <var>PIA_ROOT</var> or <var>PIA_HOME</var> tells the processor where
+    the "anywhere" is.
+</p>
 
 
 <p> Even the base directories <var>PIA_HOME</var> and <var>PIA_ROOT</var> can
@@ -283,265 +273,6 @@ Bill's proposal here
     and  a directory called <code>.pia</code> in your home directory.
 </p>
 
-</font>
-
-
-
-<blockquote>
-
-============== This section is questionable ================
-
-<h2><a name="Files"></a>Agent Files</h2>
-
-<p>This section describes the files that make up an agent.</p>
-
-<h3>File Names</h3>
-
-<p> Unlike most web servers, the PIA does not require filename extensions
-    (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
-    possible to refer to a document without revealing to the user whether it
-    is an ordinary HTML file or is created on-the-fly from an active document.
-    It also makes URL's shorter (and hence easier to remember). 
-</p>
-
-<p> Documents in an agent's home and user directories are looked up with
-    a different (larger) set of suffixes from files in the data directory;
-    this reflects the fact that active documents are not permitted in the data
-    directory, for security reasons.
-</p>
-
-<p> A file's extension, as usual, determines its MIME type.  For active
-    documents, it also determines the tagset used to process the file:
-</p>
-
-<table>
-  <tr><th> &nbsp; </th>
-      <th> tagset </th>
-      <th> meaning </th>
-  </tr>
-  <tr><th> .xh </th> <td> xhtml </td>
-      <td> Extended HTML </td>
-  </tr>
-  <tr><th> .xx </th> <td> xxml </td>
-      <td> Extended XML </td>
-  </tr>
-  <tr><th> .html </th> <td> html </td>
-      <td> Ordinary HTML </td>
-  </tr>
-  <tr><th> .htm </th> <td> html </td>
-      <td> Ordinary HTML </td>
-  </tr>
-  <tr><th> .xml </th> <td> <em>none</em> </td>
-      <td> Ordinary XML </td>
-  </tr>
-
-  <tr><th colspan=2>&nbsp;</th><th>&nbsp;</th></tr>
-
-  <tr><th colspan=2>&nbsp;</th>
-      <th> (used internally) </th>
-  </tr>
-
-  <tr><th> .inc </th> <td> xhtml </td>
-      <td> ``include'' files </td>
-  </tr>
-  <tr><th> .ts </th> <td> tagset </td>
-      <td> tagset files </td>
-  </tr>
-  <tr><th> .xml </th> <td> depends on usage. </td>
-      <td> Ordinary XML </td>
-  </tr>
-</table>
-
-<p> File names passed to the PIA in URL's are always handled by the
-    appropriate agent.  Relative filenames always have the current base
-    (pathname) prepended by the browser.
-</p>
-
-<p> Inside the PIA things are somewhat more complex: there are two additional
-    contexts to consider.  These are the form fields used during agent
-    initialization, and the attributes that designate system resources:
-    ``<code>src</code>'' in the &lt;include&gt;, &lt;connect&gt;, and
-    &lt;status&gt; elements, and the ``system names'' of entities.  The
-    following conventions are used for agent initialization:
-</p>
-
-<!-- === the following table is totally wrong now! === -->
-<table>
-  <tr><td> <code>~/</code></td>
-      <td> The user's home directory </td>
-  <tr><td> <code>./</code></td>
-      <td> (or any relative path) the PIA agent directory</td>
-  <tr><td> <code>../</code></td>
-      <td> the PIA's home directory <code>PIA_HOME</code></td>
-  <tr><td> <code>/~/</code></td>
-      <td> The PIA's real root directory <code>PIA_ROOT</code></td>
-  <tr><td> <code>/</code></td>
-      <td> An absolute path in URL format.</td>
-  <tr><td> <code>file:</code></td>
-      <td> An absolute path in system format.</td>
-</table>
-
-<p> When the <code>file:</code> prefix is not present, paths are in ``URL
-    format'':  slash characters are converted, if necessary, to the
-    operating system's file separator.
-</p>
-
-
-<p> In elements that may access URL's as well as files, for example an
-    additional prefix of <code>pia:</code> is used to distinguish between
-    normal file lookup, as above, and agent-based lookup, which is the
-    default.  In agent-based lookup, extensions and paths are handled
-    according to the agent's naming rules, above.  In other words, anything
-    that looks like the file part of a URL is treated as if it was:
-</p>
-
-<table>
-  <tr><td> <code>/<em>path</em>/<em>name</em></code></td>
-      <td> looked up relative to the given agent </td>
-  <tr><td> <code>&nbsp;</code></td>
-      <td> relative paths are looked up by the <em>current</em> agent </td>
-  <tr><td> <code>pia:~/</code></td>
-      <td> The user's home directory </td>
-  <tr><td> <code>pia:./</code></td>
-      <td> (or any relative path) the PIA agent directory</td>
-  <tr><td> <code>pia:../</code></td>
-      <td> the PIA home directory <code>PIA_HOME</code></td>
-  <tr><td> <code>pia:/~/</code></td>
-      <td> The PIA user directory <code>PIA_ROOT</code></td>
-  <tr><td> <code>pia:/</code></td>
-      <td> An absolute path in URL format.</td>
-  <tr><td> <code>file:</code></td>
-      <td> An absolute path in system format.</td>
-</table>
-
-<h3>Standard Files</h3>
-
-<p>A PIA Agent consists of little more than a collection of
-extended HTML (XHTML) files organized in a directory.
-Agents require a set of standard files.
-Those files, listed below, are "inherited" from the root directory
-(PIA_HOME/Agents) if they are not found in the agent's home directory.</p>
-
-<ul>
-<li> <code>home.xh</code><br>
-     
-     The agent's "home page." This is the page that appears when the agent is
-     selected from the Agency's list of running agents. It is therefore
-     usually the first page seen by a user, and should include links to at
-     least the most useful of the agent's other pages. It is returned from a
-     request for <code>/AgentName</code>.</li>
-
-<li> <code>index.xh</code> and <code>about.inc</code><br>
-     
-     The page returned from a request for <code>/AgentName/</code>. Note
-     the trailing slash that distinguishes this page from the home page.
-     It gives a standardized listing of the agent's default pages, sub-agents,
-     and so on.  Typically, it needs no customization.  The default includes
-     the agent-specific file <code>about.inc</code> if it is present.</li>
-
-<li> <code>help.xh</code> and <code>help.inc</code><br>
-     
-     This page is meant to provide general and context-specific help for the
-     agent.  The default page is customized by including the agent-specific
-     file <code>help.inc</code>, if present. </li>
-
-<li> <code>options.xh</code><br>
-     Lists the agent's options.  This page seldom, if ever, requires
-     customization.  The <code>options</code> page also displays the agent's
-     data in XML format, suitable for use in an <code>AGENT.xml</code> file.
-     </li>
-
-<li> <code>AGENT.xml</code><br>
-     This XML file is <em>loaded</em> (read by the PIA) to initialize and
-     install the agent.  It contains all the information necessary for
-     constructing the agent.  A version of it can be written into the agent's
-     user directory to preserve user customizations. </li>
-
-<li> <code>initialize.xh</code><br>
-     This XHTML file is invoked automatically when the agent is created. It
-     defines default values for any options and sets the "match criteria" for
-     transactions that the agent acts on. This file does <em>not</em> have a
-     default, but it can be omitted if it is not needed.</li>
-</ul>
-
-</blockquote>
-
-
-<font color="red">
-bills' proposal here
-
-<h2><a name="Files"></a>Application Files</h2>
-
-<p>This section describes the files that make up an application.</p>
-
-<h3>File Name Suffixes</h3>
-
-<p> Unlike most web servers, the PIA does not require filename extensions
-    (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
-    possible to refer to a document without revealing to the user whether it
-    is an ordinary HTML file or is created on-the-fly from an active document.
-    It also makes URL's shorter (and hence easier to remember). 
-</p>
-
-<p> Documents in an application's home directory and subdirectories are looked up
-    with a different (larger) set of suffixes.  A file's extension, as usual,
-    determines its MIME type.  Here are some examples: 
-</p>
-
-<table>
-  <tr><th> &nbsp; </th>
-      <th> tagset </th>
-      <th> meaning </th>
-  </tr>
-  <tr><th> .xh </th> <td> xhtml </td>
-      <td> Extended HTML </td>
-  </tr>
-  <tr><th> .xx </th> <td> xxml </td>
-      <td> Extended XML </td>
-  </tr>
-  <tr><th> .html </th> <td> html </td>
-      <td> Ordinary HTML </td>
-  </tr>
-  <tr><th> .htm </th> <td> html </td>
-      <td> Ordinary HTML </td>
-  </tr>
-  <tr><th> .xml </th> <td> <em>none</em> </td>
-      <td> Ordinary XML </td>
-  </tr>
-
-  <tr><th colspan=2>&nbsp;</th><th>&nbsp;</th></tr>
-
-  <tr><th colspan=2>&nbsp;</th>
-      <th> (used internally) </th>
-  </tr>
-
-  <tr><th> .inc </th> <td> xhtml </td>
-      <td> ``include'' files </td>
-  </tr>
-  <tr><th> .ts </th> <td> tagset </td>
-      <td> tagset files </td>
-  </tr>
-  <tr><th> .xml </th> <td> depends on usage. </td>
-      <td> Ordinary XML </td>
-  </tr>
-</table>
-
-
-<p>But the processor not only needs to know what is in the file, but also what
-    rules to apply in processing that file type...so the PIA uses special
-    extension-mapping files (like <code>extensions.xci</code>) to tell the
-    processor which tagset to use in processing which file.  Usually, these
-    mappings are straightforward (like "use the local tagset on all
-    <var>.xh</var> files"), but may also be much more flexible and powerful
-    (see the <var>Samples/ExtensionDemo</var> application, which assigns the
-    local tagset to any file with the <var>.foo</var> suffix). </p>
-
-<h3>File Name Locations</h3>
-
-<p> Where is the "current working directory" for an active page?  If an active
-    page tries to read the file <var>../Agents/Foo</var>, where will the
-    processor look?  If it tries to write that file, where will it write?
-</p>
 
 <p> In fact, reading and writing are somewhat different.  <strong>All</strong>
     file-writing takes place in the <var>PIA_ROOT</var> directory
@@ -552,101 +283,313 @@ bills' proposal here
     interpretation of the various configuration files (<var>
     _subsite.xcf</var>, as outlined above).  </p>
 
-  <p> File-reading, as mentioned before, tries at first to act like
-      file-writing (looking under <var>PIA_ROOT</var> either for the file or
-      for a configuration file pointing to it), and uses the same "current
-      working directory" as file-writing.  But (unlike in the writing case),
-      if the processor fails to find the desired file in that fashion, it
-      falls back to looking under <var>PIA_HOME</var>, and searches <i> there
-      </i> for the file or for configuration pointers. </p>
+<p> File-reading, as mentioned before, tries at first to act like
+    file-writing (looking under <var>PIA_ROOT</var> either for the file or
+    for a configuration file pointing to it), and uses the same "current
+    working directory" as file-writing.  But (unlike in the writing case),
+    if the processor fails to find the desired file in that fashion, it
+    falls back to looking under <var>PIA_HOME</var>, and searches <i> there
+    </i> for the file or for configuration pointers. </p>
 
-  <p><strong> This process can sometimes lead to confusion; be aware that
-  files may not be written or read where you first expect. </strong>  The
-  least confusing approach is to create and modify all files directly under
-  <var>PIA_ROOT</var>; then everything will be read and written in the same
-  place, and path names will be transparent. </p>
+<p> <strong> This process can sometimes lead to confusion; be aware that
+    files may not be written or read where you first expect. </strong>  The
+    least confusing approach is to create and modify all files directly under
+    <var>PIA_ROOT</var>; then everything will be read and written in the same
+    place, and path names will be transparent. </p>
 
-<h3> File formats </h3>
 
-<p> There are further rules for the format of filenames and URLs, when dealing
-    with attributes that designate system resources, like ``<code>src</code>''
-    in the &lt;include&gt;, &lt;connect&gt;, and &lt;status&gt; elements, and
-    the ``system names'' of entities. 
+
+<h2><a name="Files"></a>File Names and Access</h2>
+
+<p> This section describes the conventions for naming files, and for
+    specifying files inside of active tags.
+</p>
+
+<h3>Filename Extensions</h3>
+
+<p> Unlike most web servers, the PIA does not require filename extensions
+    (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
+    possible to refer to a document without revealing to the user whether it
+    is an ordinary HTML file or is created on-the-fly from an active document.
+    It also makes URL's shorter (and hence easier to remember). 
+</p>
+
+<p> Documents in application directories may be looked up with
+    a different (larger) set of suffixes from files in a data directory;
+    this reflects the fact that active documents are not permitted in the data
+    directory, for security reasons.
+</p>
+
+<p> A file's extension, as usual, determines its MIME type -- the information
+    the browser needs in order to display the file correctly.  But because the
+    PIA processes active documents at the server level, it not only needs to
+    know what is in the file, but also what rules (contained in a so-called
+    ``tagset'' file) to apply in processing that
+    file type.
+
+<p> The mapping from extensions to MIME types and tagsets is usually specified
+    in a file called <code>extensions.xci</code>; however the default mapping
+    can be overridden or extended by any application for its own purposes
+    (see the <var>Samples/ExtensionDemo</var> application, which assigns the
+    local tagset to any file with the <var>.foo</var> suffix).
+</p>
+
+<table align="center"  width="90%" border="2" cellpadding="4">
+  <tr><th> Ext. </th>
+      <th align="left"> MIME type </th>
+      <th align="left"> tagset </th>
+      <th align="left"> meaning </th>
+  </tr>
+  <tr><th> .xh </th> <td> text/html </td> <td> xhtml </td>
+      <td> Extended HTML </td>
+  </tr>
+  <tr><th> .xx </th> <td> text/xml </td> <td> xxml </td>
+      <td> Extended XML </td>
+  </tr>
+  <tr><th> .html </th> <td> text/html </td> <td> HTML </td>
+      <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .htm </th> <td> text/html </td> <td> HTML </td>
+      <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .xml </th> <td> text/xml </td> <td> <em>none</em> </td>
+      <td> Ordinary XML </td>
+
+  <tr><th colspan=4>&nbsp;</th></tr>
+
+  <tr><th colspan=4>&nbsp; (used internally) </th>
+  </tr>
+
+  <tr><th> .xcf </th> <td> <em>hidden</em> </td> <td> pia-config </td>
+      <td> XML Configuration File </td>
+  </tr>
+  <tr><th> .xci </th> <td> <em>hidden</em> </td> <td> pia-config </td>
+      <td> included in a <code>.xcf</code> file. </td>
+  </tr>
+  <tr><th> .inc </th> <td> <em>hidden</em> </td> <td> <em>current</em> </td>
+      <td> ``include'' files </td>
+  </tr>
+  <tr><th> .ts </th> <td> <em>hidden</em> </td> <td> tagset </td>
+      <td> tagset files </td>
+  </tr>
+  <tr><th> .xml </th> <td> <em>hidden</em> </td>
+      <td> <em>various</em> </td>
+      <td> Ordinary XML </td>
+  </tr>
+</table>
+
+
+
+<h3>Configuration Files</h3>
+
+<p> The PIA uses a fairly small number of standard files to determine its
+    configuration.
+</p>
+
+<table align="center" width="90%" border="2" cellpadding="4">
+  <tr><th> File
+      </th>
+      <th> Location
+      </th>
+      <th> Usage
+      </th>
+  </tr>
+  <tr><td align="top"> <code><em>user-specified</em>.xcf</code>
+      </td>
+      <td> command line
+      </td>
+      <td> top-level configuration file.   This overrides any
+	   <code>_subsite.xcf</code> file in the top-level directory.
+      </td>
+  </tr>
+  <tr><td align="top"> <code>initialize.xh</code>
+      </td>
+      <td> top level
+      </td>
+      <td> PIA initialization.
+      </td>
+  </tr>
+  <tr><td align="top"> <code>_subsite.xcf</code>
+      </td>
+      <td> any directory
+      </td>
+      <td> per-directory configuration information and metadata.
+      </td>
+  </tr>
+  <tr><td align="top"> <code><em>appname</em>-xhtml.ts</code>
+      </td>
+      <td> any application
+      </td>
+      <td> conventional name for an application's local tagset file.
+      </td>
+  </tr>
+</table>
+
+
+<h3>Application Files</h3>
+
+<p> A PIA application consists of little more than a collection of
+    extended HTML (XHTML) files organized in a directory.  Some of these files
+    have conventional names, to make it easier for a user to navigate the
+    resource tree.
 </p>
 
 
-<p>?????????  Steve- does initialization still make a difference here? ???</p>
+<table align="center"  width="90%" border="2" cellpadding="4">
+  <tr><td align="top"> <code>home.xh</code>
+      </td>
+      <td> required
+      </td>
+      <td> The ``home page'' for the application.  This is usually the first
+	   page seen by a user of the application, so it should include links
+	   to at least the most commonly used other pages. 
+      </td>
+  </tr>
+  <tr><td align="top"> <code>DATA/</code>
+      </td>
+      <td> recommended
+      </td>
+      <td> The conventional name for the sub-directory where the application
+	   stores its data.  You can, however, use any name you like. 
+      </td>
+  </tr>
+  <tr><td align="top"> <code>help.xh</code>
+      </td>
+      <td> optional
+      </td>
+      <td> Where the user looks for help.  It is possible to configure a
+	   virtual link to a default version of <code>help.xh</code>.
+      </td>
+  </tr>
+  <tr><td align="top"> <code>about.html</code>
+      </td>
+      <td> optional
+      </td>
+      <td> A good name for a file that gives background information on the
+	   application:  its goals, philosophy, and so on.  Often includes
+	   documentation of major design decisions.
+      </td>
+  </tr>
+  <tr><td align="top"> <code>to-do.html</code>
+      </td> 
+      <td> optional
+      </td>
+      <td> Application-maintainer's ``to-do'' list. 
+      </td>
+  </tr>
+  <tr><td align="top"> <code>done.html</code>
+      </td>
+      <td> optional
+      </td>
+      <td> Items moved from the ``to-do'' list after being completed.
+      </td>
+  </tr>
+
+  <tr><th colspan=3>&nbsp;</th></tr><!-- include files -->
+  <tr><th colspan=3>Include files</th></tr>
+  <tr><td align="top"> <code>HEADER.html</code>
+      </td>
+      <td> recommended
+      </td>
+      <td> Appears at the top of a directory listing. 
+      </td>
+  </tr>
+  <tr><td align="top"> <code>about.inc</code>
+      </td>
+      <td> optional
+      </td>
+      <td> often included by <code>home.xh</code>, especially if an
+	   application has multiple entry points. 
+      </td>
+  </tr>
+  <tr><td align="top"> <code>help.inc</code>
+      </td>
+      <td> optional
+      </td>
+      <td> included by the default version of <code>help.xh</code>.
+      </td>
+  </tr>
+</table>
+
+
+<h3>File Access</h3>
+
+<p> Locations passed to the PIA in URL's are always looked up in the site
+    resource tree.  Relative filenames always have the current base (pathname)
+    prepended by the browser.
+</p>
+
+<p> Inside the PIA things are somewhat more complex:  an application may need
+    to refer to things elsewhere in the file system, including files that
+    aren't part of the PIA's resource tree at all.  In particular, this
+    happens in the  attributes that designate system resources:
+    ``<code>src</code>'' in the &lt;include&gt;, &lt;connect&gt;, and
+    &lt;status&gt; elements, ``<code>file</code>'' and
+    ``<code>virtual</code>'' attributes in subsite configuration files, and
+    the ``system names'' of entities.  The following conventions are used:
+</p>
+
+<ol>
+  <li> Locations without a ``protocol'' prefix (e.g. ``<code>file:</code>'')
+       are treated as URL's, exactly the way the browser would treat them.  In
+       other words, they refer to exactly the same resources that would be
+       returned to the user if that URL was requested.  Locations without a
+       leading ``<code>/</code>'' (slash) character are looked up relative to
+       the location of the referring document.
+
+  <li> The prefixes given in the following table are used to specify locations
+       outside of URL space:
+
+       <font color="red">
+       <p>
+       <strong>=== THIS TABLE IS A TOTAL LIE!===</strong><br>
+       ... but it represents the way I <em>intend</em> to make it work.
+       </font>
+
+       <table>
+           <tr><td valign="top"> <code>file:</code></td>
+               <td> A file, using normal filesystem conventions.  Relative
+		    paths are relative to the directory in which the
+		    <code>pia</code> command was given.  
+               </td>
+           <tr><td> <code>path:</code></td>
+               <td> A file with its path specified in ``<em>URL
+		    format</em>'', with forward slashes.  Paths starting with
+		    <code>~/</code> are relative to the user's home directory.
+               </td>
+           <tr><td> <code>pia:</code></td>
+               <td> A path, in <em>URL</em> format (with forward slashes),
+		    relative to the PIA's ``home'' directory
+		    <code>$PIA_HOME</code>
+               </td> 
+           <tr><td> <code>real:</code></td>
+               <td> A path, in <em>URL</em> format, relative to the ``real
+		    root'' directory <code>$PIA_ROOT</code>.
+               </td>
+           <tr><td> <code>virtual:</code></td>
+               <td> A path, in <em>URL</em> format, relative to the ``virtual
+		    root'' directory if there is one.
+               </td>
+       </table>
+
+  <li> Files passed on the <code>pia</code> command line or in environment
+       variables are in system format, i.e. treated as if they had an implicit
+       ``<code>file:</code>'' prefix.
+</ol>
 
 <p> When the <code>file:</code> prefix is not present, paths are in ``URL
     format'':  slash characters are converted, if necessary, to the
     operating system's file separator.  So <var>../MyApp/home.xh</var> will be
-    converted (on DOS/Windows) to <var>..\MyApp\home.xh</var>. One the other
-    hand,  <var>file:../MyApp/home.xh</var> will not be converted.
+    converted (on DOS/Windows) to <var>..\MyApp\home.xh</var>.
 </p>
 
 
-<p> In elements that may access URL's as well as files, for example an
-    additional prefix of <code>pia:</code> 
-is used to distinguish between normal file lookup, as above, and application-based
-    lookup, which is the default.  In application-based lookup, extensions and paths
-    are handled according to the application's naming rules, above.  In other words,
-    anything that looks like the file part of a URL is treated as if it was:
-</p>
-
-<p>?????????  Steve- better check this table... ???</p>
-
-<table>
-  <tr><td> <code>pia:~/</code></td>
-      <td> The user's home directory </td>
-  <tr><td> <code>pia:./</code></td>
-      <td> (or any relative path) the current application directory</td>
-  <tr><td> <code>pia:../</code></td>
-      <td> one level above the current application directory</td>
-  <tr><td> <code>pia:/~/</code></td>
-      <td> The PIA-user directory <code>PIA_ROOT</code></td>
-  <tr><td> <code>pia:/</code></td>
-      <td> (same as above)</td>
-  <tr><td> <code>file:</code></td>
-      <td> An absolute path in system format, relative to / (Unix) or (say) C:\
-	   (Windows)</td>
-</table>
-
-<h3>Standard Files</h3>
-
-<p>A PIA Application consists of little more than a collection of
-extended HTML (XHTML) files organized in a directory.
-Applications require a set of standard files.
-Those files, listed below, are "inherited" from the root directory
-(PIA_HOME/Agents) if they are not found in the application's home directory.</p>
-
-<ul>
-
-<li> <code>index.xh</code> <br>
-     
-     The page returned from a request for <code>/ApplicationName/</code>. Note
-     the trailing slash that distinguishes this page from the home page.
-     It gives a standardized listing of the application's default pages, sub-applications,
-     and so on.  Typically, it needs no customization. </li>
-
-<li> <code>_subsite.xcf</code><br>
-     This XML file sets all the configuration options, such as assigning
-     tagsets to files, pointing to directories elsewhere, even determining
-     which port the PIA will listen to. </li>
-
-<li> <code>initialize.xh</code><br> This XHTML file is invoked automatically
-     when the application is first called. ??????????It defines default values for
-     any options and sets the "match criteria" for transactions that the application
-     acts on.?????????????? This file does <em>not</em> have a default, but it
-     can be omitted if it is not needed.</li>
-</ul>
-</font>
-
+<h2><a name="Code">Programming issues</a></h2>
 
 <blockquote>
-
-================= This section is questionable; is it really necessary? ===
-
-<h2><a name="Code">Agent Data Structures and Code</a></h2>
+<p><em>non-programmers can safely skip this section.</em>
+</p>
+</blockquote>
 
 <p>Every installed agent has an associated software object which
 contains its options (stored as entities in the <code>AGENT</code>
@@ -661,12 +604,14 @@ in which the agent has registered interest.</p>
     converted to underscore (<code>_</code>) characters), it is loaded
     automatically when the agent is installed.</p>
 
-<p>It is sometimes necessary to use a different programming language from Java
-for part of an agent. (For example, PERL is good for text manipulation).  The
-best technique is to put the external code into a CGI script (with a
-<code>.cgi</code> extension).  PERL is a popular choice for a scripting
-language because it is nearly as ubiquitous as Java. Be warned, though, that
-not all of its libraries or extensions are available on all systems.</p>
+<p> It is sometimes necessary to use a different programming language from
+    Java for part of an application. (For example, PERL is good for text
+    manipulation).  The best technique is to put the external code into a CGI
+    script (with a <code>.cgi</code> extension).  PERL is a popular choice for
+    a scripting language because it is nearly as ubiquitous as Java. Be
+    warned, though, that not all of its libraries or extensions are available
+    on all systems.
+</p>
 
 <p> An alternative to CGI scripts is the Java native interface, or Java code
     that uses the <code>exec</code> method of the
@@ -677,10 +622,8 @@ not all of its libraries or extensions are available on all systems.</p>
     scripts in PERL are more likely to be portable.
 </p>
 
-</blockquote>
 
-
-<h2><a name="Tips"></a>Tips on Agent Creation</h2>
+<h2><a name="Tips"></a>Tips on Application Writing</h2>
 
 <p>PIA applications and active documents  are so new that few conventions
 have become established for their use and there is considerable
@@ -690,14 +633,16 @@ style in particular: </p>
 
 <h3>Uniform Look and Feel</h3>
 
-<p>Use tagsets to give a family of related applications a similar appearance. The
-PIA uses <code>&lt;header&gt;</code>, <code>&lt;subhead&gt;</code>, and
-<code>&lt;footer&gt;</code> in this way; almost every application XHTML page
-includes the code which expands into a standardized heading.</p>
+<p> Use tagsets to give a family of related applications a similar
+    appearance. The PIA uses <code>&lt;header&gt;</code>,
+    <code>&lt;subhead&gt;</code>, and <code>&lt;footer&gt;</code> in this way;
+    almost every application XHTML page includes the code which expands into a
+    standardized heading.
+</p>
 
-<p> Use ``include'' files and application-specific entities to customize inherited
-    pages.  The standard <code>include</code> files currently available
-    are:
+<p> Use ``include'' files and application-specific entities to customize
+    inherited pages.  The standard <code>include</code> files currently
+    available are:
 </p>
 
 <ul>
@@ -786,31 +731,46 @@ installation form, especially if an application has many options.</p>
 
 <h3>Readable Source</h3>
 
-<p>It goes without saying that the output of a XHTML file--the
-user's view--should be easily read, understood, and used. But so
-should the input--the author's view.</p>
+<p> It goes without saying that the output of a XHTML file--the user's
+    view--should be easily read, understood, and used. But so should the
+    input--the author's view.  This is especially important in an open-source
+    system like the PIA; you are almost guaranteed that somebody else will be
+    reading your code at some point -- and it's likely that you will be
+    reading theirs!
+</p>
 
 <p>Appropriate indentation makes for easier-to-read code. Indent
 the content of elements such as lists and control structures.
 Comment the file as appropriate, using one of the two types of comment
 available in the PIA:</p>
+
 <ul>
+  <li><p> The ordinary HTML comment <code>&lt;!-- like this --&gt;</code> is
+       passed on by the PIA processor to the browser, so it can appear in the
+       browser's "Page Source" window.  Unfortunately, this kind of comment
+       can affect the processing of active tags (because it still exists, even
+       if invisibly, during processing), and can lead to very puzzling errors
+       (for example, you may be testing whether a list is empty, and finding
+       that it is not empty because it contains such a comment).</p> </li>
 
-<li><p> The ordinary HTML comment <code>&lt;!-- like this --&gt;</code> is
-passed on by the PIA processor to the browser, so it can appear in the
-browser's "Page Source" window.  Unfortunately, this kind of comment can
-affect the processing of active tags (because it still exists, even if
-invisibly, during processing), and can lead to very puzzling errors (for
-example, you may be testing whether a list is empty, and finding that it is
-not empty because it contains such a comment).</p> </li>
+  <li><p> The other type of comment is more like a traditional "programming
+       comment", and is ideal for describing what happens in an active page.
+       It looks <code>&lt;?-- like this --?&gt;</code>; any such comments are
+       removed at the very first PIA processing step, and thus have no side
+       effects at all.  We encourage copious use of this style comment to
+       clarify your active pages, just as programmers comment their
+       code. </p>
 
-<li><p> The other type of comment is more like a traditional "programming
-    comment", and is ideal for describing what happens in an active page.  It
-    looks <code>&lt;?-- like this --?&gt;</code>; any such comments are
-    removed at the very first PIA processing step, and thus have no side
-    effects at all.  We encourage copious use of this style comment to clarify
-    your active pages, just as programmers comment their code. </p></li>
+       <p>It is important to note that <em>there must be a space after the
+       ``<code>?--</code>''!</em> Otherwise the first word of the comment will
+       be taken as part of the name of an XML processing instruction, which
+       will <em>not</em> be recognized as a comment and will be passed on to
+       the browser, which in turn will display it to the user, usually in a
+       particularly ugly format.  </p>
+       </li>
 </ul>
+
+<h3>Keep maintainers informed</h3>
 
 <p>Keep a to-do list. Document your design decisions, including
 things you tried that turned out to be mistakes.</p>
@@ -838,9 +798,18 @@ details'' document.</p>
        decisions and their motivations.
 </ul>
 
+<blockquote>
+
+<font color=red>
+========== this section is questionable ===============
+</font>
+
 <h4><a name="Directory">Directory Structure</a></h4>
 
-<p>Your Information Agency makes use of two paralles directory trees:</p>
+
+????????????Steve-- are these corrections  true????????????
+
+<p>Your Information Agency makes use of two parallel directory trees:</p>
 
 <ul>
   <li> <var>PIA_HOME</var> contains the code, documentation, applications and
@@ -848,18 +817,15 @@ details'' document.</p>
        overwritten by <code>cvs update </code>, and may be shared by many
        users on a common filesystem (e.g. in <var>/usr/local/</var>).</li>
 
-  <li> <var>PIA_ROOT</var> (typically <tt>~/.pia</tt> on Unix) stores application
-       data and customized active documents.  This directory is always the
-       <i>first</i> place the PIA processor looks for files; it only checks
-       <var>PIA_HOME</var> if it can't find them here.</li>
+  <li> <var>PIA_ROOT</var> (typically <tt>~/.pia</tt> on Unix) stores
+       application data and customized active documents.  This directory is
+       always the <i>first</i> place the PIA processor looks for files; it
+       only checks <var>PIA_HOME</var> if it can't find them here.</li>
 </ul>
 
 <p>By default, an application <var>MyApp</var> in the directory
 <var>AllApps</var> will read and write its data files into <var>
 PIA_ROOT/AllApps/MyApp</var> directory. </p>
-
-
-????????????Steve-- are these corrections  true????????????
 
 <p>When the PIA processor looks for documents for (say) the URL
 <nobr><code>PIAhost:8888/MyApps/Foo</code></nobr>, it will first look in
@@ -876,44 +842,6 @@ form, <tt>foo.xh</tt> for the <var>History</var> application would go in
 <tt>~/.pia/Agents/History/foo.xh</tt>, and would not risk being overwritten by
 subsequent History-application updates from RiSource.org. </p>
 
-
-<p>The following section contains tips on creating applications.
-Additional ideas and inspiration might come from a close look at
-the interforms of applications that ship with the PIA.</p>
-
-
-<blockquote>
-
-========== this section is questionable ===============
-
-<h4><a name="installing">Installing Agents</a></h4>
-
-<p>In order for the PIA Agency to know about a particular agent and
-direct requests to that agent appropriately, that agent must be
-installed.  As agents are represented by persistent software
-objects, agent installation creates the object that corresponds to
-the agent in question.</p>
-
-<p>There are actually two ways to install an agent:  ``<em>loading</em>'' an
-XML definition file, and ``<em>creating</em>'' the agent by submitting an HTML
-form that specifies its attributes.  Loading is faster, but creating an agent
-is an easy way to install a <em>new</em> agent to experiment with or to
-extend. </p>
-
-<p>On start-up, the Information Agency looks in the directory
-<var>PIA_ROOT</var> and then <var>PIA_HOME</var> for the
-<code>/Admin/agent-files.xml</code>, which specifies the XML files that need
-to be loaded.  It also looks in <var>PIA_ROOT</var> for
-<code>/Admin/START-UP.html</code>, which contains HTML forms to submit in
-order to <em>create</em> agents.</p>
-
-<p>When an agent is created, the PIA loads its <tt>initialize.xh</tt>
-file, if one exists.  Consider creating such a file for your agent in
-<code>initialize.xh</code>. This file typically contains default values for
-variables are used by your agent, and may perform additional actions as well.
-When an agent is <em>loaded</em>, the PIA runs the ``hook'' contained in its
-<code>&amp;initialize;</code> attribute. </p>
-
 <h4>Entities</h4>
 
 <p>Entity variables can be several levels deep. For example, <tt>
@@ -923,32 +851,25 @@ namespace are shared by all of that agent's documents, and can even be
 accessed from <em>other</em> agents.  (The History agent does this with its
 toolbar segment, for example.)</p>
 
-<h4>Inheritance</h4>
-
-<p>Standard forms such as <code>options.xh</code>, can be inherited
-from the Agents directory. The PIA Agent looks in the <var>
-Agents</var> directory if this form is not found in that agent's
-subdirectory, <code>/Agents/<var>AGENT_NAME</var></code>.</p>
-
 <h3>Processing Documents Not Specifically Requested</h3>
 
-<p>Agents can process documents moving through the agency even if
-they are not specifically directed to that agent. For example, the
-History and remoteTools agents process all proxied documents. Each agent
-registers a set of <dfn>criteria</dfn> for the documents it is interested in.
-Whenever the agency sees a document that matches an agent's
-registered criteria, (requests for documents are considered
-documents in their own right), that agent is given a chance to
-process the document before sending it on to its destination.</p>
+<p>Agents can be used to process documents moving through the agency. For
+example, the History and remoteTools agents process all proxied
+documents. Each agent registers a set of <dfn>criteria</dfn> for the documents
+it is interested in.  Whenever the agency sees a document that matches an
+agent's registered criteria, (requests for documents are considered documents
+in their own right), that agent is given a chance to process the document
+before sending it on to its destination.</p>
 
 </blockquote>
 
 
-<h3><a name="Debugging"></a>Debugging Tag-Based Applications</h3>
+<h3><a name="Debugging"></a>Debugging PIA Applications</h3>
 
-<p>As with any code, application code may not always work correctly the
-first time. Here are some techniques for understanding what is
-happening within your application.</p>
+<p> As with any software, a PIA-based application is unlikely to work
+    correctly the first time.  Here are some techniques for understanding what
+    is happening within your application.
+</p>
 
 
 <ul>
@@ -958,29 +879,29 @@ happening within your application.</p>
 
   <li> Use the &lt;pretty> tag (and/or nested &lt;pretty>&lt;protect> tags) to
        view the document as the processor sees it, and disentangle possible
-       confusion in indentation and nesting.  See its<a
-         href="http://pia.rsv.ricoh.com/Tutorial/aboutPrettyRepeat.xh">tutorial
-         </a>   page for details. </li>
+       confusion in indentation and nesting.  See its <a
+       href="http://pia.rsv.ricoh.com/Tutorial/aboutPrettyRepeat.xh">tutorial
+       </a>  page for details. </li>
 
-<li>Use the <a
-href="http://pia.rsv.ricoh.com/Tutorial/aboutDebugRepeat.xh">debug tag</a> to
-print the parse tree.  This shows how the document parser interprets the
-document, or document fragment, and sees the relationships between the various
-nodes.  </li>
+  <li> Use the <a
+       href="http://pia.rsv.ricoh.com/Tutorial/aboutDebugRepeat.xh">debug
+       tag</a> to print the parse tree.  This shows how the document parser
+       interprets the document, or document fragment, and sees the
+       relationships between the various nodes.  </li>
 
 
-<li>Look at the HTML source that is generated, using <var> View/Document
-Source</var> or <var>View/Page Source</var> (via right-clicking) in the
-browser menu. This gives a good indication of where the code broke down.  Some
-elements, such as &lt;include&gt;, insert comments into the output document
-when an error occurs. </li>
+  <li> Look at the HTML source that is generated, using <var> View/Document
+       Source</var> or <var>View/Page Source</var> (via right-clicking) in the
+       browser menu. This gives a good indication of where the code broke
+       down.  Some elements, such as &lt;include&gt;, insert comments into the
+       output document when an error occurs. </li>
 
-  <li>Use the <tt>&amp;urlQuery</tt>; entity to check that the
-<em>expected</em> name/value pairs are being posted from one page to another.
-For example, <code>&urlQuery;</code> appears in the
-<code>home.xh</code> page for the <code>Samples/Form</code> application, so
-you can  see something like following after submitting the form: <code>
-data=hi+there</code>.  </li>
+  <li> Use the <tt>&amp;urlQuery</tt>; entity to check that the
+       <em>expected</em> name/value pairs are being posted from one page to
+       another.  For example, <code>&urlQuery;</code> appears in the
+       <code>home.xh</code> page for the <code>Samples/Form</code>
+       application, so you can see something like following after submitting
+       the form: <code> data=hi+there</code>.  </li>
      
   <li> Look at the PIA server console (where you ran <code>PIA/bin/pia</code>,
        and where you subsequently re-run it whenever you change
@@ -993,12 +914,11 @@ data=hi+there</code>.  </li>
        without having to change the expansion/output properties of the tags or
        active sections you are investigating. </li>
 
-       <li> Run the pia with the <code>-d</code> (debug) option
-     (e.g. <code>PIA/bin/pia -d </code>).  This will produce
-     voluminous output about what the PIA thinks it's doing.  Adding the
-     <code>-v</code> (verbose) flag will produce even more output, tracing the
-     progress of the document processing system. </li>
-     
+  <li> Run the pia with the <code>-d</code> (debug) option
+       (e.g. <code>PIA/bin/pia -d </code>).  This will produce voluminous
+       output about what the PIA thinks it's doing.  Adding the
+       <code>-v</code> (verbose) flag will produce even more output, tracing
+       the progress of the document processing system. </li>
 </ul>
 
 <p>The extended HTML tags needed to create applications are described in
@@ -1011,7 +931,7 @@ Manual</a>.</p>
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: author.html,v 1.16 1999-10-15 17:17:43 steve Exp $</i><br>
+<i>$Id: author.html,v 1.17 1999-10-15 23:13:01 steve Exp $</i><br>
 </body>
 </html>
 
