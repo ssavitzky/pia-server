@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.8 1999-06-23 23:42:43 wolff Exp $
+// $Id: HTTPRequest.java,v 1.9 1999-07-12 18:51:56 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -811,8 +811,8 @@ public class  HTTPRequest extends Transaction {
 	
 	  long delay = 1000;
 
-          //POSTs should be already completed before the transaction
-          //is resolved...
+          // To process POSTS while waiting for resolution uncomment the following and fix initializeContent / form Content
+	  /* 
 	  if( method().equalsIgnoreCase( "POST" ) ){
 	      if(!contentObj.processInput()) {
 		  try{
@@ -824,15 +824,20 @@ public class  HTTPRequest extends Transaction {
 		  Thread.currentThread().sleep(delay);
 	      }catch(InterruptedException ex){;}
 	  }
+	  */
+       try{
+	  synchronized(this) {
+	    if(! resolved) wait(); //use instead of above sleep
+	  }
+        }catch(InterruptedException ex){;}
       }
       
-      // resolved, finish up an form content
-      if( method().equalsIgnoreCase( "POST" ) ){
-	   while(contentObj.processInput()) {
-	     //keep processing until done with posted vars
-           }
-      }
-      
+      	  if( method().equalsIgnoreCase( "POST" ) ){
+	      while(contentObj.processInput()) {
+		// continue to process input until all is read
+	      }
+	  }
+	  
 	
       // now satisfy self
       satisfy( resolver);
