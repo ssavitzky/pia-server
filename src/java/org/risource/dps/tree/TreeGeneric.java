@@ -1,5 +1,5 @@
 // TreeGeneric.java
-// $Id: TreeGeneric.java,v 1.4 1999-11-16 23:34:05 steve Exp $
+// $Id: TreeGeneric.java,v 1.5 2000-02-18 00:55:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -105,7 +105,7 @@ public class TreeGeneric extends TreeElement  {
    *	distinguish a null value (no value) from an empty one.
    */
   public void setValueNodes(NodeList newValue) {
-    if (value == null) {
+    if (newValue == null) {
       isAssigned = false;
       value = null;
       return;

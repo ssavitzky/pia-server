@@ -1142,11 +1142,14 @@ If 4th node is there, returns "four".
   <li> 2000-02-14 <b>Bug</b> Too many tags end paragraphs <br>
        For example, currently &lt;font&gt; cannot enclose multiple paragraphs,
        because a &lt;p&gt; ends it.
-       
+
+  <li> 2000-02-17 <b>Bug</b> if (value==null) in TreeGeneric.setValueNodes<br>
+       should have been <code>if (newValue == null)</code>
+       (2000-02-17) J.L. Taylor<br>
 
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.44 2000-02-15 01:51:57 steve Exp $</b><br>
+<b>$Id: done.html,v 1.45 2000-02-18 00:58:31 steve Exp $</b><br>
 </body></html>
