@@ -1,5 +1,5 @@
 ////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.1 1999-10-06 23:39:13 bill Exp $
+//	$Id: weekdayHandler.java,v 1.2 1999-10-07 17:50:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ import org.risource.ds.List;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.lang.Package;
+//import java.lang.Package;
 import org.risource.pia.Pia;
 
 import org.risource.dps.*;
@@ -52,20 +52,39 @@ import java.lang.StringBuffer;
 
 
 /**
- * Handler for &lt;weekday&gt; &lt;/&gt;  This tag prints
+ * Handler for &lt;weekday&gt; &lt;/&gt;  This tag outputs
  * the weekday associated with a given date (or nothing, if incorrect).
  * <br>	
  *
- * @version $Id: weekdayHandler.java,v 1.1 1999-10-06 23:39:13 bill Exp $
+ * @version $Id: weekdayHandler.java,v 1.2 1999-10-07 17:50:48 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
 public class weekdayHandler extends GenericHandler {
 
-    List printList = null;
+  static int maxday[] = { 
+    /* jan feb mar apr may jun jul aug sep oct nov dec */
+       31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+  };
 
-	
-    int indentIncrement = 4;
+  /** Compute the maximum day of the given month in the given year. 
+   *
+   *<p>	Note that this computation is accurate only for the Gregorian
+   *	calendar, not the Julian.  It substitutes for the Java 1.2
+   *	function getActualMaximum(Calendar.DAY_OF_MONTH) on 
+   *	GregorianCalendar.
+   *
+   *<p>  === remove maxDayOfMonth when Java 1.2 is universally used.
+   */
+  static int maxDayOfMonth(int month, int year) {
+    /** NOTE: January is 0, February is 1 */
+    return (month != 1)? maxday[month]
+      : (year % 400 == 0)? 29
+      : (year % 100 == 0)? 28
+      : (year % 4   == 0)? 29
+      : 28;
+  }
+
   /************************************************************************
   ** Semantic Operations:
   ************************************************************************/
@@ -81,20 +100,17 @@ public class weekdayHandler extends GenericHandler {
   public void action(Input in, Context cxt, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
 
-
-
     // get subelements
     int date = -1, month = -1, year = -1;
     long unixdate = -1;
     for (int i = 0; i < content.getLength(); ++i) {
-
 	
 	String name;
-	if (	content.activeItem(i).getNodeType() == Node.ELEMENT_NODE){
-	    name = content.activeItem(i).getNodeName();
+	if (content.activeItem(i).getNodeType() == Node.ELEMENT_NODE){
+	  name = content.activeItem(i).getNodeName();
+	} else {
+	  continue;
 	}
-	else
-	    continue;
 
 	Enumeration en;
 	Association as;
@@ -106,7 +122,7 @@ public class weekdayHandler extends GenericHandler {
 		if ( as.isIntegral() )
 		    date = (int)( as.longValue() );
 	    }
-	}
+	} else
 	if (name.equalsIgnoreCase("month")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
@@ -115,7 +131,7 @@ public class weekdayHandler extends GenericHandler {
 		    // let people input month at 1-12, not 0-11
 		    month = (int)( as.longValue() ) - 1;
 	    }
-	}
+	} else
 	if (name.equalsIgnoreCase("year")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
@@ -123,7 +139,7 @@ public class weekdayHandler extends GenericHandler {
 		if ( as.isIntegral() )
 		    year = (int)( as.longValue() );
 	    }
-	}
+	} else
 	if (name.equalsIgnoreCase("unixdate")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
@@ -154,20 +170,21 @@ public class weekdayHandler extends GenericHandler {
     // Package pack = Package.getPackage("java.lang");
     // System.out.println("Version: " + pack.getImplementationVersion() );
 
-
     //  Date theTime = theDay.getTime();
     //theDay.setTime(theTime);
 
     // these checking functions should really be getActual[Minimum/Maximum],
     // but those aren't implemented methods yet.
-    if (date < theDay.getActualMinimum(Calendar.DAY_OF_MONTH) ||
-	date > theDay.getActualMaximum(Calendar.DAY_OF_MONTH) ||
-	month < theDay.getActualMinimum(Calendar.MONTH) ||
-	month > theDay.getActualMaximum(Calendar.MONTH) ){
+    int maxDay = maxDayOfMonth(month, year); 
+    // int maxDay = theDay.getActualMaximum(Calendar.DAY_OF_MONTH)
+    int minDay = 1;            // theDay.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+    if (date < minDay || date > maxDay ||
+	month < 0 /* theDay.getActualMinimum(Calendar.MONTH) */ ||
+	month > 11 /* theDay.getActualMaximum(Calendar.MONTH) */ ){
 	reportError(in, cxt,"weekday tag has illegal date/month/year");
 	return;
     }
-    int maxDay = theDay.getActualMaximum(Calendar.DAY_OF_MONTH);
     int wday = (theDay.get(Calendar.DAY_OF_WEEK)- Calendar.SUNDAY + 7) % 7;
     List dayNames = List.split("Sunday Monday Tuesday Wednesday"
 				    + " Thursday Friday Saturday");
