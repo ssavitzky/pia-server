@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.41 2000-05-02 21:45:25 steve Exp $
+#	$Id: Makefile,v 1.42 2000-06-02 23:33:13 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ SUBDIRS= src bin lib Tagsets Doc
 include $(MF_DIR)/file.make
 include $(MF_DIR)/subdir.make
 
-### The following is unique to the top level ###############################
+###### The following is unique to the top level ###############################
 
 ### Version information:
 
@@ -65,22 +65,22 @@ WEB_RMT  = /home/web/risource-htdocs
 FTP_RMT  = /home/ftp/PIA
 CVS_RMT  = /home/cvsroot
 
+############################################################################# 
+###
 ### How to make a source release:
 ###
-#   1. Set make macros RELEASE, MAJOR, MINOR, and SUFFIX as appropriate.
-#   2. If the version number has changed, commit the Makefile NOW.
-#	Building includes a "cvs checkout"; everything in the release
-#	will come out of the CVS tree, not your working directory.
-#   2. "make prep-checkout" : this updates _and_commits_ Version.java.
-#	It then tags the CVS tree and creates a clean build directory.
-#   3. "make rsync-cvs" (if running under ssh-agent) or DO THIS MANUALLY:  
-# cd /pia1/CvsRoot ; 
-# rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
-#   4. "make src-release"
-#	If part of this fails, it breaks down into these substeps:
-#	make do_checkout build_release tar_file
-#   5. upload tar file: "make upload" works if running under ssh-agent. 
-#   6. Fix RiSource.org/{News/news.html, PIA/latest.html}
+###   1. Set make macros RELEASE, MAJOR, MINOR, and SUFFIX as appropriate.
+###   2. If the version number has changed, commit the Makefile NOW.
+###	 Building includes a "cvs checkout"; everything in the release
+###	 will come out of the CVS tree, not your working directory.
+###   2. "make prep-checkout" : this updates _and_commits_ Version.java.
+###	 It then tags the CVS tree and creates a clean build directory.
+###   3. "make rsync-cvs" (running under ssh-agent -- otherwise do it manually)
+###   4. "make src-release"
+###	 If part of this fails, it breaks down into these substeps:
+###	 make do_checkout build_release tar_file
+###   5. upload tar file: "make upload" works if running under ssh-agent. 
+###   6. Fix RiSource.org/{News/news.html, PIA/latest.html}
 
 ### src-release:
 ###   1. do_checkout	A complete "cvs checkout" from the PUBLIC SERVER.
@@ -197,11 +197,13 @@ upload::
 	@echo 'Now fix RiSource.org/PIA/{latest.html, downloading.html}'
 	@echo 'They then need to be uploaded to $(WEB_RMT)/PIA'
 
+############################################################################# 
 ###
-### Directory index
+### Directory index (Done as part of "make doc")
 ###
 ###	First, make a list of all the directories, in all-dirs.log
 ###	Then, make it into an HTML file that we can use as an index. 
+###
 
 doc:: all-dirs.html sidebar.html
 
@@ -219,107 +221,10 @@ all-dirs.log::
 ###
 ### Old stuff.
 ###
-###	Everything after this point is _probably_ obsolete; it is being kept
-###	around because at some point we may go back and revise our procedures
-###	to use it again.
+###	We used to have make targets for building things like a CD-ROM and 
+###	separate source and binary releases.  The Makefile that contained
+###	all that has been renamed Makefile.cdrom, checked in, and then removed.
+###	If you want it, you can retrieve it from the Attic using CVS.
 ###
 
-### Stuff for making a CD-ROM
-
-CD_ROM_SRC_DIR	= cd_rom_src_dir
-CD_ROM_DEST_DIR	= cd_rom_dest_dir
-CD_ROM_PUB      = Ricoh Silicon Valley
-
-cd_rom:		$(CD_ROM_SRC_DIR) $(CD_ROM_DEST_DIR) version_id
-	mkisofs -f -R -T \
-	    -P "$(CD_ROM_PUB)" -A $(VERSION_ID) -V $(VERSION_ID) \
-	    -o $(CD_ROM_DEST_DIR)/pia.iso $(CD_ROM_SRC_DIR)
-
-
-
-### Put all CVS files into a tar file for safekeeping.
-
-SRCDIR=src/java/org/risource
-CLASSDIR=src/java
-PIALIBDIR=lib/java
-PIABINDIR=bin
-DOCRELEASE=Doc/Release
-DOCPAPER=Doc/Papers
-CDROMDIR=../cdrom
-
-cvs.tar::
-	find $(SUBDIRS) -name CVS -print | tar -cT - -f cvs.tar
-
-### Prepare release
-
-rm_bin_tar::
-	 rm -f pia_bin.toc 
-	 rm -f pia_bin.tgz
-	 rm -f $(PIALIBDIR)/pia.zip
-rm_pia_tar::
-	rm -f pia.toc
-	rm -f pia_src.tgz
-	rm -f $(PIALIBDIR)/pia.zip
-
-prep_rel::
-	cd $(CLASSDIR); make clean ; make
-	cd $(CLASSDIR); make doc
-	cd $(CLASSDIR);
-
-### add crln
-crfixbat:: 
-	cd $(PIABINDIR); cp pia.bat pia.bak; cp_ascii < pia.bak > pia.bat
-	cd $(PIABINDIR); cp piajdk.bat piajdk.bak; cp_ascii < piajdk.bak > piajdk.bat
-	cd $(PIABINDIR); cp autorun.inf autorun.bak; cp_ascii < autorun.bak > autorun.inf
-	cd $(PIABINDIR); rm -f *.bak
-	cp README README.bak; cp_ascii < README.bak > README.txt
-	cp INSTALL INSTALL.bak; cp_ascii < INSTALL.bak > INSTALL.txt
-	rm README.bak INSTALL.bak
-	cd $(DOCRELEASE); cp readme readme.bak; cp_ascii < readme.bak > readme.txt; rm readme.bak
-
-
-### Binary release
-
-pia_bin.toc:: 
-	cd ..; find PIA \! -type d -print \
-	    | grep -v CVS \
-	    | grep -v Config/CDRW | grep -v Config/Demos \
-	    | grep -v Config/MB3 \
-	    | grep -v Config/Photo | grep -v Config/Printer \
-	    | grep -v Config/WebWort | grep -v Config/cdrom \
-	    | grep -v pia_src.tgz | grep -v pia.toc \
-	    | grep -v src > PIA/pia_bin.toc 
-
-pia_bin.tar:	rm_bin_tar prep_rel crfixbat pia_bin.toc
-	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
-
-### Source release
-
-pia.toc:: 
-	cd ..;	find PIA \! -type d -print \
-	    | grep -v CVS \
-	    | grep -v src/app/webfax | grep -v src/perl \
-	    | grep -v src/tex \
-	    | grep -v Config/CDRW | grep -v Config/MB3 \
-	    | grep -v Config/Photo | grep -v Config/Printer \
-	    | grep -v Config/WebWort | grep -v Config/cdrom \
-	    | grep -v Config/Demos | grep -v Doc/Papers \
-	    | grep -v pia_bin.tgz | grep -v pia_bin.toc > PIA/pia.toc 
-
-pia.tar:	rm_pia_tar prep_rel crfixbat pia.toc
-	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
-
-
-
-### Binary and source release
-pia_bin_src: 	rm_bin_tar rm_pia_tar prep_rel crfixbat pia_bin.toc pia.toc
-	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
-	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
-
-pia_cdrom::	pia_bin_src
-	cp pia_bin.tgz $(CDROMDIR); cp pia_src.tgz $(CDROMDIR)
-	cp Doc/Release/readme.txt $(CDROMDIR)
-	cp bin/autorun.inf $(CDROMDIR)
-	cp bin/pia.pif $(CDROMDIR)
-
-
+###### End of Makefile #####################################################
