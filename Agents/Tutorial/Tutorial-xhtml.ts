@@ -20,7 +20,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.7 1999-12-09 23:08:04 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.8 1999-12-10 01:31:46 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -74,7 +74,7 @@
       <head><title>Editor</title></head>
       <body bgcolor='#ffffff' link='blue' vlink='blue'>
 
-        <form action='instantiate.xh' method='post' target='instantiation'>
+        <form action='instantiate.xh' method='get' target='instantiation'>
            <table width='100%'>
 
             <tr>
