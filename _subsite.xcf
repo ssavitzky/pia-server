@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.25 2000-10-06 17:39:35 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.26 2000-10-19 00:04:01 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -21,8 +21,13 @@
   <include src="Config/Site/extensions.xci"/>
   <Ext name="wi"	type="text/html" tagset="/.Woad/woad-index"	/>
 
-  <!-- contains <xref name="word">URL</xref>  -->
-  <include src="xrefs.wi"> </include>
+  <!-- contains <xref name="word">-W-</xref>  -->
+  <if><status item="exists" src="xrefs.wi" />
+      <then>
+	<stringmap name="xref" />
+	<include src="xrefs.wi"> </include>
+      </then>
+  </if>
 
 <!-- Links to root resources. -->
 

@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.28 2000-10-12 23:11:09 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.29 2000-10-19 00:04:05 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -1064,6 +1064,19 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<define element="yellow-box">
+  <doc>
+  </doc>
+  <action>
+       <table bgcolor="yellow" width="100%" cellspacing="0" cellpadding="3"
+	      border="0">
+	 <tr> <td> <get name="content" />
+	      </td>
+	 </tr>
+       </table>
+  </action>
+</define>
+
 <h3>Headers and Footers</h3>
 
 <define element="header">
@@ -1328,6 +1341,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.28 2000-10-12 23:11:09 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.29 2000-10-19 00:04:05 steve Exp $ -->
 </tagset>
 
