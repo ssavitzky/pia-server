@@ -82,6 +82,26 @@
   </tr>
 </table>
 
+<index-bar name="Notes">Notes Files HEADER</index-bar>
+
+<!-- look for notes -->
+
+<form action="/.Woad/src-note" method="post">
+  <input type="hidden" name="path" value="&LOC:path;" />
+  <table cellpadding="0" cellspacing="2" border="0" bgcolor="white">
+    <tr> <th bgcolor="#cccccc"> Name </th> 
+	 <th bgcolor="#cccccc"> Title </th> 
+	 <th bgcolor="#cccccc"> [help] </th>
+    </tr>
+    <tr> <td> &nbsp;<input name="name" size="8" /> </td>
+	 <td> &nbsp;<input name="title" size="30" /> </td>
+	 <td> &nbsp;<input name="op" value="Add Note" type="submit" /> </td>
+    </tr>
+  </table>
+</form>
+
+<index-bar name="Files">Notes Files HEADER</index-bar>
+
 <define element="rejectFile">
   <doc> decide whether to omit a file from the listing
   </doc>
@@ -95,8 +115,6 @@
     </if>
   </action>
 </define>
-
-<hr />
 
 <if>&tail;
     <then>
@@ -113,7 +131,7 @@
 	  </foreach>
 	  <if><rejectFile>&f;</rejectFile>
 	      <else>
-		<tr><th align="left"><a href="&f;"><code>&f;</code></a></th>
+		<tr><td align="left"><a href="&f;"><code>&f;</code></a></td>
 		</tr>
 	      </else>
 	  </if>	  
@@ -124,7 +142,8 @@
 
 <if> <status item="exists" src="&LOC:path;/HEADER.html" />
      <then>
-<hr />
+
+<index-bar name="HEADER">Notes Files HEADER</index-bar>
 
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr><td>&nbsp;</td>
@@ -144,5 +163,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.3 2000-06-17 15:19:28 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.4 2000-06-18 17:40:51 steve Exp $" />
 </body></html>

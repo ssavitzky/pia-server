@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.7 2000-06-17 00:03:07 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.8 2000-06-18 17:40:51 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -393,7 +393,7 @@ Note that we only need these inside the PIA.
 
 <define element="xf">
   <doc> Either an anchor link or a bold name.  Used on lines that
-	contain links to any of several different pages.
+	contain links to any of several different formats.
   </doc>
   <define attribute="fmt">
     <doc> The "format", attached as a query string to the URL and matched
@@ -436,6 +436,34 @@ Note that we only need these inside the PIA.
 	<else><do name="a">
 		  <set name="href"><get name="attributes:href"/></set>
 		  <get name="content"/></do></else>
+    </if>
+  </action>
+</define> 
+
+<define element="xan">
+  <doc> Either an anchor link or a bold name.  Used on lines that contain
+	links to any of several different fragment names within a single page.
+  </doc>
+  <define attribute="name">
+    <doc> The name to link to.  Matched against the content. 
+    </doc>
+  </define>
+  <define attribute="text">
+    <doc> If present, the text of the element.  If omitted, the name is used. 
+    </doc>
+  </define>
+  <action>
+    <let name="name"><get name="attributes:name"/></let>
+    <let name="text">
+	<get name="attributes:text"><get name="attributes:name"/></get>
+    </let>
+    <if><do name="test">
+	    <set name="match"><get name="name"/></set>
+	    <get name="content"/></do>
+	<then><b><get name="text"/></b></then>
+	<else><do name="a">
+		  <set name="href">#<get name="name"/></set>
+		  <get name="text"/></do></else>
     </if>
   </action>
 </define> 
@@ -591,6 +619,25 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<define element="index-bar">
+  <doc> A navigation bar used to index sections within a page.  Content is a
+	list of section names.  
+  </doc>
+  <define attribute="name">
+    <doc> The name of the current section.
+    </doc>
+  </define>
+  <action><a name="&attributes:name;"><hr /></a>
+    <table width="100%" border="2" cellpadding="3" cellspacing="0"
+	   bgcolor="99ccff">
+      <tr><td>
+	<repeat>
+	  <foreach><text op="trim"><get name="content"/></text></foreach>
+	  <xan name="&li;"><get name="attributes:name"/></xan>
+      </td></tr>
+    </table>
+  </action>
+</define>
 
 <define element="nav-bar">
   <doc> A navigation bar, usually placed just above the copyright notice in

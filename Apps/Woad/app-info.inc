@@ -4,7 +4,8 @@
  -->
 <table bgcolor="ffffff" cellpadding="2">
   <tr>
-    <th colspan="3" bgcolor="#99ccff">
+    <td bgcolor="#99ccff"> &nbsp; </td>
+    <th colspan="2" align="left" bgcolor="#99ccff">
         <ss>WOAD</ss> Application Information
     </th>
   </tr>
@@ -61,4 +62,4 @@
 </table>
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.2 2000-06-17 00:03:06 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.3 2000-06-18 17:40:50 steve Exp $">

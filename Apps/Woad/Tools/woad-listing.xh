@@ -51,7 +51,9 @@
 		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
 		   </th>
 		   <th align=left>
-		      <big> <get name="VAR:format"/> Woad annotations</big>
+		      <big> <get name="VAR:format"/> annotations for this
+			    URL.
+		      </big>
 		   </th>
 	       </tr>
 	       <tr>
@@ -77,7 +79,7 @@
     </tr>
 </table>
 
-<define element="rejectFile">
+<define element="rejectNote">
   <doc> decide whether to omit a file from the listing
   </doc>
   <action>
@@ -97,11 +99,10 @@
   </action>
 </define>
 
-<h2>Explicit Annotations:</h2>
+<index-bar name="Notes">Notes Links Images Source</index-bar>
 
 <blockquote>
-<p> The following is a list of annotation topics available at this
-    location. 
+<p> The following is a list of notes available at this location. 
 </p>
 </blockquote>
 
@@ -110,14 +111,28 @@
   <foreach entity="f">
      <text sort><status item="files" src="&LOC:path;&tail;" /></text>
   </foreach>
-  <if><rejectFile>&f;</rejectFile>
+  <if><rejectNote>&f;</rejectNote>
       <else>
-  	<tr><th align="left"><a href="&f;"><code>&f;</code></a></th>
+  	<tr><td align="left"><a href="&f;"><code>&f;</code></a></td>
 	</tr>
       </else>
   </if>	  
 </repeat>
 </table>
+
+<form action="/.Woad/woad-note" method="post">
+  <input type="hidden" name="path" value="&LOC:path;" />
+  <table cellpadding="0" cellspacing="2" border="0" bgcolor="white">
+    <tr> <th bgcolor="#cccccc"> Name </th> 
+	 <th bgcolor="#cccccc"> Title </th> 
+	 <th bgcolor="#cccccc"> [help] </th>
+    </tr>
+    <tr> <td> &nbsp;<input name="name" size="8" /> </td>
+	 <td> &nbsp;<input name="title" size="30" /> </td>
+	 <td> &nbsp;<input name="op" value="Add Note" type="submit" /> </td>
+    </tr>
+  </table>
+</form>
 
 <!-- ==================================================================== -->
 <doc> Here we load the page <em>from the target server</em> and attempt to
@@ -136,18 +151,20 @@
   </set>
 </hide>
 
-<h3>Links:</h3>
+<index-bar name="Links">Notes Links Images Source</index-bar>
+
 <blockquote>
 <table bgcolor="white" cellpadding=1>
   <tr>
     <th bgcolor="#cccccc">URL</th>
     <th bgcolor="#cccccc"> description </th>
   </tr>
-  <repeat><foreach><extract><from>&serverPage;</from>
+  <repeat><foreach><text op="sort" unique="unique">
+	    <extract><from>&serverPage;</from>
     			    <name all>a</name>
   			    <attr>href</attr> 
   			    <eval />
-    	    </extract></foreach>
+    	    </extract></text></foreach>
             <tr><!-- may need to remap absolute links to annotation loc's -->
 	      <td> <a href="&li;">&li;</a> </td>
 	      <td> &nbsp;
@@ -158,15 +175,16 @@
 </table>
 </blockquote>
 
-<h3>Images:</h3>
+<index-bar name="Images">Notes Links Images Source</index-bar>
 
 <blockquote>
 <table bgcolor="white">
-  <repeat><foreach><extract><from>&serverPage;</from>
+  <repeat><foreach><text op="sort" unique="unique">
+	    <extract><from>&serverPage;</from>
     			    <name all>img</name>
   			    <attr>src</attr> 
   			    <eval />
-    	    </extract></foreach>
+    	    </extract></text></foreach>
             <tr><!-- need to map these to server loc's:
 	      	     annotation mangles images severely. -->
 	      <td> <a href="&li;">&li;</a> </td>
@@ -175,8 +193,7 @@
 </table>
 </blockquote>
 
-<hr />
-<h2>Woad source view</h2>
+<index-bar name="Source">Notes Links Images Source</index-bar>
 
 <!-- For images, should simply insert the image here (DUH!) -->
 
@@ -187,19 +204,36 @@
     take you to the page <em>on the target server</em>.)
 </p>
 
+<table bgcolor="white" width="90%" cellpadding="5">
+  <tr>
+    <td valign="top"> 
+	 <a href="&spath;">View document source.</a>
+    </td>
+    <td> This will show you the source document that this page
+	 <em>comes from</em>.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"> 
+	 <a href="&tpath;">View page on server.</a>
+    </td>
+    <td> This will show you the document directly on the server.
+    </td>
+  </tr>
+</table>	  
+</blockquote>
+
 <if>&SITE:notesPrefix;
     <then><table bgcolor="yellow" width="90%" cellpadding="5">
              <tr>
-	       <td> <red> Note that in this situation, links starting with
-		    ``<code>/</code>'' in the source view will be incorrect.
+	       <td> <red> Note that at the moment, links starting with
+		    ``<code>/</code>'' in the source view will be broken
 		    Sorry about that.  </red>
 	       </td>
 	     </tr>
           </table>	  
     </then>
 </if>
-</blockquote>
-
 <table bgcolor="white" cellpadding="5">
   <tr><td>
 <pre><expand><extract>
@@ -209,5 +243,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.2 2000-06-17 00:03:10 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.3 2000-06-18 17:40:52 steve Exp $" />
 </body></html>
