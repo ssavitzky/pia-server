@@ -72,7 +72,10 @@
 		   </th>
 		   <th align=left>
 		      <big> <i>directory listing:</i>
-		 	    <code>&decoratedPath; &tail;</code>
+		 	    <code>&decoratedPath;</code>
+		 	    <if>&tail;
+		 		<then>&nbsp;[<i>does not exist</i>]</then>
+		 	    </if>
 		      </big> 
 		   </th>
 	       </tr>
@@ -202,23 +205,27 @@
 </define>
 <set name="cvs-controlled"></set>
 
-<if> &npath;
-     <then>
+<if> &tail;
+     <else>
        <yellow-note>
 	 This is a source directory listing.  If there's a page here called
 	 <code>index.html</code>, that's  probably what the browser will show
 	 for it, but this can be changed in server configuration files that
 	 <ss>WOAD</ss> doesn't understand yet.
        </yellow-note>
-     </then>
+     </else>
 </if>
 
 <if>&tail;
     <then>
-	<h3>Invalid source path <code>&spath;&tail;</code>.</h3>
+        <hr /><yellow-box><p></p>
+	<b>Invalid source path <code>&spath;&tail;</code>.</b>
 	<p> The closest valid directory above it is
-	    <code><a href="&LOC:path;/">&spath;/</a></code> 
-	</p>
+	    <code><a href="&LOC:path;/">&spath;</a></code> 
+	</p></yellow-box>
+        <yellow-note> although the <em>source</em> path does not exist,
+		      there may still be a corresponding URL on the server.
+        </yellow-note>
     </then>
   <else-if>&dirIndex;
     <then> 
@@ -363,5 +370,5 @@
      </else>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.20 2000-10-18 18:14:07 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.21 2000-10-19 00:05:03 steve Exp $" />
 </body></html>
