@@ -47,11 +47,14 @@
        cd /usr/local/apache/conf
        ln -s ../PIA/Config/Servlet/jserv .
        </pre>
-       and there's a <em>remote</em> chance that it might all work well enough
-       for a test.   If you actually want to build an application around the
-       PIA servlet, you will <em>at the very least</em> have to edit
+
+       and there's a fair chance that it might all work well enough for a
+       test.  If you actually want to build an application around the PIA
+       servlet, you will <em>at the very least</em> have to edit
        <code>jserv/zone.properties.pia</code> to tell it where to find the PIA
-       site configuration file.
+       site configuration file.  Otherwise, just browse to <a
+       href="http://localhost:8080/servlets/PIA">
+       localhost:8080/servlets/PIA</a> and it <em>should</em> work.
   </dd>
 </dl>
 
@@ -73,5 +76,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.1 2000-04-15 00:36:46 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.2 2000-04-19 01:09:35 steve Exp $</b>
 <a name="files"><hr></a>

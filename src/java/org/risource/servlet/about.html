@@ -25,9 +25,11 @@
 
 <h2>Configuration</h2>
 
-<p> So far, PIAServlet has only been tested in Apache-JServ.  Because
-    <code>PIAServlet</code> is still <em>highly</em> experimental, it should
-    be configured with a path to a file that it uses as a log file.
+<p> So far, PIAServlet has only been tested in Apache-JServ and Sun's
+    <code>servletrunner</code> in JSDK2.0.  Because <code>PIAServlet</code> is
+    still <em>highly</em> experimental, it should be configured with a path to
+    a file that it uses as a log file.  Configuration files can be found in <a
+    href="../../../../../Config/Servlet/">PIA/Config/Servlet</a>.
 </p>
 
 <p> The biggest problem with PIAServlet so far is that a Servlet is
@@ -37,13 +39,15 @@
 
 <ol>
   <li> Use <code>mod_rewrite</code> or the equivalent to map
-       pathnames onto the PIA servlet.
+       pathnames onto the PIA servlet.  This pretty-well renders your server
+       useless for serving ordinary files, so you may as well just use the PIA
+       server. 
   </li>
-  <li> Use the <code>PIA:url</code> and <code>PIA:rootPath</code> entities to
-       refer to the Servlet root.  The entities are defined correctly both in
-       the standalone PIA and in the PIAServlet, but are currently not used in
-       the XML code, which is therefore not portable between the two
-       environments.
+  <li> Use the <code>PIA:url</code> and <code>PIA:rootPath</code> entities in
+       your <code>.xh</code> files to refer to the Servlet root.  The entities
+       are defined correctly both in the standalone PIA and in the PIAServlet.
+       This allows a PIA-based application to co-exist with other applications
+       in your server.
   </li>
 </ol>
 
@@ -90,5 +94,5 @@
 
 <hr />
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
-<i>$Id: about.html,v 1.6 2000-04-19 00:02:46 steve Exp $</i><br />
+<i>$Id: about.html,v 1.7 2000-04-19 01:09:42 steve Exp $</i><br />
 </body></html>
