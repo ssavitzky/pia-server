@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>&LOC:path; : Woad annotations</title>
+</head><body>
+<hide>
+  <set name="spath">
+    <if>&SITE:sourceOffset;
+	<then><subst match="^&SITE:sourceOffset;"
+	             result="">&LOC:path;</subst></then>
+	<else>&LOC:path;</else>
+    </if></set>
+  <set name="VAR:format"><if> &FORM:all; <then>complete</then>
+    <else-if>&FORM:detail;<then>detail</then></else-if>
+    <else>filtered</else>
+  </if></set>
+
+  <doc> The following crockery is used to compute &amp;decoratedPath;,
+	which is the path of the current directory ``decorated'' with
+	".." links to the directories above "."
+  </doc>
+  <set name="depth">0</set>
+  <set name="split"><subst match="/" result=" ">[]&spath;</subst></set>
+  <repeat>
+    <foreach><text split>&split;</text></foreach>
+    <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
+  </repeat>
+  <set name="d">2</set>
+  <set name="decoratedPath"><repeat><hide>
+    </hide><foreach entity="f"><text split>&split;</text></foreach><hide>
+    <set name="dots"><repeat><for start="&d;" stop="&depth;"/>../</repeat></set>
+    <set name="d"><numeric op="sum">1 <get name="d"/></numeric></set>
+    </hide><if> &dots;
+	  <then><a href="&dots;">&f;</a>/</then>
+	  <else>&f;</else>
+  </if></repeat></set>
+
+  <doc> Set other variables.
+  </doc>
+  <set name="tpath"><mapToTarget>&LOC:path;</mapToTarget></set>
+</hide>
+
+<table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+  <tr><th align="left">
+    <h1><code>&decoratedPath;</code></h1>
+    </th>
+  </tr>
+  <tr> <td>
+	     <table><!-- the nested table shrink-wraps its contents     -->
+	            <!-- so it doesn't get spread out by the width=100% -->
+	       <tr><th align="left">
+		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
+		   </th>
+		   <th align=left>
+		      <big> <get name="VAR:format"/> Woad annotations</big>
+		   </th>
+	       </tr>
+	       <tr>
+		 <td align="right">-&gt;&nbsp;</td>
+		 <td>
+		      <xf fmt="filtered" href="&LOC:path;">filtered</xf>
+		      <xf fmt="complete" href="&LOC:path;?all">complete</xf>
+		      <if><get name="tpath" />
+		          <then>
+		      	    <a href="&tpath;/">&lt;server&gt;</a>
+		          </then>
+		      </if>
+		      <a href="/.Woad/help.xh#views">[help]</a>
+		 </td>
+		</tr>
+	     </table>
+	</td>
+    </tr>
+  </tr>
+</table>
+
+<define element="rejectFile">
+  <doc> decide whether to omit a file from the listing
+  </doc>
+  <action>
+    <if> &FORM:all;
+	<then> </then>
+        <else><test match="~$">&f;</test>
+              <test match=".bak$">&f;</test>
+              <test match="^[.]">&f;</test>
+	</else>
+    </if>
+  </action>
+</define>
+
+<table bgcolor="white">
+<repeat>
+  <foreach entity="f">
+     <text sort><status item="files" src="&LOC:path;" /></text>
+  </foreach>
+  <if><rejectFile>&f;</rejectFile>
+      <else>
+  	<tr><th align="left"><a href="&f;"><code>&f;</code></a></th>
+	</tr>
+      </else>
+  </if>	  
+</repeat>
+</table>
+
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.1 2000-06-15 01:25:46 steve Exp $" />
+</body></html>
