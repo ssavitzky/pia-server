@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Notes on PIA Interfaces and Integration</title>
+</head><body>
+<h1>Notes on PIA Interfaces and Integration</h1>
+
+<blockquote>
+  <p> <font color="red">DRAFT:  This is a work in progress!  Read at your own
+      risk; believe at your peril!</font>
+  </p>
+  <p> Note that this file is not actually checked in yet; I'm still thinking
+      about the best place to put it within the PIA documentation tree.
+  </p>
+</blockquote>
+
+<blockquote>
+  <p> This document discusses the PIA's architecture, the interfaces (API's)
+      that it supports, and ways of integrating the PIA with other web servers
+      and into other web applications in such a way to preserve cross-platform
+      application portability.
+  </p>
+</blockquote>
+
+<h2>Introduction</h2>
+
+<p> The PIA architecture has three main components (also referred to below as
+    ``features''): 
+</p>
+
+<ol>
+  <li> <strong><code>dps</code></strong> -- the Document Processing System
+       that implements the tag language.  By itself, the DPS essentially
+       provides a simple but complete ``macro language'' for XML and HTML web
+       pages. 
+  </li>
+  <li> <strong><code>site</code></strong> -- the site structure package.  This
+       provides a simple, robust, versatile, and OS-independent way of
+       structuring the files and directories that comprise a web application.
+  </li>
+  <li> <strong><code>agents</code></strong> -- PIA agents provide the ability
+       to operate (using the DPS) on web requests and documents as they
+       pass through a PIA-based proxy server.  It is worth noting that most
+       PIA applications will not require agents to operate on proxied
+       transactions. 
+  </li>
+</ol>
+
+<p> There are also four different degrees to which the PIA or its components
+    may be integrated with a web server such as Apache:
+</p>
+
+<ol>
+  <li> <strong>Not at all</strong> -- the PIA functions as a stand-alone
+       web server.  
+  </li>
+  <li> <strong>Attached Server</strong> -- the main web server passes (some
+       subset of) its requests off to the PIA.  This is the standard interface
+       for servlet engines and for server-side scripting engines that need to
+       share state among requests.  Note that many, if not all, attached
+       servers can also run stand-alone.
+  </li>
+  <li> <strong>Fully Integrated</strong> -- the PIA components run inside the
+       main server's memory image.  In a multi-process, single-threaded server
+       like Apache 1.x this makes it difficult (not <em>necessarily</em>
+       impossible) to share state among requests.
+  </li>
+</ol>
+
+<hr />
+<h2>Interfaces</h2>
+
+<p> The following table lists some interfaces which it is plausible that the
+    PIA might support:
+</p>
+
+<table border="3" width="90%" align="center" cellpadding="3">
+  <tr> <th align="right">Interface</th>
+       <th>Difficulty</th>
+       <th>Features</th>
+       <th>Priority</th>
+       <th>Notes</th>
+  </tr>
+  <tr> <th colspan="4" align="left"> Protocol Interfaces </th>
+       <td>&nbsp;</td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;AJP
+       </th>
+       <td valign="top"> mid </td>
+       <td valign="top"> +site +agents </td>
+       <td valign="top"> mid </td>
+       <td valign="top"> This is the protocol used between Apache and the Java
+            servlet engines; most other high-end web servers also support it.
+	    It may also be used by the PHP engine.  Code can be obtained from
+	    Tomcat or JServ.
+       </td>
+  </tr>
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <tr> <th colspan="4" align="left"> Java Interfaces </th>
+       <td align="right"> <em>For interoperation with existing XML
+            toolsets.</em> 
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;Servlet
+       </th>
+       <td valign="top"> low </td>
+       <td valign="top"> ?site ~agents</td>
+       <td valign="top"> high </td>
+       <td valign="top"> Mark did this; it should be easy to resurrect.  The
+            Servlet interface supports non-proxied agents.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;DOM
+       </th>
+       <td valign="top"> low </td>
+       <td valign="top"> -site </td>
+       <td valign="top"> high </td>
+       <td valign="top"> Already written, but tuning and testing are required.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;SAX
+       </th>
+       <td valign="top"> mid </td>
+       <td valign="top"> -site </td>
+       <td valign="top"> high </td>
+       <td valign="top"> The hooks are in for this, but they're totally
+            untested. 
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;TRAX
+       </th>
+       <td valign="top"> ? </td>
+       <td valign="top"> -site </td>
+       <td valign="top"> low </td>
+       <td valign="top"> This is a <em>proposed</em> interface; we'll have to
+            wait until it stabilizes.  No information available yet.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;Cocoon 1.x
+       </th>
+       <td valign="top"> low </td>
+       <td valign="top"> -site  </td>
+       <td valign="top"> mid </td>
+       <td valign="top"> This is essentially a one-liner given DOM.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;Cocoon 2.x
+       </th>
+       <td valign="top"> mid </td>
+       <td valign="top"> -site </td>
+       <td valign="top"> low </td>
+       <td valign="top"> Probably simple given SAX and a stable Cocoon 2.0,
+            but it may take a while to get to that point.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;Tomcat <br /> Servlet
+       </th>
+       <td valign="top"> mid </td>
+       <td valign="top"> +site +agents </td>
+       <td valign="top"> low </td>
+       <td valign="top"> Tomcat includes hooks for agents. 
+       </td>
+  </tr>
+  <tr><td colspan="5">&nbsp;</td></tr>
+
+  <tr> <th colspan="4" align="left"> C Interfaces </th>
+       <td align="right">
+          <em>Difficulty ratings assume existance of CPIA.</em>
+       </td>
+  </tr>
+
+  <tr> <th valign="top" align="right"> &nbsp;<code>mod_dps</code>
+       </th>
+       <td valign="top"> low </td>
+       <td valign="top"> -site </td>
+       <td valign="top"> high </td>
+       <td valign="top"> Should be very simple given C port of DPS.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;<code>mod_site</code>
+       </th>
+       <td valign="top"> high </td>
+       <td valign="top"> -dps +site </td>
+       <td valign="top"> high </td>
+       <td valign="top"> Does not require DPS; can be done using the XML
+	    parser built into Apache 2.0.  It should be possible to leverage
+	    off of the metadata kept by <code>mod_dav</code>.
+       </td>
+  </tr>
+  <tr> <th valign="top" align="right"> &nbsp;<code>mod_pia</code>
+       </th>
+       <td valign="top"> mid </td>
+       <td valign="top"> +site +agents </td>
+       <td valign="top"> mid </td>
+       <td valign="top"> This is really just adds agents to
+	    <code>mod_dps</code> and <code>mod_site</code>
+       </td>
+  </tr>
+</table>
+
+<p> 
+</p>
+<div align="right">
+<table width="90%" align="center">
+  <tr>
+    <td valign="top">
+         The features <code>+dps</code> and <code>-agents</code> are assumed
+         unless otherwise noted.  The ``full-featured'' PIA is
+         <code>+dps</code> <code>+site</code> <code>+agents</code>. 
+    </td>
+    <td>&nbsp;</td>
+    <td valign="top">
+      <table border="3">
+	<tr> <th colspan="2"> Difficulty ratings </th>
+	</tr>
+	<tr> <td>low</td>
+	     <td> &lt; 1 week </td>
+	</tr>
+	<tr> <td>mid</td>
+	     <td> &lt; 1 month </td>
+	</tr>
+	<tr> <td>high</td>
+	     <td> &gt; 1 month </td>
+	</tr>
+      </table>
+    </td>
+    <td>&nbsp;</td>
+    <td valign="top">
+      <table border="3">
+	<tr> <th colspan="2"> Priority ratings </th>
+	</tr>
+	<tr> <td>low</td>
+	     <td> postpone </td>
+	</tr>
+	<tr> <td>mid</td>
+	     <td> do if convenient. </td>
+	</tr>
+	<tr> <td>high</td>
+	     <td> Do it! </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+
+<hr />
+<h2>PIA and Apache</h2>
+
+<p> There are two main paths to a ``full-featured'' PIA integrated with Apache:
+</p>
+<ol>
+  <li> <strong><code>mod_pia</code></strong> -- a full-featured PIA
+       implemented as a set of standard, C, Apache modules.  It should
+       <em>not</em> be necessary to implement a stand-alone PIA server in C. 
+  </li>
+  <li> <strong>AJP</strong> -- this is the interface used between a web server
+       and a subsidiary server-like engine.  It keeps the present PIA
+       essentially intact, and would be more efficient and better-integrated
+       than the present <code>mod_proxy</code>-based scheme.  Some
+       investigation is required, mainly to see whether proxying (and hence
+       agents) can be supported through AJP. 
+  </li>
+</ol>
+
+<p> Several intermediate or alternative structures are possible:
+</p>
+
+<ul>
+  <li> <strong>Servlet</strong> -- the servlet interface supports every
+       feature of the PIA except agents operating on proxied transactions.
+       With the aid of <code>mod_rewrite</code> it might even be possible to
+       support those as well.
+  </li>
+  <li> <strong><code>mod_site</code> + AJP</strong> -- this puts processing
+       into a separate server, but allows Apache to serve static HTML pages
+       directly. 
+  </li>
+  <li> <strong>Tomcat Servlet</strong> -- using Tomcat's additional hooks, it
+       should be possible to implement agents.  As with AJP, the only question
+       is whether the servlet engine can also be used as a proxy.
+  </li>
+  <li> <strong><code>mod_perl</code></strong> -- a PERL implementation of the
+       PIA would allow a full-featured PIA to run as part of Apache and
+       interoperate cleanly with existing <code>mod_perl</code>-based web
+       applications.  
+  </li>
+</ul>
+
+<hr />
+<h2>DPS outside the PIA</h2>
+
+<p> It is likely that the DPS will be useful outside of the PIA.  Since the
+    existing code will soon support all of the major Java interfaces (DOM,
+    SAX, Servlet) used in XML applications this use should be encouraged, and
+    may eventually lead to the PIA's tag language becoming a standard, either
+    as an alternative or (less likely) an extension to XSLT.
+</p>
+
+
+<hr />
+<h2>Alternative Implementations</h2>
+
+<p> No effort should be put into alternative implementations (except for C, of
+    course) at this time, but if some outside developer wants to do one they
+    should be encouraged.
+</p>
+
+<dl>
+  <dt> <strong>C</strong>
+  </dt>
+  <dd> The CPIA effort is, of course, already in progress.
+  </dd>
+
+  <dt> <strong>C++</strong>
+  </dt>
+  <dd> A C++ implementation would be a straightforward translation of the Java
+       implementation, made simpler by the fact that C++ versions of the SAX
+       and DOM API's already exist. 
+  </dd>
+
+  <dt> <strong>PERL</strong>
+  </dt>
+  <dd> This is the most attractive alternative implementation, because
+       <code>mod_perl</code> is very popular and because most of the machinery
+       required is already present in the form of PERL modules. 
+  </dd>
+
+  <dt> <strong>Python</strong>
+  </dt>
+  <dd> A Python implementation would probably be roughly as easy as a PERL
+       one; Python has very good XML support, including a DOM implementation. 
+  </dd>
+
+  <dt> <strong>XSP</strong> (Cocoon 2)
+  </dt>
+  <dd> An implementation of the DPS as an XSP ``<em>taglib</em>'' (tag
+       library) is feasible; it would provide a sort of ``universal taglib''
+       for Cocoon. 
+  </dd>
+
+  <dt> <strong>DPS Compiler</strong>
+  </dt>
+  <dd> A set of DPS tags could (fairly easily) be written that translate the
+       DPS tags into subroutines or classes in some existing programming
+       language.  This raises the intriguing possibility of a PIA
+       implementation written entirely ``in itself.''  Such an implementation
+       would be both <em>extremely</em> portable and highly efficient.
+  </dd>
+
+  <dt> <strong></strong>
+  </dt>
+  <dd> 
+  </dd>
+
+  <dt> <strong></strong>
+  </dt>
+  <dd> 
+  </dd>
+
+  <dt> <strong></strong>
+  </dt>
+  <dd> 
+  </dd>
+</dl>
+
+
+<hr />
+<h2>Roadmap</h2>
+
+<p> What follows is the implementation roadmap for the PIA's interfaces:
+</p>
+
+<ol>
+  <li> Implement the Java interfaces (Servlet, DOM, SAX, in that order).  Even
+       though these do not directly lead to a full-featured PIA integrated
+       with Apache, they are very simple and we have already committed to
+       doing them.  They will give the PIA the highest possible level of
+       interoperability with existing XML applications with minimal effort.
+       In addition, the Servlet interface will provide a fallback position,
+       integrating the PIA's <code>dps</code> and <code>site</code> packages
+       with <em>any</em> servlet-based web server.
+  </li>
+  <li> Implement, or at least investigate, AJP.  This would provide a PIA
+       implementation <em>fully</em> integrated with Apache and with all the
+       other web servers that support AJP.  It's also possible that code taken
+       from Tomcat's front end could greatly simplify and clean up the PIA's
+       front-end code in <code>org.risource.pia</code> and
+       <code>org.risource.content</code>.
+  </li>
+  <li> Implement <code>mod_pia</code>; the C port should be ready at about
+       this time.  
+  </li>
+  <li> Cleanup.  Based on experiences with <code>mod_pia</code> and the Java
+       interfaces, it should be possible to do a <em>major</em> cleanup and
+       simplification of the PIA's Java implementation.  This would include
+       eliminating redundant classes and interfaces, lazy expansion of tag
+       content, and major overhaul of the <code>org.risource.pia</code>
+       package.
+  </li>
+</ol>
+
+
+<hr />
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
+<b>$Id: interfaces.html,v 1.1 2000-04-25 23:19:14 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
