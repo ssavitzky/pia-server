@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.10 1999-04-12 20:54:33 wolff Exp $
+# $Id: file.make,v 1.11 2000-02-25 23:25:58 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -64,7 +64,7 @@ endif
 
 ifeq ($(CLASSPATH),)
 .java.class:
-	export wd; wd=`pwd`; cd $(CLASSDIR); javac -g $(JAVAFLAGS) $$wd/$<
+	wd=`pwd`; export wd; cd $(CLASSDIR); javac -g $(JAVAFLAGS) $$wd/$<
 #	cd $(CLASSDIR); javac -g $(JAVAFLAGS) $(PKGPATH)/$<; $(CDFIX)
 else
 BUILDCLASSES=$(CLASSDIR)$S$(CLASSPATH)
