@@ -29,7 +29,7 @@
 
 <h3>Top Level Packages</h3>
 <dl>
-  <dt> <a href="dps/">dps/</a>
+  <dt> <a href="dps/"><code>org.risource.dps</code></a>
   </dt>
   <dd> Document Processing System.  This is the PIA's mechanism for expanding
        ``active content'' represented in XML, and for operating on HTML and
@@ -38,23 +38,25 @@
        the DPS in situations not covered by the simplified interfaces in the
        <a href="sax/">sax</a> package.
   </dd>`
-  <dt> <a href="pia/">pia/</a>
+  <dt> <a href="pia/"><code>org.risource.pia</code></a>
   </dt>
   <dd> The PIA proxy server itself.  You will need to understand parts of this
        package if you want to implement new agents in Java, in order to
        perform unusual operations on web transactions. 
   </dd>`
-  <dt> <a href="site/">site/</a>
+  <dt> <a href="site/"><code>org.risource.site</code></a>
   </dt>
   <dd> The Site Resource Package, which provides flexible web-site
-       configuration and management to PIA-based servers.
-  </dd>`
+       configuration and management to PIA-based servers.  You will need to
+       understand parts of this package if you want to implement classes that
+       can be ``mounted'' as part of an application's URL hierarchy.
+  </dd>
 </dl>
 
 <h3>Simplified API's</h3>
 
 <dl>
-  <dt> <a href="dom/">dom/</a>
+  <dt> <a href="dom/"><code>org.risource.dom</code></a>
   </dt>
   <dd> Interfaces and classes for use by application programmers who want to
        use the Document Processing System in applications based on the W3C's
@@ -63,13 +65,13 @@
        href="dps/tree/">dps/tree/</a>; the extended interfaces are in <a
        href="dps/active/">dps/active/</a>.
   </dd>`
-  <dt> <a href="sax/">sax/</a>
+  <dt> <a href="sax/"><code>org.risource.sax</code></a>
   </dt>
   <dd> Interfaces and classes for use by application programmers who want to
        use the Document Processing System in applications based on
        <a href="../xml/sax/">SAX</a>, the Simple API for XML. 
   </dd>`
-  <dt> <a href="servlet/">servlet/</a>
+  <dt> <a href="servlet/"><code>org.risource.servlet</code></a>
   </dt>
   <dd> Servlet implementation classes, for use in servlet engines such as
        Tomcat and Apache-JServ
@@ -85,27 +87,28 @@
 </p>
 
 </dl>
-  <dt> <a href="content/">content/</a>
+  <dt> <a href="content/"><code>org.risource.content</code></a>
   </dt>
   <dd> Representations for message content.
   </dd>`
-  <dt> <a href="ds/">ds/</a>
+  <dt> <a href="ds/"><code>org.risource.ds</code></a>
   </dt>
-  <dd> Data Structures
+  <dd> Data Structures.  Classes in this directory provide a largely
+       language-independent set of data structures that are used throughout
+       the PIA.
   </dd>`
-  <dt> <a href="test/">test/</a>
-  </dt>
-  <dd> Test cases and drivers (mostly <strong>obsolete</strong>)
-  </dd>`
-  <dt> <a href="tf/">tf/</a>
+  <dt> <a href="tf/"><code>org.risource.tf</code></a>
   </dt>
   <dd> Classes that compute Transaction Features.  These are lazily-evaluated
        values matched by the PIA against each agent's selection criteria.
   </dd>`
-  <dt> <a href="util/">util/</a>
+  <dt> <a href="util/"><code>org.risource.util</code></a>
   </dt>
-  <dd> Utilities
+  <dd> Utility classes.
   </dd>`
+  <dt> <a href="test/"><code>test/</code></a>
+  </dt>
+  <dd> Test cases and drivers (mostly <strong>obsolete</strong> at this point).
 </dl>
 
 <h2>Naming Conventions</h2>
@@ -118,5 +121,5 @@
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.12 2000-05-01 18:04:11 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.13 2000-05-01 18:47:32 steve Exp $</b>
 <a name="files"><hr></a>
