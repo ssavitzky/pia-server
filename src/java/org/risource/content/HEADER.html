@@ -1,25 +1,35 @@
-<h1>Package org.risource.content</h1>
+<h1><a href="../../../../../-">PIA</a> / <a href="../../../../">src</a>
+    / <a href="../../../">java</a> / <a href="../../">org</a>
+    / <a href="../">risource</a> / content</h1>
 
+<p>
 <a href="../">[..]</a>
-<a href="#files">[files]</a><p>
+<a href="#files">[files]</a> (
+  <a href="text/">text</a>
+)
+</p>
 
-This directory contains generic implementations of the <a
-href=../pia/Content.java> Content </a> interface.
-A content objects is used to represent the "content" of a <A
-href=../pia/Transaction.java>transaction</a>, usually streaming data (HTML page, JPEG
-file, etc.) being sent from a Web server to a browser.  The content interface
-provides a very generic way for <a href=../pia/Agent.java>agents</a> to get
-access to or modify
-the data in transit.  Some agents (e.g. cache agent) grab a copy of the data and
-put it into a file (using the <code>tapIn or tapOut</code> methods), while others modify the data  (e.g. Proxie inserts a
-toolbar just after the body tag of HTML pages using the <code>add</code> method). <p>
+<p> This directory contains generic implementations of the <a
+    href=../pia/Content.java> Content </a> interface.  A content objects is
+    used to represent the "content" of a <A
+    href=../pia/Transaction.java>transaction</a>, usually streaming data (HTML
+    page, JPEG file, etc.) being sent from a Web server to a browser.  The
+    content interface provides a very generic way for <a
+    href=../pia/Agent.java>agents</a> to get access to or modify the data in
+    transit.  Some agents (e.g. cache agent) grab a copy of the data and put
+    it into a file (using the <code>tapIn or tapOut</code> methods), while
+    others modify the data (e.g. Proxie inserts a toolbar just after the body
+    tag of HTML pages using the <code>add</code> method).
+</p>
 
+<p>
 The content classes in this directory are normally instantiated by a <a
 href=../pia/ContentFactory.java> ContentFactory</a>.  The default
 ContentFactory uses mime type to find a name of the corresponding content
 class, so <a href=text/html.java> text/html.class</a> would be the class
 instantiated for data of type text/html.  If no specific type is found a
 default is used <a href=ByteStreamContent.java>ByteStreamContent</a>.
+</p>
 
 <p>
 All of these classes inherit from <a
@@ -35,6 +45,7 @@ data out to a browser as soon as possible (without waiting for the entire data
 structure to be in memory), so a content object has to keep track of any
 modifications specified by an agent and perform them at the appropriate time
 as the data is being shipped through the circular buffer.
+</p>
 
 
 <h2>Annotated Contents</h2>
@@ -53,5 +64,5 @@ as the data is being shipped through the circular buffer.
  </dl>
 
 
-<b>$Id: HEADER.html,v 1.1 1999-04-13 20:11:48 wolff Exp $</b>
+<b>$Id: HEADER.html,v 1.2 2000-04-20 22:35:40 steve Exp $</b>
 <a name="files"><hr></a>

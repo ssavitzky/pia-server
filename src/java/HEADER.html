@@ -1,12 +1,19 @@
-<h1>.../pia/src/java</h1>
+<h1><a href="../../-">PIA</a> / <a href="../">src</a> / java</h1>
 
+<p>
 <a href="../">[..]</a>
-<a href="#files">[files]</a><p>
+<a href="#files">[files]</a> (
+  <a href="JP/">JP</a>
+  <a href="misc/">misc</a>
+  <a href="org/"><b>org</b></a>
+)
+</p>
 
 <p> This directory contains the source code for classes and applications
     written in Java (which makes no firm distinction between a library class
     and the top-level class of an application).
-<p> 
+</p> 
+
 <dl>
   <dt> <b>Note:</b>
   <dd> This is the root of the Java package tree; it is <em>not</em> the
@@ -16,14 +23,13 @@
        directory.  (This is, effectively, what the <code>Makefile</code>s do.)
 </dl>
 
-
 <h2>Annotated Contents</h2>
 
 <h3>Directories</h3>
 <dl>
-  <dt> <a href="JP">JP</a>
+  <dt> <a href="JP/">JP/</a> 
   <dd> Code from Japanese organizations and companies (i.e. entities in the
-       <code>.jp</code> top-level domain.
+       <code>.jp</code> top-level domain).
   <dt> <a href="misc/">misc/</a>
   <dd> Classes developed elsewhere that do not specify a package. 
   <dt> <a href="org/">org/</a>
@@ -37,15 +43,32 @@
 	      Consortium</a>.  This may eventually change to <code>w3</code>,
 	      depending on exactly which conventions the Consortium decides to
 	      follow. 
+	 <dt> <a href="org/xml">org/xml</a>
+	 <dd> Code from <a href="http://xml.org/"><code>xml.org</code></a>.
        </dl>
   <dt> <a href="makefiles/">makefiles/</a>
   <dd> Makefiles
 </dl>
 
+<h3>Source Code and Class Files</h3>
+
+<p> This directory is the logically-correct place to put source code for
+    classes that do not have a package, and it is where the Java compiler will
+    put the <code>.class</code> files of such classes, no matter
+    <em>where</em> their sources are located in the tree.  
+</p>
+
 <h3>Log Files</h3>
 
+<p> The PIA build process can be made to keeps log of all builds in this tree;
+    using the ``<code>make&nbsp;logs</code>'' command.  This is <em>not</em>
+    normally done as part of the release process, but it can be useful for
+    tracking problems.  <code>all_source.log</code> <em>is</em> made; it
+    contains a list of all <code>.java</code> source files in the tree.
+</p>
+
 <dl>
-  <dt> <a href="all_files.log">all_files.log</a>
+  <dt> <a href="all_source.log">all_source.log</a>
   <dd> Sorted list of all Java source files in the tree. 
   <dt> <a href="doc.log">doc.log</a>
   <dd> Log from doing ``<code>make doc</code>''.  Useful for tracking down
@@ -116,7 +139,7 @@ be kept to 15 characters or less, but that's just to prevent unwanted line
 wraps and keep multi-column listings under control. 
 
 <hr>
-<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.5 1999-04-20 16:34:58 steve Exp $</b>
+<b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.6 2000-04-20 22:35:23 steve Exp $</b>
 <a name="files"><hr></a>
 

@@ -1,17 +1,24 @@
-<h1>Tag Handlers for the DPS</h1>
+<h1><a href="../../../../../../-">PIA</a> / <a href="../../../../../">src</a>
+    / <a href="../../../../">java</a> / <a href="../../../">org</a>
+    / <a href="../../">risource</a> / <a href="../">dps</a> / handler</h1>
 
+<p>
 <a href="../">[..]</a>
 <a href="#files">[files]</a>
-(
+[
   <a href="#Base_Classes">Base Classes</a>
+  <a href="#Utility_Classes">Utility Classes</a>
+  <a href="#handlers">Tag Handlers</a>
 ||
   <a href="about.html">about</a>
-)
-<p>
+]
+</p>
 
-This directory contains primarily tag-handler classes (implementations of
-<a href="../Handler.java"><code>org.risource.dps.Handler</code></a>) for use as actor
-handles.  Tag handler classes are loaded dynamically. <p> 
+<p> This directory contains primarily tag-handler classes (implementations of
+    <a href="../Handler.java"><code>org.risource.dps.Handler</code></a>).  Tag
+    handler classes can be loaded dynamically, but the most commonly-used ones
+    are pre-loaded into a hash table in <a href="Loader.java">Loader</a>. 
+</p> 
 
 <h2><a name="Base_Classes">Base Classes</a></h2>
 
@@ -28,7 +35,16 @@ handles.  Tag handler classes are loaded dynamically. <p>
        <a href="../active/ActiveElement.java">ActiveElement</a> nodes.  
 </dl>
 
-<h2>Tag Handler Classes</h2>
+<h2><a name="Utility_Classes">Utility Classes</a></h2>
+
+<dl>
+  <dt> <a href="Loader.java">Loader</a>
+  </dt>
+  <dd> Loader for tag handler classes.
+  </dd>
+</dl>
+
+<h2><a name="handlers">Tag Handler Classes</a></h2>
 
 Tag handler classes have <em>lowercase</em> names, with periods replaced by
 underscores, and hyphens elided by capitalizing the next letter.  If the name
@@ -42,8 +58,8 @@ used as a word-separator within names. <p>
 
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 1999-03-23 23:31:44 steve Exp $</b>
+<b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.5 2000-04-20 22:35:56 steve Exp $</b>
 <a name="files"><hr></a>
 
 

@@ -1,24 +1,50 @@
-<h1>Output Implementations for the DPS</h1>
+<h1><a href="../../../../../../-">PIA</a> / <a href="../../../../../">src</a>
+    / <a href="../../../../">java</a> / <a href="../../../">org</a>
+    / <a href="../../">risource</a> / <a href="../">dps</a> / output</h1>
 
+<p>
 <a href="../">[..]</a>
-<a href="#files">[files]</a><p>
+<a href="#files">[files]</a> [
+  <a href="#Base_Classes">Base Classes</a>
+  <a href="#Classes">Output Classes</a>
+]
+</p>
 
-This directory contains implementations of the Output interface, which provides
-a destination for Node's from a DPS Processor. <p>
+<p> This directory contains implementations of the Output interface, which
+    provides a destination for Node's from a DPS Processor.
+</p>
 
 <h2>Classes</h2>
 
+<h3><a name="Base_Classes">Base Classes</a></h3>
+
+<dl>
+  <dt> <a href="ActiveOutput.java">ActiveOutput</a>
+  </dt>
+  <dd> Abstract base class for implementations of the Output interface
+       that operate exclusively on ActiveNode's.
+  </dd>
+  <dt> <a href="Proxy.java">Proxy</a>
+  </dt>
+  <dd> Base class for filtering proxy outputs. 
+  </dd>
+  <dt> <a href="ToExternalForm.java">ToExternalForm</a>
+  </dt>
+  <dd> Abstract base class for implementations of Output that produce a String
+       or Stream in external form.
+  </dd>
+</dl>
+
+<h3><a name="Classes">Output Classes</a></h3>
+
 <ul>
-  <li> <a href="ActiveOutput.java">ActiveOutput</a>
   <li> <a href="DiscardOutput.java">DiscardOutput</a>
   <li> <a href="FilterMarkup.java">FilterMarkup</a>
   <li> <a href="FilterText.java">FilterText</a>
   <li> <a href="OutputTrace.java">OutputTrace</a>
-  <li> <a href="Proxy.java">Proxy</a>
   <li> <a href="ToAttributeList.java">ToAttributeList</a>
   <li> <a href="ToCharData.java">ToCharData</a>
   <li> <a href="ToDocument.java">ToDocument</a>
-  <li> <a href="ToExternalForm.java">ToExternalForm</a>
   <li> <a href="ToHTTPClient.java">ToHTTPClient</a>
   <li> <a href="ToNamespace.java">ToNamespace</a>
   <li> <a href="ToNodeList.java">ToNodeList</a>
@@ -29,11 +55,8 @@ a destination for Node's from a DPS Processor. <p>
 
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.3 1999-06-04 22:40:08 steve Exp $</b>
-<address><a href="http://rsv.ricoh.com/~steve"
-         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
-         >steve@rsv.ricoh.com</a>&gt;</address>
+<b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.4 2000-04-20 22:36:05 steve Exp $</b>
 <a name="files"><hr></a>
 
 

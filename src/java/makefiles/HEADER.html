@@ -1,16 +1,25 @@
-<h1>Java Makefiles</h1>  <!-- -*-html-helper-*- -->
+<h1><a href="../../../-">PIA</a> / <a href="../../">src</a>
+    / <a href="../">java</a> / makefiles</h1>
 
+<p> 
 <a href="../">[..]</a>
-<a href="#files">[files]</a><p>
+<a href="#files">[files]</a>
+</p>
 
-<p> This directory contains makefile templates; they are meant to be included
-    using the ``<code>include</code>'' directive of GNU or similar versions of
-    <code>make</code>.  They are known to work on Linux with GNU make and
-    Solaris with SUN's make.
+<p> This directory contains makefile templates for compiling Java classes and
+    packages; they are meant to be included using the ``<code>include</code>''
+    directive of GNU or similar versions of <code>make</code>.  They are known
+    to work on Linux and Solaris with GNU <code>make</code>.  They used to
+    work with Sun's <code>make</code>, but this hasn't been tested recently.
+</p>
 
-<p> A little attention has been paid to making it work on Windows, but unless
-    <code>make</code>, java, and the shell interpret ``<code>/</code>'' as the 
-    file separator there is little hope that they will really work.
+<p> A little attention has been paid to making the makefiles work on Windows,
+    but unless <code>make</code>, java, and the shell interpret
+    ``<code>/</code>'' as the file separator there is little hope that they
+    will really work.  A better solution would be to use an OS-independent
+    tool like
+    <a href="http://jakarta.apache.org/ant/index.html"><code>ant</code></a>.
+</p>
 
 <h2>Annotated Contents</h2>
 
@@ -22,6 +31,6 @@
 </dl>
 
 <hr>
-<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.1 1999-03-23 17:43:50 steve Exp $</b>
+<b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.2 2000-04-20 22:35:26 steve Exp $</b>
 <a name="files"><hr></a>

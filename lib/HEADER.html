@@ -1,15 +1,31 @@
-<h1>lib</h1>
-<a href="../">[..]</a>
-<a href="#files">[files]</a><p>
+<h1><a href="../-">PIA</a> / lib</h1>
+
+<p>
+<a href="../-">[..]</a>
+<a href="#files">[files]</a>
+</p>
 
 <p> This directory contains the ``libraries'' which are required for
     ordinary operation of the PIA and the DPS's <code>process</code> command.
     In particular, it contains the fundamental tagsets.  Unlike the PIA server
     tagsets in <a href="../Tagsets/"><code>../Tagsets</code></a>, tagsets in
-    this directory are not expected to be customized.
+    this directory are not expected to be customized.  Some of the tagsets in
+    this directory are meant to be used primarily offline.
+</p>
 
-<p> Note that <code>lib</code> is added to the PIA's <code>CLASSPATH</code>.
+<p> Note that <code>lib</code> is normally added to the PIA's
+    <code>CLASSPATH</code>. 
+</p>
     
+<dl>
+  <dt> <b>See Also:</b> 
+  </dt>
+  <dd> <a href="../Tagsets">../Tagsets</a> -- tagsets used only in the PIA.
+  </dd>
+  <dt> <b>Naming:</b>
+  <dd> This is the default directory from which tagsets are loaded; names of
+       the tagsets in this directory need not be prefixed. 
+</dl>
 
 <h2>Annotated Contents</h2>
 <h3>Tagsets</h3>
@@ -22,13 +38,59 @@
 <dl>
   <dt> <a href="basic.ts">basic.ts</a> <a href="basic.html">.html</a>
   </dt>
-  <dd>
+  <dd> The ``basic'' tagset, containing definitions of all the primitive
+       tags.  <em>This is the definitive documentation on tags</em>
   </dd>
+  <dt> <a href="tsdoc.ts">tsdoc.ts</a> <a href="tsdoc.html">.html</a>
+  </dt>
+  <dd> Tagset for <em>documenting</em> tagsets.  This is used online for
+       viewing tagsets, and offline for building the HTML documentation
+       files. 
+  </dd>
+  <dt> <a hreft="tsstrip.ts">tsstrip.ts</a> <a href="tsstrip.html">.html</a>
+  </dt>
+  <dd> Tagset for stripping documentation out of a tagset to make it load
+       faster. 
+  </dd>
+  <dt> <a href="xhtml.ts">xhtml.ts</a> <a href="xhtml.html">.html</a>
+  </dt>
+  <dd> Additional tags for processing XHTML files.
+  </dd>
+  <dt> <a href="ehtml.ts">ehtml.ts</a> <a href="ehtml.html">.html</a>
+  </dt>
+  <dd> Same as <a href="xhtml.ts">xhtml.ts</a>  but handles standard HTML
+       constructs, including empty tags (like &lt;hr&gt;) and missing end
+       tags, without complaint.
+  </dd>
+  <dt> <a href="debug.ts">debug.ts</a> <a href="debug.html">.html</a>
+  </dt>
+  <dd> a couple of tags used for debugging and displaying XML code.
+  </dd>
+  <dt> <a href="xxml.ts">xxml.ts</a> <a href="xxml.html">.html</a>
+  </dt>
+  <dd> presently a placeholder; intended to allow non-primitive extensions to
+       <a href="basic.ts">basic.ts</a> for processing XML files.
+  </dd>
+  <dt> <a href="pia-config.ts">pia-config.ts</a> <a href="pia-config.html">.html</a>
+  </dt>
+  <dd> Tagset used for reading PIA subsite configuration files
+       (<code>_subsite.xcf</code>). 
+  </dd>
+  <dt> <a href="pia-tags.ts">pia-tags.ts</a> <a href="pia-tags.html">.html</a>
+  </dt>
+  <dd> Primitive tags intended for use in the PIA.  These tags are not used
+       for page layout, and are not likely to be customized.
+  </dd>
+  <dt> <a href="pia-xxml.ts">pia-xxml.ts</a> <a href="pia-xxml.html">.html</a>
+  </dt>
+  <dd> presently a placeholder; intended to allow non-primitive extensions to
+       <a href="basic.ts">basic.ts</a> for processing XML files in the PIA.
+  </dd>
+       
 </dl>
 
-<h3>Other Files</h3>
 
-<hr>
-<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.2 2000-04-19 23:52:28 steve Exp $</b>
-<a name="files"><hr></a>
+<hr />
+<b>Copyright &copy; 1999-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.3 2000-04-20 22:35:07 steve Exp $</b>
+<a name="files"><hr /></a>

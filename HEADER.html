@@ -1,27 +1,38 @@
-<h1>Platform for Information Applications</h1>
+<h1>PIA: Platform for Information Applications</h1>
 
 <p>
-<a href="../">[..]</a>
-<a href="#files">[files]</a>
+<a href="../">[..]</a><!-- gets back to the home page if there is one -->
+<a href="#files">[files]</a> [
+  <a href="#Documents">Documents</a>
+  <a href="#Directories">Directories</a>
+ ||
+  <a href="#virtual"><i>virtual</i></a>
+] <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 (
- <a href="Agents">Agents</a>,
- <a href="Config">Config</a>,
- <a href="Contrib">Contrib</a>,
- <a href="Doc">Doc</a>,
- <a href="Tagsets">Tagsets</a>,
- <a href="bin">bin</a>,
- <a href="lib">lib</a>,
- <a href="src">src</a>
+  <a href="Agents/">Agents</a>,
+  <a href="Config/">Config</a>,
+  <a href="Contrib/">Contrib</a>,
+  <a href="Doc/">Doc</a>,
+  <a href="Samples/">Samples</a>,
+  <a href="Tagsets/">Tagsets</a>,
+  <a href="bin/">bin</a>,
+  <a href="lib/">lib</a>,
+  <a href="src/">src</a>
+ ||
+ <a href="Icon/"><i>Icon</i></a>
+ <a href="logs/"><i>logs</i></a>
 )
-
+</p>
 
 <p> This is the top-level directory for software and documentation generated
     by members of the PIA Project at <a href="http://www.RiSource.org/"
     >RiSource.org</a>.
+</p>
 
 <h2>Annotated Contents</h2>
 
-<h3>Documents</h3>
+<h3><a name="Documents">Documents</a></h3>
 <dl>
   <dt> <a href="README">README</a>
   <dd> 
@@ -29,10 +40,10 @@
   <dd> The license under which this software is distributed.
 </dl>
 
-<h3>Directories</h3>
+<h3><a name="Directories">Directories</a></h3>
 <dl>
   <dt> <a href="Agents/">Agents/</a>
-  <dd> Agent document directories.
+  <dd> Agent and application directories.
   <dt> <a href="Config/">Config/</a>
   <dd> Configuration files for various PIA-based appliances, operating
        systems, and so on.
@@ -64,6 +75,40 @@
   <dd> Source code for the PIA and related utilities.
 </dl>
 
+<h3><a name="virtual">Virtual Resources</a></h3>
+
+<p> The following documents and directories are not part of the distribution.
+    However, if you are viewing this directory through a PIA in its default
+    configuration, they will be present in the listing.  Unless otherwise
+    noted, they are actually located in your PIA root directory
+    (<code>$HOME/.pia</code> on Unix).
+</p>
+
+<dl>
+  <dt> <a href="Icon/">Icon/</a>
+       (from <a href="Agents/ROOT/">Agents/ROOT/</a> )
+  </dt>
+  <dd> Icon directory.
+       
+  </dd>
+  <dt> <a href="logs/">logs/</a>
+  </dt>
+  <dd> Where the PIA puts log files.
+  </dd>
+  <dt> <a href="robots.txt">robots.txt</a>
+       (from <a href="Agents/ROOT/">Agents/ROOT/</a> )
+  </dt>
+  <dd> Control file that tells robots (web crawlers, search engines) which
+       subdirectories to ignore.
+  </dd>
+  <dt> <a href="welcome.inc">welcome.inc</a>
+  </dt>
+  <dd> Not provided by default -- if you create a file with this name in your
+       PIA root directory, it will be inserted into your PIA's home page
+       between the heading and the documentation grid.
+  </dd>
+</dl>
+
 <h2>Naming Conventions</h2>
 
 <p> Sub-directories that contain source code, libraries, and executables
@@ -82,6 +127,6 @@
     are capitalized according to local conventions.
 
 <hr>
-<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.8 1999-12-14 19:00:51 steve Exp $</b>
+<b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.9 2000-04-20 22:34:03 steve Exp $</b>
 <a name="files"><hr></a>
