@@ -28,6 +28,23 @@
 
 <p> 
 
+<h4>Major Issues</h4>
+
+<p> As a consequence of the changes listed below, there are some compatibility
+    issues in this release:
+
+<ol>
+  <li> Most importantly, all references to the tagset "pia-xhtml"
+       <em>must</em> be changed to refer to <code>"/Tagsets/pia-xhtml"</code>
+       -- otherwise either the tagset won't be found.
+
+  <li> If you're not using one of the wrapper scripts
+       (<code>PIA/bin/pia</code> or <code>PIA/bin/pia.bat</code>) you probably
+       need to use the <code>-home</code> option to pass the PIA's home
+       directory on the command line.  You may also need to put
+       <code>PIA/lib</code> into your <code>CLASSPATH</code>.
+</ol>
+
 <h4>Changes since 2.0.7</h4>
 
 <ol>
@@ -559,5 +576,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.0.html,v 1.33 1999-12-14 19:03:02 steve Exp $</b><br>
+<b>$Id: r2.0.html,v 1.34 1999-12-17 22:47:05 steve Exp $</b><br>
 </body></html>
