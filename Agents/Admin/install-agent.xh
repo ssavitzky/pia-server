@@ -28,7 +28,7 @@
     </if>
     </td></tr><tr><th width='340'>
 	</th><td>
-	   <form action='/&AGENT:name;remove-agent' method='POST'>
+	   <form action='/&AGENT:name;/remove-agent' method='POST'>
 	     <input name='agent' value='&name;' type='hidden' />
 	     <input type='submit' value='Remove &name;' />
 	   </form>
@@ -53,5 +53,5 @@ file.
 </else>
 </if>
 
-<short-footer cvsid='$Id: install-agent.xh,v 1.4 1999-03-27 02:29:22 pgage Exp $' />
+<short-footer cvsid='$Id: install-agent.xh,v 1.5 1999-04-27 23:53:26 wolff Exp $' />
 </body></html>

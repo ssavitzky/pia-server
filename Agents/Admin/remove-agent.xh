@@ -9,7 +9,7 @@
 </then></if>
 
 <header>Remove Agent</header>
-<if>&removed; <else><sub-head page='remove_agent' /></else></if>
+<if><get name='removed' /> <else><sub-head page='remove_agent' /></else></if>
 
 <hr />
 
@@ -29,5 +29,5 @@ Name:<select name='agent'>
 </form>
 
 
-<footer cvsid='$Id: remove-agent.xh,v 1.5 1999-03-31 01:28:42 pgage Exp $' />
+<footer cvsid='$Id: remove-agent.xh,v 1.6 1999-04-27 23:53:27 wolff Exp $' />
 </body></html>

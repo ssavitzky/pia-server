@@ -1,5 +1,5 @@
 ////// TreeExternal.java -- Entity that refers to an external resource
-//	$Id: TreeExternal.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+//	$Id: TreeExternal.java,v 1.2 1999-04-27 23:53:40 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that refers to an external
  *	resource, for example, a file.
  *
- * @version $Id: TreeExternal.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+ * @version $Id: TreeExternal.java,v 1.2 1999-04-27 23:53:40 wolff Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -261,7 +261,7 @@ public class TreeExternal extends TreeEntity {
     writer = new OutputStreamWriter(outStream);
     return new ToWriter(writer);
   }
-
+ 
   protected void writeValueToResource(Context cxt) {
     Output out = writeResource(cxt);
     Copy.copyNodes(getValueNodes(cxt), out);
@@ -282,6 +282,8 @@ public class TreeExternal extends TreeEntity {
       reader.close();
       inStream.close();
     } catch (IOException e) {}
+      catch (NullPointerException e) {}
+
     wrappedInput = null;
     reader = null;
     inStream = null;
@@ -305,6 +307,18 @@ public class TreeExternal extends TreeEntity {
     }
   }
 
+  /** Get the node's value as an Input. 
+   * superclass implementation is not right -- override...
+   */
+  public Input fromValue(Context cxt){ 
+    
+    if(resourceName != null) return getValueInput(cxt);
+    
+    return super.fromValue(cxt);
+    
+  }
+
+  
   public Output getValueOutput(Context cxt) {
     context = cxt;
     if (resourceName != null) {
@@ -313,7 +327,7 @@ public class TreeExternal extends TreeEntity {
       return null; // === getValueOutput should return wrapped Output
     }
   }
-
+ 
   /** Get the node's value. 
    *
    * <p> There will be problems if this is called while reading the value.
@@ -321,12 +335,31 @@ public class TreeExternal extends TreeEntity {
   public ActiveNodeList getValueNodes(Context cxt) {
     if (resourceName == null && wrappedInput == null)
       return super.getValueNodes(cxt);
+    //Fetch data from resource 
     ToNodeList out = new ToNodeList();
-    Input in = fromValue(cxt);
-    Copy.copyNodes(in, out);
+    Input in = fromValue(cxt); 
+    if(in != null) Copy.copyNodes(in, out);
     super.setValueNodes(out.getList());
     closeInput();
     return super.getValueNodes(cxt);
+  }
+
+
+  /** Get the node's value. 
+   *
+   * <p> Get The nodes value outside of a context -- There will be problems with this.
+   */
+  public ActiveNodeList getValueNodes() {
+    ActiveNodeList myval = super.getValueNodes();
+    if(myval == null ) {
+        System.out.println("getValue called without context ");
+         //Not yet initialized with system data??
+         System.out.println("making up data ");
+         myval = new TreeNodeList(); // Can't fetch the data without a context
+    }
+    
+    return myval;
+    
   }
 
   /** Set the node's value.  If the value is <code>null</code>, 

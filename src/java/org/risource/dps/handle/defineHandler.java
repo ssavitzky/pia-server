@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.9 1999-04-23 00:21:38 steve Exp $
+//	$Id: defineHandler.java,v 1.10 1999-04-27 23:53:34 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.9 1999-04-23 00:21:38 steve Exp $
+ * @version $Id: defineHandler.java,v 1.10 1999-04-27 23:53:34 wolff Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -284,10 +284,21 @@ class define_entity extends defineHandler {
     TagsetProcessor tproc = (top instanceof TagsetProcessor)
       ? (TagsetProcessor) top : null;
 
+      String nspace=null;
+      String nsname=name;
+      
+    if (hasNamespace(name)) {
+      // Have to worry about namespace. 
+      int i = name.indexOf(':');
+      nspace=name.substring(0,i);
+      nsname=name.substring(i+1);
+    }
+    
+
     ActiveEntity ent = null;
     if (sysName != null) {
       // External 
-      TreeExternal ext = new TreeExternal(name, sysName, null);
+      TreeExternal ext = new TreeExternal(nsname, sysName, null);
 
       ext.setMode(mode);
       ext.setMethod(method);
@@ -299,12 +310,23 @@ class define_entity extends defineHandler {
 	ext.setRequestContent(new TreeNodeList(newContent));
       ent = ext;
     } else {
-      ent = ts.createActiveEntity(name, newContent);
+      ent = ts.createActiveEntity(nsname, newContent);
     }
     
     if (hasNamespace(name)) {
       // Have to worry about namespace. 
-      cxt.setBinding(name, ent, false);
+
+      //This is broken ==  cxt.setBinding(name, ent, false);
+      //workaround:
+      Namespace ns = cxt.getNamespace(nspace);
+      if(ns != null) {
+	ns.setBinding(nsname,ent);
+      } else {
+	cxt.message(-1, nspace + " namespace does not exist!" , 0 , true);
+      }
+      
+       
+
     } else if (tproc != null ) {
       // If we're in a tagset, define it there.
       tproc.getTagset().setBinding(name, ent);

@@ -5,10 +5,14 @@
 <h1>Initialize the &agentName; agent</h1>
 
 <!--  ===================================================================  -->
-<!--  Initialize variables used by Readers' Helper.
+<!--  Initialize bug agent -->
 <!-- ===================================================================  -->
 <user-message>Initializing &agentName; from &filePath;</user-message>
 
+<!-- set the ID counter for bugs -->
+<define entity="AGENT:bugid" system="~/bug_id.txt" mode=write>
+</define>
+<if><get name="AGENT:bugid" /><else><set name="AGENT:bugid">0</set></else></if>
 
-<footer cvsid='$Id: initialize.xh,v 1.1 1999-04-20 00:50:22 pgage Exp $ />
+<footer cvsid='$Id: initialize.xh,v 1.2 1999-04-27 23:53:31 wolff Exp $ />
 </body></html>
