@@ -1,17 +1,93 @@
-<h1>.../pia/Agents</h1>
+<h1>PIA Agents and Applications</h1>
 
-This directory contains a directory for each top-level agent.  This allows
-each agent to consist of multiple CGI scripts and documents, and still be
-addressable by a single, simple URL.  
-<p>
+<a href="../">[..]</a>
+<a href="#files">[files]</a>
 
-This directory is ``overlaid'' by your personal Agents directory, 
-<a href="/~/Agents/">/~/Agents/</a>; this lets you make private versions of any
-agent's files.  Your personal Agents directory is located under
-<code>$PIA_HOME.</code>
-<p>
+<p> This directory contains a subdirectory for each agent or application that
+    is meant to be accessible at the top level of a PIA server, i.e. as
+    <code>~<em>name</em></code>.  Many of these top-level applications consist
+    of an Agent and the pages that control and describe it.
+
+<p> At one time, <em>every</em> top-level directory corresponded to an Agent.
+    This is no longer the case, but the old name for this directory has been
+    retained for historical reasons.
+
+<p> This directory is ``overlaid'' by your personal Agents directory; this
+    lets you make private versions of any agent's files.  Your personal Agents
+    directory is normally located under <code>$PIA_HOME</code>; which is
+    typically <code>~/.pia</code> on a Unix system.  The last line in the
+    directory listing (<a href="#paths">below</a>) will give its actual
+    location in this server. 
+
+<p> Some Agents,  the History agent for example, keep data files in a
+    subdirectory which is usually called <code>DATA</code>.
+
+<p> Note that specialized servers can be configured so that this directory and
+    its contents are invisible from the Web.
+
+<h2>Agents</h2>
+
+<p> The following directories contain actual <em>agents</em> -- pieces of XML
+    code that are expanded in response to certain conditions in the PIA
+    server: 
+
+<dl>
+  <dt> <a href="Admin/">Admin</a>
+  <dd> The server-administration agent.  (Strictly speaking this is an
+       application, but it actually includes an Agent which is used to ensure
+       that administration tags are only executed from inside the Admin
+       directory.) 
+  <dt> <a href="Proxie/">Proxie</a>
+  <dd> This is also an application, but it serves as a front panel for a
+       collection of agents that are active when the PIA is used as a proxy. 
+  <dt> <a href="HelloWorld/">HelloWorld/</a>
+  <dd> This is the sample agent described in the <a
+       href="/Doc/author.html">Author's Guide</a>.
+</dl>
+
+<h2>Applications</h2>
+
+<p> The following directories contain ``web applications'' that may, in some
+    cases, be made available as ``home directories'' just like agents.
+
+<dl>
+  <dt> <a href="Tutorial/">Tutorial</a>
+  <dd> This application provides an introduction to the PIA's tag language.
+  <dt> <a href="Demo/">Demo</a>
+  <dd> This application consists entirely of pages that demonstrate the PIA's
+       tag language.  It is more comprehensive than the <a
+       href="Tutorial/">Tutorial</a>, and hence less comprehensible to the
+       average new user.
+  <dt> <a href="Swifty/">Swifty</a>
+  <dd> This is an application that helps you construct a ``home page''; it is
+       meant to serve as an example.
+  <dt> <a href="View/">View</a>
+  <dd> This application allows you to view pages using a variety of different
+       tagsets.  For example, you can view HTML pages as plain text, or as
+       ``slide presentations''.
+</dl>
+
+<h2>Utilities</h2>
+
+<p> The following directories contain files that are often used by agents and
+    applications, but they do not themselves contain agents.
+
+<dl>
+  <dt> <a href="defaults/">defaults</a>
+  <dd> This directory contains default versions of files like
+       <code>home.xh</code> and <code>help.xh</code>.  It is meant to be the
+       last item in an agent directory's virtual search path.
+  <dt> <a href="ROOT/.">ROOT</a>
+  <dd> This directory contains files and subdirectories that are meant to be
+       made accessible at the root of a server's URL tree, using an entry like
+       <pre> &lt;Container name="Icon" virtual="Agents/ROOT/Icon" /&gt;</pre>
+       in the server's configuration file.  They are not included at the top
+       level (<code><a href="../../">PIA</a></code>) because they are
+       optional and are easier to omit if they're virtual.
+</dl>
 
 <hr>
-<b>Copyright &copy; 1997 Ricoh California Research Center</b><br>
-<b>$Id: HEADER.html,v 1.3 1999-03-23 20:34:54 steve Exp $</b><br>
-<hr>
+<b>Copyright &copy; 1997-1999 Ricoh California Research Center</b><br>
+<b>$Id: HEADER.html,v 1.4 1999-09-22 23:45:27 steve Exp $</b><br>
+<a name="files"><hr></a>
+

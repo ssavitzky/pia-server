@@ -6,7 +6,7 @@
   <a href="#Packages">Packages</a>
   <a href="#Interfaces">Interfaces</a>
   <a href="#Classes">Classes</a>
-  <a href="#Exceptions">Exceptions</a> ||
+  <a href="#Base">Base Classes</a> ||
   <a href="about.html">about</a>,
   <a href="to-do.html">to-do</a>,
   <a href="done.html">done</a>
@@ -22,28 +22,49 @@ document site structuring subsystem.
 
 <dl>
   <dt> <a href="Resource.java">Resource</a>
-  <dd> A document accessible via a URL
+  <dd> A document or container resource accessible via a URL
+  <dt> <a href="Document.java">Document</a>
+  <dd> A document resource.
   <dt> <a href="Root.java">Root</a>
   <dd> The root of a resource tree.
+  <dt> <a href="Realizable.java">Realizable</a>
+  <dd> A document that can be ``realized:'' moved from a virtual location to a
+       ``real'' one.
 </dl>
 
 <hr>
-<h3><a name="Classes">Classes</a></h3>
+<h3><a name="Classes">Concrete Classes</a></h3>
 
 <dl>
   <dt> <a href="Subsite.java">Subsite</a>
-  <dd> An implementation of Resource
+  <dd> An implementation of Resource and Realizable specifically for
+       containers. 
+  <dt> <a href="SiteDocument.java">SiteDocument</a>
+  <dd> An implementation of Document.
   <dt> <a href="Site.java">Site</a>
   <dd> An implementation of Root
+  <dt> <a href="Listing.java">Listing</a>
+  <dd> A virtual Document that contains a listing of the contents of a
+       Subsite. 
+  <dt> <a href="FileResource.java">FileResource</a>
+  <dd> An implementation of Resource that takes all of its configuration
+       information from an underlying file or directory.
+  <dt> <a href="FileDocument.java">FileDocument</a>
+  <dd> An implementation of Document that takes all of its configuration
+       information from an underlying file.
 </dl>
 
 <hr>
-<h3><a name="Exceptions">Exceptions</a></h3>
+<h3><a name="Base">Base Classes</a></h3>
 
 <dl>
+  <dt> <a href="AbstractResource.java">AbstractResource</a>
+  <dd> Abstract base class for all implementations of Resource.
+  <dt> <a href="ConfiguredResource.java">ConfiguredResource</a>
+  <dd> Abstract base class for Subsite and SiteDocument.
 </dl>
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.1 1999-08-06 23:59:15 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.2 1999-09-22 23:45:41 steve Exp $</b>
 <a name="files"><hr></a>
