@@ -18,40 +18,88 @@
 	projects.  
 </dl>
 
-<h2><a name="Interfaces">DPS and Standard Interfaces</a></h2>
+<h2><a name="Interfaces">PIA, DPS and Standard Interfaces</a></h2>
+
+<h3>DPS:  DOM and SAX</h3>
 
 <p> I see the transition of the DPS to standard interfaces (DOM and SAX) as
     proceeding in these stages:
 
 <ol>
   <li> The Input and Output implementations <code>FromDocument</code>,
-       <code>FromSAX</code>, <code>ToDocument</code>, <code>ToSAX</code>.
+       <code>ToDocument</code>, <code>ToSAX</code>.
        (Document, of course, refers to the corresponding DOM class).
        <code>ToDocument</code> already exists as a stub.  <code>FromSAX</code>
-       requires the use of two threads and a queue. 
+       would require the use of two threads and a queue; it's not particularly
+       useful because the SAX interface doesn't pass entities to the
+       application.  
   <li> Extend Tagset to implement DocumentType (it's almost there now).  This
        would probably be sufficient to allow our own DOM to be used in some
        other applications.  (Not all -- in particular,
-       <code>getElementsByTagName</code> is still unimplemented.)
+       <code>getElementsByTagName</code> is still unimplemented.)  Replace all
+       operations that create Nodes by calls on a Document's creation
+       methods.  
   <li> Extend the Cursor implementation so that it doesn't require the
        presence of an actual ActiveNode.  (A previous implementation involved
-       a DOM Node, but you don't actually need that, either.)  It may even be
+       a DOM Node, but you shouldn't need that, either.)  It may even be
        reasonable to virtualize Text nodes as strings.  See <a
-       href="Design/dom.html">Design/dom.html</a> for details.
-  <li> Add the SAX interface to Processor.  This would require constructing
-       subtrees for some (perhaps not all) active nodes.  An alternative,
-       event-oriented <code>action</code> method would probably be needed in
-       the <code>Action</code> interface, or (more likely) a pair of them.  In
-       the default case these would simply pass the event (cursor) to the
-       Output.  For <em>active</em> nodes, these would construct a subtree and
-       call the original 3-argument <code>action</code> routine, but
-       eventually many handlers would be rewritten for better performance. 
+       href="Design/dom.html">Design/dom.html</a> for details.  There are less
+       than 50 calls on <code>getNode</code> and <code>getActive</code>.  More
+       work needs to be done in order to replace all (most?) uses of NodeList
+       with cursors as well.
+  <li> Extend Output so that it can take a Cursor instead of a Node, or even
+       node components (node name, node type, attribute list, value string,
+       and content).  It would be possible for a SAX parser or other
+       event-driven parser to drive an Output directly at this point.
+  <li> Add an event-driven interface to Processor -- essentially, make
+       Processor into an Output.  This would
+       require constructing subtrees for some (perhaps not all) active nodes.
+       An alternative, event-oriented <code>action</code> method would
+       probably be needed in the <code>Action</code> interface, or (more
+       likely) a pair of them.  In the default case these would simply pass
+       the event (in the form of a cursor) to the Output.  For <em>active</em>
+       nodes, these would construct a subtree and call the original 3-argument
+       <code>action</code> routine when the end tag is seen, but eventually
+       many handlers would be rewritten for better performance.
+  <li> It would be possible at this point to switch Parser from being an Input
+       to being something that merely drives an Output.  
 </ol>
 
-<p> The event-driven Processor is somewhat related to the <em>old</em>
+<p> Note that if Output extends SAX, and Processor extends Output, it becomes
+    possible to use the DPS to process XML delivered by a SAX parser.  You
+    couldn't use it on documents with embedded DPS control structures or
+    entities, but you <em>could</em> use it for other kinds of processing. 
+
+<p> The event-driven Processor is somewhat related to the old
     <em>Token</em>-oriented ``interform interpretor'' enshrined in
     <code>pia/src/java/crc/interform</code> -- not that it's a particularly
     good example. 
+
+<h3>PIA: Servlet and Apache</h3>
+
+<p> The choices for the PIA are Servlet (which seems pretty obvious), EJB, and
+    an Apache module.  There are two different choices within Servlet.
+
+<ol>
+  <li> The entire PIA (more specifically the Resolver) is a Servlet.  This
+       allows the PIA's own Agent name resolution and proxying to work
+       cleanly.  It reduces the parent server to a mere shell.
+
+  <li> Each Agent is a Servlet.  This gives up the Resolver unless you use the
+       PIA's own server, but has the potential to greatly clean up the
+       interface between the server portion of the PIA and the Agents, and
+       probably gets rid of a lot of junk on Transaction as well.
+</ol>
+
+<p> The best is probably a hybrid approach: the Resolver is a Servlet in its
+    own right, but delegates the actual response (<code>respond</code> method)
+    to <code>Agent</code>s that are <em>also</em> <code>Servlet</code>s.  This
+    gives the option of wrapping ordinary third-party <code>Servlet</code>s as
+    <code>Agent</code>s. 
+
+<p> An Apache module is most easily implemented using <code>mod_java</code>,
+    but any design should allow a C version of the PIA to be dropped in
+    instead. 
 
 <h2><a name="C-port">C Port</a></h2>
 
@@ -179,7 +227,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.5 1999-06-09 18:36:11 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.6 1999-06-11 23:29:59 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
