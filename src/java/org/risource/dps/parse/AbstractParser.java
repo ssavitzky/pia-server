@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.20 2000-08-30 19:55:04 steve Exp $
+//	$Id: AbstractParser.java,v 1.21 2000-09-20 00:39:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.20 2000-08-30 19:55:04 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.21 2000-09-20 00:39:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -462,29 +462,30 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected ActiveNode next;
 
   /** Holds the next text item. */
-  protected ActiveText nextText;
+  protected ActiveNode nextText;
 
   /** Holds the next unmatched end tag. */
   protected String nextEnd;
 
-  protected abstract ActiveText getText() throws IOException;
+  protected abstract ActiveNode getToken() throws IOException;
 
   /** Advance to the next ``token''. <p>
    *	
    *	The next ``token'' might be either text, in <code>nextText</code>, 
    *	an ordinary Node, in <code>next</code>, or an end tag, in 
-   *	<code>nextEnd</code>.  They are checked in that order. 
+   *	<code>nextEnd</code>.  They are checked in that order.  This allows
+   *	getToken one node's worth of lookahead.
    */
   protected ActiveNode nextToken() {
     ActiveNode n = null;
     if (nextText == null && next == null && nextEnd == null) try {
       buf.setLength(0);
-      nextText = getText();	// Try to get some text.
+      nextText = getToken();	// Try to get some text.
     } catch (IOException e) {
       return null;
     }
     if (nextText != null) {
-      // === here we check for an implicitly-required paragraph tag.
+      // === here we should check for an implicitly-required paragraph tag.
       n = nextText;
       nextText = null;
     } else if (next != null) {

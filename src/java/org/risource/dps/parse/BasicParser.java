@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.11 2000-07-24 16:56:06 steve Exp $
+//	$Id: BasicParser.java,v 1.12 2000-09-20 00:39:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.11 2000-07-24 16:56:06 steve Exp $
+ * @version $Id: BasicParser.java,v 1.12 2000-09-20 00:39:05 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -359,7 +359,7 @@ public class BasicParser extends AbstractParser {
    *
    * === This will eventually get split so we can detect space, etc. ===
    */
-  protected ActiveText getText() throws IOException {
+  protected ActiveNode getToken() throws IOException {
 
     while (eatText()) {
       if ((last == '&' && getEntity(strictEntities)) ||
@@ -368,7 +368,6 @@ public class BasicParser extends AbstractParser {
     }
     return (buf.length() > 0)? createActiveText(buf.toString(), false) : null;
   }
-
 
   /************************************************************************
   ** Construction:
