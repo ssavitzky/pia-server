@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.13 1999-04-07 23:22:21 steve Exp $
+// $Id: GenericAgent.java,v 1.14 1999-04-13 00:56:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -546,6 +546,14 @@ public class GenericAgent implements Agent, Registered, Serializable {
     return (type() == null)? null : Pia.instance().resolver().agent(type());
   }
 
+  /** 
+   * Test for whether a type agent has been specified.
+   */
+  public boolean typeAgentSpecified() {
+    if (type() != null && type().equals(name())) return false;
+    else return (type() != null);
+  }    
+
   /**
    * Return the agent's ``mount point'' in the PIA's URL hierarchy. 
    *	If never set, this will be "/".
@@ -1031,6 +1039,11 @@ public class GenericAgent implements Agent, Registered, Serializable {
     } else {
       path.push(Pia.instance().usrAgentsDir());
       if (!forWriting) path.push(Pia.instance().piaAgentsDir());
+      if (typeAgentSpecified()) {
+	// type agent is specified but hasn't started yet:
+	// return a stopgap, but don't cache it yet!
+	return path;
+      } 
     }
 
     if (!forWriting) documentFileList = path;
