@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.7 1999-04-23 00:21:37 steve Exp $
+# 	$Id: Makefile,v 1.8 1999-04-30 23:36:58 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -40,10 +40,11 @@ BASE_CLASSES = \
 ### These are the primitive handlers defined in basic.ts
 ###	Indented names are handlers for active sub-elements.
 PRIM_HANDLERS = \
+	bindHandler.java \
+	connectHandler.java \
 	defineHandler.java \
 	  actionHandler.java \
 	  valueHandler.java \
-	connectHandler.java \
 	expandHandler.java \
 	extractHandler.java \
 	headersHandler.java \

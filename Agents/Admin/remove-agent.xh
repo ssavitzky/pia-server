@@ -13,7 +13,7 @@
 
 <hr />
 
-<if><get name='FORM:agent'='t' />
+<if><get name='FORM:agent' />
 <then>
   <h3>&removed; removed<h3>
 </h3></h3></then><else>
@@ -29,5 +29,5 @@ Name:<select name='agent'>
 </form>
 
 
-<footer cvsid='$Id: remove-agent.xh,v 1.6 1999-04-27 23:53:27 wolff Exp $' />
+<footer cvsid='$Id: remove-agent.xh,v 1.7 1999-04-30 23:36:31 steve Exp $' />
 </body></html>

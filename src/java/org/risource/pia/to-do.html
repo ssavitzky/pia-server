@@ -27,14 +27,6 @@ See also:
 
 <h2>Main List</h2>
 <ol>
-  <li> <b>Bug</b> Fix Agent namespace operations <br>
-       AGENTS:agent messes up the agent namespace: needs to be AGENTS:agent.
-       The Tabular ops have to go through the namespace rather than the other
-       way around, and initialization from a table needs to do the same.  When
-       fixed, go into ActiveDoc and change (Tabular)agent to agent in two
-       places.
-       (1999-04-22) <br>
-
   <li> <b>Impr</b> Need per-agent mapping of extension to tagset. <br>
        It really needs to be possible to fully specify the mapping of file
        extension to tagset.  The present technique is kludgy.  In some cases
@@ -43,6 +35,8 @@ See also:
 
   <li> <b>Hole</b> Regexp and Jigsaw must go! (<b>critical</b>) <br>
        (1999-02-09) <br>
+       -- Jigsaw has been pared down to only what we need; RegExp is still a
+	  problem.
 
   <li> <b>Bug</b> Header parsing exception handling <br>
        In a response, parseInitializationString should set defaults instead of
@@ -58,15 +52,13 @@ See also:
        AGENTS: Resolver's agent table.  Initialize an agent with
        <code>&lt;set name=AGENTS:foo&gt;options&lt;/&gt;</code>.
        (1998-11-02)<br>
-
+       -- PIA (1999-03), AGENTS (1999-04-27)
+       
   <li> <b>Hole</b> Interface Cleanup <br>
        Make most attributes conform to get/set convention instead of the
        legacy perl convention.  Remove most convenience methods,
        e.g. the ones that set criteria, etc.
 
-  <li> <b>Bug</b> no namespace for all installed agents. <br>
-       (1998-10-12) <br>
-       
   <li> <b>Bug:</b> ProcessedContent doesn't do insertions. <br>
        Neither does its predecessor, InterFormContent.
        (1998-07-08) <br>
@@ -101,7 +93,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.7 1999-04-23 00:25:26 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.8 1999-04-30 23:38:02 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

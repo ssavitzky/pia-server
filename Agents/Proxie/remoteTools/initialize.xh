@@ -13,8 +13,8 @@
 <trans-control>
 <set entity='entity' name='pia'>http://&piaHOST;:&piaPORT;</set>
 <a href='&pia;/' target='_top'><img src='&pia;/Icon/pent24.gif' height='24' width='24' border='0' /></a>
-<expand>&AGENT:Toolbar:controls;</expand>
-<expand><get name='AGENT:History:controls' /></expand>
+<expand>&AGENTS:Toolbar:controls;</expand>
+<expand><get name='AGENTS:History:controls' /></expand>
 <!--  making this a link is actually useful: it gets you out of a frame.  -->
 <a href='&url;' target='_top'>&lt;URL:&url;&gt;</a>
 <hr />
@@ -29,5 +29,5 @@
   </dt><dd> <pre><protect markup='markup' result='result'>&AGENT:act-on;</protect></pre>
 </dd></dl>
 
-<footer cvsid='$Id: initialize.xh,v 1.5 1999-03-27 02:29:44 pgage Exp $' />
+<footer cvsid='$Id: initialize.xh,v 1.6 1999-04-30 23:36:42 steve Exp $' />
 </body></html>

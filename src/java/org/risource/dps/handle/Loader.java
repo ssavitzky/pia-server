@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	$Id: Loader.java,v 1.5 1999-04-23 00:21:36 steve Exp $
+//	$Id: Loader.java,v 1.6 1999-04-30 23:36:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,6 +57,7 @@ public class Loader {
   }
 
   static {
+    defHandle("bind", new bindHandler());
     defHandle("tagset", new tagsetHandler());
     defHandle("define", new defineHandler());
     /**/defHandle("action", new actionHandler());
@@ -72,6 +73,7 @@ public class Loader {
     defHandle("get", new getHandler());
     defHandle("include", new includeHandler());
     defHandle("logical", new logicalHandler());
+    defHandle("namespace", new namespaceHandler());
     defHandle("numeric", new numericHandler());
     defHandle("parse", new parseHandler());
     defHandle("protect", new protectHandler());

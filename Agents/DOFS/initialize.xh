@@ -7,9 +7,9 @@
 <!--  really, the only reason to have this init. file is the following:  -->
 <user-message>Initializing &AGENT:pathName;<if>
     <test exact='exact' match='&agentName;'>&agentType;</test>
-    <then>from &filePath; </then>
+    <then> from &filePath; </then>
     <else>(a &AGENT:type;) with root=&AGENT:root;</else></if></user-message>
 
 <hr />
-<short-footer cvsid='$Id: initialize.xh,v 1.5 1999-04-17 01:11:23 steve Exp $' />
+<short-footer cvsid='$Id: initialize.xh,v 1.6 1999-04-30 23:36:34 steve Exp $' />
 </body></html>

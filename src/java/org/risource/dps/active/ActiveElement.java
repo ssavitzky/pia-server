@@ -1,5 +1,5 @@
 ////// ActiveElement.java: Active Element interface
-//	$Id: ActiveElement.java,v 1.4 1999-04-07 23:20:57 steve Exp $
+//	$Id: ActiveElement.java,v 1.5 1999-04-30 23:36:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveElement.java,v 1.4 1999-04-07 23:20:57 steve Exp $
+ * @version $Id: ActiveElement.java,v 1.5 1999-04-30 23:36:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -46,7 +46,7 @@ public interface ActiveElement extends ActiveNode, Element {
   ************************************************************************/
 
   /** Convenience function: get an Attribute by name and return its value. */
-  public NodeList getAttributeValue(String name);
+  public ActiveNodeList getAttributeValue(String name);
 
   /** Convenience function: get an Attribute by name and return its value
    *	as a boolean

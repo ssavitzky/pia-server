@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.12 1999-04-23 00:22:04 steve Exp $
+//	$Id: ActiveDoc.java,v 1.13 1999-04-30 23:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,6 +38,7 @@ import java.net.URL;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
+import org.risource.dps.namespace.*;
 import org.w3c.dom.NodeList;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.active.ActiveNode;
@@ -55,7 +56,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.12 1999-04-23 00:22:04 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.13 1999-04-30 23:37:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -139,6 +140,7 @@ public class ActiveDoc extends TopProcessor {
   public void initializeNamespaceEntities() {
 
     define("PIA", Pia.instance().properties());
+    define("AGENTS", Pia.instance().resolver().getAgentTable());
     Transaction transaction = getTransaction();
     if (transaction != null) {
       define("TRANS", "TRANSACTION", transaction);
@@ -186,7 +188,7 @@ public class ActiveDoc extends TopProcessor {
 	String apath = transaction.getFeatureString("agent-path");
 	String atype = transaction.getFeatureString("agent-type");
 
-	define("TRANS-AGENT", (Tabular)agent);
+	define("TRANS-AGENT", (ActiveNode)agent);
 	define("transAgentName", aname);
 	define("transAgentType", atype);
 	define("transAgentPath", apath);
@@ -216,7 +218,7 @@ public class ActiveDoc extends TopProcessor {
     // Set these even if we retrieved an entity table from the 
     // transaction -- the agent is (necessarily) different      
 
-    define("AGENT", (Tabular)agent);
+    define("AGENT", (ActiveNode)agent);
     define("agentName", agent.name());
     define("agentType", agent.type());
     define("agentPath", agent.path());

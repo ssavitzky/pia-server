@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.17 1999-04-23 00:25:18 steve Exp $
+// $Id: GenericAgent.java,v 1.18 1999-04-30 23:37:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,6 +50,7 @@ import org.risource.pia.Authenticator;
 import org.risource.pia.Pia;
 import org.risource.pia.ContentOperationUnavailable;
 import org.risource.pia.FileAccess;
+import org.risource.pia.agent.ToAgent;
 
 import org.risource.content.ByteStreamContent;
 import org.risource.content.text.ProcessedContent;
@@ -61,7 +62,7 @@ import org.risource.ds.Criteria;
 import org.risource.ds.Tabular;
 import org.risource.ds.Registered;
 
-import org.risource.dps.Tagset;
+import org.risource.dps.*;
 import org.risource.dps.tagset.Loader;
 import org.risource.dps.process.ActiveDoc;
 import org.risource.dps.active.*;
@@ -87,6 +88,9 @@ import org.w3c.www.http.HTTP;
 public class GenericAgent extends BasicNamespace
   implements Agent, Registered, Serializable, Tabular {
   
+  /** Class name of GenericAgent. */
+  public static String genericAgentClassName = "org.risource.pia.GenericAgent";
+
   /** Standard option (entity) names. */
 
   public static String home_doc_dir_name = "home-dir";
@@ -236,6 +240,9 @@ public class GenericAgent extends BasicNamespace
   /** The Tagsets being used by this agent. */
   protected transient Table tagsets = null;
 
+  /** The Tagsets being used by this agent. */
+  protected transient Tagset defaultTagset = null;
+
   /** Load a tagset for this agent.  
    */
   public Tagset loadTagset(ActiveDoc proc, String name) {
@@ -263,7 +270,7 @@ public class GenericAgent extends BasicNamespace
   }
 
   /** Make sure that the tagset gets fetched again. */
-  public void invalidateTagset() { tagsets = null; }
+  public void invalidateTagset() { tagsets = null; defaultTagset = null; }
 
   /** Make sure that all tagsets get fetched again. */
   public void invalidateAllTagsets() { piaXHTMLtagset = null; tagsets = null; }
@@ -272,7 +279,50 @@ public class GenericAgent extends BasicNamespace
   ** Initialization:
   ************************************************************************/
 
+  /** Flag that says whether initialization has been done. */
   protected boolean initialized = false;
+
+  /** Flag that says whether to run the initialization file. */
+  public boolean runInitFile = true;
+
+  /**
+   * Set options with a hash table (typically a form).
+   *	Ignore the <code>agent</code> option, which comes from the fact
+   *	that most install forms use it in place of <code>name</code>.
+   */
+  public void parseOptions(Tabular hash){
+    if (hash == null) return;
+    Enumeration e = hash.keys();
+    while( e.hasMoreElements() ){
+      Object keyObj = e.nextElement();
+      String key = (String)keyObj;
+      // Ignore "agent", which is replaced by "name".
+      if (key.equalsIgnoreCase("agent")) continue;
+      Object v = hash.get(key);
+      String value = (v instanceof ActiveNode)
+	? ((ActiveNode)v).getNodeValue() : hash.get( key ).toString();
+      put(key, value);
+    }
+  }
+
+  /** 
+   * Load entities from an Input
+   */
+  public void loadFrom(Input in, Context cxt, Tabular opts) {
+    ActiveDoc env = ActiveDoc.getActiveDoc(cxt);
+    runInitFile = false;
+
+    parseOptions(opts);
+    initialize();
+
+    ToAgent loader = new ToAgent(this);
+    loader.setContext(cxt);
+    Tagset ts = loadTagset(env, "xhtml");
+    Processor p = env.subDocument(in, cxt, loader, ts);
+    // It's up to the subDocument processor to switch tagsets.
+    p = p.subProcess(in, loader, this);
+    p.processChildren();
+  }
 
   /** Initialization.  Subclasses may override, but this should rarely
    *	be necessary.  If they <em>do</em> override this method it is
@@ -297,7 +347,6 @@ public class GenericAgent extends BasicNamespace
     //	  but we need a processor in order to load tagsets.
     String url = pathName() + "/" + "initialize.xh";
     Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
-
     ActiveDoc   proc = null;
     Resolver    res = Pia.instance().resolver();
 
@@ -307,25 +356,40 @@ public class GenericAgent extends BasicNamespace
       proc = makeDPSProcessor(req, res);
     }
 
+    // At this point, we have all our options and files. 
+    if (Pia.verbose()) dumpDebugInformation();
+
+    initialized = true;
+    if (runInitFile) runInitFile();
+  }
+
+  /** Run the initialization file. 
+   *
+   * <p> Clears the <code>runInitFile</code> flag, so that the file will not
+   *     be run again when the Agent is loaded from XML.  The initialization
+   *     file may set the corresponding attribute, which will force the file
+   *     to be re-run whenever the Agent is re-initialized.
+   */
+  public void runInitFile() {
+    runInitFile = false;
+
     /* Run the initialization in the current thread to ensure that 
      * agents are initialized in the correct order and that no requests
      * are made on partially-initialized agents.
      */
     String    fn = findDocument("initialize");
 
-    // At this point, we have all our options and files. 
-    if (Pia.verbose()) dumpDebugInformation();
-
     if (fn != null) try {
+      String url = pathName() + "/" + "initialize";
       if (RESOLVE_INITIALIZE) {	
 	// We can force initialization to use the resolver if necessary.
 	createRequest("GET", url, (String)null, null );
       } else {
-	// Run an XHTML initialization file.
-	if (proc == null) {
-	  // make a new processor if we haven't done so already
-	  proc = makeDPSProcessor(req, res);
-	}
+	// Run an XHTML initialization file.  Fake the request.
+	Transaction req = makeRequest(machine(), "GET", url,
+				      (String)null, null);
+	Resolver    res = Pia.instance().resolver();
+	ActiveDoc   proc = makeDPSProcessor(req, res);
 	org.risource.dps.Parser p = proc.getTagset().createParser();
 	p.setReader(new FileReader(fn));
 	proc.setOutput(new org.risource.dps.output.DiscardOutput());
@@ -334,12 +398,11 @@ public class GenericAgent extends BasicNamespace
 	proc.run();
       }
     } catch (Exception e) {
-      System.err.println("Exception while initializing " + name());
+      System.err.println("Exception in " + fn + " initializing " + name());
       System.err.println(e.toString());
       e.printStackTrace();
       System.err.println("PIA recovering; " + name() + " incomplete.");
     }
-    initialized = true;
   }
 
   /** Make sure that directories get checked again. */
@@ -848,21 +911,16 @@ public class GenericAgent extends BasicNamespace
   ** Tabular interface: 
   ************************************************************************/
 
-  /** Retrieve an item by name.  Returns null if no such item
-   *	exists.  Accepts items in other agents (ugly). */
+  /** Retrieve an item by name.  Returns null if no such item exists.  */
   public synchronized Object get(String name) {
-    int i = name.indexOf(":");
-    if (i > 0) {
-      String aname = name.substring(0, i);
-      name = name.substring(i+1);
-      Agent a = Pia.instance().resolver().agentaname);
-      return (a == null)? null : ((GenericAgent)a).get(name);
-    }
+    ActiveNode binding = bindings.getBinding(name);
+    if (binding == null || !(binding instanceof EntityIndirect)) 
+      return binding;
 
     if (name.equals("criteria")) {
 	return (criteria() == null)? "" : criteria().toString();
     }
-    return properties.get(name.toLowerCase());
+    return properties.get(name);
   }
 
   /** Returns an enumeration of the table keys */
@@ -877,7 +935,19 @@ public class GenericAgent extends BasicNamespace
    */
   public synchronized void put(String name, Object value) {
     if (name == null) return;
-    name = name.toLowerCase();
+    ActiveNode binding = bindings.getBinding(name);
+    if (binding != null	&& binding instanceof EntityIndirect)
+      putProperty(name, value);
+    else if (value instanceof ActiveNode) 
+      setBinding(name, (ActiveNode)value);
+    else if (value instanceof ActiveNodeList) 
+      setValueNodes(null, name, (ActiveNodeList)value);
+    else 
+      putProperty(name, value);
+
+  }
+
+  protected void putProperty(String name, Object value) {
     if (value != null) 
       properties.put(name, value);
     else
@@ -903,25 +973,6 @@ public class GenericAgent extends BasicNamespace
     }
   }
 
-  /**
-   * Set options with a hash table (typically a form).
-   *	Ignore the <code>agent</code> option, which comes from the fact
-   *	that most install forms use it in place of <code>name</code>.
-   *	=== eventually need agent= path+name ===
-   */
-  public void parseOptions(Tabular hash){
-    if (hash == null) return;
-    Enumeration e = hash.keys();
-    while( e.hasMoreElements() ){
-      Object keyObj = e.nextElement();
-      String key = (String)keyObj;
-      // Ignore "agent", which is replaced by "name".
-      if (key.equalsIgnoreCase("agent")) continue;
-      String value = hash.get( key ).toString();
-      put(key, value);
-    }
-  }
-
   /** Retrieve an attribute by name, returning its value as a String. */
   public String getObjectString(String name) {
     Object o = get(name);
@@ -933,15 +984,29 @@ public class GenericAgent extends BasicNamespace
   ** Namespace Interface:
   ************************************************************************/
 
+  protected void indirect(String name) {
+    addBinding(name, new EntityIndirect(name, this, this));
+  }
+
+  protected void indirect(String name, boolean entityAlso) {
+    setAttributeNode(new AttrIndirect(name, this, this));
+    if (entityAlso)
+      addBinding(name, new EntityIndirect(name, this, this, name));
+  }
+
   public void initializeEntities() {
-    addBinding("name", new EntityIndirect("name", this, this));
-    addBinding("path", new EntityIndirect("path", this, this));
-    addBinding("type", new EntityIndirect("type", this, this));
-    addBinding("pathName", new EntityIndirect("pathName", this, this));
-    addBinding("criteria", new EntityIndirect("criteria", this, this));
-    addBinding("act-on", new EntityIndirect("act-on", this, this));
-    addBinding("handle", new EntityIndirect("handle", this, this));
-    addBinding("authentication", new EntityIndirect("authentication", this, this));
+    indirect("name", true);
+    indirect("path", true);
+    indirect("type", true);
+    indirect("class", true);
+    indirect("criteria");
+    indirect("act-on");
+    indirect("handle");
+    indirect("authentication");
+    indirect("home-dir", true);
+    indirect("data-dir", true);
+    indirect("user-dir", true);
+    indirect("pathName", true);
   }
 
   /** Replace an existing binding. 
@@ -950,7 +1015,7 @@ public class GenericAgent extends BasicNamespace
   protected void replaceBinding(String name, ActiveNode old,
 				ActiveNode binding) {
     if (old instanceof EntityIndirect) {
-      old.setValueNodes(null, binding.getValueNodes(null));
+      ((EntityIndirect)old).setValueNodes(binding.getValueNodes(null));
     } else {
       super.replaceBinding(name, old, binding);
     }
@@ -1463,10 +1528,14 @@ public class GenericAgent extends BasicNamespace
   /* name and type should be set latter */
   public GenericAgent(){
     this("GenericAgent", "GenericAgent");
+    String cname = getClass().getName();
+    if (!cname.equals(genericAgentClassName)) put("class", cname);
   }
 
   public GenericAgent(String name, String type){
     super("AGENT", name);
+    String cname = getClass().getName();
+    if (!cname.equals(genericAgentClassName)) put("class", cname);
     
     fileTable = new Table();
     initializeEntities();
@@ -1479,9 +1548,3 @@ public class GenericAgent extends BasicNamespace
   }
 
 }
-
-
-
-
-
-

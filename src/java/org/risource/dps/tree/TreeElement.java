@@ -1,5 +1,5 @@
 ////// TreeElement.java -- implementation of ActiveElement
-//	$Id: TreeElement.java,v 1.2 1999-04-23 00:22:20 steve Exp $
+//	$Id: TreeElement.java,v 1.3 1999-04-30 23:37:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeElement.java,v 1.2 1999-04-23 00:22:20 steve Exp $
+ * @version $Id: TreeElement.java,v 1.3 1999-04-30 23:37:38 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -228,7 +228,7 @@ public class TreeElement extends TreeNode implements ActiveElement
   }
 
   /** Convenience function: get an Attribute by name and return its value. */
-  public NodeList getAttributeValue(String name) {
+  public ActiveNodeList getAttributeValue(String name) {
     ActiveAttr attr = getActiveAttr(name);
     return (attr == null)? null : attr.getValueNodes(null);
   }
@@ -237,8 +237,16 @@ public class TreeElement extends TreeNode implements ActiveElement
     return org.risource.dps.util.Test.trueValue(getActiveAttr(name));
   }
 
+  /** Convenience function: change an attribute's value. 
+   *	Carefully avoids replacing an old attribute binding by a new one,
+   *	since the attribute may be special in some way.
+   */
   public void setAttributeValue(String name, ActiveNodeList value) {
-    setAttributeNode(new TreeAttr(name, value));
+    ActiveAttr old = getActiveAttr(name);
+    // === at some point we may want to make sure attr is not inherited
+    // === from the DTD.
+    if (old == null) setAttributeNode(new TreeAttr(name, value));
+    else old.setValueNodes(null, value);
   }
 
   public void setAttributeValue(String name, ActiveNode value) {
@@ -479,7 +487,7 @@ public class TreeElement extends TreeNode implements ActiveElement
     }
     if (hasEmptyDelimiter()) s += " /";
     s += ">";
-    if (!mixedContent && hasChildNodes()) s += "\n";
+    // if (!mixedContent && hasChildNodes()) s += "\n";
     return s;
   }
 
@@ -488,7 +496,15 @@ public class TreeElement extends TreeNode implements ActiveElement
    *	with special significance, such as ampersand.
    */
   public String contentString() {
-    return (getChildNodes() == null)? "" : getChildNodes().toString();
+    if (!mixedContent && hasChildNodes()) {
+      String s = "\n";
+      for (Node n = getFirstChild(); n != null; n = n.getNextSibling()) {
+	s += "  " + n.toString() + "\n";
+      }
+      return s;
+    } else {
+      return (getChildNodes() == null)? "" : getChildNodes().toString();
+    }
   }
 
   /** Return the String equivalent of the Token's end tag (for an element)
@@ -496,8 +512,7 @@ public class TreeElement extends TreeNode implements ActiveElement
    */
   public String endString() {
     if (implicitEnd() || isEmptyElement()) return "";
-    else return ((mixedContent? "" : "\n")
-		 + "</" + (nodeName == null ? "" : nodeName) + ">");
+    else return "</" + (nodeName == null ? "" : nodeName) + ">";
   }
 
   /** Convert the elment to a String in external form..

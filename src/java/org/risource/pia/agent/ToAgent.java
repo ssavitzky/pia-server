@@ -1,5 +1,4 @@
-////// ToNodeList.java: Token output Stream to node list
-//	$Id: ToNodeList.java,v 1.5 1999-04-30 23:37:17 steve Exp $
+////// ToAgent.java: Token output Stream to Agent
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -22,81 +21,57 @@
 */
 
 
-package org.risource.dps.output;
+package org.risource.pia.agent;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
+import org.risource.dps.output.ToNamespace;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.namespace.BasicNamespace;
+
+import org.risource.pia.*;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
-
 /**
- * Output to an (active) NodeList.<p>
+ * Output to an Agent.
  *
- * @version $Id: ToNodeList.java,v 1.5 1999-04-30 23:37:17 steve Exp $
+ * <p>	This class is used to construct an Agent, and in particular a
+ *	GenericAgent.
+ *
+ * @version $Id: ToAgent.java,v 1.1 1999-04-30 23:38:08 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.w3c.dom.NodeList
+ * @see org.risource.pia.Agent
+ * @see org.risource.pia.GenericAgent
  */
-public class ToNodeList extends ActiveOutput implements Output {
+public class ToAgent extends ToNamespace {
 
   /************************************************************************
   ** State:
   ************************************************************************/
 
-  protected TreeNodeList list = new TreeNodeList();
+  protected Agent agent = null;
 
   /************************************************************************
-  ** Methods:
+  ** Access Methods:
   ************************************************************************/
 
-  public ActiveNodeList getList() { return list; }
-  public void clearList() { list = new TreeNodeList(); }
+  /** Get the Agent under construction. */
+  public Agent getAgent() { return agent; }
 
-  public void putNode(Node aNode) {
-    if (depth == 0) {
-      list.append(aNode);
-    } else {
-      super.putNode(aNode);
-    }
-  }
-
-  public void startNode(Node aNode) {
-    Node p = aNode.getParentNode();
-    if (active == p && active != null) {	// already a child.  descend.
-      if (p != null) descend();
-      setNode(aNode);
-      return;
-    }
-    if (p != null || aNode.hasChildNodes()) {
-      aNode = Copy.copyNodeAsActive(aNode);
-    }
-    appendNode(aNode, active);
-    descend();
-    setNode(aNode);
-  }
-
-  public Node toParent() {
-    if (depth != 1) return super.toParent();
-    setNode((Node)null);
-    depth--;
-    atFirst = false;
-    return active;
-  }
-
-  protected void appendNode(Node aNode, Node aParent) {
-    if (depth == 0)  	list.append(aNode); 
-    else 		Copy.appendNode(aNode, aParent);
-  }
 
   /************************************************************************
   ** Construction:
   ************************************************************************/
-  public ToNodeList() {
+  public ToAgent() {
+    this(new GenericAgent());
+  }
+
+  public ToAgent(Agent a) {
+    super(a);
+    agent = a;
   }
 
 }

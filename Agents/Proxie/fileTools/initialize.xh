@@ -6,12 +6,12 @@
 
 <user-message>Initializing &agentName; from &filePath;</user-message>
 <set name='AGENT:criteria'>response agent-response html</set>
-<set name='AGENT:act-on'><protect><if><get agent='agent' name='hidden' /><else>
+<set name='AGENT:act-on'><protect><if><get name='AGENT:hidden' /><else>
 <trans-control>
-<set entity='entity' name='pia'>http://&piaHOST;:&piaPORT;</set>
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
 <a href='&pia;/' target='_top'><img src='&pia;/Icon/pia24.gif' height='24' width='43' border='0' /></a>
-<expand>&AGENT:Toolbar:controls;</expand>
-<expand><get name='AGENT:History:controls' /></expand>
+<expand>&AGENTS:Toolbar:controls;</expand>
+<expand><get name='AGENTS:History:controls' /></expand>
 ( <if><test not='not' exact='exact' match='&transAgentType;'>&transAgentName;</test>
     <then><a href='&pia;/&transAgentType;'>&transAgentType;</a>
           <a href='&pia;/&transAgentType;/'> / </a></then>
@@ -30,5 +30,5 @@
   </dt><dd> <pre><protect markup='markup' result='result'>&AGENT:act-on;</protect></pre>
 </dd></dl>
 
-<footer cvsid='$Id: initialize.xh,v 1.5 1999-04-02 01:04:26 pgage Exp $' />
+<footer cvsid='$Id: initialize.xh,v 1.6 1999-04-30 23:36:40 steve Exp $' />
 </body></html>

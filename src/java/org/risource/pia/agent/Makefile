@@ -1,5 +1,5 @@
 ###### pia/agent/Makefile:	Agent handlers and related classes
-#	$Id: Makefile,v 1.4 1999-03-23 23:32:42 steve Exp $
+#	$Id: Makefile,v 1.5 1999-04-30 23:38:07 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,7 +27,8 @@ TOPDIR=../../../..
 
 OTHER = \
 	AgentMachine.java \
-	AgentInstallException.java
+	AgentInstallException.java \
+	ToAgent.java
 
 AGENTS = \
 	Admin.java \
@@ -38,6 +39,7 @@ AGENTS = \
 	Camera.java
 
 HANDLERS = \
+	AgentBuilder.java \
 	agentHome.java \
 	agentInstall.java \
 	agentRemove.java \

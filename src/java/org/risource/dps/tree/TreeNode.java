@@ -1,5 +1,5 @@
 // TreeNode.java
-// $Id: TreeNode.java,v 1.3 1999-04-23 00:22:25 steve Exp $
+// $Id: TreeNode.java,v 1.4 1999-04-30 23:37:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -303,13 +303,13 @@ public class TreeNode implements ActiveNode, Serializable {
   }
 
   /** Append a new child.
-   *	Can be more efficient than <code>insertBefore()</code>
+   *	Calls addChild to do the actual append.
    */
   public Node appendChild(Node newChild) {
     if (newChild == null) return null;
-    if (newChild.getParentNode() == this) return newChild;
-    if (newChild.getParentNode() != null) newChild = newChild.cloneNode(true);
-    doInsert((TreeNode)newChild, null);
+    if( !(newChild instanceof TreeNode) )
+      throw new DPSException(DPSException.NOT_ACTIVE_NODE_ERR);
+    addChild((ActiveNode) newChild);
     return newChild;
   }
 

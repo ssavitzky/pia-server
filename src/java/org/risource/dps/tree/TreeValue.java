@@ -1,5 +1,5 @@
 // TreeValue.java
-// $Id: TreeValue.java,v 1.3 1999-04-23 00:22:27 steve Exp $
+// $Id: TreeValue.java,v 1.4 1999-04-30 23:37:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -149,14 +149,14 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
 
   public TreeValue(short type, String name, ActiveNodeList v) {
     this(type, name);
-    setValueNodes( v );
+    if (v != null) setValueNodes( v );
   }
 
   /** Construct a node with given data and handler. */
   public TreeValue(short type, String name, ActiveNodeList value,
 		   Handler handler) {
     super(type, name, handler);
-    setValueNodes(value);
+    if (value != null) setValueNodes(value);
   }
 
   /**

@@ -1,5 +1,5 @@
 ////// namespaceHandler.java: <namespace> Handler implementation
-//	$Id: namespaceHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
+//	$Id: namespaceHandler.java,v 1.6 1999-04-30 23:37:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,13 +29,17 @@ import org.w3c.dom.NodeList;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.tree.TreeAttrList;
+import org.risource.dps.namespace.*;
+import org.risource.dps.output.ToNamespace;
 
 /**
- * Handler for &lt;namespace&gt;....&lt;/&gt;  <p>
+ * Handler for &lt;namespace&gt;....&lt;/&gt; 
  *
- *	
+ * <p>	Expand the content in a context that contains a new local namespace. 
+ *	Return the namespace as the result. 
  *
- * @version $Id: namespaceHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
+ * @version $Id: namespaceHandler.java,v 1.6 1999-04-30 23:37:03 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -46,9 +50,37 @@ public class namespaceHandler extends GenericHandler {
   ************************************************************************/
 
   /** Action for &lt;namespace&gt; node. */
-  public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, ActiveNodeList content) {
-    unimplemented(in, cxt); // do the work
+  public void action(Input in, Context cxt, Output out) {
+    ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
+    if (atts == null) atts = new TreeAttrList();
+    String name = atts.getAttribute("name");
+    if (name != null) name = name.trim();
+    boolean pass = atts.hasTrueAttribute("pass");
+
+    Namespace ns = makeNamespace(cxt, name, atts);
+    ToNamespace loader = new ToNamespace(ns);
+    loader.setContext(cxt);
+    if (pass) loader.setBypass(out);
+    Processor p = cxt.subProcess(in, loader, ns);
+    p.processChildren();
+    ActiveNode result = finish(cxt, ns, atts);
+    if (result != null) out.putNode(result);
+  }
+
+  /** Construct the namespace.  Specialized subclasses may override this. */
+  protected Namespace makeNamespace(Context cxt, String name,
+				    ActiveAttrList atts) {
+    return new BasicNamespace(name);
+  }
+
+  /** Perform any necessary cleanup or initialization.  Return the namespace
+   *	as the result, unless the <code>hide</code> attribute is present.
+   *	Specialized subclasses may need to override this.
+   */
+  protected ActiveNode finish(Context cxt, Namespace ns, ActiveAttrList atts) {
+    if (atts.hasTrueAttribute("hide") ||
+	atts.hasTrueAttribute("pass")) return null;
+    return (ActiveNode)ns;
   }
 
   /************************************************************************

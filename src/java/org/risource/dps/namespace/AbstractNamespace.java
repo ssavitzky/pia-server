@@ -1,5 +1,5 @@
 ////// AbstractNamespace.java: Node Lookup Table
-//	$Id: AbstractNamespace.java,v 1.1 1999-04-23 00:17:05 steve Exp $
+//	$Id: AbstractNamespace.java,v 1.2 1999-04-30 23:37:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: AbstractNamespace.java,v 1.1 1999-04-23 00:17:05 steve Exp $
+ * @version $Id: AbstractNamespace.java,v 1.2 1999-04-30 23:37:05 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -213,6 +213,55 @@ public abstract class AbstractNamespace extends TreeGeneric
 
   public ActiveNodeList getValueNodes(Context cxt) {
     return new TreeNodeList((ActiveNode)this);
+  }
+
+  /************************************************************************
+  ** Presentation:
+  ************************************************************************/
+
+  /** Return the String equivalent of the Token's start tag (for an element)
+   *	or the part that comes before the <code>data()</code>.  Special
+   *	hackery for wrapping excessively-long attribute lists. 
+   */
+  public String startString() {
+    String s = "<" + (nodeName == null ? "" : nodeName);
+    ActiveAttrList attrs = getAttrList();
+    int margin = 3 + nodeName.length();
+    int col = margin; 
+    if (attrs != null && attrs.getLength() > 0) {
+      for (int i = 0; i < attrs.getLength(); ++i) {
+	ActiveAttr at = (ActiveAttr)attrs.asNodeList().activeItem(i);
+	if (!at.getSpecified() || at.getValueNodes() == null) continue;
+	String it = at.toString();
+	if (col + 1 + it.length() < 72) {
+	  s += " " + it;
+	  col += 1 + it.length();
+	} else {
+	  s += "\n";
+	  for (col = 0; col < margin; col++) s += " ";
+	  s += it;
+	  col += it.length();
+	}	    
+      }
+    }
+    if (getName() != null && getAttribute("name") == null) 
+      s += " name='" + getName() + "'";
+    if (hasEmptyDelimiter()) s += " /";
+    s += ">";
+    // if (!mixedContent && hasChildNodes()) s += "\n";
+    return s;
+  }
+
+  public String contentString() {
+    String s = "\n";
+    for (ActiveNode n = getFirstActive(); n != null; n = n.getNextActive()) {
+      EntityIndirect e =
+	(n instanceof EntityIndirect)? (EntityIndirect)n : null;
+      if (e != null && e.getValueNodes() == null) continue;
+      if (e != null && e.getAttrName() != null)      continue;
+      s += "  " + n.toString() + "\n";
+    }
+    return s;
   }
 
   /************************************************************************

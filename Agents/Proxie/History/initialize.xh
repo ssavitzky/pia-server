@@ -4,7 +4,7 @@
 </head><body>
 <h1>Initialize the &agentName; agent</h1>
 
-<user-message>Initializing &agentName; from &filePath;</user-message>
+<user-message>Initializing &AGENT:name; from &filePath;</user-message>
 <set name='AGENT:criteria'>response agent-response-</set>
 <user-message>&agentName; criteria: &AGENT:criteria;</user-message>
 
@@ -48,5 +48,5 @@
        the user's browser; that's up to the <a href='/remoteTools'>remoteTools</a> agent.
 </dd></dl>
 
-<footer cvsid='$Id: initialize.xh,v 1.6 1999-04-07 13:58:07 steve Exp $' />
+<footer cvsid='$Id: initialize.xh,v 1.7 1999-04-30 23:36:37 steve Exp $' />
 </body></html>

@@ -48,33 +48,33 @@ you get a generic <em><a href='index'>index</a></em> page.
 <h2><a name='naming'>Naming Conventions:</a></h2>
 <set name='name'><em>Agent</em></set>
 
-<p> An Agent name without a final slash is redirected to the Agent's
-``home page'' (usually <code>home.xh</code>).  With a final
-slash you will always go to a more-or-less generic index page.  A name of
-the form <a href='/&AGENT:name;~'>/&name;~</a> (i.e. appending a tilde to the
-Agent's name) will take you to the Agent's ``home page.''  In the 1-line index
-above, this link is 
-represented by the ``<code>~/</code>'' in front of the DOFS agent's name.  The
-generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
+<p> An Agent name without a final slash is redirected to the Agent's ``home
+page'' (usually <code>home.xh</code>).  With a final slash you will always go
+to a more-or-less generic index page.  A name of the form <a
+href='/&AGENT:name;~'>/&name;~</a> (i.e. appending a tilde to the Agent's
+name) will take you to the Agent's ``home page.''  In the 1-line index above,
+the generic index is linked from the ``<code>/</code>'' <em>after</em> the
+name.
 
 <dl>
   <dt> <a href='/&AGENT:name;'>/&name;</a>
   </dt><dd> Usually, the &name; agent's home page;, except that some agents may
        redirect this (for example, to their data directory).
   </dd><dt> <a href='/&AGENT:name;~'>/&name;~</a>
-  </dt><dd> The &name; agent's home page: <code>home.xh</code> in the agent's code
-       directory.
+  </dt><dd> The &name; agent's <em>real</em> home page: <code>home.xh</code>
+  in the agent's 
+  code directory.  This link works even if the home page is redirected.
   </dd><dt> <a href='/&AGENT:name;~/'>/&name;~/</a>
   </dt><dd> The &name; agent's ``generic'' index page.  Usually not very
        interesting, but occasionally useful if there are things the home page
        leaves out.
   </dd><dt> <a href='/~&AGENT:name;'>/~&name;</a>
-  </dt><dd> The home page of the &name; agent's data directory, (typically
-       <code>index.html</code>) or a generic directory listing.
+  </dt><dd> The home page of the &name; agent's data directory (typically
+       <code>index.html</code>), or a generic directory listing.
   </dd><dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
   </dt><dd> A generic listing of the &name; agent's data directory.
 </dd></dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.7 1999-03-27 02:29:20 pgage Exp $' />
+<footer cvsid='$Id: home.xh,v 1.8 1999-04-30 23:36:30 steve Exp $' />
 </p></body></html>

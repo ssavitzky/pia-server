@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.6 1999-04-23 00:22:40 steve Exp $
+//	$Id: Index.java,v 1.7 1999-04-30 23:37:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.6 1999-04-23 00:22:40 steve Exp $
+ * @version $Id: Index.java,v 1.7 1999-04-30 23:37:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -76,27 +76,40 @@ public class Index {
     }
   }
 
-  /** Get a value using a name and namespace. 
+  /** Get a value from a Context using a name and namespace. 
    *
-   * @param c the context in which to do the lookup.
-   * @param space the name of the namespace (ending with colon!)
+   * @param c the Context in which to do the lookup.
+   * @param space the name of the Namespace.
    * @param name  the name within the namespace.  If name is null,
-   *	the entire namespace is returned.
+   *	the list of names is returned.
    */
   public static ActiveNodeList getValue(Context c, String space, String name) {
     Namespace ns = c.getNamespace(space);
+    return getValue(c, ns, name);
+  }
 
-    // If there's nothing there, return null.
+  /** Get a value from a Namespace using a Context and name. 
+   *
+   * <p> If the name contains a colon, getValue is called recursively.
+   *
+   * @param c the Context in which to compute the value
+   * @param ns the Namespace
+   * @param name  the name within the Namespace.  If name is null,
+   *	the list of names is returned.
+   */
+  public static ActiveNodeList getValue(Context c, Namespace ns, String name) {
     if (ns == null) return null;
-
-    // If we wanted the whole space, return its list of bindings.
     if (name == null) {
-      //if (ns instanceof ActiveNodeList) return (ActiveNodeList)ns;
-      //if (ns instanceof ActiveNode) return new TreeNodeList((ActiveNode)ns);
-      return new TreeNodeList(ns.getBindings());
+      return new TreeNodeList(ns.getNames());
     }
-    ActiveNode binding = ns.getBinding(name);
-    return (binding == null)? null : binding.getValueNodes(c);
+    int i = name.indexOf(':');
+    if (i < 0) return ns.getValueNodes(c, name);
+    String space = name.substring(0, i);
+    name = (i == name.length() - 1) ? null : name.substring(i+1);
+    ActiveNode n = ns.getBinding(space);
+    if (n == null) return null;
+    ns = n.asNamespace();
+    return (ns == null) ? null : getValue(c, ns, name);
   }
 
   public static void setValue(Context c, String space, String name,
@@ -104,8 +117,10 @@ public class Index {
     Namespace ns = c.getNamespace(space);
 
     if (ns != null) {
+      //System.err.println("Setting " + name + " in '" + ns.getName() + ":'");
       ns.setValueNodes(c, name, value);
     } else {
+      System.err.println("No namespace found for '" + space + ":'");
       // If there's nothing there, make a namespace and populate it.
       BasicEntityTable ents = new BasicEntityTable(space);
       Tagset ts = c.getTopContext().getTagset();

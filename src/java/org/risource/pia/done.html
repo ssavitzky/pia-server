@@ -127,11 +127,35 @@ See also:
        initialization, and dates as presented by the History agent's hook.
        (1998-06-18) <br>
        -- Should add timezone and UTC time/date as well.
+
+  <li> 1999-04-27 <b>Bug</b> Fix Agent namespace operations <br>
+       AGENT:agent messes up the agent namespace: needs to be AGENTS:agent.
+       The Tabular ops have to go through the namespace rather than the other
+       way around, and initialization from a table needs to do the same.  When
+       fixed, go into ActiveDoc and change (Tabular)agent to agent in two
+       places.
+       (1999-04-22) <br>
+
+  <li> 1999-04-27 <b>Bug</b> no namespace for all installed agents. <br>
+       (1998-10-12) <br>
+       
+  <li> 1999-04-28 <b>Bug</b> AGENTS:foo:bar <br>
+       Still not working because Agent doesn't take it to the next level
+       anymore.  Should be done in Index instead.
+       (1999-04-27) <br>
+
+  <li> 1999-04-30 <b>Hole</b> Ability to save and restore Agents as XML <br>
+       Need to distinguish the initialization done at create time from that
+       done after read-in.  There should be an attribute that says whether to
+       read the init file.  Distinguish installation (file in agent directory)
+       from restart (file in user directory).
+       (1999-04-07) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.4 1999-04-23 00:25:25 steve Exp $</b><br>
+<b>$Id: done.html,v 1.5 1999-04-30 23:38:01 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

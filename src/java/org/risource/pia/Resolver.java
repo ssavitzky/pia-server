@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.6 1999-03-30 15:56:09 steve Exp $
+// $Id: Resolver.java,v 1.7 1999-04-30 23:37:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -22,6 +22,26 @@
 */
 
 
+package org.risource.pia;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.util.Enumeration;
+import java.util.Date;
+
+import java.net.URL;
+
+import org.risource.pia.Agent;
+import org.risource.pia.Transaction;
+import org.risource.util.Utilities;
+
+import org.risource.ds.Queue;
+import org.risource.ds.Table;
+import org.risource.ds.Tabular;
+import org.risource.ds.List;
+
+
 
 /**
  * A Resolver (i.e. an instance of PIA.Resolver) acts like a stack of
@@ -40,25 +60,6 @@
  * Approximately once per minute, it polls each Agent in its registry
  * to see whether it has any Crontab entries to run. <p>
  */
-
-package org.risource.pia;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import java.util.Enumeration;
-import java.util.Date;
-
-import java.net.URL;
-
-import org.risource.pia.Agent;
-import org.risource.pia.Transaction;
-import org.risource.util.Utilities;
-
-import org.risource.ds.Queue;
-import org.risource.ds.Table;
-import org.risource.ds.List;
-
 public class Resolver extends Thread {
   /**
    * Attribute index - a collection of agents by name.
@@ -184,10 +185,17 @@ public class Resolver extends Thread {
 
   /**
    * agents 
-   * @return agents
+   * @return Enumeration of all agents
    */
   public Enumeration agents(){
     return agentsByPathName.elements();
+  }
+
+  /** 
+   * Table of all agents.
+   */
+  public Tabular getAgentTable() {
+    return agentsByName;
   }
 
   /**

@@ -1,5 +1,5 @@
 // Dofs.java
-// $Id: Dofs.java,v 1.6 1999-04-23 00:25:28 steve Exp $
+// $Id: Dofs.java,v 1.7 1999-04-30 23:38:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -133,7 +133,7 @@ public class Dofs extends GenericAgent {
    * name and type needs to be set after this
    */
   public Dofs(){
-    super();
+    super("DOFS", "DOFS");
   }
 
   public Dofs(String name, String type){

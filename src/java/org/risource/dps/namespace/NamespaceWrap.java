@@ -1,5 +1,5 @@
 ////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	$Id: NamespaceWrap.java,v 1.2 1999-04-27 23:53:37 wolff Exp $
+//	$Id: NamespaceWrap.java,v 1.3 1999-04-30 23:37:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,7 @@ import org.risource.ds.Tabular;
  * ===	The implementation is crude, and will probably want to be revisited. ===
  * ===	We may want to insist that NamespaceWrap implement Entity.
  *
- * @version $Id: NamespaceWrap.java,v 1.2 1999-04-27 23:53:37 wolff Exp $
+ * @version $Id: NamespaceWrap.java,v 1.3 1999-04-30 23:37:10 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
@@ -202,10 +202,17 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
   ** ActiveNode operations:
   ************************************************************************/
 
+  /** contentString has to explicitly iterate over the bindings because
+   *	they are generated on-the-fly rather than being the children of
+   *	the NamespaceWrap.
+   */
   public String contentString() {
-    ToString o = new ToString();
-    Copy.copyNodes(getBindings(), o);
-    return o.getString();
+    String s = "\n";
+    Input in = getBindings();
+    for (org.w3c.dom.Node n = in.getNode(); n != null; n = in.toNextSibling()) {
+      s += " " + n.toString() + "\n"; 
+    }
+    return s;
   }
 
   /************************************************************************

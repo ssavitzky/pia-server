@@ -21,17 +21,35 @@
 
 <h1>Admin-XHTML Tagset</h1>
 
-<doc> This tagset is local to the Admin agent.  It is worth noting that the
-      Admin agent also handles pages in the ``root'' directory, with no
-      agent; these are kept in the <code>Admin/ROOT</code> directory,
+<doc> This tagset is local to the Admin agent.
 </doc>
 
-<h2>Legacy operations</h2>
+<h2>Agent-specific tags</h2>
 
-<note author=steve> Note the use of <code>handler=org.risource.pia.agent.xxx</code> in
+<note author=steve> Note the use of
+   <code>handler=org.risource.pia.agent.xxx</code> in 
    the following definitions.  This puts agent-specific handlers where they
    belong, in the <code>org.risource.pia.agent</code> package.
 </note>
+
+
+<define element=AGENT handler='org.risource.pia.agent.AgentBuilder'
+        quoted='quoted'>
+  <doc> This element builds and installs an Agent object.
+  </doc>
+</define>
+
+<define element=agent-install handler=org.risource.pia.agent.agentInstall>
+</define>
+
+<define element=agent-remove empty handler=org.risource.pia.agent.agentRemove>
+   <define attribute=agent required>
+      <doc> specifies the name of the agent to be removed
+      </doc>
+   </define>
+</define>
+
+<h2>Legacy operations</h2>
 
 <define element=agent-home empty handler=org.risource.pia.agent.agentHome>
    <doc> Determine the home directory of an agent.  Prefixes the agent's name
@@ -55,13 +73,6 @@
    </define>
 </define>
 
-<define element=agent-remove empty handler=org.risource.pia.agent.agentRemove>
-   <define attribute=agent required>
-      <doc> specifies the name of the agent to be removed
-      </doc>
-   </define>
-</define>
-
 <define element=agent-save empty handler=org.risource.pia.agent.agentSave>
    <define attribute=file required>
       <doc> specifies the name of the file to be saved into.
@@ -80,9 +91,6 @@
       <doc> specifies that the agent is to be appended to an existing file.
       </doc>
    </define>
-</define>
-
-<define element=agent-install handler=org.risource.pia.agent.agentInstall>
 </define>
 
 <h2>Page Components</h2>

@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.10 1999-04-27 23:53:34 wolff Exp $
+//	$Id: defineHandler.java,v 1.11 1999-04-30 23:37:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,6 +29,7 @@ import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tagset.TagsetProcessor;
 import org.risource.dps.handle.Loader;
+import org.risource.dps.output.ToNamespace;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeExternal;
 
@@ -39,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.10 1999-04-27 23:53:34 wolff Exp $
+ * @version $Id: defineHandler.java,v 1.11 1999-04-30 23:37:01 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -284,8 +285,8 @@ class define_entity extends defineHandler {
     TagsetProcessor tproc = (top instanceof TagsetProcessor)
       ? (TagsetProcessor) top : null;
 
-      String nspace=null;
-      String nsname=name;
+    String nspace=null;
+    String nsname=name;
       
     if (hasNamespace(name)) {
       // Have to worry about namespace. 
@@ -294,7 +295,6 @@ class define_entity extends defineHandler {
       nsname=name.substring(i+1);
     }
     
-
     ActiveEntity ent = null;
     if (sysName != null) {
       // External 
@@ -324,12 +324,12 @@ class define_entity extends defineHandler {
       } else {
 	cxt.message(-1, nspace + " namespace does not exist!" , 0 , true);
       }
-      
-       
-
     } else if (tproc != null ) {
       // If we're in a tagset, define it there.
       tproc.getTagset().setBinding(name, ent);
+    } else if (out instanceof ToNamespace) {
+      // we are building a namespace.  Define it there.
+      ((ToNamespace)out).getNamespace().setBinding(name, ent);
     } else {
       // Otherwise, define it in the document's entity table. 
       top.setBinding(name, ent, false);

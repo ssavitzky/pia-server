@@ -1,5 +1,5 @@
 ////// TreeExternal.java -- Entity that refers to an external resource
-//	$Id: TreeExternal.java,v 1.2 1999-04-27 23:53:40 wolff Exp $
+//	$Id: TreeExternal.java,v 1.3 1999-04-30 23:37:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that refers to an external
  *	resource, for example, a file.
  *
- * @version $Id: TreeExternal.java,v 1.2 1999-04-27 23:53:40 wolff Exp $
+ * @version $Id: TreeExternal.java,v 1.3 1999-04-30 23:37:41 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -58,24 +58,22 @@ public class TreeExternal extends TreeEntity {
   protected Input wrappedInput = null;
 
   /** Retrieve the wrapped object. */
-  public Input getWrappedInput() { return wrappedInput; }
+  public Input getWrappedInput() 		{ return wrappedInput; }
 
   /** Set the wrapped object.  Wrap it, if possible. */
-  public void setWrappedInput(Input in) {
-    wrappedInput = in;
-  }
+  public void setWrappedInput(Input in) 	{ wrappedInput = in; }
 
-  /** The name of a resource to be input. */
-  protected String resourceName = null;
+  /** The name of the resource to be input.
+   *	This is the same as what the DOM calls the ``<code>systemId</code>''.
+   */
+  public String getResourceName() 		{ return systemId; }
+  public void setResourceName(String s) 	{ systemId = s; }
 
-  public String getResourceName() { return resourceName; }
-  public void setResourceName(String s) { resourceName = s; }
-
-  /** The content to send with the request packet. */
   protected NodeList requestContent = null;
 
-  public NodeList getRequestContent() { return requestContent; }
-  public void setRequestContent(NodeList v) { requestContent = v; }
+  /** The content to send with the request packet. */
+  public NodeList getRequestContent() 		{ return requestContent; }
+  public void setRequestContent(NodeList v) 	{ requestContent = v; }
 
   // === The following should really be protected and have proper accessors...
 
@@ -181,7 +179,7 @@ public class TreeExternal extends TreeEntity {
    */
   protected void locateResource(Context cxt) {
     TopContext top  = cxt.getTopContext();
-    String url = resourceName;
+    String url = getResourceName();
     if (url == null) return;
     if (url.indexOf(":") < 0 || url.startsWith("file:") ||
 	url.indexOf("/") >= 0 && url.indexOf(":") > url.indexOf("/")) {
@@ -252,7 +250,7 @@ public class TreeExternal extends TreeEntity {
     TopContext top  = cxt.getTopContext();
     outStream = null;
     try {
-      outStream = top.writeExternalResource(resourceName, append,
+      outStream = top.writeExternalResource(getResourceName(), append,
 					    createIfAbsent, doNotOverwrite);
     } catch (IOException e) {
       cxt.message(-2, e.getMessage(), 0, true);
@@ -298,7 +296,7 @@ public class TreeExternal extends TreeEntity {
   public Input getValueInput(Context cxt) { 
     context = cxt;
     // if (value != null) === only works if we check timestamps too
-    if (resourceName != null && wrappedInput == null) {
+    if (getResourceName() != null && wrappedInput == null) {
       return readResource(cxt);
     } else if (wrappedInput != null) {
       return getWrappedInput();
@@ -312,7 +310,7 @@ public class TreeExternal extends TreeEntity {
    */
   public Input fromValue(Context cxt){ 
     
-    if(resourceName != null) return getValueInput(cxt);
+    if(getResourceName() != null) return getValueInput(cxt);
     
     return super.fromValue(cxt);
     
@@ -321,7 +319,7 @@ public class TreeExternal extends TreeEntity {
   
   public Output getValueOutput(Context cxt) {
     context = cxt;
-    if (resourceName != null) {
+    if (getResourceName() != null) {
       return writeResource(cxt);
     } else {
       return null; // === getValueOutput should return wrapped Output
@@ -333,7 +331,7 @@ public class TreeExternal extends TreeEntity {
    * <p> There will be problems if this is called while reading the value.
    */
   public ActiveNodeList getValueNodes(Context cxt) {
-    if (resourceName == null && wrappedInput == null)
+    if (getResourceName() == null && wrappedInput == null)
       return super.getValueNodes(cxt);
     //Fetch data from resource 
     ToNodeList out = new ToNodeList();
@@ -370,7 +368,7 @@ public class TreeExternal extends TreeEntity {
    */
   public void setValueNodes(Context cxt, ActiveNodeList newValue) {
     super.setValueNodes(cxt, newValue);
-    if (resourceName != null) {
+    if (getResourceName() != null) {
       Output out = writeResource(cxt);
       Copy.copyNodes(newValue, out);
       closeOutput();
@@ -410,7 +408,6 @@ public class TreeExternal extends TreeEntity {
   /** Note that this has to do a shallow copy */
   public TreeExternal(TreeExternal e, boolean copyChildren) {
     super(e, copyChildren);
-    resourceName = e.getResourceName();
   }
 
   /** Construct a node with given name. */
@@ -431,7 +428,7 @@ public class TreeExternal extends TreeEntity {
    */
   public TreeExternal(String name, String rname, Context cxt) {
     super(name);
-    resourceName = rname;
+    setResourceName(rname);
     context = cxt;
   }
 
@@ -440,16 +437,16 @@ public class TreeExternal extends TreeEntity {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
-   *	copied, but children are not.
+  /** Return a shallow copy of this Node.
    */
   public ActiveNode shallowCopy() {
     return new TreeExternal(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Don't copy children because they
+   *	aren't really there: the value is obtained specially.
    */
   public ActiveNode deepCopy() {
-    return new TreeExternal(this, true);
+    return new TreeExternal(this, false);
   }
 }

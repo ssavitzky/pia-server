@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.8 1999-04-23 00:25:15 steve Exp $
+// $Id: Agent.java,v 1.9 1999-04-30 23:37:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,8 @@ import org.risource.pia.Resolver;
 import org.risource.pia.Content;
 
 import org.risource.dps.Namespace;
+import org.risource.dps.Input;
+import org.risource.dps.Context;
 
 import org.risource.ds.List;
 import org.risource.ds.Criteria;
@@ -66,6 +68,15 @@ public interface Agent extends Namespace {
    */
   public void initialize();
 
+  /**
+   * Set options with a hash table, typically an attribute list.
+   */
+  public void parseOptions(Tabular hash);
+
+  /** 
+   * Load entities from an Input
+   */
+  public void loadFrom(Input in, Context cxt, Tabular opts);
 
   /************************************************************
   ** Access to attributes:
@@ -168,12 +179,6 @@ public interface Agent extends Namespace {
    * may want to intercept a transaction meant for somewhere else.
    */
   public boolean handle(Transaction ts, Resolver res);
-
-  /**
-   * Set options with a hash table
-   *
-   */
-  public void parseOptions(Tabular hash);
 
   /************************************************************
   ** Directories:
