@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.10 2000-03-29 16:37:07 steve Exp $
+// $Id: SiteMachine.java,v 1.11 2000-06-15 01:24:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -112,7 +112,8 @@ public class SiteMachine extends Machine {
     if (contentType.startsWith("multipart/form-data")) {
       org.risource.pia.Pia.debug(this,"Making new MultipartFormContent");
 
-      c = new MultipartFormContent(Utilities.StringToByteArrayOutputStream(queryString));
+      c = new MultipartFormContent
+	(Utilities.StringToByteArrayOutputStream(queryString));
     } else {
       // Convert stream to String, taking care of nulls
       if (queryString == null) {
@@ -253,7 +254,8 @@ public class SiteMachine extends Machine {
    * Respond to a transaction with a stream of HTML generated using the DPS.
    */
   public boolean sendProcessedResponse (Document doc, String ctype, String tsn,
-					Transaction trans, Resolver res ) {
+					Transaction trans, Resolver res,
+					String pathinfo) {
     Transaction response = new HTTPResponse( trans, false );
 
     SiteDoc proc = new SiteDoc(doc, null, trans, response, res);
@@ -275,6 +277,8 @@ public class SiteMachine extends Machine {
     }
 
     Content c = new ProcessedContent(doc.getPath(), reader, proc);
+    if (pathinfo != null) proc.define("PATH_INFO", pathinfo);
+
     response.setStatus( 200 ); 
     response.setHeader("Server", Version.SERVER);
     response.setHeader("Last-Modified",
@@ -368,15 +372,26 @@ public class SiteMachine extends Machine {
     path = Utilities.urlDecode(path);
 
     // Locate the resource.  Fail if it can't be found.
-    Resource resource = site.locate(path, false, null);
+    StringBuffer tail = new StringBuffer();
+    Resource resource = site.locate(path, (short)-1, null, tail);
     if (resource == null) return false;
 
     // If the resource is hidden, we're not supposed to show it.
     if (resource.isHidden()) return false;
 
-    // If the request needs to be redirected, do so now.
-    String redirection = getRedirection(resource, path);
-    if (redirection != null) return sendRedirection(request, redirection);
+    // Check for non-null pathinfo.
+    String pathinfo = null;
+    if (tail.length() == 0) {
+      // No pathinfo, so check to see whether we need to redirect it.
+      String redirection = getRedirection(resource, path);
+      if (redirection != null) return sendRedirection(request, redirection);
+    } else {
+      // There's pathinfo.  Make sure the resource is a container.
+      //   We may eventually be able to flag random resources as able to 
+      //   handle pathinfo.  For the moment, we bomb out.
+      if (!resource.isContainer()) return false;
+      pathinfo = tail.toString();
+    }
 
     // See if the request needs to be authenticated.
     Agent auth = res.getAuthenticatorForResource(resource);
@@ -405,22 +420,29 @@ public class SiteMachine extends Machine {
     if (ctype == null) ctype = "text/plain";
 
     if( tsname == null || tsname.length() == 0 ) {
+      if (pathinfo != null) return false; // passive docs don't handle pathinfo
       return sendStreamResponse(doc, ctype, request, res);
     } else if (tsname.startsWith("!")) {
       try{
-	execCgi(ctype, request, doc.documentFile().getPath());
+	execCgi(ctype, request, doc.documentFile().getPath(), doc, pathinfo);
       }catch(PiaRuntimeException ee ){
 	throw ee;
       }
     } else if (tsname.startsWith("#")) {
       return false;
+    } else if (pathinfo != null && ! (doc instanceof Listing)) {
+      // not a Listing, hence not defined by IndexDocumentPath.
+      //   There's no good way yet to tell whether a random XML file 
+      //   can handle pathinfo, so we just bail out at this point.
+      return false;
     } else {
-      return sendProcessedResponse(doc, ctype, tsname, request, res);
+      return sendProcessedResponse(doc, ctype, tsname, request, res, pathinfo);
     }
     return true;
   }
 
-  protected void execCgi(String ctype, Transaction request, String file )
+  protected void execCgi(String ctype, Transaction request, String file,
+			 Document doc, String pathinfo)
        throws PiaRuntimeException
   {
     Runtime rt = Runtime.getRuntime();
@@ -429,7 +451,7 @@ public class SiteMachine extends Machine {
     OutputStream out;
 
     try{
-      String[] envp = setupEnvironment( request );
+      String[] envp = setupEnvironment(request, doc, pathinfo);
 
       process = rt.exec( file, envp );
 
@@ -455,11 +477,15 @@ public class SiteMachine extends Machine {
 
   /**
    * Prepare environment variables for CGI
+   *	See <a href="http://hoohoo.ncsa.uiuc.edu/cgi/env.html">
+   *	    http://hoohoo.ncsa.uiuc.edu/cgi/env.html</a> for a writeup
+   *	on the defined environment variables.
    */
-  protected String[] setupEnvironment(Transaction req){
+  protected String[] setupEnvironment(Transaction req, Document doc, 
+				      String pathinfo){
     String path = req.requestURL().getFile();
 
-    String[] envp = new String[9];
+    String[] envp = new String[10];
     envp[0]="CONTENT_TYPE=";
     envp[1]="CONTENT_LENGTH=";
     
@@ -477,7 +503,8 @@ public class SiteMachine extends Machine {
     if( req.method().equalsIgnoreCase( "GET" ) )
       envp[7] += req.queryString();
     
-    envp[8]="PATH_INFO="	+ path;
+    envp[8]="PATH_INFO="	+ pathinfo;
+    envp[9]="SCRIPT_NAME="	+ doc.getPath();
 
     for(int i = 0; i < envp.length; i++){
       Pia.debug(this, "The environment var -->" + envp[i]);

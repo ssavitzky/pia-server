@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.12 2000-06-02 23:17:33 steve Exp $
+//	$Id: AbstractResource.java,v 1.13 2000-06-15 01:24:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.12 2000-06-02 23:17:33 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.13 2000-06-15 01:24:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -445,10 +445,36 @@ public abstract class AbstractResource implements Resource {
    *	list will be used. 
    */
   public Resource locate(String path, boolean create, List extensions) {
+    return locate(path, (short)(create? 1 : 0), extensions, null);
+  }
+
+
+  /** Locate a Resource that corresponds to a (typically relative) path.
+   *
+   *<p>	This version of <code>locate</code> gives the option of returning
+   *	an ancestor of the requested document.
+   *
+   * @param path a path, relative to either this Resource or (if it starts 
+   *	with a slash) the root of the resource tree.
+   * @param code if positive, a missing resource will be created 
+   *	even if it does not exist; if negative, the closest existing ancestor 
+   *	will be returned.
+   * @param extensions a list of extensions to try.  If <em>empty</em>, no
+   *	extension processing will be done.  If <code>null</code>, the default
+   *	list will be used. 
+   */
+  public Resource locate(String path, short code, List extensions,
+			 StringBuffer tail) {
     if (path == null || path.length() == 0) return null;
 
     if (! isContainer()) { 
-      return getContainer().locate(path, create, extensions); }
+      if (code < 0) {
+	tail.append(path);
+	return this;
+      } else {
+	return getContainer().locate(path, code, extensions, tail); 
+      }
+    }
 
     if (extensions == null) extensions = getDefaultExtensions();
 
@@ -470,44 +496,52 @@ public abstract class AbstractResource implements Resource {
       if (path.equals("..")) return getContainer();
       //if (path.equals(".")) return this;
       Resource child = locateChild(path, extensions);
-      if (create && (child == null ||
-		     child instanceof Realizable 
-		     && !((Realizable)child).isReal()) ) {
+      if ((code > 0) && (child == null ||
+			 child instanceof Realizable 
+			 && !((Realizable)child).isReal()) ) {
 	// Try to create a virtual resource for the child. 
 	child = create(path, false, true, null);
 	if (child == null)
 	  getRoot().report(-2, getPath() + " failed to create child " + path,
 			   0, false);
+      } else if (code < 0 && child == null) {
+	// Return this container, the closest available ancestor.
+	tail.append(path);
+	return this;
       }
       return child;
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
       if (path.length() == 0) return getRoot();
       else if (ci > 0) return null;
-      else return getRoot().locate(path, create, extensions);
+      else return getRoot().locate(path, code, extensions, tail);
     } else if (ci >= 0 && (si < 0 || si > ci)) {
       return locatePrefixedResource(stripPrefix(path), getPrefix(path),
-				    create, extensions);
+				    code > 0, extensions);
     } else if (path.startsWith("../")) {
       path = path.substring(3);
       while (path.startsWith("/")) { path = path.substring(1); }
       if (path.length() == 0) return getContainer();
-      return getContainer().locate(path, create, extensions);
+      return getContainer().locate(path, code, extensions, tail);
     } else {			// Somewhere underneath.
       Resource child = getChild(path.substring(0, si));
-      if (child == null && create) {
+      if (child == null && code > 0) {
 	// Try to create a virtual container for the child. 
 	child = create(path.substring(0, si), true, true, null);
 	if (child == null)
 	  getRoot().report(-2, getPath() + " failed to create directory " 
 			   + path.substring(0, si), 0, false);
+      } else if (code < 0 && child == null) {
+	// Return this container, the closest available ancestor.
+	tail.append(path);
+	return this;
       }
       if (child == null) return null;
       path = path.substring(si+1);
       while (path.startsWith("/")) { path = path.substring(1); }
       // If the path is now empty, return the directory we just found
       if (path.length() == 0) return child;
-      return child.locate(path, create, extensions);
+      return child.locate(path, code, extensions, tail);
     }
   }
 

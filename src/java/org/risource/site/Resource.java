@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.7 2000-04-14 23:10:07 steve Exp $
+//	$Id: Resource.java,v 1.8 2000-06-15 01:24:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.7 2000-04-14 23:10:07 steve Exp $
+ * @version $Id: Resource.java,v 1.8 2000-06-15 01:24:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -300,6 +300,24 @@ public interface Resource {
    *	list will be used. 
    */
   public Resource locate(String path, boolean create, List extensions);
+
+  /** Locate a Resource that corresponds to a (typically relative) path.
+   *
+   *<p>	This version of <code>locate</code> gives the option of returning
+   *	an ancestor of the requested document.
+   *
+   * @param path a path, relative to either this Resource or (if it starts 
+   *	with a slash) the root of the resource tree.
+   * @param code if positive, a missing resource will be created 
+   *	even if it does not exist; if negative, an ancestor will be returned.
+   * @param extensions a list of extensions to try.  If <em>empty</em>, no
+   *	extension processing will be done.  If <code>null</code>, the default
+   *	list will be used. 
+   * @param tail a StringBuffer in which to return the remaining path segment
+   *	if <code>code</code> is negative.
+   */
+  public Resource locate(String path, short code, List extensions,
+			 StringBuffer tail);
 
   /************************************************************************
   ** Name and Type Mapping:
