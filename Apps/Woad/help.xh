@@ -297,6 +297,12 @@
     directory.
 </p>
 
+<h3><a name="notesByTime"><code>notesByTime.wi</code></a></h3>
+
+<p> This index contains links to all Woad annotations, sorted with the most
+    recent notes first. 
+</p>
+
 <h3><a name="sourcePathIndex"><code>sourcePathIndex.wi</code></a></h3>
 
 <p> This index contains <em>all</em> files and directories in the source,
@@ -394,5 +400,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.13 2000-08-26 00:36:40 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.14 2000-09-25 23:22:03 steve Exp $" />
 </p></body></html>

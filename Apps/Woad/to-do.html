@@ -5,23 +5,29 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Impr</b> link from a note to annotated page. <br />
+       noticeable especially in .sources, where there's an extraneous
+       <code>.notes</code> interpolated into the URL.
+       (20000-09-25)
+  </li>
   <li> <b>Goal</b> useable release by 9/30. <br />
        <ul>
 	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
-	      actual directories.  This would be trivial if done in the
-	      <code>.xcf</code> file, but we also have to tell the indexer.
+	      actual directories.
 	 </li>
 	 <li> Tagged source listings for non-SGML code files [either by
-	      shallow parsing, external taggers, or both]
+	      shallow parsing, external taggers, or both] (2000-09-22) and
+	      shallow parsing for SGML files.
 	 </li>
 	 <li> Cross-reference and chronological (newest-first) indices of
-	      notes 
+	      notes (2000-09-25)
 	 </li>
        </ul>
   </li>
   <li> <b>Hole</b> cross-references for words. <br />
        See hook: <code>TextParser.lookupXref(...)</code>.  Look it up in a
-       namespace (which could, e.g., be tied to a database).
+       namespace (which could, e.g., be tied to a database).    Linking can be
+       done in listing parser if there's a suitable namespace in context. 
        (2000-09-22)
   </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
@@ -34,9 +40,11 @@
        -- (2000-06-28: annotation listing done.  Ready for indexing and
 	  linking.)
   </li>
-  <li> <b>Impr</b> allow arbitrary source=target mapping using index <br />
-       either a separate file, or something in <code>dirIndex</code>.  Needed
-       for stuff like <code>/cgi-bin</code>
+  <li> <b>Impr</b> allow arbitrary source=target mapping <br />
+       either a .wi file, or a tagset included in woad-xhtml.  Needed
+       for stuff like <code>/cgi-bin</code>.  Cannot be done in
+       <code>.xcf</code> file because that results in undesirable aliasing.
+       Could be done with an included tagset.
        (2000-06-23)
   </li>
   <li> <b>Impr</b> use WOAD server as proxy <br />
@@ -296,5 +304,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.20 2000-09-23 00:52:58 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.21 2000-09-25 23:22:03 steve Exp $</b><br>
 </body></html>

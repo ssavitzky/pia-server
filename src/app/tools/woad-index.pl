@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.9 2000-08-30 19:56:19 steve Exp $
+#	$Id: woad-index.pl,v 1.10 2000-09-25 23:22:09 steve Exp $
 # Create WOAD index files.
 #
 
@@ -156,6 +156,7 @@ $id		= "($ids($idc*$ids)?)"; # pattern for C identifiers
 %fragments	= ();		# maps HTML fragment identifiers
 %identifiers	= ();		# maps identifiers in various languages
 %notes		= ();
+%notesByTime	= ();
 
 #   Keyword context maps:
 #
@@ -240,6 +241,8 @@ print STDERR "    abs: " . $roots[0] . "\n";
 open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
 indexDir($source, "/");
 close (PATHINDEX);
+
+indexWoadDir("$root$project", "/");
 
 globalIndices();
 
@@ -451,6 +454,8 @@ sub indexMarkupFile {
 
     my $path = $$entry{"path"};
 
+    $summary = '';		# return note summary in a global.
+
     open (FILE, $pf);
     while (<FILE>) {
 	++$line;
@@ -489,6 +494,18 @@ sub indexMarkupFile {
 	    indexDef($1, 'tag', $path, $line, "$element.$1", $_);
 	} elsif (/\s+function $id/) {	# PHP function
 	    indexDef($1, 'func', $path, $line, $1, $_);
+	}
+
+	if (/\<summary\>/) {
+	    $txt = $_;
+	    $start = $line;
+	    while (<FILE>) {
+		$txt .= $_;
+		++$line;
+		last if (/\<\/summary\>/i);
+	    }
+	    $txt =~ /\<summary\>(.*)\<\/summary\>/is;
+	    $summary = $1;
 	}
 
 	# === ought to be able to identify javadoc/tsdoc documentation ===
@@ -569,6 +586,91 @@ sub indexCodeFile {
     close FILE;
 }
 
+###### Index WOAD Annotation ##########################################
+
+### indexWoadDir(directoryName, pathFromNotes) 
+#	index a WOAD annotation directory.  This is easy because we're 
+#	only looking for annotation (.ww) files.
+#
+sub indexWoadDir {
+    my ($d, $path) = (@_);
+
+    # Open and read the directory.
+    if (! opendir(DIR, "$d")) {
+	print STDERR "cannot open directory $d\n";
+	return;
+    }
+    my @files = sort(readdir(DIR));
+    my @subdirs = ();
+
+    # === eventually compare dates on directory and dirIndex.wi
+    print STDERR "indexing notes in $d \n";
+
+    for (my $i= 0; $i < @files; ++$i) {
+	if ($files[$i] eq "." || $files[$i] eq "..") { next; }
+	if ($files[$i] =~ /\.wi$/) { next; }
+	if ($files[$i] =~ /\.ww$/) { indexWoadNote($files[$i], $path); }
+	elsif (-d "$d/$files[i]") { push (@subdirs, $files[$i]); }
+    }
+
+    # now do the subdirectories
+
+    if ($recursive) {
+	for (my $i = 0; $i < @subdirs; ++$i) { 
+	    my $dd = $subdirs[$i];
+	    indexWoadDir("$d/$dd", "$path/$dd" );
+	}
+    }
+}
+
+sub indexWoadNote {
+    my ($f, $path) = (@_);
+
+    my $indexme = 0;
+    my $type = '';		# type category
+    my $tdscr = '';		# type description
+    my $ftype = '';		# type from `file`
+
+    $f =~ /\.([^.]*)$/;		# extract extension.  
+    my $ext = $1;
+    my $basename = $f; 
+    $basename =~ s/\.([^.]*)$//;
+
+    my $absPath = "$root$project$path/$f";
+    $absPath =~ s@//@/@g;
+
+    my $woadPath = "$path/$f";
+    $woadPath =~ s@//@/@g;
+
+    #if (-d $absPath) { return 1; } # index directories
+    #if ($f !~ /\.ww$/) { return 0; } # otherwise, only look at notes
+
+    my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
+	$mtime, $ctime, $blksiz, $blks) = stat $absPath;
+
+    # file index entry
+    my %entry = ("name" => $f, "path" => $woadPath,
+		 "size" => $size, "mtime" => $mtime, "type" => "note");
+
+    $type = "markup";
+
+    # === indexMarkupFile is probably wrong for notes.
+    indexMarkupFile($absPath, \%entry);
+
+    # Convert entry to xml format:	=== this is probably wrong
+    my $ent = "<Wfile";
+    for (my @keys = keys(%entry), my $k = 0; $k < @keys; ++$k) {
+	$ent .= " " . $keys[$k] . '="' . $entry{$keys[$k]} . '"';
+    }
+    $ent .= "> $summary </Wfile>\n";
+
+    $notesByTime{"m$mtime"} .= $ent;
+    print STDERR $ent;
+
+    return 0;
+}
+
+
 ###### Create word index entry ########################################
 
 ### indexDef(word, context, file, lineNr, name, shortDef)
@@ -623,11 +725,13 @@ sub globalIndices {
     my ($context);
     my @entries;
     my ($entry, $i, $c);
+    my @keys;
+    my $k;
 
     # === LOSES HUGELY if there are empty lines in entries! ===
 
     mkdir ("$root$project$words", 0777);
-    for (my @keys = sort(keys(%defs)), my $k = 0; $k < @keys; ++$k) {
+    for (@keys = sort(keys(%defs)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
 	print STDERR "defs for $context -> $dir/defs.wi\n";
@@ -652,7 +756,7 @@ sub globalIndices {
 	    close (INDEX);
 	}
     }
-    for (my @keys = sort(keys(%docs)), my $k = 0; $k < @keys; ++$k) {
+    for (@keys = sort(keys(%docs)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
 	print STDERR "docs for $context -> $dir/docs.wi\n";
@@ -661,7 +765,7 @@ sub globalIndices {
 	print INDEX $docs{$context};
 	close (INDEX);
     }
-    for (my @keys = sort(keys(%uses)), my $k = 0; $k < @keys; ++$k) {
+    for (@keys = sort(keys(%uses)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
 	print STDERR "uses for $context -> $dir/uses.wi\n";
@@ -670,7 +774,14 @@ sub globalIndices {
 	print INDEX $uses{$context};
 	close (INDEX);
     }
-    
+
+    # Here we do the chronological notes index
+    open (INDEX, ">$root$project/notesByTime.wi");
+    @keys = sort(keys(%notesByTime));
+    for ($k = @keys - 1; $k >= 0; --$k) {
+	print INDEX $notesByTime{$keys[$k]};
+    }
+    close (INDEX);
 }
 
 
@@ -746,6 +857,6 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.9 2000-08-30 19:56:19 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.10 2000-09-25 23:22:09 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 

@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.6 2000-08-30 23:22:25 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.7 2000-09-25 23:22:03 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -110,6 +110,39 @@
   </action>
 </define>
 
+<define element="Wfile">
+  <doc> Woad File reference.
+  </doc>
+  <action>
+    <let name="path"><get name="attributes:path" /></let>
+    <tr> <td> <a href="&path;">&path;</a>
+	 </td>
+	 <td> <date><seconds><get name="attributes:mtime" /></seconds></date>
+	 </td>
+    <tr> <td colspan="2" bgcolor="yellow"> &nbsp;&nbsp;&nbsp;
+	      <logical op="or">
+	        <logical op="and">
+      		    <get name="attributes:title"/>
+      		    <strong><get name="attributes:title"/></strong>
+      	        </logical>
+	        <get name="content"/>
+	        <em><if> <get name="attributes:tdscr" />
+	      	    <then> <get name="attributes:tdscr" />
+	      	 	   <if> <test match="file">
+	      			  <get name="attributes:tdscr" /></test>
+	      			<test match="directory">
+	      			  <get name="attributes:tdscr" /></test>
+	      			<else>file</else>
+	      		   </if>
+	      	    </then>
+	      	    <else>(untitled note)</else>
+	        </if></em>
+	      </logical>
+	 </td>
+    </tr>
+  </action>
+</define>
+
 <define element="Def">
   <doc> Word definition
   </doc>
@@ -165,7 +198,7 @@
 </set>
 <hr />
 
-<table bgcolor="white" border="2">    
+<table bgcolor="white" border="2" width="100%">    
 <expand><get name="content"/></expand>
 </table>
 <hr />
