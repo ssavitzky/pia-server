@@ -16,31 +16,31 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> &lt;bind type="namespace"&gt; <br>
+       Would make it possible to set up sub-namespaces at load time.
+       (1999-07-15) <br>
+
   <li> <b>Impr</b> Parser should use a LineNumberReader <br>
        Should also have optional filename, both for use in error messages.
        (1999-07-15) <br>
 
   <li> <b>Bug</b> &lt;include src="file:..."&gt; fails for directories<br>
        There also ought to be a way to get directory content from
-       &lt;status&gt;.
+       &lt;status&gt; [there is: item="files"].
        (1999-07-14) <br>
+       -- This is because readExternalResource just blindly returns a
+	  FileInputStream instead of going through FileAccess (PIA) or the
+	  equivalent (Filter).
 
   <li> <b>Bug</b> &lt;connect&gt; gives null pointer exceptions. <br>
        (1999-07-14) <br>
-
-  <li> <b>Hole</b> per-Agent mappings for file extensions <br>
-       Need a way to specify tagset, MIME type for various extensions
-       (specifically <code>.html</code>).  Might also want a "sandbox"
-       subclass of ActiveDoc that effectively makes the AGENT, PIA and tagset 
-       namespaces read-only.
-       (1999-07-14) [requested by Tim] <br>
-       -- maybe AGENT:tagsets:html and AGENT:mime-type:html
 
   <li> <b>Impr</b> safeDefineHandler, safeSetHandler <br>
        Safe versions of &lt;define&gt; and &lt;set&gt; that are only able to
        define things in the current document, and with no handlers.  There
        should also be a &lt;make-safe&gt; tag to use safe versions of all
-       handlers. 
+       handlers.   Might also want a "sandbox" subclass of ActiveDoc that
+       effectively makes the AGENT, PIA and tagset namespaces read-only.
        (1999-07-14) <br>
 
   <li> <b>Impr</b> Need action code PROCESS_NODE <br>
@@ -626,5 +626,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.26 1999-07-15 17:17:17 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.27 1999-07-28 17:49:22 steve Exp $</b><br>
 </body></html>
