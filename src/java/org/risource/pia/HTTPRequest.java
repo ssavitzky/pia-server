@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.5 1999-03-24 22:06:53 pgage Exp $
+// $Id: HTTPRequest.java,v 1.6 1999-05-18 20:26:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -778,7 +778,9 @@ public class  HTTPRequest extends Transaction {
 	  Pia.debug(this, "Got a head...");
 
 	  // and the content
-	  if( method().equalsIgnoreCase( "POST" ) || method().equalsIgnoreCase( "GET" ) ||  method().equalsIgnoreCase( "PUT" )){
+	  if (method().equalsIgnoreCase( "POST" )
+	      || method().equalsIgnoreCase( "GET" )
+	      ||  method().equalsIgnoreCase( "PUT" )){
 	      if(contentObj ==  null) initializeContent();
 	      Pia.debug(this, "Got a body...");
 	      // incase body needs to update header about content length
