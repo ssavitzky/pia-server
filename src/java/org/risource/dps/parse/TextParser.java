@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
+//	$Id: TextParser.java,v 1.3 2000-09-30 00:10:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,16 +26,15 @@ package org.risource.dps.parse;
 
 import org.w3c.dom.Node;
 
-import org.risource.dps.Parser;
-import org.risource.dps.Syntax;
+import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.Copy;
+import org.risource.dps.util.Index;
 
 import org.risource.dps.tree.TreeAttrList;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeComment;
 
-import org.risource.dps.Context;
 
 import org.risource.ds.Table;
 import org.risource.ds.List;
@@ -59,7 +58,7 @@ import java.io.IOException;
  *	are not specified, reasonable defaults are used that correspond
  *	roughly to Unix shell-script conventions.
  *
- * @version $Id: TextParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
+ * @version $Id: TextParser.java,v 1.3 2000-09-30 00:10:44 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -67,9 +66,8 @@ import java.io.IOException;
 public class TextParser extends AbstractParser {
 
   /************************************************************************
-  ** State:
+  ** State Constants:
   ************************************************************************/
-
 
   /** State constant for "code": look for programming-language keywords,
    *	comments, and strings. 	All code-like states have 1 in the low-order 
@@ -100,6 +98,15 @@ public class TextParser extends AbstractParser {
   /** Inside a quoted string.  This is a Text-like state. */
   protected final static int IN_STRING = 6;
 
+  /************************************************************************
+  ** State:
+  ************************************************************************/
+
+
+  /************************************************************************
+  ** parse Parameters:
+  ************************************************************************/
+
   /** table of programming-language keywords. */
   protected Table keywords = new Table();
 
@@ -121,6 +128,12 @@ public class TextParser extends AbstractParser {
   /** The string that ends a comment that started with "cbegin". */
   protected String cend    = null;
 
+  /** Name of cross-reference namespace */
+  protected String xrefsName = null;
+
+  /** cached reference to cross-reference namespace */
+  protected Namespace xrefs = null;
+  protected TopContext top = null;
 
   /************************************************************************
   ** Cross-references:
@@ -131,7 +144,24 @@ public class TextParser extends AbstractParser {
    * @return a URL.
    */
   protected String lookupXref(String id) {
-    return null;		// === lookupXref ===
+    if (xrefs == null && xrefsName != null) {
+      if (top == null) top = getProcessor().getTopContext();
+      ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
+      if (n == null) top.message(-2, "no binding for "+xrefsName, 0, true);
+      else xrefs = n.asNamespace();
+      if (xrefs == null) {
+	if (n != null)
+	  top.message(-2, ("binding exists but not a namespace "
+			   + n.getClass().getName()), 0, true);
+	xrefsName = null;	// only give error once per document.
+      }
+    }
+    if (xrefs != null) {
+      ActiveNodeList v = xrefs.getValueNodes(top, id);
+      return (v != null)? v.toString() : null;
+    } else {
+      return null;
+    }
   }
 
 
@@ -236,7 +266,7 @@ public class TextParser extends AbstractParser {
       if (nextEnd != null && state == IN_CODE) {
 	next = createActiveText(id, false);
 	return createActiveElement(nextEnd, null, false);
-      } else if (stopwords.at(id.toLowerCase()) != null) {
+      } else if (stopwords.at(id.toLowerCase()) == null) {
 	// === It may not be necessary to check stopwords if state == IN_CODE
 
 	// At this point we know that the word is neither a keyword nor a 
@@ -291,6 +321,7 @@ public class TextParser extends AbstractParser {
     comment = tse.getAttribute("comment");
     cbegin  = tse.getAttribute("cbegin");
     cend    = tse.getAttribute("cend");
+    xrefsName = tse.getAttribute("xrefs");
 
     if (comment == null && cbegin == null) comment="#";
 

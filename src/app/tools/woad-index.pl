@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.11 2000-09-26 23:13:10 steve Exp $
+#	$Id: woad-index.pl,v 1.12 2000-09-30 00:09:08 steve Exp $
 # Create WOAD index files.
 #
 
@@ -33,18 +33,32 @@ $sourceSuffix	= ".notes";
 $wordPrefix	= ".words";
 $words		= "/$wordPrefix";
 
+### Patterns 
+
 $prune		= '[0-9]+';	        # pattern for directories to prune
 $xids		= '[-_0-9A-Za-z]';      # start chars for XML identifiers
+$nxids		= '[^-_0-9A-Za-z]';     # non-start chars for XML identifiers
 $xidc		= '[-.:_0-9A-Za-z]';    # interior chars for XML identifiers
 $xid		= "($xids($xidc*$xids)?)";	# pattern for XML identifiers
 $ids		= '[_A-Za-z]';		# start chars for C identifiers
+$nids		= '[^_A-Za-z]';		# non-start chars for C identifiers
 $idc		= '[._0-9A-Za-z]';     # interior chars for C identifiers
 $id		= "($ids($idc*$ids)?)"; # pattern for C identifiers
 
 ### Global state:
 
+$pass		= 0;		# pass 0: look for definitions
+				# pass 1: look for references
+
 @roots		= ();		# absolute paths of root directories
 				# ( used for link circularity checking )
+
+### Statistics:
+
+$nSourceFiles	= 0;
+$nSourceDirs	= 0;
+$nNotPruned	= 0;
+$nNoteFiles	= 0;
 
 ### Filename and extension classifiers:
 #	Each maps the extension or name onto a type description.
@@ -172,6 +186,12 @@ $id		= "($ids($idc*$ids)?)"; # pattern for C identifiers
 %docs		= ();		# context map for word documentation
 %uses		= ();		# context map for word usage
 
+#   Word cross-reference map:
+#
+#	This maps words onto a string containing all references to that word.
+
+%xrefs		= ();
+
 #   File Index:
 #
 #	Each file index is a hash table that maps file paths into 
@@ -243,15 +263,30 @@ print STDERR "    abs: " . $roots[0] . "\n";
 
 ###### Do the Work ######################################################
 
+## Index the source tree
 open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
 indexDir($source, "/");
 close (PATHINDEX);
 
+## Index the WOAD tree, mainly looking for notes.
 indexWoadDir("$root$project", "/");
 
+## Now output the global definition and documentation indices
+#	Afterwards we throw most of the information away to save space.
 globalIndices();
 
+## Increment $pass and re-index the sources looking for references
+# === do we need to clobber @roots here?
+$pass ++;
+indexDir($source, "/");
+makeCrossReference();
+
+## Finally, output the statistics.
 print STDERR "roots: @roots \n";
+print STDERR "#sourceFiles: $nSourceFiles, "
+	.    "($nSourceDirs dirs, $nNotPruned indexed), "
+	.    "#notes: $nNoteFiles, " 
+    	.    "#defs: $nDefs, #words $nWords\n";
 
 exit(0);
 
@@ -272,23 +307,36 @@ sub indexDir {
     my @files = sort(readdir(DIR));
     my @subdirs = ();
 
+    ++ $nSourceDirs unless ($pass);
+
     # Open the corresponding index file for output
     my $xd = "$root$project/$sourcePrefix$path";
     $xd =~ s@//@/@g;
     -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd/\n";
 
     # === eventually compare dates on directory and dirIndex.wi
-    open (DIRINDEX, ">$xd/dirIndex.wi") || die "cannot create $xd/dirIndex.wi";
-    print STDERR "indexing $d -> $xd\n";
+    if (!$pass) { 
+	print STDERR "indexing $d -> $xd\n";
+	open (DIRINDEX, ">$xd/dirIndex.wi")
+	    || die "cannot create $xd/dirIndex.wi";
+    } else {
+	print STDERR "reindexing $d -- ";
+    }
 
-    for (my $i= 0; $i < @files; ++$i) {
+    my $n = 0; my $s = 0;
+    for (my $i= 0; $i < @files; ++$i, ++$n) {
 	if ($files[$i] eq "." || $files[$i] eq "..") { next; }
 	if (indexFile($files[$i], $path)) {
+	    ++ $s;
 	    push (@subdirs, $files[$i]); 
 	}
     }
 
-    close (DIRINDEX);
+    if (!$pass) {
+	close (DIRINDEX);
+    } else {
+	print STDERR " $n files, $s dirs\n";
+    }
 
     # now do the subdirectories
 
@@ -309,6 +357,8 @@ sub indexDir {
 #
 sub indexFile {
     my ($f, $path) = (@_);
+    ++ $nSourceFiles unless ($pass);
+
     if ($f eq "." || $f eq "..") { return 0; }
     if ($f =~ /^\./) { return 0; } # don't index any dot files (questionable)
     if ($f =~ /\~$/) { return 0; } # don't index any backup files
@@ -405,13 +455,23 @@ sub indexFile {
 	    $entry{"height"} = $2;
 
 	} else {
-	    $type = "unknown";	# could actually call `file` here.
-	    $ftype = `file -b $absPath`;
-	    $entry{"dscr"} = "(?) $ftype";
+	    $type = "unknown";	# call `file` to identify the file
+	    $ftype = `file -b $absPath` unless ($pass);
+	    $entry{"dscr"} = "(?) $ftype" unless ($pass);
 
-	    # === At this point we can decide whether to index as text or code
+	    # At this point we can decide whether to index as text or code
+	    # actually, `file` isn't always specific enough.
+
+	    if ($ftype =~ /script/ || $ftype =~ /commands/) {
+		indexCodeFile($absPath, \%entry);
+	    } elsif ($ftype =~ /text/) {
+		indexMarkupFile($absPath, \%entry);
+	    }
 	}
     }
+
+    ### At this point we're done if we're not re-indexing ###
+    return $indexme unless ($pass);
 
     # add type and type description to entry
     $entry{"type"} = $type;
@@ -428,7 +488,7 @@ sub indexFile {
 
     # Insert entry into file index table.  We may possibly be needing it.
     $pathIndex{$absPath} = \%entry;
-
+    
     # Convert entry to xml format:
     $ent = "<File";
     for (my @keys = keys(%entry), my $k = 0; $k < @keys; ++$k) {
@@ -437,6 +497,8 @@ sub indexFile {
     $ent .= ">$woadPath</File>";
     print PATHINDEX "    $ent\n";
     print DIRINDEX  "    $ent\n";
+
+    ++ $nNotPruned;
     return $indexme;
 }
 
@@ -458,6 +520,11 @@ sub indexMarkupFile {
     my $start = 0;		# start of a multi-line construct
 
     my $path = $$entry{"path"};
+
+    if ($pass) {
+	reindexFile($pf, $entry);
+	return;
+    }
 
     $summary = '';		# return note summary in a global.
 
@@ -527,6 +594,11 @@ sub indexTextFile {
     my $title = '';
     my $line  = 0;
     
+    if ($pass) {
+	reindexFile($pf, $entry);
+	return;
+    }
+
 }
 
 sub indexCodeFile {
@@ -535,6 +607,11 @@ sub indexCodeFile {
 
     my $title = '';
     my $line  = 0;
+
+    if ($pass) {
+	reindexFile($pf, $entry);
+	return;
+    }
 
     open (FILE, $pf);
     while (<FILE>) {
@@ -591,6 +668,34 @@ sub indexCodeFile {
     close FILE;
 }
 
+### reindexFile(path, entry)
+#	Go through the file on the second pass looking for references
+#	to words that are already defined.
+#
+sub reindexFile {
+    my ($pf, $entry) = (@_);
+    my $path = $$entry{"path"};
+
+    my $title = '';
+    my $line  = 0;
+
+    open (FILE, $pf);
+    while (<FILE>) {
+	++$line;
+
+	while (/$id/) {		# gobble words in the line
+	    my $word = $1;
+	    s/$nids*$id//;
+	    if ($xrefs{lc($word)} ne '') {	# If the word has a definition,
+					# index its use here.
+		indexUse($1, '', $path, $line);
+	    }
+	}	
+    }
+    close FILE;
+}
+
+
 ###### Index WOAD Annotation ##########################################
 
 ### indexWoadDir(directoryName, pathFromNotes) 
@@ -633,6 +738,8 @@ sub indexWoadDir {
 
 sub indexWoadNote {
     my ($f, $path) = (@_);
+
+    ++ $nNoteFiles;
 
     my $indexme = 0;
     my $type = '';		# type category
@@ -696,8 +803,14 @@ sub indexDef {
 
     my $entry = "<Def word=\"$word\" path=\"$path\" line=\"$line\" "
 	      . (($ident eq $word)? '' : "id=\"$ident\" ")
+	      . "context=\"$context\" "
 	      . "name=\"$name\">$def</Def>\n\n";
+
     $defs{$context} .= $entry;
+
+    if ($ident eq $word) {
+	$xrefs{lc($word)} .= $entry;
+    }
     # === Append to $context/$word/defs.wi as well ===
     # === it's possible, even likely, that a database _would_ be better ===
 }
@@ -708,19 +821,31 @@ sub indexDef {
 sub indexDoc {
     my ($word, $context, $path, $line, $name, $def) = (@_);
     $def = stringify($def);
-    $docs{$context} .= "<Doc word=\"$word\" path=\"$path\" line=\"$line\" "
-	             . "name=\"$name\">$def</Def>\n\n";
+
+    $entry = "<Doc word=\"$word\" path=\"$path\" line=\"$line\" "
+	   . "context=\"$context\" "
+	   . "name=\"$name\">$def</Def>\n\n";
+
+    $docs{$context} .= $entry;
+    $xrefs{lc($word)} .= $entry;
 }
 
-### indexUse(word, context, file, lineNr, name)
-#	index a word use. 
-#   === Presently not done: don't know where to put it.  BIG. ===
+### indexUse(word, context, file, lineNr)
+#	index a word use.  This is done in a second pass so that we know
+#	which words have already been defined. 
 #
 sub indexUse {
-    my ($word, $context, $path, $line, $name) = (@_);
-    $uses{$context} .= "<Ref word=\"$word\" path=\"$path\" line=\"$line\" "
-	             . "name=\"$name\" />\n\n";
-    
+    my ($word, $context, $path, $line) = (@_);
+
+    my $entry = "<Ref word=\"$word\" path=\"$path\" line=\"$line\" "
+	      . ($context ? "context=\"$context\" " : "") . " />\n\n";
+
+    if ($context ne '') {
+	$uses{$context} .= $entry;
+    }
+
+    # lowercase the word for the cross-reference key.
+    $xrefs{lc($word)} .= $entry;
 }
 
 
@@ -730,9 +855,10 @@ sub indexUse {
 #	output the global indices.
 #
 sub globalIndices {
-    my ($context);
+    my $context;
+    my $word;
     my @entries;
-    my ($entry, $i, $c);
+    my ($entry, $i, $c, $d);
     my @keys;
     my $k;
 
@@ -757,6 +883,7 @@ sub globalIndices {
 	    $entries[$i] =~ /word\=\"(.)/; 
 	    $c = uc($1);
 	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
+	    ++ $nDefs;
 
 	    # Should really take advantage of sortedness to avoid extra opens
 	    open (INDEX, ">>$dir/defs-$c-.wi");
@@ -764,6 +891,8 @@ sub globalIndices {
 	    close (INDEX);
 	}
     }
+    %defs = ();
+
     for (@keys = sort(keys(%docs)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
@@ -773,15 +902,94 @@ sub globalIndices {
 	print INDEX $docs{$context};
 	close (INDEX);
     }
+    %docs = ();
+
+}
+
+### makeCrossReference()
+#	output the global cross-reference index.
+#
+#	Unlike the other contexts, which have an index file for each initial
+#	letter, the xref directory has a subdirectory for each letter, and
+#	a file for each word.  It is hoped that this will keep individual
+#	directories at least somewhat manageable.  
+#	
+sub makeCrossReference {
+    my $context;
+    my $word;
+    my @entries;
+    my ($entry, $i, $c, $d);
+    my @keys;
+    my $k;
+
+    # First put out the context-specific cross-references. 
+
     for (@keys = sort(keys(%uses)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
 	print STDERR "uses for $context -> $dir/uses.wi\n";
 	mkdir ($dir, 0777);
-	open (INDEX, ">$dir/uses.wi");
-	print INDEX $uses{$context};
+	# Don't even bother making a uses.wi -- it will normally be too big.
+	@entries = sort(split /\n\n/, $uses{$context});
+	for ($i = 0; $i < 27; ++$i) {
+	    $c = substr('0ABCDEFGHIJKLMNOPQRSTUVWXYZ', $i, 1);
+	    if (-f "$dir/uses-$c-.wi") { unlink "$dir/uses-$c-.wi"; }
+	}
+	$c = '';
+	for ($i = 0; $i < @entries; ++$i) {
+	    $entries[$i] =~ /word\=\"(.)/; 
+	    $c = uc($1);
+	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
+
+	    # Should really take advantage of sortedness to avoid extra opens
+	    open (INDEX, ">>$dir/uses-$c-.wi");
+	    print INDEX $entries[$i] . "\n";
+	    close (INDEX);
+	}
+    }
+    %uses = ();
+
+    # Now do the actual cross-references
+
+    $context = "xref";
+    $dir = "$root$project$words/$context";
+    mkdir ($dir, 0775);
+    print STDERR "xrefs -> $root$project/xrefs.wi\n";
+    open (XREFS, ">$root$project/xrefs.wi");
+    $d = '';
+    my $n = 0;
+    for (@keys = sort(keys(%xrefs)), $k = 0; $k < @keys; ++$k, ++$n) {
+	my $word = $keys[$k];
+	++ $nWords;
+
+	# === This would be a good place to check for stopwords.
+
+	$c = substr($word, 0, 1);
+	$c = uc($c);
+	if ($c !~ /[a-zA-Z]/) { $c = '0'; }
+
+	if ($c ne $d) {		# If we're starting a new letter,
+	    mkdir ("$dir/-$c-", 0775); # ... make a directory.
+	    if ($d ne '') { print STDERR " $d($n)"; }
+	    $n = 0;
+	    $d = $c;
+	}
+
+	# write the cross-reference file entry for the word
+	# As we go, clear out entries in %xrefs to save both time and space
+
+	my $xfile = "$dir/-$c-/$word.wi";
+	my $xlink = "$words/$context/-$c-/$word.wi";
+	print XREFS "<xref name=\"$word\">$xlink</xref>\n";
+	
+	open (INDEX, ">$xfile");
+	@entries = sort(split (/\n\n/, $xrefs{$word}));
+	$xrefs{$word} = '';	# save memory
+	print INDEX join ("\n", @entries);
 	close (INDEX);
     }
+    close (XREFS);
+    print STDERR "\n";
 
     # Here we do the chronological notes index
     open (INDEX, ">$root$project/AllNotesByTime.wi");
@@ -865,6 +1073,6 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.11 2000-09-26 23:13:10 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.12 2000-09-30 00:09:08 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.22 2000-09-26 23:10:29 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.23 2000-09-30 00:08:51 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -20,6 +20,9 @@
   <!-- Include the standard extension map. -->
   <include src="Config/Site/extensions.xci"/>
   <Ext name="wi"	type="text/html" tagset="/.Woad/woad-index"	/>
+
+  <!-- contains <xref name="word">URL</xref>  -->
+  <include src="xrefs.wi"> </include>
 
 <!-- Links to root resources. -->
 

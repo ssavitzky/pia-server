@@ -18,9 +18,10 @@
 <!-- ====================================================================== -->
 
 <tagset name="src-file" tagset="woad-xhtml" parser="TextParser"
+	xrefs="SITE:xref"
 	include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-file.ts,v 1.2 2000-09-23 00:50:48 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.3 2000-09-30 00:09:03 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
@@ -66,7 +67,7 @@
 
 <define element="id" syntax="quoted">
   <doc> identifier. </doc>
-  <action>&content;</action>
+  <action><a href="&attributes:href;">&content;</a></action>
 </define>
 
 <define element="fn">

@@ -5,6 +5,9 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Wish</b> xref indices, parsers for man and info pages<br />
+       (2000-09-29)
+  </li>
   <li> <b>Bug</b> link from a note to the page it annotates. <br />
        Noticeable especially in .sources, where there's an extraneous
        <code>.notes</code> interpolated into the URL.  Obviously another
@@ -16,14 +19,21 @@
        i.e. "processed", "wrapped", ...
        (2000-09-25)
   </li>
+  <li> <b>Bug</b> no expansion for &lt;Ref&gt; in .wi <br />
+       Also, we may want a different expansion for Def and Ref in xrefs.
+       (2000-09-29)
+  </li>
   <li> <b>Goal</b> useable release by 9/30. <br />
        <ul>
 	 <li> Upload new PIA to <a href="http://pia.rsv.ricoh.com;">
 	      <code>pia.rsv.ricoh.com</code> </a>; release.
 	 </li>
+	 <li> Word cross-refs. (2000-09-29)
+	 </li>
 	 <li> Tagged source listings for non-SGML code files [either by
 	      shallow parsing, external taggers, or both] (2000-09-22) and
 	      shallow parsing for SGML files.<!-- === -->
+	      <!-- === ShallowParser nice, but could be postponed === -->
 	 </li>
 	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
 	      actual directories. (2000-09-26)
@@ -32,12 +42,6 @@
 	      notes (2000-09-25)
 	 </li>
        </ul>
-  </li>
-  <li> <b>Hole</b> cross-references for words. <br />
-       See hook: <code>TextParser.lookupXref(...)</code>.  Look it up in a
-       namespace (which could, e.g., be tied to a database).    Linking can be
-       done in listing parser if there's a suitable namespace in context. 
-       (2000-09-22)
   </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things: proper tagging of identifiers in context,
@@ -306,5 +310,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.22 2000-09-26 23:11:12 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.23 2000-09-30 00:08:57 steve Exp $</b><br>
 </body></html>

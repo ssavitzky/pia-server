@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.43 2000-08-30 23:24:13 steve Exp $
+#	$Id: Makefile,v 1.44 2000-09-30 00:08:50 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -232,8 +232,8 @@ all-dirs.log::
 ###
 
 my-woad-index::
-	perl src/app/tools/woad-index.pl source=. root=$$HOME/.pia
-
+	perl src/app/tools/woad-index.pl source=. root=$$HOME/.pia \
+	| tee woad-index.log
 
 ############################################################################# 
 ###

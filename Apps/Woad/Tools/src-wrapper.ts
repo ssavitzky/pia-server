@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.3 2000-07-28 22:30:08 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.4 2000-09-30 00:09:03 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -71,8 +71,8 @@
   <set name="note-tail">
 	&SITE:sourceSuffix;/&DOC:name;/
   </set>
-  </hide>
 
+  </hide>
   <head><title>&spath; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">

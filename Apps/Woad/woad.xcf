@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.20 2000-09-26 23:11:13 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.21 2000-09-30 00:08:57 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -28,7 +28,7 @@
     <action><hide>
 	<repeat><while><test match="\,">&content;</test></while>
 	            <set name="content">
-			<subst match="\," result=" ">&content;</subst></let>
+			<subst match="\," result=" ">&content;</subst></set>
 	</repeat>
       </hide>&content;</action>
   </define>

@@ -20,6 +20,7 @@
 <tagset name="src-ccode" parent="src-file" tagset="woad-xhtml"
 	include="src-wrapper" documentWrapper="-document-"
 	parser="TextParser" comment="//" cbegin="/*" cend="*/"
+	xrefs="SITE:xref"
 	keywords="if else while until for switch case
 		  try catch throws implements instanceof new this super
 		  class interface static public private protected final 
@@ -27,7 +28,7 @@
 		  String return import package include define"
 >
 
-<cvs-id>$Id: src-ccode.ts,v 1.1 2000-09-23 00:50:48 steve Exp $</cvs-id>
+<cvs-id>$Id: src-ccode.ts,v 1.2 2000-09-30 00:09:03 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for Java, C and C-like languages.</h1>
 
