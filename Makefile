@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.37 2000-02-25 22:29:37 steve Exp $
+#	$Id: Makefile,v 1.38 2000-03-02 04:38:16 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -43,8 +43,8 @@ include $(MF_DIR)/subdir.make
 
 VENDOR_TAG  = PIA
 RELEASE     = 2
-MAJOR       = 0
-MINOR       = 9
+MAJOR       = 1
+MINOR       = 1
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
