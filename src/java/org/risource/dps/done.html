@@ -686,11 +686,24 @@ See also:
 	      DOM utilities.
        </ul>
 
+  <li> 1999-04-15 <b>Bug</b> Using Entity instead of EntityRef <br>
+       Parser is generating Entity nodes instead of EntityRef nodes for entity
+       references.
+       (1999-04-15) <br>
+       -- Along the way fixed the problem of EntityRef having an intrinsic
+	  value. 
+
+  <li> 1999-04-16 <b>Bug</b> Empty entity list is global! <br>
+       ... so adding an entity to an (active) element that doesn't have one
+       adds the entity to everything.
+       (1999-04-16) <br>
+       -- The culprit was GenericHandler.
+       
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.6 1999-04-07 23:20:49 steve Exp $</b><br>
+<b>$Id: done.html,v 1.7 1999-04-17 01:11:59 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

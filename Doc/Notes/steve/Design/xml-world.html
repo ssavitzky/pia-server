@@ -212,10 +212,117 @@
     installer needs to check.
 
 
+<hr><!-- ========================================================== -->
+<h2>Implementation Notes</h2>
+
+<h3>Entity Output</h3>
+
+<p> There's a problem: how do things like Entity nodes print?
+
+<p> The answer is that it really depends on their parent.  If it's a DOCTYPE
+    (declaration) node, then the Entity should get output as a declaration.
+    If it's an Element (e.g. &lt;NAMESPACE&gt;), then the Entity should get
+    output as an &lt;ENTITY&gt; element.
+
+<p> At the moment it's all kind of moot: we want XML representations, and we
+    don't parse doctypes properly.
+
+
+<h3>Agent and Entity Input</h3>
+
+<p> When an Entity is read in, it's really the parent (e.g. the Agent or
+    Tagset) that should determine what to do with it, in the
+    <code>append</code> method.  There's a major complication in the fact that
+    the parser will append the entity before its contents are seen, if a tree
+    is being constructed.  One would be tempted to do the construction with an
+    Output, except that has the same problem!
+
+<p> The right thing is to <em>initialize</em> the new object after reading
+    it.  This could actually be done by putting a processing instruction at
+    the end of the content!  It's not a problem for Tagset or Namespace
+    because the bindings just go right into the table, and nothing has to be
+    done to their content after that.  Agents <em>have</em> to be
+    initialized. 
+
+<p>&nbsp;
+
+<p> There's another complication: the Agent's tagset <em>must</em> be
+    available while the Agent is being read in.  Passing it as an attribute or
+    the first entity wouldn't work, because the node under construction
+    doesn't know about the parser!  Another alternative is to update all the
+    handlers when the Agent is initialized.  That would be slow.
+
+<p> One correct solution is to put the tagset's filename into the DOCTYPE
+    (where it belongs anyway) or into a processing instruction (targeted at
+    the parser).  Another is to separate construction from parsing.
+
+<p>&nbsp;
+
+<p> Ideally one would like to be able to read an &lt;ENTITY&gt; element, for
+    example, and construct a <code>TreeEntity</code> node.  The problem is
+    that the parser has called the Handler's <code>createElement</code> method
+    and is really expecting an Element back.  It would be better if it set the
+    tagname variable first (so that the end tag has something to match), but
+    then left the node alone to be whatever type got returned.  The only
+    alternative would be to make almost everything a <code>TreeGeneric</code>,
+    which is ugly.
+
+<p> It seems as though <code>createElement</code> and
+    <code>createActiveElement</code> are only called in a very small number of
+    places, so it's pretty painless to have them return an
+    <code>ActiveNode</code> (which in most cases is all the caller needs,
+    anyway) and check the return type as needed.
+    <code>Document.createElement</code> is the obvious exception; it may be
+    necessary to resort to wrappers here.
+
+<p>&nbsp;
+
+<p> Of course, the whole gamut of problems simply goes away if we use a tagset
+    and handlers to construct the objects, or (perhaps even better) if we move
+    the construction into an Output that can do the necessary translation.
+    In the latter case the parse tree could be <em>totally</em> passive, and
+    the constructed objects need not be even remotely related to DOM objects.
+    Using an Output has the additional advantage that it can be driven by a
+    SAX parser. 
+
+<p> There's an intermediate position, though, that takes good advantage of the
+    way the system works:  Construct objects of appropriate classes in the
+    Parser, and assemble them into structures in an Output.  This requires
+    that the intermediate objects, at least, be implementations of
+    ActiveNode, but that's not really a problem in the PIA where even an Agent
+    is basically just a specialized Namespace.  This is similar to what
+    TagsetProcessor is doing; the difference is that no processing needs to be
+    done, just a copy.
+
+<p> There's also a more extreme version that requires even <code>less</code>
+    intervention:  make an I/O pair called <code>ToTabular</code> and
+    <code>FromTabular</code>!  That's disgusting: I like it.  Not really
+    suitable for things, like agents, that might contain real XML, but it's
+    great for headers and Property objects.
+
+
+<h3>Agent Representation</h3>
+
+<p> An Agent does <em>not</em> have to be an extension of
+    <code>TreeGeneric</code> -- <code>TreeElement</code> would do.  Note that
+    its name as a namespace wants to be <code>AGENT</code> anyway.  On the
+    other hand, <code>BasicNamespace</code> <em>is</em> an extension of
+    <code>TreeGeneric</code>, so it's probably moot.  On the <em>other</em>
+    other hand, <code>BasicNamespace</code> probably should <em>not</em>
+    descend from <code>TreeGeneric</code>.  The only things that do are
+    AbstractHandler, BasicTagset, BasicNamespace, and NamespaceWrap.
+    <code>TreeDocument</code> perhaps should.  It seems no longer necessary
+    for <code>TreeGeneric</code> to have a value component.
+
+<p> <code>TreeGeneric</code> should go back to the function of providing
+    separate <em>names</em> for a node when used as an element or something
+    else.  In other words, when it's an element the <code>nodeName</code>
+    should be the <code>tagName</code>, and the ``other'' name should be the
+    <code>name</code> <em>attribute</em>.
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: xml-world.html,v 1.1 1999-04-13 18:30:58 steve Exp $</b><br>
+<b>$Id: xml-world.html,v 1.2 1999-04-17 01:11:33 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
