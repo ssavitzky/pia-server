@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+//	$Id: PIAServlet.java,v 1.3 2000-04-05 19:07:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.3 2000-04-05 19:07:48 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -488,7 +488,8 @@ public class PIAServlet
     }
 
     resp.setStatus( 200 ); 
-    resp.setHeader("Server", Version.SERVER);
+    resp.setHeader("Servlet", this.getClass().getName() +
+		   " in " + Version.SERVER);
     resp.setDateHeader("Last-Modified", doc.getLastModified()); 
     resp.setContentType( ctype );
 
