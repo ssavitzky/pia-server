@@ -1,0 +1,30 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Generic Home Page for &AGENT:name;</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Home Page</header>
+<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<sub-head page='home'>
+<if>&subs;
+  <then>
+    <tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
+                <else>&agentType; agents: </else></if>
+        </th><td><repeat list='&subs;'>
+               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
+           </repeat>
+</td></tr></then></if>
+</sub-head>
+
+<if><test exact='exact' match='&amp;agentType'>&agentName;</test>
+    <then><set name='agentPath'>&agentName;</set></then>
+    <else><set name='agentPath'>&agentType;/&agentName;</set></else>
+</if>
+<hr />
+
+<!--  See whether there's an "about" file for this agent.  -->
+<include src='about.inc'> </include>
+<p>
+<footer cvsid='$Id: home.xh,v 1.1 1999-09-22 23:43:47 steve Exp $' />
+</p></body></html>
