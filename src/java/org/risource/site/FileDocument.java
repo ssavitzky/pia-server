@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+//	$Id: FileDocument.java,v 1.3 1999-08-31 23:32:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+ * @version $Id: FileDocument.java,v 1.3 1999-08-31 23:32:09 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -194,22 +194,6 @@ public class FileDocument extends FileResource implements Document {
 			 Element config) {
     return null;
   }
-
-  /** Make the associated resource real. 
-   *
-   * @return <code>false</code> if the Resource cannot be realized.
-   */
-  public boolean realize() { 
-    if (!isReal()) {
-      if (!getContainer().realize()) return false;
-      // replace file with a new one under its (realized) parent. 
-      file = new File(new File(getContainer().getRealPath()), getName());
-      real = true;
-    }
-
-    return isReal();
-  }
-
 
   /************************************************************************
   ** Construction:

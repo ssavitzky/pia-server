@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+//	$Id: Subsite.java,v 1.3 1999-08-31 23:32:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+ * @version $Id: Subsite.java,v 1.3 1999-08-31 23:32:12 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -305,7 +305,7 @@ public class Subsite extends ConfiguredResource implements Resource {
 	subsiteCache.at(name, result);
 	childLocationCache.at(name, result);
       } else {
-	result = new LocalDocument(name, this, f, config);
+	result = new SiteDocument(name, this, f, config);
 	if (cfg != null) childLocationCache.at(name, result);
       }
     } else if (loc instanceof ActiveElement) { 	// Location is a config.
@@ -316,7 +316,7 @@ public class Subsite extends ConfiguredResource implements Resource {
 	subsiteCache.at(name, result);
 	childLocationCache.at(name, result);
       } else {
-	result = new LocalDocument(name, this, null, config);
+	result = new SiteDocument(name, this, null, config);
 	childLocationCache.at(name, result);
       }
     } else {
@@ -412,9 +412,9 @@ public class Subsite extends ConfiguredResource implements Resource {
    */
   public boolean realize() {
     if (!isReal()) {
-      if (!getContainer().realize()) return false;
+      if (!base.realize()) return false;
       // replace file with a new one under its (realized) parent. 
-      file = new File(new File(getContainer().getRealPath()), getName());
+      file = new File(new File(base.getRealPath()), getName());
       real = true;
     }
     return isReal();

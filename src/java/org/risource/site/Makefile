@@ -1,5 +1,5 @@
 ###### site/Makefile:	Site Structure package.
-# 	$Id: Makefile,v 1.2 1999-08-20 00:03:26 steve Exp $
+# 	$Id: Makefile,v 1.3 1999-08-31 23:32:10 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -29,13 +29,14 @@ PACKAGES = \
 
 FILES = \
 	Resource.java \
+	Realizable.java \
 	Document.java \
 	Root.java \
 	AbstractResource.java \
 	FileResource.java \
 	FileDocument.java \
 	ConfiguredResource.java \
-	LocalDocument.java \
+	SiteDocument.java \
 	Subsite.java \
 	Site.java
 

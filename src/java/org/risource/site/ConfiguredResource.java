@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.3 1999-08-31 23:32:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,14 +43,16 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.3 1999-08-31 23:32:09 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps
  * @see org.risource.dps.Namespace
  * @see org.w3c.dom */
-public abstract class ConfiguredResource extends AbstractResource {
+public abstract class ConfiguredResource extends AbstractResource
+  implements Realizable
+{
   
   /************************************************************************
   ** Configuration State:

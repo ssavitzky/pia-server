@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+//	$Id: Resource.java,v 1.3 1999-08-31 23:32:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+ * @version $Id: Resource.java,v 1.3 1999-08-31 23:32:11 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -184,14 +184,6 @@ public interface Resource {
    */
   public boolean isLocal();
 
-  /** Returns <code>true</code> if the resource is a local file or directory
-   *	in direct descent from a real root directory.
-   *
-   *<p>	Note that <code>isReal</code> differs from <code>isLocal</code>: 
-   *	a resource can be local without being real, e.g. if it is an alias.
-   */
-  public boolean isReal();
-
   /** Returns <code>true</code> if the resource is hidden. 
    *
    *<p>	Hidden documents can still be accessed through their Resource,
@@ -225,7 +217,13 @@ public interface Resource {
   ** Document Access:
   ************************************************************************/
 
-  /** Returns the Document associated with the Resource. */ 
+  /** Returns the Document associated with the Resource. 
+   *
+   *<p>	A Resource that <em>is</em> a Document (i.e. implements the Document 
+   *	interface) simply returns itself.  A container Resource will normally
+   *	return, for example, its <code>index.html</code> document or the 
+   *	equivalent. 
+   */ 
   public Document getDocument();
 
   /************************************************************************
@@ -262,14 +260,6 @@ public interface Resource {
    *	name.
    */
   public String getPath();
-
-  /** Returns the absolute path to this resource's real location in the 
-   *	filesystem. 
-   *
-   * @return the absolute path to this resource.  Returns <code>null</code>
-   *	if the resource has not been realized.
-   */
-  public String getRealPath();
 
   /** Returns the path of the resource's parent, with a slash appended 
    *	if necessary.
@@ -337,9 +327,4 @@ public interface Resource {
   public Resource create(String name, boolean container, boolean virtual, 
 			 Element config);
 
-  /** Make the associated resource real. 
-   *
-   * @return <code>false</code> if the Resource cannot be realized.
-   */
-  public boolean realize();
 }

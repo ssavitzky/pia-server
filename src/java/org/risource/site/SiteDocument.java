@@ -1,5 +1,5 @@
-////// LocalDocument.java -- implementation for a document resource
-//	$Id: LocalDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+////// SiteDocument.java -- implementation for a document resource
+//	$Id: SiteDocument.java,v 1.1 1999-08-31 23:32:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,19 +33,20 @@ import java.io.*;
 import java.net.URL;
 
 /**
- * Simple implementation for a document resource that specifies a local file.
+ * Simple implementation for a document resource that is contained under a
+ *	Site (i.e. contained in a Subsite).
  *
- * <p> Some of a LocalDocument's configuration information may be
+ * <p> Some of a SiteDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: LocalDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
+ * @version $Id: SiteDocument.java,v 1.1 1999-08-31 23:32:11 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps
  * @see org.w3c.dom
  */
-public class LocalDocument extends ConfiguredResource implements Document {
+public class SiteDocument extends ConfiguredResource implements Document {
 
   /************************************************************************
   ** Configuration Management:
@@ -110,7 +111,7 @@ public class LocalDocument extends ConfiguredResource implements Document {
   /** Returns the Document associated with the Resource. */ 
   public Document getDocument() { return this; }
 
-  /** @return a <code>File</code> for accessing a local document, or
+  /** @return a <code>File</code> for accessing a site document, or
    *      <code>null</code> if the resource is non-local. */
   public File documentFile() { return file; }
 
@@ -212,9 +213,9 @@ public class LocalDocument extends ConfiguredResource implements Document {
    */
   public boolean realize() { 
     if (!isReal()) {
-      if (!getContainer().realize()) return false;
+      if (!base.realize()) return false;
       // replace file with a new one under its (realized) parent. 
-      file = new File(new File(getContainer().getRealPath()), getName());
+      file = new File(new File(base.getRealPath()), getName());
       real = true;
     }
 
@@ -233,12 +234,12 @@ public class LocalDocument extends ConfiguredResource implements Document {
   ** Construction:
   ************************************************************************/
 
-  public LocalDocument(String name, ConfiguredResource parent, File file, 
+  public SiteDocument(String name, ConfiguredResource parent, File file, 
 		       ActiveElement config) {
     super(name, parent, false, file, config, null);
   }
 
-  public LocalDocument(ConfiguredResource parent, ActiveElement config) {
+  public SiteDocument(ConfiguredResource parent, ActiveElement config) {
     super(parent, config);
   }
 }
