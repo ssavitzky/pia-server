@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Notes on PIA Architecture</title>
+</head><body>
+<h1>Notes on PIA Architecture</h1>
+
+<blockquote>
+  <p> <font color="red">DRAFT:  This is a work in progress!  Read at your own
+      risk; believe at your peril!</font>
+  </p>
+  <p> Note that this file is not actually checked in yet; I'm still thinking
+      about the best place to put it within the PIA documentation tree.
+  </p>
+</blockquote>
+
+<blockquote>
+  <p> This document discusses the PIA's architecture, with special reference
+      to architectural features that support the development of customizable,
+      cross-platform web applications.
+  </p>
+
+  <p> Notes on interfaces (API's and specialized protocols) supported by the
+      PIA and their role in integrating the PIA into web servers (especially
+      Apache) and other web applications can be found in <a
+      href="interfaces.html"><code>interfaces.html</code></a>.
+  </p>
+</blockquote>
+
+<h2>Introduction</h2>
+
+<p> The PIA architecture has three main components (also referred to below as
+    ``features''): 
+</p>
+
+<ol>
+  <li> <strong><code>dps</code></strong> -- the Document Processing System
+       that implements the tag language.  By itself, the DPS essentially
+       provides a simple but complete ``macro language'' for XML and HTML web
+       pages. 
+  </li>
+  <li> <strong><code>site</code></strong> -- the site structure package.  This
+       provides a simple, robust, versatile, and OS-independent way of
+       structuring the files and directories that comprise a web application.
+  </li>
+  <li> <strong><code>agents</code></strong> -- PIA agents provide the ability
+       to operate (using the DPS) on web requests and documents as they
+       pass through a PIA-based proxy server.  It is worth noting that most
+       PIA applications will not require agents that operate on proxied
+       transactions; proxy agents are harder to support in most platforms. 
+  </li>
+</ol>
+
+<hr />
+<h2>Cross-Platform Web Applications</h2>
+
+
+<hr />
+<h2>Customizable Web Applications</h2>
+
+
+<hr />
+<h2>Roadmap</h2>
+
+<p> What follows is the implementation roadmap for cross-platform PIA
+    applications:
+</p>
+
+<ol>
+  <li> Implement the Java interfaces (Servlet, DOM, SAX, in that order).  Even
+       though these do not directly lead to a full-featured PIA integrated
+       with Apache, they are very simple and we have already committed to
+       doing them.  They will give the PIA the highest possible level of
+       interoperability with existing XML applications with minimal effort.
+       In addition, the Servlet interface will provide a fallback position,
+       integrating the PIA's <code>dps</code> and <code>site</code> packages
+       with <em>any</em> servlet-based web server.
+  </li>
+
+  <li> Ensure that most major PIA applications (except, obviously, the ones in
+       <a href="/Agents/Proxie">/Agents/Proxie</a>) still operate in the
+       Servlet version.  The fundamental rule is ``<em>you don't know whether
+       something is portable until it is actually running on two different
+       platforms.</em>'' 
+  </li>
+</ol>
+
+
+<hr />
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
+<b>$Id: architecture.html,v 1.1 2000-04-26 17:00:24 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
