@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.21 2000-09-20 00:39:04 steve Exp $
+//	$Id: AbstractParser.java,v 1.22 2000-09-21 17:15:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.21 2000-09-20 00:39:04 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.22 2000-09-21 17:15:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -76,7 +76,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected EntityTable 	entities	= null; 
 
   //protected int			lineNumber	= 1;
-  protected int			lf		= '\n';
+  protected final static int	lf		= '\n';
+  protected final static int	cr		= '\r';
 
   /************************************************************************
   ** Access:
@@ -283,11 +284,53 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatTextInLine() throws IOException {
     if (last == 0) last = in.read();
     if (last < 0) return false;
-    if (last == entityStart || last == '<' || last == lf) return true;
+    if (last == entityStart || last == '<' || last == lf || last == cr)
+      return true;
     do {
       buf.append((char)last);
       last = in.read();
-    } while (last >= 0 && last != lf && last != entityStart && last != '<');
+    } while (last >= 0 && last != lf  && last != cr &&
+	     last != entityStart && last != '<');
+    return true;
+  }
+
+  /** Starting at <code>last</code> (or the next available character
+   *	if <code>last</code> is zero), append characters to
+   *	<code>buf</code> until end-of-line or end-of-buffer is seen.  
+   *	The terminating character ends up in <code>last</code>.
+   *
+   *	@return true if at least one character is eaten. 
+   */
+   protected final boolean eatLine() throws IOException {
+    if (last == 0) last = in.read();
+    if (last < 0) return false;
+    if (last == lf || last == cr) return true;
+    do {
+      buf.append((char)last);
+      last = in.read();
+    } while (last >= 0 && last != lf  && last != cr);
+    return true;
+  }
+
+  /** Starting at <code>last</code> (or the next available character
+   *	if <code>last</code> is zero), eat and return an end-of-line
+   *	sequence. 
+   *
+   *	@return true if at least one character is eaten. 
+   */
+   protected final boolean eatEndOfLine() throws IOException {
+    if (last == 0) last = in.read();
+    if (last < 0) return false;
+    buf.append((char)last);
+    if (last == cr) {
+      last = in.read();
+      if (last == lf) { 
+	buf.append((char)last);
+	last = in.read();
+      }
+    } else {
+      last = in.read();
+    }
     return true;
   }
 
@@ -469,12 +512,17 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   protected abstract ActiveNode getToken() throws IOException;
 
-  /** Advance to the next ``token''. <p>
+  /** Advance to the next ``token''. 
    *	
-   *	The next ``token'' might be either text, in <code>nextText</code>, 
+   *<p>	The next ``token'' might be either text, in <code>nextText</code>, 
    *	an ordinary Node, in <code>next</code>, or an end tag, in 
    *	<code>nextEnd</code>.  They are checked in that order.  This allows
    *	getToken one node's worth of lookahead.
+   *
+   *<p>	Should really use a queue of tokens. 
+   *
+   * @return <code>null</code> if the next token is an end tag (with the tag
+   *	name in <code>nextEnd</code>), otherwise return the next node.
    */
   protected ActiveNode nextToken() {
     ActiveNode n = null;

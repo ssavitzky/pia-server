@@ -1,5 +1,5 @@
 ###### dps/parse/Makefile:	Active document parsers
-# 	$Id: Makefile,v 1.4 1999-03-23 23:31:58 steve Exp $
+# 	$Id: Makefile,v 1.5 2000-09-21 17:15:05 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,6 +27,9 @@ TOPDIR=../../../..
 FILES = \
 	AbstractParser.java \
 	BasicParser.java \
+	LineParser.java \
+	ShallowParser.java \
+	TextParser.java \
 	HTMLParser.java
 
 include $(TOPDIR)/makefiles/file.make
@@ -36,6 +39,8 @@ include $(TOPDIR)/makefiles/file.make
 AbstractParser.class: ../Tagset.java ../Parser.java \
 	../EntityTable.java 
 BasicParser.class: AbstractParser.java ../Tagset.java \
+	../Parser.java ../EntityTable.java 
+TextParser.class: AbstractParser.java ../Tagset.java \
 	../Parser.java ../EntityTable.java 
 HTMLParser.class: BasicParser.java AbstractParser.java \
 	../Tagset.java \
