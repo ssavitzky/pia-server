@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.5 2000-06-14 17:07:16 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.6 2000-06-15 01:23:09 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -89,10 +89,6 @@
           </th>
       </tr>
     </table>
-    <if> &FORM:probe;<!-- this is wrong now. -->
-	 <then> <a href="#entities"><b>entities</b></a>
-	 </then>
-    </if>
 
     <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
       <tr> <td>
@@ -121,6 +117,13 @@
 		          <then>
 		      	    <a href="&tpath;">&lt;server&gt;</a>
 		          </then>
+		      </if>
+		      <if> &FORM:entities;<!-- this is wrong now. -->
+			   <then> <a href="#entities">[info]</a>
+			   </then>
+			   <else> <a href="&docPath;?entities#entities">
+				  <b>[info]</b></a>
+			   </else>
 		      </if>
 		      <a href="/.Woad/help.xh#views">[help]</a>
 		 </td>
@@ -182,10 +185,25 @@
 </if>
 
 <hr /><!-- ====== End of Listing ===================================== -->
-<if> &FORM:probe;
+<if> &FORM:entities;
   <then>
 <hr />
-<h3><a name="entities">Entities</a></h3>
+<table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+  <tr> <th align="left" colspan="2">
+        <h3><a name="entities">WOAD server info</a></h3>
+       </th>
+  </tr>
+  <tr> <td width="50">&nbsp;</td>
+       <td>
+            <p> This is a complete dump of the information the WOAD server is
+		keeping track of for this source listing and its parent
+		directories.  It is presently most useful for debugging WOAD.
+            </p>
+       </td>
+  </tr>
+  <tr> <td colspan="2">&nbsp;</td></tr>
+</table>
+
 <ul>
 <repeat><foreach><get name="VAR:"/></foreach>
   <if><get name="FORM:expanded">
