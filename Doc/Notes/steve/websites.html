@@ -14,14 +14,17 @@
     static IP address and a fast pipe, it's probably a bad idea to run the PIA
     as your primary web server.  <em>(When we get a version of the PIA that
     runs efficiently as an Apache module, this will change...)</em>
+</p>
 
 <p> So, for a variety of reasons, you are probably going to want to run the
     PIA's document processor (the <code>process</code> command) ``offline'' to
     generate ordinary, static HTML files which you can then <em>upload</em> to
     your external web site.  This gives you all the versatility of the PIA
     with the security and efficiency of a ``traditional'' web server.
+</p>
 
 <p> This document explains how to do this, in two sections:
+</p>
 
 <ol>
   <li> <a href="#processing">Offline Document Processing</a>
@@ -35,9 +38,13 @@
     href="http://www.apache.org/docs/mod/mod_proxy.html#proxypass">ProxyPass</a>
     option.  The following 
     line added to Apache's configuration file is all it takes:
+</p>
 
-<pre>Proxypass /PIA http://localhost:8888/</pre>
-
+<table border="1" cellpadding="5" width="90%" align="center">
+<tr><td>
+ <pre>Proxypass /PIA http://localhost:8888/</pre>
+</td></tr>
+</table>
 
 <h2><a name="processing">Offline Document Processing</a></h2>
 
@@ -51,7 +58,7 @@
     job.
 </p>
 
-<table border=1 width="90%" align="center">
+<table border="1"  cellpadding="5" width="90%" align="center">
 <tr><td>
 <pre>
 ### Files:
@@ -85,12 +92,13 @@ endif
 ### Targets:
 
 all:: $(XH_HTML)
-</pre></tr></td>
+</pre></td></tr>
 </table>
 
 <p> Now, the command ``<code>make all</code>'' will run the
     <code>process</code> command on all files that have changed since the last
     time you ran <code>make</code>. 
+</p>
 
 <h3>Variations</h3>
 
@@ -99,10 +107,12 @@ all:: $(XH_HTML)
     personal web site after a major re-organization: the
     <code>&lt;header&gt;</code> tag in the old directories created a ``moved''
     sign in each page, with a link to the new location.
+</p>
 
 <p> If you don't want separate <code>.html</code> and <code>.xh</code> files,
     it is possible to process HTML files ``in place.''  The best way is with a
     sequence of commands like:
+</p>
 
 <pre>
   mv foo.html foo.html.bak
@@ -114,7 +124,7 @@ all:: $(XH_HTML)
     wrapping the sections you plan on updating with a <code>&lt;div&gt;</code>
     or <code>&lt;span&gt;</code> tag with an appropriate <code>class</code> or
     <code>id</code> attribute.
-
+</p>
 
 
 <h2><a name="uploading">Uploading Documents</a></h2>
@@ -123,6 +133,7 @@ all:: $(XH_HTML)
     Unless your connection is very fast or your website is very small, you
     will want to upload only those documents which have <em>changed</em> since
     the last upload.  There are three main ways of doing this:
+</p>
 
 <ol>
   <li> Use a utility that does the whole job.  This technique is often called
@@ -153,6 +164,7 @@ all:: $(XH_HTML)
 <p> This is easy -- <code>rsync</code> is basically an improved version of the
     <code>rcp</code> remote copy program.  You can mirror an entire directory
     tree with a command like:
+</p>
 
 <pre>
 rsync -a --numeric-ids --delete -v PIA/ cvs.risource.org:/home/cvsroot/PIA
@@ -161,11 +173,13 @@ rsync -a --numeric-ids --delete -v PIA/ cvs.risource.org:/home/cvsroot/PIA
 <p> (You may have guessed that we use this technique to upload the PIA's CVS
     repository -- this guarantees that the outside tree is an exact copy of
     the inside one used by the developers.)
+</p>
 
 <p> The <code>--delete</code> option means to delete files on the remote
     system that have been deleted on the local system; the trailing slash on
     the source directory transfers its entire contents, recursively.  It's a
     little tricky: the following command:
+</p>
 
 <pre>
 rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
@@ -173,15 +187,18 @@ rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
 
 <p> transfers the PIA subdirectory to the destination directory, and deletes
     everything else there!  Usually not a good idea.
+</p>
 
 <p> The <code>-C</code> option to <code>rsync</code> ignores the same files
     that CVS ignores for checkin; this is not usually what you want if your
     source files are under CVS control but the ones you want to upload are
     built by <code>make</code>.
+</p>
 
 <p> You'll probably find it most convenient to put your <code>rsync</code>
     commands into your top-level <code>Makefile</code> -- that's what we do in
     the PIA and <a href="http://RiSource.org/">RiSource.org</a> website.
+</p>
 
 
 <h3>Uploading with <code>cvs</code></h3>
@@ -189,6 +206,7 @@ rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
 <p> This leads inevitably to the next variation, uploading using
     <code>cvs</code>.  This works <em>very</em> well if the following two
     conditions are true:
+</p>
 
 <ol>
   <li> You have a complete development environment on the host you're
@@ -205,7 +223,9 @@ rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
     complete <code>cvs&nbsp;checkout</code> into a brand-new directory, and
     re-build everything from scratch.  Then we roll the whole thing up into a
     <code>tar</code> file and upload <em>that</em> to <a
-    href="http://RiSource.org/">RiSource.org</a>.
+    href="http://RiSource.org/">RiSource.org</a>.  You can see all of the gory
+    details in the PIA's top-level <a href="../../../Makefile">Makefile</a>.
+</p>
 
 
 <h3>Uploading with <code>make</code></h3>
@@ -214,7 +234,7 @@ rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
     on the following fragment of <code>Makefile</code> code:
 </p>
 
-<table border=1 width="90%" align="center">
+<table border="1" cellpadding="5" width="90%" align="center">
 <tr><td><pre>
 put:: $(FILES)
 	@echo cd $(RMTDIR) 		 > put
@@ -222,7 +242,7 @@ put:: $(FILES)
 	for f in $? ; do echo put $$f 	>> put ; done
 	@echo bye 			>> put
 	ftp -i $(HOST) &lt; put > /dev/null
-</pre></tr></td>
+</pre></td></tr>
 </table>
 
 <p> This is, of course, designed to use FTP, and it relies on having a
@@ -231,30 +251,51 @@ put:: $(FILES)
     descend into subdirectories you'll need to <code>cd</code> to the
     <em>parent</em> directory in order to do a <code>mkdir</code> on the
     (possibly new) child. 
+</p>
 
 <p> It's even easier with something like <code>rcp</code> or <code>rsync</code>:
 </p>
 
-<table border=1 width="90%" align="center">
+<table border="1" cellpadding="5" width="90%" align="center">
 <tr><td><pre>
 put:: $(FILES)
 	-rsh $(HOST) mkdir $(RMTDIR)
 	rsync $? $(HOST):$(RMTDIR)
 	touch put
-</pre></tr></td>
+</pre></td></tr>
 </table>
 
 <p> Also note the use of <code>rsh</code> and <code>mkdir</code> to make the
     remote directory if it's not there already.
+</p>
 
 <p> The basic idea is always the same, though: use a file (called
     <code>put</code> in this case) as a ``timestamp'' and upload everything
     that has changed since the last time.
+</p>
 
+<p> If you have subdirectories (as most of us do), you'll want to make your
+    Makefile recursive:
+</p>
+
+<table border="1" cellpadding="5" width="90%" align="center">
+<tr><td><pre>
+put::
+	for p in $(SUBDIRS); do test -d $$p && \
+            ( cd $$p; if test -f Makefile; \
+	              then $(MAKE) put; fi ); \
+	done
+</pre></td></tr>
+</table>
+
+<p> The various <code>test</code>'s are there to ensure that you won't get an
+    infinite recursion if one of the <code>SUBDIRS</code> or its
+    <code>Makefile</code> is missing. 
+</p>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: websites.html,v 1.2 1999-11-19 23:56:33 steve Exp $</b><br>
+<b>$Id: websites.html,v 1.3 2000-04-26 18:26:50 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
