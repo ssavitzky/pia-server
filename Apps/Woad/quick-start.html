@@ -6,7 +6,8 @@
 
 <h2><a name="running">Running <font face="sans-serif, Helvetica">Woad</font></a></h2>
 
-<p> To run <font face="sans-serif, Helvetica">WOAD</font> on a directory that contains HTML documents:
+<p> To run <font face="sans-serif, Helvetica">WOAD</font> on a directory that
+    contains HTML documents: 
 </p>
 <pre>
     woad <em>directory</em>
@@ -14,7 +15,7 @@
 
 <p> If that directory is visible on a server, add
     ``<code>target=<em>host:port</em>&nbsp;sources=<em>directory</em></code>''
-    to the command.  <font color="red">(The ``<code>sources=</code>'' is
+    to the command.  <font color="#cc0000">(The ``<code>sources=</code>'' is
     temporarily required to get around a deficiency in command-line decoding.)
     </font>
 </p>
@@ -24,9 +25,10 @@
     ``<code>prefix=/<em>subdir</em></code>''
 </p>
 
-<p> <font face="sans-serif, Helvetica">WOAD</font>'s annotations and indices will normally be in your home
-    directory in a subdirectory called <code>.woad</code> -- This can be
-    changed by specifying ``<code>-root <em>directory</em></code>''.
+<p> <font face="sans-serif, Helvetica">WOAD</font>'s annotations and indices
+    will normally be in your home directory in a subdirectory called
+    <code>.woad</code> -- This can be changed by specifying ``<code>-root
+    <em>directory</em></code>''.
 </p>
 
 
@@ -57,8 +59,17 @@
 <p> If you have a personal copy of the PIA running, you can also use Woad to
     view and annotate it.  To create the index, use the command:
 </p>
-<pre>    ~/PIA/src/app/tools/woad-index.pl sources="~/PIA" root="~/.pia"
+<pre>    ~/PIA/src/app/tools/woad-index.pl sources=$HOME/PIA root=$HOME/.pia
 </pre>
+
+<dl>
+  <dt> <font color="#cc0000"><b>Note:</b></font>
+  </dt>
+  <dd> <font color="#cc0000">If you have a PIA server already running, you will
+       have to stop and re-run it before the new indices will be
+       visible. </font>
+  </dd>
+</dl>
 
 <hr />
 <h2><a name="why">Why Blue?  Why Woad?</a></h2>
@@ -89,14 +100,15 @@
 </p>
 
 <blockquote>
-<p> <font face="sans-serif, Helvetica" color="red">Woad Warrior</font> <font
-    color="red">is not implemented yet.</font> You can get a vague idea of its
-    eventual flavor by following this link to its ``<a href="warrior">home
-    page</a>'', but it won't really do anything for you at this point.
+<p> <font face="sans-serif, Helvetica" color="#cc0000">Woad Warrior</font>
+    <font color="#cc0000">is not implemented yet.</font> You can get a vague
+    idea of its eventual flavor by following this link to its ``<a
+    href="warrior">home page</a>'', but it won't really do anything for you at
+    this point.
 </p>
 </blockquote>
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: quick-start.html,v 1.1 2000-07-21 20:26:01 steve Exp $</b><br>
+<b>$Id: quick-start.html,v 1.2 2000-07-28 23:01:04 steve Exp $</b><br>
 </body></html>
