@@ -9,7 +9,7 @@
    <else>  Type your name in the box</else>
 </if>
 
-<form action="instantiate.xh" method="post">
+<form action="instantiate.xh" method="get">
    <input name="inputName" value="your name here" size="15"/>
    <input name="submitNameButton" type="submit" value="Submit name"/>
 </form>
