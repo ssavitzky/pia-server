@@ -1,5 +1,5 @@
 ////// TreeAttr.java -- implementation of ActiveAttr
-//	$Id: TreeAttr.java,v 1.2 1999-04-30 23:37:35 steve Exp $
+//	$Id: TreeAttr.java,v 1.3 1999-06-04 22:40:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,7 +32,7 @@ import org.risource.dps.*;
  * An implementation of the ActiveAttr interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeAttr.java,v 1.2 1999-04-30 23:37:35 steve Exp $
+ * @version $Id: TreeAttr.java,v 1.3 1999-06-04 22:40:31 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 public class TreeAttr extends TreeValue implements ActiveAttr {
@@ -126,7 +126,7 @@ public class TreeAttr extends TreeValue implements ActiveAttr {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token. 
+  /** Return a shallow copy of this Node. 
    *	Since an attribute's value is kept in its children, we actually
    *	need to do a deep copy.
    */
@@ -134,7 +134,7 @@ public class TreeAttr extends TreeValue implements ActiveAttr {
     return new TreeAttr(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new TreeAttr(this, true);

@@ -1,5 +1,5 @@
 ////// TreeDocType.java -- implementation of ActiveDeclaration
-//	$Id: TreeDocType.java,v 1.1 1999-04-07 23:22:05 steve Exp $
+//	$Id: TreeDocType.java,v 1.2 1999-06-04 22:40:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
  * An implementation of the ActiveDocType interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeDocType.java,v 1.1 1999-04-07 23:22:05 steve Exp $
+ * @version $Id: TreeDocType.java,v 1.2 1999-06-04 22:40:36 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -84,7 +84,7 @@ public class TreeDocType extends TreeDecl implements ActiveDocType {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {

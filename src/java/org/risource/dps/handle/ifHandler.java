@@ -1,5 +1,5 @@
 ////// ifHandler.java: Node Handler generic implementation
-//	$Id: ifHandler.java,v 1.7 1999-05-18 20:17:54 steve Exp $
+//	$Id: ifHandler.java,v 1.8 1999-06-04 22:39:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,12 +38,12 @@ import org.risource.dps.util.*;
  *	<code>else</code> children.  
  *	<p>
  *
- * @version $Id: ifHandler.java,v 1.7 1999-05-18 20:17:54 steve Exp $
+ * @version $Id: ifHandler.java,v 1.8 1999-06-04 22:39:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  */
 

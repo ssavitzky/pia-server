@@ -1,4 +1,4 @@
-////// ToNamespace.java: Token output Stream to Namespace
+////// ToNamespace.java:  Output to Namespace
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Namespace.<p>
  *
- * @version $Id: ToNamespace.java,v 1.1 1999-04-30 23:37:15 steve Exp $
+ * @version $Id: ToNamespace.java,v 1.2 1999-06-04 22:40:13 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  */

@@ -1,5 +1,5 @@
 ////// thenHandler.java: Node Handler generic implementation
-//	$Id: thenHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
+//	$Id: thenHandler.java,v 1.5 1999-06-04 22:39:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,12 +38,12 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: thenHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
+ * @version $Id: thenHandler.java,v 1.5 1999-06-04 22:39:52 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  */
 

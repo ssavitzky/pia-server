@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.7 1999-05-28 21:49:14 steve Exp $
+//	$Id: Tagset.java,v 1.8 1999-06-04 22:39:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import org.risource.dps.active.*;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.7 1999-05-28 21:49:14 steve Exp $
+ * @version $Id: Tagset.java,v 1.8 1999-06-04 22:39:28 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -123,7 +123,7 @@ public interface Tagset  {
 
   public void setHandlerForTag(String tagname, Handler newHandler);
 
-  /** Called during parsing to return a suitable Token for a generic
+  /** Called during parsing to return a suitable Handler for a generic
    *	Node, given the Node's type.
    */
   public Handler getHandlerForType(short nodeType);
@@ -170,7 +170,6 @@ public interface Tagset  {
    *	of <code>ParseTreeElement</code>, but may return an instance of 
    *	a subclass instead. <p>
    *
-   * @see org.risource.dps.active.ParseTreeElement
    */
   public ActiveElement createActiveElement(String tagname,
 					   ActiveAttrList attributes,

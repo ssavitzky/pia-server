@@ -1,5 +1,5 @@
 ////// TreeText.java -- implementation of ActiveText
-//	$Id: TreeText.java,v 1.1 1999-04-07 23:22:11 steve Exp $
+//	$Id: TreeText.java,v 1.2 1999-06-04 22:40:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.util.*;
  * An implementation of the ActiveText interface, suitable for use in 
  *	DPS parse.
  *
- * @version $Id: TreeText.java,v 1.1 1999-04-07 23:22:11 steve Exp $
+ * @version $Id: TreeText.java,v 1.2 1999-06-04 22:40:46 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -119,14 +119,14 @@ public class TreeText extends TreeCharData implements ActiveText {
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
     return "";		// insert character entities ===
   }
 
-  /** Return the String equivalent of the Token's content or
+  /** Return the String equivalent of the Node's content or
    *	<code>data()</code>.  Entities are substituted for characters
    *	with special significance, such as ampersand.
    */
@@ -135,7 +135,7 @@ public class TreeText extends TreeCharData implements ActiveText {
     //return (getChildren() == null)? getData() : getChildren().toString();
   }
 
-  /** Return the String equivalent of the Token's end tag (for an element)
+  /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
@@ -143,7 +143,7 @@ public class TreeText extends TreeCharData implements ActiveText {
   }
 
 
-  /** Convert the Token to a String.
+  /** Convert the Node to a String.
    */
   public String toString() {
     return contentString();
@@ -153,7 +153,7 @@ public class TreeText extends TreeCharData implements ActiveText {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {

@@ -1,5 +1,5 @@
 ////// TreeEntity.java -- implementation of ActiveEntity
-//	$Id: TreeEntity.java,v 1.3 1999-04-30 23:37:40 steve Exp $
+//	$Id: TreeEntity.java,v 1.4 1999-06-04 22:40:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntity.java,v 1.3 1999-04-30 23:37:40 steve Exp $
+ * @version $Id: TreeEntity.java,v 1.4 1999-06-04 22:40:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -131,7 +131,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
@@ -143,7 +143,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
 	    + "'>");
   }
 
-  /** Return the String equivalent of the Token's content or
+  /** Return the String equivalent of the Node's content or
    *	<code>data()</code>.  Entities are substituted for characters
    *	with special significance, such as ampersand.
    */
@@ -152,7 +152,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
     return (v == null)? "" : v.toString();
   }
 
-  /** Return the String equivalent of the Token's end tag (for an element)
+  /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
@@ -160,7 +160,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
   }
 
 
-  /** Convert the Token to a String.
+  /** Convert the Node to a String.
    *
    * === It's an interesting question whether to return name or value ===
    */
@@ -172,14 +172,14 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
     return new TreeEntity(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new TreeEntity(this, true);

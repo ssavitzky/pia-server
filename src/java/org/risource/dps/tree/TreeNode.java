@@ -1,5 +1,5 @@
 // TreeNode.java
-// $Id: TreeNode.java,v 1.4 1999-04-30 23:37:43 steve Exp $
+// $Id: TreeNode.java,v 1.5 1999-06-04 22:40:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -145,6 +145,9 @@ public class TreeNode implements ActiveNode, Serializable {
    *	If refChild is null, insert newChild at the end of the list of
    *	children. If refChild is not a child of the Node that insertBefore is
    *	being invoked on, a NotMyChildException is thrown.
+   *
+   * @exception org.w3c.dom.DOMException -- see DOM for details.
+   * @exception org.risource.dps.active.DPSexception if not an active node.
    */
   public synchronized Node insertBefore(Node newChild, Node refChild)
        throws DOMException 
@@ -170,6 +173,8 @@ public class TreeNode implements ActiveNode, Serializable {
    *
    *	If oldChild was not already a child of the node that the replaceChild
    *	method is being invoked on, a NotMyChildException is thrown.
+   * @exception org.w3c.dom.DOMException if oldChild isn't a child
+   * @exception org.risource.dps.active.DPSexception if not an active node
    */
   public synchronized Node replaceChild(Node oldChild, Node newChild)
        throws DOMException
@@ -190,8 +195,7 @@ public class TreeNode implements ActiveNode, Serializable {
    * Removes the child node indicated by oldChild from the list of children and
    *	returns it.  <p>
    *
-   *	If oldChild was not a child of the given node, a NotMyChildException is
-   *	thrown. 
+   * @exception org.w3c.dom.DOMException if oldChild isn't a child
    */
   public synchronized Node removeChild(Node oldChild)
        throws DOMException  {
@@ -218,6 +222,10 @@ public class TreeNode implements ActiveNode, Serializable {
     return getContent();
   }
   
+  /** Set the value from a nodelist.  In this case, complain because
+   *	a generic Node doesn't <em>have</em> a value.
+   * @exception org.w3c.dom.DOMException for nodes that don't have values.
+   */
   public void setValueNodes(Context cxt, ActiveNodeList v) {
     throw new DPSException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
 			   "Setting value of " + getClass().getName());
@@ -304,6 +312,7 @@ public class TreeNode implements ActiveNode, Serializable {
 
   /** Append a new child.
    *	Calls addChild to do the actual append.
+   * @exception org.risource.dps.active.DPSexception if not an active node.
    */
   public Node appendChild(Node newChild) {
     if (newChild == null) return null;

@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.5 1999-04-07 23:22:15 steve Exp $
+//	$Id: Copy.java,v 1.6 1999-06-04 22:40:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,11 +35,10 @@ import org.risource.dps.*;
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.5 1999-04-07 23:22:15 steve Exp $
+ * @version $Id: Copy.java,v 1.6 1999-06-04 22:40:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
- * @see org.risource.dps.util.Process
  */
 
 public class Copy {

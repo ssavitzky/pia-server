@@ -1,5 +1,5 @@
 ////// Parser.java: Parser interface
-//	$Id: Parser.java,v 1.3 1999-03-12 19:24:58 steve Exp $
+//	$Id: Parser.java,v 1.4 1999-06-04 22:39:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,12 +29,12 @@ import java.io.Reader;
 
 /**
  * The interface for an Input that converts a character stream (Reader) into 
- *	a Token stream.  <p>
+ *	a ``virtual parse tree''.  <p>
  *
  *	Being a ProcessorInput, the Parser gets all of the syntactic
  *	information and parse-stack state it needs from the Processor.
  *
- * @version $Id: Parser.java,v 1.3 1999-03-12 19:24:58 steve Exp $
+ * @version $Id: Parser.java,v 1.4 1999-06-04 22:39:25 steve Exp $
  * @author steve@rsv.ricoh.com */
 
 public interface Parser extends ProcessorInput {

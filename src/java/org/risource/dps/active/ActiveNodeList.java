@@ -1,5 +1,5 @@
 ////// ActiveNodeList.java: ActiveNode List interface
-//	$Id: ActiveNodeList.java,v 1.4 1999-04-07 23:20:58 steve Exp $
+//	$Id: ActiveNodeList.java,v 1.5 1999-06-04 22:39:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,9 +32,9 @@ import org.w3c.dom.*;
  *	Collection or org.risource.ds.List.  The contents are not necessarily 
  *	from the same level in the parse tree, though this is usual.
  *
- * @version $Id: ActiveNodeList.java,v 1.4 1999-04-07 23:20:58 steve Exp $
+ * @version $Id: ActiveNodeList.java,v 1.5 1999-06-04 22:39:32 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dps.ActiveNode
+ * @see org.risource.dps.active.ActiveNode
  * @see org.risource.ds.List
  */
 

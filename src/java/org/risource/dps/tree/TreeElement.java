@@ -1,5 +1,5 @@
 ////// TreeElement.java -- implementation of ActiveElement
-//	$Id: TreeElement.java,v 1.3 1999-04-30 23:37:38 steve Exp $
+//	$Id: TreeElement.java,v 1.4 1999-06-04 22:40:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeElement.java,v 1.3 1999-04-30 23:37:38 steve Exp $
+ * @version $Id: TreeElement.java,v 1.4 1999-06-04 22:40:37 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -476,7 +476,7 @@ public class TreeElement extends TreeNode implements ActiveElement
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
@@ -491,7 +491,7 @@ public class TreeElement extends TreeNode implements ActiveElement
     return s;
   }
 
-  /** Return the String equivalent of the Token's content or
+  /** Return the String equivalent of the Node's content or
    *	<code>data()</code>.  Entities are substituted for characters
    *	with special significance, such as ampersand.
    */
@@ -507,7 +507,7 @@ public class TreeElement extends TreeNode implements ActiveElement
     }
   }
 
-  /** Return the String equivalent of the Token's end tag (for an element)
+  /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
@@ -525,14 +525,14 @@ public class TreeElement extends TreeNode implements ActiveElement
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
     return new TreeElement(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new TreeElement(this, true);

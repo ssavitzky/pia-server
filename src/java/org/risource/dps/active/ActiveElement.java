@@ -1,5 +1,5 @@
 ////// ActiveElement.java: Active Element interface
-//	$Id: ActiveElement.java,v 1.5 1999-04-30 23:36:53 steve Exp $
+//	$Id: ActiveElement.java,v 1.6 1999-06-04 22:39:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveElement.java,v 1.5 1999-04-30 23:36:53 steve Exp $
+ * @version $Id: ActiveElement.java,v 1.6 1999-06-04 22:39:30 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -76,7 +76,7 @@ public interface ActiveElement extends ActiveNode, Element {
   ** Syntax: convenience flags:
   ************************************************************************/
 
-  /** Returns true if the Token corresponds to an Element that
+  /** Returns true if the Node corresponds to an Element that
    *	consists of a start tag with no content or corresponding end
    *	tag.
    */
@@ -85,7 +85,7 @@ public interface ActiveElement extends ActiveNode, Element {
   /** Sets the internal flag corresponding to isEmptyElement. */
   public void setIsEmptyElement(boolean value);
 
-  /** Returns true if the Token corresponds to an empty Element and
+  /** Returns true if the Node corresponds to an empty Element and
    *	its (start) tag contains the final ``<code>/</code>'' that marks
    *	an empty element in XML.
    */
@@ -94,7 +94,7 @@ public interface ActiveElement extends ActiveNode, Element {
   /** Sets the internal flag corresponding to hasEmptyDelimiter. */
   public void setHasEmptyDelimiter(boolean value);
 
-  /** Returns true if the Token corresponds to an Element which has content
+  /** Returns true if the Node corresponds to an Element which has content
    *	but no end tag, or to an end tag that was omitted from the input or 
    *	that should perhaps be omitted from the output.
    */

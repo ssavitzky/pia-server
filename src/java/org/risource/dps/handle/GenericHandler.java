@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.7 1999-04-30 23:36:56 steve Exp $
+//	$Id: GenericHandler.java,v 1.8 1999-06-04 22:39:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,13 +47,13 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.7 1999-04-30 23:36:56 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.8 1999-06-04 22:39:42 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  */
 
@@ -260,7 +260,8 @@ public class GenericHandler extends BasicHandler {
   /** Construct a GenericHandler for a passive element. 
    *
    * @param syntax see codes in <a href="org.risource.dps.Syntax.html">Syntax</a>
-   * @see #getSyntaxCode
+   * @see org.risource.dps.handle.AbstractHandler#getSyntaxCode
+   * @see org.risource.dps.Syntax
    */
   public GenericHandler(int syntax) {
     super(syntax);
@@ -278,7 +279,8 @@ public class GenericHandler extends BasicHandler {
    *	the content.
    * @param parseEnts if <code>true</code> (default), recognize entities in
    *	the content.
-   * @see #getSyntaxCode
+   * @see org.risource.dps.handle.AbstractHandler#getSyntaxCode
+   * @see org.risource.dps.Syntax
    */
   public GenericHandler(boolean empty, boolean parseElts, boolean parseEnts) {
     super(empty, parseElts, parseEnts);

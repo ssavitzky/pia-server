@@ -1,5 +1,5 @@
 ////// TextNodeHandler.java: Text Node Handler implementation
-//	$Id: TextNodeHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
+//	$Id: TextNodeHandler.java,v 1.6 1999-06-04 22:39:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,13 +38,13 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: TextNodeHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
+ * @version $Id: TextNodeHandler.java,v 1.6 1999-06-04 22:39:46 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
  */
@@ -109,7 +109,7 @@ public class TextNodeHandler extends AbstractHandler {
   ** Parsing Operations:
   ************************************************************************/
 
-  /** Called to determine the correct Handler for a given Token.
+  /** Called to determine the correct Handler for a given Node
    *	The default action is to return <code>this</code>.
    */
   public Action getActionForNode(ActiveNode n) {

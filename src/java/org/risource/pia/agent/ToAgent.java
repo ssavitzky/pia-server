@@ -1,4 +1,4 @@
-////// ToAgent.java: Token output Stream to Agent
+////// ToAgent.java: Output to Agent
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * <p>	This class is used to construct an Agent, and in particular a
  *	GenericAgent.
  *
- * @version $Id: ToAgent.java,v 1.1 1999-04-30 23:38:08 steve Exp $
+ * @version $Id: ToAgent.java,v 1.2 1999-06-04 22:40:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.pia.Agent
  * @see org.risource.pia.GenericAgent

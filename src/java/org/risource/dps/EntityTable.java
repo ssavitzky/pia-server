@@ -1,5 +1,5 @@
 ////// EntityTable.java: Entity Lookup Table interface
-//	$Id: EntityTable.java,v 1.6 1999-04-23 00:21:19 steve Exp $
+//	$Id: EntityTable.java,v 1.7 1999-06-04 22:39:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,11 +35,11 @@ import java.util.Enumeration;
  *	<em>Setting</em> values still requires a context, because nodes
  *	may have to be constructed.
  *
- * @version $Id: EntityTable.java,v 1.6 1999-04-23 00:21:19 steve Exp $
+ * @version $Id: EntityTable.java,v 1.7 1999-06-04 22:39:23 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.active.ActiveEntity
- * @see org.risource.dps.util.BasicEntityTable
+ * @see org.risource.dps.namespace.BasicEntityTable
  */
 
 public interface EntityTable extends Namespace {

@@ -1,5 +1,5 @@
 ////// Context.java: Document processing context interface
-//	$Id: Context.java,v 1.6 1999-04-23 00:21:17 steve Exp $
+//	$Id: Context.java,v 1.7 1999-06-04 22:39:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,14 +38,11 @@ import java.io.PrintStream;
  *	although this will usually be the simplest implementation. <p>
  *
  *	At any given level in the Context stack there is a current set of
- *	bindings for entities and handlers, and a current Node being operated
- *	on, normally by appending to it.  There is also a current Token being
+ *	bindings for entities and handlers, and a current Node being 
  *	``expanded'' or processed.  Immediately before starting (pushing) a
- *	new Context, the current Token should correspond to the Element being
+ *	new Context, the current Node should correspond to the Element being
  *	pushed.  That way, immediately after popping, it will have the
- *	Handler that needs to be called to finalize the operation.  A Handler
- *	need not be associated with an end tag, which saves the Parser the
- *	trouble of looking it up. <p>
+ *	Handler that needs to be called to finalize the operation. <p>
  *
  *	Note that the current Node does <em>not</em> have to be a child
  *	of the current Node one level up in the stack.  It is perfectly
@@ -67,13 +64,13 @@ import java.io.PrintStream;
  *		 represents a ``continuation.''
  *	</ul>
  *
- * @version $Id: Context.java,v 1.6 1999-04-23 00:21:17 steve Exp $
+ * @version $Id: Context.java,v 1.7 1999-06-04 22:39:22 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Handler
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Token
+ * @see org.risource.dps.Active
  * @see org.risource.dps.Namespace
  */
 

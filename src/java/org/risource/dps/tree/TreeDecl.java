@@ -1,5 +1,5 @@
 ////// TreeDecl.java -- implementation of ActiveDeclaration
-//	$Id: TreeDecl.java,v 1.1 1999-04-07 23:22:05 steve Exp $
+//	$Id: TreeDecl.java,v 1.2 1999-06-04 22:40:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
  * An implementation of the ActiveDecl interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeDecl.java,v 1.1 1999-04-07 23:22:05 steve Exp $
+ * @version $Id: TreeDecl.java,v 1.2 1999-06-04 22:40:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -129,7 +129,7 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
@@ -137,7 +137,7 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
       + ((getItemName() == null)? "" : getItemName() + " ");
   }
 
-  /** Return the String equivalent of the Token's content or
+  /** Return the String equivalent of the Node's content or
    *	<code>data()</code>.  Entities are substituted for characters
    *	with special significance, such as ampersand.
    */
@@ -146,7 +146,7 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
       + (hasChildNodes()? "[" + getChildNodes().toString() + "]" : "");
   }
 
-  /** Return the String equivalent of the Token's end tag (for an element)
+  /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
@@ -154,7 +154,7 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
   }
 
 
-  /** Convert the Token to a String.
+  /** Convert the Node to a String.
    */
   public String toString() {
     return startString() + contentString() + endString();
@@ -164,7 +164,7 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {

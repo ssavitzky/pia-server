@@ -1,5 +1,5 @@
 ////// TreeComment.java -- implementation of ActiveComment
-//	$Id: TreeComment.java,v 1.1 1999-04-07 23:22:04 steve Exp $
+//	$Id: TreeComment.java,v 1.2 1999-06-04 22:40:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveComment interface, suitable for use in 
  *	DPS parse.
  *
- * @version $Id: TreeComment.java,v 1.1 1999-04-07 23:22:04 steve Exp $
+ * @version $Id: TreeComment.java,v 1.2 1999-06-04 22:40:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -75,14 +75,14 @@ public class TreeComment extends TreeCharData implements ActiveComment {
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
     return "<!-- ";
   }
 
-  /** Return the String equivalent of the Token's content or
+  /** Return the String equivalent of the Node's content or
    *	<code>data()</code>.  Entities are substituted for characters
    *	with special significance, such as ampersand.
    */
@@ -90,7 +90,7 @@ public class TreeComment extends TreeCharData implements ActiveComment {
     return getData();
   }
 
-  /** Return the String equivalent of the Token's end tag (for an element)
+  /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
@@ -108,14 +108,14 @@ public class TreeComment extends TreeCharData implements ActiveComment {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
     return new TreeComment(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new TreeComment(this, true);

@@ -1,5 +1,5 @@
 ////// AbstractNamespace.java: Node Lookup Table
-//	$Id: AbstractNamespace.java,v 1.2 1999-04-30 23:37:05 steve Exp $
+//	$Id: AbstractNamespace.java,v 1.3 1999-06-04 22:40:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: AbstractNamespace.java,v 1.2 1999-04-30 23:37:05 steve Exp $
+ * @version $Id: AbstractNamespace.java,v 1.3 1999-06-04 22:40:01 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -219,7 +219,7 @@ public abstract class AbstractNamespace extends TreeGeneric
   ** Presentation:
   ************************************************************************/
 
-  /** Return the String equivalent of the Token's start tag (for an element)
+  /** Return the String equivalent of the Node's start tag (for an element)
    *	or the part that comes before the <code>data()</code>.  Special
    *	hackery for wrapping excessively-long attribute lists. 
    */

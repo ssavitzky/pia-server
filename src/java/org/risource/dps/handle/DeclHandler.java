@@ -1,5 +1,5 @@
 ////// DeclHandler.java: Declaration Node Handler implementation
-//	$Id: DeclHandler.java,v 1.1 1999-04-07 23:21:18 steve Exp $
+//	$Id: DeclHandler.java,v 1.2 1999-06-04 22:39:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,13 +39,13 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: DeclHandler.java,v 1.1 1999-04-07 23:21:18 steve Exp $
+ * @version $Id: DeclHandler.java,v 1.2 1999-06-04 22:39:38 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
  */

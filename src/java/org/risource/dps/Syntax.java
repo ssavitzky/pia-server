@@ -1,5 +1,5 @@
 ////// Syntax.java: Node Syntax Handler interface
-//	$Id: Syntax.java,v 1.4 1999-04-07 23:20:48 steve Exp $
+//	$Id: Syntax.java,v 1.5 1999-06-04 22:39:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,11 +39,11 @@ import org.risource.dps.active.*;
  *	(non-verifying) parser to be built without exposing the gory details
  *	of SGML to the casual programmer. <p>
  *
- * @version $Id: Syntax.java,v 1.4 1999-04-07 23:20:48 steve Exp $
+ * @version $Id: Syntax.java,v 1.5 1999-06-04 22:39:26 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Token
+ * @see org.risource.dps.Handler
  * @see org.risource.dps.Input 
  */
 
@@ -132,8 +132,8 @@ public interface Syntax {
    *	It is assumed that <code>this</code> is the result of the
    *	Tagset method <code>handlerForTag</code>.  Normally just
    *	returns <code>this</code>, but a handler may further examine
-   *	the Token's attributes and return something more specific. 
-   *	The Handler is also permitted to <em>modify</em> the Token.
+   *	the Node's attributes and return something more specific. 
+   *	The Handler is also permitted to <em>modify</em> the Node.
    *	<p>
    *
    *	Note that this replaces the earlier technique of dispatching
@@ -141,8 +141,8 @@ public interface Syntax {
    *	in some cases.  Since <code>getActionForNode</code> is called
    *	at parse time, it preceeds any actual processing of the Node. <p>
    *
-   * @param t the Token for which the syntax is being checked.
-   * @return the correct Handler for the Token.  
+   * @param n the Node for which the syntax is being checked.
+   * @return the correct Handler for the Node.  
    * @see org.risource.dps.Tagset
    */
   public Action getActionForNode(ActiveNode n);
@@ -168,13 +168,13 @@ public interface Syntax {
    */
   public boolean mayContainParagraphs();
 
-  /** Return true if this kind of token implicitly ends the given one. 
+  /** Return true if this kind of Node implicitly ends the given one. 
    *	This is not as powerful a test as using the DTD, but it will work
    *	in most cases and permits a simpler parser.
    */
   public boolean implicitlyEnds(String tag);
 
-  /** Return true if this kind of token is a potential child of the given one.
+  /** Return true if this kind of Node is a potential child of the given one.
    */
   public boolean isChildOf(String tag);
 

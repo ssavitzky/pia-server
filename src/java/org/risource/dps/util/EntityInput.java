@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.5 1999-04-07 23:22:15 steve Exp $
+//	$Id: EntityInput.java,v 1.6 1999-06-04 22:40:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.5 1999-04-07 23:22:15 steve Exp $
+ * @version $Id: EntityInput.java,v 1.6 1999-06-04 22:40:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -133,14 +133,14 @@ public class EntityInput extends TreeEntity {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
     return new EntityInput(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new EntityInput(this, true);

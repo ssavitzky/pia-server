@@ -1,5 +1,5 @@
-////// ToNodeList.java: Token output Stream to node list
-//	$Id: ToNodeList.java,v 1.5 1999-04-30 23:37:17 steve Exp $
+////// ToNodeList.java:  Output to node list
+//	$Id: ToNodeList.java,v 1.6 1999-06-04 22:40:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to an (active) NodeList.<p>
  *
- * @version $Id: ToNodeList.java,v 1.5 1999-04-30 23:37:17 steve Exp $
+ * @version $Id: ToNodeList.java,v 1.6 1999-06-04 22:40:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.NodeList
  */

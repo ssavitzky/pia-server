@@ -1,5 +1,5 @@
 ////// EntityWrap.java -- implementation of ActiveEntity
-//	$Id: EntityWrap.java,v 1.1 1999-04-23 00:17:12 steve Exp $
+//	$Id: EntityWrap.java,v 1.2 1999-06-04 22:40:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.ds.Tabular;
  * <p> In contrast, NamespaceWrap should use EntityIndirect.
  *	
  *
- * @version $Id: EntityWrap.java,v 1.1 1999-04-23 00:17:12 steve Exp $
+ * @version $Id: EntityWrap.java,v 1.2 1999-06-04 22:40:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  * @see org.risource.dps.namespace.NamespaceWrap
@@ -148,14 +148,14 @@ public class EntityWrap extends TreeEntity {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes, if any, are
+  /** Return a shallow copy of this Node.  Attributes, if any, are
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
     return new EntityWrap(this, false);
   }
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy() {
     return new EntityWrap(this, true);

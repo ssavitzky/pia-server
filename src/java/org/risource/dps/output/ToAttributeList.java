@@ -1,5 +1,5 @@
-////// ToAttributeList.java: Token output Stream to attribute list
-//	$Id: ToAttributeList.java,v 1.4 1999-04-07 23:21:39 steve Exp $
+////// ToAttributeList.java: Output to attribute list
+//	$Id: ToAttributeList.java,v 1.5 1999-06-04 22:40:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,9 +35,9 @@ import org.risource.dps.tree.TreeAttrList;
 /**
  * Output to an AttributeList.<p>
  *
- * @version $Id: ToAttributeList.java,v 1.4 1999-04-07 23:21:39 steve Exp $
+ * @version $Id: ToAttributeList.java,v 1.5 1999-06-04 22:40:09 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dps.Token
+ * @see org.risource.dps.active.ActiveAttrList
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */

@@ -1,5 +1,5 @@
-////// ToWriter.java: Token output Stream to Writer
-//	$Id: ToWriter.java,v 1.5 1999-05-07 23:33:49 steve Exp $
+////// ToWriter.java:  Output to Writer
+//	$Id: ToWriter.java,v 1.6 1999-06-04 22:40:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,9 +35,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
- * Output a Token stream to a Writer (character output stream). <p>
+ * Output to a Writer (character output stream). <p>
  *
- * @version $Id: ToWriter.java,v 1.5 1999-05-07 23:33:49 steve Exp $
+ * @version $Id: ToWriter.java,v 1.6 1999-06-04 22:40:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor

@@ -1,5 +1,5 @@
 ////// ToHTTPClient.java: output nodes to HTTP client
-//	$Id: ToHTTPClient.java,v 1.4 1999-04-07 23:21:40 steve Exp $
+//	$Id: ToHTTPClient.java,v 1.5 1999-06-04 22:40:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,13 +37,13 @@ import java.io.OutputStreamWriter;
 import java.io.IOException;
 
 /**
- * Output a Token stream to an HTTP client (represented by its OutputStream). 
+ * Output to an HTTP client (represented by its OutputStream). 
  *
  * <p>	Contains extra machinery to output the response line and headers ahead
  *	of the document content.  This allows the DPS to modify the response
  *	type and headers. 
  *
- * @version $Id: ToHTTPClient.java,v 1.4 1999-04-07 23:21:40 steve Exp $
+ * @version $Id: ToHTTPClient.java,v 1.5 1999-06-04 22:40:12 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor

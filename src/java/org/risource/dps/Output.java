@@ -1,5 +1,5 @@
 ////// Output.java: Document Builder
-//	$Id: Output.java,v 1.4 1999-04-07 23:20:48 steve Exp $
+//	$Id: Output.java,v 1.5 1999-06-04 22:39:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,9 +39,9 @@ import org.w3c.dom.Element;
  *	    <li> Convert a subtree into a String.
  *	</ul>
  *
- * @version $Id: Output.java,v 1.4 1999-04-07 23:20:48 steve Exp $
+ * @version $Id: Output.java,v 1.5 1999-06-04 22:39:24 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dps.Token
+ * @see org.risource.dps.Context
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */

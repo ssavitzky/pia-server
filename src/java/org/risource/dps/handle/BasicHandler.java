@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.5 1999-04-07 23:21:17 steve Exp $
+//	$Id: BasicHandler.java,v 1.6 1999-06-04 22:39:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,13 +42,12 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.5 1999-04-07 23:21:17 steve Exp $
+ * @version $Id: BasicHandler.java,v 1.6 1999-06-04 22:39:36 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
  */
@@ -82,7 +81,7 @@ public class BasicHandler extends AbstractHandler {
   ** Parsing Operations:
   ************************************************************************/
 
-  /** Set what the Handler knows about a Token's syntax.
+  /** Set what the Handler knows about a Node's syntax.
    *
    * @see org.risource.dps.Syntax
    */
@@ -184,7 +183,8 @@ public class BasicHandler extends AbstractHandler {
   /** Construct a BasicHandler for a passive element. 
    *
    * @param syntax see codes in <a href="org.risource.dps.Syntax.html">Syntax</a>
-   * @see #getSyntaxCode
+   * @see org.risource.dps.handle.AbstractHandler#getSyntaxCode
+   * @see org.risource.dps.Syntax
    */
   public BasicHandler(int syntax) {
     syntaxCode = syntax;
@@ -203,7 +203,7 @@ public class BasicHandler extends AbstractHandler {
    *	the content.
    * @param parseEnts if <code>true</code> (default), recognize entities in
    *	the content.
-   * @see #getSyntaxCode
+   * @see org.risource.dps.handle.AbstractHandler#getSyntaxCode
    */
   public BasicHandler(boolean empty, boolean parseElts, boolean parseEnts) {
     syntaxCode = empty? Syntax.EMPTY : Syntax.NORMAL;

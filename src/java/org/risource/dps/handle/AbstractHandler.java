@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.6 1999-04-07 23:21:17 steve Exp $
+//	$Id: AbstractHandler.java,v 1.7 1999-06-04 22:39:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,12 +44,12 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.6 1999-04-07 23:21:17 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.7 1999-06-04 22:39:34 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  */
 
@@ -98,13 +98,13 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
    */
   protected int syntaxCode = 0;
 
-  /** What the Handler knows about a Token's syntax without looking at it.
+  /** What the Handler knows about a Node's syntax without looking at it.
    *
    * @see org.risource.dps.Syntax
    */
   public int getSyntaxCode() { return syntaxCode; }
 
-  /** Set what the Handler knows about a Token's syntax.
+  /** Set what the Handler knows about a Node's syntax.
    *
    * @see org.risource.dps.Syntax
    */
@@ -117,9 +117,9 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
    *	It is assumed that <code>this</code> is the result of the Tagset
    *	method <code>handlerForTag</code>.
    *
-   * @param t the Token for which this is the handler, and for which the
+   * @param n the Node for which this is the handler, and for which the
    *	ssyntax is being checked.
-   * @return <code>true</code> if the Token is an empty Element.
+   * @return <code>true</code> if the Node is an empty Element.
    * @see org.risource.dps.Tagset
    */
   public boolean isEmptyElement(Node n) {
@@ -184,7 +184,7 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
     return e;
   }
 
-  /** Called to determine the correct Action for a given Token.
+  /** Called to determine the correct Action for a given Node.
    *	The default action is to return <code>this</code>, but it is
    *	possible to do additional dispatching based on the Node's 
    *	attributes or other information.
@@ -244,13 +244,13 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
    */
   public boolean mayContainParagraphs() { return true; }
 
-  /** Return true if this kind of token implicitly ends the given one. 
+  /** Return true if this kind of node implicitly ends the given one. 
    *	This is not as powerful a test as using the DTD, but it will work
    *	in most cases and permits a simpler parser.
    */
   public boolean implicitlyEnds(String tag) { return false; }
 
-  /** Return true if this kind of token is a potential child of the given one.
+  /** Return true if this kind of node is a potential child of the given one.
    */
   public boolean isChildOf(String tag) { return true; }
 

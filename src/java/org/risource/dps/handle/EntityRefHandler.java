@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.2 1999-04-17 01:19:05 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.3 1999-06-04 22:39:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,13 +38,13 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.2 1999-04-17 01:19:05 steve Exp $
+ * @version $Id: EntityRefHandler.java,v 1.3 1999-06-04 22:39:41 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
- * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.tagset.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
  */
@@ -136,7 +136,7 @@ public class EntityRefHandler extends AbstractHandler {
   ** Parsing Operations:
   ************************************************************************/
 
-  /** Called to determine the correct Handler for a given Token.
+  /** Called to determine the correct Handler for a given Node.
    *	Does dispatching on the name to determine which of the canned
    *	handlers to return.
    *

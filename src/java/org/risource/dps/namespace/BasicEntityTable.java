@@ -1,5 +1,5 @@
 ////// BasicEntityTable.java: Node Handler Lookup Table
-//	$Id: BasicEntityTable.java,v 1.1 1999-04-23 00:17:07 steve Exp $
+//	$Id: BasicEntityTable.java,v 1.2 1999-06-04 22:40:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,11 +39,10 @@ import org.risource.ds.Table;
  *	This implementation is represented as an Element; the bindings
  *	are kept in its children.  <p>
  *
- * @version $Id: BasicEntityTable.java,v 1.1 1999-04-23 00:17:07 steve Exp $
+ * @version $Id: BasicEntityTable.java,v 1.2 1999-06-04 22:40:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Token
  * @see org.risource.dps.Input 
  */
 
