@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.9 1999-05-07 23:37:00 steve Exp $
+// $Id: Pia.java,v 1.10 1999-05-20 20:23:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.9 1999-05-07 23:37:00 steve Exp $
+  * @version $Id: Pia.java,v 1.10 1999-05-20 20:23:30 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -300,29 +300,36 @@ public class Pia implements Tabular {
   /**
    * @return this machine
    */
-  public Machine thisMachine(){
-    return thisMachine;
+  public static Machine thisMachine(){
+    return instance.thisMachine;
   }
   
   /**
    * @return resolver
    */
-  public Resolver resolver(){
-    return resolver;
+  public static Resolver resolver(){
+    return instance.resolver;
   }
 
   /**
    * @return admin agent
    */
-  public Admin adminAgent(){
-    return adminAgent;
+  public static Admin adminAgent(){
+    return instance.adminAgent;
   }
+
+  /** Set <code>true</code> after the Admin agent has been started. 
+   *	This is used during initialization so that operations that normally
+   *	require the Admin agent (such as loading an Agent from XML) can
+   *	proceed in its absence. 
+   */
+  public static boolean adminStarted=false;
 
   /**
    * @return root agent
    */
-  public Agent rootAgent(){
-    return rootAgent;
+  public static Agent rootAgent(){
+    return instance.rootAgent;
   }
 
   /**
@@ -830,12 +837,18 @@ public class Pia implements Tabular {
     
     // Create the Root agent, and make its data directory the USR_ROOT
     rootAgent = new Root(rootAgentName, usrRootStr);
-
-    // Create the Admin agent.  Its initialize.xh file loads everything else.
-    adminAgent = new Admin(adminAgentName, null);
-
     resolver.registerAgent( rootAgent );
-    resolver.registerAgent( adminAgent );
+
+    String fn = null; //rootAgent.findDocument("./Admin/AGENT.xml");
+    if (fn != null) {
+      ((GenericAgent)rootAgent).loadFile(fn, null);
+      adminAgent = (Admin) resolver.agent(adminAgentName);
+    } else {
+      // Create the Admin agent.  Its initialize.xh file loads everything else.
+      adminAgent = new Admin(adminAgentName, null);
+      resolver.registerAgent( adminAgent );
+    }
+    adminStarted=true;
 
     try{
       accepter = new Accepter( realPort );

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.20 1999-05-07 23:36:19 steve Exp $
+// $Id: GenericAgent.java,v 1.21 1999-05-20 20:23:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -307,6 +307,7 @@ public class GenericAgent extends BasicNamespace
 
   /** Flag that says whether initialization has been done. */
   protected boolean initialized = false;
+  protected boolean tagsetsInitialized = false;
 
   /** Flag that says whether to run the initialization file. */
   public boolean runInitFile = true;
@@ -336,6 +337,7 @@ public class GenericAgent extends BasicNamespace
    */
   public void loadFrom(Input in, Context cxt, Tabular opts) {
     ActiveDoc env = ActiveDoc.getActiveDoc(cxt);
+    env.setAgent(this);
     runInitFile = false;
 
     parseOptions(opts);
@@ -344,10 +346,12 @@ public class GenericAgent extends BasicNamespace
     ToAgent loader = new ToAgent(this);
     loader.setContext(cxt);
     Tagset ts = loadTagset(env, "xhtml");
-    Processor p = env.subDocument(in, cxt, loader, ts);
+    TopContext tp = env.subDocument(in, cxt, loader, ts);
     // It's up to the subDocument processor to switch tagsets.
-    p = p.subProcess(in, loader, this);
+    Processor p = tp.subProcess(in, loader, this);
     p.processChildren();
+    env.subDocumentEnd();
+    initialized=false;
   }
 
   /** Initialization.  Subclasses may override, but this should rarely
@@ -368,17 +372,20 @@ public class GenericAgent extends BasicNamespace
     put("path", path());
     put("pathName", pathName());
 
-    // Fake a request for the initialization file. 
-    //    We might not need it, in which case this is a waste, 
-    //	  but we need a processor in order to load tagsets.
-    String url = pathName() + "/" + "initialize.xh";
-    Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
-    ActiveDoc   proc = null;
-    Resolver    res = Pia.instance().resolver();
+      // Fake a request for the initialization file. 
+      //    We might not need it, in which case this is a waste, 
+      //	  but we need a processor in order to load tagsets.
+      String url = pathName() + "/" + "initialize.xh";
+      Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
+      ActiveDoc   proc = null;
+      Resolver    res = Pia.resolver();
 
-    // Force tagsets to load if necessary. 
-    if (piaXHTMLtagset == null || findDocument(name()+"-xhtml") != null) {
-      proc = makeDPSProcessor(req, res);
+    if (! tagsetsInitialized) {
+      // Force tagsets to load if necessary. 
+      if (piaXHTMLtagset == null || findDocument(name()+"-xhtml") != null) {
+	proc = makeDPSProcessor(req, res);
+      }
+      tagsetsInitialized = true;
     }
 
     // At this point, we have all our options and files. 
@@ -387,6 +394,7 @@ public class GenericAgent extends BasicNamespace
     initialized = true;
     ActiveNodeList initHook = getValueNodes(null, "initialize");
     if (initHook != null) {
+      if (proc == null) proc = makeDPSProcessor(req, res);
       proc.setInput(new FromNodeList(initHook));
       proc.setOutput(new DiscardOutput());
       proc.run();
@@ -411,24 +419,33 @@ public class GenericAgent extends BasicNamespace
      */
     String    fn = findDocument("initialize");
 
-    if (fn != null) try {
+    if (fn != null) {
       String url = pathName() + "/" + "initialize";
       if (RESOLVE_INITIALIZE) {	
 	// We can force initialization to use the resolver if necessary.
 	createRequest("GET", url, (String)null, null );
       } else {
 	// Run an XHTML initialization file.  Fake the request.
-	Transaction req = makeRequest(machine(), "GET", url,
-				      (String)null, null);
-	Resolver    res = Pia.instance().resolver();
-	ActiveDoc   proc = makeDPSProcessor(req, res);
-	org.risource.dps.Parser p = proc.getTagset().createParser();
-	p.setReader(new FileReader(fn));
-	proc.setOutput(new DiscardOutput());
-	proc.setInput(p);
-	proc.define("filePath", fn);
-	proc.run();
+	loadFile(fn, null);
       }
+    }
+  }
+
+  public void loadFile(String fn, String tagsetFile) {
+    try {
+      Transaction req = makeRequest(machine(), "GET", "file:" + fn,
+				    (String)null, null);
+      Resolver    res = Pia.resolver();
+      ActiveDoc  proc = makeDPSProcessor(req, res);
+      if (tagsetFile != null) {
+	proc.setTagset(proc.loadTagset(tagsetFile));
+      }
+      Parser        p = proc.getTagset().createParser();
+      p.setReader(new FileReader(fn));
+      proc.setOutput(new DiscardOutput());
+      proc.setInput(p);
+      proc.define("filePath", fn);
+      proc.run();
     } catch (Exception e) {
       System.err.println("Exception in " + fn + " initializing " + name());
       System.err.println(e.toString());
@@ -482,12 +499,12 @@ public class GenericAgent extends BasicNamespace
   /** Register the Agent with the Resolver. */
   public void register() {
     //    System.err.println("Registering "+ type() + "/" + name());
-    Pia.instance().resolver().registerAgent( this );
+    Pia.resolver().registerAgent( this );
   }
 
   /** Remove the Agent from the Resolver's registry */
   public void unregister() {
-    Pia.instance().resolver().unRegisterAgent( this );
+    Pia.resolver().unRegisterAgent( this );
   }
 
 
@@ -592,7 +609,7 @@ public class GenericAgent extends BasicNamespace
     //    request.setContentLength( queryString.length() );
 
     // to machine should be gotten from url
-    //   request.toMachine( Pia.instance().thisMachine() );
+    //   request.toMachine( Pia.thisMachine() );
     request.setMethod( method );
     request.setRequestURL( url );
     return request;
@@ -648,7 +665,7 @@ public class GenericAgent extends BasicNamespace
   public Agent typeAgent() {
     // Handle the anomalous (legacy) situation where type == name
     if (type() != null && type().equals(name())) return null;
-    return (type() == null)? null : Pia.instance().resolver().agent(type());
+    return (type() == null)? null : Pia.resolver().agent(type());
   }
 
   /** 
@@ -1081,7 +1098,7 @@ public class GenericAgent extends BasicNamespace
     Pia.debug(this, msg);
 
     Content ct = new org.risource.content.text.html( new StringReader(msg) );
-    Transaction response = new HTTPResponse( Pia.instance().thisMachine,
+    Transaction response = new HTTPResponse( Pia.thisMachine(),
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
     // Got a redirect message for all agency agents
@@ -1241,6 +1258,8 @@ public class GenericAgent extends BasicNamespace
   public String findDocument(String path, String suffixPath[],
 			     boolean forWriting) {
     if ( path == null ) return null;
+    List dirPath = forWriting? dataSearchPath(): documentSearchPath();
+    String writeRoot = userDirFile.getPath();
 
     if (path.startsWith("/~")) {	// old-style data path
       path = "/" + path.substring(2);
@@ -1252,7 +1271,14 @@ public class GenericAgent extends BasicNamespace
       // Treat /PATH/NAME~ same as /PATH/NAME -- agent handles if different.
       if (path.startsWith(HOME)) path = path.substring(HOME.length());
       path = path.substring(1);
+    } else if (path.startsWith("./")) {	// Relative to AGENTS
+      dirPath = new List();
+      dirPath.push(Pia.instance().usrAgentsDir());
+      if (!forWriting) dirPath.push(Pia.instance().piaAgentsDir());
+      path = path.substring(2);
+      writeRoot = Pia.instance().usrAgentsDir().getPath();
     }
+
     // OK: at this point we have a relative path.
 
     if (path.startsWith(DATA)) {
@@ -1262,11 +1288,10 @@ public class GenericAgent extends BasicNamespace
     }
 
     if (suffixPath == null) suffixPath = codeSearch;
-    List dirPath = forWriting? dataSearchPath(): documentSearchPath();
     String found =  FileAccess.findFile(path, dirPath, suffixPath);
     if (found != null) return found;
     if (forWriting) { // Didn't find anything, but it may be ok to create it.
-      return forceParent(NameUtils.systemPath(userDirFile.getPath(), path));
+      return forceParent(NameUtils.systemPath(writeRoot, path));
     }
     return null;
   }
