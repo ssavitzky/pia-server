@@ -17,9 +17,9 @@
 <!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
 <!-- ====================================================================== -->
 
-<tagset name="src-ccode" parent="src-file" tagset="woad-xhtml"
-	include="src-wrapper" documentWrapper="-document-"
-	parser="CodeParser" comment="//" cbegin="/*" cend="*/"
+<tagset name="src-xref" parent="HTML" tagset="woad-xhtml"
+        include="src-file src-wrapper"
+	parser="TextParser" comment="//" cbegin="/*" cend="*/"
 	xrefs="SITE:xref"
 	keywords="if else while until for switch case
 		  try catch throws implements instanceof new this super
@@ -28,16 +28,17 @@
 		  String return import export package include define"
 >
 
-<cvs-id>$Id: src-ccode.ts,v 1.4 2000-10-06 00:27:42 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xref.ts,v 1.1 2000-10-06 00:27:43 steve Exp $</cvs-id>
 
-<h1>WOAD source-file listing for Java, C and C-like languages.</h1>
+<h1>WOAD Cross-reference listing for HTML</h1>
 
-<doc> This tagset is used for listing arbitrary files.
+<doc> This tagset is used for listing markup files with cross-references.
 </doc>
 
 <define element="" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="&tagname;" tc="#666666"><expand>&content;</expand><hide>
+    </hide><elt tag="&tagname;" tc="#666666"><hide>
+    </hide><expand><get name="content" /></expand><hide>
     </hide></elt></action>
 </define>
 
@@ -46,8 +47,17 @@
     </hide></action>
 </define>
 
+<define element="comment" syntax="quoted">
+  <action><font color="red">&lt;!--&value;--&gt;</font><hide>
+    </hide></action>
+</define>
+
 <define element="#pi" syntax="quoted">
-  <action><font color="red">&lt;?&name; &value;?&gt;</font><hide>
+  <action><font color="red">&lt;?<get name="name"/>&value;?&gt;</font><hide>
+    </hide></action>
+</define>
+<define element="pi" syntax="quoted">
+  <action><font color="red">&lt;?<get name="name"/>&value;?&gt;</font><hide>
     </hide></action>
 </define>
 
@@ -60,6 +70,7 @@
   <action><font color="red">&lt;!&name; &value;&gt;</font><hide>
     </hide></action>
 </define>
+
 
 </tagset>
 

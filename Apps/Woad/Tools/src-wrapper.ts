@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.5 2000-10-05 19:02:56 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.6 2000-10-06 00:27:43 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -40,9 +40,8 @@
   <set name="VAR:format"><if> &FORM:nested; <then>nested</then>
     <else-if>&FORM:raw;<then>raw</then></else-if>
     <else-if>&FORM:retag;<then>retagged</then></else-if>
-    <else-if>&FORM:wrap;<then>wrapped</then></else-if>
     <else-if>&FORM:tsdoc;<then>tsdoc</then></else-if>
-    <else>processed</else>
+    <else>xref</else>
   </if></set>
   <set name="VAR:wrap">&FORM:wrap;</set>
   <set name="tpath"><mapSrcToTarget>&DOC:path;</mapSrcToTarget></set>
@@ -93,8 +92,7 @@
 	       <tr>
 		 <td align="right">-&gt;&nbsp;</td>
 		 <td>
-		      <xf fmt="processed" href="&DOC:path;">processed</xf>
-		      <xf fmt="wrapped" href="&DOC:path;?wrap">wrapped</xf>
+		      <xf fmt="xref" href="&DOC:path;">xref</xf>
 		      <xf fmt="nested" href="&DOC:path;?nested">nested</xf>
 		      <xf fmt="raw" href="&DOC:path;?raw">raw</xf>
 		      <if><test match=".ts$">&DOC:name;</test>
@@ -227,20 +225,7 @@
 <hr />
 
 <!-- ===================================================================== -->
-<if> &FORM:nested;	<!-- ====== nested =============================== -->
-  <then>
-<yellow-note><em>
-      This <tt>&VAR:format;</tt> listing is color-coded and indented to show
-      the nesting level of the tags.  
-       <br />
-      <red>Note that because of current limitations omitted end tags are
-      shown, and linebreaks inside of tags are eliminated.  Omitted end tags
-      may be shown in the wrong place.</red> </em>
-</yellow-note>
-<hr />
-<pretty>&content;</pretty>
-  </then>
-<else-if> &FORM:raw;	<!-- ====== raw ================================== -->
+<if> &FORM:raw;	<!-- ====== raw ================================== -->
   <then>
 <yellow-note><em> This <tt>&VAR:format;</tt> listing shows the full contents of
   the file with no alteration.</em>
@@ -258,17 +243,11 @@
 <hr />
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
-<else>			<!-- ====== processed ============================ -->
+<else>			<!-- ====== xref ============================ -->
 <yellow-note><em>
-      This <tt>&VAR:format;</tt> listing is color-coded and font-coded
-      according to syntax.  The <tt><a href="&DOC:path;?wrap">wrapped</a></tt>
-      format tends to be more compact than the normal <tt><a
-      href="&DOC:path;">processed</a></tt> format, and is more readable in
-      some cases.<br />
-
-      <red>Because of current limitations, omitted end tags are shown and
-      linebreaks inside of tags are removed.  Missing end tags may be shown in
-      the wrong place.</red> </em>
+      This <tt>&VAR:format;</tt> listing is color-coded according to syntax,
+      using a rather loose parsing algorithm.  Identifiers with definitions
+      elsewhere in the tree are linked to cross-reference files.
 </yellow-note>
 
 <hr />

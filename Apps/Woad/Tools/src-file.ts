@@ -17,7 +17,7 @@
 <!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
 <!-- ====================================================================== -->
 
-<tagset name="src-file" tagset="woad-xhtml" parser="TextParser"
+<tagset name="src-file" tagset="woad-xhtml" parser="CodeParser"
 	xrefs="SITE:xref"
 	include="src-wrapper" documentWrapper="-document-"
 	keywords="if else else: elsif elif while until for func sub switch case
@@ -28,7 +28,7 @@
 		  define open close split join def from try: except:" 
  >
 
-<cvs-id>$Id: src-file.ts,v 1.5 2000-10-05 19:01:30 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.6 2000-10-06 00:27:42 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 

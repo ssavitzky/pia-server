@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.4 2000-10-05 19:02:56 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.5 2000-10-06 00:27:43 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -42,6 +42,7 @@
     <else-if>&FORM:direct;<then>direct</then></else-if>
     <else-if>&FORM:retag;<then>retagged</then></else-if>
     <else-if>&FORM:wrap;<then>wrapped</then></else-if>
+    <else-if>&FORM:xref;<then>xref</then></else-if>
     <else-if>&FORM:tsdoc;<then>tsdoc</then></else-if>
     <else>processed</else>
   </if></set>
@@ -96,6 +97,7 @@
 		 <td>
 		      <xf fmt="processed" href="&DOC:path;">processed</xf>
 		      <xf fmt="wrapped" href="&DOC:path;?wrap">wrapped</xf>
+		      <xf fmt="xref" href="&DOC:path;?xref">xref</xf>
 		      <xf fmt="nested" href="&DOC:path;?nested">nested</xf>
 		      <xf fmt="raw" href="&DOC:path;?raw">raw</xf>
 		      <xf fmt="direct" href="&DOC:path;?direct">direct</xf>
@@ -347,6 +349,20 @@
 <pretty>&content;</pretty>
   </then>
 
+<else-if> &FORM:xref;	<!-- ====== xref ================================= -->
+  <then>
+<yellow-note><em>
+	This <tt>&VAR:format;</tt> listing shows the full contents
+	of the file with defined words made into cross-reference links.  
+       <br />
+	<red>Note that the parser is presently extremely buggy. </red>  </em>
+</yellow-note>
+
+<hr />
+<hide>&content;</hide>
+<pre><include src="&DOC:path;" tagset="/.Woad/Tools/src-xref" /></pre>
+  </then></else-if>
+
 <else-if> &FORM:raw;	<!-- ====== raw ================================== -->
   <then>
 <yellow-note><em> This <tt>&VAR:format;</tt> listing shows the full contents of
@@ -354,6 +370,7 @@
 </yellow-note>
 
 <hr />
+<hide>&content;</hide>
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
 
@@ -365,6 +382,7 @@
 </yellow-note>
 
 <hr />
+<hide>&content;</hide>
 <include src="&DOC:path;" quoted="true" tagset="HTML" />
   </then></else-if>
 <else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
@@ -374,6 +392,7 @@
 </yellow-note>
 
 <hr />
+<hide>&content;</hide>
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
 <else>			<!-- ====== processed ============================ -->
