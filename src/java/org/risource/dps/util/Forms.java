@@ -1,5 +1,5 @@
 ////// Forms.java:  Form utilities
-//	$Id: Forms.java,v 1.4 1999-04-07 23:22:16 steve Exp $
+//	$Id: Forms.java,v 1.5 1999-07-26 20:41:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -225,7 +225,8 @@ public class Forms  {
 	// Try to guess the MIME type
 	// If cannot be determined, used default value of application/octet-stream
 	// as specified in the RFC
-	String mimeType = FileAccess.contentType(value,"application/octet-stream");
+	String mimeType
+	  = FileAccess.defaultContentType(value, "application/octet-stream");
 	debug("Mime type of file set to "+mimeType);
 	  
 	// Write out header
