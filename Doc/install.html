@@ -38,8 +38,9 @@
        </ul>
 </dl>
 
-<hr>
-<h2><a name="Installing">Installing the Files</a></h2>
+
+
+<h1><a name="Installing">Installing the Files</a></h1>
 
 <big>
 <p> We will assume that you have already downloaded and unpacked the PIA
@@ -61,89 +62,140 @@
 
 </small></blockquote>
 
-</big>
 
+
+<hr/>
 <h1><a name="Quick">Quick Start</a></h1>
 
+
+
 <big>
-<p> If you are feeling lucky, you can now start the PIA with the command:
-</p>
+<em> As a static Web Server...</em>
 
-<pre>./PIA/bin/pia .</pre>
+<blockquote>
+<p> Do you have access to a directory (let's call it <code>html_dir</code>) with
+     some HTML files in it? (If not, skip to the  <em>"active web
+     server"</em> section following). Start the PIA with the command</p>
 
-<blockquote><small>
-<p> Assuming all went well, you can now click on the following link: <a
-    href="http://localhost:8888/">http://localhost:8888/</a> to point your
-    browser at a running PIA-based web server.
-</small></blockquote>
+<p>  <code>PIA/bin/pia  html_dir</code> </p>
 
-<p> If that didn't work, try reading the next section on <a
-    href="#Setup">Initial Setup</a>, possibly followed by the section on <a
-    href="using.html#Troubleshooting">Troubleshooting</a> in
-    <a href="using.html">Using the PIA</a>
-</p>
+<p> [this command tells the PIA to serve files from <code>html_dir</code>; you
+    should see some initialization messages and a "Point your browswer to..."
+    URL the end.] </p>
 
-<p> If it <em>did</em> work, you should now try to start the PIA in its
-    <em>default</em> configuration as a platform for web-based applications,
-    with the command:
-</p>
+<p> Next, view a page file (say <code>my_page.html</code>) by
+    pointing your browser as the PIA suggests, for example </p>
 
-<pre>./PIA/bin/pia</pre>
+<p> <code>http://penguin.crc.ricoh.com:8888/my_page.html</code> </p>
+
+<p> You should see your page displayed, just as if it were displayed by a
+    regular web server like Apache. </p>
+</blockquote>
+
+
+<em> As an active Web Server...</em>
+
+
+<blockquote>
+
+<p> To serve active pages, all you need is some active pages to serve!  So
+    copy a <code>home.xh</code> file from one of 
+    <code>PIA/Samples/[HelloWorld,FileHandling,Form,PrettyStuff]</code>
+    into <code>html_dir</code> (for example, on Unix <code>cp 
+    PIA/Samples/HelloWorld/home.xh html_dir/home.xh </code>). </p>
+
+<p> Point the browser at one of these new active pages, e.g. </p>
+
+<p> <code>http://penguin.crc.ricoh.com:8888/home.xh</code> </p>
+
+<p> You should see our page displayed, in which case you can you can learn
+    more options for setting up the PIA from the sections below, or you can
+    tinker with it (with help from the <a href="author.html#Quick">Author's
+    guide</a>). </p>
+
+<p> In the long run you will probably want to serve files from a different
+    directory (like the <code>.pia</code> directory described below), and you
+    will probably want to have many different "sub-site" directories of active
+    pages (see the <a href="author.html#Quick">Author's Guide</a>). </p>
+
+
+
+</blockquote>
+</big>
+
+<hr>
 
 </big>
 
-<h1><a name="Setup">Initial Setup</a></h1>
+
+<h1>Setup Details</h1>
 
 <big>
 
-<p> In order to use the PIA, the PIA program needs to know three things:
+<p> The PIA program needs to know (at least) two  things:
 </p>
 
 <ol>
   <li> Where to find its own files, including the Java class library.  This
        directory is the directory named <code>PIA</code> where the PIA was
        initially installed, and is called the PIA's ``<em>home</em>''
-       directory, or <var>PIA_HOME</var>. 
+       directory, or <var>PIA_HOME</var> (see the <em>Experts Only</em>
+       note below for a subtle clarification). 
   <li> Where the applications can write their data files, and the user can
        place new or customized applications.  This is called the PIA's
        ``<em>root</em>'' directory, or <var>PIA_ROOT</var>.
-  <li> Where to find the applications and documents that it serves to a
-       browser.  This is called the PIA's ``<em>virtual root</em>'' directory.
-       In most cases, this is the same as the PIA's home directory.  It can be
-       set explicitly on the command line (the <code>-vroot</code> option) or
-       in the site configuration file.
 </ol>
 
 <blockquote><small>
 
-<p> Two of these can (optionally) be set up using environment variables:</p>
+<p> These can (optionally) be set up using environment variables:</p>
 <ol>
   <li> <var>PIA_HOME</var> indicates the location where the PIA files were
        installed.</li> 
   <li> <var>PIA_ROOT</var> indicates the location where the PIA web server
-       looks for its web pages, and where applications write their data
-       files.</li> 
+       first looks for its web pages, and where applications write their data
+       files.</li>
 </ol>
 
-<p> Why two ``root'' directories?  So that one of them can be shared by many
+<p> Why two such directories?  So that one of them can be shared by many
     users and updated frequently (via CVS), while the other is personalized by
     each user and not overwritten by the updates. </p>
 
-<p> The PIA's ``virtual root'' (usually <var>PIA_HOME</var>) directory
-    <em>parallels</em> the ``real root'' (<var>PIA_ROOT</var>), but the real
-    root has priority.  Whenever a PIA application needs to write a file it
-    does so under the real root; similarly, whenever the PIA <em>serves</em> a
-    file to a browser, it looks first under the real root.
+<p> The directory <var>PIA_HOME</var> parallels <var>PIA_ROOT</var>,
+    but <var>PIA_ROOT</var> root has priority.  Whenever a PIA application
+    needs to write a file it does so under <var>PIA_ROOT</var>; similarly,
+    whenever the PIA <em>serves</em> a file to a browser, it looks first under
+    <var>PIA_ROOT</var>.
 
-<p> But if the PIA can't find a file in the real root, it then looks in the
-    virtual root (because the PIA <em>never</em> tries to write files there,
-    the virtual root could even be a CD-ROM!). The standard default virtual
-    root for the PIA is <code>PIA_HOME</code>, the PIA's home directory.  In
-    this way, we keep the PIA's files, which you have just downloaded and
-    which can be automatically updated using CVS, separate from any
-    application data and personal customizations you may have done.
+<p> But if the PIA can't find a file in <var>PIA_ROOT</var>, it then looks in
+    the <var>PIA_HOME</var> (which could even be a CD-ROM, because the PIA
+    <em>never</em> tries to write files there!). In this way, we keep the
+    PIA's core files, which you have just downloaded and which can be
+    automatically updated using CVS, separate from any application data and
+    personal customizations you may have done.
+
+<p><em>Experts only:</em> The directory <var>PIA_HOME</var>, as described
+above, actually refers to two funtionally different locations, which can be
+addressed separately.  One is where the java classes and executables live;
+that is always and forever <var>PIA_HOME</var>.  But the other location---the
+<em>"virtual root,"</em>, where the PIA looks for applications it can't find
+in <var>PIA_ROOT</var>---could in principle be somewhere else. </p>
+
+<p>In fact, you can set the <em> virtual root</em> to be some third directory
+by using the <code>-vroot</code> command-line option when starting the PIA,
+but we don't recommend it for beginners.... not only is it confusing, but your
+PIA server would no longer have access to cvs-updated applications in the
+<code>Agents, Samples</code>, and <code>Contrib</code> directories. </p>
+
+<p> In summary,  it is possible to let the PIA look for its executables in
+    <code>PIA_HOME</code>, look (first) for  applications in
+    <code>PIA_ROOT</code>, and look (last) for applications in the <em>virtual
+    root</em>. </p>
+
 
 </small></blockquote>
+
+
 
 <p> As a consequence of this arrangement, <strong> we recommend you don't edit
     <i>anything</i> in <var>PIA_HOME</var>, which is automatically
@@ -289,11 +341,11 @@ on Unix.</p>
 <p> There are some applications---such as a browser proxy and browsing-history
     system---which require that your browser use the PIA as a proxy.  This
     enables the PIA to process any incoming and outgoing pages as you would
-    like.  See the <code>Proxie</code> for more details.
+    like.  See the <code>Proxie</code> agent for more details.
 </p>
 
 <p> It is also possible to use the PIA ``off line'' from the command line, as
-    a pure document processor.  See <a href="using.html#process">Using the
+    a pure document processor.  See <a href="using.html#Processing">Using the
     PIA</a>.
 </p>
 
@@ -323,7 +375,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.19 1999-10-22 17:33:49 steve Exp $</i><br>
+<i>$Id: install.html,v 1.20 1999-10-22 18:58:31 bill Exp $</i><br>
 
 
 </body></html>
