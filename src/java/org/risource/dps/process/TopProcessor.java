@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.17 1999-10-18 15:41:59 steve Exp $
+//	$Id: TopProcessor.java,v 1.18 1999-12-14 18:46:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.17 1999-10-18 15:41:59 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.18 1999-12-14 18:46:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -228,6 +228,15 @@ public class TopProcessor extends BasicProcessor implements TopContext
   ** External Entities:
   ************************************************************************/
 
+  protected final static String stripPrefix(String path) {
+    return path.substring(path.indexOf(":") + 1);
+  }
+
+  protected final static String getPrefix(String path) {
+    if (path.indexOf(":") < 0) return null;
+    return path.substring(0, path.indexOf(":"));
+  }
+
   /** Locate a resource relative to the Document being processed.
    * @param path a path.
    * @param forWriting <code>true</code> if the Resource is intended to 
@@ -235,6 +244,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
    */
   public Resource locateResource(String path, boolean forWriting) {
     if (location == null) return null;
+    if (getPrefix(path) != null) return null;
     return location.locate(path, forWriting,
 			   forWriting? new List() : null);
   }
@@ -373,6 +383,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
    */
   public Tagset loadTagset(String tsname) {
     if (tsname == null) return tagset;
+    else if (location != null) return location.loadTagset(tsname);
     else return org.risource.dps.tagset.Loader.loadTagset(tsname, this);
   }
 
@@ -556,43 +567,22 @@ public class TopProcessor extends BasicProcessor implements TopContext
     setLocation(doc);
   }
 
-  public TopProcessor(Tagset ts, boolean defaultEntities) {
-    tagset = ts;
-    top = this;
-    if (defaultEntities) initializeEntities();
-  }
-
-  public TopProcessor(Input in, Output out) {
-    this(in, (Context)null, out, (Namespace)null);
-    initializeEntities();
-  }
-
-  public TopProcessor(Input in, Output out, Namespace ents) {
-    this(in, (Context)null, out, ents);
-  }
-
-  public TopProcessor(Input in, Context prev, Output out, Namespace ents) {
-    super(in, prev, out, ents);
-
-    if (input instanceof ProcessorInput) 
-      ((ProcessorInput)input).setProcessor(this);
-
-    top = this;
-  }
-
   public TopProcessor(Input in, Context prev, Output out, Tagset ts) {
-    this(in, prev, out, (Namespace)null);
+    super(in, prev, out, (Namespace)null);
+
+    top = this;
     setTagset(ts);
-    if (tagset != null && input instanceof ProcessorInput) 
-      ((ProcessorInput)input).setTagset(tagset);
+
+    if (input instanceof ProcessorInput) {
+      ((ProcessorInput)input).setProcessor(this);
+      if (tagset != null) 
+	((ProcessorInput)input).setTagset(tagset);
+    }
   }
 
   public TopProcessor(Input in, Context prev, Output out, Tagset ts, 
 		      Resource doc) {
-    this(in, prev, out, (Namespace)null);
-    setTagset(ts);
-    if (tagset != null && input instanceof ProcessorInput) 
-      ((ProcessorInput)input).setTagset(tagset);
+    this(in, prev, out, ts);
     setLocation(doc);
   }
 
