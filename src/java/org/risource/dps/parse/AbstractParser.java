@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.17 2000-02-15 01:52:01 steve Exp $
+//	$Id: AbstractParser.java,v 1.18 2000-06-07 19:10:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.17 2000-02-15 01:52:01 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.18 2000-06-07 19:10:27 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -74,6 +74,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected LineNumberReader 	in 		= null;
   protected Tagset 		tagset 		= null;
   protected EntityTable 	entities	= null; 
+
   //protected int			lineNumber	= 1;
   //protected int			lf		= '\n';
 
@@ -108,6 +109,9 @@ public abstract class AbstractParser extends CursorStack implements Parser
       ActiveAttrList atts = aTagset.getAttrList();
       strictEndTags = ((atts == null)
 		       || !atts.hasTrueAttribute("nonstrictEndTags"));
+      if (atts != null) {
+	documentWrapper = atts.getAttribute("documentWrapper");
+      }
     }
   }
 
@@ -181,7 +185,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
   }
 
   /************************************************************************
-  ** SGML flags:
+  ** SGML flags and data:
   **
   ** <p> The flags in this section control various parameters of the SGML
   **	 parsing process.  Strictly speaking they ought to be set from the
@@ -220,6 +224,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected boolean strictAttributeQuotes = false;
 
+  /** Tagname of an element in which to wrap the entire document. */
+  protected String		documentWrapper = null;
 
   /************************************************************************
   ** Low-level Recognizers:
@@ -573,7 +579,13 @@ public abstract class AbstractParser extends CursorStack implements Parser
   ** Construction:
   ************************************************************************/
 
-  protected void initialize() { advanceParser(); }
+  protected void initialize() { 
+    if (documentWrapper != null) {
+      setNode(createActiveElement(documentWrapper, null, false));
+    } else {
+      advanceParser(); 
+    }
+  }
 
    
   public AbstractParser() {
