@@ -1,5 +1,5 @@
-////// Subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.1 1999-08-07 00:29:49 steve Exp $
+////// subsite.java -- standard implementation of Resource
+//	$Id: Subsite.java,v 1.2 1999-08-20 00:03:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,11 +24,13 @@
 
 package org.risource.site;
 
+import org.risource.site.util.*;
+
 import org.w3c.dom.*;
 import org.risource.ds.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
-
+import org.risource.dps.tagset.Loader;
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
@@ -48,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.1 1999-08-07 00:29:49 steve Exp $
+ * @version $Id: Subsite.java,v 1.2 1999-08-20 00:03:26 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -81,13 +83,19 @@ public class Subsite extends ConfiguredResource implements Resource {
    */
   protected Table tagsetCache = null;
 
+  /** Context to be used for loading tagsets. */
+  protected SiteContext tsLoader = null;
+
   /** A table that maps resource names into child Subsite objects.
    */
-  protected Table subsiteCache = null;
+  protected Table subsiteCache = new Table();
 
   /** A table that maps resource names into configuration elements. 
    */
   protected Table childConfigCache = null;
+
+  /** The File containing the configuration information, if any. */
+  protected File configFile = null;
 
   /** A table that maps resource names into locations or child resources.
    *	A location is either the File for the directory <em>containing</em> 
@@ -97,23 +105,54 @@ public class Subsite extends ConfiguredResource implements Resource {
    *	first time the child is accessed.
    */
   protected Table childLocationCache = null;
+  protected int childLocationCount = 0;
 
   protected Namespace entityBindings = null;
 
   protected File virtualSearchPath[] = null;
 
-  /** The last time a <code>locateChildren</code> operation was performed.
+  /** The most recent time the underlying directory or a directory in the
+   *	<code>virtualSearchPath</code> was modified.
    *	This is compared to the timestamps of the underlying real directory 
    *	and every directory in the <code>virtualSearchPath</code>. 
    */
-  protected long directoryTimestamp = 0;
+  protected long locationTimestamp = 0;
 
   /************************************************************************
   ** Configuration Management:
   ************************************************************************/
 
   protected boolean basicSaveConfig() {
-    return false; // === unimplemented
+    // If there's nothing to save, we're done.
+    if (config == null) return true;
+
+    // If there's no real directory to save in, we fail.
+    if (!realize()) return false;
+
+    // Locate the file. 
+    configFile = new File(file, getConfigFileName());
+
+    // === write into config file ===
+    return true; // === unimplemented
+  }
+
+  protected ActiveElement loadConfig() {
+    configFile = locateChildDocument(getConfigFileName());
+    if (configFile == null) return null;
+
+    // === really want to load the tagset here as well ===
+
+    config = XMLUtil.load(configFile, null);
+    return config;
+  }
+
+  protected void configure() {
+    if (config == null) return;
+    super.configure();
+
+    // Handle any attributes not handled by the parent. 
+
+    // Go through the children.
   }
 
   /************************************************************************
@@ -144,9 +183,28 @@ public class Subsite extends ConfiguredResource implements Resource {
   ** Container Access:
   ************************************************************************/
 
+  /** Locate a child document without using the location cache. */
+  protected File locateChildDocument(String name) {
+    File f = null;
+    if (file != null && file.exists()) {
+      f = new File(file, name);
+      if (f.exists()) return f;
+    }
+    if (virtualSearchPath != null) {
+      for (int j = 0; j < virtualSearchPath.length; ++j) {
+	if (!virtualSearchPath[j].isDirectory()) continue;
+	f = new File(virtualSearchPath[j], name);
+	if (f.exists()) return f;
+      }
+    }
+    return null;
+  }
+
   /** Construct a new childLocationCache */
   protected void locateChildren() {
     Table t = new Table();
+    int count = 0;
+
     String list[];
     String name;
     Enumeration enum;
@@ -154,8 +212,12 @@ public class Subsite extends ConfiguredResource implements Resource {
     // First look for the real contents
     if (file != null && file.isDirectory()) {
       list = file.list();
-      for (int i = 0; i < list.length; ++i) 
+      for (int i = 0; i < list.length; ++i) {
 	t.at(list[i], file);
+	count ++;
+      }
+      if (file.lastModified() > locationTimestamp) 
+	locationTimestamp = file.lastModified();
     }
     // Finally look at every directory in the virtual search path.
     if (virtualSearchPath != null) {
@@ -163,7 +225,12 @@ public class Subsite extends ConfiguredResource implements Resource {
 	if (!virtualSearchPath[j].isDirectory()) continue;
 	list = virtualSearchPath[j].list();
 	for (int i = 0; i < list.length; ++i) 
-	  if (t.at(list[i]) == null) t.at(list[i], virtualSearchPath[i]);
+	  if (t.at(list[i]) == null) {
+	    t.at(list[i], virtualSearchPath[i]);
+	    count ++;
+	  }
+	if (virtualSearchPath[j].lastModified() > locationTimestamp) 
+	  locationTimestamp = virtualSearchPath[j].lastModified();
       }
     }
     // Finally, check for pure virtual resources
@@ -171,18 +238,34 @@ public class Subsite extends ConfiguredResource implements Resource {
       enum = childConfigCache.keys();
       while (enum.hasMoreElements()) {
 	name = enum.nextElement().toString();
-	if (t.at(name) == null) t.at(name, childConfigCache.at(name));
+	if (t.at(name) == null) {
+	  t.at(name, childConfigCache.at(name));
+	  count ++; 
+	}
       } 
     }
     childLocationCache = t;
+    childLocationCount = count;
   }
 
   /** Compare the timestamps on all directories in the virtualSearchPath
-   *	with the time the last locateChildren was done, and re-run it
-   *	if necessary.
+   *	with the time the last locateChildren was done.
+   *
+   * @return <code>true</code> if the location cache is still valid.
    */
-  protected void checkDirectoryTimes() {
-    // === unimplemented.
+  protected boolean locationCacheValid() {
+    if (childConfigCache == null) return false;
+    if (file != null && file.isDirectory()
+        && file.lastModified() > locationTimestamp) return false;
+    if (virtualSearchPath != null) {
+      for (int j = 0; j < virtualSearchPath.length; ++j) {
+	if (virtualSearchPath[j].isDirectory()
+	    && virtualSearchPath[j].lastModified() > locationTimestamp) 
+	  return false;
+      }
+    }
+
+    return true;
   }
 
   /** Returns an array of strings naming the contents. 
@@ -192,8 +275,9 @@ public class Subsite extends ConfiguredResource implements Resource {
    *	<code>null</code> if this resource is not a container.
    */
   public String[] listNames() {
-    locateChildren();
-    String list[] = new String[childLocationCache.nItems()];
+    if (!locationCacheValid()) locateChildren();
+
+    String list[] = new String[childLocationCount];
     Enumeration enum = childLocationCache.keys();
     for (int i = 0; enum.hasMoreElements(); ++i) 
       list[i] = enum.nextElement().toString();
@@ -204,8 +288,7 @@ public class Subsite extends ConfiguredResource implements Resource {
   public Resource getChild(String name) {
     ActiveElement cfg = null;
     Resource result = null;
-    if (childLocationCache == null) locateChildren();
-    else checkDirectoryTimes();
+    if (! locationCacheValid()) locateChildren();
 
     Object loc = childLocationCache.at(name);
     if (loc == null) {			  	// No location -- it's a dud.
@@ -242,11 +325,63 @@ public class Subsite extends ConfiguredResource implements Resource {
     }
     return result;
   }
+  /************************************************************************
+  ** Name and Type Mapping:
+  ************************************************************************/
 
+  /** Get the default extension list used by <code>locate</code>. 
+   *
+   * <p> The default is to pass the buck to the container.  It is assumed 
+   *	that somewhere up the resource tree we will encounter a node with a
+   *	default list. 
+   *
+   * @return an empty List if there is no parent.
+   */
   public List getDefaultExtensions() {
     List l = new List();
     l.push("xh"); l.push("html"); l.push("htm"); // === bogus
     return l;
+  }
+
+  /** Map a document name to a corresponding file type. */
+  public String getContentTypeFor(String name) {
+    return (getContainer() != null)
+      ? getContainer().getContentTypeFor(name)
+      : null;
+  }
+
+  /** Map a document name to a corresponding tagset name. */
+  public String getTagsetNameFor(String name) {
+    return (getContainer() != null)
+      ? getContainer().getTagsetNameFor(name)
+      : null;
+  }
+
+  /** Load a tagset. */
+  public Tagset loadTagset(String name) {
+    // === Probably should check the tagset name for signs of being a path 
+
+    // First look in the cache
+    Tagset ts = (tagsetCache == null)? null : (Tagset) tagsetCache.at(name);
+    if (ts != null && ts.upToDate()) {
+      return ts;
+    }
+
+    // Then look for it as a local ".ts" file.
+    File tsfile = locateChildDocument(name + ".ts");
+    if (tsfile != null) {
+      if (tsLoader == null) tsLoader = new SiteContext(this, null);
+      ts = Loader.loadTagset(tsfile, tsLoader);
+      if (tagsetCache == null) tagsetCache = new Table();
+      tagsetCache.at(name, ts);
+      return ts;
+    }
+
+    // Finally, fall back on the parent
+    //	If there isn't a parent, hope that the tagset loader can find it.
+    return (getContainer() != null)
+      ? getContainer().loadTagset(name)
+      : Loader.loadTagset(name);
   }
 
   /************************************************************************

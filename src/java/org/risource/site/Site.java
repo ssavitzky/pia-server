@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.1 1999-08-07 00:29:49 steve Exp $
+//	$Id: Site.java,v 1.2 1999-08-20 00:03:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,9 +27,11 @@ package org.risource.site;
 import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.ds.*;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Enumeration;
 
 /**
  * Implementation of Root, the root of a resource tree.
@@ -37,7 +39,7 @@ import java.net.URL;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.1 1999-08-07 00:29:49 steve Exp $
+ * @version $Id: Site.java,v 1.2 1999-08-20 00:03:26 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -50,7 +52,10 @@ public class Site extends Subsite implements Root {
   protected int verbosity = 0;
   protected PrintStream log = System.err;
   protected URL serverURL = null;
-  protected String configFileName = "_subsite.cfg";
+  protected String configFileName = "_subsite.xcf";
+
+  protected Table agentHomes = null;
+  protected int agentCount = 0;
 
   /************************************************************************
   ** Root interface:
@@ -77,12 +82,47 @@ public class Site extends Subsite implements Root {
   /** Obtain the current verbosity level for error reporting. */
   public int getVerbosity() { return verbosity; }
 
+  public Resource agentHome(String name) {
+    return (agentHomes == null)? null : (Resource)agentHomes.at(name);
+  }
+
+  public void registerAgentHome(String name, Resource home) {
+    if (agentHomes == null) agentHomes = new Table();
+    if (home == null) {
+      agentHomes.remove(name);
+      agentCount --;
+    } else {
+      agentHomes.at(name, home);
+      agentCount ++;
+    }
+  }
+  
+  /** List the registered agents. */
+  public String[] listAgents() {
+    if (agentHomes == null) return null;
+    String list[] = new String[agentCount];
+    Enumeration e = agentHomes.keys();
+    for (int i = 0; i < agentCount && e.hasMoreElements(); ++i) {
+      list[i] = e.nextElement().toString();
+    }
+    return list;
+  }
+
   /************************************************************************
   ** Resource interface:
   ************************************************************************/
 
   public Root getRoot() { return this; }
-  
+
+  /** <code>getChild</code> extended to handle agent names starting 
+   *	with tilde.
+   */
+  public Resource getChild(String name) {
+    if (name.startsWith("~")) 
+      return (Resource) agentHomes.at(name.substring(1));
+    else return super.getChild(name);
+  }
+
   /************************************************************************
   ** Initialization:
   ************************************************************************/
@@ -91,11 +131,22 @@ public class Site extends Subsite implements Root {
   public void setReporting(PrintStream s) { log = s; }
   public void setServerURL(URL u) { serverURL = u; }
 
+  public String getConfigFileName() { return configFileName; }
+  /** Set configuration file name. */
+  public void setConfigFileName(String configFileName) {
+    if (configFileName != null) this.configFileName = configFileName;
+  }
+
   /************************************************************************
   ** Construction:
   ************************************************************************/
 
   public Site(File location, ActiveElement config, Namespace props) {
     super("/", null, location, config, props);
+  }
+
+  public Site(String location, String configFileName) {
+    this(new File(location), null, null);
+    setConfigFileName(configFileName);
   }
 }

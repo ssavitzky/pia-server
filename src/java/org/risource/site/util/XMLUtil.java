@@ -1,5 +1,5 @@
 ////// XMLUtil.java: the Document Processing System used stand-alone as a filter
-//	$Id: XMLUtil.java,v 1.1 1999-08-18 18:06:31 steve Exp $
+//	$Id: XMLUtil.java,v 1.2 1999-08-20 00:03:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,15 +38,9 @@ import org.risource.dps.tagset.TagsetProcessor;
  * Load an XML configuration file.
  */
 public class XMLUtil {
-  static String tsname = "xhtml";
-  static Tagset tagset = null;
   static int verbosity = 0;
 
   public static ActiveElement load(File file, Tagset ts) {
-    if (ts == null) {
-      if (tagset == null) tagset = loadTagset(tsname);
-      ts = tagset;
-    }
     FileInputStream in = null;
     try {
       in = new FileInputStream(file);
@@ -75,4 +69,5 @@ public class XMLUtil {
     }
     return null;
   }
+
 }

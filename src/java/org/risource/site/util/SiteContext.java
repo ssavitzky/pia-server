@@ -1,5 +1,5 @@
 ////// SiteContext.java: Top Processor for PIA active documents
-//	$Id: SiteContext.java,v 1.1 1999-08-18 18:06:31 steve Exp $
+//	$Id: SiteContext.java,v 1.2 1999-08-20 00:03:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,10 +39,13 @@ import java.net.URL;
 import org.risource.dps.*;
 import org.risource.dps.process.*;
 import org.risource.dps.util.*;
+import org.risource.dps.output.*;
 import org.risource.dps.namespace.*;
+import org.risource.dps.active.*;
+
 import org.w3c.dom.NodeList;
 import org.risource.dps.tree.TreeNodeList;
-import org.risource.dps.active.ActiveNode;
+import org.risource.dps.active.ActiveElement;
 import org.risource.dps.handle.Loader;
 
 import org.risource.site.*;
@@ -52,9 +55,9 @@ import org.risource.ds.Table;
 import org.risource.ds.Tabular;
 
 /**
- * A TopProcessor for processing active documents in a Subsite.
+ * A TopProcessor for processing active documents, typically in a Subsite.
  *
- * @version $Id: SiteContext.java,v 1.1 1999-08-18 18:06:31 steve Exp $
+ * @version $Id: SiteContext.java,v 1.2 1999-08-20 00:03:30 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps
@@ -81,6 +84,14 @@ public class SiteContext extends TopProcessor {
 
   public Subsite getSubsite() { return subsite; }
   public Document getDocument() { return document; }
+
+  /** Go up the chain from a document and find an enclosing Subsite. */
+  public Subsite locateSubsite(Resource r) {
+    if (r == null) return null;
+    return (r instanceof Subsite)
+      ? (Subsite)r
+      : locateSubsite(r.getContainer());
+  }
 
   public ActiveElement documentConfig() {
     ToNodeList out = new ToNodeList(null);
@@ -142,8 +153,10 @@ public class SiteContext extends TopProcessor {
    * @see org.risource.pia.FileAccess#systemFileName
    */
   public File locateSystemResource(String path, boolean forWriting) {
-    if (path.startsWith("file:")) {
-      // file: is handled by systemFileName
+    if (path.startsWith("file:") || path.startsWith("FILE:")) {
+      // file: is handled by the underlying OS
+      // === should do a security check and convert slashes if necessary.
+      // === also need to be relative to the Site's real directory.
       return new File(path.substring("file:".length()));
     } else {
       Resource r = subsite.locate(path, forWriting, null);
@@ -196,16 +209,18 @@ public class SiteContext extends TopProcessor {
 
   public SiteContext(Subsite subsite, Document document) {
     super();
-    this.subsite = subsite;
+    this.subsite = (subsite != null)? subsite : locateSubsite(document);
     this.document = document;
+    if (document != null) setTagset(document.loadTagset(null));
     initializeEntities();
   }
 
   public SiteContext(Input in, Context cxt, Output out, Tagset ts,
 		     Subsite subsite, Document document) {
     super(in, cxt, out, ts);
-    this.subsite = subsite;
+    this.subsite = (subsite != null)? subsite : locateSubsite(document);
     this.document = document;
+    if (document != null && ts == null) setTagset(document.loadTagset(null));
     initializeEntities();
   }
 

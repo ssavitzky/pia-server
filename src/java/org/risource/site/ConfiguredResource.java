@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.1 1999-08-07 00:29:46 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.2 1999-08-20 00:03:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.1 1999-08-07 00:29:46 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.2 1999-08-20 00:03:25 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -151,6 +151,10 @@ public abstract class ConfiguredResource extends AbstractResource {
 
   protected abstract boolean basicSaveConfig();
 
+  protected String getConfigFileName() {
+    if (base == null) return null;
+    else return base.getConfigFileName();
+  }
 
   /************************************************************************
   ** Tree Navigation:

@@ -1,5 +1,5 @@
 ////// Root.java -- interface for the topmost resource in a site
-//	$Id: Root.java,v 1.1 1999-08-07 00:29:48 steve Exp $
+//	$Id: Root.java,v 1.2 1999-08-20 00:03:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.net.URL;
  *
  * <p> 
  *
- * @version $Id: Root.java,v 1.1 1999-08-07 00:29:48 steve Exp $
+ * @version $Id: Root.java,v 1.2 1999-08-20 00:03:26 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -54,4 +54,29 @@ public interface Root extends Resource {
   /** Obtain the current verbosity level for error reporting. */
   public int getVerbosity();
 
+  /** Obtain the home Resource associated with an agent. 
+   *
+   *<p> The home resource of an agent is also accessible as a virtual
+   *	child of the Root, by preceeding its name by a ``<code>~</code>'' 
+   *	character.  Note that agents themselves are not represented in the
+   *	tree, although their resources and metadata are.  This way, we
+   *	avoid constraining the implementation of the agents themselves.
+   *
+   * @param name the name of the agent (<em>without</em> a leading
+   *	``<code>~</code>'' character). 
+   * @see #registerAgentHome
+   */
+  public Resource agentHome(String name);
+
+  /** Associate a home Resource with an agent.
+   *
+   * @param name the name of the agent (<em>without</em> a leading
+   *	``<code>~</code>'' character). 
+   * @param home the Resource associated with this agent.
+   * @see #agentHome
+   */
+  public void registerAgentHome(String name, Resource home);
+
+  /** List all registered agents. */
+  public String[] listAgents();
 }

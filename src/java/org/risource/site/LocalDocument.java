@@ -1,5 +1,5 @@
 ////// LocalDocument.java -- implementation for a document resource
-//	$Id: LocalDocument.java,v 1.1 1999-08-07 00:29:47 steve Exp $
+//	$Id: LocalDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  * <p> Some of a LocalDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: LocalDocument.java,v 1.1 1999-08-07 00:29:47 steve Exp $
+ * @version $Id: LocalDocument.java,v 1.2 1999-08-20 00:03:25 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -193,6 +193,12 @@ public class LocalDocument extends ConfiguredResource implements Document {
    */
   public String[] listNames() { return null; }
 
+
+  /** Load a tagset. */
+  public Tagset loadTagset(String name) {
+    if (name == null) name = getTagsetName();
+    return getContainer().loadTagset(name);
+  }
 
   /************************************************************************
   ** Resource Manipulation:

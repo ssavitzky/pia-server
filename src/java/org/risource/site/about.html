@@ -4,11 +4,119 @@
 </head><body>
 <h1>About the Site Resource Package</h1>
 
-<p> 
+<h2>Introduction</h2>
+
+<p> the Site Resource Package is designed to implement the mapping from URL's
+    passed to the PIA server, to documents returned by the browser.  This
+    breaks down into the following steps:
+
+<ol>
+  <li> Mapping from the file part of the URL to the corresponding document
+       resource in the server's filesystem.
+  <li> Mapping the resource into a content type, processing method (none, DPS,
+       or CGI), and (in the case of DPS processing) tagset.
+</ol>
+
+<p> Additionally, the Site Resource Package is able to manage an arbitrary
+    amount of additional XML metadata associated with documents, including
+    WebDAV properties, DPS entities, PIA agents, and so on.
+
+<p> The information that defines the structure (configuration) of a site is
+    <em>also</em> defined using XML, but configuration information is kept (at
+    least conceptually) separate from other metadata in order to simplify the
+    implementation and increase versatility.
+
+<h2>Class Structure</h2>
+
+<p> There are three interfaces in the <code>org.risource.site</code> package:
+
+<ol>
+  <li> <a href="Resource.java">Resource</a>: the generic interface for any
+       kind of resource on a site.
+  <li> <a href="Document.java">Document</a>: the interface for document (leaf)
+       resources.
+  <li> <a href="Root.java">Root</a>: the interface for the root of a site. 
+</ol>
+
+<p> The interfaces follow the the <strong>Composite</strong> pattern as
+    described in the Gang-of-Four book; in this pattern the main interface
+    (Resource) includes all methods needed for accessing sub-Resources.  This
+    imposes no burden on implementations of Document, which are free to return
+    null results. 
+
+<p> However, since every container (directory) Resource has an associated
+    Document (for example, <code>home.xh</code> or <code>index.html</code>)
+    that may be accessible on its own, it makes sense for Resource and
+    Document to be different.  A method, <code>getDocument</code>, gets the
+    Document associated with a Resource (even if it is the same object). 
+
+<p> There are two parallel sets of implementation classes:
+<p>
+<table border=2 cellpadding=3 align=center>
+  <tr><th>&nbsp;</th>
+      <td align=center colspan=2>AbstractResource</td>
+  </tr>
+  <tr><th>&nbsp;</th>
+      <td>ConfiguredResource</td>
+      <td>&nbsp;</td>
+  </tr>
+  <tr><th>Resource</th>
+      <td>Subsite <em>(container)</em></td>
+      <td>FileResource</td>
+  </tr>
+  <tr><th>Document</th>
+      <td>LocalDocument</td>
+      <td>FileDocument</td>
+  </tr>
+  <tr><th>Root</th>
+      <td>Site</td>
+      <td>&nbsp;</td>
+  </tr>
+</table>
+
+<p> The ``File'' classes are (comparatively) lightweight objects that contain
+    no configuration information or associated XML metadata -- everything is
+    derived from the underlying file or directory.
+
+<p> One may well ask why the interface is called Resource and the
+    implementation is called Subsite rather than the other way around, or
+    perhaps something like BasicResource.  The main reason is that
+    ``<code>site.Resource</code>'' simply <em>sounds better</em> than
+    ``<code>site.Subsite</code>''.  Also, ``resource'' (and to a lesser
+    extent, ``document'') match the terminology used in, for example, WebDAV
+    and most other web-related specifications.  (URL, after all, stands for
+    ``Universal <em>Resource</em> Locator''.)
+
+<p> <code>Subsite</code> caches a large amount of information: virtual search
+    path for defaults, which virtual directory each child is in, timestamps,
+    tagsets, configuration information for child documents, and so on.  In
+    fact, it is possible to build an entire virtual Site out of nothing but a
+    configuration file.
+
+<p> For this reason, Subsite objects are normally kept in memory as a tree.
+    FileResource objects are not, since they are easy to reconstruct from the
+    available filesystem information.  Similarly, LocalDocument objects are
+    easily reconstructed from a combination of filesystem information and
+    the configuration information cached by their parent Subsite.
+
+<h2>Agents</h2>
+
+<p> One objective of the <code>site</code> package is to provide the machinery
+    necessary to support ``agents,'' but without placing any constraints on
+    their implementation.  All that a Root really needs to do is to map names
+    that start with a ``<code>~</code>'' (tilde) character into the ``home
+    Resource'' (typically a container) for the named agent.  It is then up to
+    the documents in that Resource to provide the agent's user interface.
+
+<p> Note that not all agents need to be registered in this way, only the ones
+    that need web-accessible user interfaces.  Similarly, nothing prevents a
+    Resource from being the home of several agents, as long as some mechanism
+    exists for sorting them out.  One way of doing this might be to make an
+    Agent's ``home Resource'' a document rather than a container.
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.2 1999-08-09 18:24:34 steve Exp $</b><br>
+<b>$Id: about.html,v 1.3 1999-08-20 00:03:27 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

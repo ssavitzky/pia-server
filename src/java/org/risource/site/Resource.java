@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.1 1999-08-07 00:29:48 steve Exp $
+//	$Id: Resource.java,v 1.2 1999-08-20 00:03:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.1 1999-08-07 00:29:48 steve Exp $
+ * @version $Id: Resource.java,v 1.2 1999-08-20 00:03:26 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -316,7 +316,10 @@ public interface Resource {
   /** Map a document name to a corresponding tagset name. */
   public String getTagsetNameFor(String name);
 
-  /** Load a tagset. */
+  /** Load a tagset.  
+   * @param name The tagset name.  If <code>null</code>, the Resource's
+   *	default tagset is loaded.
+   */
   public Tagset loadTagset(String name);
 
   /************************************************************************

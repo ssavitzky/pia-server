@@ -1,5 +1,5 @@
 ###### site/Makefile:	Site Structure package.
-# 	$Id: Makefile,v 1.1 1999-08-06 23:59:16 steve Exp $
+# 	$Id: Makefile,v 1.2 1999-08-20 00:03:26 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,6 +24,9 @@
 PACKAGE=org.risource.site
 TOPDIR=../../..
 
+PACKAGES = \
+	util
+
 FILES = \
 	Resource.java \
 	Document.java \
@@ -37,6 +40,7 @@ FILES = \
 	Site.java
 
 include $(TOPDIR)/makefiles/file.make
+include $(TOPDIR)/makefiles/package.make
 
 ### Dependencies
 
