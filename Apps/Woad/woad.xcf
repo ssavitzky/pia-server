@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.24 2000-10-19 00:04:06 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.25 2001-01-31 18:03:51 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -147,6 +147,7 @@
   <Ext name="hpp" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
   <Ext name="hxx" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
 
+  <Ext name="cgi" 	type="text/html" tagset="/.Woad/Tools/src-file" />
   <Ext name="pl" 	type="text/html" tagset="/.Woad/Tools/src-file" />
   <Ext name="pm" 	type="text/html" tagset="/.Woad/Tools/src-file" />
   <Ext name="py" 	type="text/html" tagset="/.Woad/Tools/src-file" />

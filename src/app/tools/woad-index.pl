@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.20 2001-01-11 20:51:29 steve Exp $
+#	$Id: woad-index.pl,v 1.21 2001-01-31 18:03:56 steve Exp $
 # Create WOAD index files.
 #
 
@@ -143,6 +143,7 @@ $nNoteFiles	= 0;
 		    "py"	=> "Python",
 		    "sh"	=> "shell",
 		    "bat"	=> "DOS shell",
+		    "cgi"	=> "CGI script",
 		);
 
 %binFileExt	= ( "class"	=> "java class",
@@ -687,11 +688,11 @@ sub indexCodeFile {
 	
 	if (/^\s*\/\/|^\s*\#|^\s*\/\*.+\*\/\s+$/) { # C/Perl comment
 	    # Only skip comment if it occupies the entire line.
-	} elsif (/\s+sub $id/) {	# PERL function
+	} elsif (/^\s*sub $id/) {	# PERL function
 	    indexDef($1, 'func', $path, $line, $1, $_);
-	} elsif (/\s+function $id\s*[^a-zA-Z\s]/) {# PHP or shell function
+	} elsif (/^\s*function $id\s*[^a-zA-Z\s]/) {# PHP or shell function
 	    indexDef($1, 'func', $path, $line, $1, $_);
-	} elsif (/\s+def $id/) {	# Python function
+	} elsif (/^\s*def $id/) {	# Python function
 	    indexDef($1, 'func', $path, $line, $1, $_);
 	} elsif (/^\s*class\s+($id)/) {	# C++/Java/Python class decl.
 	    indexDef($1, 'class', $path, $line, "$1", $_);
@@ -1223,7 +1224,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.20 2001-01-11 20:51:29 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.21 2001-01-31 18:03:56 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 
