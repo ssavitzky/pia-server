@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.9 1999-04-13 21:17:15 steve Exp $
+//	$Id: extractHandler.java,v 1.10 1999-04-17 01:16:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.9 1999-04-13 21:17:15 steve Exp $
+ * @version $Id: extractHandler.java,v 1.10 1999-04-17 01:16:13 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -122,7 +122,7 @@ public class extractHandler extends GenericHandler {
    *	Used by sub-element handlers.
    */
   public ActiveNodeList getExtracted(Context cxt) {
-    return cxt.getEntityValue("list", true);
+    return cxt.getValueNodes("list", true);
   }
 
   /** Handle a numeric item. */
@@ -329,7 +329,7 @@ class inHandler extends extract_subHandler {
     while (items.hasMoreElements()) {
       Node item = (Node) items.nextElement();
       if (item.getNodeType() == Node.TEXT_NODE) {
-        Node binding = aContext.getEntityBinding(item.toString(), false);
+        ActiveNode binding = aContext.getBinding(item.toString(), false);
 	if (binding != null) out.putNode(binding);
       } else {
 	out.putNode(item);
@@ -767,6 +767,7 @@ class replaceHandler extends extract_subHandler {
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
+      out.putNode(item);
       switch (item.getNodeType()) {
       case Node.ATTRIBUTE_NODE:
 	if (name != null 
@@ -884,21 +885,20 @@ class appendHandler extends extract_subHandler {
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
+      out.putNode(item);
       if (children) {
 	  if (NodeType.hasContent(item))
 	    Copy.appendNodes(content, item);	
-	  // out.putNode(parent);
       } else {
 	ActiveNode parent = null;
 	ActiveNode p = (ActiveNode)item.getParentNode();
-	  if (p != null && p != parent) {
-	    parent = p;
-	    Copy.appendNodes(content, parent);
-	  }
-	  // putList(out, extracted);
-	  // putList(out, content);
+	if (p != null && p != parent) {
+	  parent = p;
+	  Copy.appendNodes(content, parent);
+	}
       }
     }
+    if (!children) putList(out, content);
   }
   appendHandler() { super(true, false); }
 }
@@ -937,6 +937,7 @@ class insertHandler extends extract_subHandler {
 	  item.insertBefore(content.item(j), next);
 	}
       }
+      out.putNode(item);
     }
   }
   insertHandler() { super(true, false); }
