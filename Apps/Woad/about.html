@@ -275,7 +275,7 @@
 
 <p> In this case the source tree and the WOAD annotation tree are separate.
     Ordinary programming is decentralized using CVS, as usual, but everyone
-    shares the same WOAD tre so that annotations can be immediately shared
+    shares the same WOAD tree so that annotations can immediately be shared
     with all other developers.
 </p>
 
@@ -320,7 +320,8 @@
     over a WOAD server: mainly applications that include discussion forums,
     collaborative editing and annotation, and collaborative development of
     structured web pages.  For example, <a href="http://dmoz.org/">dmoz</a>,
-    <a href="http://c2.com/cgi/wiki?WelcomeVisitors">Wiki</a>, and <a href="http://slashdot.org/">slashdot</a> are examples.
+    <a href="http://c2.com/cgi/wiki?WelcomeVisitors">Wiki</a>, and
+    <a href="http://slashdot.org/">slashdot</a> are examples.
 </p>
 
 <p> A ``real-world'' WOAD-based application might be part of a larger website,
@@ -357,7 +358,7 @@
 <p> Note that POST requests present a significant problem here -- there is
     basically no way to recapture them in most cases.  They <em>can</em> be
     recaptured if the target server is <em>Woad-aware</em> and has links to
-    Woad on all of its pages.
+    Woad on all of its pages, or if the Woad server is being used as a proxy.
 </p>
 </blockquote>
 
@@ -365,7 +366,6 @@
     that define their relationships.  Note that <em>all</em> of the following
     parameters are expected to start with a ``<code>/</code>'' character and
     <em>not</em> to end with one.
-    (Note that the current ones are misnamed.)
 </p>
 
 <ul>
@@ -455,37 +455,20 @@
 </dl>
 
 
-<p> OLD parameters (mostly phased out by now):
-</p>
-<ul>
-  <li> <code>sourcePrefix</code> -&gt; <code>notesPrefix</code> OR
-       <code>sourcePrefix</code> depending on usage.
-       <code>sourcePrefix</code> is more likely.  sourceOffset and
-       sourcePrefix were getting concatenated.; this is no longer true.
-  </li>
-  <li> <code>targetPrefix</code> [prefix] -&gt; <code>docOffset</code> [offset]
-  </li>
-  <li> <code>sourceOffset</code> [offset] -&gt; <code>sourcePrefix</code>
-  </li>
-  <li> <code>vroot</code> -&gt; <code>sourceRoot</code>
-  </li>
-  <li> <code>.Woad</code> -&gt; <code>woadPrefix</code>
-  </li>
-  <li> <code>mapToTarget</code> -&gt; <code>mapSrcToTarget</code>; add
-       <code>mapNoteToTarget</code>, <code>mapNoteToSrc</code>,
-       <code>mapSrcToNote</code>. 
-  </li>
-</ul>
-we pretty much end up swapping <code>offset</code> and <code>prefix</code>
-when those are used as variables.
-
 <h3><a name="section-6.1">6.1:</a> Keywords</h3>
 
 <p> Keywords are a bit of a problem.  One option is to make them all queries,
-    another is to put them under <code>.Woad/Words</code> or maybe even
-    <code>.w</code>.  One could easily do both using, e.g.,
-    <code>.Woad?id=<em>word</em></code>.
+    another is to put them under <code>/.Woad/Words</code>; we don't do either
+    of these, choosing instead to add another prefix, so that the keywords can
+    all be found under <code>/.words</code>.  
 </p>
+
+<blockquote>
+  This is not strictly true at the implementation level:  the directory
+  <code>/.Woad/Words</code> <em>does</em> exist, and is simply aliased as
+  <code>/.words</code> -- this makes it possible to include some pre-built
+  headings and indices with the distribution.
+</blockquote>
 
 <p> Keyword <em>pages</em> can get fairly complex, because a word may be used
     in several contexts, and these will want <em>separate</em> annotation.
@@ -493,6 +476,12 @@ when those are used as variables.
     This wins, because it makes it possible to associated arbitrary amounts of
     information with a word, and there's minimal interference between the
     different items.
+</p>
+
+<p> The directories immediately underneath <code>/.words</code> correspond to
+    <em>contexts</em> in which words can be defined.  For example,
+    <code>/.words/func</code> contains words declared as functions;
+    <code>/.words/file</code> contains words used as the names of files.
 </p>
 
 <p> It will probably prove necessary to hash words into subdirectories on
@@ -1001,6 +990,6 @@ when those are used as variables.
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: about.html,v 1.10 2000-08-22 23:57:41 steve Exp $</b><br />
+<b>$Id: about.html,v 1.11 2000-08-30 23:21:28 steve Exp $</b><br />
 <address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
 </body></html>
