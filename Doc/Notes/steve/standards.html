@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA and Standards</title>
+<link rev="made" href="mailto:steve@rsv.ricoh.com">
+</head><body>
+<h1>PIA and Standards</h1>
+
+<p> This note discusses the status of the PIA with respect to the various
+    standards it uses, follows, and in some cases fails to follow.  In
+    particular, it discusses the relationship between the PIA and:
+
+<ul>
+  <li> SGML
+  <li> XML (including XHTML and XSL)
+  <li> SAX
+  <li> DOM
+  <li> Java
+</ul>
+
+
+<h2>SGML and Document Types</h2>
+
+<p> Active documents in the PIA have <em>two</em> document types: the document
+    type of the <em>input</em>, before processing, and the document type of
+    the <em>output</em>, after processing.
+
+<h3>Output Documents</h3>
+
+<p> It is our intention to ensure that output documents, i.e. the documents
+    seen by a browser or other client, validate against whatever DTD their
+    document type specifies.  At the moment, we are using:
+
+<pre>
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+</pre>
+
+<p> Unfortunately, we have not actually validated any of our documents as of
+    Release 2.0.2.
+
+<h3>Input Documents</h3>
+
+<p> Active documents, e.g. <code>.xh</code> files, should really have their
+    output document type generated automatically, with their input document
+    type designating the tags actually contained in the document, i.e. the
+    <em>extended</em> document type defined by the tagset.
+
+<p> As of Release 2.0.2, unfortunately, we don't do this.  The document type,
+    like other declarations, is simply passed through.   It isn't even parsed,
+    which is a (different) problem.  We <em>do</em> plan to fix this.
+
+<h3>Tagsets and DTD's</h3>
+
+<p> Our intention is to generate SGML DTD's automatically from tagsets (using
+    a tagset, naturally).  We will have to add a few new constructs in order
+    to make this happen.
+
+<p> We also intend to provide a utility to generate ``skeleton'' tagsets from
+    DTD's.  Naturally, all of the elements so defined would be passive, but it
+    would be a good starting point for anyone developing a custom tagset.
+
+<hr>
+<h2>XML and XHTML</h2>
+
+<h3>XHTML</h3>
+
+<p> First and foremost, what <em>we</em> call XHTML is <em>not</em> what the
+    W3C calls XHTML.  Theirs is a totally reworked DTD, forcing all of the
+    original HTML tags into XML syntax.  Ours is the <em>original</em> HTML
+    DTD, with our own active-document tags (the Basic tagset
+    <code>basic.ts</code> plus a few extensions) added in a way that conforms
+    to HTML syntax, <em>not</em> XML.
+
+<p> It is our expectation that any parser that can handle HTML and recognize
+    the XML `<code>/&gt;</code>' convention for empty tags will be able to
+    handle our extended HTML.  After we devise a DTD for it, any SGML
+    parser should be able to handle it.
+
+<p> <strong>Our XHTML is eXtended HTML, not XML!</strong> We should probably
+    rename it.  Like HTML and SGML, and unlike XML, our syntax is designed for
+    human creation and editing.  The differences are:
+
+<ol>
+  <li> Our parser permits optional end tags.  We find that this greatly
+       improves readability and makes documents easier to create with
+       HTML-aware editors.
+  <li> Our parser does not require a <code>/&gt;</code> in elements that the
+       tagset declares as being empty.
+  <li> Attribute values that are names need not be quoted.
+  <li> Boolean attributes can be minimized. 
+  <li> Entities need not be defined.  We use entities as variables.
+  <li> Namespaces need not be declared.  We use namespaces as scopes for
+       variables and tags. 
+</ol>
+
+<p> It is important to note, however, that it is trivial to make the
+    <em>output</em> of the PIA's document processor conform to the W3C's XHTML
+    DTD if that is considered desirable, and it probably will be at some
+    point.  With an appropriate command-line option the stand-alone
+    <code>process</code> command would make an excellent HTML clean-up tool.
+
+<h3>XML</h3>
+
+<p> As noted above, our extended HTML documents are not XML.  Our extensions
+    are somewhat in the XML <em>style</em>, but they are not (yet) XML.
+
+<p> Nevertheless, it would be desirable in the future to move toward
+    converting all of our sample code to XML, so as to make it easier to
+    process using (other) standard tools.  It is our intention to do so.
+
+<p> It is <em>not</em> our intention to abandon support for general SGML,
+    however.  We intend <em>always</em> to 
+
+<h3>XSL</h3>
+
+<p> XSL (the XML StyleSheet Language) is very similar in intent to the PIA's
+    document-processing language.  The unfortunate problem is that XSL drops
+    back into JavaScript to perform any operations except the few that XSL
+    defines elements for.  We don't need to do that.
+
+<p> We should be able to define a tagset that uses the XSL tags ``on the
+    outside'' but uses the PIA's tags for processing in situations where XSL
+    drops into JavaScript.  It would be significantly harder to convert
+    between these two formats.  This might make a good project for someone in
+    the developer community.
+
+<p> Note that the PIA makes an excellent alternative to XSL in situations
+    where a JavaScript interpretor is not present. 
+
+<hr>
+<h2>SAX Parsers</h2>
+
+<p> A useful near-term step would be to use the SAX interface to allow drop-in
+    replacement of our (ad-hoc and rather buggy) parser with any standard
+    SGML or XML parser.
+
+<p> Unfortunately, our current interface to the parser is totally different
+    from SAX.  SAX is ``event-driven'' -- it reads an input stream and calls a
+    callback function whenever a new token is encountered.  Our interface
+    treats the parser as a ``virtual tree iterator'' -- the processor calls on
+    the parser to traverse the input document's parse tree depth first.
+
+<p> There are three ways of interfacing the PIA's document processor with a
+    SAX parser:
+
+<ol>
+  <li> Build a complete parse tree and traverse it.  This is trivial, so we
+       will probably do it first.  The disadvantage is that the entire tree
+       has to live in memory, so it's unsuitable for large documents
+       (fortunately we have very few of these) or limited-memory
+       (e.g. embedded) applications.
+
+  <li> Run the parser and the processor in separate threads, with a queue of
+       partial trees passing between them.  This is not particularly hard, but
+       it's not necessary, either.
+
+  <li> Extend the document processor to operate as a SAX back-end, i.e. in
+       ``push mode.''  In fact, an earlier version of the processor
+       <em>did</em> operate in this mode, so we know that it's not
+       particularly difficult.  It will require adding an additional method to
+       the <code>Action</code> interface and its implementations, and some
+       changes to <code>Context</code> and <code>Processor</code> (all in the
+       <code>org.risource.dps</code> package).
+</ol>
+
+<p> Our intention is to make the SAX-style parsers an <em>alternative</em> to
+    our own technique, not to abandon tree iterators entirely: they're far too
+    attractive when you have enough memory to cache whole parse trees.  Things
+    will get a <em>little</em> more complicated, but not excessively so.
+
+<p> It's worth noting that our <code>Output</code> interface is <em>very</em>
+    similar to SAX.  Making the PIA's document processor <em>look like a SAX
+    parser</em> will be trivial.
+
+<hr>
+<h2>DOM</h2>
+
+<p> As of Release 2.0.2 the PIA's Document Object Model (as defined in the
+    <code>org.risource.dom</code> package) conforms to an earlier draft of the
+    W3C's Document Object Model specification, not the recommendation as
+    finally approved.  Unfortunately, some classes on which we relied
+    heavily (e.g. TreeIterator) disappeared in the interim, and a number of
+    behavioral specifications (e.g. live nodelists) appeared that make an
+    efficient implementation difficult.
+
+<p> Moreover, it was never the DOM's intention to be a representation for
+    SGML documents, only HTML and XML documents and only in the context of a
+    client-side scripting language like JavaScript.  The DOM is totally unable
+    to deal with documents that do not fit in memory all at once, nor to deal
+    with applications that want to move nodes between documents.  
+
+<p> We intend to deal with the situation as follows:
+
+<ol>
+  <li> Update our code to use the DOM Level 1 core interfaces defined in <a
+       href="http://www.w3.org/TR/1998/REC-DOM-Level-1-19981001/"
+       >www.w3.org/TR/1998/REC-DOM-Level-1-19981001/</a>, as soon as possible.
+       This will permit the PIA to use <em>any</em> DOM implementation as a
+       drop-in replacement.
+
+  <li> Create <em>two implementations</em> of our ``<code>ActiveNode</code>''
+       interface: one a direct implementation, the other a set of ``wrappers''
+       for a generic DOM implementation.  Our direct implementation will
+       conform to the DOM <em>interface specification</em> (with our
+       extensions), but <em>not</em> to the DOM <em>behavioral
+       specification</em>, which we will relax to the point where an efficient
+       implementation becomes possible.
+</ol>
+
+<p> It may be desirable to keep the <code>ActiveNode</code> interfaces as
+    self-contained as possible, rather than making them extensions of
+    corresponding DOM interfaces.  This would eventually make it easier to
+    offer our interfaces as an alternative to the DOM for general SGML
+    document-processing applications.
+
+<p> Stand-alone interfaces would represent a significant change from the
+    present scheme, but might actually simplify the transition away from the
+    old DOM interfaces now in use, which will require major changes anyway.
+
+<p> That said, I expect that the <em>near-term</em> plan should be a
+    mixed strategy: try to stay independent at the interface level, but base
+    the implementation on the DOM.
+
+<hr>
+<h2>Java</h2>
+
+<p> The PIA is currently implemented in Java.  It was originally implemented
+    using Java 1.0.1 but rather quickly made the transition to 1.1.  It is now
+    implemented almost entirely in the intersection of 1.1 and 1.2, and
+    everything but the cryptographic handlers compiles and runs in either.
+
+<p> As of Release 2.1 the PIA's package namespace follows current conventions,
+    being entirely under <code>org.risource.*</code>.  Do not be decieved by
+    the existance of a <code>src/java</code> directory; this does <em>not</em>
+    correspond to the <code>java.*</code> package namespace, but rather to the
+    implementation language.  Similarly, PERL modules will go into
+    <code>src/perl</code> when we get around to writing them.
+
+<p> The naming of classes and methods is slightly less conventional, and
+    reflects both history (the original implementation was in PERL) and
+    architectural considerations.  Specifically:
+
+<ul>
+  <li> In many cases, especially in older code, the names of ``access
+       methods'' conform to PERL rather than Java conventions.  For example,
+       the methods to ``get'' and ``set'' an item in a
+       <code>org.risource.ds.List</code> are <code>at(int index)</code> and
+       <code>at(int index, Object value)</code> rather than the more
+       conventional <code>getItem(int index)</code> and <code>setItem(int
+       index, Object value)</code>.  Similarly, the access methods for the
+       ``name'' attribute of an Agent are <code>name()</code> and
+       <code>name(String newName)</code>.
+
+  <li> Some classes have lowercase names.  In all cases, such classes are
+       automatically loaded, with the name derived from a tag name or other
+       symbol in the PIA's (rather than Java's) namespace.  For example, the
+       names of content handlers in <code>org.risource.content</code> are
+       derived from MIME types, and the names of tag handlers in
+       <code>org.risource.dps.handle</code> are derived from tag names.  
+</ul>
+
+<hr>
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
+<b>$Id: standards.html,v 1.1 1999-03-18 00:22:29 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
