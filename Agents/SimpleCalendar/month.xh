@@ -28,13 +28,12 @@
   </head>
   <body bgcolor="white">
 
-
-  <?-- Title --?>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
     <tr><th align=left colspan=8><font size="+2">
 	    Calendar for 
             <weekday monthname="yes">&mypack;</weekday> &myYear; </font>
 	</th>
+    <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
     <tr><th align=left colspan=8>&nbsp;
 	</th>
         <td align="right" colspan=4>
@@ -44,23 +43,30 @@
            &day;, &year; </a>
         </td>
     </tr>
+    <tr><td colspan=12>&nbsp;</td></tr>
   </table>
   <?-- bar of links to nearby months and years --?>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
     <tr>
        <repeat entity="mth" start="1" stop="12"><text trim="yes">
-	   <set name="mthname">
+	 <hide>
+           <set name="align"><if><test equals="1">&mth;</test>
+				 <then>left</then>
+			     <else-if><test equals="12">&mth;</test>
+				 <then>right</then>
+			     <else>center</else></if></set>
+	   <set name="mthname"><text trim>
 	       <weekday monthname="yes">
 		  <date>15</date><month>&mth;</month><year>&myYear;</year>
 	       </weekday>
-	   </set>
+	   </text></set>
+	 </hide>
 	   <if><test equals="&myMonth;">&mth;</test>
 	     <then>
-	       <th valign="middle"> &nbsp;<font size="+2">&mthname;</font> &nbsp;</th>
+	       <th valign="middle" align="&align;"><font size="+2">&mthname;</font></th>
 	     </then>
 	     <else>
-	         <td valign="center"><a  href="month.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;
-	         </a> &nbsp; </td>
+	         <td valign="middle" align="&align;"><a  href="month.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;</a> </td>
 	     </else>
 	   </if>
        </text></repeat>
@@ -72,20 +78,20 @@
           <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
 		&lastYear;</a>
         </td>
-        <td align="left">
+        <hide><td align="left">
           <a href="month.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
 		&lastYear;-&myMonth;</a>
-        </td>
-        <th align="center" colspan=8>
+        </td></hide>
+        <th align="center" colspan=10>
 		<font size="+2">
           <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
 		&myYear;</a>
 	  </font>
 	</th>
-        <td align="right">
+        <hide><td align="right">
           <a href="month.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
 		&nextYear;-&myMonth;</a>
-        </td>
+        </td></hide>
         <td align="right">
           <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
 		&nextYear;</a>
@@ -98,7 +104,7 @@
   <?-- set name="wholeEventList"> </set --?>
   </hide>
 
-	<table cellspacing="1"  cellpadding="2" border="0">
+	<table cellspacing="1"  cellpadding="2" border="0" width="100%">
 
             <tr>
                <th><tt>--Sunday---</tt></th>
@@ -164,6 +170,6 @@
 
        <show-errors />
 
-
+    <short-footer cvsid="$Id: month.xh,v 1.2 1999-10-11 22:38:11 steve Exp $"/>
   </body>
 </html>
