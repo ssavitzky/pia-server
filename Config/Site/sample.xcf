@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.6 1999-11-12 17:22:42 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.7 1999-11-16 19:00:03 bill Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -94,7 +94,7 @@
 		      registered as ~whatever at the top level.  "xname" is
 		      just a variable, local to the agent. 
 		   -->
-		 <set name="AGENT:pattern">doubleclick\.net|yimg\.com|ads\.lycos.com</set>
+		 <set name="AGENT:pattern">clickthru|doubleclick\.net|yimg\.com|ads\.lycos.com|adforce|imgis|transfer\.go\.com|adclick</set>
 <user-message>  pattern=&AGENT:pattern;</user-message>
      </initialize>
      <doc> This agent takes any URL that matchs a particular pattern and
@@ -103,9 +103,11 @@
      <action><user-message>req: &TRANS:url;</user-message>
        <if><test match="&AGENT:pattern;">&TRANS:url;</test>
 	   <then>
+             <user-message>MATCHED!</user-message>
 	     <set name="TRANS:url">&PIA:url;/Icon/1x1.xbm</set>
-	     <user-message>  -> &TRANS:url;</user-message>
+	     <user-message>trans: &TRANS:url;</user-message>
 	   </then>
+           <else> <user-message>nope...</user-message> </else>
        </if>
      </action>
    </AGENT>
