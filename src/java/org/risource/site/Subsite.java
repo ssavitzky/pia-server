@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.13 1999-10-13 18:23:29 steve Exp $
+//	$Id: Subsite.java,v 1.14 1999-10-13 22:00:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.13 1999-10-13 18:23:29 steve Exp $
+ * @version $Id: Subsite.java,v 1.14 1999-10-13 22:00:10 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -151,6 +151,11 @@ public class Subsite extends ConfiguredResource implements Resource {
   }
 
   protected File[] getVirtualSearchPath() { return virtualSearchPath; }
+
+  public String getHomeDocumentName() {
+    return (homeDocumentName != null)? homeDocumentName
+      : (base != null)? base.getHomeDocumentName() : "home";
+  }
 
   /************************************************************************
   ** Configuration Management:
@@ -354,10 +359,7 @@ public class Subsite extends ConfiguredResource implements Resource {
    * @return document matching <code>homeDocumentName</code>, or a listing.
    */ 
   public Document getDocument() {
-    Resource doc = locate(homeDocumentName, false, null);
-    if (homeDocumentName == null) {
-      homeDocumentName = (base != null)? base.homeDocumentName : "home";
-    }
+    Resource doc = locate(getHomeDocumentName(), false, null);
     return (doc != null && ! doc.isContainer())
       ? doc.getDocument()
       : new Listing(getName(), this, file);
