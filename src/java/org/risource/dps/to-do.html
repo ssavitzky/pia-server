@@ -16,6 +16,21 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Wish</b> automatic (optional) backup on write. <br />
+       e.g. attribute <code>backup</code> specifies the extension to be used
+       for a backup file.  If present and non-null, and the file to be written
+       already exists, and the <code>append</code> attribute is not present,
+       the existing file is renamed to create a backup file.  If the value of
+       <code>backup</code> <em>ends</em> with a period, it is inserted before
+       the filename extension, otherwise it is simply appended.  If the value
+       contains the character ``<code>0</code>'' (zero), it is replaced with
+       the smallest integer for which a corresponding backup file does not
+       already exist.
+       (2000-12-05)<br />
+       -- non-trivial because &lt;output&gt; uses <code>locate</code>,
+	  <code>locateSystemResource</code>, etc.  May need "backup" parameter
+	  to <code>locateSystemResource</code> and <code>documentWriter</code>.
+  </li>
   <li> <b>Hole</b> streaming lazy evaluation of entities would be nice. <br />
        Currently, expanding an EntityRef involves constructing an intermediate
        NodeList even if the EntityRef could provide an Input.  This is
@@ -617,5 +632,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.51 2000-10-05 19:09:00 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.52 2000-12-06 02:11:39 steve Exp $</b><br>
 </body></html>

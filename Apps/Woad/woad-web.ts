@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.11 2000-10-25 20:05:48 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.12 2000-12-06 02:11:35 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -169,13 +169,26 @@
 	</if>
     </set>
     <if> <get name="FORM:update" />
-	 <then> <hide><get name="content"/></hide><!-- discard old content -->
+	 <then>
+	    <doc> <p> Rewrite the note.  It is believed that this is the only
+		      place in Woad where a note is rewritten (as opposed to
+		      created, which happens in several places).  Therefore
+		      this is the right place to create a backup file.
+		  </p>
+		  <p> Note that we actually have to copy the original file
+		      rather than rename it; this gets around a bug in the
+		      implementation of SiteDocument (which is where the
+		      backup file <em>really</em> needs to be written).
+		  </p>
+	    </doc>
+	    <hide><get name="content"/></hide><!-- discard old content -->
+<filter cmd="cp -fp &SITE:file;&DOC:path; &SITE:file;&DOC:path;~" />
 <set name="content">
   <make name="title"><get name="FORM:title" /></make>
 
-  <make name="summary"><parse><get name="FORM:summary" /></parse></make>
+  <make name="summary"><parse tagset="HTML"><get name="FORM:summary" /></parse></make>
 
-  <make name="content"><parse><get name="FORM:content" /></parse></make>
+  <make name="content"><parse tagset="HTML"><get name="FORM:content" /></parse></make>
 
 </set>
 <output dst="&DOC:path;"><make name="note">

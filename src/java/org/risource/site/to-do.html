@@ -16,6 +16,18 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> problems when a document renames itself. <br />
+       If an ordinary document renames itself, e.g. by using &lt;filter&gt;
+       to invoke <code>mv</code>, it can no longer be found.  This is because
+       the original SiteDocument node is still present.  The correct solution
+       is a rename operation that does the right thing.
+       (2000-12-05)<br />
+  </li>
+  <li> <b>Hole</b> need write-and-create-backup op. <br />
+       See corresponding wish in <a href="../dps/to-do.html">../dps/to-do.html
+       </a>.
+       (2000-12-05)<br />
+  </li>
   <li> <b>Bug</b> problems when directory tree changes <br />
        Deleting a directory out from under a running PIA causes a null pointer
        exception.  Adding a real one doesn't hurt, but it isn't seen, either.
@@ -231,5 +243,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.23 2000-08-23 00:03:35 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.24 2000-12-06 02:11:43 steve Exp $</b><br>
 </body></html>

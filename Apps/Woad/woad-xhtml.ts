@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.30 2000-10-24 20:55:12 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.31 2000-12-06 02:11:35 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -39,6 +39,9 @@
   </li>
 </ul>  
 </note>
+
+<h2>Utilities</h2>
+<define element="filter" handler="filterHandler" />
 
 <h2>Form-Processing Tags</h2>
 
@@ -1342,6 +1345,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.30 2000-10-24 20:55:12 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.31 2000-12-06 02:11:35 steve Exp $ -->
 </tagset>
 
