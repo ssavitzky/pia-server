@@ -8,9 +8,10 @@
     <th colspan="2" align="left" bgcolor="#99ccff">
         <ss>WOAD</ss> Application Information
     </th>
+    <td bgcolor="#99ccff"> <a href="about#parameters">[help]</a> </td>
   </tr>
   <tr>
-    <th bgcolor="silver"> parameter </th>
+    <th bgcolor="silver"> <em>parameter</em> </th>
     <th bgcolor="silver"> value </th>
     <th bgcolor="silver"> command-line option </th>
   </tr>
@@ -20,20 +21,6 @@
     </td>
     <td> <code>target=<em><get name="SITE:targetServer">[host:port]</get></em>
 	 </code> 
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> annotation Prefix </th>
-    <td>  <get name="SITE:notesPrefix">&nbsp;</get>
-    </td>
-    <td> <em>set in site config file</em>
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> source Prefix </th>
-    <td>  <get name="SITE:sourcePrefix">&nbsp;</get>
-    </td>
-    <td> <code>prefix=<em><get name="SITE:sourcePrefix">/path</get></em></code>
     </td>
   </tr>
   <tr>
@@ -60,6 +47,54 @@
     <td> <code>-root <em>&SITE:file;</em></code> </td>
   </tr>
 </table>
+
+<p></p>
+<hr />
+
+<table bgcolor="ffffff" cellpadding="2">
+  <tr>
+    <td bgcolor="#99ccff"> &nbsp; </td>
+    <th colspan="2" align="left" bgcolor="#99ccff">
+        <ss>WOAD</ss> Tree Structure Parameters
+    </th>
+    <td bgcolor="#99ccff"> <a href="about#parameters">[help]</a> </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> <em>parameter</em> </th>
+    <th bgcolor="silver"> value </th>
+    <th bgcolor="silver"> description </th>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> annotation Prefix </th>
+    <td>  <get name="SITE:notesPrefix">&nbsp;</get>
+    </td>
+    <td> Location of annotation tree on this server.
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> keyword Prefix </th>
+    <td>  <get name="SITE:wordPrefix">&nbsp;</get>
+    </td>
+    <td> Location of keyword index on this server.
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> source Prefix </th>
+    <td>  <get name="SITE:sourcePrefix">&nbsp;</get>
+    </td>
+    <td> Location of source tree on this server.
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> source Suffix </th>
+    <td>  <get name="SITE:sourceSuffix">&nbsp;</get>
+    </td>
+    <td> Location of notes relative to a source directory
+    </td>
+  </tr>
+</table>
+
+
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.3 2000-06-18 17:40:50 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.4 2000-06-21 01:11:42 steve Exp $">
