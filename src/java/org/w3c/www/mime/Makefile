@@ -18,5 +18,5 @@ FILES = \
 
 
 include $(TOPDIR)/makefiles/file.make
-include $(TOPDIR)/makefiles/package.make
+#include $(TOPDIR)/makefiles/package.make
 
