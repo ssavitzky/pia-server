@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.8 1999-04-13 00:55:16 steve Exp $
+//	$Id: extractHandler.java,v 1.9 1999-04-13 21:17:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.8 1999-04-13 00:55:16 steve Exp $
+ * @version $Id: extractHandler.java,v 1.9 1999-04-13 21:17:15 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -881,15 +881,15 @@ class appendHandler extends extract_subHandler {
     boolean children = atts.hasTrueAttribute("children");
 
     ActiveNodeList extracted = getExtracted(aContext);
-    ActiveNode parent = null;
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
       if (children) {
-	  if (!NodeType.hasContent(item))
-	    Copy.appendNodes(content, parent);	
+	  if (NodeType.hasContent(item))
+	    Copy.appendNodes(content, item);	
 	  // out.putNode(parent);
       } else {
+	ActiveNode parent = null;
 	ActiveNode p = (ActiveNode)item.getParentNode();
 	  if (p != null && p != parent) {
 	    parent = p;
