@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.21 1999-10-19 01:04:17 steve Exp $
+// $Id: Pia.java,v 1.22 1999-10-20 16:21:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.21 1999-10-19 01:04:17 steve Exp $
+  * @version $Id: Pia.java,v 1.22 1999-10-20 16:21:58 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -144,7 +144,6 @@ public class Pia implements Tabular {
   private String  piaRootPath		= null;
   private String  piaVirtualRootPath	= null;
 
-  private String  url		= null;
   private String  host       	= null;
   private int	  realPort   	= 8888;
   private int     virtualPort	= 8888;
@@ -535,13 +534,9 @@ public class Pia implements Tabular {
    *	Only called in HTTPRequest for computing full request URL
    */
    public String url() {
-     if ( url == null ) {
-       if ( virtualPort != 80 ) 
-	 url = "http://" + host + ":" + virtualPort ;
-       else
-	 url = "http://" + host ;
-       }		
-     return url ;
+     return ( virtualPort != 80 ) 
+       ? "http://" + host + ":" + virtualPort() 
+       : "http://" + host ;
   }
 
   /************************************************************************
@@ -746,7 +741,8 @@ public class Pia implements Tabular {
     setProperty("configfile", configFileName);
     setProperty("initialize", initDocPath);
 
-    url = url();
+    setProperty("port", virtualPort());
+    setProperty("url", url());
   }
 
   /** Reset any properties that were changed in the site config. file, but
@@ -855,7 +851,7 @@ public class Pia implements Tabular {
     }
 
     if (verbosity >= 0) 
-      System.err.println("Point your browser to <URL: " + url + ">");
+      System.err.println("Point your browser to <URL: " + url() + ">");
   }
 
   /** Initialize the Pia from the properties.  Can be called again if the

@@ -30,7 +30,7 @@
 <form method='GET' action='source'>
 <input type='submit' value='View source' />
 <input type='hidden' name='tagset' value='HTML' />
-<b>URL:</b> <input name='url' size='55' maxlength='200' value='http://&PIA:host;:&PIA:port;/PIA/Agents' />
+<b>URL:</b> <input name='url' size='55' maxlength='200' value='&PIA:url;/PIA/Agents' />
 </form>
 
 <dl>
@@ -40,7 +40,7 @@
        not defined in this tagset.
 </dd></dl>
 
-<footer cvsid='$Id: source.xh,v 1.5 1999-10-04 17:07:59 steve Exp $' />
+<footer cvsid='$Id: source.xh,v 1.6 1999-10-20 16:21:53 steve Exp $' />
 </body></html>
 </else>
 </if>

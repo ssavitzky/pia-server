@@ -33,10 +33,10 @@
   <option>HTML</option>
   <option>tsdoc</option>
 </SELECT>
-<b>URL:</b> <input name='url' size='55' maxlength='200' value='http://&PIA:host;:&PIA:port;/' />
+<b>URL:</b> <input name='url' size='55' maxlength='200' value='&PIA:url;/' />
 </form>
 
-<footer cvsid='$Id: view.xh,v 1.5 1999-10-04 17:08:00 steve Exp $' />
+<footer cvsid='$Id: view.xh,v 1.6 1999-10-20 16:21:54 steve Exp $' />
 </body></html>
 </else>
 </if>

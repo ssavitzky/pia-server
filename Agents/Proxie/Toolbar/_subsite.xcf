@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.5 1999-10-14 21:43:06 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.6 1999-10-20 16:21:41 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -10,10 +10,9 @@
          document, albeit an imaginary one.  
       -->
     <DOCUMENT> <!-- Generic Toolbar controls: -->
-<set name='pia'>http://&PIA:host;:&PIA:port;</set>
-<a href='&pia;/&AGENT:path;/' target='_top'>[~]</a>
-<a href='&pia;&AGENT:path;/hide?hide=true' target='_top'>[X]</a>
-<a href='&pia;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a>
+<a href='&PIA:url;/&AGENT:path;/' target='_top'>[~]</a>
+<a href='&PIA:url;&AGENT:path;/hide?hide=true' target='_top'>[X]</a>
+<a href='&PIA:url;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a>
     </DOCUMENT>
   </Resource>
 </Container>

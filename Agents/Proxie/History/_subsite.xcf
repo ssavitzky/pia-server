@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.6 1999-10-20 00:09:51 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.7 1999-10-20 16:21:37 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -8,8 +8,7 @@
     <initialize><user-message>    History agent initialized</user-message>
 	<output directory="directory" dst="DATA" /><!-- create DATA dir. -->
 	<!-- define some entities -->
-	<set name="AGENT:pia">http://&PIA:host;:&PIA:port;</set>
-	<set name="AGENT:dd">http://&PIA:host;:&PIA:port;/~&AGENT:name;/DATA</set>
+	<set name="AGENT:dd">&PIA:url;/~&AGENT:name;/DATA</set>
     </initialize>
     <action>
      <set name="ct"><get name="TRANS:Content-type" /></set>
@@ -50,8 +49,8 @@
          document, albeit an imaginary one.  
       -->
     <DOCUMENT><!--   from History agent:   -->
-<set name="dd">http://&PIA:host;:&PIA:port;/~History/DATA</set>
-[<a href="&AGENT:pia;/~History/" target="_top">Hist</a>
+<set name="dd">&PIA:url;/~History/DATA</set>
+[<a href="&PIA:url;/~History/" target="_top">Hist</a>
  <a href="&dd;/" target="_top">*</a>/<a href="&dd;/&year;/" target="_top">&year;</a>/<a href="&dd;/&year;/&month;/" target="_top">&month;</a>/<a href="&dd;/&year;/&month;/&day;.html" target="_top">&day;</a>
  <a href="&dd;/last.html" target="_top">&time;</a>]
     </DOCUMENT>

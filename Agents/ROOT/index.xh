@@ -3,7 +3,6 @@
   <title>&user.name;'s Agency on &PIA:host;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
-<set name='piaURL'>http://&PIA:host;:&PIA:port;/</set>
 <set name='ltitle'><if><test exact='exact' match='pia'>&user.name;</test>
 		     <then> </then>
 		     <else><a href='/~/'>&user.name;'s</a> </else></if></set>
@@ -12,7 +11,7 @@
 			    <then>An Information Appliance</then>
 	    		    <else>Personal Information Agency</else>
 			</if><br />
-	 &lt;<a href='&piaURL;'>&piaURL;</a>&gt;</header>
+	 &lt;<a href='&PIA:url;'>&PIA:url;</a>&gt;</header>
 
 <table cellspacing='0' cellpadding='0' border='0'>
 <tr>
@@ -64,5 +63,5 @@
 <hr />
 <include src='/ROOT/doc-grid.inc'> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.7 1999-10-04 17:25:58 steve Exp $' />
+<short-footer cvsid='$Id: index.xh,v 1.8 1999-10-20 16:21:50 steve Exp $' />
 </p></body></html>

@@ -27,10 +27,10 @@
 <form method='GET' action='slides'>
 <input type='submit' value='View slides' />
 <input type='hidden' name='tagset' value='slides' />
-<b>URL:</b> <input name='url' size='55' maxlength='200' value='http://&PIA:host;:&PIA:port;/Doc' />
+<b>URL:</b> <input name='url' size='55' maxlength='200' value='&PIA:url;/Doc' />
 </form>
 
-<footer cvsid='$Id: slides.xh,v 1.6 1999-10-04 17:07:59 steve Exp $' />
+<footer cvsid='$Id: slides.xh,v 1.7 1999-10-20 16:21:53 steve Exp $' />
 </body></html>
 </else>
 </if>

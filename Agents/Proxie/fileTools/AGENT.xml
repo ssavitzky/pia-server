@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.3 1999-10-04 17:07:47 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.4 1999-10-20 16:21:44 steve Exp $ -->
 
 <AGENT name='fileTools' path='/Proxie/Toolbar/'
        type='/Proxie/Toolbar' home-dir='Proxie/fileTools'
@@ -8,16 +8,15 @@
   <bind name='onStart'>on</bind>
   <bind name='act-on'><if><get name='AGENT:hidden' /><else>
 <trans-control>
-<set name='pia'>http://&PIA:host;:&PIA:port;</set>
-<a href='&pia;/' target='_top'><img src='&pia;/Icon/pia24.gif' height='24' width='43' border='0' /></a>
+<a href='&PIA:url;/' target='_top'><img src='&PIA:url;/Icon/pia24.gif' height='24' width='43' border='0' /></a>
 <expand>&AGENTS:Toolbar:controls;</expand>
 <expand><get name='AGENTS:History:controls' /></expand>
 ( <if><test not='not' exact='exact' match='&transAgentType;'>&transAgentName;</test>
-    <then><a href='&pia;/&transAgentType;'>&transAgentType;</a>
-          <a href='&pia;/&transAgentType;/'> / </a></then>
+    <then><a href='&PIA:url;/&transAgentType;'>&transAgentType;</a>
+          <a href='&PIA:url;/&transAgentType;/'> / </a></then>
 </if>
-<a href='&pia;/&transAgentName;'>&transAgentName;</a>
-<a href='&pia;/&transAgentName;/'> / </a> )
+<a href='&PIA:url;/&transAgentName;'>&transAgentName;</a>
+<a href='&PIA:url;/&transAgentName;/'> / </a> )
 <a href='/PIA/Agents/&urlPath;'>&urlPath;</a>
 <hr />
 </trans-control></else></if>
