@@ -59,7 +59,7 @@
 <p> Once we get to this point, a lot of things can be simplified:
 
 <ul>
-  <li> Initialization is just reading an <code>agent.x</code> file with the
+  <li> Initialization is just reading an <code>agent.xml</code> file with the
        <code>agent</code> tagset.  <code>initialize.xh</code> goes away except
        for agents that really need to execute code on startup.  Even then, an
        intialization <em>entity</em> should do most of the work.
@@ -137,6 +137,36 @@
     DPS attributes of our objects: action, syntax, key (for sorting and
     extraction), etc.
 
+<h3><a name="where">Where Things Go</a></h3>
+
+<p> There are three possibilities:
+
+<ol>
+  <li> Move the ActiveNode interfaces to <code>org.risource.dom.active</code>,
+       and the implementations to <code>org.risource.dom.tree</code>.  Move
+       <code>Cursor</code> and related stuff to, perhaps,
+       <code>org.risource.dom.cursor</code>. Blow away
+       <code>org.risource.dps.active</code> or use it for purely DPS-specific
+       stuff (which might be hard to find).  It's rather hard to justify
+       having the ActiveNode interfaces under the DOM, but it does mean that
+       <code>org.risource.dom</code> and its sub-directories constitute a
+       completely stand-alone implementation of the DOM.
+  <li> Move the implementations to <code>org.risource.dps.tree</code>.  Blow
+       away <code>org.risource.dom</code> or use it for utilities that use
+       only the <code>org.w3c.dom</code> interfaces.  This leaves
+       <code>org.risource.dps</code> and its sub-packages as a stand-alone
+       document processor.  If the DOM and DPS go their separate ways, nobody
+       will notice. 
+  <li> Move the implementations to <code>org.risource.dom.tree</code> but
+       leave the ActiveNode interfaces in
+       <code>org.risource.dps.active</code>.  In this case, neither
+       <code>org.risource.dom</code> nor <code>org.risource.dps</code> can
+       stand alone, but minimal damage is done to the existing directory
+       structure (<code>tree</code> is added, but nothing goes away).  The way
+       is still open to a totally DOM-free version of the DPS.
+</ol>
+
+
 <h3>Implementation</h3>
 
 <p> There are basically three ways to proceed:
@@ -146,14 +176,12 @@
        interfaces in place, move the implementation to org.risource.dom.tree,
        and basically go to completion in one step.  This leaves the working
        copy of the PIA out of commission for the longest time.
-  <li> Copy the ParseTree classes out of org.risource.dps.active into
-       org.risource.dom.tree and hack them until they compile with
-       org.w3c.dom.  Move the mixed interfaces from org.risource.dps.active to
-       org.risource.dom or org.risource.dom.active; use them in the DPS until
-       we can shift it from ``nodal'' to purely ``cursorial'' form.
-  <li> Hack org.risource.dps.active in place to use org.w3c.dom.  Sort things
-       out later.  This is the fastest route to DOM compliance, but probably the
-       slowest overall.
+  <li> Develop new working copies of the mixed (ActiveNode) interfaces and
+       their implementation.  Then switch the DPS over, using the mixed
+       interfaces until we can shift it from ``arboreal'' to purely
+       ``cursorial'' form.  This is the fastest route to DOM compliance.
+  <li> Switch the DPS over to being purely cursorial.  <em>Then</em> drop in
+       the new ActiveNode implementation.
 </ol>
 
 <p> The nice thing about the middle path is that it is the most incremental
@@ -165,7 +193,6 @@
 <p> During the transition, the <code>ActiveNode</code> interfaces will
     continue to be used in the DPS.  Afterward, they will be used only in the
     cursor implementations.
-
 
 <hr><!-- ========================================================== -->
 
@@ -257,7 +284,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Stephen R. Savitzky</b><br>
-<b>$Id: projects.html,v 1.7 1999-03-31 00:27:10 steve Exp $</b><br>
+<b>$Id: projects.html,v 1.8 1999-04-01 22:27:06 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
