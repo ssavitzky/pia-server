@@ -1,5 +1,5 @@
 ###### interform/test/Makefile:	InterForm Interpretor tests
-# 	$Id: Makefile,v 1.3 1999-03-12 19:27:58 steve Exp $
+# 	$Id: Makefile,v 1.4 1999-03-23 18:40:17 pgage Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -25,11 +25,7 @@ PACKAGE=org.risource.interform.test
 TOPDIR=../../../..
 
 FILES = \
-	t1.txt \
 	t2.html \
-	t3.if \
-	t4.if \
-	t5.if \
 	t6.xh
 
 .SUFFIXES: .txt .html .if .xh .xx .out .ok .diff .run

@@ -1,8 +1,0 @@
-#!/bin/sh
-#	$Id: process,v 1.2 1999-03-12 19:27:59 steve Exp $
-# DPS filter
-#	
-#
-# Usage: 
-#	process [option]... filename
-exec pia_wrapper  crc.dps.Filter $*
