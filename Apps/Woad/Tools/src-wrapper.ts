@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.7 2000-10-06 06:28:43 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.8 2000-10-24 20:55:18 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -129,10 +129,11 @@
     
 
 <hide>
+    <set name="xloc">&LOC:path;&note-tail;</set>
     <!-- Create a new note:  have to do this before listing the directory -->
-    <handleNoteCreation>&LOC:path;&note-tail;</handleNoteCreation>
+    <handleNoteCreation>&xloc;</handleNoteCreation>
     <!-- List the note files -->
-    <listNoteFiles>&LOC:path;&note-tail;</listNoteFiles>
+    <listNoteFiles>&xloc;</listNoteFiles>
 </hide>
 
 <!-- at this point, include content of HEADER.ww if there is one. -->
@@ -234,7 +235,7 @@
 <hr />
 <hide>&content;</hide>
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
-  </then></else-if>
+  </then>
 <else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
   <then>
 <yellow-note><em> This <tt>&VAR:format;</tt> listing shows tagset
@@ -250,7 +251,7 @@
       This <tt>&VAR:format;</tt> listing is color-coded according to syntax,
       using a rather loose parsing algorithm.  Identifiers with definitions
       elsewhere in the tree are linked to cross-reference files.
-</yellow-note>
+</em></yellow-note>
 
 <hr />
 <!-- not clear whether we always want to make the listing <small>. -->

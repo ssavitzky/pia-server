@@ -21,7 +21,7 @@
 	xrefs="SITE:xref" xprefix="/.words/xref/"
         include="src-wrapper src-file" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.10 2000-10-13 23:21:46 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.11 2000-10-24 20:55:18 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -411,7 +411,7 @@
 </small>
   </then></else-if>
 
-<else> 		<!-- ====== xref ================================= -->
+  <else>	<!-- ====== xref ================================= -->
 <yellow-note><em>
 	This <tt>&VAR:format;</tt> listing shows the full contents
 	of the file with defined words made into cross-reference links.  
@@ -424,7 +424,6 @@
 
 <hr />
 <small><pre><expand>&content;</expand></pre></small>
-  </then></else-if>
 
   </else>
 </if>

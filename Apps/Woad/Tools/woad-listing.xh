@@ -45,14 +45,15 @@
 <!-- === should test for presence of source directory. -->
   <if> <test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
        <then>
-	 <set name="xloc">&npath;&tail;</set>
+	 <set name="yloc">&npath;&tail;</set>
        </then>
        <else>
-	 <set name="xloc">
+	 <set name="yloc">
 	    <subst match="/[^/]*$" result="">&npath;&tail;</subst></set>
        </else>
   </if>
-  <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
+  <set name="yloc"><subst match="^//" result="/">&yloc;</subst></set>
+  <set name="xloc">&LOC:path;&tail;</set>
 
   <!-- Ensure that form submissions don't get redirected!  -->
   <set name="formLoc">
@@ -66,7 +67,7 @@
 <title>&npath;&tail; : Woad annotations</title>
 </head><body bgcolor="#99ccff">
 <!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
-    xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
+    yloc=&yloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
     tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
     title="&pageTitle;"<br />
 -->
@@ -237,7 +238,7 @@
   <repeat>
     <foreach>&linksToPage;</foreach>
       <let name="absPath">
-  	<fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
+  	<fixRelativePath path="&yloc;">&li;</fixRelativePath></let>
       <if> &absPath;
   	   <then>
   	      <let name="absLink"><get name="SITE:notesPrefix" />&absPath;</let>
@@ -261,7 +262,7 @@
   <repeat><foreach>&linksInPage;</foreach>
     <tr><!-- may need to remap absolute links to annotation loc's -->
 	   <let name="absPath">
-	     <fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
+	     <fixRelativePath path="&yloc;">&li;</fixRelativePath></let>
     <if> <get name="absPath" />
          <then>
       	    <let name="absPath">
@@ -372,5 +373,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.20 2000-10-06 17:40:53 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.21 2000-10-24 20:55:19 steve Exp $" />
 </body></html>

@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.29 2000-10-19 00:04:05 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.30 2000-10-24 20:55:12 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -725,6 +725,7 @@ Note that we only need these inside the PIA.
    <let name="mtime"><status src="&path;" item="last-modified" /></let>
    <if>&FORM:title;<then><let name="title">&FORM:title;</let></then></if>
    </hide><parse tagset="HTML"><get name="FORM:summary" /></parse>
+</make>
 </output>
 		</else>
 	   </if>
@@ -1341,6 +1342,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.29 2000-10-19 00:04:05 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.30 2000-10-24 20:55:12 steve Exp $ -->
 </tagset>
 

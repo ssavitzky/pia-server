@@ -44,11 +44,11 @@
 
   <if> <test not="not" match="\.[a-zA-Z0-9]+$">&spath;&tail;</test>
        <then>
-	 <set name="xloc">&spath;&tail;</set>
+	 <set name="xloc">&LOC:path;&tail;</set>
        </then>
        <else>
 	 <set name="xloc">
-	    <subst match="/[^/]*$" result="">&spath;&tail;</subst></set>
+	    <subst match="/[^/]*$" result="">&LOC:path;&tail;</subst></set>
        </else>
   </if>
   <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
@@ -370,5 +370,5 @@
      </else>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.21 2000-10-19 00:05:03 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.22 2000-10-24 20:55:18 steve Exp $" />
 </body></html>

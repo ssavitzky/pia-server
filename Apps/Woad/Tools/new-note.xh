@@ -16,9 +16,12 @@
   <tr>
     <th bgcolor="#cccccc" width="100" align="left"> label: </th>
     <td bgcolor="#ffffff">&nbsp;
-        <if> <test match="other"><get name="FORM:label"/></test>
-    	     <then><input name="label"/></then>
-    	     <else><get name="FORM:label"/></else>
+        <if> <logical op="and">
+    		<get name="FORM:label"/>
+    		<test not="not" match="other"><get name="FORM:label"/></test>
+    	     </logical>
+    	     <then><get name="FORM:label"/></then>
+    	     <else><input name="label"/></else>
 	</if>
     </td>
   </tr>
@@ -52,8 +55,7 @@
         <input type="submit" name="create" value="create"/>
     </th>
     <td valign="top"> Click here to create the note.
-        <br /> Go ``back'' in your browser if you really didn't mean
-	          it. 
+        <br /> Go ``back'' in your browser if you really didn't mean it. 
     </td>
   </tr>
 </table>
@@ -61,28 +63,60 @@
 
 <hr /><!-- ==================== create the form ====================== -->
 
-<doc> The following is an egregious hack:  Include a template note,
-      <em>sans</em> the enclosing <code>&lt;note&gt;</code> element, and
-      expand it with <code>FORM:edit</code> set.  Disgusting, no?  Yes.
-</doc>
-
 <if> <get name="FORM:create" />
-     <then>
+     <then><!-- create the note -->
+<set name="content">
+  <make name="title"><get name="FORM:title" /></make>
+
+  <make name="summary"><parse><get name="FORM:summary" /></parse></make>
+
+  <make name="content"><parse><get name="FORM:content" /></parse></make>
+
+</set>
+<set name="notePath">
+  <forceTrailingSlash>&FORM:path;</forceTrailingSlash>&FORM:label;.ww
+</set>
+<output dst="&notePath;"><make name="note">
+    <get name="content"/>
+</make>
+</output>
+<!-- === AllNotesByTime needs to go under &project; or something eventually -->
+<output dst="/AllNotesByTime.wi" append="yes">
+<make name="Wfile"><hide>
+   <let name="name">&FORM:label;</let>
+   <let name="path">&notePath;</let>
+   <let name="type">note</let>
+   <!-- let name="size"><status src="&path;" item="length" /></let -->
+   <let name="mtime"><status src="&path;" item="last-modified" /></let>
+   <if>&FORM:title;<then><let name="title">&FORM:title;</let></then></if>
+   </hide><parse tagset="HTML"><get name="FORM:summary" /></parse>
+</make>
+</output>
+	<expand tagset="/.Woad/woad-web">
+	  <extract>
+	    <from>
+		<include quoted src="&notePath;" tagset="/.Woad/woad-web" />
+	    </from>
+	    note <content />
+	</expand>
      </then>
      <else>
+	<doc> The following is an egregious hack: Include a template note,
+	      <em>sans</em> the enclosing <code>&lt;note&gt;</code> element,
+	      and expand it with <code>FORM:edit</code> set.  Disgusting, no?
+	      Yes.
+	</doc>
 	<set name="FORM:edit">yes</set>
-	<input name="path" value="&FORM:path;" />
+	<input name="path" value="&FORM:path;" type="hidden" />
 	<expand tagset="/.Woad/woad-web">
 	  <include quoted src="note-template.xml" tagset="/.Woad/woad-web" />
 	</expand>
      </else>
 </if>
 
-
-
 </form>
 
 
 <p>
-<short-footer cvsid="$Id: new-note.xh,v 1.1 2000-06-28 01:50:04 steve Exp $" />
+<short-footer cvsid="$Id: new-note.xh,v 1.2 2000-10-24 20:55:17 steve Exp $" />
 </p></body></html>

@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.9 2000-10-12 23:11:09 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.10 2000-10-24 20:55:11 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -178,12 +178,12 @@
   <make name="content"><parse><get name="FORM:content" /></parse></make>
 
 </set>
-		<output dst="&DOC:path;"><make name="note">
-  <get name="content"/>
+<output dst="&DOC:path;"><make name="note">
+    <get name="content"/>
 </make>
-		</output>
+</output>
 <!-- === AllNotesByTime needs to go under &project; or something eventually -->
-		<output dst="/AllNotesByTime.wi" append="yes">
+<output dst="/AllNotesByTime.wi" append="yes">
 <make name="Wfile"><hide>
    <let name="name">&DOC:name;</let>
    <let name="path">&DOC:path;</let>
@@ -192,6 +192,7 @@
    <let name="mtime"><status src="&path;" item="last-modified" /></let>
    <if>&FORM:title;<then><let name="title">&FORM:title;</let></then></if>
    </hide><parse tagset="HTML"><get name="FORM:summary" /></parse>
+</make>
 </output>
 	 </then>
     </if>
@@ -249,6 +250,7 @@
      </else>
 </if>
 <hr />
+<!-- for some reason the old content appears here after an update. -->
 </body></html>
   </action>
 </define>
