@@ -1,5 +1,5 @@
 ////// protectHandler.java: <protect> Handler implementation
-//	$Id: protectHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
+//	$Id: protectHandler.java,v 1.6 1999-07-09 22:55:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;protect&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: protectHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
+ * @version $Id: protectHandler.java,v 1.6 1999-07-09 22:55:38 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -46,13 +46,16 @@ public class protectHandler extends GenericHandler {
   /** Just return the content. */
   public void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
-    putList(out, content);
+    if (atts.hasTrueAttribute("markup")) {
+      putText(out, aContext, content.toString());
+    } else {
+      putList(out, content);
+    }
   }
 
   /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
-    if (dispatch(e, "markup")) 	 return protect_markup.handle(e);
     if (dispatch(e, "result"))	 return protect_result.handle(e);
     return this;
   }
@@ -82,21 +85,6 @@ public class protectHandler extends GenericHandler {
       parseEntitiesInContent = true;	// false	recognize entities?
     }
   }
-}
-
-class protect_markup extends protectHandler {
-  /** The action for &lt;protect markup&gt; is tricky: it relies on the fact
-   *	that Text, when output, replaces markup characters with entities. 
-   */
-  public void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, ActiveNodeList content) {
-    putText(out, aContext, content.toString());
-  }
-  /** The constructor is also tricky: it relies on the fact that the 
-   *	superclass's constructor detects the "result" attribute.
-   */
-  public protect_markup(ActiveElement e) { super(e); }
-  static Action handle(ActiveElement e) { return new protect_markup(e); }
 }
 
 class protect_result extends protectHandler {
