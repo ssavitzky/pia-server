@@ -1,5 +1,5 @@
 ////// AbstractNamespace.java: Node Lookup Table
-//	$Id: AbstractNamespace.java,v 1.5 1999-11-04 22:33:48 steve Exp $
+//	$Id: AbstractNamespace.java,v 1.6 1999-11-09 01:18:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: AbstractNamespace.java,v 1.5 1999-11-04 22:33:48 steve Exp $
+ * @version $Id: AbstractNamespace.java,v 1.6 1999-11-09 01:18:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -226,22 +226,24 @@ public abstract class AbstractNamespace extends TreeGeneric
   public String startString() {
     String s = "<" + (nodeName == null ? "" : nodeName);
     ActiveAttrList attrs = getAttrList();
-    int margin = 3 + nodeName.length();
+    int margin = 2 + nodeName.length();
     int col = margin; 
     if (attrs != null && attrs.getLength() > 0) {
       for (int i = 0; i < attrs.getLength(); ++i) {
 	ActiveAttr at = (ActiveAttr)attrs.asNodeList().activeItem(i);
 	if (!at.getSpecified() || at.getValueNodes() == null) continue;
+	String an = at.getName();
 	String it = at.getNodeValue();
-	if (col + 1 + it.length() < 72) {
-	  s += " " + it;
-	  col += 1 + it.length();
+	int len = an.length() + it.length() + 3;
+	if (col + 1 + len < 72) {
+	  s += " ";
+	  col += 1 + len;
 	} else {
 	  s += "\n";
 	  for (col = 0; col < margin; col++) s += " ";
-	  s += it;
-	  col += it.length();
+	  col += len;
 	}	    
+	s += an + "=\"" + it + "\"";
       }
     }
     if (getName() != null && getAttribute("name") == null) 

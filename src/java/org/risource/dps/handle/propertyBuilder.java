@@ -1,5 +1,5 @@
 ////// propertyBuilder.java: <namespace> Handler implementation
-//	$Id: propertyBuilder.java,v 1.1 1999-11-06 01:14:45 steve Exp $
+//	$Id: propertyBuilder.java,v 1.2 1999-11-09 01:18:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tree.TreeAttrList;
 import org.risource.dps.namespace.*;
-import org.risource.dps.output.ToNamespace;
+import org.risource.dps.output.ToProperties;
 
 /**
  * Handler for &lt;properties&gt;....&lt;/&gt; 
@@ -39,7 +39,7 @@ import org.risource.dps.output.ToNamespace;
  * <p>	Expand the content in a context that contains a new local namespace. 
  *	Return the namespace as the result. 
  *
- * @version $Id: propertyBuilder.java,v 1.1 1999-11-06 01:14:45 steve Exp $
+ * @version $Id: propertyBuilder.java,v 1.2 1999-11-09 01:18:47 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -56,9 +56,10 @@ public class propertyBuilder extends GenericHandler {
     String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
     boolean pass = atts.hasTrueAttribute("pass");
+    String tag = in.getTagName();
 
-    Namespace ns = makeNamespace(cxt, name, atts);
-    ToNamespace loader = new ToNamespace(ns, cxt.getTopContext().getTagset());
+    Namespace ns = makeNamespace(cxt, tag, name, atts);
+    ToProperties loader = new ToProperties(ns, cxt.getTopContext().getTagset());
     loader.setContext(cxt);
     if (pass) loader.setBypass(out);
     Processor p = cxt.subProcess(in, loader, ns);
@@ -68,9 +69,9 @@ public class propertyBuilder extends GenericHandler {
   }
 
   /** Construct the namespace.  Specialized subclasses may override this. */
-  protected Namespace makeNamespace(Context cxt, String name,
+  protected Namespace makeNamespace(Context cxt, String tag, String name,
 				    ActiveAttrList atts) {
-    return new PropertyTable(name);
+    return new PropertyTable(tag, name, atts);
   }
 
   /** Perform any necessary cleanup or initialization.  Return the namespace

@@ -1,5 +1,5 @@
 ////// PropertyTable.java: Node and String Lookup Table
-//	$Id: PropertyTable.java,v 1.5 1999-11-04 22:33:48 steve Exp $
+//	$Id: PropertyTable.java,v 1.6 1999-11-09 01:18:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.ds.Table;
  *
  * <p>	The 
  *
- * @version $Id: PropertyTable.java,v 1.5 1999-11-04 22:33:48 steve Exp $
+ * @version $Id: PropertyTable.java,v 1.6 1999-11-09 01:18:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.site
@@ -180,7 +180,11 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
   }
 
   public PropertyTable(String name, ActiveAttrList attrs) {
-    super("Properties", name, attrs); 
+    this("Properties", name, attrs); 
+  }
+
+  public PropertyTable(String tag, String name, ActiveAttrList attrs) {
+    super(tag, name, attrs); 
   }
 
   public PropertyTable(String name, java.util.Properties props) {

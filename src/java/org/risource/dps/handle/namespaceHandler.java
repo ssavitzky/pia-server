@@ -1,5 +1,5 @@
 ////// namespaceHandler.java: <namespace> Handler implementation
-//	$Id: namespaceHandler.java,v 1.7 1999-07-14 20:20:24 steve Exp $
+//	$Id: namespaceHandler.java,v 1.8 1999-11-09 01:18:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.output.ToNamespace;
  * <p>	Expand the content in a context that contains a new local namespace. 
  *	Return the namespace as the result. 
  *
- * @version $Id: namespaceHandler.java,v 1.7 1999-07-14 20:20:24 steve Exp $
+ * @version $Id: namespaceHandler.java,v 1.8 1999-11-09 01:18:47 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -56,8 +56,9 @@ public class namespaceHandler extends GenericHandler {
     String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
     boolean pass = atts.hasTrueAttribute("pass");
+    String tag = in.getTagName();
 
-    Namespace ns = makeNamespace(cxt, name, atts);
+    Namespace ns = makeNamespace(cxt, tag, name, atts);
     ToNamespace loader = new ToNamespace(ns, cxt.getTopContext().getTagset());
     loader.setContext(cxt);
     if (pass) loader.setBypass(out);
@@ -68,9 +69,9 @@ public class namespaceHandler extends GenericHandler {
   }
 
   /** Construct the namespace.  Specialized subclasses may override this. */
-  protected Namespace makeNamespace(Context cxt, String name,
+  protected Namespace makeNamespace(Context cxt, String tag, String name,
 				    ActiveAttrList atts) {
-    return new BasicNamespace(name);
+    return new BasicNamespace(tag, name, atts);
   }
 
   /** Perform any necessary cleanup or initialization.  Return the namespace
