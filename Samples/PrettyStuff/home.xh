@@ -28,7 +28,7 @@
 
 <!--  Add an image for some decoration  -->
 <TR>
-<TD><IMG src='images/sm_snow.gif' height='310' width='203' alt='Display an Image' /></TD>
+<TD><IMG src='images/sm_snow.png' height='310' width='203' alt='Display an Image' /></TD>
 
 <TD> See how the <code>&lt;header&gt;</code> and <code>&lt;footer &gt;</code>
      tags expand to contain not only images but links to useful locations as
@@ -45,6 +45,6 @@
 <!-- pia-xhtml tagset. It provides the navigation bar at the bottom of 
 <!-- the page, along with a copyright notice.
 <!-- ===================================================================  -->
-<footer cvsid='$Id: home.xh,v 1.1 1999-10-14 22:36:20 bill Exp $'></footer>
+<footer cvsid='$Id: home.xh,v 1.2 1999-11-05 01:12:51 steve Exp $'></footer>
 </body>
 </html>

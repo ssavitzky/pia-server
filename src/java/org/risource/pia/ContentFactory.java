@@ -1,5 +1,5 @@
 // ContentFactory.java
-// $Id: ContentFactory.java,v 1.3 1999-03-12 19:29:02 steve Exp $
+// $Id: ContentFactory.java,v 1.4 1999-11-05 01:12:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,6 +50,7 @@ public class ContentFactory extends ContentHandler
   public static String TEXT_HTML                         = "text/html";
   public static String TEXT_PLAIN                        = "text/plain";
   public static String IMAGE_GIF                         = "image/gif";
+  public static String IMAGE_PNG                         = "image/png";
   public static String APPLICATION_POSTSCRIPT            = "application/postscript";
   public static String APPLICATION_X_JAVA_AGENT          = "application/x-java-agent";
   public static String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
@@ -75,7 +76,8 @@ public class ContentFactory extends ContentHandler
     contentTypeTable.at( APPLICATION_X_WWW_FORM_URLENCODED, PIAPREFIX + ".FormContent");
     contentTypeTable.at( TEXT_HTML, TEXTPACKPREFIX + ".html");
     contentTypeTable.at( TEXT_PLAIN, TEXTPACKPREFIX + ".plain");
-    contentTypeTable.at( IMAGE_GIF, IMGPACKPREFIX + ".gif");
+    //contentTypeTable.at( IMAGE_GIF, IMGPACKPREFIX + ".gif");
+    //contentTypeTable.at( IMAGE_PNG, IMGPACKPREFIX + ".png");
   }
   
   public ContentFactory()

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.4 1999-10-20 16:21:44 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.5 1999-11-05 01:12:09 steve Exp $ -->
 
 <AGENT name='fileTools' path='/Proxie/Toolbar/'
        type='/Proxie/Toolbar' home-dir='Proxie/fileTools'
@@ -8,7 +8,8 @@
   <bind name='onStart'>on</bind>
   <bind name='act-on'><if><get name='AGENT:hidden' /><else>
 <trans-control>
-<a href='&PIA:url;/' target='_top'><img src='&PIA:url;/Icon/pia24.gif' height='24' width='43' border='0' /></a>
+<a href='&PIA:url;/' target='_top'><img src='&PIA:url;/Icon/pia24.png'
+   height='24' width='43' border='0' /></a> 
 <expand>&AGENTS:Toolbar:controls;</expand>
 <expand><get name='AGENTS:History:controls' /></expand>
 ( <if><test not='not' exact='exact' match='&transAgentType;'>&transAgentName;</test>

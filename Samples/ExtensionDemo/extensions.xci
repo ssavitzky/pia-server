@@ -1,4 +1,4 @@
-<!-- $Id: extensions.xci,v 1.1 1999-10-14 22:29:07 bill Exp $ -->
+<!-- $Id: extensions.xci,v 1.2 1999-11-05 01:12:48 steve Exp $ -->
 <!-- see the file PIA/Config/Site/extensions.xci for more complete examples -->
 
 
@@ -8,5 +8,6 @@
 
   <Ext name="jpeg"	type="image/jpeg"				/>
   <Ext name="jpg"	type="image/jpeg"				/>
+  <Ext name="png"	type="image/png"				/>
   <Ext name="gif"	type="image/gif"				/>
 

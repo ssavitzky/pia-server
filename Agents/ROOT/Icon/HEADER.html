@@ -1,21 +1,27 @@
 <h1>Icons for Agents</h1>
 
+<p>
 This directory contains icons that are shared by many agents.  Icons that are
 agent-specific should go into the Agent's home directory.  Putting icons under
 Agency allows them to be overridden by the user.  It also ensures that they
-will be available; the Agency agent is always running.<p>
+will be available; the Agency agent is always running.
 
 
 <dl>
   <dt> <b>Note:</b>
-  <dd> When checking in binary files such as GIF's, you need to use:
+  <dd> When checking in binary files such as PNG's, you need to use:
        <pre>
-       cvs add -kb <i>foo.gif</i>
+       cvs add -kb <i>foo.png</i>
        </pre>
   <dt> <b>Logos</b>
-  <dd> A name like ``<code>logo24.gif</code>'' indicates a plain logo;
-       ``<code>cpia24.gif</code>'' indicates a logo attached to the letters
+  <dd> A name like ``<code>logo24.png</code>'' indicates a plain logo;
+       ``<code>pia24.png</code>'' indicates a logo attached to the letters
        ``PIA''.  The number in all cases is the height in pixels.
+  <dt> <b>GIF's</b>
+  <dd> GIF images have been removed from the PIA and replaced with PNG images,
+       to avoid patent licensing problems.  Besides, PNG's are smaller.  GIF's
+       can still be found in /Doc/API/javadoc/images -- these came from Sun,
+       and we're presuming that they're ok.
 </dl>
 
 <h2>Acknowledgements:</h2>
@@ -29,7 +35,7 @@ will be available; the Agency agent is always running.<p>
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.3 1999-03-12 19:22:49 steve Exp $</b><br>
+<b>$Id: HEADER.html,v 1.4 1999-11-05 01:12:20 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.9 1999-10-26 22:52:45 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.10 1999-11-05 01:12:38 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -286,7 +286,7 @@
            align="center" width="100%">
       <tr><th align=left><font size="+2">&content;</font>
 	  </th>
-      <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
+      <tr height=6><td><img src="/Icon/rule.png" height=6 width=469></td></tr>
     </table>
     <table border="0" cellpadding="0" cellspacing="0" 
            align="center" width="100%">

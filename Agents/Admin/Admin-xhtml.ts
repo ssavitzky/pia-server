@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.19 1999-10-19 22:10:50 bill Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.20 1999-11-05 01:11:59 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -242,17 +242,17 @@
 <define entity=A100>
   <doc> Large logo.  
   </doc>
-  <value><img src="/Icon/logo100.gif" height=100 width=111 
+  <value><img src="/Icon/logo100.png" height=100 width=111 
 		alt="ADMIN"></value>
 </define>
 <!-- these two aren't being picked up from pia-xhtml; check namespace stuff
      in TopProcessor and BasicTagset. -->
 <define entity=blank-170x1>
-  <value><img src="/Icon/white170x1.gif" width=170 height=1
+  <value><img src="/Icon/white170x1.png" width=170 height=1
 		alt=" "></value>
 </define>
 <define entity=blue-dot>
-  <value><img src="/Icon/dot-blue.gif"
+  <value><img src="/Icon/dot-blue.png"
 		height=20 width=20 alt="*"></value>
 </define>
 
@@ -390,6 +390,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.19 1999-10-19 22:10:50 bill Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.20 1999-11-05 01:11:59 steve Exp $</b><br />
 </tagset>
 
