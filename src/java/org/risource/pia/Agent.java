@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.7 1999-04-17 01:21:06 steve Exp $
+// $Id: Agent.java,v 1.8 1999-04-23 00:25:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,7 @@ import org.risource.pia.Machine;
 import org.risource.pia.Resolver;
 import org.risource.pia.Content;
 
+import org.risource.dps.Namespace;
 
 import org.risource.ds.List;
 import org.risource.ds.Criteria;
@@ -58,7 +59,7 @@ import org.risource.tf.UnknownNameException;
  * <p> Agent extends the <code>Tabular</code> interface, and all of its 
  *	attributes are also accessible through this interface.
  */
-public interface Agent extends Tabular {
+public interface Agent extends Namespace {
 
   /**
    * Default initialization; implementors may override
@@ -153,11 +154,6 @@ public interface Agent extends Tabular {
    * @return virtual machine
    */
   public Machine machine();
-
-  /**
-   * Setting the virtual machine.  
-   */
-  public void machine( Machine vmachine);
 
   /**
    * This method is called from the Resolver when an Agent's Criteria list

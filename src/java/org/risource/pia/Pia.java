@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.6 1999-03-23 23:32:25 steve Exp $
+// $Id: Pia.java,v 1.7 1999-04-23 00:29:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.6 1999-03-23 23:32:25 steve Exp $
+  * @version $Id: Pia.java,v 1.7 1999-04-23 00:29:52 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -833,7 +833,7 @@ public class Pia implements Tabular {
 
     // Create the Root agent, and make its data directory the USR_ROOT
     rootAgent = new Root(rootAgentName, null);
-    rootAgent.put(Root.data_dir_name, usrRootStr);
+    ((GenericAgent)rootAgent).put(Root.data_dir_name, usrRootStr);
 
     adminAgent = new Admin(adminAgentName, null);
 

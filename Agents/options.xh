@@ -7,8 +7,10 @@
 <sub-head page='options' />
 
 <hr />
+<p>This is a ``dump'' of the internal Agent data structure in XML format.
 
-
+<pre><protect result markup>&AGENT;</protect></pre>
+<hr />
 <set entity='entity' name='title'>Options Page</set>
 
 <if><test exact='exact' match='&amp;agentType'>&agentName;</test>
@@ -52,6 +54,6 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.2 1999-04-15 22:02:11 pgage Exp $' />
+<footer cvsid='$Id: options.xh,v 1.3 1999-04-23 00:25:12 steve Exp $' />
 
 </body></html>

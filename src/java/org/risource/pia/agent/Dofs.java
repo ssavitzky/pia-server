@@ -1,5 +1,5 @@
 // Dofs.java
-// $Id: Dofs.java,v 1.5 1999-03-23 23:32:38 steve Exp $
+// $Id: Dofs.java,v 1.6 1999-04-23 00:25:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,6 +60,7 @@ import org.risource.ds.Table;
 import org.risource.ds.List;
 
 import org.risource.util.Utilities;
+import org.risource.dps.namespace.*;
 
 import org.w3c.www.http.HTTP;
 public class Dofs extends GenericAgent {
@@ -122,6 +123,11 @@ public class Dofs extends GenericAgent {
   /************************************************************************
   ** Construction:
   ************************************************************************/
+
+  public void initializeEntities() {
+    super.initializeEntities();
+    addBinding("root", new EntityIndirect("root", this, this));
+  }
 
   /**
    * name and type needs to be set after this

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.16 1999-04-21 22:19:24 steve Exp $
+// $Id: GenericAgent.java,v 1.17 1999-04-23 00:25:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,6 +65,7 @@ import org.risource.dps.Tagset;
 import org.risource.dps.tagset.Loader;
 import org.risource.dps.process.ActiveDoc;
 import org.risource.dps.active.*;
+import org.risource.dps.namespace.*;
 
 import org.risource.util.NullOutputStream;
 import org.risource.util.NameUtils;
@@ -83,8 +84,8 @@ import org.w3c.www.http.HTTP;
  *
  *	@see org.risource.pia.Agent
  */
-public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
-  implements Agent, Registered, Serializable {
+public class GenericAgent extends BasicNamespace
+  implements Agent, Registered, Serializable, Tabular {
   
   /** Standard option (entity) names. */
 
@@ -130,7 +131,7 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
   /**
    * Attribute table for storing options
    */
-  protected Table itemsByName = new Table();
+  protected Table properties = new Table();
 
   /**
    * Attribute index - name of this agent
@@ -341,6 +342,18 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
     initialized = true;
   }
 
+  /** Make sure that directories get checked again. */
+  public void invalidatePaths() {
+    dataDirFile = null;
+    homeDirFile = null;
+    userDirFile = null;
+    documentFileList = null;
+  }
+
+  /************************************************************************
+  ** Debugging:
+  ************************************************************************/
+
   protected void dumpDebugInformation() {
     System.err.println(debugInformation());
   }
@@ -367,13 +380,6 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
   }
 
 
-  /** Make sure that directories get checked again. */
-  public void invalidatePaths() {
-    dataDirFile = null;
-    homeDirFile = null;
-    userDirFile = null;
-    documentFileList = null;
-  }
   /************************************************************************
   ** Registration and Unregistration:
   ************************************************************************/
@@ -842,11 +848,6 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
   ** Tabular interface: 
   ************************************************************************/
 
-  /** Return the number of defined. */
-  public synchronized int size() {
-    return itemsByName.size();
-  }
-
   /** Retrieve an item by name.  Returns null if no such item
    *	exists.  Accepts items in other agents (ugly). */
   public synchronized Object get(String name) {
@@ -855,18 +856,18 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
       String aname = name.substring(0, i);
       name = name.substring(i+1);
       Agent a = Pia.instance().resolver().agentaname);
-      return (a == null)? null : a.get(name);
+      return (a == null)? null : ((GenericAgent)a).get(name);
     }
 
     if (name.equals("criteria")) {
 	return (criteria() == null)? "" : criteria().toString();
     }
-    return itemsByName.get(name.toLowerCase());
+    return properties.get(name.toLowerCase());
   }
 
   /** Returns an enumeration of the table keys */
   public Enumeration keys() {
-    return itemsByName.keys();
+    return properties.keys();
   }
 
   /** Set an item. 
@@ -878,9 +879,9 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
     if (name == null) return;
     name = name.toLowerCase();
     if (value != null) 
-      itemsByName.put(name, value);
+      properties.put(name, value);
     else
-      itemsByName.remove(name);
+      properties.remove(name);
 
     if (name.equals("act-on")) {
       actOnHook = value;
@@ -925,6 +926,34 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
   public String getObjectString(String name) {
     Object o = get(name);
     return (o == null)? null : o.toString();
+  }
+
+
+  /************************************************************************
+  ** Namespace Interface:
+  ************************************************************************/
+
+  public void initializeEntities() {
+    addBinding("name", new EntityIndirect("name", this, this));
+    addBinding("path", new EntityIndirect("path", this, this));
+    addBinding("type", new EntityIndirect("type", this, this));
+    addBinding("pathName", new EntityIndirect("pathName", this, this));
+    addBinding("criteria", new EntityIndirect("criteria", this, this));
+    addBinding("act-on", new EntityIndirect("act-on", this, this));
+    addBinding("handle", new EntityIndirect("handle", this, this));
+    addBinding("authentication", new EntityIndirect("authentication", this, this));
+  }
+
+  /** Replace an existing binding. 
+   *	DO NOT replace a specialized binding -- just set its value.
+   */
+  protected void replaceBinding(String name, ActiveNode old,
+				ActiveNode binding) {
+    if (old instanceof EntityIndirect) {
+      old.setValueNodes(null, binding.getValueNodes(null));
+    } else {
+      super.replaceBinding(name, old, binding);
+    }
   }
 
   /************************************************************************
@@ -1433,13 +1462,14 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
 
   /* name and type should be set latter */
   public GenericAgent(){
-    fileTable = new Table();
-    name("GenericAgent");
-    type("GenericAgent");
+    this("GenericAgent", "GenericAgent");
   }
 
   public GenericAgent(String name, String type){
+    super("AGENT", name);
+    
     fileTable = new Table();
+    initializeEntities();
 
     if( name != null ) this.name( name );
     if( type != null )

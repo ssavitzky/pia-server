@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.8 1999-04-13 18:00:20 steve Exp $
+// $Id: FileAccess.java,v 1.9 1999-04-23 00:29:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -241,7 +241,7 @@ public class FileAccess {
       boolean noTrailingSlash = false;
 
       boolean all = false;
-      if(agent.get("all") != null)
+      if(((GenericAgent)agent).get("all") != null)
 	all = true;
 
       // Ensure that the base URL is "/" terminated

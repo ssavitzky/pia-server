@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.5 1999-03-24 21:23:22 pgage Exp $
+// $Id: Transaction.java,v 1.6 1999-04-23 00:25:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -681,12 +681,12 @@ public abstract class Transaction
       //for (int c = in.read(); c >= 0 && c != '\n'; c = in.read()) 
       // firstLine += (char)c;
 
-
       if( firstLine == null ){
-	String msg = "First line is null...\n";
-	throw new PiaRuntimeException (this
-					, "initializeHeader"
-					, msg) ;
+	String msg = "First line is null.  \n" 
+	  + "  This usually indicates a host somewhere in your route \n"
+	  + "  that is ignoring ICMP packet-size-negotiation packets. \n"
+	  + "  You may need to change the proxy the PIA is using. \n";
+	throw new PiaRuntimeException (this, "initializeHeader", msg) ;
       }
 
       if( firstLine.length() > 0 )
@@ -701,9 +701,7 @@ public abstract class Transaction
       if( headersObj == null && !firstLineOk ){
 	 Pia.debug(this, "Can not parse header...");
 	 String msg = "Can not parse header...\n";
-	 throw new PiaRuntimeException (this
-					, "initializeHeader"
-					, msg) ;
+	 throw new PiaRuntimeException (this, "initializeHeader", msg) ;
       }
 
     }catch(IOException e){
@@ -726,7 +724,8 @@ public abstract class Transaction
  /** 
   * parse the first line
   */
-  protected abstract void parseInitializationString( String firstLine )throws IOException;
+  protected abstract void parseInitializationString( String firstLine )
+    throws IOException;
   
   
   /**
