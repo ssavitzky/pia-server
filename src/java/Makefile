@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.10 1999-04-20 16:35:00 steve Exp $
+#	$Id: Makefile,v 1.11 1999-06-03 21:37:40 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,6 +24,7 @@
 TOPDIR=.
 
 ADOCDIR = $(PIADIR)/Doc/API/javadoc
+CLASSDIR= .
 
 PACKAGES= \
 	misc \
@@ -43,7 +44,6 @@ JIGSAWPACKAGE= \
 
 PIAPACKAGENAMES= \
 	org.risource.content org.risource.content.text \
-	org.risource.dom \
 	org.risource.dps \
 	org.risource.dps.active \
 	org.risource.dps.handle \
@@ -61,6 +61,8 @@ PIAPACKAGENAMES= \
 	org.risource.tf \
 	org.risource.util \
 	misc
+
+#	org.risource.dom \
 
 ### These are the names of the classes in the JDK that the PIA uses.  
 ###	Assuming javadoc can find the source code, we should be able to
@@ -84,7 +86,10 @@ MISCPACKAGENAMES= \
 REGEXPACKAGENAMES= \
 	JP.ac.osaka_u.ender.util.regex
 
-PACKAGENAMES= $(PIAPACKAGENAMES) $(MISCPACKAGENAMES) $(SUNPACKAGENAMES) $(REGEXPACKAGENAMES)
+# Packages to document.
+#	We don't include $(SUNPACKAGENAMES) because we can't guarantee
+#	that the sources are accessible.
+PACKAGENAMES= $(PIAPACKAGENAMES) $(MISCPACKAGENAMES) $(REGEXPACKAGENAMES)
 
 
 # makefiles/file.make defines PIADIR, LIBDIR, BINDIR, DOCDIR
@@ -185,11 +190,10 @@ all_source.log::
 ###	We do this because javadoc doesn't append to existing index files,
 ###	it smashes them.  This makes it useless when run recursively.
 
-JIGSAWSOURCE = /pia1/ext/java/Jigsaw/src/classes
 JAVADOC_CLASSES = $(CLASSDIR):$(JAVACLASSES):$(LIBCLASSES):$(CLASSPATH)
-JAVADOC_SOURCES = $(CLASSDIR):$(CLASSPATH):$(JAVASOURCE):$(JIGSAWSOURCE)
+JAVADOC_SOURCES = $(CLASSDIR):$(CLASSPATH):$(JAVASOURCE)
 JAVADOC_CMD = javadoc -J-mx64m -J-ms64m -d $(ADOCDIR) -package \
-	-classpath $(JAVADOC_CLASSES) -sourcepath $(JAVADOC_SOURCES)
+	-sourcepath $(JAVADOC_SOURCES)
 
 alldoc::
 	-$(JAVADOC_CMD) $(PACKAGENAMES)
