@@ -24,30 +24,22 @@
        Ends up with <code>.source</code> non-existant.  Weird.
        (2000-06-23)
   </li>
-  <li> 2000-06-26 <b>Hole</b> site indexing; links TO pages <br />
-       There are two ways to do it: incrementally while browsing the URL tree,
-       and offline using a crawler (similar to woad-index.pl).  It's going to
-       be slow unless we use a namespace.  (Maybe SITE:siteMap.)  Note that
-       after site indexing you can have a "directory" listing at each
-       directory-like URL.
-       (2000-06-21)
-  </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things: proper tagging of identifiers in context,
        and figuring out where in the tree to link them.  Generally, each
        identifier gets its own page, Wiki style.  In some cases the
        context requires its own page, i.e. for Java identifiers or XHTML
        tags.
-       (2000-06-07)
-  </li>
-  <li> <b>Hole</b> note listing, editing and creation <br />
-       "label" = filename base.  When creating a new note, suffix a number to
-       the chosen label.  Combine source and URL listings if possible.
-       (2000-06-22)
+       (2000-06-07)<br />
+       -- (2000-06-28: annotation listing done.  Ready for indexing and
+	  linking.)
   </li>
   <li> <b>Impr</b> allow arbitrary source=target mapping using index <br />
        either a separate file, or something in <code>dirIndex</code>.
        (2000-06-23)
+  </li>
+  <li> <b>Impr</b> HEADER note with content appearing at top of page.
+       (2000-06-28)
   </li>
   <li> <b>Impr</b> Allow arbitrary links, text on index bar <br />
        This requires using &lt;xan&gt; etc. tags, with some modifications.
@@ -124,7 +116,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.12 2000-06-28 05:07:23 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.13 2000-06-29 01:58:56 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
