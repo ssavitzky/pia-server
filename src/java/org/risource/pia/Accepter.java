@@ -128,8 +128,10 @@ public class Accepter extends Thread {
 
     String hostName = iaddr.getHostName();
 
-    Pia.debug( this, "connection from : "+ hostName + " at: " + String.valueOf( port ) );
-    Pia.log( "connection from : "+ hostName + " at: " + String.valueOf( port ) +"\n" );
+    Pia.debug( this, "connection from: " + hostName
+	       + " at: " + String.valueOf( port ) );
+    Pia.log( "connection from: " + hostName
+	     + " at: " + String.valueOf( port ) +"\n" );
     
     createRequestTransaction(hostName, port, clientSocket);
 

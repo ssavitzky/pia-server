@@ -103,68 +103,68 @@ public class Pia implements Tabular {
   /**
    * Property name of path of pia properties file.
    */
-  public static final String PIA_PROP_PATH = "org.risource.pia.profile";
+  public static final String PIA_PROP_PATH = "pia.profile";
 
   /**
    * Property name of URL of pia doc
    */
-  public static final String PIA_DOCURL = "org.risource.pia.docurl";
+  public static final String PIA_DOCURL = "pia.docurl";
 
   /**
    * Property name of pia's top-level install directory.
    */
-  public static final String PIA_ROOT = "org.risource.pia.piaroot";
+  public static final String PIA_ROOT = "pia.piaroot";
 
   /**
    * Property name of port the PIA is accessed through.
    */
-  public static final String PIA_PORT = "org.risource.pia.port";
+  public static final String PIA_PORT = "pia.port";
 
   /**
    * Property name of port the PIA listens on.  May differ from PIA_PORT
    *	if PIA_PORT is what a proxy server is listening to.
    */
-  public static final String REAL_PORT = "org.risource.pia.realport";
+  public static final String REAL_PORT = "pia.realport";
 
   /**
    * Property name of this host
    */
-  public static final String PIA_HOST = "org.risource.pia.host";
+  public static final String PIA_HOST = "pia.host";
 
   /**
    * Property name of user's pia state directory (normally ~/.pia)
    */
-  public static final String USR_ROOT = "org.risource.pia.usrroot";
+  public static final String USR_ROOT = "pia.usrroot";
 
   /**
    * Property name of debugging flag
    */
-  public static final String PIA_DEBUG = "org.risource.pia.debug";
+  public static final String PIA_DEBUG = "pia.debug";
 
   /**
    * Property name of verbose flag
    */
-  public static final String PIA_VERBOSE = "org.risource.pia.verbose";
+  public static final String PIA_VERBOSE = "pia.verbose";
 
   /**
    * Property name of pia logger class
    */
-  public static final String PIA_LOGGER = "org.risource.pia.logger";
+  public static final String PIA_LOGGER = "pia.logger";
 
   /**
    * Property name of pia request timeout
    */
-  public static final String PIA_REQTIMEOUT = "org.risource.pia.reqtimeout";
+  public static final String PIA_REQTIMEOUT = "pia.reqtimeout";
 
   /**
    * Property name of root agent name
    */
-  public static final String ROOT_AGENT_NAME = "org.risource.pia.rootagent";
+  public static final String ROOT_AGENT_NAME = "pia.rootagent";
 
   /**
    * Property name of admin agent name
    */
-  public static final String ADMIN_AGENT_NAME = "org.risource.pia.adminagent";
+  public static final String ADMIN_AGENT_NAME = "pia.adminagent";
 
 
   /************************************************************************
@@ -214,7 +214,7 @@ public class Pia implements Tabular {
   ************************************************************************/
 
   /** The name of the class that will perform our setup. 
-   *	@see org.risource.pia.Setup
+   *	@see pia.Setup
    */
   protected String setupClassName 	= "org.risource.pia.Setup";
 
@@ -791,7 +791,18 @@ public class Pia implements Tabular {
     /* Try to find the user's PIA state directory.   */
 
     usrRootDir = new File( usrRootStr );
-    usrRootStr = usrRootDir.getAbsolutePath();
+    if ((usrRootDir.exists() || usrRootDir.mkdir())
+	&& usrRootDir.isDirectory() && usrRootDir.canWrite()) {
+      usrRootStr = usrRootDir.getAbsolutePath();
+    } else if (usrRootDir.exists() && ! usrRootDir.isDirectory()) {
+      throw new PiaInitException(usrRootStr + " is not a directory");
+    } else if (usrRootDir.exists() && ! usrRootDir.canWrite()) {
+      throw new PiaInitException("Cannot write into user's PIA directory "
+				 + usrRootStr);
+    } else {
+      throw new PiaInitException("Cannot locate or create user's PIA directory "
+				 + usrRootStr);
+    }
 	
     usrAgentsStr = usrRootStr + filesep + "Agents";
     usrAgentsDir = new File( usrAgentsStr );
@@ -851,12 +862,13 @@ public class Pia implements Tabular {
       initializeProperties();
       initializeLogger();
 
-      String fileMap = properties.getProperty("org.risource.pia.filemap");
+      String fileMap = properties.getProperty("pia.filemap");
       loadFileMapping(fileMap);
 
       return true;
     }catch(Exception e){
       System.out.println( e.toString() );
+      e.printStackTrace();
       return false;
     }
   }
@@ -940,7 +952,7 @@ public class Pia implements Tabular {
 
   /** Load the MIME type mappings.  */
   protected Properties loadFileMapping( String where ){
-    if (where == null) where = properties.getProperty("org.risource.pia.filemap");
+    if (where == null) where = properties.getProperty("pia.filemap");
 
     Properties zFileMapping = new Properties();
     File mapFile            = null;
@@ -1015,7 +1027,7 @@ public class Pia implements Tabular {
 
       /** Continue with the initialization if the user requested props. */
 
-      verbose = pia.properties.getBoolean("org.risource.pia.verbose", false);
+      verbose = pia.properties.getBoolean("pia.verbose", false);
       if (verbose) {
 	pia.reportProps(pia.properties, "Properties");
       }

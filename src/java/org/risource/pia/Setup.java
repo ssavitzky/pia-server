@@ -59,24 +59,24 @@ class Setup extends Configuration {
   protected String[] piaEnvTable = {
     "USER",	"user.name",
     "HOME",	"user.home",
-    "PIA_DIR",	"org.risource.pia.piaroot",
-    "USR_DIR",	"org.risource.pia.usrroot",
-    "PIA_PORT",	"org.risource.pia.port",
-    "REAL_PORT", "org.risource.pia.realport",
+    "PIA_DIR",	"pia.piaroot",
+    "USR_DIR",	"pia.usrroot",
+    "PIA_PORT",	"pia.port",
+    "REAL_PORT", "pia.realport",
   };
 
   /** PIA option table: */
   protected String[] piaOptTable = {
-    "-u",	"org.risource.pia.usrroot",	"dir",		null,
-    "-p",	"org.risource.pia.port",		"number",	"8888",
-    "-d",	"org.risource.pia.debug",	"bool",		null,
-    "-v",	"org.risource.pia.verbose",	"bool",		null,
-    "-port",	"org.risource.pia.port",		"number",	"8888",
-    "-real",	"org.risource.pia.realport", 	"number",	"8888",
-    "-root",	"org.risource.pia.piaroot",	"dir",		null,
-    "-profile",	"org.risource.pia.profile",	"file",		null,
-    "-filemap",	"org.risource.pia.filemap",	"file",		null,
-    "-host",	"org.risource.pia.host", 	"name",		null,
+    "-u",	"pia.usrroot",	"dir",		null,
+    "-p",	"pia.port",		"number",	"8888",
+    "-d",	"pia.debug",	"bool",		null,
+    "-v",	"pia.verbose",	"bool",		null,
+    "-port",	"pia.port",		"number",	"8888",
+    "-real",	"pia.realport", 	"number",	"8888",
+    "-root",	"pia.piaroot",	"dir",		null,
+    "-profile",	"pia.profile",	"file",		null,
+    "-filemap",	"pia.filemap",	"file",		null,
+    "-host",	"pia.host", 	"name",		null,
   };
 
   /* Perl options: ================================================
@@ -143,7 +143,7 @@ class Setup extends Configuration {
 
     /* Merge properties from the profile, if specified. */
 
-    String profile = properties.getProperty("org.risource.pia.profile");
+    String profile = properties.getProperty("pia.profile");
     if (profile != null) {
       if (mergeProperties(profile)) {
 	System.err.println("Loaded properties from "+profile);
@@ -155,7 +155,7 @@ class Setup extends Configuration {
 
     /* Make sure we have a PIA directory */
 
-    String piaRoot = properties.getProperty("org.risource.pia.piaroot");
+    String piaRoot = properties.getProperty("pia.piaroot");
     
     if (piaRoot == null) {
       System.err.println("Cannot locate PIA root (install) directory.\n"
@@ -173,12 +173,12 @@ class Setup extends Configuration {
       System.err.println("Error: "+piaRoot+" is not a directory.\n");
       return true;
     }
-    properties.put("org.risource.pia.piaroot", piaRoot);
+    properties.put("pia.piaroot", piaRoot);
 
     /* Check to see if we have a user directory.  Warn the user if we don't,
      *	but proceed (to possible disaster). */
 
-    String usrRoot = properties.getProperty("org.risource.pia.usrroot");
+    String usrRoot = properties.getProperty("pia.usrroot");
     if (usrRoot == null) {
       if (dirExists(home + filesep + ".pia")) {
 	usrRoot = home + filesep + ".pia";
@@ -202,13 +202,13 @@ class Setup extends Configuration {
 
       if( result ){
 	usrRoot = userRoot.getAbsolutePath();
-	properties.put("org.risource.pia.usrroot", fixFileName(usrRoot));
+	properties.put("pia.usrroot", fixFileName(usrRoot));
       }
       else
 	return true;
 
     } else {
-      properties.put("org.risource.pia.usrroot", fixFileName(usrRoot));
+      properties.put("pia.usrroot", fixFileName(usrRoot));
     }
 
     /* Load the user's default profile if there is one and it hasn't already
@@ -222,7 +222,7 @@ class Setup extends Configuration {
 
     /* Make sure there's a filemap */
 
-    String fileMap = properties.getProperty("org.risource.pia.filemap");
+    String fileMap = properties.getProperty("pia.filemap");
     if (fileMap == null) {
       path = new List();
       if (usrRoot != null) path.push(usrRoot);
@@ -236,7 +236,7 @@ class Setup extends Configuration {
 	return false;
       }
     } else {
-      properties.put("org.risource.pia.filemap", fixFileName(fileMap));
+      properties.put("pia.filemap", fixFileName(fileMap));
     }
 
     return results;
