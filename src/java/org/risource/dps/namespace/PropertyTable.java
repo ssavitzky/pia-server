@@ -1,5 +1,5 @@
 ////// PropertyTable.java: Node and String Lookup Table
-//	$Id: PropertyTable.java,v 1.1 1999-10-04 17:35:12 steve Exp $
+//	$Id: PropertyTable.java,v 1.2 1999-10-11 21:42:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.ds.Table;
  *
  * <p>	The 
  *
- * @version $Id: PropertyTable.java,v 1.1 1999-10-04 17:35:12 steve Exp $
+ * @version $Id: PropertyTable.java,v 1.2 1999-10-11 21:42:38 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.site
@@ -92,10 +92,20 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
    * @see org.w3c.dom.NamedNodeMap
    */
   public  void setNamedBinding(String map, String name, ActiveElement elt) {
+    if (elt instanceof Namespace) {
+      setBinding(name, elt);
+      return;
+    }
+
     Namespace binding = (Namespace)getBinding(map);
     
-    if (binding == null) binding = new BasicNamespace(map);
-    binding.setBinding(name, elt);
+    if (binding == null) {
+      binding = new BasicNamespace(map);
+      binding.setBinding(name, elt);
+      setBinding(map, (BasicNamespace)binding);
+    } else {
+      binding.setBinding(name, elt);
+    }
   }
 
   /** Bind an Element that represents a property.
