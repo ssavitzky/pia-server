@@ -15,15 +15,66 @@
        <a href="../dps/"><code>../dps/</code></a>
 </ul>
 
+<h2>Recent Changes</h2>
+
+<p> As of 9/9/99 (End Of File Day -- seems appropriate) I am starting to make
+    major changes in the implementation of Agents and the PIA core server.  I
+    expect them to be finished and ready for public consumption in about a
+    week.
+
+<p> The main change is that Agents will no longer handle Transactions directly
+    under most circumstances (the old <code>handle</code> method will still be
+    there so that a specialized agent can specify special handling if
+    necessary.  A cache agent might do this, for example.)  Agents will
+    <em>not</em> handle transactions directed at their ``home URL'' by
+    default -- this association will be made in a different way.
+
+<p> If a Transaction is not proxied, its default action will be to go to the
+    PIA's ``Site'' (<code>Pia.getSite()</code>), locate the
+    <code>Resource</code> specified by the URL, and return the associated
+    document.  This is done by means of a one-line change in
+    <code>HTTPRequest.toMachine</code> that defaults to to
+    <code>Pia.getSiteMachine()</code> when no toMachine has been specified.
+
+<p> As a result of this change, a ``Root'' agent is no longer necessary; its
+    function was simply to map URL paths onto agents.  It is also no longer
+    necessary to have an Agent for each top-level directory in URL space; the
+    net effect is to speed up transaction processing in the Resolver.  Mapping
+    URL's to files is also sped up considerably because the classes in the
+    <code>org.risource.site</code> package do the lookup more efficiently than
+    <code>GenericAgent</code> used to.
+
+<p> It is possible to register a ``home directory'' in URL space that is
+    web-accessible as ``<code>/~<em>name</em></code>'' following the usual
+    web/Unix convention for home directories.  (Note that in the Reader's
+    Helper, for example, it would make a great deal of sense to give each user
+    a home directory.)  These directories will <em>usually</em> be associated
+    with agents, though this need not be the case.  The ability to have
+    unregistered agents and non-agent home directories gives the site designer
+    full control over the top-level namespace.
+
+<p> Even if an Agent has not registered its home directory at the top level it
+    will still have one: the directory in which the document that contains the
+    agent's state resides.  An Agent with persistent state will automatically
+    write out its state document whenever it changes.
+
+<p> It is the <code>SiteMachine</code>'s responsibility to track down the
+    agent associated with a directory URL and make it available as a
+    <code>Namespace</code> when executing the documents in that directory.
+    Multiple agents may share a home directory; their namespaces will
+    <em>all</em> be available under the agents' names (e.g.,
+    <code>History:</code> as well as the default <code>AGENT:</code>).
+
+
 <h2>Philosophy</h2>
 
 
-<h2>Implementation:</h2>
+<h2>Implementation</h2>
 
 <h3>Processing Overview</h3>
 
 
-<h3>Algorithms:</h3>
+<h3>Algorithms</h3>
 
 
 <h3>Data Structures</h3>
@@ -33,7 +84,7 @@
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.3 1999-03-12 19:29:43 steve Exp $</b><br>
+<b>$Id: about.html,v 1.4 1999-09-09 21:44:02 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
