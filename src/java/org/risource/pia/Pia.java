@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.23 1999-10-22 00:56:47 steve Exp $
+// $Id: Pia.java,v 1.24 1999-10-22 17:33:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.23 1999-10-22 00:56:47 steve Exp $
+  * @version $Id: Pia.java,v 1.24 1999-10-22 17:33:28 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -432,7 +432,7 @@ public class Pia implements Tabular {
     e.printStackTrace();
   }
 
-  public static void report(int level, String msg) {
+  public static void message(int level, String msg) {
     if (level <= verbosity) System.err.println(msg);
   }
 
@@ -546,19 +546,18 @@ public class Pia implements Tabular {
   /**
    * Initialize the server logger and the statistics object.
    */
-    private void initializeLogger() throws PiaInitException {
+    private void initializeLogger() {
+      if ( piaRootPath == null || piaRootPath.length() == 0) return;
       if ( loggerClassName != null ) {
 	try {
 	  logger = (Logger) Class.forName(loggerClassName).newInstance() ;
 	  logger.initialize (this) ;
 	} catch (Exception ex) {
-	  String err = ("Unable to create logger of class ["
-			+ loggerClassName +"]" + "\r\ndetails: \r\n"
-			+ ex.getMessage());
-	  throw new PiaInitException(err);
+	  logger = null;
+	  warningMsg("Unable to create logger: " + ex.getMessage());
 	}
       } else {
-	warningMsg ("no logger specified, not logging.");
+	warningMsg("no logger specified, not logging.");
       }
     }
 
@@ -678,18 +677,15 @@ public class Pia implements Tabular {
      *	It may turn out to be a directory, in which case assume
      *	that it was meant to be the root.
      */
-    if (siteConfigPath != null) {
+    if (siteConfigPath != null && siteConfigPath.length() != 0) {
       File f = new File(siteConfigPath);
       if (f.exists() && f.isDirectory()) {
-	warningMsg("Specified site configuration file is a directory.");
-	if (piaRootPath == null) {
-	  piaRootPath = siteConfigPath;
-	  siteConfigPath = null;
-	  warningMsg("... assuming you meant it to be the root.");
-	} else {
-	  report(-2, "Since root is already specified, this is an error.");
-	  System.exit(1);
-	}
+	message(0, "Specified site configuration file is a directory.");
+	piaRootPath = siteConfigPath;
+	if (piaVirtualRootPath == null) piaVirtualRootPath = "";
+	siteConfigPath = null;
+	message(0, "... assuming you meant it to be the real root."
+		+  ((piaVirtualRootPath == "")? "  No virtual root!" : ""));
       }
     }
     
@@ -698,11 +694,13 @@ public class Pia implements Tabular {
     File piaRootDir = (piaRootPath == null)? null : new File( piaRootPath );
     if (piaRootDir == null) {
       warningMsg("No root directory specified.");
+    } else if (piaRootPath.equals("")) {
+      piaRootDir = null;
     } else if ((piaRootDir.exists() || piaRootDir.mkdir())
 	&& piaRootDir.isDirectory() && piaRootDir.canWrite()) {
       piaRootPath = piaRootDir.getAbsolutePath();
     } else if (piaRootDir.exists() && ! piaRootDir.isDirectory()) {
-      report(-2, "Specified root " + piaRootPath + " is not a directory.");
+      message(-2, "Specified root " + piaRootPath + " is not a directory.");
       System.exit(1);
     } else if (piaRootDir.exists() && ! piaRootDir.canWrite()) {
       warningMsg("Specified root " + piaRootPath + " cannot be written.");
@@ -712,7 +710,7 @@ public class Pia implements Tabular {
 
     if (piaRootPath == null && piaVirtualRootPath == null &&
 	piaHomePath == null && siteConfigPath == null) {
-      report(-2, "Either a PIA home, a configuration file, "
+      message(-2, "Either a PIA home, a configuration file, "
 	     + "or a valid root directory must be specified.");
       System.exit(1);
     }
@@ -795,7 +793,7 @@ public class Pia implements Tabular {
 
     File cfgFile = (siteConfigPath == null)? null : new File(siteConfigPath);
     if (cfgFile != null && !cfgFile.canRead()) {
-      System.err.println("Cannot read initialization file " + siteConfigPath);
+      System.err.println("Cannot read configuration file " + siteConfigPath);
       System.exit(-1);
     }
 
@@ -1025,7 +1023,7 @@ public class Pia implements Tabular {
 
     if (! pia.initialize()) System.exit(1);
 
-    report(-1, "PIA version " + org.risource.Version.VERSION);
+    message(-1, "PIA version " + org.risource.Version.VERSION);
     reportProps(instance.properties, "System Properties:");
 
     try {
@@ -1066,7 +1064,7 @@ public class Pia implements Tabular {
     "-vport",	"virtualport",	"number",	"8888",
     "-rport",	"realport", 	"number",	"8888",
     "-root",	"root",		"dir",		null,
-    "-vroot",	"virtualroot",	"dir",		null,
+    "-vroot",	"vroot",	"dir",		null,
     "-host",	"host", 	"name",		null,
     "-config",	"configfile",	"file",		"_subsite.xcf",
     "-site",	"site",		"file",		null,
@@ -1075,7 +1073,7 @@ public class Pia implements Tabular {
 
   /** PIA property table: */
   protected static String[] piaPropTable = {
-    "verbosity", "home", "virtualport", "realport", "root", "virtualroot",
+    "verbosity", "home", "virtualport", "realport", "root", "vroot",
     "host", "configfile",
     "http_proxy", "ftp_proxy", "gopher_proxy", "no_proxy",
   };
