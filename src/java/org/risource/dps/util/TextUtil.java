@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.6 1999-04-23 00:22:44 steve Exp $
+//	$Id: TextUtil.java,v 1.7 1999-05-06 20:42:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.6 1999-04-23 00:22:44 steve Exp $
+ * @version $Id: TextUtil.java,v 1.7 1999-05-06 20:42:21 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -145,7 +145,7 @@ public class TextUtil {
   ** Trimming and padding:
   ************************************************************************/
 
-  /** Trim the blank spaces from a String. */
+  /** Trim leading blank spaces from a String. */
   public static final String trimLeading(String s) {
     s += '.';
     s = s.trim();
@@ -166,55 +166,55 @@ public class TextUtil {
     List results = new List();
     String rStr;
 
-    boolean seenFirstTextNode = false;
-    int lastTextIndex = -1;
-
-    // Get last text item
-    Node firstTextNode = null;
-    Node lastTextNode = null;
+    int startIndex = -1;
+    int endIndex = -1;
     
-    // Get first and last text nodes in list
+    // Get first non-whitespace text node
     int len = nl.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode n = nl.activeItem(i);
       if(NodeType.isText(n)) {
-	if(seenFirstTextNode == false) {
-	  firstTextNode = n;
-	  seenFirstTextNode = true;
-	}
-	else {
-	  // Only a first text node, this won't get set
-	  lastTextNode = n;
-	}
+	ActiveText t = (ActiveText)n;
+	if (t.getIsWhitespace()) continue;
+	startIndex = i;
+	break;
+      } else {
+	startIndex = i;
+	break;
       }
     }
-    
-    if(lastTextNode == null)
-      lastTextNode = firstTextNode;
 
-    for (int i = 0; i < len; ++i) {
+    // Get larst non-whitespace text node
+    for (int i = len-1; i >= 0; --i) {
+      ActiveNode n = nl.activeItem(i);
+      if(NodeType.isText(n)) {
+	ActiveText t = (ActiveText)n;
+	if (t.getIsWhitespace()) continue;
+	endIndex = i;
+	break;
+      } else {
+	endIndex = i;
+	break;
+      }
+    }
+
+    for (int i = startIndex; i <= endIndex; ++i) {
       ActiveNode n = nl.activeItem(i);
       if(NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
-	if(n == firstTextNode) {
-	  String s = tNode.toString();
-	  rStr = trimLeading(s);
-	  tNode.setData(rStr);
-	  results.push(tNode);
-	  seenFirstTextNode = true;
-	}
-	else if(n == lastTextNode) {
-	  String s = tNode.toString();
-	  rStr = trimTrailing(s);
-	  tNode.setData(rStr);
-	  results.push(tNode);
-	}
-	else {
+	if (i == startIndex) {
+	  if (i == endIndex) {
+	    results.push(new TreeText(tNode.getData().trim()));
+	  } else {
+	    results.push(new TreeText(trimLeading(tNode.getData())));
+	  }
+	} else if (i == endIndex) {
+	  results.push(new TreeText(trimTrailing(tNode.getData())));
+	} else {
 	  // Push all other text nodes
 	  results.push(tNode);
 	}
-      }
-      else {
+      } else {
 	// push other node type unchanged
 	results.push(n);
       }
