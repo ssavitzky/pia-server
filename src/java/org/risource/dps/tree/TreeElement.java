@@ -1,5 +1,5 @@
 ////// TreeElement.java -- implementation of ActiveElement
-//	$Id: TreeElement.java,v 1.4 1999-06-04 22:40:37 steve Exp $
+//	$Id: TreeElement.java,v 1.5 2000-03-07 00:35:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeElement.java,v 1.4 1999-06-04 22:40:37 steve Exp $
+ * @version $Id: TreeElement.java,v 1.5 2000-03-07 00:35:21 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -288,7 +288,7 @@ public class TreeElement extends TreeNode implements ActiveElement
   public boolean isEmptyElement() {
     //System.err.println("<" + getTagName() + "> is " + 
     //	       (isEmptyElement? "empty" : "non-empty"));
-    return isEmptyElement;
+    return isEmptyElement && !hasChildNodes();
   }
 
   /** Sets the internal flag corresponding to isEmptyElement. */
@@ -307,7 +307,10 @@ public class TreeElement extends TreeNode implements ActiveElement
    *	speed up many operations that would otherwise require knowledge of the
    *	DTD.
    */
-  public boolean hasEmptyDelimiter() { return hasEmptyDelim; }
+  public boolean hasEmptyDelimiter() { 
+    if (hasChildNodes()) hasEmptyDelim = false;
+    return hasEmptyDelim;
+  }
 
   /** Sets the internal flag corresponding to hasEmptyDelim. */
   public void setHasEmptyDelimiter(boolean value) {
@@ -511,7 +514,7 @@ public class TreeElement extends TreeNode implements ActiveElement
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
-    if (implicitEnd() || isEmptyElement()) return "";
+    if (implicitEnd() || hasEmptyDelimiter()) return "";
     else return "</" + (nodeName == null ? "" : nodeName) + ">";
   }
 

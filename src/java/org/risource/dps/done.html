@@ -1196,9 +1196,16 @@ If 4th node is there, returns "four".
        </pre><br />
        -- turned out to be TreeNodeList(enum) with null enum.
   </li>
+
+  <li> 2000-03-06 <b>Bug</b> empty active tag with mode=replace-content <br />
+       ... expands into an empty start tag followed by untagged content.
+       <br />
+       -- The problem turned out to be rather subtle (involving
+	  endElement(optional)) and is really fixed only for XML.
+  </li>
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.46 2000-02-25 22:55:09 steve Exp $</b><br>
+<b>$Id: done.html,v 1.47 2000-03-07 00:35:12 steve Exp $</b><br>
 </body></html>
