@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.5 1999-10-13 18:18:00 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.6 1999-10-20 00:09:57 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -8,7 +8,7 @@
   <Ext name="xh"	type="text/html" tagset="SimpleCalendar-xhtml"	/>
 
   <AGENT name="Calendar" criteria="false">
-     <initialize><user-message>SimpleCalendar agent initialized</user-message>
+     <initialize><user-message>  SimpleCalendar agent initialized</user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
 	  marker, so that ~Calendar works.  This illustrates that the names of

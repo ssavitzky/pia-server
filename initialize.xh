@@ -11,18 +11,28 @@
 
 <user-message>Running initialize.xh in PIA</user-message>
 
-<status item="path" src="/Agents/Admin" />
-<status item="path" src="/Agents/Proxie" />
-<status item="path" src="/Agents/Proxie/Toolbar" />
-<status item="path" src="/Agents/Proxie/History" />
-<status item="path" src="/Agents/Proxie/remoteTools" />
+<define element="init-children">
+  <doc> Descend into the children of a directory and force each to initialize
+	itself.  Naturally we only do this for directories believed to contain
+	agents.
+  </doc>
+  <action>
+    <user-message>Initializing in &content;</user-message>
+    <repeat><foreach entity="f"><status item="files" src="&content;"/></foreach>
+	    <if><status item="exists" src="&content;/&f;/initialize.inc" />
+	        <then><include src="&content;/&f;/initialize.inc" /></then>
+	    </if>
+    </repeat>
+  </action>
+</define>
 
-<status item="path" src="/Agents/Demo" />
-<status item="path" src="/Agents/SimpleCalendar" />
-<status item="path" src="/Agents/Tutorial" />
-<status item="path" src="/Agents/View" />
+<init-children>/Agents</init-children>
+
+<!-- Due to a bug, init-children doesn't seem to work recursively yet.
+     That's ok, though; we just load an initialize.inc file where necessary.
+  -->
 
 <hr/>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.xh,v 1.4 1999-10-19 20:39:42 bill Exp $</b><br/>
+<b>$Id: initialize.xh,v 1.5 1999-10-20 00:09:44 steve Exp $</b><br/>
 </body></html>

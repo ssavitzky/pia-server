@@ -1,11 +1,11 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.5 1999-10-13 18:17:50 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.6 1999-10-20 00:09:51 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
   <AGENT name="History" criteria="response proxy-response">
-    <initialize><user-message>History agent initializing</user-message>
+    <initialize><user-message>    History agent initialized</user-message>
 	<output directory="directory" dst="DATA" /><!-- create DATA dir. -->
 	<!-- define some entities -->
 	<set name="AGENT:pia">http://&PIA:host;:&PIA:port;</set>

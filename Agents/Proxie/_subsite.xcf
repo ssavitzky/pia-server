@@ -1,9 +1,9 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-24 18:49:14 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-10-20 00:09:47 steve Exp $ -->
 
 <Container>
   <AGENT name="Proxie" criteria="false">
-     <initialize><user-message>Proxie agent initializing</user-message>
+     <initialize><user-message>  Proxie agent initialized</user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
 	  marker, so that ~Proxie works, and so that &AGENT:name; works in all
