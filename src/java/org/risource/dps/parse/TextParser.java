@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.7 2000-10-13 23:21:54 steve Exp $
+//	$Id: TextParser.java,v 1.8 2000-10-19 00:03:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.w3c.dom.Node;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.namespace.*;
 import org.risource.dps.util.Copy;
 import org.risource.dps.util.Index;
 
@@ -62,7 +63,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a variety of ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.7 2000-10-13 23:21:54 steve Exp $
+ * @version $Id: TextParser.java,v 1.8 2000-10-19 00:03:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -168,6 +169,7 @@ public class TextParser extends AbstractParser {
 
   /** cached reference to cross-reference namespace */
   protected Namespace xrefs = null;
+  protected PropertiesWrap pxrefs = null;
 
   /** Prefix for cross-references */
   protected String xprefix = null;
@@ -178,7 +180,9 @@ public class TextParser extends AbstractParser {
   ** Cross-references:
   ************************************************************************/
 
-  /** Look up a cross-reference
+  /** Look up a cross-reference.  
+   *	All keywords are lowercased for lookup, which is a crock: it ought
+   *	to be specified by the application.
    *
    * @return a URL.
    */
@@ -188,7 +192,10 @@ public class TextParser extends AbstractParser {
       ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
       if (n == null) {
 	//top.message(-2, "no binding for "+xrefsName, 0, true);
-      }else xrefs = n.asNamespace();
+      } else {
+	xrefs = n.asNamespace();
+	if (xrefs instanceof PropertiesWrap) pxrefs = (PropertiesWrap)xrefs; 
+      }
       if (xrefs == null) {
 	if (n != null)
 	  top.message(-2, ("binding exists but not a namespace "
@@ -196,12 +203,20 @@ public class TextParser extends AbstractParser {
 	xrefsName = null;	// only give error once per document.
       }
     }
-    if (xrefs != null) {
+    id = id.toLowerCase();
+    if (pxrefs != null) {
+      // if we have a PropertiesWrap, look up the string directly.
+      String s = pxrefs.getProperty(id);
+      if (s == null) return null;
+      if (xprefix != null) s = xprefix + s;
+      if (s.endsWith("/")) s += id;
+      return s;
+    } else if (xrefs != null) {
       ActiveNodeList v = xrefs.getValueNodes(top, id);
       if (v == null) return null;
       String s = v.toString();
       if (xprefix != null) s = xprefix + s;
-      if (s.endsWith("/")) s += id.toLowerCase();
+      if (s.endsWith("/")) s += id;
       return s;
     } else {
       return null;
