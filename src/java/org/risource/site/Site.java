@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.4 1999-09-17 23:39:52 steve Exp $
+//	$Id: Site.java,v 1.5 1999-09-22 23:51:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.4 1999-09-17 23:39:52 steve Exp $
+ * @version $Id: Site.java,v 1.5 1999-09-22 23:51:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -226,30 +226,29 @@ public class Site extends Subsite implements Root {
    *	The configuration file need not be accessible as part of the Site. 
    */
   public Site(String location, String siteConfigPath) {
-    this(location, null, null, null, null, siteConfigPath);
+    this(location, null, null, null, null);
+    loadConfigFile(new File(siteConfigPath));
   }
 
   /** Construct a Site with an explicit virtual path.
    *
    *<p> This constructor allows both the real and virtual locations to be
    *	specified before attempting to load the configuration file.  This
-   *	is necessary in case the configuration file is virtual.  
+   *	is necessary in case the configuration file is virtual.  The actual
+   *	loading is deferred in case the caller needs to perform additional
+   *	setup.
    *
    * @param realLoc the pathname of the real location of the Site
    * @param virtualLoc the pathname of the virtual location of the Site
    * @param defaultDir the pathname of the directory of default documents
    * @param configFileName the default configuration file name
    * @param configTagsetName the tagset to use for loading configuration files.
-   * @param siteConfigPath the pathname of the site configuration file. 
-   *	If omitted, configuration loading is deferred.
    */
   public Site(String realLoc, String virtualLoc, String defaultDir,
-	      String configFileName, String configTagsetName,
-	      String siteConfigPath) {
+	      String configFileName, String configTagsetName) {
     super(realLoc, virtualLoc, defaultDir);
     if (configFileName != null)   setConfigFileName(configFileName);
     if (configTagsetName != null) this.configTagsetName = configTagsetName;
-    if (siteConfigPath != null) loadConfigFile(new File(siteConfigPath));
   }
 
 }

@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.13 1999-09-22 00:28:57 steve Exp $
+// $Id: Pia.java,v 1.14 1999-09-22 23:51:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.13 1999-09-22 00:28:57 steve Exp $
+  * @version $Id: Pia.java,v 1.14 1999-09-22 23:51:03 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -165,7 +165,7 @@ public class Pia implements Tabular {
   /** 
    * Property name of site configuration file path
    */
-  public static final String SITE_CONFIG_PATH = "pia.siteconfig";
+  public static final String SITE_CONFIG_PATH = "pia.sitecfg";
 
   /** 
    * Property name of initialization document path
@@ -796,10 +796,19 @@ public class Pia implements Tabular {
     resolver     = new Resolver();
     Transaction.resolver = resolver;
 
+    File cfgFile = (siteConfigPath == null)? null : new File(siteConfigPath);
+    if (cfgFile != null && !cfgFile.canRead()) {
+      System.err.println("Cannot open initialization file " + siteConfigPath);
+      System.exit(-1);
+    }
+    System.err.println("Site config path = " + siteConfigPath + " " + 
+		       ((cfgFile == null)? "-" : cfgFile.getPath()));
+
     rootResource = new PiaSite(usrRootStr, piaRootStr, null, 
-			       configFileName, "pia-config", siteConfigPath);
+			       configFileName, "pia-config");
     rootResource.setVerbosity(getVerbosity());
-    if (siteConfigPath == null) rootResource.loadConfig();
+    if (siteConfigPath == null) rootResource.loadConfig() ;
+    else rootResource.loadConfigFile(cfgFile);
 
     Resource init = rootResource.locate(initDocPath, false, null);
     Document initDoc = (init == null)? null : init.getDocument();

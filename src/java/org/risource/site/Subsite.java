@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.8 1999-09-22 00:17:18 steve Exp $
+//	$Id: Subsite.java,v 1.9 1999-09-22 23:51:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.8 1999-09-22 00:17:18 steve Exp $
+ * @version $Id: Subsite.java,v 1.9 1999-09-22 23:51:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -177,7 +177,12 @@ public class Subsite extends ConfiguredResource implements Resource {
   }
 
   public void loadConfigFile(File f) {
-    setConfig(XMLUtil.load(new FileDocument(null, this, f),
+    if (!f.exists()) {
+      RuntimeException e = new RuntimeException("Cannot open config file");
+      getRoot().reportException(e, "  in loadConfigFile");
+      throw e;
+    }
+    setConfig(XMLUtil.load(new FileDocument("[config]", this, f),
 			   getConfigTagset()));
   }
 

@@ -16,6 +16,15 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> need special handling for include in xcf files.<br>
+       ... in order to avoid initializing child resources before their
+       parents.  May actually need a dummy Subsite for this.
+       (1999-09-22) <br>
+
+  <li> <b>Hole</b> Need convention for accessing real, virtual, etc. <br>
+       Suggest pseudo-subdirs -r, -v, -d, etc.
+       (1999-09-22) <br>
+
   <li> <b>Bug</b> Subsites don't get reconfigured when changed. <br>
        <code>subsiteCache</code> is always used.  If a config file is changed
        or a directory added to the virtual path, an existing Subsite won't
@@ -235,5 +244,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.8 1999-09-17 23:39:53 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.9 1999-09-22 23:51:15 steve Exp $</b><br>
 </body></html>

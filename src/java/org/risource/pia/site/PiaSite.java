@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: PiaSite.java,v 1.1 1999-09-17 23:39:47 steve Exp $
+//	$Id: PiaSite.java,v 1.2 1999-09-22 23:51:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * A specialized Site for use in the PIA.
  *
- * @version $Id: PiaSite.java,v 1.1 1999-09-17 23:39:47 steve Exp $
+ * @version $Id: PiaSite.java,v 1.2 1999-09-22 23:51:08 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -67,16 +67,6 @@ public class PiaSite extends Site {
     super(location, config);
   }
 
-  /** Construct a Site from a location and configuration file.
-   *	
-   * @param location the pathname of the real location of the Site. 
-   * @param siteConfigPath the pathname of the site configuration file. 
-   *	The configuration file need not be accessible as part of the Site. 
-   */
-  public PiaSite(String location, String siteConfigPath) {
-    this(location, null, null, null, null, siteConfigPath);
-  }
-
   /** Construct a Site with an explicit virtual path.
    *
    *<p> This constructor allows both the real and virtual locations to be
@@ -88,15 +78,10 @@ public class PiaSite extends Site {
    * @param defaultDir the pathname of the directory of default documents
    * @param configFileName the default configuration file name
    * @param configTagsetName the tagset to use for loading configuration files.
-   * @param siteConfigPath the pathname of the site configuration file. 
-   *	If omitted, configuration loading is deferred.
    */
   public PiaSite(String realLoc, String virtualLoc, String defaultDir,
-	      String configFileName, String configTagsetName,
-	      String siteConfigPath) {
+	      String configFileName, String configTagsetName) {
     super(realLoc, virtualLoc, defaultDir, configFileName, 
-	  ((configTagsetName != null)? configTagsetName : "pia-config"),
-	  null /* Defer loading */);
-    if (siteConfigPath != null) loadConfigFile(new File(siteConfigPath));
+	  ((configTagsetName != null)? configTagsetName : "pia-config"));
   }
 }
