@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.8 1999-04-30 23:36:58 steve Exp $
+# 	$Id: Makefile,v 1.9 1999-06-25 00:24:40 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -56,6 +56,7 @@ PRIM_HANDLERS = \
 	includeHandler.java \
 	logicalHandler.java \
 	namespaceHandler.java \
+	nodeBuilder.java \
 	numericHandler.java \
 	outputHandler.java \
 	parseHandler.java \
