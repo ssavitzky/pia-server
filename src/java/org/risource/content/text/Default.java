@@ -1,5 +1,5 @@
 //  Default.java
-// $Id: Default.java,v 1.6 1999-04-29 17:48:47 pia Exp $
+// $Id: Default.java,v 1.7 1999-10-14 00:52:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,12 +47,6 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-// converter used in OutputStreamWriter === warning specific to Sun VM? ==
-// using here to avoid double buffering of
-
-import sun.io.CharToByteConverter;
-import sun.io.ConversionBufferFullException;
-
 /**
  * Content wrapper for streams of text.
  * 	default for text/....  mime type.
@@ -61,7 +55,6 @@ import sun.io.ConversionBufferFullException;
  * 	byte array after conversion (similar to OutputStreamWriter).
  * 	Manipulations can be done to character buffer.
  */
-
 public class Default extends StreamingContent {
 
    protected char[] buf, pending;
@@ -74,7 +67,6 @@ public class Default extends StreamingContent {
   }
 
 
-  protected CharToByteConverter ctb;
   protected String encoding;
   //  transform original objects into reader
   protected Reader cReader;
@@ -365,21 +357,22 @@ public class Default extends StreamingContent {
     * when sun provides better encoding support.
     */
 
-   protected void initializeEncoding(){
+   protected void initializeEncoding() {
      if(headers != null){
        encoding = headers.header("Charset"); // should be ContentEncoding?
        //charset actually is a parameter of content type -- does header support?
        // should add headers.encoding method
      }
-    if(encoding == null)
-     encoding =CharToByteConverter.getDefault().getCharacterEncoding();
+     /* === CharToByteConverter is a Sun class!
+     if(encoding == null)
+       encoding =CharToByteConverter.getDefault().getCharacterEncoding();
      try  {
-        CharToByteConverter.getConverter(encoding);
-   }  catch(Exception e){
-     // if encoding not supported, get default
-     encoding =CharToByteConverter.getDefault().getCharacterEncoding();
-   }
-   
+       CharToByteConverter.getConverter(encoding);
+     }  catch(Exception e){
+       // if encoding not supported, get default
+       encoding =CharToByteConverter.getDefault().getCharacterEncoding();
+     }
+     */
    }
   
 
