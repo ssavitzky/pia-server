@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.6 1999-11-17 18:31:35 steve Exp $
+//	$Id: SiteDoc.java,v 1.7 1999-12-14 18:40:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,6 +41,7 @@ import org.risource.dps.util.*;
 import org.risource.dps.namespace.*;
 import org.w3c.dom.NodeList;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeEntity;
 import org.risource.dps.active.ActiveNode;
 import org.risource.dps.handle.Loader;
 
@@ -59,7 +60,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.6 1999-11-17 18:31:35 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.7 1999-12-14 18:40:10 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -202,7 +203,11 @@ public class SiteDoc extends TopProcessor {
     // transaction -- the agent is (necessarily) different      
     if (agent == null) return;
 
-    define("AGENT", (agent == null)? null : (Namespace)((ActiveNode)agent).getAttrList());
+    if (agent != null) {
+      define("AGENT", (Namespace)((ActiveNode)agent).getAttrList());
+      define("agentNode", new TreeEntity("agentNode",
+					 new TreeNodeList((ActiveNode)agent)));
+    }
     define("agentName", agent.name());
     define("agentHome", agent.getHome().getPath());
 
@@ -235,11 +240,22 @@ public class SiteDoc extends TopProcessor {
   public File locateSystemResource(String path, boolean forWriting) {
     if (path.startsWith("file:")) {
       // file: is handled by systemFileName === locateSystemResource bogus
-      return new File(path.substring("file:".length()));
+      return new File(stripPrefix(path));
     } else if (path.startsWith("pia:")) {
-      path = path.substring(4);
-      // pia: Strip the "pia:" and handle the rest with systemFileName
-      // locateSystemResource bogus
+      path = stripPrefix(path);
+      // pia: Strip the "pia:" and look relative to PIA_HOME
+      if (!path.startsWith("/")) path = "/" + path;
+      path = Pia.instance().getProperty("home") + path;
+      return new File(path);
+    } else if (path.startsWith("r:") || path.startsWith("root:")) {
+      path = stripPrefix(path);
+      if (!path.startsWith("/")) path = "/" + path;
+      path = Pia.instance().getProperty("root") + path;
+      return new File(path);
+    } else if (path.startsWith("v:") || path.startsWith("vroot:")) {
+      path = stripPrefix(path);
+      if (!path.startsWith("/")) path = "/" + path;
+      path = Pia.instance().getProperty("vroot") + path;
       return new File(path);
     } else if (path.indexOf(":") >= 0) {
       // URL: fail.
@@ -262,7 +278,10 @@ public class SiteDoc extends TopProcessor {
    * @see org.risource.pia.FileAccess#systemFileName
    */
   public boolean isRemotePath(String path) {
-    return (!path.startsWith("pia:") && super.isRemotePath(path));    
+    return (!path.startsWith("pia:")
+	    && !path.startsWith("r:") && !path.startsWith("v:")
+	    && !path.startsWith("root:") && !path.startsWith("vroot:")
+	    && super.isRemotePath(path));    
   }
 
   /** Determine whether a resource name is special. 

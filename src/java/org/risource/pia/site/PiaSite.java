@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: PiaSite.java,v 1.3 1999-10-04 17:40:47 steve Exp $
+//	$Id: PiaSite.java,v 1.4 1999-12-14 18:40:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import java.util.Enumeration;
 /**
  * A specialized Site for use in the PIA.
  *
- * @version $Id: PiaSite.java,v 1.3 1999-10-04 17:40:47 steve Exp $
+ * @version $Id: PiaSite.java,v 1.4 1999-12-14 18:40:10 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -57,6 +57,30 @@ public class PiaSite extends Site {
    */
   protected TopContext makeTopContext() {
     return new SiteDoc();
+  }
+
+  protected Resource getPrefixedResource(String path, String prefix) {
+    if (prefix.equalsIgnoreCase("pia:")) {
+      while (path.startsWith("/")) { path = path.substring(1); }
+      File home = Pia.getHomeDir();
+      if (home == null) return null;
+      return new FileDocument("pia:", null, home).getRelative(path);
+    } else {
+      return super.getPrefixedResource(path, prefix); 
+    }
+  }
+
+  protected Resource locatePrefixedResource(String path, String prefix,
+					    boolean create, List extensions) {
+    if (prefix.equalsIgnoreCase("pia:")) {
+      while (path.startsWith("/")) { path = path.substring(1); }
+      File home = Pia.getHomeDir();
+      if (home == null) return null;
+      return new FileDocument("pia:", null, home).locate(path, create,
+							 extensions);
+    } else {
+      return super.locatePrefixedResource(path, prefix, create, extensions); 
+    }
   }
 
   /************************************************************************
