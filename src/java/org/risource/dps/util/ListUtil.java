@@ -1,5 +1,5 @@
 ////// ListUtil.java: List-Processing Utilities
-//	$Id: ListUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+//	$Id: ListUtil.java,v 1.5 2000-02-25 22:34:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	In most cases, a list result is returned as an Enumeration.
  *	This avoids constructing a NodeList when it's not needed.
  *
- * @version $Id: ListUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: ListUtil.java,v 1.5 2000-02-25 22:34:36 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see java.util.Enumeration
@@ -96,7 +96,7 @@ public class ListUtil {
    *	as a separate Text object.
    */
   public static Enumeration getTextItems(ActiveNodeList nl) {
-    int len = nl.getLength();
+    int len = (nl == null)? 0 : nl.getLength();
     List results = new List();
     for (int i = 0; i < len; ++i) {
       ActiveNode n = nl.activeItem(i);
