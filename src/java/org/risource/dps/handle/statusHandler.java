@@ -1,5 +1,5 @@
 ////// statusHandler.java: <status> Handler implementation
-//	$Id: statusHandler.java,v 1.7 1999-04-17 01:19:14 steve Exp $
+//	$Id: statusHandler.java,v 1.8 1999-09-22 00:34:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 
+import org.risource.site.*;
+
 import java.io.File;
 import java.net.URL;
 
@@ -38,7 +40,7 @@ import java.net.URL;
  *
  * <p>	Determine the status of a resource. 
  *
- * @version $Id: statusHandler.java,v 1.7 1999-04-17 01:19:14 steve Exp $
+ * @version $Id: statusHandler.java,v 1.8 1999-09-22 00:34:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -117,11 +119,16 @@ public class statusHandler extends GenericHandler {
 	if (content != null) Expand.processNodes(content, cxt, out);
       }
     } else {
-      File local = top.locateSystemResource(url, false);
-      if (local != null) {
-	putList(out, Status.getStatusItem(local, item));
+      Resource res = top.locateResource(url, false);
+      if (res != null) {
+	putList(out, Status.getStatusItem(res, item));
       } else {
-	if (content != null) Expand.processNodes(content, cxt, out);
+	File local = top.locateSystemResource(url, false);
+	if (local != null) {
+	  putList(out, Status.getStatusItem(local, item));
+	} else {
+	  if (content != null) Expand.processNodes(content, cxt, out);
+	}
       }
     }
   }

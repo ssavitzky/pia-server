@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.7 1999-08-20 00:02:18 steve Exp $
+//	$Id: tagsetHandler.java,v 1.8 1999-09-22 00:34:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.7 1999-08-20 00:02:18 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.8 1999-09-22 00:34:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -167,7 +167,7 @@ public class tagsetHandler extends GenericHandler {
 	cxt.debug("Loading tagset=" + incN + 
 		   ((incTS == null)? " FAILED" : " OK"));
 	if (incTS == null) {
-	  reportError(in, cxt, "Cannot load included tagset " + incTS);
+	  reportError(in, cxt, "Cannot load included tagset " + incN);
 	} else {
 	  newTagset.include(incTS);
 	}

@@ -1,5 +1,5 @@
 ////// outputHandler.java: <output> Handler implementation
-//	$Id: outputHandler.java,v 1.6 1999-07-08 21:38:42 bill Exp $
+//	$Id: outputHandler.java,v 1.7 1999-09-22 00:34:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,7 +29,10 @@ import org.w3c.dom.NodeList;
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.File;
+import java.io.Writer;
 import java.io.OutputStreamWriter;
+
+import org.risource.site.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -40,7 +43,7 @@ import org.risource.dps.tree.TreeComment;
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: outputHandler.java,v 1.6 1999-07-08 21:38:42 bill Exp $
+ * @version $Id: outputHandler.java,v 1.7 1999-09-22 00:34:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -59,6 +62,9 @@ public class outputHandler extends GenericHandler {
     boolean directory = atts.hasTrueAttribute("directory");
 
     OutputStream stm = null;
+    Writer writer = null;
+    Resource res = null;
+    Document doc = null;
 
     // === at this point we should consider checking for file= and href=
     if (url == null) {
@@ -67,33 +73,45 @@ public class outputHandler extends GenericHandler {
     }
 
     if (directory) {
+      if (! url.endsWith("/")) url += "/";
+      res = top.locateResource(url, true);
+      if (res != null) return;
       File dir = top.locateSystemResource(url, true);
-      if (! dir.exists()) dir.mkdirs();
+      if (dir == null) {
+	out.putNode(new TreeComment("Cannot create directory " + url));
+	top.message(-2, "Cannot create directory " + url, 0, true);
+      } else if (! dir.exists()) dir.mkdirs();
       return;
     }
 
     // Try to open the stream.  Croak if it fails. 
 
-    try {
-      stm = top.writeExternalResource(url, append, true, false);
-    } catch (IOException e) {
-      out.putNode(new TreeComment(e.getMessage()));
-      return;
+    res = top.locateResource(url, true);
+    if (res != null) {		// We found one.  Open the document
+      doc = res.getDocument();
+      writer = doc.documentWriter(append);
+    } else {			// Try to open the stream.  Croak if it fails. 
+      try {
+	stm = top.writeExternalResource(url, append, true, false);
+      } catch (IOException e) {
+	out.putNode(new TreeComment(e.getMessage()));
+	return;
+      }
+      if (stm != null) writer = new OutputStreamWriter(stm);
     }
-
-    if (stm == null) {
+    if (writer == null) {
       out.putNode(new TreeComment("Cannot open " + url));
+      top.message(-2, "Cannot write " + url, 0, true);
       return;
     }
 
-    OutputStreamWriter writer = new OutputStreamWriter(stm);
     ToWriter output = new ToWriter(writer);
     Copy.copyNodes(content, output);
 
     try {
       output.close();
       writer.close();
-      stm.close();
+      if (stm != null) stm.close();
     } catch (IOException e) {}
 
   }
