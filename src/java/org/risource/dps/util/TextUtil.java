@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.8 1999-05-18 20:27:35 steve Exp $
+//	$Id: TextUtil.java,v 1.9 1999-07-13 20:27:08 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.8 1999-05-18 20:27:35 steve Exp $
+ * @version $Id: TextUtil.java,v 1.9 1999-07-13 20:27:08 bill Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -484,7 +484,8 @@ public class TextUtil {
     List results = new List();
     int len = nl.getLength();
     for (int i = 0; i < len; ++i) {
-      ActiveNode n = nl.activeItem(i);
+	//      ActiveNode n = nl.activeItem(i);
+      ActiveNode n = (nl.activeItem(i)).shallowCopy();
       if(NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
 	String bStr = URLEncoder.encode(tNode.toString());
@@ -504,7 +505,8 @@ public class TextUtil {
     List results = new List();
     int len = nl.getLength();
     for (int i = 0; i < len; ++i) {
-      ActiveNode n = nl.activeItem(i);
+	//      ActiveNode n = nl.activeItem(i);
+      ActiveNode n = (nl.activeItem(i)).shallowCopy();
       if(NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
 	String s = tNode.toString();
@@ -529,7 +531,8 @@ public class TextUtil {
     List resultList = new List();
     int len = nl.getLength();
     for (int i = 0; i < len; ++i) {
-      ActiveNode n = nl.activeItem(i);
+	//ActiveNode n = nl.activeItem(i);
+      ActiveNode n = (nl.activeItem(i)).shallowCopy();
       if (NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
 	String s = tNode.toString();
