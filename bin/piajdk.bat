@@ -65,13 +65,9 @@ REM SET JDKHOME=c:\java\jdk
 
 path=%path%;%JDKHOME%\bin
 
-REM set the path for the JIGSAW and REGEXP libraries
-REM PIA uses a very small amount of code from these
-SET REGEXP=%PIAHOME%\lib\java\regexp.jar
-SET JIGSAW=%PIAHOME%\lib\java\jigsaw_s.jar
+REM pia needs to be run from PIA\src\java directory as there is no
+REM explicit CLASSPATH
 
-REM the path
-SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\src\java;%PIAHOME%\lib\java\pia.zip;%JDKHOME%\classes;%JDKHOME%\lib\classes.zip
-
-java -classpath %CPATH% org.risource.pia.Pia -root %PIAHOME% -u %UHOME%
+cd %PIAHOME%\src\java
+java org.risource.pia.Pia -root %PIAHOME% -u %UHOME%
 

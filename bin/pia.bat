@@ -59,12 +59,8 @@ echo UHOME is set to %UHOME%
 REM tell where to find jre
 path=%path%;%JDKHOME%\bin
 
+REM pia needs to be run from PIA\src\java directory as there is no
+REM explicit CLASSPATH
 
-REM set the path for the JIGSAW and REGEXP libraries
-REM PIA uses a very small amount of code from these
-SET REGEXP=%PIAHOME%\lib\java\regexp.jar
-SET JIGSAW=%PIAHOME%\lib\java\jigsaw_s.jar
-
-REM the classpath
-SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\lib\java\pia.zip;%PIAHOME%\src\java
-jre -cp %CPATH% org.risource.pia.Pia -root %PIAHOME% -u %UHOME%
+cd %PIAHOME%\src\java
+jre org.risource.pia.Pia -root %PIAHOME% -u %UHOME%
