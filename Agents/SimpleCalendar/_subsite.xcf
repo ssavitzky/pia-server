@@ -1,11 +1,11 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-10-07 00:33:23 bill Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-10-07 17:33:09 steve Exp $ -->
 
 <Container>
 
-  <Map ext="xh"		type="text/html"	tagset="SimpleCalendar-xhtml"	/>
+  <Ext name="xh"	type="text/html" tagset="SimpleCalendar-xhtml"	/>
 
-  <AGENT name=SimpleCalendar criteria="false" class="org.risource.pia.agent.SimpleCalendar">
+  <AGENT name=SimpleCalendar criteria="false">
      <initialize><user-message>SimpleCalendar agent initialized</user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
