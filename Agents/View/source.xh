@@ -1,11 +1,22 @@
  <if><get name='FORM:url' />
     <then><hide><!--  must have some text before the first active tag??   -->
 <set name='URL'><text decode='url'>&FORM:url;</text></set></hide>
-<!--  Processed with /View/slides.xh  -->
+
 <html>
   <head><title>&URL;</title></head>
   <body>
     <h2>Source code for &URL;</h2>
+    <hr/>
+        <a href="source"><b>Source Viewer</b></a>
+    <if>&FORM:pretty;
+	<then><b>[pretty-printed]</b>
+              <a href="source?url=&FORM:url;">[raw source]</a>
+        </then>
+	<else><a href="source?url=&FORM:url;&pretty=yes">[pretty-printed]</a>
+	      <b>[raw source]</b>
+        </else>
+    </if>
+    <hr/>
     <if>&FORM:pretty;
         <then><pretty><include src='&URL;' tagset='pia-xhtml' quoted='quoted' />
               </pretty>
@@ -42,8 +53,8 @@
     </tr>
     <tr><th align="right" colspan="2">Formatting: </th>
         <td> <select>
-		<option selected>as-is</option>
-		<option>pretty</option>
+		<option selected>raw source</option>
+		<option>pretty-printed</option>
 	    </select>
         </td>
     </tr>
@@ -61,7 +72,7 @@
        not defined in this tagset.</dd>
 </dl>
 
-<footer cvsid='$Id: source.xh,v 1.7 1999-10-25 16:39:30 steve Exp $' />
+<footer cvsid='$Id: source.xh,v 1.8 1999-10-25 19:18:51 steve Exp $' />
 </body></html>
 </else>
 </if>
