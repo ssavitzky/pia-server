@@ -1,12 +1,7 @@
-<set name="mybg">white</set>
-
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
-<HTML>
-<html>
 
-   <body bgcolor="&mybg;">
-
-   <hide>  
+<hide>  
+       <set name="mybg">white</set>
        <?-- decide between drop-down selections and typed-in entries --?>
        <if>&FORM:newEventTime2;
            <then>
@@ -23,12 +18,6 @@
 	<set name="myYear" >&year;</set>
 	<set name="myMonth" ><numstrip>&month;</numstrip></set>
 	<set name="myDay" ><numstrip>&day;</numstrip></set>
-   </hide>
-
-        <?-- show today as link to editing today --?>
-        <show-today />
-
-   <hide>
         <if>
            <?-- check if form called this page  --?>
            <test><logical or='or'> 
@@ -46,6 +35,27 @@
 	   </then>
 	</if>
 
+       <?-- encapsulate whole date into a smaller package --?>
+       <set name="datepack">
+              <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+       </set>
+    <set name="todaypack">
+         <date>&day;</date><month>&month;</month><year>&year;</year>
+    </set>
+       <set name="title">Events for <weekday>&datepack;</weekday>,
+		     <weekday monthname="yes">&datepack;</weekday>
+		       &myDay;, &myYear;</set>
+</hide>
+
+<html>
+<head>
+    <title>&title;</title>
+</head>
+<body bgcolor="&mybg;">
+
+   <header>&title;</header>
+
+   <hide>
         <?-- clean up inconsistent repeat info and package the rest --?>
         <set name="oldIntervalEvent"></set>
         <set name="intervalEntity"></set>
@@ -279,11 +289,6 @@
 	  <lookup newYear="&myYear;"
 		  newMonth="&myMonth;"
 		  newDay="&myDay;" />
-       </set>
-
-       <?-- encapsulate whole date into a smaller package --?>
-       <set name="datepack">
-              <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
        </set>
 
        <?-- initialize description variable --?>
@@ -571,23 +576,6 @@
   <show-errors />
 </body>
 </html>  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
