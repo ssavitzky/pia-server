@@ -1,5 +1,5 @@
 ////// outputHandler.java: <output> Handler implementation
-//	$Id: outputHandler.java,v 1.4 1999-04-07 23:21:25 steve Exp $
+//	$Id: outputHandler.java,v 1.5 1999-05-11 01:31:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.tree.TreeComment;
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: outputHandler.java,v 1.4 1999-04-07 23:21:25 steve Exp $
+ * @version $Id: outputHandler.java,v 1.5 1999-05-11 01:31:12 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -87,10 +87,11 @@ public class outputHandler extends GenericHandler {
     }
 
     OutputStreamWriter writer = new OutputStreamWriter(stm);
-    Output output = new ToWriter(writer);
+    ToWriter output = new ToWriter(writer);
     Copy.copyNodes(content, output);
 
     try {
+      output.close();
       writer.close();
       stm.close();
     } catch (IOException e) {}

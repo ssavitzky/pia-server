@@ -786,11 +786,22 @@ If 4th node is there, returns "four".
        -- saving works as of 4-27, but could be improved.  Only tagsets not
 	  done as of 5/6; they're less useful.
 
+  <li> 1999-05-07 <b>Impr</b> use buffered readers and writers <br>
+       (1999-05-07) <br>
+       -- this leads to a significant speed increase: 2x for reading!
+
+  <li> 1999-05-10 <b>Bug</b> Buffered writers need to be closed. <br>
+       ToWriter invisibly wraps its Writer in a BufferedWriter if necessary.
+       This means that closing the Writer you gave it doesn't necessarily
+       flush the buffer!  Probably ought to have <code>Writer.close()</code>.
+       (1999-05-10) <br>
+       -- 5/10 checked for close with fgrep. 
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.11 1999-05-07 23:38:10 steve Exp $</b><br>
+<b>$Id: done.html,v 1.12 1999-05-11 01:31:04 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
