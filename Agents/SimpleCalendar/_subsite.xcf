@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.2 1999-10-07 17:33:09 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.3 1999-10-11 22:37:34 steve Exp $ -->
 
 <Container>
 
@@ -9,9 +9,8 @@
      <initialize><user-message>SimpleCalendar agent initialized</user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
-	  marker, so that ~SimpleCalendar works and the
-	  SimpleCalendar-specific tags have a way of security-checking their
-	  directory.
+	  marker, so that ~SimpleCalendar works.  It might not hurt to rename
+	  the agent "Calendar".
        -->
   </AGENT>
 
