@@ -1,5 +1,5 @@
 <!DOCTYPE tagset SYSTEM "tagset.dtd">
-<!-- ---------------------------------------------------------------------- -->
+<!-- ====================================================================== -->
 <!-- The contents of this file are subject to the Ricoh Source Code Public  -->
 <!-- License Version 1.0 (the "License"); you may not use this file except  -->
 <!-- in compliance with the License.  You may obtain a copy of the License  -->
@@ -15,10 +15,10 @@
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
-<!-- ---------------------------------------------------------------------- -->
+<!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.2 1999-12-16 21:12:53 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.3 2000-03-16 22:11:02 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -33,7 +33,7 @@
 Note that we only need these inside the PIA.
 
 <h3>Submit-Forms</h3>
-<define element=submit-forms handler="org.risource.pia.handle.submitHandler" >
+<define element="submit-forms" handler="org.risource.pia.handle.submitHandler" >
   <doc> Submit each form in the content to its target.  Results, if any,
 	are discarded.
   </doc>
@@ -43,7 +43,7 @@ Note that we only need these inside the PIA.
 
 <h4>Sub-elements of <tag>form</tag></h4>
 <ul>
-  <li> <define element=process parent=form quoted handler>
+  <li> <define element="process" parent="form" syntax="quoted" handler>
          <doc> The content of a <tag>process</tag> element is expanded only
 	       when the <tag>form</tag> that contains it is being processed as
 	       a result of a <code>post</code> or <code>query</code>
@@ -57,17 +57,17 @@ Note that we only need these inside the PIA.
 <h3>Graphics and pseudo-graphics</h3>
 
 <define entity="blank-170x1">
-  <value><img src="/Icon/white170x1.png" width=170 height=1
-		alt=" "></value>
+  <value><img src="/Icon/white170x1.png" width="170" height="1" alt=" "></value>
 </define>
 <define entity="blue-dot">
   <value><img src="/Icon/dot-blue.png"
-		height=20 width=20 alt="*"></value>
+		height="20" width="20" alt="*"></value>
 </define>
 
 <define entity="RiSource.org">
   <value><a href="http://www.RiSource.org/"
-            ><font color="#c40026" face="Verdana, Arial, Helvetica, sans-serif"
+            ><font color="#c40026" 
+                   face="Verdana, Arial, Helvetica, sans-serif"
                    >Ri</font><font color="black"
 	                           face="Verdana, Arial, Helvetica, sans-serif"
                    ><i>Source.org</i></font></a></value>
@@ -75,7 +75,8 @@ Note that we only need these inside the PIA.
 
 <define entity="RiSource.org.pia">
   <value><a href="http://www.RiSource.org/PIA"
-            ><font color="#c40026" face="Verdana, Arial, Helvetica, sans-serif"
+            ><font color="#c40026" 
+                   face="Verdana, Arial, Helvetica, sans-serif"
                    ><i>PIA</i></font></a></value>
 </define>
 
@@ -83,16 +84,16 @@ Note that we only need these inside the PIA.
 <h2>Page Components</h2>
 
 <h3>Utility tags for use in page components</h3>
-<define element=xa>
+<define element="xa">
   <doc> Either an anchor link or a bold name.  Used on lines that
 	contain links to any of several different pages.
   <doc>
-  <define attribute=page>
+  <define attribute="page">
     <doc> The base name of the current page, matched against the URL (href
 	  attribute).  If missing, the current binding of "page" is used.
     </doc>
   </define>
-  <define attribute=href>
+  <define attribute="href">
     <doc> The URL of the page.
     </doc>
   </define>
@@ -123,7 +124,7 @@ Note that we only need these inside the PIA.
 	  "page" is used. 
     </doc>
   </define>
-  <define attribute=pages required>
+  <define attribute="pages" required="yes">
     <doc> space-separated names of the pages represented on this line.
     </doc>
   </define>
@@ -157,7 +158,7 @@ Note that we only need these inside the PIA.
   </action>
 </define> 
 
-<define element="verboseForm" quoted>
+<define element="verboseForm" syntax="quoted">
   <doc> Expand the content if the AGENT:verboseForms option is set.
   </doc>
   <action><if><get name="AGENT:verboseForms"/>
@@ -165,7 +166,7 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<define element="verbosePage" quoted>
+<define element="verbosePage" syntax="quoted">
   <doc> Expand the content if the AGENT:verbosePage option is set.
   </doc>
   <action><if><get name="AGENT:verbosePages"/>
@@ -173,7 +174,7 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<define element="agentOption" empty>
+<define element="agentOption" syntax="empty">
   <doc> Set an agent option from a form.
   </doc>
   <define attribute="name" required>
@@ -202,7 +203,7 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<define element="agentLock" empty>
+<define element="agentLock" syntax="empty">
   <doc> Set an agent lock from a form.  Locks can be set, but cannot be
 	cleared.
   </doc>
@@ -263,12 +264,12 @@ Note that we only need these inside the PIA.
 <table cellspacing=0 cellpadding=0 border=0>
 <tr><th valign=top width=170>&nbsp;</th>
     <th align=right valign=top width=170><get name="ltitle"/>&nbsp; </th>
-    <th align=left valign=top><if><get name=title />
-	<then><get name=title /></then>
+    <th align=left valign=top><if><get name="title"/>
+	<then><get name="title"/></then>
 	<else><get name="fileName"/></else></if></th></tr>
 <if><get name="attributes:show-date"/><then>
   <tr nowrap nobr>
-      <td colspan=2><td><get name="dayName"/>, <get name="year"/>-<get
+      <td colspan=2></td><td><get name="dayName"/>, <get name="year"/>-<get
 	name="month"/>-<get name="day"/>, <get name="time"/>:<get
 	name="second"/></td></tr>
   </then></if>
@@ -276,11 +277,11 @@ Note that we only need these inside the PIA.
 </action>
 </define>
 
-<define element=sub-head quoted>
+<define element="sub-head" syntax="quoted">
   <doc> A secondary table located immediately under the header.
 	Content should consist of additional table rows.
   </doc>
-  <define attribute=page>
+  <define attribute="page">
     <doc> the base name of the page, e.g. <code>index</code> or
 	  <code>home</code>.
     </doc>
@@ -288,30 +289,32 @@ Note that we only need these inside the PIA.
   <action><set name=page><get name="attributes:page"/></set>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr><th align=center valign=center nowrap width=170
-        ><br/><include src=insert> </include></th>
+        ><br/><include src="insert"> </include></th>
     <td>
-    <table cellspacing=0 cellpadding=0 border=0>
-      <tr><th align=left nowrap width=170><get name="blank-170x1"/></th>
-	  <td><br /></td></tr>
-      <tr><th align=right>
-            <xopt pages="home index help options"><get name="blue-dot"/></xopt>
-	  <td><xa href="home">Home</xa>
-    	      <xa href="-">Index</xa>
-	      <if><status item="exists" src="help.xh" />
-    	          <then><xa href="help">Help</xa></then></if> 
-	      <if><status item="exists" src="help.xh" />
-	          <then><xa href="options">Options</xa></then></if> 
-	  </td>
-      </tr>
-      <expand><get name="content"/></expand>
-  </table></td>
+      <table cellspacing=0 cellpadding=0 border=0>
+	<tr><th align=left nowrap width=170><get name="blank-170x1"/></th>
+	    <td><br /></td>
+	</tr>
+	<tr><th align=right>
+	      <xopt pages="home index help options"><get name="blue-dot"/></xopt>
+	    <td><xa href="home">Home</xa>
+		<xa href="-">Index</xa>
+		<if><status item="exists" src="help.xh" />
+		    <then><xa href="help">Help</xa></then></if> 
+		<if><status item="exists" src="help.xh" />
+		    <then><xa href="options">Options</xa></then></if> 
+	    </td>
+	</tr>
+	<expand><get name="content"/></expand>
+      </table>
+    </td>
 </tr>
 </table>
   </action>
 </define>
 
 
-<define element=nav-bar>
+<define element="nav-bar">
   <doc> A navigation bar, usually placed just above the copyright notice in
 	the footer.  Usually fits in a single line.  Content is whatever you
 	want to put after the standard start.
@@ -335,84 +338,103 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<define element=footer empty>
+<define element="footer" syntax="empty">
   <doc> This expands into a standard footer, including a ``navigation bar''.
 	Go to some lengths to extract the year the file was modified from the
 	cvs id.
   </doc>
-  <define attribute=cvsid>
+  <define attribute="cvsid">
     <doc> The CVS id string of the file.
     </doc>
   </define>
   <action>
-<hr>
-<nav-bar/>
-<hr>
-<set name=dateIndex><if><test match='Id:'><get name="attributes:cvsid"/></test>
-    <then>3</then><else>2</else></if></set>
-<set name=myear><subst match="/.* " result=", "><extract>
-    <from><get name="attributes"/></from>
-    <name>cvsid</name><eval/><text split><get name="list"/></text>
-    <nodes><get name="dateIndex"/></nodes>
-    </extract></subst> </set>
+<hr />
+<nav-bar />
+<hr />
+    <hide>
+      <set name="dateIndex">
+	<if><test match='Id:'><get name="attributes:cvsid"/></test>
+	    <then>3</then><else>2</else>
+	</if>
+      </set>
+      <set name="myear">
+	<subst match="/.* " result=", "><extract>
+          <from><get name="attributes:cvsid"/></from>
+          <text split><get name="list"/></text>
+          <nodes><get name="dateIndex"/></nodes>
+        </extract> </subst> </set>
+    </hide>
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
-   Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
-<em><get name='attributes:cvsid' /></em>
+   Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
+<em><get name="attributes:cvsid" /></em>
 <a href="/Agents/View/source?url=&docPath;">view source</a>
   </action>
 </define>
 
-<define element=short-footer empty>
+<define element="short-footer" syntax="empty">
   <doc> This expands into a short-form footer: just the CVS id and copyright
 	notice. 
   </doc>
-  <define attribute=cvsid>
+  <define attribute="cvsid">
     <doc> The CVS id string of the file.
     </doc>
   </define>
   <action>
-<hr>
-<set name=dateIndex><if><test match='Id:'><get name="attributes:cvsid"/></test>
-    <then>3</then><else>2</else></if></set>
-<set name=myear><subst match="/.* " result=", "><extract>
-    <from><get name="attributes"/></from>
-    <name>cvsid</name><eval/><text split><get name="list"/></text>
-    <nodes><get name="dateIndex"/></nodes>
-    </extract></subst> </set>
+<hr />
+    <hide>
+      <set name="dateIndex">
+	<if><test match="Id:"><get name="attributes:cvsid"/></test>
+	    <then>3</then><else>2</else>
+	</if>
+      </set>
+      <set name="myear">
+	<subst match="/.* " result=", "><extract>
+          <from><get name="attributes:cvsid"/></from>
+          <text split><get name="list"/></text>
+          <nodes><get name="dateIndex"/></nodes>
+        </extract> </subst> </set>
+    </hide>
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
-<em><get name='attributes:cvsid' /></em>
+<em><get name="attributes:cvsid" /></em>
 <if><status src="/Agents/View/source.xh" item="exists"/>
     <then><a href="/Agents/View/source?url=&docPath;">view source</a></then>
 </if>
   </action>
 </define>
 
-<define element=inc-footer empty>
+<define element="inc-footer" syntax="empty">
   <doc> This expands into a tiny footer for include files. 
   </doc>
-  <define attribute=cvsid>
+  <define attribute="cvsid">
     <doc> The CVS id string of the file.
     </doc>
   </define>
   <action>
-<set name=dateIndex><if><test match='Id:'><get name="attributes:cvsid"/></test>
-    <then>3</then><else>2</else></if></set>
-<set name=myear><subst match="/.* " result=", "><extract>
-    <from><get name="attributes"/></from>
-    <name>cvsid</name><eval/><text split><get name="list"/></text>
-    <nodes><get name="dateIndex"/></nodes>
-    </extract> </subst></set>
-<set name=incfn><extract><from><get name="attributes"/></from>
-    <name>cvsid</name><eval/>
-    <text split><get name="list"/></text> 0
-    </extract><extract><from><get name="attributes"/></from>
-    <name>cvsid</name><eval/>
-    <text split><get name="list"/></text>
-    <nodes><numeric difference><get name="dateIndex"/> 2</numeric>
-           <numeric difference><get name="dateIndex"/> 1</numeric>
-    </nodes></extract></set>
-<h6 align=right><get name="incfn"/> &copy; <get name="myear"/>
+    <hide>
+      <set name="dateIndex">
+	<if><test match="Id:"><get name="attributes:cvsid"/></test>
+	    <then>3</then><else>2</else>
+	</if>
+      </set>
+      <set name="myear">
+	<subst match="/.* " result=", "><extract>
+          <from><get name="attributes:cvsid"/></from>
+          <text split><get name="list"/></text>
+          <nodes><get name="dateIndex"/></nodes>
+        </extract> </subst> </set>
+      <set name="incfn">
+	<extract><from><get name="attributes:cvsid"/></from>
+	         <text split><get name="list"/></text> 0
+	</extract><extract><from><get name="attributes:cvsid"/></from>
+	         <text split><get name="list"/></text>
+		 <nodes><numeric difference><get name="dateIndex"/> 2</numeric>
+		        <numeric difference><get name="dateIndex"/> 1</numeric>
+		 </nodes>
+	</extract>
+      </set>
+    </hide>
+<h6 align="right"><get name="incfn"/> &copy; <get name="myear"/>
     Ricoh Silicon Valley</h6>
   </action>
 </define>
