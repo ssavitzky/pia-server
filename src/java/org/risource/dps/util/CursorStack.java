@@ -1,5 +1,5 @@
 ////// CursorStack.java: A linked-list stack of current nodes.
-//	$Id: CursorStack.java,v 1.5 1999-06-25 00:42:18 steve Exp $
+//	$Id: CursorStack.java,v 1.6 1999-07-02 23:53:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.active.*;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: CursorStack.java,v 1.5 1999-06-25 00:42:18 steve Exp $
+ * @version $Id: CursorStack.java,v 1.6 1999-07-02 23:53:05 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -142,9 +142,12 @@ public class CursorStack implements Cursor {
   }
 
   /** Save the current state in a new stack frame. 
-   *	This is marginally faster than the alternative,
-   *	<code>stack = new CursorStack(this, true);</code> 
-   *	the alternative generalizes better to subclasses.
+   *
+   *<p>	Pushing in place is marginally faster than the alternative,
+   *	<code>stack = new CursorStack(this, true);</code> --
+   *	the alternative generalizes better to subclasses, but there are
+   *	also some cases where one simply <em>must</em> push in place, 
+   *	for example when the CursorStack is being used as an Output.
    */
   protected void pushInPlace() { 
     stack = new CursorStack(depth, node, action, tagName, active, 
