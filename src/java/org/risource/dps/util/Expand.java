@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.5 1999-04-07 23:22:16 steve Exp $
+//	$Id: Expand.java,v 1.6 1999-05-06 20:41:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import org.risource.dps.tree.TreeAttr;
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.5 1999-04-07 23:22:16 steve Exp $
+ * @version $Id: Expand.java,v 1.6 1999-05-06 20:41:27 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -140,6 +140,14 @@ public class Expand {
     Input in = new FromParseTree(aNode);
     ToNodeList out = new ToNodeList();
     c.subProcess(in, out).processChildren();
+    return out.getList();
+  }
+
+  /** Process a Node and return the result. */
+  public static ActiveNodeList processNode(ActiveNode aNode, Context c) {
+    Input in = new FromParseTree(aNode);
+    ToNodeList out = new ToNodeList();
+    c.subProcess(in, out).processNode();
     return out.getList();
   }
 
