@@ -1,9 +1,4 @@
-
-
-<HTML>
 <html>
-<body>
-
 <hide> <?-- first create zero-stripped month and day for display --?>
        <?-- get default date as today --?>
        <set name="myYear" >&year;</set>
@@ -17,9 +12,7 @@
              <set name="showMonthOnly"></set>
          </then>
        </if>
-</hide>
-       <show-today />
-<hide>
+
        <if>
            <?-- check if form called this page  --?>
            <get name="FORM:Add" /> 
@@ -31,6 +24,12 @@
 	   </then>
 	</if>
 </hide>
+  <head>
+    <title>Calendar for &myYear;-&myMonth;</title>
+  </head>
+  <body>
+
+       <show-today />
 
        <?-- bar of links to nearby months and years --?>
        <navbar />
@@ -146,24 +145,5 @@
        <show-errors />
 
 
-     </body>
-   </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </body>
+</html>
