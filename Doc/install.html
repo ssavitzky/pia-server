@@ -32,11 +32,11 @@ You need the following software to run the PIA:</p>
      need a Java Development Kit <code>JDK</code>.) Java can be obtained from <code>
      <a href = "http://www.javasoft.com">java.sun.com</a></code> (direct links
      to <a
-     href=http://www.javasoft.com/products/jdk/1.2/jre/index.html>JRE</a> or
-     <a href=http://www.javasoft.com/products/jdk/1.2/>JDK</a>)</li>
+     href="http://www.javasoft.com/products/jdk/1.2/jre/index.html">JRE</a> or
+     <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>)</li>
 <li>An operating system that supports sockets and long filenames.<br>We
 have run the PIA software on Linux (Red Hat 4.2 with the <a
-     href=http://www.blackdown.org/>blackdown.org</a> JDK), Windows 9X, and
+     href="http://www.blackdown.org/">blackdown.org</a> JDK), Windows 9X, and
      Solaris on SPARC.  It does not seem to work on the Macintosh
      because of differences in file handling.</li>
 <li>Utilities for unpacking the files (<code>tar</code> and
@@ -76,21 +76,31 @@ This creates the directory <code>PIA/</code> under your current directory. </p>
 
 <table border=1>
 <caption> Directory Structure (inside the PIA directory)</caption>
-<tr><th>Agents <th>Config <th> Contrib <th> bin <th> lib <th> src 
+<thead>
+<tr>
+<th>Agents </th>
+<th>Config </th>
+<th>Contrib </th>
+<th>bin </th>
+<th>lib </th>
+<th>src </th>
+</tr>
+</thead>
+<tbody>
 <tr><td valign=top>The Agents directory contains subdirectories for each standard agent.
 Each agent directory contains the collection of XML files (active pages) that work together
 to form an application. The Agents directory also contains default XML files
-for standard pages, like the home page of an agent.
+for standard pages, like the home page of an agent.</td>
 <td valign=top>The Config directory contains configuration information stored in the
      form of property files.  Look here to permanently change things like
-     ports, proxy information, etc.
+     ports, proxy information, etc.</td>
 <td valign=top>The Contrib directory is used for contributed agents and other files
-     that are not a part of the standard release.
+     that are not a part of the standard release.</td>
  <td valign=top> bin contains the programs that actually run the PIA software either
      as a web server (<code> pia, pia.bat </code> or as a command line filter
-    <code> process </code>.  Note that pia and process run under unix only.)
+    <code> process </code>.  Note that pia and process run under unix only.)</td>
 <td valign=top> lib contains the precompiled java libraries needed to run the
-     software.
+     software.</td>
  <td valign=top> src/java/ contains the java source files used in the PIA software.
      <strong> If you want to set the classpath by hand, set it to
 	      <code>PIA/src/java/</code> </strong> not PIA/src!
@@ -99,7 +109,9 @@ for standard pages, like the home page of an agent.
       Center.  This will soon change to org.risource.*)<p>
 <code>src/org and src/misc</code> contain code referenced by the PIA software
 and included for convenience.
-<code>src/app</code> contains a few utility applications. 
+<code>src/app</code> contains a few utility applications.</p> </td>
+</tr>
+</tbody>
 </table>
 
 <h3 id = "CHDCECIE">Setting Up</h3>
@@ -177,7 +189,7 @@ work.</p><h2><a name = "Questions">Questions, Problems, or Comments</a></h2><p>Y
 can check for known bugs by going to 
 <code><a href = "http://www.RiSource.org/PIA/">http://www.risource.org/PIA/</a></code></p>
 <p>
-Questions, problems and comments should be directed to <code><a href=mailto:pia-bugs@risource.org>PIA-bugs@risource.org</a></code>.
+Questions, problems and comments should be directed to <code><a href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.
 </p>
 <hr>
 <p><b>Copyright 1999 Ricoh Silicon Valley</b></p>
