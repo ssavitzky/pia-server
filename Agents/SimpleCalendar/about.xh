@@ -1,39 +1,89 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>About the SimpleCalendar agent</title>
+<title>About the SimpleCalendar Application</title>
 </head><body>
-<h1>About the SimpleCalendar</h1>
+<h1>About the SimpleCalendar Application</h1>
 
+<h2>General Introduction</h2>
+
+<p> The SimpleCalendar is intended mainly as a starting point for further
+    development; it is still pretty far from a complete application.  It is,
+    however, at the point where it's actually useable for simple cases. 
+</p>
+
+<p> This application illustrates some of the issues in flexible web page
+    design using the PIA.  The month and day pages, for example, use the
+    <code>&lt;navbar&gt;</code> element for their navigation bar; the year
+    page uses only the <code>&lt;monthRow&gt;</code> element which is one part
+    of it.  Similarly, the <code>grid.xh</code> variant uses
+    <code>&lt;show-today&gt;</code> to show today's date, while
+    <code>month.xh</code> and <code>year.xh</code> use a customized version of
+    the PIA's <code>&lt;header&gt;</code> tag.
+</p>
+
+<p> A calendar is perhaps the definitive example of an application whose
+    interface everyone has an opinion about, and which one can spend endless
+    hours customizing.  Please enjoy.
+</p>
+
+<h2>Steve's Notes</h2>
 
 <ul>
+  <li> The ``old way'' of doing things involved a single page,
+       <code>grid.xh</code>, that displayed almost everything.  I have added
+       <code>month.xh</code> and <code>year.xh</code> pages that are more
+       specialized.
+  </li>
+  <li> In order to retain the old look and feel where appropriate, I've added
+       the ``<code>mpage="grid"</code>'' attribute to all formatting elements
+       that generate links; and a corresponding form keyword to the
+       <code>year.xh</code> page.  This allows the old <code>grid.xh</code> to
+       refer to the new <code>year.xh</code> page and eventually get back.
+  </li>
+  <li> The original <code>navbar</code> element is still around, but it is
+       also possible to use the month and year table rows separately, for
+       more flexibility in formatting. 
+  </li>
+  <li> At some point the <code>grid.xh</code> page will probably disappear,
+       but the <code>mpage</code> machinery would still be useful if somebody
+       wanted an alternative month format. 
+  </li>
+</ul>
 
-  <li>Filter to show only events at a particular location, time, weekday etc
+<h2>Bill's Wish List</h2>
+
+<ul>
+  <li> Filter to show only events at a particular location, time, weekday etc
        </li>
 
-  <li>Fit a whole year's display onto one page, e.g. by making each day only
-      one or two characters wide, making months nestle against each other
-      (no break in a week spanning months), making months side-by-side, etc.
+  <li> Fit a whole year's display onto one page, e.g. by making each day only
+       one or two characters wide, making months nestle against each other
+       (no break in a week spanning months), making months side-by-side, etc.
        And remove any lookup of events from that page, so it is purely
-       navigation rather than event display.
+       navigation rather than event display.<br>
+       -- done by Steve, 1999-10-11.
        </li>
 
-  <li>Cache the files in memory for quicker calculation.
+  <li> Cache the files in memory for quicker calculation.
        </li>
        
-  <li>Put a title on each page.
+  <li> Put a title on each page.<br>
+       -- done by Steve, 1999-10-11.
        </li>
 
-  <li>remove "all" from navbar, and make links from year point to the
-       stripped-down year display mentioned above.
+  <li> Remove "all" from navbar, and make links from year point to the
+       stripped-down year display mentioned above.<br>
+       -- done by Steve, 1999-10-11.
        </li>
 
-   <li>Add a year-navbar to the year display page, showing many years on
-   either side of the present one (with appropriate links).
+   <li> Add a year-navbar to the year display page, showing many years on
+	either side of the present one (with appropriate links).<br>
+	-- done by Steve, 1999-10-11.
        </li>
 </ul>
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.xh,v 1.1 1999-10-07 18:37:44 bill Exp $</b><br>
+<b>$Id: about.xh,v 1.2 1999-10-12 15:53:57 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~bill/"
          ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
          >bill@rsv.ricoh.com</a>&gt;</address>

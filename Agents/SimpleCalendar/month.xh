@@ -28,28 +28,10 @@
   </head>
   <body><!--  bgcolor="white" gives insufficient contrast on some screens -->
 
-  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr><th align=left><font size="+2">
-	    Calendar for 
-            <weekday monthname="yes">&mypack;</weekday> &myYear; </font>
-	</th>
-    <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
-  </table>
-  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr><th align=left>
-	  <table>  <!-- bar of links to nearby years -->
- 	   <yearRow>&myYear;</yearRow>
-	  </table>
-	</th>
-        <td align="right">
-	  <a href="home">Today</a> is 
-            <weekday>&todaypack;</weekday>,
-	  <a href="month"><weekday monthname="yes">&todaypack;</weekday>
-            &day;, &year;</a>
-        </td>
-    </tr>
-    <tr><td colspan=2>&nbsp;</td></tr>
-  </table>
+  <header>Calendar for
+	   <weekday monthname="yes">&mypack;</weekday> &myyear;</header>
+
+
   <?-- bar of links to nearby months and years --?>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
     <monthRow>&myYear;</monthRow>
@@ -153,6 +135,6 @@
 
        <show-errors />
 
-    <short-footer cvsid="$Id: month.xh,v 1.5 1999-10-12 06:10:48 steve Exp $"/>
+    <short-footer cvsid="$Id: month.xh,v 1.6 1999-10-12 15:53:58 steve Exp $"/>
   </body>
 </html>

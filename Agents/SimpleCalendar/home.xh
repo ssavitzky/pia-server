@@ -6,7 +6,6 @@
 
    <body bgcolor="&mybg;">
 
-
    <hide>  
        <?-- decide between drop-down selections and typed-in entries --?>
        <if>&FORM:newEventTime2;
@@ -129,7 +128,9 @@
   </hide>
 
         <?-- put a navigation bar on here too --?>
+  <hr/>
         <navbar mpage="grid" />
+  <hr/>
 
         <?-- make a URL which will pass this date on to other operations --?>
 	<set name="shortURL">newDay=<text

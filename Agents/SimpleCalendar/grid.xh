@@ -31,7 +31,9 @@
        <show-today />
 
        <?-- bar of links to nearby months and years --?>
+	<hr/>
        <navbar mpage="grid"/>
+	<hr/>
 
        <hide>
 	    <?-- flags and now-empty list for deciding to show events --?>

@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.5 1999-10-12 06:10:46 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.6 1999-10-12 15:53:57 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -36,17 +36,20 @@
 
 
 
-     <define element="numpad">
-	     <doc> Takes a number and left-pads it with a zero if it's just one digit.</doc>
-	     <action><if><test match=".." >&content;</test>
-		     <then>&content;</then>
-		     <else>0&content;</else></if></action>
-     </define>
+<define element="numpad">
+  <doc> Takes a number and left-pads it with a zero if it's just one digit.
+  </doc>
+  <action><if><test match=".." >&content;</test>
+	      <then>&content;</then>
+	      <else>0&content;</else></if></action>
+</define>
 
 
      <!-- strip off leading zeros from single-digit positive numbers -->
-     <define element="numstrip">
-         <action><text trim="yes">
+<define element="numstrip">
+  <doc> Strips leading zeros from single-digit positive numbers
+  </doc>
+  <action><text trim="yes">
             <if><test greater="9">&content;</test>
                <then>&content;</then>
                <else>
@@ -58,7 +61,7 @@
                </else>
             </if>
          </text></action>
-     </define>
+  </define>
 
 
 <define element="readoneevent">
@@ -152,7 +155,7 @@
 
 <define element="month-name">
   <doc> Convert the content, a number between 1 and 12 inclusive, into the
-	name of the corresponding month
+	name of the corresponding month.
   </doc>
   <action><weekday monthname="yes">
 		  <date>15</date><month>&content;</month><year>&myYear;</year>
@@ -168,7 +171,7 @@
        <set name="todaypack">
               <date>&day;</date><month>&month;</month><year>&year;</year>
        </set>
-        <!-- show  today's date as link to the day -->
+        <!-- show today's date as link to the day -->
 <h2> Today is  
           <weekday>&todaypack;</weekday>,
                  <a href="home.xh?newDay=&myDay;&newMonth=&myMonth;&newYear=&year;&Add=submit"><weekday monthname="yes">&todaypack;</weekday>
@@ -269,13 +272,39 @@
   </action>
 </define>
 
+<define element="header">
+  <action>
+    <table border="0" cellpadding="0" cellspacing="0"
+           align="center" width="100%">
+      <tr><th align=left><font size="+2">&content;</font>
+	  </th>
+      <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" 
+           align="center" width="100%">
+      <tr><th align=left>
+	    <table>  <!-- bar of links to nearby years -->
+	     <yearRow>&myYear;</yearRow>
+	    </table>
+	  </th>
+	  <td align="right">
+	    <a href="home">Today</a> is 
+	      <weekday>&todaypack;</weekday>,
+	    <a href="month"><weekday monthname="yes">&todaypack;</weekday>
+	      &day;, &year;</a>
+	  </td>
+      </tr>
+      <tr><td colspan=2>&nbsp;</td></tr>
+    </table>
+  </action>
+</define>
+
 <define element="navbar">
   <define attribute="mpage">
     <doc> If present, use this as the page to use for the month display.
     </doc>
   </define>	 
   <action>
-     <hr />
      <set name="mpage"><get name="attributes:mpage"/></set>
      <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
      <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -300,7 +329,6 @@
 	   </td>
        </tr>
     </table>
-    <hr />
   </action>
 </define>
 
