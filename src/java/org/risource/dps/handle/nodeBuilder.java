@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.1 1999-06-25 00:24:42 steve Exp $
+//	$Id: nodeBuilder.java,v 1.2 1999-06-26 00:43:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.1 1999-06-25 00:24:42 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.2 1999-06-26 00:43:56 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -56,6 +56,10 @@ public class nodeBuilder extends GenericHandler {
     if (atts == null) atts = new TreeAttrList();
     String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
+    if (name == null) {
+      reportError(in, cxt, "No 'name' attribute");
+      return;
+    }
     ToNodeList content = new ToNodeList();
 
     TreeAttrList ns = new TreeAttrList();
