@@ -1,5 +1,5 @@
 ////// logicalHandler.java: <logical> Handler implementation
-//	$Id: logicalHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
+//	$Id: logicalHandler.java,v 1.6 1999-05-06 20:39:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;logical&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: logicalHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
+ * @version $Id: logicalHandler.java,v 1.6 1999-05-06 20:39:53 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -57,8 +57,8 @@ public class logicalHandler extends GenericHandler {
   /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
-    if (dispatch(e, "and")) 	 return logical_and.handle(e);
-    if (dispatch(e, "or")) 	 return logical_or.handle(e);
+    if (dispatch(e, "and", "op")) 	 return logical_and.handle(e);
+    if (dispatch(e, "or",  "op")) 	 return logical_or.handle(e);
     return this;
   }
    
@@ -69,7 +69,7 @@ public class logicalHandler extends GenericHandler {
   /** Constructor must set instance variables. */
   public logicalHandler() {
     /* Expansion control: */
-    expandContent = true;	// false	Expand content?
+    expandContent = false;	// true 	Expand content?
     textContent = false;	// true		extract text from content?
 
     /* Syntax: */
@@ -80,12 +80,15 @@ public class logicalHandler extends GenericHandler {
 }
 
 class logical_and extends logicalHandler {
+  /** Process a logical AND.  Whitespace and comments are ignored. */
   public void action(Input in, Context aContext, Output out) {
     ActiveNodeList content = Expand.getContent(in, aContext);
     ActiveNodeList last = null;
     int len = content.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode child = content.activeItem(i);
+      if (NodeType.isText(child)
+	  || child.getNodeType() == ActiveNode.COMMENT_NODE) continue;
       last = Test.getTrueValue(child, aContext);
       if (last == null) return;
     }
@@ -97,6 +100,7 @@ class logical_and extends logicalHandler {
 }
 
 class logical_or extends logicalHandler {
+  /** Process a logical OR.  Whitespace and comments are ignored. */
   public void action(Input in, Context aContext, Output out) {
     ActiveNodeList content = Expand.getContent(in, aContext);
     ActiveNodeList value = null;
