@@ -1,5 +1,5 @@
 ////// NodeType.java: Document Processor basic implementation
-//	$Id: NodeType.java,v 1.2 1999-04-13 00:52:56 steve Exp $
+//	$Id: NodeType.java,v 1.3 1999-04-13 21:45:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,43 +36,44 @@ import org.w3c.dom.Node;
  * <p> This type also performs type-related tests on nodes, partially
  *	compensating for the lack of inheritance in the DOM types.
  *
- * @version $Id: NodeType.java,v 1.2 1999-04-13 00:52:56 steve Exp $
+ * @version $Id: NodeType.java,v 1.3 1999-04-13 21:45:41 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.w3c.dom.Node
  */
 
 public class NodeType {
-  public static final short           ELEMENT_NODE         = 1;
-  public static final short           ATTRIBUTE_NODE       = 2;
-  public static final short           TEXT_NODE            = 3;
-  public static final short           CDATA_SECTION_NODE   = 4;
-  public static final short           ENTITY_REFERENCE_NODE = 5;
-  public static final short           ENTITY_NODE          = 6;
-  public static final short           PROCESSING_INSTRUCTION_NODE = 7;
-  public static final short           COMMENT_NODE         = 8;
-  public static final short           DOCUMENT_NODE        = 9;
-  public static final short           DOCUMENT_TYPE_NODE   = 10;
-  public static final short           DOCUMENT_FRAGMENT_NODE = 11;
-  public static final short           NOTATION_NODE        = 12;
+  public static final short	UNDEFINED 	= -5;
+  public static final short	ALL 		= -4;
+  public static final short	DECLARATION 	= -3;
+  public static final short	NODELIST 	= -2;
+  public static final short	ENDTAG 		= -1;
 
   public static final short	NONE		=  0;
-  public static final short	ENDTAG 		= -1;
-  public static final short	NODELIST 	= -2;
-  public static final short	DECLARATION 	= -3;
-  public static final short	ALL 		= -4;
-  public static final short	UNDEFINED 	= -5;
+
+  public static final short 	ELEMENT		= Node.ELEMENT_NODE;
+  public static final short 	ATTRIBUTE	= Node.ATTRIBUTE_NODE;
+  public static final short 	TEXT		= Node.TEXT_NODE;
+  public static final short 	CDATA 		= Node.CDATA_SECTION_NODE;
+  public static final short 	REFERENCE	= Node.ENTITY_REFERENCE_NODE;
+  public static final short 	ENTITY		= Node.ENTITY_NODE;
+  public static final short 	PI	    = Node.PROCESSING_INSTRUCTION_NODE;
+  public static final short 	COMMENT		= Node.COMMENT_NODE;
+  public static final short 	DOCUMENT	= Node.DOCUMENT_NODE;
+  public static final short 	DOCTYPE		= Node.DOCUMENT_TYPE_NODE;
+  public static final short 	FRAGMENT	= Node.DOCUMENT_FRAGMENT_NODE;
+  public static final short 	NOTATION	= Node.NOTATION_NODE;
 
   public static final short	MIN_TYPE 	= -4;
-  public static final short	MAX_TYPE 	= NOTATION_NODE;
+  public static final short	MAX_TYPE 	= NOTATION;
 
   /** This maps types into names.  They are only used for debugging,
    *	so they needn't match the names defined by either the DOM
    *	or XPTR standards, which are different anyway.
    */
   public static final String names[] = {
-    "ALL",	"DECLARATION", 	"NODELIST",	"ENDTAG",  	"ERROR",
-    /* 1... */ 	"ELEMENT",	"ATTRIBUTE",	"TEXT",	  	"CDATA", 
+    "ALL",	"DECLARATION", 	"NODELIST",	"ENDTAG",  	"NONE",
+    /* .. 1: */	"ELEMENT",	"ATTRIBUTE",	"TEXT",	  	"CDATA", 
     "REFERENCE","ENTITY",	"PI",		"COMMENT",	"DOCUMENT",
     "DOCTYPE",	"FRAGMENT",	"NOTATION",
   };
@@ -88,9 +89,9 @@ public class NodeType {
 
   public static final boolean hasValueNodes(Node n) {
     switch (n.getNodeType()) {
-    case ATTRIBUTE_NODE: 
-    case ENTITY_REFERENCE_NODE:
-    case ENTITY_NODE:
+    case Node.ATTRIBUTE_NODE: 
+    case Node.ENTITY_REFERENCE_NODE:
+    case Node.ENTITY_NODE:
       return true;
     default:
       return false;
@@ -99,9 +100,9 @@ public class NodeType {
 
   public static final boolean hasContent(Node n) {
     switch (n.getNodeType()) {
-    case ATTRIBUTE_NODE: 
-    case ENTITY_NODE:
-    case ELEMENT_NODE:
+    case Node.ATTRIBUTE_NODE: 
+    case Node.ENTITY_NODE:
+    case Node.ELEMENT_NODE:
       return true;
     default:
       return false;
@@ -115,8 +116,8 @@ public class NodeType {
    */
   public static final boolean isText(Node n) {
     switch (n.getNodeType()) {
-    case TEXT_NODE:
-    case CDATA_SECTION_NODE:
+    case Node.TEXT_NODE:
+    case Node.CDATA_SECTION_NODE:
       return true;
     default:
       return false;
