@@ -20,7 +20,8 @@
 This is a paragraph describing the uses of <la lref="fluid.xh" >
 Liquid Documents.</la>  Such documents may revolutionize the display of text
 information by allowing the user to choose which links to follow without
-opening new pages or losing track of where he was. </p>
+opening new pages or losing track of where he was. (In this example, clicking
+a liquid link once opens it, and clicking again <b>closes</b> it!) </p>
 
 <p>
 Liquid documents were first proposed by <la lref="xerox.xh" >Xerox
