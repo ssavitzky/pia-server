@@ -1,5 +1,6 @@
+
 // Utilities.java
-// $Id: Utilities.java,v 1.4 1999-05-07 23:37:20 steve Exp $
+// $Id: Utilities.java,v 1.5 1999-07-13 20:29:09 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -659,6 +660,11 @@ public class Utilities {
     byte bytes[] = input.getBytes();
 
     int l = bytes.length * 3 / 4;
+
+    if (l == 0)
+	return null;
+
+
     //  check for padding
     if(bytes[l-1] == '=') l--;
     if(bytes[l-1] == '=') l--;
