@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.6 1999-10-19 01:04:21 steve Exp $
+// $Id: SiteMachine.java,v 1.7 1999-11-06 01:06:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -152,7 +152,7 @@ public class SiteMachine extends Machine {
     } catch (ContentOperationUnavailable e) {
       // If we cannot find content length, do not set header
     }
-    request.setHeader("Accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
+    request.setHeader("Accept", "image/png, image/x-xbitmap, image/jpeg, image/pjpeg, image/gif, */*");
 
     //    request.setContentLength( queryString.length() );
 
