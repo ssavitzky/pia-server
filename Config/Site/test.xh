@@ -4,15 +4,16 @@
 </head><body>
 <h1>PIA test file</h1>
 
-<set name=LOC:foo>this is a suitable value for foo</set>
 <ul>
 <repeat><foreach><get name="DOC:"/></foreach>
         <li> &li; = <protect result markup><get name="DOC:&li;"/> </protect>
 	</li>
 </repeat>
-</ul>	     
+</ul>
+
+<pre><protect result markup><get name="DOC:;"/> </protect></pre>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.1 1999-09-22 00:50:06 steve Exp $</b><br>
+<b>$Id: test.xh,v 1.2 1999-10-04 17:31:01 steve Exp $</b><br>
 </body></html>
