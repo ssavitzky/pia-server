@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.7 1999-03-24 20:48:23 steve Exp $
+// $Id: GenericAgent.java,v 1.8 1999-03-25 00:46:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -308,7 +308,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
     String    fn = findDocument("initialize");
 
     // At this point, we have all our options and files. 
-    /* if (Pia.debug()) */ dumpDebugInformation();
+    if (Pia.verbose()) dumpDebugInformation();
 
     if (fn != null) try {
       if (RESOLVE_INITIALIZE) {	
