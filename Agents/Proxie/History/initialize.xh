@@ -16,16 +16,16 @@
 
 <set name='AGENT:act-on'><protect>
    <set name='ct'><get name='TRANS:Content-type' /></set>
-   <set name='fn'>&year;/&month;/&day;.html</set>
-   <output directory='directory' dst='&year;/&month;/' /><!--  create dir. if necessary  -->
+   <set name='fn'>~/&year;/&month;/&day;.html</set>
+   <output directory='directory' dst='~/&year;/&month;/' /><!--  create dir. if necessary  -->
    <if><test match='html'>&ct;</test>
        <then><set entity='entity' name='title'><get name='TRANS:title' /></set>
 	     <output append='append' dst='&fn;'><if><!--  dummy to suppress line brk  -->
 	 	</if>&time; <a href='&url;'>&url; : &title;</a><br />
 </output>
-             <output dst='last.link'><a href='&url;'>&url; : &title;</a>
+             <output dst='~/last.link'><a href='&url;'>&url; : &title;</a>
 </output>
-             <output dst='last.html'>&date; &time; <a href='&url;'>&url; : &title;</a>
+             <output dst='~/last.html'>&date; &time; <a href='&url;'>&url; : &title;</a>
 <dl>
   <dt> <b>Link:</b>
   </dt><dd> <protect result='result' markup='markup'><a href='&url;'>&url; : &title;</a></protect>
@@ -48,5 +48,5 @@
        the user's browser; that's up to the <a href='/remoteTools'>remoteTools</a> agent.
 </dd></dl>
 
-<footer cvsid='$Id: initialize.xh,v 1.5 1999-04-02 01:04:23 pgage Exp $' />
+<footer cvsid='$Id: initialize.xh,v 1.6 1999-04-07 13:58:07 steve Exp $' />
 </body></html>
