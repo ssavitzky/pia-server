@@ -1,5 +1,5 @@
 // Version.java
-// $Id: Version.java,v 1.7 1999-06-02 21:53:09 steve Exp $
+// $Id: Version.java,v 1.8 1999-06-07 18:36:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ package org.risource;
  *
  * <p> Note that this is currently not changed from PIA/Makefile
  *
- * @version $Id: Version.java,v 1.7 1999-06-02 21:53:09 steve Exp $
+ * @version $Id: Version.java,v 1.8 1999-06-07 18:36:44 steve Exp $
  * @see org.risource.pia.Setup
  */
 public interface Version {
@@ -51,11 +51,11 @@ public interface Version {
   public static final int    MINOR      = 5;
 
   /** The version-number suffix, e.g. "A" or "beta" */
-  public static final String SUFFIX     = ""; // e.g. beta1 or whatever
+  public static final String SUFFIX     = "a"; // e.g. beta1 or whatever
 
   /** The full version identification of the PIA. */
   public static final String VERSION    = RELEASE + "." + MAJOR
-    + ((MINOR == 0)? "" : "." + MINOR) + SUFFIX;
+    + ((MINOR == 0)? "a" : "." + MINOR) + SUFFIX;
 
   /** The server identification string. */
   public static final String SERVER	= VENDOR_TAG + "/" + VERSION;
@@ -65,5 +65,5 @@ public interface Version {
 
   /** The CVS revision of this file. */
   public static final String CVS_REV    =
-    "$Id: Version.java,v 1.7 1999-06-02 21:53:09 steve Exp $";
+    "$Id: Version.java,v 1.8 1999-06-07 18:36:44 steve Exp $";
 }
