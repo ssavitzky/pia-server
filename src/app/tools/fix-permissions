@@ -1,11 +1,11 @@
 #!/bin/sh
-# $Id: fix-permissions,v 1.2 1999-03-12 19:23:53 steve Exp $
+# $Id: fix-permissions,v 1.3 1999-06-11 23:30:25 steve Exp $
 #
 # This script fixes permissions on directories created by someone who
 # did a "cvs update" with their umask set to 22.
 # Note that you have to be root in order to do this.
 #
 # Usage:
-#	cd /pia1/pia; su; fix-permissions
+#	cd /pia1/CvsRoot/PIA; su; fix-permissions
 #	
 find . -type d -exec chmod g+w {} \;
