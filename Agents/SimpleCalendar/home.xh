@@ -325,7 +325,7 @@
 	       <set name="myDesc"/>
 	       <set name="longURL" />
 
-               <?--readoneevent extracts time/place etc from li into my...--?>
+
                <readoneevent />
 
                <?-- store chosen event description etc if it matches --?>

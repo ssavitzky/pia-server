@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.3 1999-10-08 18:52:08 bill Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.4 1999-10-11 22:04:26 bill Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -360,6 +360,7 @@
               </repeat>
           </repeat>
        </set>
+
 
 
              <!-- by week, looping over 1-4 week intervals -->
