@@ -1,4 +1,4 @@
-<!-- $Id: extensions.xci,v 1.4 1999-12-14 18:52:59 steve Exp $ -->
+<!-- $Id: extensions.xci,v 1.5 2000-02-15 02:00:59 steve Exp $ -->
 
   <Ext name="html"	type="text/html"				/>
   <Ext name="htm"	type="text/html"				/>
@@ -10,6 +10,8 @@
 
   <Ext name="eh" 	type="text/html"	tagset="ehtml"	/>
   <Ext name="xx" 	type="application/xml"	tagset="xxml"	/>
+  <Ext name="ts" 	type="text/html"	tagset="tsdoc"	/>
+  <Ext name="slides" 	type="text/html"	tagset="/Tagsets/slides"	/>
 
   <Ext name="png"	type="image/png"				/>
   <Ext name="jpeg"	type="image/jpeg"				/>
