@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.14 1999-11-04 22:33:55 steve Exp $
+//	$Id: AbstractParser.java,v 1.15 1999-11-06 01:05:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.BitSet;
 
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.io.LineNumberReader;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.IOException;
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.14 1999-11-04 22:33:55 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.15 1999-11-06 01:05:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -71,9 +71,11 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   protected Processor   	processor	= null;
   protected ActiveNode 		document 	= null;
-  protected BufferedReader 	in 		= null;
+  protected LineNumberReader 	in 		= null;
   protected Tagset 		tagset 		= null;
   protected EntityTable 	entities	= null; 
+  //protected int			lineNumber	= 1;
+  //protected int			lf		= '\n';
 
   /************************************************************************
   ** Access:
@@ -94,8 +96,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
    *	roughly doubles the speed of the parser!
    */
   public void setReader(Reader aReader) { 
-    if (aReader instanceof BufferedReader) in = (BufferedReader) aReader;
-    else				   in = new BufferedReader(aReader);
+    if (aReader instanceof LineNumberReader) in = (LineNumberReader) aReader;
+    else				   in = new LineNumberReader(aReader);
   }
 
   public Tagset getTagset() { return tagset; }
@@ -117,6 +119,19 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   public void close() {
     if (in != null) try { in.close(); } catch (IOException e) {}
+  }
+
+  /** Return the current location as a string suitable for error messages. 
+   *
+   *<p> Note that line numbers will not be detected correctly on systems that
+   * 	don't use <code>'\n'</code> (linefeed) as part of their end-of-line 
+   *	sequence (i.e. the Mac).
+   */
+  protected String location() {
+    org.risource.site.Document doc
+      = getProcessor().getTopContext().getDocument();
+    String docName = (doc == null)? "" : doc.getName() + ":";
+    return docName + (in.getLineNumber() + 1) + ":";
   }
 
   /************************************************************************
@@ -244,6 +259,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
     if (last < 0) return false;
     if (last == entityStart || last == '<') return true;
     do {
+      // if (last == lf) lineNumber++;
       buf.append((char)last);
       last = in.read();
     } while (last >= 0 && last != entityStart && last != '<');
@@ -261,12 +277,16 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatIdent() throws IOException {
     if (last == 0) last = in.read();
     String id = "";
-    if (last < 0 || 0 == idc[last]) return false;
+    if (last < 0 || 0 == idc[last]) {
+      // if (last == lf) lineNumber++;
+      return false;
+    }
     do {
       id += (char)last;
       last = in.read();
     } while (last > 0 && 0 != idc[last]);
     // was while (last > 0 && isIdent.get(last))
+    // if (last == lf) lineNumber++;
     ident = id;
     return true;    
   }
@@ -279,10 +299,12 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatUntil(int aCharacter, boolean checkEntities)
        throws IOException {
     if (last == 0) last = in.read();
+    // if (last == lf) lineNumber++;
     while (last >= 0 && last != aCharacter
 	   && !(checkEntities && last == entityStart)) {
       buf.append((char)last);
       last = in.read();
+      // if (last == lf) lineNumber++;
     } 
     return last >= 0;    
   }
@@ -294,10 +316,12 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatUntil(BitSet aBitSet, boolean checkEntities)
        throws IOException {
     if (last == 0) last = in.read();
+    // if (last == lf) lineNumber++;
     while (last >= 0 && ! aBitSet.get(last)
 	   && !(checkEntities && last == entityStart)) {
       buf.append((char)last);
       last = in.read();
+      // if (last == lf) lineNumber++;
     } 
     return last >= 0;    
   }
@@ -317,6 +341,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
     int nextPosition = aString.indexOf(aCharacter, 1);
 
     if (last == 0) last = in.read();
+    // if (last == lf) lineNumber++;
     while (last >= 0 && !(checkEntities && last == entityStart)) {
 
       /* This could be faster, but it could be a lot slower, too.  We
@@ -366,6 +391,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 	}
       }
       last = in.read();
+      // if (last == lf) lineNumber++;
     } 
     return last >= 0;
   }
@@ -377,6 +403,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
     if (last == 0) last = in.read();
     if (last < 0) return false;
     while (last >= 0 && last <= ' ') {
+      // if (last == lf) lineNumber++;
       buf.append((char)last);
       last = in.read();
     }
@@ -452,13 +479,20 @@ public abstract class AbstractParser extends CursorStack implements Parser
     } if (insideElement(tag, caseFoldTagnames)) {
       // ... Yes, we're OK.  End the current element.
 	if (strictEndTags == true){
-	    getProcessor().message(-2, "Missing end tag </" + getTagName(depth-1) + "> inserted before </" + tag + ">", 0, true);	
+	    getProcessor().message(-2, (location() + "Missing end tag </"
+					+ getTagName(depth-1)
+					+ "> inserted before </" + tag + ">"),
+				   0, true);	
 	}
 	return 1;
     } else {
       // ... Bad nesting.  Change next to an appropriate comment.
-      next = createActiveNode(Node.COMMENT_NODE, "Badly nested end tag: /" + tag);
-      getProcessor().message(-2, "Badly nested end tag </" + getTagName(depth-1) + "> before </" + tag + ">", 0, true);
+      next = createActiveNode(Node.COMMENT_NODE,
+			      "Badly nested end tag: /" + tag);
+      getProcessor().message(-2, (location() + "Badly nested end tag </"
+				  + getTagName(depth-1) + "> before </"
+				  + tag + ">"),
+			     0, true);
       return -1;
     }
   }
