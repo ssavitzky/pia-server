@@ -13,35 +13,95 @@
   to existing sites than in rebuilding a site from scratch. 
 </blockquote>
 
+<dl>
+  <dt> <b>See also:</b>
+  </dt>
+  <dd> 
+       <dl>
+	 <dt> <a href="utility-tagsets.html">utility-tagsets</a>
+	 </dt>
+	 <dd> Proposals for tagsets that provide commonly-used, but not basic
+	      or universal, functions across a wide range of applications.
+	 </dd>
+	 <dt> <a href="web-wizards.html">web-wizards</a>
+	 </dt>
+	 <dd> Proposals for web applications that build web pages,
+	      configuration files, and other documents or collections of
+	      documents.
+	 </dd>
+       </dl>
+  </dd>
+</dl>
+
 <hr /><!-- ============================================================== -->
 <h2>Online Applications</h2>
 
 <blockquote>
+<p> This section makes no distinction between internet and intranet
+    applications (both are websites), but it is expected that the PIA in its
+    present implementation will primarily be useful in intranets.  Its use in
+    low-volume internet sites will be limited by the fact that most of these
+    are hosted, and few hosting services or ISP's provide Java.  The aggregate
+    of these online applications would essentially be an ``intranet-in-a-box''
+    for a small business. 
+</p>
 <p> Note that the easiest way to add a PIA-based application to an existing
     website is to use a <a
-    href="../../../src/java/org/risource/servlet">Servlet</a>.   This results
-    in the PIA being ``mounted'' as a subdirectory in the website's URL space.
+    href="../../../src/java/org/risource/servlet">Servlet</a>.  This results
+    in the PIA being ``mounted'' as a subdirectory in the website's URL
+    space.  A stand-alone PIA server could be used to provide an integrated
+    ``intranet-in-a-box.'' 
 </p>
 </blockquote>
 
 <h3>Discussion Forums</h3>
 
-<p> Many sites, e.g. <a href="http://slashdot.org/">Slashdot</a> and <a
-    href="">Linux Today</a> consist almost entirely of reader contributions.
-    In some cases the discussions may be mirrored from newsgroups or mailing
-    lists, using software like <a href="">hypermail</a>, but increasingly
-    these are stand-alone web applications.  A discussion forum can be
-    particularly useful in an intranet, where it can serve as a combination
-    bulletin board, suggestion box, and help desk.
+<p> Many sites, e.g. <a href="http://slashdot.org/">Slashdot</a>, <a
+    href="http://linuxtoday.com/">Linux Today</a>, and <a
+    href="http://www.advogato.org/">Advogato</a> consist almost entirely of
+    reader contributions.  In some cases the discussions may be mirrored from
+    newsgroups or mailing lists, using software like <a
+    href="http://www.hypermail.org/">hypermail</a>, but increasingly these are
+    stand-alone web applications.  A discussion forum can be particularly
+    useful in an intranet, where it can serve as a combination bulletin board,
+    suggestion box, and help desk.
+</p>
+
+<p> Discussion forum sites generally also have user accounts, usually enabling
+    other features.  For example, <a href="http://linuxtoday.com/">Linux
+    Today</a> shows a registered user which articles are new since their last
+    visit; <a href="http://www.advogato.org/">Advogato</a> includes a rating
+    system and includes user's diaries, and a list of projects.  (It's worth
+    noting that <a href="http://www.advogato.org/">Advogato</a> is written in
+    C as an Apache module (<code>mod_virgule</code>), and uses the Gnome XML
+    library to store documents as XML.)
 </p>
 
 <h3>Collaborative Authoring</h3>
 
 <p> Here I'm thinking of collaborative environments like the <a
-    href="">Wiki-Wiki</a> and <a href="">FAQ-O-Matic</a> servers, where an
-    entire collection of web pages is constructed collaboratively.  In an
-    intranet, this can be particularly useful as a way of capturing group
-    knowledge.
+    href="http://minnow.cc.gatech.edu/squeak.127">Wiki-Wiki</a> and <a
+    href="http://www.dartmouth.edu/~jonh/ff-serve/cache/1.html">FAQ-O-Matic</a>
+    servers, where an entire collection of web pages is constructed
+    collaboratively.  In an intranet, this can be particularly useful as a way
+    of capturing group knowledge.
+</p>
+
+<h3>Directories</h3>
+
+<p> The classic example here is <a href="yahoo.com">Yahoo</a>; perhaps a
+    better one is <a href="http://dmoz.org/">dmoz</a>, which is
+    collaboratively edited.  An internal directory of this sort would be a
+    useful addition to any company's intranet. 
+</p>
+
+<h3>Portals</h3>
+
+<p> Portals (both configurable sites like <a
+    href="http://my.netscape.com/">my.netscape.com</a> and news portals like
+    <a href="http://www.svlug.org/">svlug.org</a>) need to pull in information
+    from several different sources and present it on a single page, and so
+    require HTML processing, information extraction, and reformatting.
 </p>
 
 <h3>Calendars</h3>
@@ -52,6 +112,13 @@
     keeping track of appointments.  In particular, it could be used for
     organizing any chronological sequence of documents or events, including
     mail messages, forms, firewall logs, sales figures, and so on.
+</p>
+
+<h3>Home Pages</h3>
+
+<p> Any organization should have an <em>internal</em> home page for every
+    computer-using employee.  These pages should, for example, present
+    directory information, schedule, and so on in a standardized format.
 </p>
 
 <h3>Form Workflow</h3>
@@ -80,12 +147,54 @@
     order to produce a catalog a few times a year).  
 </p>
 
+<h3>Document Management</h3>
+
+<p> A web-based document management system would include:
+</p>
+
+<ul>
+  <li> hierarchical, search-based, and chronological views of the collection
+  </li>
+  <li> version control (e.g. based on CVS)
+  </li>
+  <li> locking and access control
+  </li>
+  <li> web-based or traditional application-based editing
+  </li>
+  <li> WebDAV support
+  </li>
+</ul>
+
 <hr /><!-- ============================================================== -->
 <h2>Offline Applications</h2>
 
-<h3>Formatting: Look and Feel</h3>
+<h3>Formatting: Simple Macro Expansion</h3>
 
-<h3>Formatting: Macro Expansion</h3>
+<p> One of the simpler (and hence most compelling) uses of the PIA is for
+    applying a uniform look and feel to web pages, using definitions for tags
+    like &lt;body&gt;, &lt;header&gt; and &lt;footer&gt;.  This can actually
+    be used online, too, but will have to wait for CPIA before it can easily
+    rival Apache's server-side includes. 
+</p>
+
+<p> Simple macro expansion is characterized by the use of &lt;define&gt; (for
+    both tags and entities) and &lt;include&gt;, but little if any use of
+    control structure.  Since it requires only simple replacement, it's
+    particularly easy for page authors to learn.  
+</p>
+
+<h3>Formatting: Advanced</h3>
+
+<p> More advanced formatting operations are exemplified by the slide and
+    table-of-contents tagsets.  Here the PIA starts to approach, and in some
+    cases exceed, the complexity and capabilities seen in, for example, LaTeX
+    and XSLT.  
+</p>
+
+<p> It can be expected that most advanced tagsets will be built by programmers
+    or advanced web designers (the latter probably using interactive
+    ``wizard-like'' (``web-wizard''?) tools when they become available).  
+</p>
 
 <h3>Document Indexers</h3>
 
@@ -126,7 +235,36 @@
 
 <h3>Personal Proxy</h3>
 
-<p> The original PIA application, of course, was as a personal web proxy.
+<p> The original PIA application, of course, was as a personal web proxy.  The
+    History and ad-buster agents are still useful.  Caching, password
+    management, and so on are still possible but harder. 
+</p>
+
+<h3>Personal Servers and the Distributed Intranet</h3>
+
+<p> If everyone in an organization has a personal server, it becomes possible
+    to distribute many of the traditional functions of an intranet.  For
+    example, personal home pages and document collections might be managed and
+    served from peoples' desktops.  This structure could cut down on
+    unrestricted sharing (i.e. via SMB and NFS), leading to an increase in
+    security.  Automatic mirroring and version control would take care of
+    backups.   
+</p>
+
+<p> This structure for an intranet takes advantage of the fact that disk space
+    and compute power are commodities now.  In a way it's the inverse of the
+    ``traditional'' file-server-centric structure: everyone's personal machine
+    becomes their own storage device, while the centralized server provides
+    only document-management services such as indexing, search, version
+    control, caching, and backup.
+</p>
+
+<p> Inverse proxying provides an good way of doing security: all requests for
+    <em>other people's documents</em> go through a centralized server, which
+    in turn proxies the request to the appropriate personal server using the
+    authentication information of the requestor.  This makes it unnecessary
+    for everyone to authenticate separately with everyone else's personal
+    server.
 </p>
 
 <h3>Configuration File Generators</h3>
@@ -140,14 +278,30 @@
     provides an easy means of building such tools.
 </p>
 
+<h3>Web Wizards</h3>
+
+<p> This covers a fairly wide range of wizard-like or template-like
+    applications for generating such things as tagsets, DTD's, XML Schemata,
+    web pages, and even whole web applications.  See <a
+    href="web-wizards.html"><code>web-wizards.html</code></a>.
+</p>
+
 
 <hr /><!-- ============================================================== -->
 <h2>Embedded Applications</h2>
 
+<h3>Configuration Servers</h3>
+
+<p> One thing that networked appliances always need is a web server for
+    managing their configuration.  This includes web server configuration,
+    file server configuration, configuration for specialized hardware, and so
+    on. 
+</p>
+
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: applications.html,v 1.1 2000-04-26 18:34:23 steve Exp $</b><br>
+<b>$Id: applications.html,v 1.2 2000-04-28 00:23:59 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

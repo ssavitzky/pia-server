@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Web Wizards: Documents that Build Documents</title>
+</head><body>
+<h1>Web Wizards: Documents that Build Documents</h1>
+
+<blockquote>
+  <p> A <em>web wizard</em> is a web page or web application (group of pages)
+      that is used to interactively construct or modify documents.  The PIA
+      is particularly well-adapted to this purpose because operations like
+      &lt;include&gt; and &lt;extract&gt; make it easy to manipulate
+      structured documents, and the ability to add specialized parsers means
+      that such manipulations are not necessarily restricted to XML
+      documents. 
+  </p>
+</blockquote>
+
+<hr />
+<h2>Document Management Framework</h2>
+
+<p> All of these tools would benefit from, indeed almost require, an overall
+    framework for document management.  This would be, essentially, a tree
+    browser that lets the user browse to a directory, select documents, and
+    apply tools to them.
+</p>
+
+
+<hr />
+<h2>Document Builders</h2>
+
+<p> In this category we have web wizards that build a document based on
+    information supplied by the user via a form.  The process will typically
+    involve a template or skeleton document, with entities filled in from the
+    form. 
+</p>
+
+<h3>PIA configuration builder</h3>
+
+<p> A web wizard that constructs the <code>_subsite.xcf</code> files,
+    <code>Makefile</code>s, <code>HEADER.html</code> files, and the like
+    needed for building and maintaining PIA-based applications. 
+</p>
+
+<h3>Web Page Builder</h3>
+
+<p> A web wizard that builds customized but uniform home pages and secondary
+    pages, for use in organizations (like CRC) that might want to give its
+    employees home pages, but wants their pages to at least start out with a
+    uniform look and feel.  An example of this kind of form can be seen at <a
+    href="http://www.advogato.org/acct/new.html">advogato.org</a>.
+</p>
+
+<p> This kind of application requires a very customizable template, since each
+    organization is going to want a different look and feel to their pages.
+    In the PIA project we could easily start with a version of this for the
+    Notes directory, and another for home pages under <a
+    href="RiSource.org">RiSource.org</a>.
+</p>
+
+<h3>Chrome Builder</h3>
+
+<p> This one would build the ``chrome'' for a customized Mozilla-based web
+    browser. 
+</p>
+
+<h3>Configuration File Builders</h3>
+
+<p> Many different kinds of configuration files (beyond the ones used in the
+    PIA) would benefit from a form-and-template kind of approach.  Note that
+    web-based tools already exist for some; these are noted in parentheses
+    below. 
+</p>
+
+<ul>
+  <li> <code>Makefile</code>s
+  </li>
+  <li> <code>ant</code> configuration files
+  </li>
+  <li> Apache configuration files (Comanche)
+  </li>
+  <li> Linux configuration files (Webmin)
+  </li>
+</ul>
+
+<hr />
+<h2>Document Editors</h2>
+
+<p> In this category we have web wizards that modify an existing document ``in
+    place.'' 
+</p>
+
+<h3>Web Page Editor</h3>
+
+<p> The simplest document editing wizard would be one that simply provides a
+    text area for the entire body, with separate text boxes for the title and
+    filename.  This is, of course, crude, but it might be useful in some
+    circumstances.  It's closely related to Wiki servers. 
+</p>
+
+<p> More complex versions would include controls for adding tags, and an
+    optional preview frame similar to the one in the <a
+    href="../../../Agents/Tutorial">Tutorial</a>.
+</p>
+
+<p> The difference between a web page editor and the page builder described in
+    the previous section is that the page <em>builder</em> uses a form and a
+    template, while the <em>editor</em> takes the page as-is and gives the
+    user complete control.
+</p>
+
+<h3>Table of Contents</h3>
+
+<p> The (existing) table of contents tagset (<a
+    href="../../../lib/toc.ts"><code>toc.ts</code></a>) updates a table of
+    contents in a document.  An associated wizard would make it easy to
+    <em>add</em> a TOC to a document.
+</p>
+
+
+<h3>Link Page Manager</h3>
+
+<p> A web wizard that constructs and edits pages full of links, in a couple of
+    different formats (for example: single-column, annotated list
+    (&lt;dl&gt;), tabular, ``quick-reference'', and so on.  The ``quick
+    reference'' format is exemplified by the following short extract from my
+    personal start-up page:
+</p>
+
+<blockquote>
+<dl>
+  <dt> <a href="#3" name="3">@</a> <a href="#3">^</a><!-- reference sites -->
+       <a href="http://www.javasoft.com/"><b>[Java]</b></a> 
+       <a href="http://www.javasoft.com/docs/">docs</a> (
+       <a href="http://www.javasoft.com/products/jdk/1.3/docs/">JDK 1.3</a>
+       <a href="http://www.javasoft.com/products/jdk/1.3/docs/api/packages.html">api</a>,
+       <a href="http://www.javasoft.com/products/jdk/1.2/docs/">JDK 1.2</a>
+       <a href="http://www.javasoft.com/products/jdk/1.2/docs/api/packages.html">api</a>,
+       <a href="http://www.javasoft.com/products/jdk/1.1/docs/">JDK 1.1</a>
+       <a href="http://www.javasoft.com/products/jdk/1.1/docs/api/packages.html">api</a>,
+       <a href="http://www.javasoft.com/products/jdk/1.0.2/">JDK 1.0.2</a>
+       <a href="http://www.javasoft.com/products/jdk/1.0.2/api/">api</a>,
+       <a href="http://www.javasoft.com/docs/books/jls/">Spec</a>
+       )
+  <dd> ...
+       <a href="http://java.sun.com/products/OV_stdExt.html">Optional</a> (
+       <a href="http://java.sun.com/products/servlet/index.html">servlet</a>
+       <a href="http://java.sun.com/products/servlet/2.2/javadoc/overview-summary.html">(API)</a>
+       <a href="http://java.sun.com/products/java-media/3D/index.html">3d</a>
+       )
+       <a href="http://www.gamelan.com/"><b>/Gamelan/</b></a>
+
+  <dt> <a href="#4" name="4">@</a> <a href="#3">^</a>
+       <a href="http://www.w3.org"><b>[W3C]</b></a>
+       <a href="http://www.w3.org/TR/">TR's</a> (
+       <a href="http://www.w3.org/DOM/">DOM</a>
+       <a href="http://www.w3.org/TR/REC-DOM-Level-1">rec</a>
+       <a href="http://www.w3.org/XML/">XML</a>
+       <a href="http://www.w3.org/TR/REC-rdf-syntax/">RDF</a>
+       <a href="http://www.w3.org/TR/REC-html40/">HTML4</a> )
+       <a href="http://werbach.com/barebones/barebone.html">tags</a>
+       <a href="http://home.flash.net/~drj2142/rgb.html">colors</a>
+       <a href="http://www.fmi.uni-passau.de/~ramsch/iso8859-1.html">chars</a>
+       <br>
+  <dd> <a href="http://dmoz.org/Computers/Programming/Internet/">Open Dir:</a> (
+       <a href="http://dmoz.org/Computers/Programming/Internet/W3C_DOM/">DOM</a>
+       <a href="http://dmoz.org/Computers/Data_Formats/Markup_Languages/XML/">XML</a>
+       <a href="http://dmoz.org/Computers/Programming/Internet/Server_Side_Scripting/">server scripting</a>
+       )
+	 <dd> <a href="http://apache.org/"><b>[Apache]</b></a>(
+	      <a href="http://apache.org/docs/">docs</a>)
+	      <a href="http://www.ics.uci.edu/pub/ietf/webdav/">[WebDAV]</a>(
+	      <a href="http://www.webdav.org/">[.org]</a>)
+	 <dd> <a href='http://www.oasis-open.org/cover/'><b>/SGML/</b></a>
+	      <a href="http://www.jclark.com/sp/index.htm">[SP]</a>
+	      <a href="http://www.jclark.com/xml/xp/">[XP]</a>
+	      <a href="http://www.sgmltools.org/">[-tools]</a>
+	      <a href="http://www.us.sgmltools.org/">[us]</a>
+	      <a href='http://www.infotek.no/sgmltool/guide.htm'>/guide/</a>
+	      <a href="http://www.megginson.com/SAX/">[SAX]</a>
+</dl>
+</blockquote>
+
+
+<hr />
+<h2>Document Manipulators</h2>
+
+<p> In this category we have web wizards that substantially transform or
+    otherwise manipulate a document. 
+</p>
+
+<h3>Format Translators</h3>
+
+<h3>Indexers</h3>
+
+<p> An indexer takes a document or collection of documents and prepares an
+    index for use in a search engine or document browser.  For example, the
+    indices used in the PIA's <a href="../../../all-dirs.html">directory
+    index</a> and <a href="../../../frames.html">tree browser</a>.
+</p>
+
+
+<hr />
+<h2>Template Builders</h2>
+
+<p> In this category we have web wizards that <em>build a template</em> and
+    its associated Web Wizard that, in turn, can be used to build documents.
+</p>
+
+<hr />
+<h2>Metaprogramming</h2>
+
+<p> In this category we have web wizards that output active XXML code.  In its
+    simplest form, this would just be an extension of a Page Editor with an
+    extra set of buttons for adding DPS tags.  That's less interesting than,
+    for example, a tagset builder.
+</p>
+
+
+<h3>Tagset Builder</h3>
+
+<p> The simplest form of metaprogramming wizard would be a tagset builder:
+    basically a page builder with templates for &lt;define&gt; tags and the
+    other things that go into a tagset. 
+</p>
+
+<p> A more advanced form would allow different tag definitions, for example
+    for decorations, to be included in order to customize the look and feel of
+    the pages to which the tagset is going to be applied. 
+</p>
+
+<h3>Form Builders</h3>
+
+<p> This category includes "builders" for simple forms, spreadsheets,
+    worksheets, and calendars.  The amount of ``programming'' permitted would
+    be rather limited in most cases. 
+</p>
+
+<h3>Script Builders</h3>
+
+<p> The output language of a metaprogramming wizard is not confined to the
+    PIA's version of XML.  It would be possible to build scripts in a variety
+    of languages, including JavaScript and XUL, and in fact even Java and
+    C++. 
+</p>
+
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: web-wizards.html,v 1.1 2000-04-28 00:24:00 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
