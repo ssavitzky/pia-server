@@ -1,5 +1,5 @@
 // Generic.java
-// $Id: Generic.java,v 1.1 1999-09-22 00:23:15 steve Exp $
+// $Id: Generic.java,v 1.2 1999-09-24 00:26:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -214,6 +214,9 @@ public class Generic extends TreeElement
     if (s != null) agentName = s;
     s = getAttribute("criteria");
     if (s != null) criteria = new Criteria(s);
+
+    // Add a few necessary things to the attributes:
+    setAttribute("path", agentHome.getPath()); 
 
     // Look for <intialize> and <action> elements.
     // <action> can be omitted, though it may be dangerous to do so.
