@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.6 2000-08-10 17:31:02 steve Exp $
+#	$Id: woad-index.pl,v 1.7 2000-08-23 00:03:04 steve Exp $
 # Create WOAD index files.
 #
 
@@ -12,7 +12,7 @@ sub usage {
     print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "	-v		Print version string and exit\n";
     print "  parameters: \n";
-    print "	sources=<dir>	source root\n";
+    print "	source=<dir>	source root\n";
     print "	root=<dir>	annotation root (same as -root <dir>)\n";
     print "	offset=<path>	document offset from root\n";
     print "	project=<name>	project identifier\n";
@@ -21,7 +21,7 @@ sub usage {
 
 ### Parameters: 
 
-$sources 	= "";
+$source 	= "";
 $offset 	= "";
 $root 		= "$ENV{HOME}/.woad";
 $recursive 	= 1 ;
@@ -32,10 +32,18 @@ $sourceSuffix	= ".notes";
 $wordPrefix	= ".words";
 $words		= "/$wordPrefix";
 
-$prune		= '[0-9]+';	         # pattern for directories to prune
-$ids		= '[-_0-9A-Za-z]';       # start chars for XML identifiers
-$idc		= '[-.:_0-9A-Za-z]';     # interior chars for XML identifiers
-$id		= "$ids($idc*$ids)?";    # pattern for XML identifiers
+$prune		= '[0-9]+';	        # pattern for directories to prune
+$xids		= '[-_0-9A-Za-z]';      # start chars for XML identifiers
+$xidc		= '[-.:_0-9A-Za-z]';    # interior chars for XML identifiers
+$xid		= "($xids($xidc*$xids)?)";	# pattern for XML identifiers
+$ids		= '[_A-Za-z]';		# start chars for C identifiers
+$idc		= '[._0-9A-Za-z]';     # interior chars for C identifiers
+$id		= "($ids($idc*$ids)?)"; # pattern for C identifiers
+
+### Global state:
+
+@roots		= ();		# absolute paths of root directories
+				# ( used for link circularity checking )
 
 ### Filename and extension classifiers:
 #	Each maps the extension or name onto a type description.
@@ -97,19 +105,19 @@ $id		= "$ids($idc*$ids)?";    # pattern for XML identifiers
 
 %binFileExt	= ( "class"	=> "java class",
 		    "o"		=> "object code (Unix)",
-		    "obj"	=> "object (DOS)",
+		    "obj"	=> "object code (DOS)",
 		    "exe"	=> "executable (DOS)",
 		    "com"	=> "executable (DOS)",
 		    "dvi"	=> "TeX DeVice Independent",
 		);
 
-%archiveFileExt	= ( "tar"	=> "tar",
-		    "zip"	=> "zip",
-		    "gz"	=> "gzip",
-		    "tgz"	=> "gzipped tar",
-		    "tar.gz"	=> "gzipped tar",
+%archiveFileExt	= ( "tar"	=> "tar archive",
+		    "zip"	=> "zip archive",
+		    "gz"	=> "gzip compressed file",
+		    "tgz"	=> "gzipped tar archive",
+		    "tar.gz"	=> "gzipped tar archive",
 		    "jar"	=> "Java archive",
-		    "ar"	=> "library (Unix)",
+		    "a" 	=> "library (Unix)",
 		    "so"	=> "shared object (Unix)",
 		    "dll"	=> "dynamic link lib (DOS)",
 		);
@@ -192,8 +200,10 @@ for ($i = 0; $i < @ARGV; ++$i) {
     } elsif ($arg =~ /^-/) {
 	usage();
 	exit(1);
-    } elsif ($arg =~ /^sources\=(\S+)/) { # Handle parameters
-	$sources = $1;
+    } elsif ($arg =~ /^source\=(\S+)/) { # Handle parameters
+	$source = $1;
+    } elsif ($arg =~ /^prefix\=(\S*)/) { # \S* because prefix might be null
+	$sourcePrefix = $1;
     } elsif ($arg =~ /^offset\=(\S+)/) {
 	$offset = $1;
     } elsif ($arg =~ /^project\=(\S+)/) {
@@ -205,14 +215,14 @@ for ($i = 0; $i < @ARGV; ++$i) {
     } elsif ($arg =~ /\=/) {
 	print STDERR "Unrecognized parameter $arg ignored\n";
     } else {				# handle file
-	if ($sources ne "") { die "$0 can only index one source root\n"; }
-	$sources = $arg;
+	if ($source ne "") { die "$0 can only index one source root\n"; }
+	$source = $arg;
     }
 
 }
 
-if ($sources eq "")	{ die "No sources directory specified."; }
-if (! -d $sources) 	{ die "Sources must be a directory."; }
+if ($source eq "")	{ die "No source directory specified."; }
+if (! -d $source) 	{ die "Source must be a directory."; }
 
 if ($project ne "" && $project !~ /^\//) {
     $project = "/" . $project;
@@ -220,16 +230,21 @@ if ($project ne "" && $project !~ /^\//) {
 
 $rec = $recursive? "/..." : "";
 
-print STDERR "indexing $sources$rec -> $root$project \n";
+$roots[0] = getRealDirPath($source);
 
+print STDERR "indexing $source$rec -> $root$project \n";
+print STDERR "    abs: " . $roots[0] . "\n";
 
 ###### Do the Work ######################################################
 
 open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
-indexDir($sources, "/");
+indexDir($source, "/");
 close (PATHINDEX);
 
 globalIndices();
+
+print STDERR "roots: @roots \n";
+
 exit(0);
 
 
@@ -297,13 +312,14 @@ sub indexFile {
 
     $f =~ /\.([^.]*)$/;		# extract extension.  
     my $ext = $1;
+    my $basename = $f; 
+    $basename =~ s/\.([^.]*)$//;
 
-    my $absPath = "$sources$path/$f";
+    my $absPath = "$source$path/$f";
     $absPath =~ s@//@/@g;
 
     my $woadPath = "$path/$f";
     $woadPath =~ s@//@/@g;
-
 
     my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
 	$mtime, $ctime, $blksiz, $blks) = stat $absPath;
@@ -321,6 +337,23 @@ sub indexFile {
 	    if (-f "$woadPath/dirIndex.wi") {
 		unlink("$woadPath/dirIndex.wi");
 		print STDERR "removed dirIndex.wi in pruned $woadPath";
+	    }
+	}
+	if (-l $absPath) {	# if this is a symbolic link...
+	    # check: is the real path underneath a known source root?
+	    #        if not, we follow the link, and add it to the list
+	    #        of known source roots (for more circularity checking)
+	    my $realPath = getRealDirPath($absPath);
+
+	    $tdscr = "symlink to directory $realPath";
+	    $indexme = 1;
+	    for (my $i = 0; $i < @roots; ++$i) {
+		if ($realPath =~ /^$roots[$i]/) { $indexme = 0; last; }
+	    }
+	    if ($indexme) {
+		push(@roots, $realPath);
+	    } else {
+		$tdscr = "CIRCULAR " . $tdscr;
 	    }
 	}
 	if (! $tdscr) {
@@ -366,12 +399,23 @@ sub indexFile {
 	    $type = "unknown";	# could actually call `file` here.
 	    $ftype = `file -b $absPath`;
 	    $entry{"dscr"} = "(?) $ftype";
+
+	    # === At this point we can decide whether to index as text or code
 	}
     }
 
     # add type and type description to entry
     $entry{"type"} = $type;
     if ($tdscr ne '') { $entry{"tdscr"} = $tdscr; }
+
+    # instead of $tdscr in indices, use complete dscription if available.
+    my $dscr = ($tdscr ne '')? $tdscr : $entry{"dscr"};
+
+    indexDef($basename, 'file', $woadPath, 0, '', $dscr);
+
+    # === indexDef is wrong: it wordifies the path, which loses.
+    # === There's no reason to have a path index here anyway; it's in .source
+    # indexDef($woadPath, 'path', $woadPath, 0, '', $dscr);
 
     # Insert entry into file index table.  We may possibly be needing it.
     $pathIndex{$absPath} = \%entry;
@@ -401,26 +445,43 @@ sub indexMarkupFile {
     my $line  = 0;
     my $element = '';
 
+    my $txt = '';		# text of a line + continuations
+    my $start = 0;		# start of a multi-line construct
+
     my $path = $$entry{"path"};
 
     open (FILE, $pf);
     while (<FILE>) {
 	++$line;
 	# This really ought to use an HTML/XML parser.  Punt for now.
+	# === worry about documents with multiple <title> elements. ===
 	if ($title eq '' && /\<title\>(.*)\<\/title\>/i) { 
-	    $title = $1;
+	    $title = compactify($1);
+	    indexDef($title, 'title', $path, $line, '', $title);
 	} elsif ($title eq '' && /\<title\>(.*)$/i) { 
 	    # === _really_ want a parser here -- this is a kludge.
+	    $txt = $_;
+	    $start = $line;
+	    while (<FILE>) {
+		$txt .= $_;
+		++$line;
+		last if (/\<\/title\>/i);
+	    }
+	    $txt =~ /\<title\>(.*)\<\/title\>/is;
 	    $title = $1;
-	} elsif ($title eq '' && /\<tagset.+name=["']($id)['"]/) {
+	    indexDef($title, 'title', $path, $start, '', $title);
+	} elsif ($title eq '' && /\<tagset.+name=["']($xid)['"]/) {
 	    $title = "Tagset \"$1\"";
+	    indexDef($1, 'tagset', $path, $line, $1, $_);
 	}
-	if (/\<define\s+element=["']($id)['"]/) {
-	    indexDef($1, 'tags', $path, $line, "$1", $_);
+	if (/\<define\s+element=["']($xid)['"]/) {
+	    indexDef($1, 'tag', $path, $line, "$1", $_);
 	    $element = "$1";
-	} elsif (/\<define\s+attribute=["']($id)['"]/) {
-	    indexDef($1, 'tags', $path, $line, "$element.$1", $_);
+	} elsif (/\<define\s+attribute=["']($xid)['"]/) {
+	    indexDef($1, 'tag', $path, $line, "$element.$1", $_);
 	}
+
+	# === ought to be able to identify javadoc/tsdoc documentation ===
     }
     close FILE;
 
@@ -429,15 +490,59 @@ sub indexMarkupFile {
 
 sub indexTextFile {
     my ($pf, $entry) = (@_);
+    my $path = $$entry{"path"};
+
+    my $title = '';
+    my $line  = 0;
     
 }
 
 sub indexCodeFile {
     my ($pf, $entry) = (@_);
+    my $path = $$entry{"path"};
+
+    my $title = '';
+    my $line  = 0;
 
     open (FILE, $pf);
     while (<FILE>) {
-    
+	++$line;
+
+	# The following is a very sorry excuse for parsing -- note that
+	# we don't know what the programming language is at this point.
+	# Amazingly enough, we don't really care!  This "parse" is loose
+	# enough to catch the majority of interesting cases.
+	
+	if (/^\s*\/\/|^\s*\#|^\s*\/\*.+\*\/\s+$/) { # C/Perl comment
+	    # Only skip comment if it occupies the entire line.
+	} elsif (/\s+sub $id/) {	# PERL function
+	    indexDef($1, 'func', $path, $line, $1, $_);
+	} elsif (/^\s*($id\s+)class\s+$id\s*\(/) { # C++/Java class decl.
+	    indexDef($1, 'class', $path, $line, "$1", $_);
+	} elsif (/$id\s*\(/) {	# possible C/C++/Java function decl.
+	    # may not eliminate uninitialized function-valued variables
+	    my $def = $1;
+	    if (/^\s*($id[*&+:\s]+)+\(\s*\*\s*$id\s*\)\s*\(/) {
+		/\(\s*\*\s*($id)\s*\)/;	# We just matched (*fptr)(...)
+		$def = $1;		# so ID being defined is "fptr"
+		if (! /\)\s*[=]/) {     # reject initialized variables
+		    indexDef($def, 'func', $path, $line, $def, $_);
+		}
+	    } elsif ($def =~ /^(if|for|else|elsif|while|until|void)$/) {
+		# certain keywords can be followed by "("
+	    } elsif (/^\s*(case|else|return)/) {
+		# some other keywords can be followed by "$id ("
+	    } elsif (/^\s*($id[*&+:\s]+)+$id\s*\(/) {
+		# Ought to be in class or top level, but it seems
+		# amazingly reliable nevertheless.
+
+		# === drag in the rest of the arglist if multi-line ===
+		# === hard because there may be nested parens. ===
+		indexDef($def, 'func', $path, $line, $def, $_);
+	    }
+	} elsif (/\#define\s+$id/) { # CPP macro definition (#define)
+	    indexDef($1, 'macro', $path, $line, $1, $_);
+	}
     }
     close FILE;
 }
@@ -451,7 +556,14 @@ sub indexCodeFile {
 sub indexDef {
     my ($word, $context, $path, $line, $name, $def) = (@_);
     $def = stringify($def);
+    $ident= wordify($word);
+    $word = compactify($word);
+
+    # We have to distinguish the original word from the wordified XML id,
+    # but only waste the space (word=, id=) if they're different.
+
     my $entry = "<Def word='$word' path='$path' line='$line' "
+	      . (($ident eq $word)? '' : "id='$ident' ")
 	      . "name='$name'>$def</Def>\n";
     $defs{$context} .= $entry;
     # === Append to $context/$word/defs.wi as well ===
@@ -488,6 +600,9 @@ sub indexUse {
 sub globalIndices {
     my ($context);
 
+    # === LOSES HUGELY if there are newlines in entries! ===
+
+    mkdir ("$root$project$words", 0777);
     for (my @keys = sort(keys(%defs)), my $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
@@ -521,21 +636,76 @@ sub globalIndices {
 
 ###### Utilities ########################################################
 
+### getRealDirPath(path)
+#	Return the real, absolute path to the given directory.
+#
+sub getRealDirPath {
+    my ($d) = (@_);
+    my $p = `cd $d; /bin/pwd`;
+    $p =~ /(.*)$/;
+    return $1;
+}
+
+### compactify(string)
+#	Trim excess spaces and trailing periods from "string"
+#
+sub compactify {
+    my ($s) = (@_);
+    $s =~ s/^\s*//;		# remove leading spaces
+    $s =~ s/\s*$//;		# remove trailing spaces
+    $s =~ s/\.+$//;		# remove trailing periods
+    $s =~ s/\s+/ /g;		# squash multiple spaces
+
+    return($s);
+}
+
+### wordify(string)
+#	Turn an arbitrary phrase "string" into a WOAD-indexable ``word''
+#
+sub wordify {
+    my ($s) = (@_);
+    $s =~ s/^\s*//s;		# remove leading spaces
+    $s =~ s/\s*$//s;		# remove trailing spaces
+    $s =~ s/\.+$//s;		# remove trailing periods
+    $s =~ s/\&/ and /gs;	# & -> and
+    $s =~ s/\@/ at /gs;		# @ => at
+    $s =~ s/\%/ percent /gs;	# % => percent
+    $s =~ s/\s+/ /gs;		# squash multiple spaces
+    $s =~ s/[^A-Za-z0-9.-]/_/gs;	# non-letters -> _
+
+    return($s);
+}
+
+### caseSep(string)
+#	Eliminate spaces or underscores between letters of different case.
+#	toProduce_aPhraseLikeThis.
+#
+sub caseSep {
+    my ($s) = (@_);
+
+    $s =~ s/\s+/ /gs;			# squash multiple spaces
+    $s =~ s/[^A-Za-z0-9.-]/_/gs;	# non-letters -> _
+    $s =~ s/([a-z])\_([A-Z])/$1$2/gs;
+    $s =~ s/([A-Z])\_([a-z])/$1$2/gs;
+
+    return($s);
+}
+
 ### stringify(string)
 #	entity-encode "string"
 #
 sub stringify {
     my ($s) = (@_);
-    $s =~ s/^\s*//;
-    $s =~ s/\s*$//;
-    $s =~ s/\&/\&amp\;/g;
-    $s =~ s/\</\&lt\;/g;
-    $s =~ s/\>/\&gt\;/g;
+    $s =~ s/^\s*//s;
+    $s =~ s/\s*$//s;
+    $s =~ s/\&/\&amp\;/gs;
+    $s =~ s/\</\&lt\;/gs;
+    $s =~ s/\>/\&gt\;/gs;
 
     return($s);
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.6 2000-08-10 17:31:02 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.7 2000-08-23 00:03:04 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 
