@@ -1,5 +1,5 @@
 <!doctype tagset system "tagset.dtd">
-<!-- ---------------------------------------------------------------------- -->
+<!-- ====================================================================== -->
 <!-- The contents of this file are subject to the Ricoh Source Code Public  -->
 <!-- License Version 1.0 (the "License"); you may not use this file except  -->
 <!-- in compliance with the License.  You may obtain a copy of the License  -->
@@ -15,7 +15,7 @@
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rsv.ricoh.com                                    -->
-<!-- ---------------------------------------------------------------------- -->
+<!-- ====================================================================== -->
 
 <tagset name="tsdoc" parent="HTML" tagset="xhtml">
 
@@ -68,9 +68,15 @@
          <if><test match="[()]">&li;</test><else> &li; </else></if>
        </repeat>
   </dd>
+  <dt> <b><a href="&DOC:name;?code=y">[view code]</a></b>
+  </dt>
+  <dd> The link above will show the contents of &lt;action&gt; and
+       &lt;value&gt; elements if they exist.  The original formatting may not
+       be preserved precisely.
+  </dd>
 </dl>
 
-      <get name="content"><font color="red">This tagset is empty</font></get>
+      <get name="content"><font color="red">This tagset is empty!</font></get>
       <h2>&lt;/tagset&gt;</h2>
     </body></html>
   </action>
@@ -202,6 +208,6 @@
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: tsdoc.ts,v 1.3 2000-03-14 17:18:02 steve Exp $</b><br>
+<b>$Id: tsdoc.ts,v 1.4 2000-03-22 17:33:47 steve Exp $</b><br>
 </tagset>
 
