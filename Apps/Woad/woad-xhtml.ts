@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.5 2000-06-09 00:00:31 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.6 2000-06-09 18:03:27 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -156,24 +156,34 @@ Note that we only need these inside the PIA.
 	<let name="prefix"><get name="SITE:targetPrefix"/></let>
 	<let name="offset"><get name="SITE:sourceOffset"/></let>
 	<let name="path"><get name="content"/></let>
+	<if>&prefix;
+	    <then><if><test match="^&prefix;">&path;</test>
+		      <then><let name="path">
+				  <subst match="^&prefix;" 
+				         result="">&path;</subst>
+			    </let>
+		      </then>
+		  </if>
+	    </then>
+	</if>
 	<if>&offset;
 	    <then><if><test match="^&offset;">&path;</test>
-			  <then><let name="path">
+		      <then><let name="path">
 				  <subst match="^&offset;" 
 				         result="">&path;</subst>
-				</let>
-			  </then>
-			  <else><let name="server"></let>
-				<let name="prefix"></let>
-				<let name="path"></let>
-			  </else>
-		      </if>
-		</then>
+			    </let>
+		      </then>
+		      <else><let name="server"></let>
+			    <let name="prefix"></let>
+			    <let name="path"></let>
+		      </else>
+		  </if>
+	    </then>
 	</if>
      </hide><if><get name="server"/>
-	      <then>http://&server;&prefix;&path;</then>
+	      <then>http://&server;&path;</then>
 	    <else-if>&prefix;&offset;
-	      <then>&prefix;&path;</then></else-if>
+	      <then>&path;</then></else-if>
   </if></action>
 </define>
 
