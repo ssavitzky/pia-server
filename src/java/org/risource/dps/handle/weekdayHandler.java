@@ -1,5 +1,5 @@
 ////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.3 1999-10-08 16:16:19 steve Exp $
+//	$Id: weekdayHandler.java,v 1.4 1999-10-08 17:29:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally by
  *	Abraham Savitzky.
  *
- * @version $Id: weekdayHandler.java,v 1.3 1999-10-08 16:16:19 steve Exp $
+ * @version $Id: weekdayHandler.java,v 1.4 1999-10-08 17:29:41 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -165,16 +165,15 @@ public class weekdayHandler extends GenericHandler {
     }
     
     // create the calendar, either by date/month/year or unixdate
-    Calendar theDay = Calendar.getInstance();
-    theDay.clear();
-    theDay.set(year, month, date);
+    Calendar theDay = new GregorianCalendar(year, month, date);
     if (unixdate >= 0){
 	Date theTime = new Date( unixdate*1000 ); //unix gets seconds, not msec
-	theDay.clear();
-	theDay.setTime( theTime );
+	theDay = new GregorianCalendar( );
+	theDay.setTime(theTime);
 	month = theDay.get(Calendar.MONTH);
 	date = theDay.get(Calendar.DAY_OF_MONTH);
 	year = theDay.get(Calendar.YEAR);
+	//System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
     }
 
     // Calendar in 1.1.3 is totally broken -- there is no way to recompute the 
@@ -201,6 +200,7 @@ public class weekdayHandler extends GenericHandler {
     List dayNames = List.split("Sunday Monday Tuesday Wednesday"
 				    + " Thursday Friday Saturday");
     long longDay = theDay.getTime().getTime() / 86400000;
+    //    System.out.println(" " + longDay + "=" + year + "/" + month + "/" + date);
 
     String wkday = (String)dayNames.at( wday );
     // done with compuatation
