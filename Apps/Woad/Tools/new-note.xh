@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Create New Note</title>
+</head><body bgcolor="#99ccff">
+<set name="ltitle"><font face="Helvetica, sans-serif">WOAD</font>:</set>
+<header>Create new note</header>
+<hr />
+
+<form>
+<table cellpadding="0" border="0">
+  <tr>
+    <th bgcolor="#cccccc" width="50" align="left"> Path: </th>
+    <td bgcolor="#ffffff" width="300"> <get name="FORM:path"/>
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="#cccccc" width="100" align="left"> label: </th>
+    <td bgcolor="#ffffff">&nbsp;
+        <if> <test match="other"><get name="FORM:label"/></test>
+    	     <then><input name="label"/></then>
+    	     <else><get name="FORM:label"/></else>
+	</if>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#ffffff">
+    	 <set name="nosuffix"><get name="FORM:nosuffix"/></set>
+    	 <if> &nosuffix;
+              <then><input type="checkbox" checked="yes" name="nosuffix"/>
+    	      </then>
+              <else><input type="checkbox" name="nosuffix"/></else>
+         </if>
+    </td>
+    <th bgcolor="#cccccc" align="left"> no numeric suffix
+    </th>
+</table>
+
+<dl>
+  <dt> <b>Note:</b>
+  </dt>
+  <dd> A note's file name is its <code>label</code>, followed by an integer
+       suffix to distinguish it from other notes with the same label.  Adding
+       the suffix can be suppressed using the ``no numeric suffix'' checkbox.
+  </dd>
+</dl>
+
+<hr />
+
+<table cellpadding="0" border="0">
+  <tr>
+    <th bgcolor="#ffffff">
+        <input type="submit" name="create" value="create"/>
+    </th>
+    <td valign="top"> Click here to create the note.
+        <br /> Go ``back'' in your browser if you really didn't mean
+	          it. 
+    </td>
+  </tr>
+</table>
+
+
+<hr /><!-- ==================== create the form ====================== -->
+
+<doc> The following is an egregious hack:  Include a template note,
+      <em>sans</em> the enclosing <code>&lt;note&gt;</code> element, and
+      expand it with <code>FORM:edit</code> set.  Disgusting, no?  Yes.
+</doc>
+
+<if> <get name="FORM:create" />
+     <then>
+     </then>
+     <else>
+	<set name="FORM:edit">yes</set>
+	<input name="path" value="&FORM:path;" />
+	<expand tagset="/.Woad/woad-web">
+	  <include quoted src="note-template.xml" tagset="/.Woad/woad-web" />
+	</expand>
+     </else>
+</if>
+
+
+
+</form>
+
+
+<p>
+<short-footer cvsid="$Id: new-note.xh,v 1.1 2000-06-28 01:50:04 steve Exp $" />
+</p></body></html>

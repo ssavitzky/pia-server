@@ -145,7 +145,8 @@
   </action>
 </define>
 
-<form action="/.Woad/woad-note" method="post">
+<form action="/.Woad/Tools/new-note"
+      method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;" />
 <table bgcolor="white">
   <tr> <th bgcolor="#cccccc" width="150"> label </th>
@@ -180,7 +181,8 @@
     	    click to create note </th>
   </tr>
   <tr> <td>
-    	  <select> <option selected="selected">(other)</option>
+    	  <select name="label"> 
+	       	   <option selected="selected">(other)</option>
 	       	   <option>bug</option>
 	       	   <option>note</option>
 	       	   <option>suggestion</option>
@@ -428,5 +430,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.10 2000-06-27 18:37:51 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.11 2000-06-28 01:49:22 steve Exp $" />
 </body></html>
