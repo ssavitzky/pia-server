@@ -1,5 +1,5 @@
 ////// MathUtil.java: Mathematical Utilities
-//	$Id: MathUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+//	$Id: MathUtil.java,v 1.5 1999-11-15 18:56:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
  *	A list is normally handled as an Enumeration, and a number as
  *	an Association between a Node and its value.
  *
- * @version $Id: MathUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: MathUtil.java,v 1.5 1999-11-15 18:56:47 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.ds.Association
@@ -145,7 +145,9 @@ public class MathUtil {
   ** Output Conversion:
   ************************************************************************/
 
-  /** return the string representation with digits after the .*/
+  /** Return the string representation of a floating-point number, 
+   *	with digits after the decimal point.
+   */
   public static String numberToString(double number, int digits)
   {
    if(digits < 0) return  java.lang.Double.toString(number);
@@ -175,6 +177,12 @@ public class MathUtil {
 
 
 
+  /** Return the string representation of a long integer with a given base .*/
+  public static String numberToString(long number, int base)
+  {
+    if (base <= 0) return Long.toString(number);
+    else return Long.toString(number, base);
+  }
   
 
   /************************************************************************

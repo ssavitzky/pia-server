@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.8 1999-11-09 23:18:04 steve Exp $
+//	$Id: numericHandler.java,v 1.9 1999-11-15 18:56:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.8 1999-11-09 23:18:04 steve Exp $
+ * @version $Id: numericHandler.java,v 1.9 1999-11-15 18:56:38 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -53,10 +53,30 @@ public class numericHandler extends GenericHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  /** Action for &lt;numeric&gt; node. */
+  /** Action for &lt;numeric&gt; node.  Default is just output the numbers. */
   public void action(Input in, Context cxt, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
-    // Actually do the work. 
+    Enumeration args = MathUtil.getNumbers(content);
+    double fresult = 0;
+    long   iresult = 0;
+    int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
+    long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
+
+    Association a;
+    while (args.hasMoreElements()) {
+      boolean intOp  = true;
+      a = (Association)args.nextElement();
+      if (!integerOp && ! a.isIntegral()) intOp = false;
+      if (intOp) {
+	iresult = a.longValue();
+	if (modulus != 0) iresult %= modulus;
+	putText(out, cxt, MathUtil.numberToString(iresult, base));
+      } else {
+	fresult = a.doubleValue();
+	putText(out, cxt, MathUtil.numberToString(fresult, precision));
+      }
+    }
   }
 
   /** This does the parse-time dispatching. */
@@ -114,6 +134,7 @@ class numeric_sum extends numericHandler {
     boolean intOp  = true;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     while (args.hasMoreElements()) {
@@ -126,7 +147,7 @@ class numeric_sum extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
@@ -144,6 +165,7 @@ class numeric_difference extends numericHandler {
     boolean intOp  = true;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     if (args.hasMoreElements()) {
@@ -165,7 +187,7 @@ class numeric_difference extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
@@ -183,6 +205,7 @@ class numeric_product extends numericHandler {
     boolean intOp  = true;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     while (args.hasMoreElements()) {
@@ -195,7 +218,7 @@ class numeric_product extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
@@ -213,6 +236,7 @@ class numeric_quotient extends numericHandler {
     boolean intOp  = integerOp;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     if (args.hasMoreElements()) {
@@ -234,7 +258,7 @@ class numeric_quotient extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
@@ -253,6 +277,7 @@ class numeric_power extends numericHandler {
     boolean intOp  = true;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     if (args.hasMoreElements()) {
@@ -274,7 +299,7 @@ class numeric_power extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
@@ -293,6 +318,7 @@ class numeric_remainder extends numericHandler {
     boolean intOp  = true;
     int precision = (digits < 0)? MathUtil.getInt(atts, "digits", -1): digits;
     long modulus  =  MathUtil.getLong(atts, "modulus", 0);
+    int base	  =  MathUtil.getInt(atts, "base", -1);
 
     Association a;
     if (args.hasMoreElements()) {
@@ -314,7 +340,7 @@ class numeric_remainder extends numericHandler {
       }
     }
     if (intOp) {
-      putText(out, cxt, "" + iresult);
+      putText(out, cxt, MathUtil.numberToString(iresult, base));
     } else {
       putText(out, cxt, MathUtil.numberToString(fresult, precision));
     }
