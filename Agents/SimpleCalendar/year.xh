@@ -1,0 +1,148 @@
+<html>
+<hide> <?-- first create zero-stripped month and day for display --?>
+       <?-- get default date as today --?>
+       <if><?-- check if form called this page  --?>
+           <get name="FORM:newYear" /> 
+	   <then>
+              <?-- get date submitted by form, overwriting above values --?>
+	      <set name="myYear"  >&FORM:newYear;</set>
+	      <set name="myMonth"  >&FORM:newMonth;</set>
+	   </then>
+	   <else>
+	      <set name="myYear" >&year;</set>
+	      <set name="myMonth" ><numstrip>&month;</numstrip></set>
+	   </else>
+	</if>
+    <set name="todaypack">
+         <date>&day;</date><month>&month;</month><year>&year;</year>
+    </set>
+    <set name="mypack">
+          <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+    </set>
+</hide>
+  <head>
+    <title>Calendar for &myyear;</title>
+  </head>
+  <body><!--  bgcolor="white" gives insufficient contrast on some screens -->
+
+  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+    <tr><th align=left colspan=8><font size="+2">
+	    Calendar for &myYear; </font>
+	</th>
+    <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
+    <tr><th align=left colspan=8>&nbsp;
+	</th>
+        <td align="right" colspan=4>
+       <a href="home">Today</a> is 
+          <weekday>&todaypack;</weekday>,
+       <a href="month"><weekday monthname="yes">&todaypack;</weekday>
+           &day;, &year; </a>
+        </td>
+    </tr>
+    <tr><td colspan=12>&nbsp;</td></tr>
+  </table>
+
+  <?-- bar of links to nearby years --?>
+  <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
+  <set name="llastYear"><numeric op="diff">&myYear; 2</numeric></set>
+  <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
+  <set name="nnextYear"><numeric op="sum" >&myYear; 2</numeric></set>
+  <table>
+    <tr><td align="left">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&llastYear;">
+		&llastYear;</a>
+        </td>
+        <td align="left">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
+		&lastYear;</a>
+        </td>
+        <th align="center" colspan=10>
+		<font size="+2">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
+		&myYear;</a>
+	  </font>
+	</th>
+        <td align="right">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
+		&nextYear;</a>
+        </td>
+        <td align="right">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nnextYear;">
+		&nnextYear;</a>
+        </td>
+    </tr>
+  </table>
+  <set name="thisMonth">0</set>
+    <repeat><for  start="1" stop="4" entity="row"/>
+      <table cellspacing="4" cellpadding="2" border="0">
+       <tr>
+	  <repeat><for start="1" stop="3" entity="col"/>
+	    <set name="thisMonth"><numeric op="sum">1 &thisMonth;</numeric></set>
+          <td valign="top">
+	  <table cellspacing="2"  cellpadding="2" border="0">
+	    <tr><th colspan="7">
+		<a href="month.xh?newDay=1&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">	  <weekday monthname=yes><month>&thisMonth;</month>
+					 <day>15</day><year>&myYear;</year>
+		  </weekday> </a>
+		</th>
+	    </tr>
+            <tr>
+               <td><tt>Sun</tt></td>
+               <td><tt>Mon</tt></td>
+               <td><tt>Tue</tt></td>
+               <td><tt>Wed</tt></td>
+               <td><tt>Thu</tt></td>
+               <td><tt>Fri</tt></td>
+               <td><tt>Sat</tt></td>
+            </tr>
+
+	    <set name="offset"><weekday startsun="yes">
+                   <date>15</date><month>&thisMonth;</month>
+                   <year>&myYear;</year>
+            </weekday></set>
+	    <set name="lastday"><weekday lastdate="yes">
+                 <date>15</date><month>&thisMonth;</month>
+                 <year>&myYear;</year>
+            </weekday></set>
+
+	    <?-- week loop --?>
+	    <repeat start="&offset;" entity="m" stop="&lastday;" step="7">
+           
+	       <set name="stopDay"><numeric sum="sum">&m; 6</numeric></set>
+	       <tr>
+		 <?--  day loop --?>
+		   <repeat start="&m;" stop="&stopDay;"><text trim="yes">
+		       <set name="myDay">&n;</set>
+		       <if><logical op="and">
+                             <test equals="&day;" >&myDay;</test>
+                             <test equals="&month;">&thisMonth;</test>
+                             <test equals="&year;">&myYear;</test>
+                           </logical>
+			   <then>
+			      <set name="daycolor">mistyrose</set>
+			   </then>
+			   <else>
+			   <set name="daycolor">azure</set>
+			   </else>
+		       </if>
+		       <if><daycheck testday="&myDay;" lastday="&lastday;" />
+			   <then>
+				<td valign="top"  bgcolor="&daycolor;">
+<a href="home.xh?newDay=&myDay;&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">&myDay; </a>
+				</td>
+			   </then>
+			   <else><td>&nbsp;</td></else>
+		       </if>
+		   </text></repeat>
+	       </tr>
+	    </repeat>
+	    <tr><th colspan="7">&nbsp;</th></tr>
+         </table>
+       </td>
+     </repeat></tr></table>
+    </repeat>
+    <show-errors />
+
+    <short-footer cvsid="$Id: year.xh,v 1.1 1999-10-12 00:23:19 steve Exp $"/>
+  </body>
+</html>
