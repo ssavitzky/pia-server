@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	$Id: CurrentActive.java,v 1.7 1999-07-14 20:21:20 steve Exp $
+//	$Id: CurrentActive.java,v 1.8 1999-11-03 18:28:34 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version $Id: CurrentActive.java,v 1.7 1999-07-14 20:21:20 steve Exp $
+ * @version $Id: CurrentActive.java,v 1.8 1999-11-03 18:28:34 bill Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -303,7 +303,11 @@ public class CurrentActive implements Cursor {
   protected void putNode(Node aNode) {
     Node p = aNode.getParentNode();
     if (p != null) {	// someone else's child: deep copy.
-      if (p == active) System.err.println(Log.node(aNode)+ " in " + p);
+      if (p == active) {
+	  //System.err.println(Log.node(aNode)+ " in " + p);
+	  // apparently trying to append a node to itself.
+	  return;
+      }
       ActiveNode n = (ActiveNode)aNode;
       appendNode(n.deepCopy(), active);
       /* === this will fail for attributes and entities with values:

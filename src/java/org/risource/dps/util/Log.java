@@ -1,5 +1,5 @@
 ////// Log.java: log utilities
-//	$Id: Log.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+//	$Id: Log.java,v 1.5 1999-11-03 18:28:35 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import org.risource.dps.active.*;
  *	This class contains static methods used for maintaining and 
  *	formatting a message log.
  *
- * @version $Id: Log.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: Log.java,v 1.5 1999-11-03 18:28:35 bill Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Context
@@ -54,9 +54,13 @@ public class Log {
 
     case Node.TEXT_NODE: 
       ActiveText t = (ActiveText)aNode;
+
+      if (true)
+	  throw new java.lang.RuntimeException();
+
       return t.getIsIgnorable()
 	? "ignorable" : Test.isWhitespace(t.getData()) ? "whitespace"
-	: ("text: '" + string(t.getData()) + "'");
+	: ("Text: '" + string(t.getData()) + "'");
 
     default: 
       return aNode.toString();      
