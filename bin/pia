@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: pia,v 1.4 1999-03-26 22:57:57 pgage Exp $
+#	$Id: pia,v 1.5 1999-04-13 23:40:52 wolff Exp $
 # Pia launcher. 
 #	
 #
@@ -45,7 +45,18 @@ fi
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 
-cd $PIA_DIR/src/java
+## We really want to run from PIA_DIR/src/java or else set the classpath ... 
+## pia_wrapper will set classpath if dir is not $PIA_DIR/src/java;
+if [ -z "$CLASSPATH" ] ; then
+
+    if [ `/bin/pwd` != `(cd $PIA_DIR/src/java; /bin/pwd)` ] ; then
+	echo "CLASSPATH is not set and the current directory is not $PIA_DIR/src/java"
+	echo "We will try to set an appropriate CLASSPATH but you may experience problems -- if so try running from $PIA_DIR/src/java"
+	echo "or setting your CLASSPATH environment variable to include the necessary java classes"
+
+   fi
+fi
+
 exec $PIA_BIN_DIR/pia_wrapper $D org.risource.pia.Pia $V $*
 
 

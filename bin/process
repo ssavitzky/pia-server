@@ -1,16 +1,18 @@
 #!/bin/sh
-#	$Id: process,v 1.4 1999-03-26 22:57:58 pgage Exp $
+#	$Id: process,v 1.5 1999-04-13 23:40:54 wolff Exp $
 # Process a document
 #	Process a document using the (new) Document Processing System
 #
 # Usage: 
 #	process [option]... filename
 #
-
+#
 ### Find out where this command came from:
 #	Resort to a kludge to get around the fact that "type foo"
 #	returns something like "foo is xxx", but "type -p foo" is
 #	not supported on Solaris.
+
+### May break if classpath is not set appropriately.
 
 if [ "$1" = "--kludge" ] ; then
     echo $4
