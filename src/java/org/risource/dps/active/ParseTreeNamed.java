@@ -1,5 +1,5 @@
 // ParseTreeNamed.java
-// $Id: ParseTreeNamed.java,v 1.3 1999-03-12 19:25:44 steve Exp $
+// $Id: ParseTreeNamed.java,v 1.4 1999-03-31 23:08:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,12 +54,13 @@ public abstract class ParseTreeNamed extends ParseTreeNode  {
    *	Eventually we may want a way to distinguish values stored in
    *	the children from values stored in a separate nodelist.
    */
-  public NodeList getValue(){ return value/*getChildren()*/; }
+  public NodeList getValueNodes(){ return value/*getChildren()*/; }
+  public String getValue(){ return value == null? null : value.toString(); }
 
   /** Get the node's value as an Input. 
    */
   public Input getValueInput(){ 
-    return new FromParseNodes(getValue());
+    return new FromParseNodes(getValueNodes());
   }
 
   /** Get the associated namespace, if any. */
@@ -71,7 +72,7 @@ public abstract class ParseTreeNamed extends ParseTreeNode  {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValue(NodeList newValue) {
+  public void setValueNodes(NodeList newValue) {
     if (newValue == null) {
       isAssigned = false;
       value = null;
@@ -90,6 +91,12 @@ public abstract class ParseTreeNamed extends ParseTreeNode  {
     //setChildren(newValue);
   }
 
+  public void setValue(String value){
+    setValueNodes(value==null? null
+		  : new ParseNodeList(new ParseTreeText(value)));
+  }
+
+
   public ParseTreeNamed() {
     super();
   }
@@ -106,7 +113,7 @@ public abstract class ParseTreeNamed extends ParseTreeNode  {
 
   public ParseTreeNamed(String n, NodeList v) {
     this( n );
-    setValue( v );
+    setValueNodes( v );
   }
 
   /**
@@ -115,7 +122,7 @@ public abstract class ParseTreeNamed extends ParseTreeNode  {
   public ParseTreeNamed(ParseTreeNamed attr, boolean copyChildren){
     super(attr, copyChildren);
     setName( attr.getName() );
-    setValue( attr.getValue() );
+    setValueNodes( attr.getValueNodes() );
   }
 
   /**

@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Test.java,v 1.3 1999-03-12 19:28:29 steve Exp $
+//	$Id: Test.java,v 1.4 1999-03-31 23:08:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.dps.output.*;
  *	This class contains static methods used for computing tests
  *	(booleans) on nodes and strings.
  *
- * @version $Id: Test.java,v 1.3 1999-03-12 19:28:29 steve Exp $
+ * @version $Id: Test.java,v 1.4 1999-03-31 23:08:46 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -92,9 +92,9 @@ public class Test {
       return true;
 
     case NodeType.ATTRIBUTE: 
-      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)aNode;
+      ActiveAttribute attr = (ActiveAttribute)aNode;
       if (! attr.getSpecified()) return true;
-      return orValues(attr.getValue());
+      return orValues(attr.getValueNodes());
 
     case NodeType.NODELIST: 
       return orValues(aNode.getChildren());
@@ -120,9 +120,9 @@ public class Test {
       return null;
 
     case NodeType.ATTRIBUTE: 
-      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)aNode;
+      ActiveAttribute attr = (ActiveAttribute)aNode;
       if (! attr.getSpecified()) return v;
-      return orValues(attr.getValue())? attr.getValue() : null;
+      return orValues(attr.getValueNodes())? attr.getValueNodes() : null;
     }
 
     v = Expand.processNodes(v, aContext);

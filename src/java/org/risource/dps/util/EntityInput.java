@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.3 1999-03-12 19:28:14 steve Exp $
+//	$Id: EntityInput.java,v 1.4 1999-03-31 23:08:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.3 1999-03-12 19:28:14 steve Exp $
+ * @version $Id: EntityInput.java,v 1.4 1999-03-31 23:08:41 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
@@ -74,7 +74,7 @@ public class EntityInput extends ParseTreeEntity {
   /** Get the node's value as an Input. 
    */
   public Input getValueInput(Context cxt) { 
-    if (value != null) return new FromParseNodes(getValue());
+    if (value != null) return new FromParseNodes(getValueNodes());
     return getWrappedInput();
   }
 
@@ -82,7 +82,7 @@ public class EntityInput extends ParseTreeEntity {
    *
    * <p> There will be problems if this is called while reading the value.
    */
-  public NodeList getValue() {
+  public NodeList getValueNodes() {
     if (value != null || wrappedInput == null) return value;
     ToNodeList out = new ToNodeList();
     Input in = getValueInput();
@@ -98,8 +98,8 @@ public class EntityInput extends ParseTreeEntity {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValue(NodeList newValue) {
-    super.setValue(newValue);
+  public void setValueNodes(NodeList newValue) {
+    super.setValueNodes(newValue);
     wrappedInput = null;
   }
 
@@ -115,7 +115,7 @@ public class EntityInput extends ParseTreeEntity {
   /** Note that this has to do a shallow copy */
   public EntityInput(EntityInput e, boolean copyChildren) {
     super(e, copyChildren);
-    setValue(e.getValue());
+    setValueNodes(e.getValueNodes());
   }
 
   /** Construct a node with given name. */

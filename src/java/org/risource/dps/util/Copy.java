@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.3 1999-03-12 19:28:08 steve Exp $
+//	$Id: Copy.java,v 1.4 1999-03-31 23:08:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.*;
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.3 1999-03-12 19:28:08 steve Exp $
+ * @version $Id: Copy.java,v 1.4 1999-03-31 23:08:40 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
@@ -131,8 +131,8 @@ public class Copy {
       return new ParseTreePI(pi.getName(), pi.getData());
 
     case NodeType.ATTRIBUTE: 
-      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)node;
-      return new ParseTreeAttribute(attr.getName(), attr.getValue());
+      ActiveAttribute attr = (ActiveAttribute)node;
+      return new ParseTreeAttribute(attr.getName(), attr.getValueNodes());
 
     default: 
       return null;		// node.shallowCopy();

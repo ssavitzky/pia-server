@@ -1,5 +1,5 @@
 ////// EntityWrap.java -- implementation of ActiveEntity
-//	$Id: EntityWrap.java,v 1.3 1999-03-12 19:28:15 steve Exp $
+//	$Id: EntityWrap.java,v 1.4 1999-03-31 23:08:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that wraps an arbitrary 
  *	object.  This is intended for use in NamespaceWrap.
  *
- * @version $Id: EntityWrap.java,v 1.3 1999-03-12 19:28:15 steve Exp $
+ * @version $Id: EntityWrap.java,v 1.4 1999-03-31 23:08:42 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
@@ -81,7 +81,7 @@ public class EntityWrap extends ParseTreeEntity {
    *	Eventually we may want a way to distinguish values stored in
    *	the children from values stored in a separate nodelist.
    */
-  public NodeList getValue() {
+  public NodeList getValueNodes() {
     if (value != null || wrappedObject == null) return value;
     // Have to wrap the object. 
     if (names != null) return new ParseNodeList(names.getBindings());
@@ -94,9 +94,9 @@ public class EntityWrap extends ParseTreeEntity {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValue(NodeList newValue) {
+  public void setValueNodes(NodeList newValue) {
     wrappedObject = newValue;
-    super.setValue(newValue);
+    super.setValueNodes(newValue);
   }
 
   /************************************************************************

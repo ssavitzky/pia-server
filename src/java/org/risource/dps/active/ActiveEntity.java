@@ -1,5 +1,5 @@
 ////// ActiveEntity.java: Active Entity node (parse tree element) interface
-//	$Id: ActiveEntity.java,v 1.3 1999-03-12 19:25:19 steve Exp $
+//	$Id: ActiveEntity.java,v 1.4 1999-03-31 23:08:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.Context;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveEntity.java,v 1.3 1999-03-12 19:25:19 steve Exp $
+ * @version $Id: ActiveEntity.java,v 1.4 1999-03-31 23:08:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.Active
@@ -49,7 +49,7 @@ import org.risource.dps.Context;
 public interface ActiveEntity extends Entity, ActiveNode {
 
   public NodeList getValueNodes(Context cxt);
-  public void setValueNodes(Context cxt, NodeList value);
+  public void setValueNodes(Context cxt, NodeList value); 
 
   /** Get the node's value as an Input. */
   public Input getValueInput(Context cxt);

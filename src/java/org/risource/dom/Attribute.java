@@ -1,5 +1,5 @@
 // Attribute.java
-// $Id: Attribute.java,v 1.3 1999-03-12 19:24:19 steve Exp $
+// $Id: Attribute.java,v 1.4 1999-03-31 23:08:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,13 +51,19 @@ public interface Attribute extends Node {
    * method will return null. Note the toString() method on the Attribute instance can
    * also be used to retrieve the string version of the attribute's value(s).  
    */
-  void setValue(NodeList value);
+  void setValueNodes(NodeList value);
+
+  /** Set the value as a string */
+  void setValue(String value);
 
   /**
    * Return attribute value
    * @return attribute value.
    */
-  NodeList getValue();
+  NodeList getValueNodes();
+
+  /** Return the value as a String. */
+  String getValue();
 
   /**
    * Set specified value.If this attribute was explicitly given a value in the original document, this

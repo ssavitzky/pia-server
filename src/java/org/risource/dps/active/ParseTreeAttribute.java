@@ -1,5 +1,5 @@
 ////// ParseTreeAttribute.java -- implementation of ActiveAttribute
-//	$Id: ParseTreeAttribute.java,v 1.3 1999-03-12 19:25:32 steve Exp $
+//	$Id: ParseTreeAttribute.java,v 1.4 1999-03-31 23:08:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.*;
  * An implementation of the ActiveAttribute interface, suitable for use in 
  *	DPS parse.
  *
- * @version $Id: ParseTreeAttribute.java,v 1.3 1999-03-12 19:25:32 steve Exp $
+ * @version $Id: ParseTreeAttribute.java,v 1.4 1999-03-31 23:08:16 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
@@ -56,12 +56,10 @@ public class ParseTreeAttribute extends ParseTreeNamed
 
   public int getNodeType() { return NodeType.ATTRIBUTE; }
 
-  public NodeList getValue(){ return super.getValue(); }
-
-  public void setValue(NodeList value){
+  public void setValueNodes(NodeList value){
     setIsAssigned( true );
     setSpecified(value != null);
-    super.setValue(value);
+    super.setValueNodes(value);
   }
 
   public void setSpecified(boolean specified){ this.specified = specified; }
@@ -115,7 +113,7 @@ public class ParseTreeAttribute extends ParseTreeNamed
   public String contentString() {
     return (! getSpecified() || getValue() == null)
       ? ""
-      : "'" + getValue().toString() + "'";
+      : "'" + getValue() + "'";
   }
 
   public String endString() {

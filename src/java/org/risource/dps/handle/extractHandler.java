@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.5 1999-03-25 00:42:38 steve Exp $
+//	$Id: extractHandler.java,v 1.6 1999-03-31 23:08:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.5 1999-03-25 00:42:38 steve Exp $
+ * @version $Id: extractHandler.java,v 1.6 1999-03-31 23:08:28 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -92,9 +92,9 @@ public class extractHandler extends GenericHandler {
 
 	  while (items.hasMoreElements()) {
 	    currentSet = extractTextItem(items.nextElement().toString(),
-					extracted.getValue());
+					extracted.getValueNodes());
 	    if (currentSet.getLength() == 0) terminateExtract = true;
-	    extracted.setValue(currentSet);
+	    extracted.setValueNodes(currentSet);
 	  }
 
 	  // === really ought to have something in the handler that tells the
@@ -107,13 +107,13 @@ public class extractHandler extends GenericHandler {
 	process.processNode();
 	currentSet = collect.getList();
 	if (currentSet.getLength() == 0) terminateExtract = true;
-	extracted.setValue(currentSet);
+	extracted.setValueNodes(currentSet);
 	collect.clearList();
       }
     }
     in.toParent();
 
-    putList(out, extracted.getValue(), sep);
+    putList(out, extracted.getValueNodes(), sep);
   }
 
   /************************************************************************
@@ -735,7 +735,7 @@ class evalHandler extends extract_subHandler {
       NodeList v = null;	
       switch (item.getNodeType()) {
       case NodeType.ATTRIBUTE:
-	v = a.asAttribute().getValue();
+	v = a.asAttribute().getValueNodes();
 	if (v != null) putList(out, v);
 	break;
 
@@ -772,7 +772,7 @@ class replaceHandler extends extract_subHandler {
 	     && !(caseSens && name.equals(att.getName())
 		  || !caseSens && name.equalsIgnoreCase(att.getName())))
 	  continue;
-	att.setValue(content);
+	att.setValueNodes(content);
 	break;
 
       case NodeType.ENTITY:

@@ -1,5 +1,5 @@
 // ParseTreeGeneric.java
-// $Id: ParseTreeGeneric.java,v 1.3 1999-03-12 19:25:43 steve Exp $
+// $Id: ParseTreeGeneric.java,v 1.4 1999-03-31 23:08:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -84,13 +84,16 @@ public class ParseTreeGeneric extends ParseTreeElement  {
    *	Eventually we may want a way to distinguish values stored in
    *	the children from values stored in a separate nodelist.
    */
-  public NodeList getValue()		{ return value; }
+  public NodeList getValueNodes()		{ return value; }
+  public String getValue()     	{ 
+    return value == null? null : value.toString();
+  }
 
   /** Set the node's value.  If the value is <code>null</code>, 
    *	the value is ``un-assigned''.  Hence it is possible to 
    *	distinguish a null value (no value) from an empty one.
    */
-  public void setValue(NodeList newValue) {
+  public void setValueNodes(NodeList newValue) {
     if (value == null) {
       isAssigned = false;
       value = null;
@@ -104,6 +107,11 @@ public class ParseTreeGeneric extends ParseTreeElement  {
     } else value = new ParseNodeList(newValue);
   }
 
+  public void setValue(String value){
+    setValueNodes(value==null? null
+		  : new ParseNodeList(new ParseTreeText(value)));
+  }
+
   /************************************************************************
   ** Construction and Copying:
   ************************************************************************/
@@ -115,7 +123,7 @@ public class ParseTreeGeneric extends ParseTreeElement  {
   public ParseTreeGeneric(String n, NodeList v) {
     super();
     setName( n );
-    setValue( v );
+    setValueNodes( v );
   }
 
   public ParseTreeGeneric(String tag) {
@@ -128,7 +136,7 @@ public class ParseTreeGeneric extends ParseTreeElement  {
   public ParseTreeGeneric(ParseTreeGeneric attr, boolean copyChildren){
     super((ParseTreeElement)attr, copyChildren);
     setName( attr.getName());
-    setValue(attr.getValue());
+    setValueNodes(attr.getValueNodes());
   }
 
   public ActiveNode shallowCopy() {

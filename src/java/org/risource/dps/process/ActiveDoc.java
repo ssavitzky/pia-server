@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.8 1999-03-27 01:36:22 steve Exp $
+//	$Id: ActiveDoc.java,v 1.9 1999-03-31 23:08:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.8 1999-03-27 01:36:22 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.9 1999-03-31 23:08:33 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -273,7 +273,7 @@ public class ActiveDoc extends TopProcessor {
     } else {
       // Path not starting with "/" is relative to documentBase (agent).
       if (path.startsWith("./")) path = path.substring(2);
-      if (documentBase != null) path = documentBase + path;
+      path = agent.pathName() + "/" + path;
       path = agent.findDocument(path, resourceSearch, forWriting);
       return (path == null)? null : new File(path);
     }

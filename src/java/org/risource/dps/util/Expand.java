@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.3 1999-03-12 19:28:16 steve Exp $
+//	$Id: Expand.java,v 1.4 1999-03-31 23:08:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import org.risource.dps.input.FromParseTree;
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.3 1999-03-12 19:28:16 steve Exp $
+ * @version $Id: Expand.java,v 1.4 1999-03-31 23:08:43 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -191,15 +191,15 @@ public class Expand {
   public static void expandAttrs(Context c, AttributeList atts, Output dst) {
     for (int i = 0; i < atts.getLength(); i++) { 
       try {
-	expandAttribute(c, (Attribute) atts.item(i), dst);
+	expandAttribute(c, (ActiveAttribute) atts.item(i), dst);
       } catch (org.risource.dom.NoSuchNodeException ex) {}
     }
   }
 
   /** Expand entities in an Attribute and put the result to an Output. */
-  public static void expandAttribute(Context c, Attribute att,  Output dst) {
+  public static void expandAttribute(Context c, ActiveAttribute att,  Output dst) {
     dst.putNode(new ParseTreeAttribute(att.getName(),
-				       expandNodes(c, att.getValue())));
+				       expandNodes(c, att.getValueNodes())));
   }
 
   /** Expand entities in a NodeList. */

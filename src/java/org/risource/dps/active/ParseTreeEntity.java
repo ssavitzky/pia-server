@@ -1,5 +1,5 @@
 ////// ParseTreeEntity.java -- implementation of ActiveEntity
-//	$Id: ParseTreeEntity.java,v 1.4 1999-03-27 01:28:31 steve Exp $
+//	$Id: ParseTreeEntity.java,v 1.5 1999-03-31 23:08:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: ParseTreeEntity.java,v 1.4 1999-03-27 01:28:31 steve Exp $
+ * @version $Id: ParseTreeEntity.java,v 1.5 1999-03-31 23:08:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
@@ -66,17 +66,17 @@ public class ParseTreeEntity extends ParseTreeNamed implements ActiveEntity {
   public Output getValueOutput(Context cxt) {
     // === changes when value becomes children ===
     ToNodeList out = new ToNodeList();
-    setValue(out.getList());
+    setValueNodes(out.getList());
     return out;
   }
 
   public NodeList getValueNodes(Context cxt) {
-    return getValue();
+    return getValueNodes();
   }
 
   public void setValueNodes(Context cxt, NodeList v) {
     // === changes when value becomes children ===
-    setValue(v);
+    setValueNodes(v);
   }
 
   /************************************************************************

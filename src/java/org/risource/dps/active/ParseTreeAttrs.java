@@ -1,5 +1,5 @@
 // ParseTreeAttrs.java
-// $Id: ParseTreeAttrs.java,v 1.4 1999-03-15 20:01:39 pgage Exp $
+// $Id: ParseTreeAttrs.java,v 1.5 1999-03-31 23:08:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -164,7 +164,7 @@ public class ParseTreeAttrs extends ParseNodeTable
   /** Convenience function: get an Attribute by name and return its value. */
   public NodeList getAttributeValue(String name) {
     Attribute attr = getAttribute(name);
-    return (attr == null)? null : attr.getValue();
+    return (attr == null)? null : attr.getValueNodes();
   }
 
   /** Convenience function: get an Attribute by name and return its value
@@ -172,8 +172,7 @@ public class ParseTreeAttrs extends ParseNodeTable
    */
   public String getAttributeString(String name) {
     Attribute attr = getAttribute(name);
-    NodeList value = (attr == null)? null : attr.getValue();
-    return (value == null)? null : value.toString();
+    return (attr == null)? null : attr.getValue();
   }
 	 
   /** Convenience function: get an Attribute by name and return its value

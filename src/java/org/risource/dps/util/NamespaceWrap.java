@@ -1,5 +1,5 @@
 ////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	$Id: NamespaceWrap.java,v 1.4 1999-03-31 01:28:58 pgage Exp $
+//	$Id: NamespaceWrap.java,v 1.5 1999-03-31 23:08:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import org.risource.ds.Tabular;
  * ===	The implementation is crude, and will probably want to be revisited. ===
  * ===	We may want to insist that NamespaceWrap implement Entity.
  *
- * @version $Id: NamespaceWrap.java,v 1.4 1999-03-31 01:28:58 pgage Exp $
+ * @version $Id: NamespaceWrap.java,v 1.5 1999-03-31 23:08:45 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
@@ -88,7 +88,7 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
   public Object unwrap(ActiveNode binding) {
     if (binding == null) return null;
     if (binding instanceof ParseTreeEntity) 
-      return ((ParseTreeEntity)binding).getValue();
+      return ((ParseTreeEntity)binding).getValueNodes();
     return binding;
   }
 
@@ -105,7 +105,7 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
     } else if (binding.asEntity() != null) {
       return binding.asEntity().getValueNodes(cxt);
     } else if (binding instanceof ParseTreeNamed) {
-      return ((ParseTreeNamed)binding).getValue();
+      return ((ParseTreeNamed)binding).getValueNodes();
     } else if (binding.hasChildren()) {
       return binding.getChildren();
     } else {

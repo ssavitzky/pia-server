@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.5 1999-03-27 01:36:06 steve Exp $
+//	$Id: defineHandler.java,v 1.6 1999-03-31 23:08:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.5 1999-03-27 01:36:06 steve Exp $
+ * @version $Id: defineHandler.java,v 1.6 1999-03-31 23:08:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -110,8 +110,8 @@ public class defineHandler extends GenericHandler {
     Attribute handler = atts.getAttribute("handler");
     return (handler == null)     ? null
       : (! handler.getSpecified()) ? dflt
-      : "handler".equals(handler.getValue().toString()) ? dflt
-      : handler.getValue().toString();
+      : "handler".equals(handler.getValue()) ? dflt
+      : handler.getValue();
   }
 
 

@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.3 1999-03-12 19:28:05 steve Exp $
+//	$Id: BasicNamespace.java,v 1.4 1999-03-31 23:08:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import org.risource.ds.Table;
  *
  * ===	The implementation is crude, and will probably want to be revisited. ===
  *
- * @version $Id: BasicNamespace.java,v 1.3 1999-03-12 19:28:05 steve Exp $
+ * @version $Id: BasicNamespace.java,v 1.4 1999-03-31 23:08:39 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -123,9 +123,9 @@ public class BasicNamespace extends ParseTreeGeneric implements Namespace {
     ActiveNode b = getBinding(name);
     if (b == null) return null;
     else if (b.asEntity() != null) return b.asEntity().getValueNodes(c);
-    else if (b.asAttribute() != null) return b.asAttribute().getValue();
+    else if (b.asAttribute() != null) return b.asAttribute().getValueNodes();
     else if (b instanceof ParseTreeNamed) {
-      return ((ParseTreeNamed)b).getValue();
+      return ((ParseTreeNamed)b).getValueNodes();
     } else if (b.hasChildren()) return b.getChildren();
     else return new ParseNodeList(b);
   }
@@ -138,7 +138,7 @@ public class BasicNamespace extends ParseTreeGeneric implements Namespace {
     } else if (b.asEntity() != null) {
       b.asEntity().setValueNodes(c, value);
     } else if (b.asAttribute() != null) {
-      b.asAttribute().setValue(value);
+      b.asAttribute().setValueNodes(value);
     } else {
       // === problem -- namespace can't set value (DOM update needed)
     }

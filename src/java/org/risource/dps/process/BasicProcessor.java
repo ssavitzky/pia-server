@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.3 1999-03-12 19:27:21 steve Exp $
+//	$Id: BasicProcessor.java,v 1.4 1999-03-31 23:08:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.output.ToNodeList;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.3 1999-03-12 19:27:21 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.4 1999-03-31 23:08:35 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -212,8 +212,8 @@ public class BasicProcessor extends ContextStack implements Processor {
   }
 
   /** Expand entities in the value of a given attribute. */
-  public void expandAttribute(Attribute att,  ActiveElement e) {
-    e.setAttributeValue(att.getName(), expandNodes(att.getValue()));
+  public void expandAttribute(ActiveAttribute att,  ActiveElement e) {
+    e.setAttributeValue(att.getName(), expandNodes(att.getValueNodes()));
   }
 
   /** Expand nodes in a nodelist. */
