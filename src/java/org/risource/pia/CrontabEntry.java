@@ -1,5 +1,5 @@
 // CrontabEntry.java
-// $Id: CrontabEntry.java,v 1.4 1999-09-22 00:28:55 steve Exp $
+// $Id: CrontabEntry.java,v 1.5 1999-11-04 22:46:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,7 @@ import org.risource.ds.Tabular;
 import org.risource.ds.Table;
 
 import org.risource.util.Utilities;
+import org.risource.dps.util.Log;
 
 import org.w3c.dom.Element;
 
@@ -192,7 +193,7 @@ public class CrontabEntry implements Serializable {
    *	@see #handleRequest
    */
   public boolean submitRequest() {
-    Pia.verbose("Submitting CrontabEntry " + agent.startString());
+    Pia.verbose("Submitting CrontabEntry " + Log.node(agent));
     agent.act();
     if (repeat > 0) {
       if (--repeat == 0) {
@@ -235,7 +236,7 @@ public class CrontabEntry implements Serializable {
     
     // Check the expiration date. 
     if (checkExpired(min, h, d, m, y, wd)) {
-      Pia.verbose("Expired CrontabEntry " + agent.startString());
+      Pia.verbose("Expired CrontabEntry " + Log.node(agent));
       repeat = 0;
       return true;
     }

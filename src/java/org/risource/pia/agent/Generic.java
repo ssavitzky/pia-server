@@ -1,5 +1,5 @@
 // Generic.java
-// $Id: Generic.java,v 1.3 1999-10-05 15:08:46 steve Exp $
+// $Id: Generic.java,v 1.4 1999-11-04 22:46:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,6 +54,7 @@ import org.risource.ds.Registered;
 import org.risource.dps.*;
 import org.risource.dps.tagset.Loader;
 import org.risource.dps.active.*;
+import org.risource.dps.util.Log;
 import org.risource.dps.namespace.*;
 import org.risource.dps.output.DiscardOutput;
 import org.risource.dps.input.FromNodeList;
@@ -270,7 +271,7 @@ public class Generic extends TreeElement
   }
 
   protected String debugInformation() {
-    String s = Pia.debug()? toString() : startString();
+    String s = Pia.debug()? toString() : Log.node(this);
     return s;
   }
 

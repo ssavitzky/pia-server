@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.10 1999-10-05 15:08:42 steve Exp $
+// $Id: Resolver.java,v 1.11 1999-11-04 22:46:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,7 @@ import org.risource.ds.Table;
 import org.risource.ds.Tabular;
 import org.risource.ds.List;
 
-
-
+import org.risource.dps.util.Log;
 
 
 /**
@@ -204,7 +203,7 @@ public class Resolver extends Thread {
     }
 
     if (!registered) {
-      Pia.warningMsg("Agent with unknown function " + agent.startString());
+      Pia.warningMsg("Agent with unknown function " + Log.node(agent));
     }
   }
 
