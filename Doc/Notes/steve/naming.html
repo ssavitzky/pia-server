@@ -93,10 +93,11 @@
     following search list:
 
 <ol>
-  <li> The command line, which may specify <em>either</em> the configuration
-       file itself, or the site root directory.
-  <li> The $PIA_CONFIG environment variable
-  <li> The $PIA_ROOT environment variable, specifying the site root.
+  <li> The command line, which may specify <em>either</em> the pathname of the
+       configuration file itself, or the site root directory and other
+       information that might be in the configuration file.  
+  <li> The $PIA_CONFIG environment variable.  Again, this might contain either
+       the pathname of the configuration file, or a complete command line. 
   <li> A file called <code>pia.config</code> or <code>.pia-config</code> in
        one of the following places:
        <ol>
@@ -112,6 +113,14 @@
     <code>PIA/MySite</code> as the site root.  On a multi-user system, if
     PIA/MySite is not in the user's home directory or is not writable by the
     user, the pia's home page will contain a form for making a copy.
+
+<p> It is possible that <code>PIA/MySite</code> might not exist, either
+    because it hasn't been installed (it is generated, after all) or because
+    it has been removed.  It would be possible in that case to construct a
+    virtual root that points to the default directory; this effectively
+    duplicates the process by which <code>MySite</code> is created.  However,
+    it will almost certainly be better to treat this as an error, just as in
+    any other case where the specified root does not exist. 
 
 <p> Once the PIA's root directory has been located, all of its active subsites
     that contain agents can be initialized.
@@ -158,37 +167,17 @@
 <p> A directory's <code>subsite.config</code> file contains the following:
 
 <ol>
-  <li> Inherited variables.  These correspond pretty much to the current Agent
+  <li> Normal variables.  These correspond pretty much to the current Agent
        state, and are inherited by (i.e. accessible to) all active documents
        underneath the subsite.  These include things like the extension
-       mapping. 
-  <li> Subsite variables.  These are inherited, but modified according to depth.
-       These include things like the default directory:  the default directory
-       in a subdirectory is the corresponding subdirectory of the parent's
-       default directory.  They come in three flavors: 
-       <ol>
-	 <li> those that are modified by prepending <code>../</code>; these
-	      are mainly used for relative paths to external entities,
-	      tagsets, and the like. 
-	 <li> those that are modified by appending the name of the current
-	      real directory (the URL suffix). 
-	 <li> those that are modified by appending the name of the current
-	      default directory.
-       </ol>
-       (It may be possible to find a less general mechanism for dealing with
-       these problems.)
-  <li> Local variables.  These contain meta-information associated with the
-       subsite directory, and are not inherited.  
+       mapping.  Normal namespace scoping provides inheritance; constructs
+       like <code>..:foo</code> can be used to navigate the tree. 
   <li> Document descriptors.  Strictly speaking these are contained in a local
        variable (perhaps called SHEAF); they describe any virtual or imaginary
        documents and subsites.  Note that <em>real</em> documents and subsites
        do not need to be described explicitly unless they have non-default
        attributes. 
 </ol>
-
-<p> It's not clear whether these variables should be distinguished by name or
-    by putting them in separate namespaces.  It's possible that normal scoping
-    will take care of inheritance. 
 
 <p> It's important to note that if any of the variables associated with a
     virtual subsite is changed, the subsite (and all of its parents) must be
@@ -307,7 +296,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.10 1999-07-22 15:52:11 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.11 1999-07-22 20:38:41 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
