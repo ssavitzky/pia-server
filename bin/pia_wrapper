@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.7 1999-03-26 01:41:53 steve Exp $
+#	$Id: pia_wrapper,v 1.8 1999-03-26 22:57:58 pgage Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -95,17 +95,19 @@ done
 ### Build a CLASSPATH.
 
 # The pia class library.
-PIA_CLASSES=${PIA_CLASSES-$PIA_DIR/lib/java/pia.zip}
+# PIA_CLASSES=${PIA_CLASSES-$PIA_DIR/lib/java/pia.zip}
 
-[ -z "$CLASSPATH" ] || CLASSPATH=":$CLASSPATH"
-CLASSPATH=$PIA_CLASSES$CLASSPATH
+# [ -z "$CLASSPATH" ] || CLASSPATH=":$CLASSPATH"
+# CLASSPATH=$PIA_CLASSES$CLASSPATH
 
-# The pia source directory.  (Later we will test for their existance)
+# The pia source directory.  (Later we will test for their existence)
+# PIA_SRC=${PIA_SRC-$PIA_DIR/src}
+# [ -d $PIA_SRC ] && CLASSPATH=$PIA_SRC/java:$CLASSPATH
+
+# export CLASSPATH
+
 PIA_SRC=${PIA_SRC-$PIA_DIR/src}
-[ -d $PIA_SRC ] && CLASSPATH=$PIA_SRC/java:$CLASSPATH
-
-export CLASSPATH
-
+[ -d $PIA_SRC ]
 
 ### Identify our main program.
 
@@ -116,7 +118,7 @@ else
     shift
 fi
 
-[ -z "$VERBOSE" ] || echo CLASSPATH=$CLASSPATH
+# [ -z "$VERBOSE" ] || echo CLASSPATH=$CLASSPATH
 [ -z "$VERBOSE" ] || echo "$JAVA_BIN $V $PIA_CLASS $V $ENV $*"
 exec $JAVA_BIN $D $V $PIA_CLASS $V $ENV $*
 

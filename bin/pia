@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: pia,v 1.3 1999-03-12 19:23:39 steve Exp $
+#	$Id: pia,v 1.4 1999-03-26 22:57:57 pgage Exp $
 # Pia launcher. 
 #	
 #
@@ -45,6 +45,7 @@ fi
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 
+cd $PIA_DIR/src/java
 exec $PIA_BIN_DIR/pia_wrapper $D org.risource.pia.Pia $V $*
 
 
