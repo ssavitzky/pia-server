@@ -325,16 +325,22 @@
 </p>
 
 
+<index-bar name="HEADER">Notes Files Views HEADER</index-bar>
+
 <if> <status item="exists" src="&LOC:path;/HEADER.html" />
      <then>
 
-<index-bar name="HEADER">Notes Files Views HEADER</index-bar>
+<yellow-note> This directory contains a file called HEADER.html.  This is
+    meant to preceed a directory listing, and usually contains useful
+    information about the directory, so we display it below.
+</yellow-note>
 
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
-  <tr><td>&nbsp;</td>
   <tr><th align="left">
-    <h2><code>&spath;/HEADER.html</code></h2>
-    </th>
+        <font size="+2"><b><code>
+    	  <forceTrailingSlash>&spath;</forceTrailingSlash>HEADER.html</code>
+        </code></b></font>
+      </th>
   </tr>
 </table>
 
@@ -346,7 +352,16 @@
  </tr>
 </table>
      </then>
+     <else>
+
+<yellow-note> If this directory had contained a file called HEADER.html, it
+	      would have been displayed here.  You can make your source tree
+	      easier to navigate and understand by providing suitable
+	      HEADER.html files.
+</yellow-note>
+
+     </else>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.19 2000-08-23 00:00:20 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.20 2000-10-18 18:14:07 steve Exp $" />
 </body></html>
