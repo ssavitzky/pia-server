@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.24 2000-08-30 19:57:27 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.25 2000-09-26 23:11:12 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -131,6 +131,45 @@ Note that we only need these inside the PIA.
   </hide></action>
 </define>
 
+<define element="removePathPrefix">
+  <doc> Remove a prefix from a path.  If the result would be null,
+	return a single slash.
+  </doc>
+  <define attribute="prefix">
+    <doc> The prefix to be removed.
+    </doc>
+  </define>
+  <action><if>  <test case="case" match="^&sprefix;$">&path;</test>
+		<then>/</then>
+		<else><subst match="^&sprefix;" 
+			     result="">&path;</subst></else>
+  </if></action>
+</define>
+
+<define element="replacePrefix">
+  <doc> The content is a path.  If it starts with <code>old</code>, replace
+	<code>old</code> with <code>new</code>.  Otherwise, return null.
+  </doc>
+  <note> === check explicitly for exact match to work around a subst bug.
+  </note>
+  <define attribute="old">
+    <doc> The old prefix to be removed.
+    </doc>
+  </define>
+  <define attribute="new">
+    <doc> The new prefix to be prepended.
+    </doc>
+  </define>
+  <action><if>  <test case="yes" match="^&attributes:old;$">&content;</test>
+		<then>&attributes:new;</then>
+	  <else-if>
+		<test case="yes" match="^&attributes:old;">&content;</test>
+		<then><subst match="^&attributes:old;"
+			     result="&attributes:new;">&content;</subst></then>
+	  </else-if>
+  </if></action>
+</define>
+
 <define element="forceTrailingSlash">
   <doc> Force the content, a path, to end in a slash so that it can be
 	prefixed to a filename.  An empty path is not affected.
@@ -143,9 +182,9 @@ Note that we only need these inside the PIA.
   </if></action>
 </define>
 
-<define element="mapSrcToTarget">
-  <doc> Map the source file path in <code>&amp;content;</code> to the
-	corresponding URL on the target server.  The content needs to be a
+<define element="mapSourceToNote">
+  <doc> Map the annotation path in <code>&amp;content;</code> to the
+	corresponding <em>source</em> path.  The content needs to be a
 	full path, typically the one returned by <code>&amp;DOC:path;</code>.
 
 	<p> The following global variables are used:
@@ -158,7 +197,8 @@ Note that we only need these inside the PIA.
 	  </tr>
 	  <tr> <td> <code>SITE:docOffset</code></td>
 	       <td> The path from the root of the Woad source tree to the
-		    target server's <code>DocumentRoot</code>.
+		    target server's <code>DocumentRoot</code>.  Should start
+		    with a slash, but not end with one.
 	       </td>
 	  </tr>
 	  <tr> <td> <code>SITE:sourcePrefix</code></td>
@@ -167,54 +207,19 @@ Note that we only need these inside the PIA.
 		    ``<code>.source</code>''.
 	       </td>
 	  </tr>
+	  <tr> <td> <code>SITE:aliases</code></td>
+	       <td> A space-separated list of aliased top-level directories.
+		    Each should start with a slash, but not end with one.
+	       </td>
+	  </tr>
+	  <tr> <td> <code>SITE:offsets</code></td>
+	       <td> A space-separated list of offsets corresponding to the
+		    aliased directories in <code>SITE:aliases</code>. 
+		    Each should start with a slash, but not end with one.
+	       </td>
+	  </tr>
 	</table>
 
-  </doc>
-  <action><hide>
-	<let name="server"><get name="SITE:targetServer"/></let>
-	<let name="prefix"><get name="SITE:sourcePrefix"/></let>
-	<let name="offset"><get name="SITE:docOffset"/></let>
-	<let name="path"><get name="content"/></let>
-	<if>&prefix;
-	    <then><if><test match="^&prefix;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&prefix;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		  </if>
-	    </then>
-	</if>
-	<if>&offset;
-	    <then><if><test match="^&offset;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&offset;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		      <else><let name="server"></let>
-			    <let name="prefix"></let>
-			    <let name="path"></let>
-		      </else>
-		  </if>
-	    </then>
-	</if>
-     </hide><if><get name="server"/>
-	        <then>http://&server;&path;</then>
-	        <else>&path;</else>
-  </if></action>
-</define>
-
-<define element="mapSourceToNote">
-  <doc> Map the annotation path in <code>&amp;content;</code> to the
-	corresponding <em>source</em> path.  The content needs to be a
-	full path, typically the one returned by <code>&amp;DOC:path;</code>.
   </doc>
   <action><hide>
 	<let name="nprefix"><get name="SITE:notesPrefix"/></let>
@@ -222,36 +227,36 @@ Note that we only need these inside the PIA.
 	<let name="offset"><get name="SITE:docOffset"/></let>
 	<let name="path"><get name="content"/></let>
 	<if>&sprefix;
-	    <then><if><test match="^&sprefix;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&sprefix;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		  </if>
+	    <then>
+	      <let name="path">
+		 <removePathPrefix prefix="&sprefix;">&path;</removePathPrefix>
+	      </let>
 	    </then>
 	</if>
-	<if>&offset;
-	    <then><if><test match="^&offset;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&offset;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		      <else><let name="nprefix"></let>
-			    <let name="path"></let>
-		      </else>
-		  </if>
+	<doc> The path is now cleaned up -- it starts with the source root.
+	      The next task is to find a suitable offset.  Iterate in parallel
+	      through SITE:offsets and SITE:aliases.  If an offset matches,
+	      remove it and replace it with the corresponding aliased prefix.
+	      Otherwise, check for SITE:docOffset, which is aliased to /.
+	</doc>
+	<let name="npath"></let>
+	<repeat><foreach entity="o"><get name="SITE:offsets" /></foreach>
+		<foreach entity="n"><get name="SITE:aliases" /></foreach>
+		<set name="npath">
+		  <replacePrefix old="&o;" new="&n;">&path;</replacePrefix>
+		</set>
+		<until><get name="npath"/></until>
+	</repeat>
+	<if>&npath;<then><let name="path">&npath;</let></then>
+	<else-if>&offset;
+	    <then><let name="path">
+		    <replacePrefix old="&offset;" new="/">&path;</replacePrefix>
+		  </let>
 	    </then>
+	</else-if>
 	</if>
      </hide><text op="trim">
-	&nprefix;&path;
+	<if>&path; <then>&nprefix;&path;</then></if>
   </text></action>
 </define>
 
@@ -281,16 +286,10 @@ Note that we only need these inside the PIA.
 	<let name="prefix"><get name="SITE:notesPrefix"/></let>
 	<let name="path"><get name="content"/></let>
 	<if>&prefix;
-	    <then><if><test match="^&prefix;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&prefix;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		  </if>
+	    <then>
+	      <let name="path">
+		 <removePathPrefix prefix="&prefix;">&path;</removePathPrefix>
+	      </let>
 	    </then>
 	</if>
      </hide><if><get name="server" />
@@ -313,25 +312,47 @@ Note that we only need these inside the PIA.
 	     </if></then>
 	</if>
 	<let name="offset"><get name="SITE:docOffset"/></let>
-	<let name="path"><get name="content"/></let>
+	<let name="path">
+	     <subst match="//" result="/"><get name="content"/></subst>
+	</let>
 	<if>&nprefix;
-	    <then><if><test match="^&nprefix;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&nprefix;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		  </if>
+	    <then>
+	      <let name="path">
+		 <removePathPrefix prefix="&nprefix;">&path;</removePathPrefix>
+	      </let>
 	    </then>
 	</if>
+	<let name="npath"></let>
+	<repeat><foreach entity="n"><get name="SITE:offsets" /></foreach>
+		<foreach entity="o"><get name="SITE:aliases" /></foreach>
+		<set name="npath">
+		  <replacePrefix old="&o;" new="&n;">&path;</replacePrefix>
+		</set>
+		<until><get name="npath"/></until>
+	</repeat>
+	<let name="path">
+	    <if>&npath;
+		<then>&npath;</then>
+		<else>&offset;&path;</else>
+	    </if>
+	</let>
      </hide><text op="trim">
-	&sprefix;&offset;&path;
+	&sprefix;&path;
   </text></action>
 </define>
 
+
+<define element="mapSrcToTarget">
+  <doc> Map the source file path in <code>&amp;content;</code> to the
+	corresponding URL on the target server.  The content needs to be a
+	full path, typically the one returned by <code>&amp;DOC:path;</code>.
+	This operation simply combines <tag>mapNoteToTarget</tag> with
+	<tag>mapSourceToNote</tag>, so as not to require duplication of code.
+  </doc>
+  <action><mapNoteToTarget><mapSourceToNote><get name="content"
+          /></mapSourceToNote></mapNoteToTarget></action> 
+</define>
+	
 <hide><dl></dl></hide>
 
 <define element="decoratePath">
@@ -1282,6 +1303,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.24 2000-08-30 19:57:27 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.25 2000-09-26 23:11:12 steve Exp $ -->
 </tagset>
 

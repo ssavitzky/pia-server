@@ -5,19 +5,28 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
-  <li> <b>Impr</b> link from a note to annotated page. <br />
-       noticeable especially in .sources, where there's an extraneous
-       <code>.notes</code> interpolated into the URL.
-       (20000-09-25)
+  <li> <b>Bug</b> link from a note to the page it annotates. <br />
+       Noticeable especially in .sources, where there's an extraneous
+       <code>.notes</code> interpolated into the URL.  Obviously another
+       mapping function is needed.  Back button is fine, but doesn't work if
+       you got there from AllNotesByTime.
+       (2000-09-25)
+  </li>
+  <li> <b>Impr</b> customizable views <br />
+       i.e. "processed", "wrapped", ...
+       (2000-09-25)
   </li>
   <li> <b>Goal</b> useable release by 9/30. <br />
        <ul>
-	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
-	      actual directories.
+	 <li> Upload new PIA to <a href="http://pia.rsv.ricoh.com;">
+	      <code>pia.rsv.ricoh.com</code> </a>; release.
 	 </li>
 	 <li> Tagged source listings for non-SGML code files [either by
 	      shallow parsing, external taggers, or both] (2000-09-22) and
-	      shallow parsing for SGML files.
+	      shallow parsing for SGML files.<!-- === -->
+	 </li>
+	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
+	      actual directories. (2000-09-26)
 	 </li>
 	 <li> Cross-reference and chronological (newest-first) indices of
 	      notes (2000-09-25)
@@ -39,13 +48,6 @@
        (2000-06-07)<br />
        -- (2000-06-28: annotation listing done.  Ready for indexing and
 	  linking.)
-  </li>
-  <li> <b>Impr</b> allow arbitrary source=target mapping <br />
-       either a .wi file, or a tagset included in woad-xhtml.  Needed
-       for stuff like <code>/cgi-bin</code>.  Cannot be done in
-       <code>.xcf</code> file because that results in undesirable aliasing.
-       Could be done with an included tagset.
-       (2000-06-23)
   </li>
   <li> <b>Impr</b> use WOAD server as proxy <br />
        needs an agent to add a toolbar to pages from the target server.
@@ -304,5 +306,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.21 2000-09-25 23:22:03 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.22 2000-09-26 23:11:12 steve Exp $</b><br>
 </body></html>

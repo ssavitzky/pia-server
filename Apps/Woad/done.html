@@ -115,13 +115,28 @@ See also:
        (2000-09-22)
   </li>
 
+  <li> 2000-09-25 <b>Bug</b> woad-index.pl must entity-encode attrs <br />
+       Some titles contain quotes, for example.
+       (2000-09-25)
+  </li>
+
+  <li> <b>Impr</b> allow arbitrary source=target mapping <br />
+       either a .wi file, or a tagset included in woad-xhtml.  Needed
+       for stuff like <code>/cgi-bin</code>.  Cannot be done in
+       <code>.xcf</code> file because that results in undesirable aliasing.
+       Could be done with an included tagset.
+       (2000-06-23)<br />
+       -- can be done with aliases=./..,/..., and offsets=/...,/..., on
+	  command line. 
+  </li>
+       
 </ol>
 
 
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.10 2000-09-25 23:22:02 steve Exp $</b><br>
+<b>$Id: done.html,v 1.11 2000-09-26 23:11:12 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
