@@ -1,5 +1,5 @@
 ////// Mailnow.java:  Handler for <mailnow>
-//	$Id: mailnowHandler.java,v 1.1 2000-01-21 23:11:56 bill Exp $
+//	$Id: mailnowHandler.java,v 1.2 2000-01-24 21:45:29 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -21,6 +21,19 @@
  ***************************************************************************** 
 */
 
+/*  WARNING:  this mail handler sometimes fails to send anything if one
+    of the addresses isn't parsed properly */
+
+/* Configure local sendmail with /etc/sendmail.cf containing the lines
+
+# "Smart" relay host (may be null)
+DSsmtp.$m
+
+    and
+
+# who I send unqualified names to (null means deliver locally)
+DRsmtp.$m
+ */
 
 package org.risource.dps.handle;
 
@@ -28,6 +41,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tree.TreeText;
+
+import java.io.*;
 
 /* The classes imported below must be downloaded separately from Sun in the
    JavaMail package (mail.jar located in
@@ -37,7 +52,6 @@ import org.risource.dps.tree.TreeText;
    to the classpath. */
 
 
-import java.io.*;
 import java.net.InetAddress;
 import java.util.Properties;
 import java.util.Date;            
@@ -54,17 +68,18 @@ public class mailnowHandler extends GenericHandler {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
     String text = Expand.getProcessedContentString(in, aContext);
 
-    String from = null, url = null;
+    String url = null;
     String mailhost = null;
     String mailer = "msgsend";
     String protocol = null, host = null, user = null, password = null;
     String record = null;   // name of folder in which to record mail
     boolean debug = false;
-     
-    String to = atts.getAttribute("to");
+
     String subject = atts.getAttribute("subject");
     String bcc = atts.getAttribute("bcc");
     String cc = atts.getAttribute("cc");
+    String from  = atts.getAttribute("from");
+    String to = atts.getAttribute("to");
 
     if (to == null || to == ""){
 	String errMsg = "Mail (subject " + subject + 
@@ -72,7 +87,6 @@ public class mailnowHandler extends GenericHandler {
 	reportError(in, aContext, errMsg);
 	out.putNode(new TreeText( errMsg ) );
     }
-
 
     try {
 
@@ -96,14 +110,19 @@ public class mailnowHandler extends GenericHandler {
 	else
 	    msg.setFrom();
 
+	// the InternetAddress.parse() method turns a single String
+	// into multiple addresses.
+	// Space-separatated simple addresses are ok
 	msg.setRecipients(Message.RecipientType.TO,
-			  InternetAddress.parse(to, false));
+			      InternetAddress.parse(to, false));
+	
 	if (cc != null)
 	    msg.setRecipients(Message.RecipientType.CC,
 			      InternetAddress.parse(cc, false));
 	if (bcc != null)
 	    msg.setRecipients(Message.RecipientType.BCC,
 			      InternetAddress.parse(bcc, false));
+	
 
 	msg.setSubject(subject);
 
@@ -155,11 +174,18 @@ public class mailnowHandler extends GenericHandler {
 	}
 	*/
 
+    } catch (SendFailedException e) {
+	e.printStackTrace();
+	String errMsg = "Could not send mail: " + e ;
+	reportError(in, aContext, errMsg);	
+
+	return;
     } catch (Exception e) {
 	e.printStackTrace();
+	return;
     }
 
-    String notify = "Mail regarding " + subject + " to " + to + " was sent.";
+    String notify = "Mail sent to " + to + ", regarding " + subject ;
     out.putNode(new TreeText(notify) );
     System.out.println( notify );
   }
@@ -186,4 +212,3 @@ public class mailnowHandler extends GenericHandler {
     if (e.hasTrueAttribute("result")) syntaxCode=NORMAL;
   }
 }
-
