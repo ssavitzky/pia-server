@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.22 1999-10-20 16:21:58 steve Exp $
+// $Id: Pia.java,v 1.23 1999-10-22 00:56:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.22 1999-10-20 16:21:58 steve Exp $
+  * @version $Id: Pia.java,v 1.23 1999-10-22 00:56:47 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -1063,8 +1063,8 @@ public class Pia implements Tabular {
     "-home",	"home",		"dir",		null,
     "-p",	"port",		"number",	"8888",
     "-port",	"port",		"number",	"8888",
-    "-virtual",	"virtualport",	"number",	"8888",
-    "-real",	"realport", 	"number",	"8888",
+    "-vport",	"virtualport",	"number",	"8888",
+    "-rport",	"realport", 	"number",	"8888",
     "-root",	"root",		"dir",		null,
     "-vroot",	"virtualroot",	"dir",		null,
     "-host",	"host", 	"name",		null,

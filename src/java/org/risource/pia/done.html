@@ -325,11 +325,17 @@ See also:
        setting "port" sets both virtualport and realport.
        (1999-10-18) <br>
 
+  <li>1999-10-21 <b>Bug</b> DNS lookup on requestor is sometimes slow. <br>
+       If DNS is broken, this makes the PIA _very_ slow to respond.
+       Otherwise, it's just slightly slow.
+       (1999-10-21) <br>
+       -- Solution is to log by IP address.  Doesn't seem to break anything.
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.20 1999-10-19 01:04:17 steve Exp $</b><br>
+<b>$Id: done.html,v 1.21 1999-10-22 00:56:47 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

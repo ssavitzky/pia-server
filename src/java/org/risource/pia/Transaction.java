@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.10 1999-09-15 17:34:25 bill Exp $
+// $Id: Transaction.java,v 1.11 1999-10-22 00:56:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -695,7 +695,7 @@ public abstract class Transaction
 
       if( firstLine.length() > 0 ){
 	Pia.debug(this, "the firstline-->" + firstLine);
-	Pia.log( " URL: " + firstLine + "\n");
+	Pia.log( (isRequest()? " REQ: " : " RES: ") + firstLine + "\n");
       }
       parseInitializationString( firstLine );
    

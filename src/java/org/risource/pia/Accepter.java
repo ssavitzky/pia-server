@@ -1,5 +1,5 @@
 // Accepter.java
-// $Id: Accepter.java,v 1.7 1999-10-19 01:04:16 steve Exp $
+// $Id: Accepter.java,v 1.8 1999-10-22 00:56:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -120,22 +120,26 @@ public class Accepter extends Thread {
 
   /**
    * This gets called by accepter whenever a new request is received.
-   * A transaction is created, and it automatically places itself onto the resolver.
+   * A transaction is created, and it automatically places itself onto 
+   * the resolver's queue.  
+   *
+   * The connection is logged.  === should really let the transaction do this.
    */ 
   protected void handleConnection(Socket clientSocket) {
    
     InetAddress iaddr = clientSocket.getInetAddress();
     int         port  = clientSocket.getPort();
 
-    String hostName = iaddr.getHostName();
-
-    Pia.debug( this, "connection from: " + hostName
-	       + " at: " + String.valueOf( port ) );
+    Pia.debug( this, "connection from: " + iaddr.getHostAddress()
+	       + " port: " + String.valueOf( port ) );
     Date today = new Date();
-    Pia.log( "connection from " + hostName
-	     + " at port " + String.valueOf( port )  +
-	     " on date " + today.toString() );
+    Pia.log( "request from " + iaddr.getHostAddress()
+	     + " port " + String.valueOf( port )  +
+	     " at " + today.toString() + "\n");
     
+    // using only the host address, not the FQDN, saves us a DNS lookup.
+    String hostName = iaddr.getHostAddress();
+
     createRequestTransaction(hostName, port, clientSocket);
 
   }
