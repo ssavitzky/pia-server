@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.28 1999-06-11 23:29:36 steve Exp $
+#	$Id: Makefile,v 1.29 1999-08-09 18:24:45 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -40,8 +40,8 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 5
-SUFFIX      = a
+MINOR       = 6
+SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
 VERSION    = $(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
@@ -65,10 +65,12 @@ CVS_RMT  = /home/cvsroot
 ###
 #   1. Set make macros RELEASE, MAJOR, MINOR, and SUFFIX as appropriate.
 #   2. If the version number has changed, commit the Makefile NOW.
-#	Building includes a "cvs checkout"
+#	Building includes a "cvs checkout"; everything in the release
+#	will come out of the CVS tree, not your working directory.
 #   2. "make prep-checkout" : this updates _and_commits_ Version.java.
 #   3. "make rsync-cvs" (if running under ssh-agent) or DO THIS MANUALLY:  
-#	cd /pia1/CvsRoot ; rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
+# cd /pia1/CvsRoot ; 
+# rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
 #   4. "make src-release"
 #	If part of this fails, it breaks down into these substeps:
 #	make do_checkout build_release tar_file copy_src_dir
