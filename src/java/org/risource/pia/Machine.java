@@ -1,5 +1,5 @@
 // Machine.java
-// $Id: Machine.java,v 1.5 1999-03-23 23:32:22 steve Exp $
+// $Id: Machine.java,v 1.6 1999-06-16 18:39:23 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -180,6 +180,12 @@ public class Machine implements java.io.Serializable {
     }
   }
 
+  public String getHostName()
+    {
+      return hostName;
+    }
+  
+     
   /************************************************************************
   ** Sending Responses to Client:
   ************************************************************************/

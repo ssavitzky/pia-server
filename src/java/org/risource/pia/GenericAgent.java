@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.24 1999-05-25 23:08:48 steve Exp $
+// $Id: GenericAgent.java,v 1.25 1999-06-16 18:39:21 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -1400,6 +1400,11 @@ public class GenericAgent extends BasicNamespace
    * requests authentication
    */
  public void requestAuthentication ( Transaction trans ) {
+   requestAuthentication(trans, authPolicy);
+ }
+  
+
+ public void requestAuthentication ( Transaction trans, Authenticator aPolicy ) {
 
    //do we need content for authentication response??
       Pia.debug(this, "Authentication required");
@@ -1408,7 +1413,7 @@ public class GenericAgent extends BasicNamespace
        response.setStatus( 403 ); 
      else 
        response.setStatus( 401 ); 
-    authPolicy.setResponseHeaders(response, this);
+    aPolicy.setResponseHeaders(response, this);
     Content c = new org.risource.content.text.StringContent(
 		   "Authorization required for access to agent "+ name());
     response.setContentType( "text/plain" );
