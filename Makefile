@@ -1,5 +1,5 @@
 ### Makefile for pia
-#	$Id: Makefile,v 1.4 1999-03-12 19:21:49 steve Exp $
+#	$Id: Makefile,v 1.5 1999-03-12 23:16:46 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ CD_ROM_DEST_DIR	= cd_rom_dest_dir
 CD_ROM_PUB      = Ricoh Silicon Valley
 
 VENDOR_TAG  = PIA
-RELEASE         = 1
+RELEASE         = 2
 MAJOR           = 1
 MINOR           = 0
 SUFFIX          = 
