@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: pia,v 1.5 1999-04-13 23:40:52 wolff Exp $
+#	$Id: pia,v 1.6 1999-05-18 20:15:43 steve Exp $
 # Pia launcher. 
 #	
 #
@@ -50,9 +50,11 @@ fi
 if [ -z "$CLASSPATH" ] ; then
 
     if [ `/bin/pwd` != `(cd $PIA_DIR/src/java; /bin/pwd)` ] ; then
-	echo "CLASSPATH is not set and the current directory is not $PIA_DIR/src/java"
-	echo "We will try to set an appropriate CLASSPATH but you may experience problems -- if so try running from $PIA_DIR/src/java"
-	echo "or setting your CLASSPATH environment variable to include the necessary java classes"
+	echo "CLASSPATH is not set and the current directory is not the "
+	echo "Java source directory ($PIA_DIR/src/java)."
+	echo "We will try to set an appropriate CLASSPATH, but you may experience problems"
+	echo " -- if so try running from $PIA_DIR/src/java or setting your "
+	echo "CLASSPATH environment variable to include the necessary java classes."
 
    fi
 fi
