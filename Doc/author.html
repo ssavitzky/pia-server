@@ -19,17 +19,12 @@ been messed with and potentially screwed up.  </font>
 
 
 <ul>
-<li><a href="#Quick">Quick Start</a></li>
-
-<li><a href="#Naming">Application naming</a></li>
-
-<li><a href="#Types">Application types</a></li>
-
-<li><a href="#Files">Application files</a></li>
-
-<li><a href="#Code">Application data structures and code</a></li>
-
-<li><a href="#Tips">Tips on application creation</a></li>
+  <li><a href="#Quick">Quick Start</a></li>
+  <li><a href="#Apps">Applications and Agents</a></li>
+  <li><a href="#Site">Web Site Structure</a></li>
+  <li><a href="#Files">Application files</a></li>
+  <li><a href="#Code">Application data structures and code</a></li>
+  <li><a href="#Tips">Tips on application creation</a></li>
 </ul>
 
 
@@ -72,17 +67,86 @@ tagsets are used.
    <code>TagsetDemo/</code> sample to see how). </p></li>
 
 <li><p> Add a <code>&lt;show-errors /&gt;</code> tag to your page to indicate
-any errors which may occur.  Try the <code>&lt;pretty /&gt;</code> tag to see
-the structure of your XML.  Check out the <a
-	 href="http://pia.rsv.ricoh.com/Tutorial/home.xh"> hackable tutorials
-	 </a> for more explanation of how such tags work. Play around!</p></li>
+     any errors which may occur.  Try the <code>&lt;pretty /&gt;</code> tag to
+     see the structure of your XML.  Check out the <a
+     href="http://pia.rsv.ricoh.com/Tutorial/home.xh"> hackable tutorials </a>
+     for more explanation of how such tags work. Play around!</p></li>
 
 </ul>
 
 
-<blockquote>
-<h2><a name="Naming"></a>Application Naming and Directories</h2>
+<h2><a name="Apps">Applications and Agents</a></h2>
 
+<p> The PIA is the ``Platform for Information Applications,'' so we need to
+    start by explaining exactly what an application <em>is</em> and how the
+    user can access it.  The short answer is that an application is <em>any
+    location in the PIA's web site that performs a service for the user by
+    means of active documents.</em>
+</p>
+
+<p> The first time the user visits an application's directory, its local
+    configuration file, <code>_subsite.xcf</code>, is loaded (if it exists) to
+    give the application a chance to perform any necessary setup.  This
+    includes making the application's ``home directory'' available at the top
+    of the PIA's URL space as <code>/~<em>AppName</em></code>. 
+</p>
+
+<p> It is possible to pre-load applications by accessing them in the PIA's
+    top-level initialization file, <code>/initialize.xh</code>.
+</p>
+
+<h3><a name="Agents">Agents</a></h3>
+
+<p> There are roughly two kinds of applications: passive and active.  Passive
+    applications "just sit there," doing nothing until a request for a page
+    comes in... at which point the processor finds the right page, processes
+    the appropriate <var>.xh</var> file, and sends back the processed
+    results. This is like a traditional static web-page or CGI script.
+</p>
+
+<p> Active applications, on the other hand, are more like "software agents" in
+    the traditional sense: they are background processes, always on, which
+    eavesdrop on and potentially modify all the port's traffic.  For example,
+    the <var>History</var> application (under <var>/Agents/</var>) keeps track
+    of every URL visited, and the <var>remoteTools</var> application modifies
+    incoming HTML according to the user's customization rules.  This is like a
+    traditional proxy-server.
+</p>
+
+<p> Strictly speaking, an Agent is a piece of (usually XML) code that is run
+    in response to some internal event, rather than in response to a direct
+    request for a document.  At the moment, agents can respond to either a web
+    transaction (request or response) that matches some ``criteria'', or can
+    be run at a particular time or repetition interval.
+</p>
+
+<p> It's difficult to draw a clear distinction between agents and
+    applications; any application may potentially start an arbitrary number of
+    agents.  In fact, an agent can exist purely to register an application's
+    home directory.
+</p>
+
+<blockquote>
+    <p> Some history here:  originally, <em>all</em> applications in the PIA
+	were associated with agents, and all of their ``home directories''
+	were accessible at the top level.  This persists in the terminology:
+	we still tend to use ``Agent'' and ``Application'' interchangeably,
+	and in fact the line between them is rather fuzzy -- there's no way
+	for a casual user to determine whether or not an application contains
+	an Agent.
+    </p>
+</blockquote>
+
+<p> The prototype applications in <var>Samples/</var> are of the passive
+    type; it is best to get accustomed to using these before tinkering with
+    the more subtle and complex active ones.  Once you are ready, look at
+    <var>/Agents/Proxie/History</var> as a prototype active application.
+</p>
+
+
+<h2><a name="Structure"></a>Web Site Structure</h2>
+
+<blockquote>
 
 <strong>=== THIS SECTION IS ENTIRELY WRONG!===</strong>
 
@@ -222,66 +286,6 @@ Bill's proposal here
 </font>
 
 
-
-<blockquote>
-
-============= This section is questionable ================
-
-<h2><a name="Types">Agent Types</a></h2>
-
-<p>Every agent also has a <em>type</em>, which can be 
-used to create a family of agents with similar behavior but
-different options. The <a href="/DOFS">DOFS</a> agents form such a
-family. So do the <a href="/Toolbar">&Toolbar;</a> agents <a href= 
-'/remoteTools/'>remoteTools</a> and <a href='/fileTools/'>
-fileTools</a>. In most case, the type classification name
-represents not only the family name but names an agent of which the
-others are "sub-agents."</p>
-
-<p> To be specific, the type is the complete pathname of an agent from which
-    files are ``inherited''.  An agent will search for files first in its user
-    directory, then its home directory, and then in the directories of its
-    type agent.  An agent without a type will finally look in the
-    <code>Agent</code> subdirectories of PIA_ROOT and PIA_HOME.
-</p>
-
-<p> Agents that are not "sub-agents" of some type have their type the same as
-    their name.  An XHTML script can verify this with the following test:
-</p>
-
-<blockquote><code>&lt;test exact
-match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
-
-</blockquote>
-
-
-
-
-<font color="red">
-bill's proposal here
-
-<h2><a name="Types">Application Types</a></h2>
-
-<p> There are roughly two kinds of applications: passive and active.  Passive
-    applications "just sit there," doing nothing until a request for a page
-    comes in... at which point the processor finds the right page, processes
-    the appropriate <var>.xh</var> file, and sends back the processed
-    results. This is like a traditional static web-page or CGI script.</p>
-
-  <p>Active applications, on the other hand, are more like "Agents" in the
-  traditional sense: they are background processes, always on, which eavesdrop
-  on and potentially modify all the port's traffic.  For example, the
-  <var>History</var> application (under <var>Agents/</var>) keeps track of
-  every URL visited, and the <var>Proxie</var> application modifies incoming
-  HTML according to the user's customization rules.  This is like a
-  traditional proxy-browser or proxy-server. </p>
-
-   <p> The prototype applications in <var>Samples/</var> are of the passive
-       type; it is best to get accustomed to using these before tinkering with
-       the more subtle and complex active ones.  Once you are ready, look at
-       <var>PIA/Agents/Proxie</var> as a prototype active appliation. </p>
-
-</font>
 
 <blockquote>
 
@@ -1002,8 +1006,12 @@ the <a href="Tagsets/tsdoc/pia-xhtml.html">PIA XHTML
 Manual</a>.</p>
 
 
-<hr><b>Copyright &copy; 1999 Ricoh Silicon Valley</b>
-<br>
+<hr>
+<b>Copyright &copy; 1999 <a href="http://rsv.ricoh.com/">Ricoh Silicon
+   Valley</a>.</b> 
+   Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
+                         href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
+<i>$Id: author.html,v 1.16 1999-10-15 17:17:43 steve Exp $</i><br>
 </body>
 </html>
 
