@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.19 2000-06-27 01:17:01 steve Exp $
+//	$Id: AbstractParser.java,v 1.20 2000-08-30 19:55:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.19 2000-06-27 01:17:01 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.20 2000-08-30 19:55:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -76,7 +76,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected EntityTable 	entities	= null; 
 
   //protected int			lineNumber	= 1;
-  //protected int			lf		= '\n';
+  protected int			lf		= '\n';
 
   /************************************************************************
   ** Access:
@@ -269,7 +269,26 @@ public abstract class AbstractParser extends CursorStack implements Parser
       buf.append((char)last);
       last = in.read();
     } while (last >= 0 && last != entityStart && last != '<');
-    return last >= 0;    
+    return last >= 0;		// === should probably return true
+  }
+
+  /** Starting at <code>last</code> (or the next available character
+   *	if <code>last</code> is zero), append characters to
+   *	<code>buf</code> until the next non-ordinary character (&amp; or
+   *	&lt;), end-of-line, or end-of-buffer is seen.  The terminating
+   *	character ends up in <code>last</code>.
+   *
+   *	@return true if at least one character is eaten. 
+   */
+   protected final boolean eatTextInLine() throws IOException {
+    if (last == 0) last = in.read();
+    if (last < 0) return false;
+    if (last == entityStart || last == '<' || last == lf) return true;
+    do {
+      buf.append((char)last);
+      last = in.read();
+    } while (last >= 0 && last != lf && last != entityStart && last != '<');
+    return true;
   }
 
   /** Starting at <code>last</code> (or the next available character
@@ -279,7 +298,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
    *	digits, "-", and ".".  The terminating character ends up in
    *	<code>last</code>, and the string in <code>ident</code>.
    *
-   *	@return true if at least one character is eaten.  */
+   *	@return true if at least one character is eaten.
+   */
    protected final boolean eatIdent() throws IOException {
     if (last == 0) last = in.read();
     String id = "";
@@ -311,6 +331,22 @@ public abstract class AbstractParser extends CursorStack implements Parser
       buf.append((char)last);
       last = in.read();
       // if (last == lf) lineNumber++;
+    } 
+    return last >= 0;    
+  }
+
+  /** Starting at the next available character, append characters to
+   *	<code>buf</code> until <code>aCharacter</code> (typically a
+   *	quote) or newline is seen.
+   *
+   *	@return false if end-of-file is reached before a match. */
+   protected final boolean eatLineUntil(int aCharacter, boolean checkEntities)
+       throws IOException {
+    if (last == 0) last = in.read();
+    while (last >= 0 && last != aCharacter && last != lf
+	   && !(checkEntities && last == entityStart)) {
+      buf.append((char)last);
+      last = in.read();
     } 
     return last >= 0;    
   }
