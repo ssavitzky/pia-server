@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	textHandler.java,v 1.11 1999/03/01 23:46:27 pgage Exp
+//	$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version textHandler.java,v 1.11 1999/03/01 23:46:27 pgage Exp
+ * @version $Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -459,7 +459,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>textHandler.java,v 1.11 1999/03/01 23:46:27 pgage Exp&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -625,7 +625,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>textHandler.java,v 1.11 1999/03/01 23:46:27 pgage Exp&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */

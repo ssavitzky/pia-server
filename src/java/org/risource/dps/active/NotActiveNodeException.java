@@ -1,5 +1,5 @@
 // NotActiveNodeException.java
-// NotActiveNodeException.java,v 1.2 1999/03/01 23:45:44 pgage Exp
+// $Id: NotActiveNodeException.java,v 1.3 1999-03-12 19:25:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ###### interform/test/Makefile:	InterForm Interpretor tests
-# 	Makefile,v 1.6 1999/03/02 00:46:18 pgage Exp
+# 	$Id: Makefile,v 1.3 1999-03-12 19:27:58 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	testHandler.java,v 1.12 1999/03/01 23:46:26 pgage Exp
+//	$Id: testHandler.java,v 1.4 1999-03-12 19:26:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version testHandler.java,v 1.12 1999/03/01 23:46:26 pgage Exp
+ * @version $Id: testHandler.java,v 1.4 1999-03-12 19:26:40 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

@@ -1,5 +1,5 @@
 // Resolver.java
-// Resolver.java,v 1.26 1999/03/01 23:47:46 pgage Exp
+// $Id: Resolver.java,v 1.3 1999-03-12 19:29:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

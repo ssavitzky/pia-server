@@ -1,6 +1,6 @@
 #!/bin/sh
 #	Display linecounts under "." using xdu.
-#	x-lc,v 1.1 1997/07/31 20:16:04 steve Exp
+#	$Id: x-lc,v 1.2 1999-03-12 19:23:55 steve Exp $
 
 find ${*-.} -type f ! -name '*~' ! -name '#*' ! -name '.#*' \
     ! -name '*.class' ! -name '*.o' ! -name '*.log' ! -name '*.zip' \

@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Agent Installers</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -192,5 +192,5 @@ Provides basic file browsing capabilities.
        form.
 </dl>
 
-<footer cvsid="installers.xh,v 1.5 1999/03/02 20:24:29 pgage Exp">
+<footer cvsid="$Id: installers.xh,v 1.4 1999-03-12 19:22:01 steve Exp $">
 </body></html>

@@ -1,5 +1,5 @@
 #!/bin/sh
-#	iffilter,v 1.2 1998/06/24 00:39:14 steve Exp
+#	$Id: iffilter,v 1.2 1999-03-12 19:23:37 steve Exp $
 # InterForm filter
 #	Process a document using the (old) InterForm interpretor.
 #

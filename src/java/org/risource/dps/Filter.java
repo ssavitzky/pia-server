@@ -1,5 +1,5 @@
 ////// Filter.java: the Interform Interpretor used as a filter
-//	Filter.java,v 1.27 1999/03/01 23:45:27 pgage Exp
+//	$Id: Filter.java,v 1.3 1999-03-12 19:24:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// Context.java: Document processing context interface
-//	Context.java,v 1.13 1999/03/01 23:45:25 pgage Exp
+//	$Id: Context.java,v 1.3 1999-03-12 19:24:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -69,7 +69,7 @@ import java.io.PrintStream;
  *		 represents a ``continuation.''
  *	</ul>
  *
- * @version Context.java,v 1.13 1999/03/01 23:45:25 pgage Exp
+ * @version $Id: Context.java,v 1.3 1999-03-12 19:24:47 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Handler

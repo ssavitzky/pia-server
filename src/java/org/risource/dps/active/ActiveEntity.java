@@ -1,5 +1,5 @@
 ////// ActiveEntity.java: Active Entity node (parse tree element) interface
-//	ActiveEntity.java,v 1.6 1999/03/01 23:45:41 pgage Exp
+//	$Id: ActiveEntity.java,v 1.3 1999-03-12 19:25:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.Context;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version ActiveEntity.java,v 1.6 1999/03/01 23:45:41 pgage Exp
+ * @version $Id: ActiveEntity.java,v 1.3 1999-03-12 19:25:19 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.Active

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-### 	fixup.pl,v 1.3 1999/03/02 01:02:21 pgage Exp
+### 	$Id: fixup.pl,v 1.2 1999-03-12 19:22:29 steve Exp $
 
 ##############################################################################
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// GenericAgent.java,v 1.73 1999/03/01 23:47:26 pgage Exp
+// $Id: GenericAgent.java,v 1.3 1999-03-12 19:29:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -6,4 +6,4 @@
 ``toolbar,'' in the form of a line or two of text, to each page before it is
 passed along to you. <p>  
 
-<inc-footer cvsid="about.inc,v 1.1 1999/02/04 17:44:44 steve Exp">
+<inc-footer cvsid="$Id: about.inc,v 1.2 1999-03-12 19:22:32 steve Exp $">

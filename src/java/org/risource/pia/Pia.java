@@ -1,5 +1,5 @@
 // Pia.java
-// Pia.java,v 1.34 1999/03/01 23:47:41 pgage Exp
+// $Id: Pia.java,v 1.5 1999-03-12 19:29:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version Pia.java,v 1.34 1999/03/01 23:47:41 pgage Exp
+  * @version $Id: Pia.java,v 1.5 1999-03-12 19:29:29 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {

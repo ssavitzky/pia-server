@@ -1,5 +1,5 @@
 ////// ToHTTPClient.java: output nodes to HTTP client
-//	ToHTTPClient.java,v 1.3 1999/03/01 23:46:36 pgage Exp
+//	$Id: ToHTTPClient.java,v 1.3 1999-03-12 19:27:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.io.IOException;
  *	of the document content.  This allows the DPS to modify the response
  *	type and headers. 
  *
- * @version ToHTTPClient.java,v 1.3 1999/03/01 23:46:36 pgage Exp
+ * @version $Id: ToHTTPClient.java,v 1.3 1999-03-12 19:27:08 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor

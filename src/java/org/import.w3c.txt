@@ -1,4 +1,4 @@
-# import.w3c.txt,v 1.1 1998/12/18 21:24:32 steve Exp
+# import.w3$Id: import.w3c.txt,v 1.2 1999-03-12 19:24:06 steve Exp $
 # Importing from w3c's sources was done as follows:
 #
 

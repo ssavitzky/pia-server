@@ -1,5 +1,5 @@
 ////// parseHandler.java: <parse> Handler implementation
-//	parseHandler.java,v 1.4 1999/03/01 23:46:19 pgage Exp
+//	$Id: parseHandler.java,v 1.3 1999-03-12 19:26:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.io.StringReader;
  *
  *	
  *
- * @version parseHandler.java,v 1.4 1999/03/01 23:46:19 pgage Exp
+ * @version $Id: parseHandler.java,v 1.3 1999-03-12 19:26:27 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

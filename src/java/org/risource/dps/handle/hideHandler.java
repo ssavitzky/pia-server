@@ -1,5 +1,5 @@
 ////// hideHandler.java: <hide> Handler implementation
-//	hideHandler.java,v 1.4 1999/03/01 23:46:14 pgage Exp
+//	$Id: hideHandler.java,v 1.3 1999-03-12 19:26:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.output.*;
  *
  *	
  *
- * @version hideHandler.java,v 1.4 1999/03/01 23:46:14 pgage Exp
+ * @version $Id: hideHandler.java,v 1.3 1999-03-12 19:26:19 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

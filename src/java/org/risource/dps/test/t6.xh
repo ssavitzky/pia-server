@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>t6.xh</title>
 <link rev="made" href="mailto:steve@rsv.ricoh.com">
@@ -266,5 +266,5 @@ dscr: <actor-dscr name=set><br>
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
 <!-- the following conditional keeps the id out of the results --><if>
-<then><b>t6.xh,v 1.7 1999/03/02 20:26:20 pgage Exp</b><br></then></if>
+<then><b>t6$Id: t6.xh,v 1.2 1999-03-12 19:28:02 steve Exp $</b><br></then></if>
 </body></html>

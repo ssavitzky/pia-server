@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Install Agent</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -52,5 +52,5 @@ file.
 </else>
 </if>
 
-<short-footer cvsid="install-agent.xh,v 1.2 1999/03/02 20:24:29 pgage Exp">
+<short-footer cvsid="$Id: install-agent.xh,v 1.2 1999-03-12 19:22:00 steve Exp $">
 </body></html>

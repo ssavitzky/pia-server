@@ -1,5 +1,5 @@
 // Agent.java
-// Agent.java,v 1.11 1999/03/01 23:48:17 pgage Exp
+// $Id: Agent.java,v 1.3 1999-03-12 19:30:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

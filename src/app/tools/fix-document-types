@@ -1,10 +1,12 @@
 #!/bin/sh
-# Hack to fix up <!doctype...> statements.
+#	$Id: fix-document-types,v 1.2 1999-03-12 19:23:53 steve Exp $
+#	Hack to fix up <!doctype...> statements.
 # NOTE: This will fail if the doctype isn't all on one line.
 
 pat='\<\![dD][oO][cC][tT][yY][^>]+\>'
-doctype='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">'
+doctype='<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">'
 
 find .  '(' -name '*.html' -o -name '*.xh' -o -name '*.inc' ')' -type f \
-    -exec grep -q -i '<!doctype' {} \; -print \
-    -exec perl -p -i -e "s@$pat@$doctype@g" {} \; 
+    -exec grep -q -i -e '<!doctype html' {} \; \
+    -exec perl -p -i -e "s@$pat@$doctype@g unless (/W3C/ && /4.0/);" {} \;  \
+    -exec grep -i '<!doctype' {} \; 

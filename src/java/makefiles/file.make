@@ -1,5 +1,5 @@
 ### file.make
-# file.make,v 1.25 1999/03/01 20:20:14 pgage Exp
+# $Id: file.make,v 1.3 1999-03-12 19:23:59 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 

@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	BasicParser.java,v 1.18 1999/03/01 23:46:40 pgage Exp
+//	$Id: BasicParser.java,v 1.3 1999-03-12 19:27:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version BasicParser.java,v 1.18 1999/03/01 23:46:40 pgage Exp
+ * @version $Id: BasicParser.java,v 1.3 1999-03-12 19:27:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */

@@ -1,5 +1,5 @@
 ////// ToCharData.java: Token output Stream to Character data
-//	ToCharData.java,v 1.3 1999/03/01 23:46:34 pgage Exp
+//	$Id: ToCharData.java,v 1.3 1999-03-12 19:27:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
 /**
  * Output a Token stream to a String in <em>internal</em> form. <p>
  *
- * @version ToCharData.java,v 1.3 1999/03/01 23:46:34 pgage Exp
+ * @version $Id: ToCharData.java,v 1.3 1999-03-12 19:27:05 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToString

@@ -1,5 +1,5 @@
 ### Makefile for bin
-#	Makefile,v 1.2 1999/03/02 00:46:05 pgage Exp
+#	$Id: Makefile,v 1.2 1999-03-12 19:23:36 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

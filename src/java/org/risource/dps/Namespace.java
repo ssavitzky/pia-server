@@ -1,5 +1,5 @@
 ////// Namespace.java: Node Handler Lookup Table interface
-//	Namespace.java,v 1.6 1999/03/01 23:45:31 pgage Exp
+//	$Id: Namespace.java,v 1.3 1999-03-12 19:24:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
  *	however; it may simply be the value of that name in another 
  *	Namespace, or even <em>contained in</em> some name's value.
  *
- * @version Namespace.java,v 1.6 1999/03/01 23:45:31 pgage Exp
+ * @version $Id: Namespace.java,v 1.3 1999-03-12 19:24:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor

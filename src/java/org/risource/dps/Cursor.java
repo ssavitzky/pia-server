@@ -1,5 +1,5 @@
 ////// Cursor.java: Shared interface for a ``current node''
-//	Cursor.java,v 1.3 1999/03/01 23:45:26 pgage Exp
+//	$Id: Cursor.java,v 1.3 1999-03-12 19:24:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.active.*;
  *	trees) run-time type checking.  This makes the most common operations
  *	in the DPS significantly more efficient. <p>
  *
- * @version Cursor.java,v 1.3 1999/03/01 23:45:26 pgage Exp
+ * @version $Id: Cursor.java,v 1.3 1999-03-12 19:24:48 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Input

@@ -1,5 +1,5 @@
 ////// EntityHandler.java: Entity Node Handler implementation
-//	EntityHandler.java,v 1.8 1999/03/01 23:46:01 pgage Exp
+//	$Id: EntityHandler.java,v 1.3 1999-03-12 19:25:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version EntityHandler.java,v 1.8 1999/03/01 23:46:01 pgage Exp
+ * @version $Id: EntityHandler.java,v 1.3 1999-03-12 19:25:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler

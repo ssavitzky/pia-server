@@ -1,5 +1,5 @@
 // IsAgentResponse.java
-// IsAgentResponse.java,v 1.8 1999/03/01 23:48:18 pgage Exp
+// $Id: IsAgentResponse.java,v 1.3 1999-03-12 19:30:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

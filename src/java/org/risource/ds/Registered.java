@@ -1,5 +1,5 @@
 // Registered.java -- interface for objects registered in hashtables
-// 	Registered.java,v 1.2 1999/03/01 23:47:10 pgage Exp
+// 	$Id: Registered.java,v 1.3 1999-03-12 19:28:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

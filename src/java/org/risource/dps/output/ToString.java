@@ -1,5 +1,5 @@
 ////// ToString.java: Token output Stream to String
-//	ToString.java,v 1.8 1999/03/01 23:46:37 pgage Exp
+//	$Id: ToString.java,v 1.3 1999-03-12 19:27:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
 /**
  * Output a Token stream to a String <em>in external form</em>. <p>
  *
- * @version ToString.java,v 1.8 1999/03/01 23:46:37 pgage Exp
+ * @version $Id: ToString.java,v 1.3 1999-03-12 19:27:11 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToCharData

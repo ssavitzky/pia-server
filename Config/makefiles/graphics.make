@@ -1,5 +1,5 @@
 ### graphics.make
-# graphics.make,v 1.1 1997/08/09 00:46:55 steve Exp
+# $Id: graphics.make,v 1.2 1999-03-12 19:23:00 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 
 ########################################################################

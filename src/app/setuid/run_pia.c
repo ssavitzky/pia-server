@@ -1,5 +1,5 @@
 /**** run_pia
-** 	run_pia.c,v 1.7 1999/03/02 20:25:58 pgage Exp
+** 	$Id: run_pia.c,v 1.2 1999-03-12 19:23:47 steve Exp $
 **
 **	Run ~pia/bin/pia as user pia.  Must be setuid ROOT.
 **	Install with: chown root run_pia; chmod u+s run_pia

@@ -1,5 +1,5 @@
 ////// BasicContext.java: A linked-list stack of current nodes.
-//	ContextStack.java,v 1.17 1999/03/01 23:46:52 pgage Exp
+//	$Id: ContextStack.java,v 1.3 1999-03-12 19:28:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.process.BasicProcessor;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version ContextStack.java,v 1.17 1999/03/01 23:46:52 pgage Exp
+ * @version $Id: ContextStack.java,v 1.3 1999-03-12 19:28:06 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor

@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	includeHandler.java,v 1.8 1999/03/01 23:46:16 pgage Exp
+//	$Id: includeHandler.java,v 1.3 1999-03-12 19:26:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.dps.input.FromParseNodes;
  *
  *	
  *
- * @version includeHandler.java,v 1.8 1999/03/01 23:46:16 pgage Exp
+ * @version $Id: includeHandler.java,v 1.3 1999-03-12 19:26:21 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

@@ -1,5 +1,5 @@
 ###### pia/agent/Makefile:	Agent handlers and related classes
-#	Makefile,v 1.18 1999/03/02 00:46:21 pgage Exp
+#	$Id: Makefile,v 1.3 1999-03-12 19:29:56 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -22,4 +22,4 @@
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
 
 <p>
-<!-- welcome.inc,v 1.3 1999/02/25 19:31:26 steve Exp -->
+<!-- $Id: welcome.inc,v 1.2 1999-03-12 19:22:47 steve Exp $ -->

@@ -1,5 +1,5 @@
 ////// debugHandler.java: <debug> Handler implementation
-//	debugHandler.java,v 1.3 1999/03/01 23:46:08 pgage Exp
+//	$Id: debugHandler.java,v 1.3 1999-03-12 19:26:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,7 @@ import java.lang.StringBuffer;
  * document itself.  
  * <p>	
  *
- * @version debugHandler.java,v 1.3 1999/03/01 23:46:08 pgage Exp
+ * @version $Id: debugHandler.java,v 1.3 1999-03-12 19:26:09 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

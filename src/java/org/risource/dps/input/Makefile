@@ -1,5 +1,5 @@
 ###### dps/input/Makefile:	InterForm Token input sources
-# 	Makefile,v 1.10 1999/03/02 00:46:15 pgage Exp
+# 	$Id: Makefile,v 1.3 1999-03-12 19:26:52 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Writing &amp; Customizing &agentType; Agents</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -116,5 +116,5 @@ rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.<p>
 The logo icons used by the <a href="/&agentType;/fbi">fbi</a> and <a
 href="/&agentType;/cia">cia</a> are 24 pixels high.
 
-<footer cvsid="writing.xh,v 1.3 1999/03/02 20:24:41 pgage Exp">
+<footer cvsid="$Id: writing.xh,v 1.2 1999-03-12 19:22:38 steve Exp $">
 </body></html>

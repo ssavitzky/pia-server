@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Parse Handler Demo</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -31,7 +31,7 @@ This example does not work.<br><br>
 <b>File:</b> <a href="/Root/&filePath;">&filePath;</a>
 <hr>
 <b>Copyright &copy; 1997 Ricoh California Research Center</b><br>
-<b>demo_parse.xh,v 1.3 1999/03/02 20:24:46 pgage Exp</b><br>
+<b>$Id: demo_parse.xh,v 1.2 1999-03-12 19:22:13 steve Exp $</b><br>
 
 </body></html>
 

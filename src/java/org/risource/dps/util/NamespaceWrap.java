@@ -1,5 +1,5 @@
 ////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	NamespaceWrap.java,v 1.10 1999/03/01 23:47:01 pgage Exp
+//	$Id: NamespaceWrap.java,v 1.3 1999-03-12 19:28:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import org.risource.ds.Tabular;
  * ===	The implementation is crude, and will probably want to be revisited. ===
  * ===	We may want to insist that NamespaceWrap implement Entity.
  *
- * @version NamespaceWrap.java,v 1.10 1999/03/01 23:47:01 pgage Exp
+ * @version $Id: NamespaceWrap.java,v 1.3 1999-03-12 19:28:26 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace

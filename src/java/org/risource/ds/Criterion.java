@@ -1,5 +1,5 @@
 ////// Criterion.java:  Superclass for match criteria
-//	Criterion.java,v 1.9 1999/03/01 23:47:06 pgage Exp
+//	$Id: Criterion.java,v 1.3 1999-03-12 19:28:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

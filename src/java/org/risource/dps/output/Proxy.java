@@ -1,5 +1,5 @@
 ////// Proxy: filtering proxy for an Output
-//	Proxy.java,v 1.3 1999/03/01 23:46:33 pgage Exp
+//	$Id: Proxy.java,v 1.3 1999-03-12 19:27:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import java.io.PrintStream;
  *	A Proxy can be used with no target to simply discard output.
  *	This is reasonably efficient.
  *
- * @version Proxy.java,v 1.3 1999/03/01 23:46:33 pgage Exp
+ * @version $Id: Proxy.java,v 1.3 1999-03-12 19:27:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 

@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	BasicProcessor.java,v 1.8 1999/03/01 23:46:43 pgage Exp
+//	$Id: BasicProcessor.java,v 1.3 1999-03-12 19:27:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.output.ToNodeList;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version BasicProcessor.java,v 1.8 1999/03/01 23:46:43 pgage Exp
+ * @version $Id: BasicProcessor.java,v 1.3 1999-03-12 19:27:21 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output

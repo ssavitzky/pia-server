@@ -198,5 +198,5 @@ dscr: <actor-dscr name=set><br>
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
 <!-- the following conditional keeps the id out of the results --><if>
-<then><b>t3.if,v 1.5 1998/07/31 23:51:09 steve Exp</b><br></then></if>
+<then><b>t3$Id: t3.if,v 1.2 1999-03-12 19:28:00 steve Exp $</b><br></then></if>
 </body></html>

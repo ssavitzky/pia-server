@@ -1,5 +1,5 @@
 // Text.java
-// Text.java,v 1.3 1999/03/01 23:45:23 pgage Exp
+// $Id: Text.java,v 1.3 1999-03-12 19:24:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 // Association.java
-// Association.java,v 1.3 1999/03/01 23:47:04 pgage Exp
+// $Id: Association.java,v 1.3 1999-03-12 19:28:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 // FormContent.java
-// FormContent.java,v 1.28 1999/03/01 23:47:24 pgage Exp
+// $Id: FormContent.java,v 1.3 1999-03-12 19:29:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

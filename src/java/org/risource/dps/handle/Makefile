@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	InterForm tag handlers
-# 	Makefile,v 1.30 1999/03/02 00:46:14 pgage Exp
+# 	$Id: Makefile,v 1.3 1999-03-12 19:26:02 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ###### org/Makefile:	Imported organizations' Java classes
-#	Makefile,v 1.2 1999/03/02 00:46:27 pgage Exp
+#	$Id: Makefile,v 1.3 1999-03-12 19:24:05 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

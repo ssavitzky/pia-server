@@ -1,5 +1,5 @@
 // Node.java
-// Node.java,v 1.4 1999/03/01 23:45:19 pgage Exp
+// $Id: Node.java,v 1.3 1999-03-12 19:24:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

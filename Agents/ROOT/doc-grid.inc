@@ -37,4 +37,4 @@
     </td> <td bgcolor=silver>&nbsp; 
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
-<inc-footer cvsid="doc-grid.inc,v 1.2 1999/03/03 17:43:30 pgage Exp">
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.3 1999-03-12 19:22:43 steve Exp $">

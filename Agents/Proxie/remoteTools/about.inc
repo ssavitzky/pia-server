@@ -7,4 +7,4 @@ This is indicated by the logo (<img src="/Icon/logo24.gif" height=24
 width=24>) at the front of the banner, which is a link to the PIA's home
 page.  <p>
 
-<inc-footer cvsid="about.inc,v 1.1 1999/02/04 17:53:59 steve Exp">
+<inc-footer cvsid="$Id: about.inc,v 1.3 1999-03-12 19:22:41 steve Exp $">

@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Initialize PIA</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -35,5 +35,5 @@ It is also possible to override <em>this</em> file with your own version, in
 (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary InterForm
 code into it.
 
-<short-footer cvsid="initialize.xh,v 1.4 1999/03/02 20:24:29 pgage Exp">
+<short-footer cvsid="$Id: initialize.xh,v 1.2 1999-03-12 19:21:59 steve Exp $">
 </body></html>

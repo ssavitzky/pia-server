@@ -1,5 +1,5 @@
 ////// getHandler.java: <get> Handler implementation
-//	getHandler.java,v 1.7 1999/03/01 23:46:13 pgage Exp
+//	$Id: getHandler.java,v 1.3 1999-03-12 19:26:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.dps.util.*;
  *	<code>keys</code>, <code>values</code>, and <code>bindings</code>
  *	attributes are supported.
  *
- * @version getHandler.java,v 1.7 1999/03/01 23:46:13 pgage Exp
+ * @version $Id: getHandler.java,v 1.3 1999-03-12 19:26:17 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

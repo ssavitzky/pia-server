@@ -1,5 +1,5 @@
 // Machine.java
-// Machine.java,v 1.35 1999/03/01 23:47:38 pgage Exp
+// $Id: Machine.java,v 1.3 1999-03-12 19:29:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

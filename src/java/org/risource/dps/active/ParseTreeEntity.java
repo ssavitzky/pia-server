@@ -1,5 +1,5 @@
 ////// ParseTreeEntity.java -- implementation of ActiveEntity
-//	ParseTreeEntity.java,v 1.11 1999/03/01 23:45:53 pgage Exp
+//	$Id: ParseTreeEntity.java,v 1.3 1999-03-12 19:25:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version ParseTreeEntity.java,v 1.11 1999/03/01 23:45:53 pgage Exp
+ * @version $Id: ParseTreeEntity.java,v 1.3 1999-03-12 19:25:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode

@@ -1,5 +1,5 @@
 ////// EntityTable.java: Entity Lookup Table interface
-//	EntityTable.java,v 1.9 1999/03/01 23:45:26 pgage Exp
+//	$Id: EntityTable.java,v 1.3 1999-03-12 19:24:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.Enumeration;
  *
  *	Entities are named values that can be substituted into a document.
  *
- * @version EntityTable.java,v 1.9 1999/03/01 23:45:26 pgage Exp
+ * @version $Id: EntityTable.java,v 1.3 1999-03-12 19:24:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dom.Entity

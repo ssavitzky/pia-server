@@ -1,5 +1,5 @@
 // Declaration.java
-// Declaration.java,v 1.2 1999/03/01 23:45:12 pgage Exp
+// $Id: Declaration.java,v 1.3 1999-03-12 19:24:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 // T_LinkedList.java
-// T_LinkedList.java,v 1.2 1999/03/01 23:48:07 pgage Exp
+// $Id: T_LinkedList.java,v 1.3 1999-03-12 19:30:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

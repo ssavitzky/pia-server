@@ -1,5 +1,5 @@
 ////// Parser.java: Parser interface
-//	Parser.java,v 1.8 1999/03/01 23:45:33 pgage Exp
+//	$Id: Parser.java,v 1.3 1999-03-12 19:24:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import java.io.Reader;
  *	Being a ProcessorInput, the Parser gets all of the syntactic
  *	information and parse-stack state it needs from the Processor.
  *
- * @version Parser.java,v 1.8 1999/03/01 23:45:33 pgage Exp
+ * @version $Id: Parser.java,v 1.3 1999-03-12 19:24:58 steve Exp $
  * @author steve@rsv.ricoh.com */
 
 public interface Parser extends ProcessorInput {

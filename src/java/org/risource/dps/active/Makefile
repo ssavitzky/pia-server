@@ -1,5 +1,5 @@
 ###### dps/active/Makefile:	DPS active document classes
-# 	Makefile,v 1.11 1999/03/02 00:46:13 pgage Exp
+# 	$Id: Makefile,v 1.3 1999-03-12 19:25:25 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

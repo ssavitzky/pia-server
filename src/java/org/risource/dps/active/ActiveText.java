@@ -1,5 +1,5 @@
 ////// ActiveText.java: Active Text node (parse tree element) interface
-//	ActiveText.java,v 1.2 1999/03/01 23:45:43 pgage Exp
+//	$Id: ActiveText.java,v 1.3 1999-03-12 19:25:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version ActiveText.java,v 1.2 1999/03/01 23:45:43 pgage Exp
+ * @version $Id: ActiveText.java,v 1.3 1999-03-12 19:25:23 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.Active

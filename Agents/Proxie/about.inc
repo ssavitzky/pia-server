@@ -26,4 +26,4 @@
     Web. 
 <p>  
 
-<inc-footer cvsid="about.inc,v 1.1 1999/02/04 17:44:44 steve Exp">
+<inc-footer cvsid="$Id: about.inc,v 1.2 1999-03-12 19:22:23 steve Exp $">

@@ -1,5 +1,5 @@
 ////// agentRunning.java:  Handler for <agent-home>
-//	agentRunning.java,v 1.2 1999/03/01 23:48:02 pgage Exp
+//	$Id: agentRunning.java,v 1.3 1999-03-12 19:30:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

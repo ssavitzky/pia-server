@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>The &AGENT:name; agent home page</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -120,5 +120,5 @@ provided for fixing old History directories.<p>
 <pre><protect result markup>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid="home.xh,v 1.5 1999/03/02 20:24:34 pgage Exp">
+<footer cvsid="$Id: home.xh,v 1.2 1999-03-12 19:22:30 steve Exp $">
 </body></html>

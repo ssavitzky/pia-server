@@ -1,5 +1,5 @@
 ////// Input.java: Depth-first enumerator for parse trees
-//	Input.java,v 1.9 1999/03/01 23:45:30 pgage Exp
+//	$Id: Input.java,v 1.3 1999-03-12 19:24:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,7 @@ import org.risource.dom.Element;
  *	have to ``look ahead'' to ensure that <code>hasMoreElements</code>
  *	can return an accurate result. <p>
  *
- * @version Input.java,v 1.9 1999/03/01 23:45:30 pgage Exp
+ * @version $Id: Input.java,v 1.3 1999-03-12 19:24:54 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Token

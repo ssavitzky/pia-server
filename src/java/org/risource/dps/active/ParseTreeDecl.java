@@ -1,5 +1,5 @@
 ////// ParseTreeDecl.java -- implementation of ActiveDeclaration
-//	ParseTreeDecl.java,v 1.7 1999/03/01 23:45:50 pgage Exp
+//	$Id: ParseTreeDecl.java,v 1.3 1999-03-12 19:25:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveDecl interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version ParseTreeDecl.java,v 1.7 1999/03/01 23:45:50 pgage Exp
+ * @version $Id: ParseTreeDecl.java,v 1.3 1999-03-12 19:25:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode

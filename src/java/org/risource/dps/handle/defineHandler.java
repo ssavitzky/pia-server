@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	defineHandler.java,v 1.15 1999/03/01 23:46:09 pgage Exp
+//	$Id: defineHandler.java,v 1.3 1999-03-12 19:26:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version defineHandler.java,v 1.15 1999/03/01 23:46:09 pgage Exp
+ * @version $Id: defineHandler.java,v 1.3 1999-03-12 19:26:10 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

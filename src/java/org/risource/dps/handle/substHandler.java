@@ -1,5 +1,5 @@
 ////// Subst.java:  Handler for <subst>
-//	substHandler.java,v 1.11 1999/03/01 23:46:24 pgage Exp
+//	$Id: substHandler.java,v 1.4 1999-03-12 19:26:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

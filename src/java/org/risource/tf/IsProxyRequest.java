@@ -1,5 +1,5 @@
 // IsProxyRequest.java
-// IsProxyRequest.java,v 1.6 1999/03/01 23:48:22 pgage Exp
+// $Id: IsProxyRequest.java,v 1.3 1999-03-12 19:30:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

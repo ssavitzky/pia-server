@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	AbstractParser.java,v 1.18 1999/03/01 23:46:38 pgage Exp
+//	$Id: AbstractParser.java,v 1.3 1999-03-12 19:27:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,7 +57,7 @@ import org.risource.dps.active.*;
  *
  * <p>
  *
- * @version AbstractParser.java,v 1.18 1999/03/01 23:46:38 pgage Exp
+ * @version $Id: AbstractParser.java,v 1.3 1999-03-12 19:27:13 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */

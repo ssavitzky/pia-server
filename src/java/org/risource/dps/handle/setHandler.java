@@ -1,5 +1,5 @@
 ////// setHandler.java: <set> Handler implementation
-//	setHandler.java,v 1.8 1999/03/01 23:46:22 pgage Exp
+//	$Id: setHandler.java,v 1.3 1999-03-12 19:26:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.util.*;
  * <p>	This is an approximation to the legacy &gt;set&gt;; it lacks many
  *	of the old extraction modifiers, which have moved to &lt;extract&gt;.
  *
- * @version setHandler.java,v 1.8 1999/03/01 23:46:22 pgage Exp
+ * @version $Id: setHandler.java,v 1.3 1999-03-12 19:26:33 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

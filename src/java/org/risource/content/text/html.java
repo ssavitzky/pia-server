@@ -1,5 +1,5 @@
 //  html.java
-// html.java,v 1.9 1999/03/01 23:45:08 pgage Exp
+// $Id: html.java,v 1.4 1999-03-12 19:24:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// ParseTreeElement.java -- implementation of ActiveElement
-//	ParseTreeElement.java,v 1.16 1999/03/01 23:45:51 pgage Exp
+//	$Id: ParseTreeElement.java,v 1.3 1999-03-12 19:25:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version ParseTreeElement.java,v 1.16 1999/03/01 23:45:51 pgage Exp
+ * @version $Id: ParseTreeElement.java,v 1.3 1999-03-12 19:25:38 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dom.Element

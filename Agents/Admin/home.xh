@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>&piaUSER;'s &AGENT:name;: Home Page</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -77,5 +77,5 @@ generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
 </dl>
 
 
-<footer cvsid='home.xh,v 1.4 1999/03/02 20:24:28 pgage Exp'>
+<footer cvsid='$Id: home.xh,v 1.3 1999-03-12 19:21:57 steve Exp $'>
 </body></html>

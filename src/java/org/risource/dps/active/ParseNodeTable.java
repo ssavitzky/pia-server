@@ -1,5 +1,5 @@
 // ParseNodeTable.java
-// ParseNodeTable.java,v 1.3 1999/03/01 23:45:47 pgage Exp
+// $Id: ParseNodeTable.java,v 1.3 1999-03-12 19:25:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

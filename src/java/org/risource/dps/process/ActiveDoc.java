@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	ActiveDoc.java,v 1.16 1999/03/01 23:46:42 pgage Exp
+//	$Id: ActiveDoc.java,v 1.3 1999-03-12 19:27:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing InterForm files in the PIA.
  *
- * @version ActiveDoc.java,v 1.16 1999/03/01 23:46:42 pgage Exp
+ * @version $Id: ActiveDoc.java,v 1.3 1999-03-12 19:27:18 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia

@@ -1,5 +1,5 @@
 // Logger.java
-// $Id: Logger.java,v 1.3 1999-03-12 17:02:41 steve Exp $
+// $Id: Logger.java,v 1.4 1999-03-12 19:29:24 steve Exp $
 // From: Id: CommonLogger.java,v 1.12 1996/10/01 18:45:00 abaird 
 
 /*****************************************************************************
@@ -25,7 +25,7 @@
 // Please first read the full copyright statement in file COPYRIGHT.html
 //
 // Logger.java -- modified from CommonLogger; does not inherit from any class
-// Logger.java,v 1.12 1999/03/01 23:47:37 pgage Exp
+// $Id: Logger.java,v 1.4 1999-03-12 19:29:24 steve Exp $
 // (c) COPYRIGHT Ricoh California Research Center, 1997.
 
 package org.risource.pia;

@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	Loader.java,v 1.5 1999/03/01 23:46:04 pgage Exp
+//	$Id: Loader.java,v 1.3 1999-03-12 19:26:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 // Tabular.java -- interface for tabular data
-// 	Tabular.java,v 1.4 1999/03/01 23:47:12 pgage Exp
+// 	$Id: Tabular.java,v 1.3 1999-03-12 19:28:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import java.util.Enumeration;
  * 	<code>HashTable</code> and <code>Map</code>. This is in contrast with
  * 	the older <code>Stuff</code>, which is derived from Perl.
  *
- * @version Tabular.java,v 1.4 1999/03/01 23:47:12 pgage Exp
+ * @version $Id: Tabular.java,v 1.3 1999-03-12 19:28:49 steve Exp $
  * @author steve@rsv.ricoh.com
  * @see java.util.HashTable
  * @see org.risource.ds.Stuff

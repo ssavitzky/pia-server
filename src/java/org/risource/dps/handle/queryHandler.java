@@ -1,5 +1,5 @@
 ////// queryHandler.java: <QUERY> Handler implementation
-//	queryHandler.java,v 1.2 1999/03/01 23:46:21 pgage Exp
+//	$Id: queryHandler.java,v 1.3 1999-03-12 19:26:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.util.*;
  *
  * This is a data structure object<p>	
  *
- * @version queryHandler.java,v 1.2 1999/03/01 23:46:21 pgage Exp
+ * @version $Id: queryHandler.java,v 1.3 1999-03-12 19:26:30 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

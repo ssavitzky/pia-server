@@ -1,5 +1,5 @@
 // FileAccess.java
-// FileAccess.java,v 1.23 1999/03/01 23:47:23 pgage Exp
+// $Id: FileAccess.java,v 1.4 1999-03-12 19:29:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

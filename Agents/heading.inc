@@ -20,4 +20,4 @@
 	<then><get entity name=title></then>
 	<else>&fileName;</else></if></th></tr>
 </table>
-<!-- heading.inc,v 1.7 1997/10/17 16:40:58 steve Exp -->
+<!-- $Id: heading.inc,v 1.2 1999-03-12 19:21:51 steve Exp $ -->

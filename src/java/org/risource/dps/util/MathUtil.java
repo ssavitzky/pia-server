@@ -1,5 +1,5 @@
 ////// MathUtil.java: Mathematical Utilities
-//	MathUtil.java,v 1.9 1999/03/01 23:47:00 pgage Exp
+//	$Id: MathUtil.java,v 1.3 1999-03-12 19:28:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
  *	A list is normally handled as an Enumeration, and a number as
  *	an Association between a Node and its value.
  *
- * @version MathUtil.java,v 1.9 1999/03/01 23:47:00 pgage Exp
+ * @version $Id: MathUtil.java,v 1.3 1999-03-12 19:28:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.ds.Association

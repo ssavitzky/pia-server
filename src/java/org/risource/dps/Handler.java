@@ -1,5 +1,5 @@
 ////// Handler.java: Node Handler interface
-//	Handler.java,v 1.12 1999/03/01 23:45:28 pgage Exp
+//	$Id: Handler.java,v 1.3 1999-03-12 19:24:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dom.NodeList;
  *	required during processing.  Their combination in Handler reflects
  *	the fact that the two are almost always tied together.
  *
- * @version Handler.java,v 1.12 1999/03/01 23:45:28 pgage Exp
+ * @version $Id: Handler.java,v 1.3 1999-03-12 19:24:53 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor

@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	TextUtil.java,v 1.16 1999/03/01 23:47:03 pgage Exp
+//	$Id: TextUtil.java,v 1.3 1999-03-12 19:28:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version TextUtil.java,v 1.16 1999/03/01 23:47:03 pgage Exp
+ * @version $Id: TextUtil.java,v 1.3 1999-03-12 19:28:30 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */

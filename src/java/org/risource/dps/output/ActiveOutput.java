@@ -1,5 +1,5 @@
 ////// ActiveOutput.java: Token output Stream abstract base class
-//	ActiveOutput.java,v 1.4 1999/03/01 23:46:31 pgage Exp
+//	$Id: ActiveOutput.java,v 1.3 1999-03-12 19:26:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,7 +32,7 @@ import org.risource.dom.*;
  * An abstract base class for implementations of the Output interface
  *	that operate exclusively on ActiveNode's.<p>
  *
- * @version ActiveOutput.java,v 1.4 1999/03/01 23:46:31 pgage Exp
+ * @version $Id: ActiveOutput.java,v 1.3 1999-03-12 19:26:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input

@@ -1,5 +1,5 @@
 // List.java
-// List.java,v 1.10 1999/03/01 23:47:08 pgage Exp
+// $Id: List.java,v 1.3 1999-03-12 19:28:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

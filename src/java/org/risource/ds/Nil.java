@@ -1,5 +1,5 @@
 // Nil.java
-// Nil.java,v 1.2 1999/03/01 23:47:09 pgage Exp
+// $Id: Nil.java,v 1.3 1999-03-12 19:28:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// EntityWrap.java -- implementation of ActiveEntity
-//	EntityWrap.java,v 1.3 1999/03/01 23:46:57 pgage Exp
+//	$Id: EntityWrap.java,v 1.3 1999-03-12 19:28:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that wraps an arbitrary 
  *	object.  This is intended for use in NamespaceWrap.
  *
- * @version EntityWrap.java,v 1.3 1999/03/01 23:46:57 pgage Exp
+ * @version $Id: EntityWrap.java,v 1.3 1999-03-12 19:28:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode

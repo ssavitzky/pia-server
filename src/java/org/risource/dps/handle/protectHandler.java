@@ -1,5 +1,5 @@
 ////// protectHandler.java: <protect> Handler implementation
-//	protectHandler.java,v 1.5 1999/03/01 23:46:20 pgage Exp
+//	$Id: protectHandler.java,v 1.3 1999-03-12 19:26:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;protect&gt;....&lt;/&gt;  <p>
  *
- * @version protectHandler.java,v 1.5 1999/03/01 23:46:20 pgage Exp
+ * @version $Id: protectHandler.java,v 1.3 1999-03-12 19:26:29 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

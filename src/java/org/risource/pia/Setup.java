@@ -1,5 +1,5 @@
 // Setup.java
-// Setup.java,v 1.7 1999/03/01 23:47:47 pgage Exp
+// $Id: Setup.java,v 1.5 1999-03-12 19:29:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

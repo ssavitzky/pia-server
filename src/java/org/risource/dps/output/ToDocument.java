@@ -1,5 +1,5 @@
 ////// ToDocument.java: Token output Stream to Document
-//	ToDocument.java,v 1.6 1999/03/01 23:46:35 pgage Exp
+//	$Id: ToDocument.java,v 1.3 1999-03-12 19:27:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
  * The basic implementation for a consumer of Token objects.<p>
  *
  *
- * @version ToDocument.java,v 1.6 1999/03/01 23:46:35 pgage Exp
+ * @version $Id: ToDocument.java,v 1.3 1999-03-12 19:27:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input

@@ -1,5 +1,5 @@
 // Utilities.java
-// Utilities.java,v 1.29 1999/03/01 23:48:29 pgage Exp
+// $Id: Utilities.java,v 1.3 1999-03-12 19:31:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

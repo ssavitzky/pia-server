@@ -1,5 +1,5 @@
 ////// NodeType.java: Document Processor basic implementation
-//	NodeType.java,v 1.8 1999/03/01 23:45:32 pgage Exp
+//	$Id: NodeType.java,v 1.3 1999-03-12 19:24:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,7 +29,7 @@ package org.risource.dps;
  * <p> This class mainly exists to compensate for the lack of enumerated
  *	types in Java.
  *
- * @version NodeType.java,v 1.8 1999/03/01 23:45:32 pgage Exp
+ * @version $Id: NodeType.java,v 1.3 1999-03-12 19:24:57 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Token

@@ -1,5 +1,5 @@
 ### text.make
-# text.make,v 1.2 1999/01/05 20:18:31 steve Exp
+# $Id: text.make,v 1.2 1999-03-12 19:23:03 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 
 ########################################################################

@@ -1,5 +1,5 @@
 // T_BasicNamedNodeList.java
-// T_BasicNamedNodeList.java,v 1.2 1999/03/01 23:48:04 pgage Exp
+// $Id: T_BasicNamedNodeList.java,v 1.3 1999-03-12 19:30:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

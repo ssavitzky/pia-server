@@ -1,5 +1,5 @@
 ### subdir.make -- makefile template for subdirectories
-# 	subdir.make,v 1.5 1999/01/07 01:55:19 steve Exp
+# 	$Id: subdir.make,v 1.2 1999-03-12 19:23:02 steve Exp $
 # 	COPYRIGHT 1997, Ricoh Silicon Valley
 
 ########################################################################
@@ -52,7 +52,7 @@ setup::
 
 setupSub: 
 	echo   '### Makefile for' $(MYPATH) 			 > Makefile
-	echo   '#	$subdir.make,v 1.5 1999/01/07 01:55:19 steve Exp$	'				>> Makefile
+	echo   '#	$$Id: subdir.make,v 1.2 1999-03-12 19:23:02 steve Exp $$	'				>> Makefile
 	echo   '# 	COPYRIGHT 1998, Ricoh Silicon Valley' 	>> Makefile
 	echo    						>> Makefile
 	[ -z $(ABSPIA) ] || echo 'ABSPIA=$(ABSPIA)'		>> Makefile

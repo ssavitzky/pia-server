@@ -1,5 +1,5 @@
 ////// actionHandler.java: <action> Handler implementation
-//	actionHandler.java,v 1.4 1999/03/01 23:46:07 pgage Exp
+//	$Id: actionHandler.java,v 1.3 1999-03-12 19:26:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version actionHandler.java,v 1.4 1999/03/01 23:46:07 pgage Exp
+ * @version $Id: actionHandler.java,v 1.3 1999-03-12 19:26:07 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

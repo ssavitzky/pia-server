@@ -1,5 +1,5 @@
 ////// ActiveDocument.java: Active Document (parse tree) interface
-//	ActiveDocument.java,v 1.2 1999/03/01 23:45:40 pgage Exp
+//	$Id: ActiveDocument.java,v 1.3 1999-03-12 19:25:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version ActiveDocument.java,v 1.2 1999/03/01 23:45:40 pgage Exp
+ * @version $Id: ActiveDocument.java,v 1.3 1999-03-12 19:25:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.Active

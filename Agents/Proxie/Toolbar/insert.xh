@@ -1,4 +1,4 @@
-<!-- insert.xh,v 1.1 1999/02/04 17:44:52 steve Exp -->
+<!-- $Id: insert.xh,v 1.2 1999-03-12 19:22:37 steve Exp $ -->
 &AGENT:name; agent<br>
 <if><test exact match="&AGENT:name;">&AGENT:type;</test>
     <then> 

@@ -1,5 +1,5 @@
 #!/usr/bin/perl -n
-#  stringify.pl,v 1.3 1999/03/02 01:02:33 pgage Exp
+#  $Id: stringify.pl,v 1.2 1999-03-12 19:30:02 steve Exp $
 
 ##############################################################################
  # The contents of this file are subject to the Ricoh Source Code Public

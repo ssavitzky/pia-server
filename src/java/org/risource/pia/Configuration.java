@@ -1,5 +1,5 @@
 // Configuration.java
-// Configuration.java,v 1.3 1999/03/01 23:47:18 pgage Exp
+// $Id: Configuration.java,v 1.4 1999-03-12 19:28:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

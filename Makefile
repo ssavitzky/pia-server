@@ -1,5 +1,5 @@
 ### Makefile for pia
-#	Makefile,v 1.16 1999/03/02 20:24:11 pgage Exp
+#	$Id: Makefile,v 1.4 1999-03-12 19:21:49 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public

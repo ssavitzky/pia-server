@@ -1,5 +1,5 @@
 ////// Log.java: log utilities
-//	Log.java,v 1.3 1999/03/01 23:47:00 pgage Exp
+//	$Id: Log.java,v 1.3 1999-03-12 19:28:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.active.*;
  *	This class contains static methods used for maintaining and 
  *	formatting a message log.
  *
- * @version Log.java,v 1.3 1999/03/01 23:47:00 pgage Exp
+ * @version $Id: Log.java,v 1.3 1999-03-12 19:28:22 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Context

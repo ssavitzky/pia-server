@@ -1,5 +1,5 @@
 ////// TypicalHandler.java: <typical> Handler implementation
-//	TypicalHandler.java,v 1.15 1999/03/01 23:46:06 pgage Exp
+//	$Id: TypicalHandler.java,v 1.3 1999-03-12 19:26:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.util.*;
  *
  * <p>	
  *
- * @version TypicalHandler.java,v 1.15 1999/03/01 23:46:06 pgage Exp
+ * @version $Id: TypicalHandler.java,v 1.3 1999-03-12 19:26:05 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

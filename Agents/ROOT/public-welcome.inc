@@ -22,4 +22,4 @@ href="/PIA/Doc/demos.html">Demos</a>.
 	experimental use.  Constructive criticisms is greatly appreciated.
 	Report bugs to the PIA group.
 
-<!-- public-welcome.inc,v 1.1 1999/02/04 17:44:01 steve Exp -->
+<!-- $Id: public-welcome.inc,v 1.3 1999-03-12 19:22:45 steve Exp $ -->

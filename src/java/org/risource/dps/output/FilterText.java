@@ -1,5 +1,5 @@
 ////// FilterText: text-only filter for an Output
-//	FilterText.java,v 1.4 1999/03/01 23:46:32 pgage Exp
+//	$Id: FilterText.java,v 1.3 1999-03-12 19:27:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import java.io.PrintStream;
 /**
  * An Output filter that passes only Text (and Entity) nodes <p>
  *
- * @version FilterText.java,v 1.4 1999/03/01 23:46:32 pgage Exp
+ * @version $Id: FilterText.java,v 1.3 1999-03-12 19:27:00 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 

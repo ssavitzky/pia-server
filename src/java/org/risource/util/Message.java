@@ -1,5 +1,5 @@
 ////// Message.java: Interface for an error or debugging message
-//	Message.java,v 1.2 1999/03/01 23:48:26 pgage Exp
+//	$Id: Message.java,v 1.3 1999-03-12 19:31:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ import java.util.NoSuchElementException;
  *	``Ordinary'' errors, also called ``user'' errors, are those
  *	caused by invalid input. <p>
  *
- * @version Message.java,v 1.2 1999/03/01 23:48:26 pgage Exp
+ * @version $Id: Message.java,v 1.3 1999-03-12 19:31:02 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.util.Report

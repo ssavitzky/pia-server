@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	CurrentActive.java,v 1.11 1999/03/01 23:46:55 pgage Exp
+//	$Id: CurrentActive.java,v 1.3 1999-03-12 19:28:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version CurrentActive.java,v 1.11 1999/03/01 23:46:55 pgage Exp
+ * @version $Id: CurrentActive.java,v 1.3 1999-03-12 19:28:11 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor

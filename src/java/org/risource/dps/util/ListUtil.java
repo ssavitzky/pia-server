@@ -1,5 +1,5 @@
 ////// ListUtil.java: List-Processing Utilities
-//	ListUtil.java,v 1.11 1999/03/01 23:46:59 pgage Exp
+//	$Id: ListUtil.java,v 1.3 1999-03-12 19:28:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	In most cases, a list result is returned as an Enumeration.
  *	This avoids constructing a NodeList when it's not needed.
  *
- * @version ListUtil.java,v 1.11 1999/03/01 23:46:59 pgage Exp
+ * @version $Id: ListUtil.java,v 1.3 1999-03-12 19:28:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see java.util.Enumeration

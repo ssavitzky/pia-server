@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	Status.java,v 1.3 1999/03/01 23:47:02 pgage Exp
+//	$Id: Status.java,v 1.3 1999-03-12 19:28:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import java.net.HttpURLConnection;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version Status.java,v 1.3 1999/03/01 23:47:02 pgage Exp
+ * @version $Id: Status.java,v 1.3 1999-03-12 19:28:28 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

@@ -1,5 +1,5 @@
 ###### org/w3c/Makefile:	World Wide Web Consortium
-# 	Makefile,v 1.2 1999/03/02 00:46:28 pgage Exp
+# 	$Id: Makefile,v 1.2 1999-03-12 19:31:13 steve Exp $
 
 PACKAGE=org.w3c
 TOPDIR=../..

@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// HTTPResponse.java,v 1.21 1999/03/01 23:47:33 pgage Exp
+// $Id: HTTPResponse.java,v 1.3 1999-03-12 19:29:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

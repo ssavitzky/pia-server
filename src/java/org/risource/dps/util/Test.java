@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	Test.java,v 1.9 1999/03/01 23:47:02 pgage Exp
+//	$Id: Test.java,v 1.3 1999-03-12 19:28:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.dps.output.*;
  *	This class contains static methods used for computing tests
  *	(booleans) on nodes and strings.
  *
- * @version Test.java,v 1.9 1999/03/01 23:47:02 pgage Exp
+ * @version $Id: Test.java,v 1.3 1999-03-12 19:28:29 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

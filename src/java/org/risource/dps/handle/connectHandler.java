@@ -1,5 +1,5 @@
 ////// connectHandler.java: <connect> Handler implementation
-//	connectHandler.java,v 1.8 1999/03/01 23:46:07 pgage Exp
+//	$Id: connectHandler.java,v 1.3 1999-03-12 19:26:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.io.*;
  *	within external entities.  That suggests that the best implementation
  *	is simply to create a suitable entity and return its value.
  *
- * @version connectHandler.java,v 1.8 1999/03/01 23:46:07 pgage Exp
+ * @version $Id: connectHandler.java,v 1.3 1999-03-12 19:26:08 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

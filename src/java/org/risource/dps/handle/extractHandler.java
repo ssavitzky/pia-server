@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	extractHandler.java,v 1.4 1999/03/01 23:46:11 pgage Exp
+//	$Id: extractHandler.java,v 1.4 1999-03-12 19:26:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version extractHandler.java,v 1.4 1999/03/01 23:46:11 pgage Exp
+ * @version $Id: extractHandler.java,v 1.4 1999-03-12 19:26:14 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {

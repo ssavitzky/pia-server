@@ -1,5 +1,5 @@
 ###### org/w3c/dom/Makefile:	Document Object Model
-# 	Makefile,v 1.3 1999/03/02 00:46:28 pgage Exp
+# 	$Id: Makefile,v 1.2 1999-03-12 19:31:14 steve Exp $
 
 
 PACKAGE=org.w3c.dom

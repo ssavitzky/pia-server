@@ -1,5 +1,5 @@
 ////// Report.java: Error and debugging message reporting
-//	Report.java,v 1.2 1999/03/01 23:48:28 pgage Exp
+//	$Id: Report.java,v 1.3 1999-03-12 19:31:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ import java.util.NoSuchElementException;
  *	``Ordinary'' errors, also called ``user'' errors, are those
  *	caused by invalid input. <p>
  *
- * @version Report.java,v 1.2 1999/03/01 23:48:28 pgage Exp
+ * @version $Id: Report.java,v 1.3 1999-03-12 19:31:06 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.util.Severity

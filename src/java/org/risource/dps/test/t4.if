@@ -22,5 +22,5 @@ should be '' '<authenticate user=foobax password="frobozz" file=t4.tmp1>'
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
 <!-- the following conditional keeps the id out of the results --><if>
-<then><b>t4.if,v 1.1 1998/03/20 23:28:13 steve Exp</b><br></then></if>
+<then><b>t4$Id: t4.if,v 1.2 1999-03-12 19:28:01 steve Exp $</b><br></then></if>
 </body></html>

@@ -1,5 +1,5 @@
 ### package.make
-# 	package.make,v 1.14 1999/02/22 21:20:15 steve Exp
+# 	$Id: package.make,v 1.2 1999-03-12 19:24:00 steve Exp $
 # 	COPYRIGHT 1997, Ricoh California Research Center
 # 	Portions COPYRIGHT 1997, Sun Microsystems
 

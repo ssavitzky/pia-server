@@ -1,4 +1,4 @@
-# robots.txt,v 1.1 1999/02/04 17:44:03 steve Exp
+# $Id: robots.txt,v 1.2 1999-03-12 19:22:46 steve Exp $
 User-agent: *
 Disallow: / #Comment out this line to allow robots into your PIA
  

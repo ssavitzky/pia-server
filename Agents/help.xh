@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Generic Help Page for &AGENT:name;</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -61,5 +61,5 @@ links to the documentation and to many useful InterForms, can be
 found on the <a href="/Admin">Admin Agent's home page</a>.
 
 <hr>
-<footer cvsid="help.xh,v 1.4 1999/03/02 20:24:23 pgage Exp">
+<footer cvsid="$Id: help.xh,v 1.2 1999-03-12 19:21:52 steve Exp $">
 </body></html>

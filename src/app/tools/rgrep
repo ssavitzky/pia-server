@@ -1,6 +1,6 @@
 #!/bin/sh
 #	Recursive grep
-#	files-containing,v 1.1 1997/08/12 22:51:49 steve Exp
+#	$Id: rgrep,v 1.2 1999-03-12 19:23:54 steve Exp $
 
 
 find . '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \

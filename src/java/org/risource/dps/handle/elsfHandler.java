@@ -1,5 +1,5 @@
 ////// elsfHandler.java: Node Handler generic implementation
-//	elsfHandler.java,v 1.6 1999/03/01 23:46:10 pgage Exp
+//	$Id: elsfHandler.java,v 1.3 1999-03-12 19:26:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version elsfHandler.java,v 1.6 1999/03/01 23:46:10 pgage Exp
+ * @version $Id: elsfHandler.java,v 1.3 1999-03-12 19:26:12 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor

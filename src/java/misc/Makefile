@@ -1,5 +1,5 @@
 ###### misc/Makefile:	Miscelaneous Java classes.
-#	Makefile,v 1.2 1999/03/02 00:46:27 pgage Exp
+#	$Id: Makefile,v 1.2 1999-03-12 19:24:03 steve Exp $
 
 PACKAGE="misc"
 TOPDIR=..

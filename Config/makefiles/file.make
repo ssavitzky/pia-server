@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-# file.make,v 1.3 1998/12/22 23:58:01 steve Exp
+# $Id: file.make,v 1.2 1999-03-12 19:22:59 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 
 ########################################################################

@@ -1,5 +1,5 @@
 // UnknownNameException.java
-// UnknownNameException.java,v 1.2 1999/03/01 23:48:25 pgage Exp
+// $Id: UnknownNameException.java,v 1.3 1999-03-12 19:30:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

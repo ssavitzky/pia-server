@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	GenericHandler.java,v 1.27 1999/03/01 23:46:02 pgage Exp
+//	$Id: GenericHandler.java,v 1.3 1999-03-12 19:25:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.output.DiscardOutput;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version GenericHandler.java,v 1.27 1999/03/01 23:46:02 pgage Exp
+ * @version $Id: GenericHandler.java,v 1.3 1999-03-12 19:25:57 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler

@@ -1,5 +1,5 @@
 ////// Msg.java: Error or debugging message
-//	Msg.java,v 1.3 1999/03/01 23:48:27 pgage Exp
+//	$Id: Msg.java,v 1.3 1999-03-12 19:31:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ package org.risource.util;
  *	MessageFactory interface, and a GenericMessageFactory class.
  *	It seems likely that this class will be used a lot, however. <p>
  *
- * @version Msg.java,v 1.3 1999/03/01 23:48:27 pgage Exp
+ * @version $Id: Msg.java,v 1.3 1999-03-12 19:31:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.util.Report

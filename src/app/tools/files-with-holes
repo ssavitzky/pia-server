@@ -1,6 +1,6 @@
 #!/bin/sh
 #	Display the names of files that contain a "hole"
-#	files-with-holes,v 1.1 1997/08/12 22:51:50 steve Exp
+#	$Id: files-with-holes,v 1.2 1999-03-12 19:23:52 steve Exp $
 
 re="${1-[^=]===[^=]|unimplemented|eventually}"
 

@@ -1,5 +1,5 @@
 ////// valueHandler.java: <value> Handler implementation
-//	valueHandler.java,v 1.4 1999/03/01 23:46:29 pgage Exp
+//	$Id: valueHandler.java,v 1.3 1999-03-12 19:26:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version valueHandler.java,v 1.4 1999/03/01 23:46:29 pgage Exp
+ * @version $Id: valueHandler.java,v 1.3 1999-03-12 19:26:46 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Using &AGENT:type; Agents</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
@@ -73,5 +73,5 @@ href="/History">History</a> agent's data directory:
   <dd> <a href="/~History/last.html">/~History/last.html</a>
 </dl>
 
-<footer cvsid="using.xh,v 1.3 1999/03/02 20:24:39 pgage Exp">
+<footer cvsid="$Id: using.xh,v 1.2 1999-03-12 19:22:37 steve Exp $">
 </body></html>

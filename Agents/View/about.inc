@@ -5,4 +5,4 @@
 ``&agentName;'' allows you to view documents after processing them with a
 tagset or script.
 
-<inc-footer cvsid="about.inc,v 1.1 1999/01/14 01:37:49 steve Exp">
+<inc-footer cvsid="$Id: about.inc,v 1.2 1999-03-12 19:22:54 steve Exp $">

@@ -1,5 +1,5 @@
 // T_agency.java
-// T_agency.java,v 1.5 1999/03/01 23:48:16 pgage Exp
+// $Id: T_agency.java,v 1.4 1999-03-12 19:30:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

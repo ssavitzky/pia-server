@@ -1,5 +1,5 @@
 ////// ParseTreeText.java -- implementation of ActiveText
-//	ParseTreeText.java,v 1.11 1999/03/01 23:45:57 pgage Exp
+//	$Id: ParseTreeText.java,v 1.3 1999-03-12 19:25:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.*;
  * An implementation of the ActiveText interface, suitable for use in 
  *	DPS parse.
  *
- * @version ParseTreeText.java,v 1.11 1999/03/01 23:45:57 pgage Exp
+ * @version $Id: ParseTreeText.java,v 1.3 1999-03-12 19:25:49 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.Context

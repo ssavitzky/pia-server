@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	tagsetHandler.java,v 1.9 1999/03/01 23:46:25 pgage Exp
+//	$Id: tagsetHandler.java,v 1.3 1999-03-12 19:26:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version tagsetHandler.java,v 1.9 1999/03/01 23:46:25 pgage Exp
+ * @version $Id: tagsetHandler.java,v 1.3 1999-03-12 19:26:38 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

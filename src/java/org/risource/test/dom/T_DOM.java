@@ -1,5 +1,5 @@
 // T_DOM.java
-// T_DOM.java,v 1.3 1999/03/01 23:48:06 pgage Exp
+// $Id: T_DOM.java,v 1.3 1999-03-12 19:30:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// ParseTreeAttribute.java -- implementation of ActiveAttribute
-//	ParseTreeAttribute.java,v 1.8 1999/03/01 23:45:48 pgage Exp
+//	$Id: ParseTreeAttribute.java,v 1.3 1999-03-12 19:25:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.*;
  * An implementation of the ActiveAttribute interface, suitable for use in 
  *	DPS parse.
  *
- * @version ParseTreeAttribute.java,v 1.8 1999/03/01 23:45:48 pgage Exp
+ * @version $Id: ParseTreeAttribute.java,v 1.3 1999-03-12 19:25:32 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode

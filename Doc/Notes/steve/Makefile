@@ -1,5 +1,5 @@
 ### Makefile for Doc/Notes/steve
-#	Makefile,v 1.2 1999/03/02 00:46:03 pgage Exp	
+#	$Id: Makefile,v 1.2 1999-03-12 19:23:24 steve Exp $	
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 #!/bin/sh
-# 	makeconfig,v 1.4 1997/07/21 20:57:02 rithy Exp
+# 	$Id: makeconfig,v 1.2 1999-03-12 19:23:38 steve Exp $
 # 	Generate property file for the PIA
 #
 # Usage: 

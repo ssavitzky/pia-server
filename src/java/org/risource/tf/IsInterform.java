@@ -1,5 +1,5 @@
 // IsInterForm.java
-// IsInterform.java,v 1.5 1999/03/01 23:48:20 pgage Exp
+// $Id: IsInterform.java,v 1.3 1999-03-12 19:30:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

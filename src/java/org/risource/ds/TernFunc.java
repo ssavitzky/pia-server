@@ -1,5 +1,5 @@
 // TernFunc.java
-// TernFunc.java,v 1.3 1999/03/01 23:47:12 pgage Exp
+// $Id: TernFunc.java,v 1.3 1999-03-12 19:28:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

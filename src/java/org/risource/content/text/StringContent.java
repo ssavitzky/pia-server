@@ -1,5 +1,5 @@
 //   StringContent.java
-// StringContent.java,v 1.4 1999/03/01 23:45:07 pgage Exp
+// $Id: StringContent.java,v 1.3 1999-03-12 19:24:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

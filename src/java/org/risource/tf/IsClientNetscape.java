@@ -1,5 +1,5 @@
 // IsClientNetscape.java
-// IsClientNetscape.java,v 1.5 1999/03/01 23:48:19 pgage Exp
+// $Id: IsClientNetscape.java,v 1.3 1999-03-12 19:30:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

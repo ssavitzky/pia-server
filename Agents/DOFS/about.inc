@@ -8,4 +8,4 @@
   </tr>
 </repeat>
 </table>
-<inc-footer cvsid="about.inc,v 1.1 1999/02/05 18:12:53 steve Exp">
+<inc-footer cvsid="$Id: about.inc,v 1.2 1999-03-12 19:22:07 steve Exp $">

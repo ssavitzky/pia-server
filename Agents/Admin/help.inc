@@ -9,4 +9,4 @@ The Agency agent is a sort of ``generic control panel'' for
 You should be able to find links to all of the information you need from the
 Agency's <a href="/Agency">home page</a>.  <p>
 
-<!-- help.inc,v 1.1 1999/02/04 17:42:41 steve Exp -->
+<!-- $Id: help.inc,v 1.2 1999-03-12 19:21:56 steve Exp $ -->

@@ -1,5 +1,5 @@
 ###### dps/parse/Makefile:	InterForm parsers
-# 	Makefile,v 1.5 1999/03/02 00:46:16 pgage Exp
+# 	$Id: Makefile,v 1.3 1999-03-12 19:27:17 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
