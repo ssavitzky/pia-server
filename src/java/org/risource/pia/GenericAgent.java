@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.23 1999-05-21 23:59:25 steve Exp $
+// $Id: GenericAgent.java,v 1.24 1999-05-25 23:08:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -322,7 +322,11 @@ public class GenericAgent extends BasicNamespace
   /** Flag that says whether to run the initialization file. */
   public boolean runInitFile = true;
 
-  protected ActiveDoc initProcessor;
+  /** A TopProcessor used during initialization.
+   *	Its first use is looking up the agent's tagsets; after that it is
+   *	used to process the initialization code. 
+   */
+  protected transient ActiveDoc initProcessor;
 
   /**
    * Set options with a hash table (typically a form).
@@ -366,6 +370,13 @@ public class GenericAgent extends BasicNamespace
     initialized=false;
   }
 
+  /** Perform the basic steps required for initialization.
+   *	This has to be idempotentent, because it may be called several times
+   *	depending on how the Agent is initialized.  Most notably it is called
+   *	in <code>loadFrom</code> to intialize from the attributes, and in
+   *	<code>initialize</code>, which is called when the Agent is registered
+   *	with the Resolver.
+   */
   protected void basicInitialization() {
     String n = name();
     String t = type();
