@@ -50,6 +50,15 @@ See also:
        Currently they're not defined, which causes several kinds of havoc.
        If we define them, need "retain" in many cases (e.g. &amp;nbsp;).
 
+  <li> <b>Bug</b> shouldn't split on whitespace sometimes <br>
+       e.g. in &lt;from&gt;, and possibly even &lt;foreach&gt;. 
+
+  <li> 1999-12-03 <b>Bug</b> parser doesn't insert &lt;/p&gt; properly <br>
+       Block tags like &lt;h*&gt; and &lt;ul&gt; have to be notInside
+       &lt;p&gt; for correct handling.<br>
+       -- Almost certainly still buggy.  Really need to look at the DTD and do
+	  it right.
+       
        <p>
 
   <li> 1999-11-08 <b>Bug</b> PropertyTable needs a handler. <br>
@@ -71,7 +80,8 @@ See also:
        -- &lt;make type=DOCTYPE&gt; works just fine. 
 
   <li> <b>Bug</b> subst bug <br>
-       seems to substitute for one char to the left of the match.
+       seems to substitute for one char to the left of the match.  This
+       appears to be a bug in the library.
 
   <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
 
@@ -225,5 +235,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.12 1999-11-24 22:41:35 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.13 1999-12-03 19:48:14 steve Exp $</b><br>
 </body></html>
