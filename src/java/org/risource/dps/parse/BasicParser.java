@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.10 1999-11-04 22:33:56 steve Exp $
+//	$Id: BasicParser.java,v 1.11 2000-07-24 16:56:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.10 1999-11-04 22:33:56 steve Exp $
+ * @version $Id: BasicParser.java,v 1.11 2000-07-24 16:56:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -98,12 +98,13 @@ public class BasicParser extends AbstractParser {
       } else try {
 	last = 0;
 	// blindly append character entities to the buffer!
+	char c;
 	if (ident.startsWith("x") || ident.startsWith("X")) {
-	  char c = (char)Integer.parseInt(ident, 16);
+	  c = (char)Integer.parseInt(ident, 16);
 	} else {
-	  char c = (char)Integer.parseInt(ident, 10);
-	  buf.append(c);
+	  c = (char)Integer.parseInt(ident, 10);
 	}
+	buf.append(c);
 	return false;
       } catch (NumberFormatException e) {
 	buf.append(entityStart); 
