@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.2 2000-02-25 22:30:28 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.3 2000-06-02 23:30:21 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -554,15 +554,16 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 
 <h3>Documentation Elements</h3>
 
-<define element="doc">
-  <doc> Contains documentation for the node being defined.  It can be either
-	retained or stripped out depending on how the enclosing namespace is
-	being processed.  Since it lacks a defined parent, it can be used in
-	any context.
+<define element="doc" syntax="quoted">
+  <doc> Contains documentation, e.g. for the node being defined.  It can be
+	either retained or stripped out depending on how the enclosing
+	namespace is being processed.  Since it lacks a defined parent, it can
+	be used in any context.
   </doc>
+  <action> </action>
 </define>
 
-<define element="note">
+<define element="note" syntax="quoted">
   <doc> This subelement contains attributed annotation for the node being
 	defined.  Whether it is retained or stripped depends on how the
 	enclosing namespace is processed.  Since it lacks a defined parent, it
@@ -573,6 +574,7 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 	   initials, login name, or e-mail address.
      </doc>
    </define>
+  <action> </action>
 </define>
 
 <h3>Name-Binding Elements</h3>
@@ -1288,19 +1290,19 @@ The logical elements are <tag>logical</tag> and <tag>test</tag>.
 	       <code>&lt;sort&gt;start-time&lt;/sort&gt;</code> would sort the
 	       current list by the values in the start-time tags.
          </doc>
-         <define attribute="numeric" optional="optional">
+       <define attribute="numeric" optional="optional">
            <doc>
 	       Sorts based on the "numeric" value of the tags' contents,
 	       which still uses text but interprets numbers as numbers
 	       rather than as character strings.
            </doc>
          </define>
-	               <define attribute="floatonly" optional="optional">
+       <define attribute="floatonly" optional="optional">
            <doc>Sort based on the floating-point interpretation
 	        of the tags' contents.
            </doc>
          </define>
-	               <define attribute="intonly" optional="optional">
+       <define attribute="intonly" optional="optional">
            <doc>Sort based on the integral interpretation
 	        of the tags' contents if possible.
            </doc>
