@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.8 2000-06-23 17:31:21 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.9 2000-06-24 00:42:12 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -147,7 +147,7 @@
 	       align="center" >
 	  <tr>
 	    <td valign="top"> 
-		 <a href="&npath;">View [URL annotations].</a>
+		 <a href="&npath;">View&nbsp;[URL&nbsp;annotations].</a>
 	    </td>
 	    <td> This will show you the <ss>WOAD</ss> annotations associated
 		 with this URL.  It will also show you a listing, similar to
@@ -157,7 +157,7 @@
 	  </tr>
 	  <tr>
 	    <td valign="top"> 
-		 <a href="&tpath;">View page on &lt;server&gt;.</a>
+		 <a href="&tpath;">View page&nbsp;on&nbsp;&lt;server&gt;.</a>
 	    </td>
 	    <td> This is a link to this page <em>on the server</em> -- in
 		 other words, it's what a user will see if they browse to the
@@ -189,10 +189,10 @@
   <tr><td><em>
       This <tt>&VAR:format;</tt> listing is color-coded and indented to show
       the nesting level of the tags.  
-
+       <br />
       <red>Note that because of current limitations omitted end tags are
-      shown, and linebreaks inside of tags are eliminated.  Missing end tags
-      may not be handled correctly.</red> </em>
+      shown, and linebreaks inside of tags are eliminated.  Omitted end tags
+      may not be in the right places.</red> </em>
   </td></tr>
 </table>
 <hr />
