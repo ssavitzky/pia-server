@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.4 1999-03-24 20:49:53 steve Exp $
+// $Id: Agent.java,v 1.5 1999-03-30 15:56:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,6 +50,7 @@ public class Agent extends TFComputer {
    */
   public org.risource.pia.Agent computeAgentFeatures(Transaction trans) {
     if (trans.isResponse()) trans = trans.requestTran();
+    if (trans == null) return null;
     if (! trans.test("agent-request")) return null;
 
     URL url = trans.requestURL();

@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.5 1999-03-24 17:32:07 steve Exp $
+// $Id: Resolver.java,v 1.6 1999-03-30 15:56:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -358,13 +358,12 @@ public class Resolver extends Thread {
 	  //	  Pia.debug(this,"exception caught in run");
 	  //	  e.printStackTrace();
 	}
-      }
-      else {
+      } else try {
 	tran = pop();
 	count++;
 
-	Pia.debug(this, "Popped "+count+", " + size()+ " left");
-
+	if (Pia.debug())
+	  Pia.debug(this, "Popped "+count+", " + size()+ " left.  Matching.");
 	/*
 	  Look for matches.
 	  Matching agents have their act_on method called with both the
@@ -372,20 +371,20 @@ public class Resolver extends Thread {
 	  transactions onto the resolver, push satisfiers onto the
 	  transaction, or directly modify the transaction.
 	  */
-	Pia.debug(this, "Attempting to match");
 	int n = match( tran );
-	Pia.debug(this, "..." + n + " matches");
+	if (Pia.debug())
+	  Pia.debug(this, "..." + n + " matches.  Satisfying.");
 	
 	/*
 	  Tell the transaction to go satisfy itself.  
 	  It does this by calling each of the handlers that matched agents
 	  have pushed onto its queue, and looking for a true response.
-	  */
-	
-	// do indirectly by notifying transaction that it is resolved,
-	// the transaction thread becomes responsible for running satisfy
-	Pia.debug(this, "Transaction resolves");
+	  Do it indirectly by notifying transaction that it is resolved,
+	*/
 	tran.resolved();      
+      } catch (Exception e) {
+	  System.err.println("Resolver caught exception in run()");
+	  e.printStackTrace();
       }
 
       if (System.currentTimeMillis() > cronTime + cronDELAY) 
@@ -421,10 +420,10 @@ public class Resolver extends Thread {
     
     while( e.hasMoreElements() ){
       agent = (Agent) e.nextElement();
-      Pia.debug(this, "   match " + agent.name() + "?");
+      if (Pia.debug()) Pia.debug(this, "   match " + agent.name() + "?");
 
       if (tran.matches( agent.criteria() )){
-	Pia.debug(this, "   matched " + agent.name());
+	if (Pia.debug()) Pia.debug(this, "   matched " + agent.name());
 	agent.actOn( tran, this );
 	++ matches;
       }
