@@ -140,7 +140,7 @@ entity decoding is useful in its current form.
 </p><p>
 <b>Result: </b><text decode='decode' entity='entity'>&amp; Co.</text>
 </p><p>
-<footer cvsid='$Id: demo_text.xh,v 1.7 1999-04-07 23:38:37 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_text.xh,v 1.8 1999-04-13 19:53:55 pgage Exp $' />
 
 </p></body></html>
 

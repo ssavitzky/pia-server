@@ -4,6 +4,8 @@
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>a classic example</header>
 <hr />
+<p>
 Hello world!
-<footer cvsid='$Id: hello-world.xh,v 1.4 1999-03-27 02:29:34 pgage Exp $' /></body><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+</p>
+<footer cvsid='$Id: hello-world.xh,v 1.5 1999-04-13 19:53:56 pgage Exp $' />
 </body></html>

@@ -82,7 +82,7 @@ The <a name='numeric_demo'>numeric handler demo</a> shows how to use the followi
 <br />
 <b>Result:</b><ul><numeric sort='sort' reverse='reverse'><li>88</li><li>77</li><li>11</li><li>99</li></numeric></ul>
 <p>
-<footer cvsid='$Id: demo_num.xh,v 1.5 1999-03-29 18:21:43 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_num.xh,v 1.6 1999-04-13 19:53:52 pgage Exp $' />
 
 </p></body></html>
 

@@ -115,7 +115,7 @@ return value is the "then" statement associated with the successful test.
 </if> 
 </p><p>
 
-<footer cvsid='$Id: demo_if.xh,v 1.5 1999-03-29 18:21:41 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_if.xh,v 1.6 1999-04-13 19:53:51 pgage Exp $' />
 
 </p></body></html>
 

@@ -25,7 +25,7 @@ The <a name='subst_demo'>subst demo</a> performs text substitution on node conte
 <br />
 <b> Result:</b> <subst match='argu' result='agre'>Argument between parties which argue</subst>
 <p>
-<footer cvsid='$Id: demo_subst.xh,v 1.4 1999-03-29 18:21:45 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_subst.xh,v 1.5 1999-04-13 19:53:55 pgage Exp $' />
 
 
 
