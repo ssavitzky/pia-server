@@ -18,6 +18,95 @@
 	projects.  
 </dl>
 
+<h2><a name="immediate">The Immediate Future</a></h2>
+
+<blockquote><em>
+  This section enumerates my plans for the immediate future.  Numbers in
+  parentheses give the current priority for the first few changes.  (x)
+  indicates an ongoing activity.
+</em></blockquote>
+
+<h3>Language</h3>
+<dl>
+  <dt> (1) Entity elimination
+  <dd> The idea is to define a constructor for elements, so that we don't have
+       to use entities as variables.  This will require a fair amount of grunt
+       work to fix all the <code>.xh</code> files.  An alternative requiring
+       more work would be to add an attribute to any element that indicates
+       that more attributes are contained in the content.
+  <dt> <code>#FIXED</code> attributes
+  <dd> XML allows attribute values to be specified in the DTD.  This is used
+       for namespaces, for example.  In the DPS, we could use this as a way of
+       decorating ordinary DOM nodes with the information needed by the DPS;
+       e.g. a handler hash table with keys in a <code>DPS:handler</code>
+       attribute.
+  <dt> <code>Namespaces</code>
+  <dd> Along the way we need to support XML namespaces; in particular DPS and
+       PIA namespaces. 
+</dl>
+
+<h3>DPS</h3>
+<dl>
+  <dt> (x) General interface cleanup
+  <dd> The plan is to clean up the DPS interfaces (especially Action and
+       Processor, which have accumulated a certain amount of cruft).  It might
+       be desirable to move some of the interfaces used internally
+       (e.g. Action) down into subdirectories.
+  <dt> (3) Standard interfaces
+  <dd> ToSAX, FromDOM, ToDOM.  Add SAXProxy wrapper for Processor.  It may be
+       desirable to use the packages <code>org.risource.sax</code> and
+       <code>org.risource.dom</code> (which already exists) for these, in
+       order to give a clean separation between the ``user-level'' API's and
+       the internal ones.
+  <dt> (4) Cursor cleanup
+  <dd> Improve the Cursor interface to the point where it can be used without
+       creating Node instances in most cases.
+  <dt> (5) Processor cleanup / event interface
+  <dd> The idea is not only to simplify Processor, but to add an event-driven
+       interface to it, the better to handle SAX parsers and similar
+       push-driven interfaces.
+  <dt> Event-driven Action interface
+  <dd> Add operations to the Action interface to improve efficiency when the
+       Processor is being driven from an event interface like SAX.
+</dl>
+
+<h3>Apache/C</h3>
+<dl>
+  <dt> <code>mod_pia</code>
+  <dd> Implement a PIA module, probably using <code>mod_java</code> as a
+       base.  This would be a ``quick-and-dirty'' implementation just to see
+       how the PIA fits into the Apache environment.
+  <dt> C-DPS
+  <dd> Implement a C++ port of the DPS, possibly using Jade as the base.  This
+       would be easiest to do after giving Processor an event interface.
+  <dt> Apache/C-DPS integration.
+  <dd> Actually, this would be greatly simplified if we skipped using
+       <code>mod_java</code> and started with C-DPS.
+</dl>
+
+<h3>Other</h3>
+<dl>
+  <dt> (x) Think about HTML/SGML support
+  <dd> We need to carefully think through the extent to which the PIA is going
+       to continue to support HTML and SGML as well as XML.  As long as the
+       Web consists primarily of HTML, and as long as we want to be able to
+       process documents from outside sources, it seems folly to abandon HTML
+       and SGML altogether. 
+  <dt> (2) PIA command line
+  <dd> The PIA's command-line processing needs to be simplified; it's
+       currently a kludge.  It should be possible to load agents from the
+       command line.
+  <dt> (x) Pia rationalization
+  <dd> Currently the <code>org.risource.pia.Pia</code> class is a nightmare.
+       It needs to be transformed into something like a namespace or
+       hashtable, and all the access functions that are still useful should be
+       made static.  There should be static caches for the most
+       frequently-used variables (e.g. verbosity and log). 
+  <dt> Binary file format
+  <dd> Devise a simple binary file format that maps well into C data
+       structures, DOM trees, and SAX events. 
+</dl>
+
 <h2><a name="Interfaces">PIA, DPS and Standard Interfaces</a></h2>
 
 <h3>DPS:  DOM and SAX</h3>
@@ -259,7 +348,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.7 1999-06-17 00:06:18 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.8 1999-06-22 18:38:50 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -108,6 +108,14 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
        has an event-oriented interface.  Clark also has an XML parser called
        Expat, and a Java XML parser called XP.
 
+  <li> It is tempting to use Jade, a C++ implementation of DSSSL also by James
+       Clark.  Unfortunately, it apparently doesn't implement the (tree)
+       ``transformation language'' of DSSSL, which is presumably what the PIA
+       would want to use, but it <em>does</em> have an XML flow object tree
+       back-end which might be sufficient.  In any case, Jade almost certainly
+       includes enough pieces to implement the DPS without dragging in all of
+       DSSSL.
+
   <li> Other XML parsers exist.  There are some additional requirements on a
        parser if the application needs to process HTML documents obtained from
        other sites:
@@ -307,7 +315,7 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: porting.html,v 1.6 1999-06-17 00:06:17 steve Exp $</b><br>
+<b>$Id: porting.html,v 1.7 1999-06-22 18:38:47 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
