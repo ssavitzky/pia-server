@@ -333,11 +333,13 @@
 
 
 <hr /><!-- filler -->
-<table width="90%" align="center">
+<table width="30%" align="center">
   <tr><td align="center" height="1000">
-          <table><tr><td> This space intentionally left blank<br />
-	                  in order to force the last few items<br />
-                          to the top of the page when linked to.
+          <table><tr><td> This space intentionally left blank in order to
+          		  force the last few items to the top of the page when
+                          linked to.  If you're reading this it probably means
+                          that the help section you requested hasn't been
+                          written  yet.
 	       </td></tr>
 	  </table>
       </td>
@@ -345,5 +347,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.9 2000-06-27 18:38:17 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.10 2000-06-30 00:05:40 steve Exp $" />
 </p></body></html>
