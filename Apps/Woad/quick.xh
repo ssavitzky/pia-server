@@ -61,6 +61,15 @@
 </td></tr></table>
 <hr />
 
+<table border="2" width="90%" align="center">
+  <tr> <td> <yellow-note> The following text is also available as <a
+	      href="quick-start.html"><code>quick-start.html</code></a>, i.e.,
+	      in a form that can be used before <ss>Woad</ss> is installed.
+            </yellow-note>
+       </td>
+  </tr>
+</table>
+
 <extract><from><include src="quick-start.html" /></from>
 	 <name recursive="yes">body</name> <content />
 </extract>
@@ -78,5 +87,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: quick.xh,v 1.7 2000-07-21 20:26:24 steve Exp $" />
+<short-footer cvsid="$Id: quick.xh,v 1.8 2000-07-28 22:30:59 steve Exp $" />
 </p></body></html>

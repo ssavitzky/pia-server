@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.2 2000-07-25 22:18:51 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.3 2000-07-28 22:30:08 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -145,7 +145,7 @@
 <form action="&DOC:path;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;&note-tail;" />
 <table bgcolor="white" border="2">
-  <!-- First list the indices -->
+  <!-- First list the indices, if any (they're unlikely, and optional) -->
   <if>&indexFiles;
       <then><indexTableRows>&indexFiles;</indexTableRows></then>
   </if>

@@ -120,6 +120,13 @@
   <!-- First list the indices -->
   <if>&indexFiles;
       <then><indexTableRows>&indexFiles;</indexTableRows></then>
+      <else>
+  	<tr> <th bgcolor="#cccccc"> indices </th>
+	     <td bgcolor="yellow"> This directory has not been indexed!
+	     	See <a href="#Files">below</a> for more detail.
+	     </td>
+	</tr>
+      </else>
   </if>
 
   <!-- Next, list the notes (including page notes) -->
@@ -225,10 +232,9 @@
     </then>
   </else-if>
     <else>
-       <yellow-note>
-	 This directory has not been indexed!  Indexing is done using the
-	 <code>woad-index.pl</code> command, which you can find in
-	 <code>PIA/src/apps/tools</code> 
+       <yellow-note> This directory has not been indexed! <br />
+	 Indexing is done using the <code>woad-index.pl</code> command, which
+	 you can find in <code>PIA/src/apps/tools</code>
        </yellow-note>
 	<table bgcolor="white">
 	<repeat>
@@ -340,5 +346,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.17 2000-07-25 22:18:51 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.18 2000-07-28 22:30:07 steve Exp $" />
 </body></html>

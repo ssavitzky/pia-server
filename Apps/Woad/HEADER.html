@@ -8,27 +8,77 @@
 )
 </p>
 
-<p> Web-Organized Application Development.  WOAD is a web-based ``Integrated
-    Development Environment'' optimized for (but not limited to) web
-    applications.  As the name suggests, WOAD allows you to use the web to
-    organize a development project, including its developer and user
+<p> Web-Organized Application Development.  <font
+    face="sans-serif">WOAD</font> is a web-based ``Integrated Development
+    Environment'' optimized for (but not limited to) web applications.  As the
+    name suggests, <font face="sans-serif">WOAD</font> allows you to use the
+    web to organize a development project, including its developer and user
     communities.
 </p>
 
 <h2>Annotated Contents</h2>
 <h3>Directories</h3>
 <dl>
-  <dt> <a href=""></a></dt>
-  <dd>
+  <dt> <a href="Icon/">Icon/</a></dt>
+  <dd> contains icons and images used in the <font
+       face="sans-serif">WOAD</font> system.
+  </dd>
+  <dt> <a href="Tools/">Tools/</a></dt>
+  <dd> contains the tagsets and active web pages (forms) that implement
+       listing, annotation, and editing functions in <font
+       face="sans-serif">WOAD</font>.
+  </dd>
+  <dt> <a href="Words/">Words/</a></dt>
+  <dd> Aliased as <code>/.words</code>, this directory contains the index
+       files that ship standardly with <font face="sans-serif">WOAD</font>.
   </dd>
 </dl>
-<h3>Documents</h3>
+
+<h3>Tagsets</h3>
 <dl>
-  <dt> <a href=""></a></dt>
-  <dd> 
+  <dt> <a href="woad-xhtml.ts">woad-xhtml.ts</a></dt>
+  <dd> WOAD's extensions to the PIA's XHTML.  This tagset is used directly for
+       <code>.xh</code> pages in the WOAD system, and is inherited by all
+       other WOAD tagsets.
+  </dd>
+  <dt> <a href="woad-index.xh">woad-index.xh</a></dt>
+  <dd> The tagset that implements <code>.wi</code> index files.  It includes a
+       wrapper element, because index files don't have a root element (in
+       order to make them easy to append to).
+  </dd>
+  <dt> <a href="woad-web.xh">woad-web.xh</a></dt>
+  <dd> The tagset that implements <code>.ww</code> (woad-web) annotation
+       files. 
+  </dd>
+</dl>
+
+<h3>Documents</h3>
+<blockquote>
+  <p> Documents fall into three broad categories: <code>.html</code> files
+      that are meant to be useable before WOAD is installed, the
+      <code>.xh</code> files that implement the bulk of WOAD's functionality,
+      and a limited number of ``home pages'' (also <code>.xh</code> files)
+      that represent this directory under various configurations.  We will
+      document the latter here; the others are pretty obvious.
+  </p>
+</blockquote>
+
+<dl>
+  <dt> <a href="index.xh"><code>index.xh</code></a></dt>
+  <dd> The index page for this directory when viewed inside the PIA, i.e. when
+       accessed as <code>/Apps/Woad</code>
+  </dd>
+  <dt> <a href="woad.xh"><code>woad.xh</code></a></dt>
+  <dd> The index page for this directory when viewed as <code>/.Woad</code>
+       either ``mounted'' on a PIA-based application, or as a stand-alone
+       <code>woad</code> server.
+  </dd>
+  <dt> <a href="warrior.xh"><code>warrior.xh</code></a></dt>
+  <dd> The index page for this directory when viewed as the root of a <font
+       face="sans-serif">Woad Warrior</font> server. (currently incomplete).
   </dd>
 </dl>
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: HEADER.html,v 1.2 2000-06-14 17:07:15 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.3 2000-07-28 22:30:59 steve Exp $</b>
 <a name="files"><hr /></a>

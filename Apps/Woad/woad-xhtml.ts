@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.19 2000-07-25 22:47:47 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.20 2000-07-28 22:30:59 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -27,6 +27,18 @@
       and are shared between <code>pia-xxml</code> and <code>pia-xhtml</code>.
 </doc>
 
+<note author="steve">
+<p> Two further bits of refactoring are possible at this point:
+</p>
+<ul>
+  <li> moving the pretty-printing tags (e.g. <tag>elt-b</tag>) into a
+       separate tagset, e.g. <code>Tools/listing.ts</code>
+  </li>
+  <li> moving the listing-page-specific tags (e.g. <tag>rejectNote</tag>)
+       into, e.g., <code>Tools/tools-xhtml.ts</code>. 
+  </li>
+</ul>  
+</note>
 
 <h2>Form-Processing Tags</h2>
 
@@ -474,9 +486,7 @@ Note that we only need these inside the PIA.
   </if></action>
 </define>
 
-<h2>Note-listing components</h2>
-
-<!-- $Id: woad-xhtml.ts,v 1.19 2000-07-25 22:47:47 steve Exp $ -->
+<h2>Note-handling components</h2>
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing
@@ -521,8 +531,12 @@ Note that we only need these inside the PIA.
 </define>
 
 <define element="describeIndex">
-  <doc> An index file's listing entry.	The content is the filename of the
-	index.
+  <doc> An index file's listing entry. The content is dderived from the
+	filename of the index.  Note that <strong>we do not read the
+	index!</strong> Index files can get big, and we don't want to slow
+	things down.  Fortunately, and unlike note files, the set of index
+	files is pretty-much under WOAD's control, so we just link to the
+	appropriate documentation in the help file. 
   </doc>
   <action><text op="trim">
     <let name="basename"><subst match="\.wi$" result="">&content;</subst></let>
@@ -653,31 +667,28 @@ Note that we only need these inside the PIA.
       contains the notes.
 </doc>
 
-<!-- we can define the note and index stanzas iff xloc is ALWAYS the
-     correct annotation directory.  It will probably need a fixup if it's /;
-     forceTrailingSlash will work now.
--->
-
 <define element="handleNoteCreation">
   <doc> This expands into the code that <em>creates</em> a note using the note
 	creation form.  The content is the path to the directory that will
 	contain the new note; it may be empty if we can guarantee that
-	<code>LOC:path</code> is correct.
+	<code>LOC:path</code> is correct.  Note that we do <em>nothing</em> if
+	the note already exists.  This usually means that the user has used the
+	BACK button after perhaps editing the note; we mustn't clobber it.
   </doc>
   <action>
     <if> <get name="FORM:create" />
 	 <then>
 	   <if> <status item="exists" src="&content;&FORM:label;.ww" />
 	        <else><!-- create new note -->
-	    <output dst="&content;&FORM:label;.ww"><make name="note">
-		<make name="title"><get name="FORM:title" /></make>
-		<make name="created">&dateString;</make>
-		<make name="summary">
-		    <parse><get name="FORM:summary" /></parse>
-		</make>
-		<make name="content">
-		    <parse><get name="FORM:content" /></parse>
-		</make>
+<output dst="&content;&FORM:label;.ww"><make name="note">
+	<make name="title"><get name="FORM:title" /></make>
+	<make name="created">&dateString;</make>
+	<make name="summary">
+	    <parse><get name="FORM:summary" /></parse>
+	</make>
+	<make name="content">
+	    <parse><get name="FORM:content" /></parse>
+	</make>
 </make><!-- note created using quick form -->
 </output>
 		</else>
@@ -1221,5 +1232,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<!-- $Id: woad-xhtml.ts,v 1.20 2000-07-28 22:30:59 steve Exp $ -->
 </tagset>
 
