@@ -1,5 +1,5 @@
 ### Makefile for Doc/Notes/steve
-#	$Id: Makefile,v 1.2 1999-03-12 19:23:24 steve Exp $	
+#	$Id: Makefile,v 1.3 1999-04-13 18:31:51 steve Exp $	
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -20,12 +20,16 @@
  #
 ############################################################################## 
 
- 
+
 PIADIR=../../..
 MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=steve
 MYPATH=Doc/Notes/steve
+
+SUBDIRS= Design
+
 include $(MF_DIR)/file.make
+include $(MF_DIR)/subdir.make
 include $(MF_DIR)/graphics.make
 include $(MF_DIR)/text.make
- 
+

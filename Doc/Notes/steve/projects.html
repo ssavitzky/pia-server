@@ -11,189 +11,18 @@
 
 <h2><a name="XML-rep">Agents and Tagsets in XML</a></h2>
 
-<p> Agents really want to be elements, with sub-elements for hooks and
-    criteria.  (They should really be a subclass of Tagset, so that
-    entities could be used for for ``options'' and element handlers for
-    actions.)  Similarly, tagsets want to be purely declarative, probably
-    using the XML schema tags.
-
-<p> Aside: Tagset should be a subclass of Namespace.  There's actually an
-    ambiguity here: building a Tagset should normally just be a matter of
-    loading it.  This implies a shift from the imperative (&lt;define&gt;,
-    &lt;set&gt;) to the declarative (&lt;element&gt;, &lt;entity&gt;).
-
-<p> In order to pull this off, handlers need the ability to specify the
-    class of the element being constructed.  <strong>But they already have
-    this!</strong>  The relevant method is <code>Syntax.createElement</code>.
-
-<p> Elements are created <em>by the parser</em>, so that one can just suck an
-    object in and use it.  The handler already knows, of course, whether to
-    wait until the whole element is present, but we do need to add the parser
-    hooks required to actually build the element even if we're streaming.  The
-    class name wants to be in a field in the handler.
-
-<p> There are some subtleties involved: even if one is processing on the fly,
-    the object gets built ``offline'' as a parse tree, then passed as a whole.
-    That is, of course, more efficient than executing definitions every time a
-    document is processed.  It requires a distinction between declarations and
-    actions, though.  All the construction is done at parse time using the
-    addChild operation in the node under construction.  All the parser needs
-    is a flag to say whether to build or pass.  It also needs to call the
-    new object's initializer when the end tag is seen.
-
-<p> Clearly, if we want to use conditionals, repeats, or other computation to
-    construct the object at run-time, we need to use actions instead.  The
-    pure declarative mode only works with quoted elements.  We can of course
-    mix them, and build a tree on the output after processing.  There is a
-    further point: entities in the <em>attributes</em> have to be expanded by
-    the handler.  (They should be anyway -- it's more efficient.  A proper DOM
-    implementation with <code>getValue</code> would do this automagically.)
-
-<p> There are advantages to the declarative approach, though.  Apart from
-    speed, there's reflection as well: an XML schema document would be trivial
-    to analyze and transform.  Clearly it's trivial for a tagset (in our
-    current scheme) to output a purely declarative schema, so a transition
-    would be simple.  But this isn't really necessary: just construct the
-    object as usual, and convert it to a string!
-
-<p> Once we get to this point, a lot of things can be simplified:
-
-<ul>
-  <li> Initialization is just reading an <code>agent.xml</code> file with the
-       <code>agent</code> tagset.  <code>initialize.xh</code> goes away except
-       for agents that really need to execute code on startup.  Even then, an
-       intialization <em>entity</em> should do most of the work.
-  <li> Checkpointing is just writing.
-  <li> Tagsets, inserts, initialization, etc. can be stored in an agent's
-       entities. 
-  <li> If read-write entities work, making agents persistant is
-       <em>trivial</em>.  (This suggests that persistant entities need a
-       search path, so that we can intialize from the home directory and write
-       to the user directory.)
-  <li> With a few more filename- and url-manipulating primitives, most of the
-       hairy path stuff can also be written in tags.
-  <li> It should be easy to make &lt;define&gt; simply construct objects and
-       stuff them into the appropriate tagsets and namespaces using
-       &lt;set&gt; or &lt;extract&gt;.
-</ul>
-
-<p> Similarly, transactions and their content should be represented as
-    specialized DOM nodes.  It's almost orthogonal, except that it so nicely
-    unifies actions (with their various ways of handling content) and
-    transactions, entities with machines, and so on.
-
-<p> We may continue to need ways of initializing agents (especially)
-    using initialize.xh, at least as a bootstrapping mechanism.  So the
-    installer needs to check.
+<blockquote><strong>
+  This is in progress.
+  See <a href="Design/xml-world.html">Design/xml-world.html</a>
+</strong></blockquote>
 
 
 <hr><!-- ========================================================== -->
 <h2><a name="DOM">Document Representation</a></h2>
 
-<p> Possible name: GLOM (Generic Lightweight Object Model).  Other
-    possibilities include Dlite, DOC (Document Object Cursors), ...
-
-<h3>Relationship to the DOM</h3>
-
-<p> The problem is that once you start using the DOM, you're pretty-well stuck
-    with it, including all its unsuitable characteristics: lack of DTD
-    coverage, live nodelists, fragile iterators, doubly-linked trees, total
-    inability to move nodes between documents, and so on.
-
-<p> Our representation needs to be <em>compatible with</em> but <em>disjoint
-    from</em> the DOM.  Our trees should have <em>both</em> a DOM interface
-    (for compatibility with other tools) and our own; the DPS should use only
-    our own interface.
-
-<p> Insisting that parse trees be immutable fixes many of the DOM's problems.
-    There are still some problems with entities, but we can gloss over that:
-    if you're redefining entities you're by definition outside of the DOM.
-
-<h3>Desirable Characteristics</h3>
-
-<ul>
-  <li> The interfaces seen by the DPS should be purely navigational: you never
-       actually point to a DOM node, only navigate among them.  This gives
-       <em>total</em> isolation from the implementation.  In other words we
-       use <em>cursors</em>.
-
-  <li> For putting things into containers, we will want wrappers (handles?)
-       and wrapper factories.  These will go along with the cursors and
-       <em>their</em> factories.  They will basically be cursors without
-       navigation.  The usual tree nodes, of course, will not need wrappers. 
-
-  <li> Active objects like tagsets, namespaces, and agents might be DOM nodes
-       underneath, but we ignore that and use only their interfaces.  They can
-       be constructed either declaratively (by reading) or procedurally (by
-       tree manipulation).
-</ul>
-
-<p> Bascally what we're doing is splitting up the DOM interfaces into two
-    pieces: the informational and the navigational.  We want to be able to get
-    at the attributes, content/value/children, and text of our nodes without
-    worrying about the connections among them.
-
-<p> Of course, in addition to the DOM attributes, we also want to get at the
-    DPS attributes of our objects: action, syntax, key (for sorting and
-    extraction), etc.
-
-<h3><a name="where">Where Things Go</a></h3>
-
-<p> There are three possibilities:
-
-<ol>
-  <li> Move the ActiveNode interfaces to <code>org.risource.dom.active</code>,
-       and the implementations to <code>org.risource.dom.tree</code>.  Move
-       <code>Cursor</code> and related stuff to, perhaps,
-       <code>org.risource.dom.cursor</code>. Blow away
-       <code>org.risource.dps.active</code> or use it for purely DPS-specific
-       stuff (which might be hard to find).  It's rather hard to justify
-       having the ActiveNode interfaces under the DOM, but it does mean that
-       <code>org.risource.dom</code> and its sub-directories constitute a
-       completely stand-alone implementation of the DOM.
-  <li> Move the implementations to <code>org.risource.dps.tree</code>.  Blow
-       away <code>org.risource.dom</code> or use it for utilities that use
-       only the <code>org.w3c.dom</code> interfaces.  This leaves
-       <code>org.risource.dps</code> and its sub-packages as a stand-alone
-       document processor.  If the DOM and DPS go their separate ways, nobody
-       will notice. 
-  <li> Move the implementations to <code>org.risource.dom.tree</code> but
-       leave the ActiveNode interfaces in
-       <code>org.risource.dps.active</code>.  In this case, neither
-       <code>org.risource.dom</code> nor <code>org.risource.dps</code> can
-       stand alone, but minimal damage is done to the existing directory
-       structure (<code>tree</code> is added, but nothing goes away).  The way
-       is still open to a totally DOM-free version of the DPS.
-</ol>
-
-<p> <strong>We will take the middle way.</strong>
-
-<h3>Implementation</h3>
-
-<p> There are basically three ways to proceed:
-
-<ol>
-  <li> Blow away the old DOM interfaces in org.risource.dom, put the new
-       interfaces in place, move the implementation to org.risource.dom.tree,
-       and basically go to completion in one step.  This leaves the working
-       copy of the PIA out of commission for the longest time.
-  <li> Develop new working copies of the mixed (ActiveNode) interfaces and
-       their implementation.  Then switch the DPS over, using the mixed
-       interfaces until we can shift it from ``arboreal'' to purely
-       ``cursorial'' form.  This is the fastest route to DOM compliance.
-  <li> Switch the DPS over to being purely cursorial.  <em>Then</em> drop in
-       the new ActiveNode implementation.
-</ol>
-
-<p> The nice thing about the middle path is that it is the most incremental
-    and least disruptive.  It proceeds very quickly to a compliant DOM
-    implementation, then merges it in.  It does mean several different
-    disruptions, but at least they would be fairly short ones.  It also means
-    that things can go under source control before work is complete.
-
-<p> During the transition, the <code>ActiveNode</code> interfaces will
-    continue to be used in the DPS.  Afterward, they will be used only in the
-    cursor implementations.
+<blockquote><strong>This is in progress.
+  See <a href="Design/dom.html">Design/dom.html</a> </strong>
+</blockquote>
 
 <hr><!-- ========================================================== -->
 
@@ -285,7 +114,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Stephen R. Savitzky</b><br>
-<b>$Id: projects.html,v 1.9 1999-04-02 02:53:31 steve Exp $</b><br>
+<b>$Id: projects.html,v 1.10 1999-04-13 18:31:52 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
