@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.26 1999-12-14 18:36:12 steve Exp $
+// $Id: Pia.java,v 1.27 1999-12-20 17:15:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.26 1999-12-14 18:36:12 steve Exp $
+  * @version $Id: Pia.java,v 1.27 1999-12-20 17:15:31 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -676,12 +676,19 @@ public class Pia implements Tabular {
     /* Try to find the PIA's root directory.  If it doesn't exist, 
      *	complain.
      */
-    piaHomeDir = new File( piaHomePath );
-    if (piaHomeDir.exists() && piaHomeDir.isDirectory()) {
-      piaHomePath = piaHomeDir.getAbsolutePath();
+    if (piaHomePath == null) {
+      piaHomeDir = null;
+      warningMsg("No PIA home directory (-home option) specified" 
+		 + " -- proceeding.");
     } else {
-      piaHomePath = null;
-      warningMsg("Cannot locate PIA's home directory -- proceeding.");
+      piaHomeDir = new File( piaHomePath );
+      if (piaHomeDir.exists() && piaHomeDir.isDirectory()) {
+	piaHomePath = piaHomeDir.getAbsolutePath();
+      } else {
+	piaHomePath = null;
+	warningMsg("Cannot locate PIA's home directory, specified as '"
+		   + piaHomePath + "' -- proceeding.");
+      }
     }
 
     /* Try to find the site configuration file, if specified.
