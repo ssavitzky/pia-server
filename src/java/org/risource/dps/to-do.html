@@ -16,6 +16,11 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> Parser needs error messages. <br>
+       Since its a ProcessorInput it can find the Processor's
+       <code>message</code> method.
+       (1999-06-11) <br>
+
   <li> <b>Impr</b> Improved error/message handling<br>
        Create &amp;DOC:errors; entity in process.TopProcessor; Context.message 
        (implemented in util.ContextStack) should copy messages
@@ -25,6 +30,7 @@ See also:
        active.ActiveNodeList.append(), tree.TreeText.new(String), and
        Context.getBinding(String name).
        (1999-06-09) <br>
+       -- In progress (Bill)
 
   <li> <b>Bug</b> &lt;text encode&gt; badly broken <br>
        Should be &lt;text encode=entity&gt; not &lt;encode entity&gt;.
@@ -542,7 +548,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.18 1999-06-09 16:48:00 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.19 1999-06-11 23:32:05 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
