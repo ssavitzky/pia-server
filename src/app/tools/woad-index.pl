@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.1 2000-06-21 01:14:23 steve Exp $
+#	$Id: woad-index.pl,v 1.2 2000-06-23 17:33:34 steve Exp $
 # Create WOAD index files.
 #
 
@@ -245,7 +245,7 @@ sub indexDir {
 	    push (@subdirs, $files[$i]); 
 	}
     }
-    print DIRINDEX '</namespace>', "\n";
+    #print DIRINDEX '</namespace>', "\n";
     close (DIRINDEX);
 
     # now do the subdirectories
@@ -399,5 +399,5 @@ sub globalIndices {
 ###### Utilities ########################################################
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.1 2000-06-21 01:14:23 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.2 2000-06-23 17:33:34 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
