@@ -1,11 +1,21 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.3 1999-10-06 17:24:28 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.4 1999-10-13 18:19:04 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
+
+  <!-- These properties affect the configuration process.  They must be set
+       before you attempt to do anything (for example an ``include'') that can
+       cause subsites to be created (and hence configured.)
+    -->
+  <HomeDocumentName>home</HomeDocumentName>
+  <ConfigFileName>_subsite.xcf</ConfigFileName>
+
   <!-- You can include arbitrary XXML in a configuration file, but you have to
        be careful about how you use it.  Something like the following will
-       cause subsites to be configured before their parent, which might be a
-       problem in some cases.
+       cause subsites to be configured before their parent has finished
+       reading its configuration file.
     -->
   <include src="Config/Site/extensions.xci"/>
 
