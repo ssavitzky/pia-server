@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.3 1999-08-31 23:32:12 steve Exp $
+//	$Id: Subsite.java,v 1.4 1999-09-04 00:22:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.3 1999-08-31 23:32:12 steve Exp $
+ * @version $Id: Subsite.java,v 1.4 1999-09-04 00:22:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -77,7 +77,7 @@ public class Subsite extends ConfiguredResource implements Resource {
   protected Table mimeTypeMap = null;
 
   /** A ``search path'' of filename suffixes. */
-  protected List extSearch;
+  protected List extSearch = null;
 
   /** Table that maps tagset names into the corresponding tagsets. 
    */
@@ -109,6 +109,13 @@ public class Subsite extends ConfiguredResource implements Resource {
 
   protected Namespace entityBindings = null;
 
+  /** An array of File objects to search for children, in addition to
+   *	the real location.
+   *
+   *<p>	Although in theory we could have an arbitrary number of these,
+   *	at the moment the implementation only supports two: the ``virtual
+   *	location'' and the directory that contains default documents.
+   */
   protected File virtualSearchPath[] = null;
 
   /** The most recent time the underlying directory or a directory in the
@@ -119,8 +126,39 @@ public class Subsite extends ConfiguredResource implements Resource {
   protected long locationTimestamp = 0;
 
   /************************************************************************
+  ** Access to State:
+  ************************************************************************/
+
+  /** Returns the directory from which virtual documents are obtained.
+   *	By convention, this is the first File in the virtual search path.
+   */
+  protected File getVirtualLoc() { 
+    return (virtualSearchPath == null || virtualSearchPath.length < 1)
+      ? null : virtualSearchPath[0];
+  }
+
+  /** Returns the directory from which default documents are obtained.
+   *	By convention, this is the last File in the virtual search path.
+   */
+  protected File getDefaultDir() {
+    return (virtualSearchPath == null || virtualSearchPath.length < 2)
+      ? null : virtualSearchPath[virtualSearchPath.length - 1];
+  }
+
+  /************************************************************************
   ** Configuration Management:
   ************************************************************************/
+
+  protected ActiveAttrList reportConfigAttrs() {
+    ActiveAttrList cfg = super.reportConfigAttrs();
+    if (getVirtualLoc() != null) 
+      cfg.setAttribute("virtual", getVirtualLoc().getPath());
+    if (getDefaultDir() != null) 
+      cfg.setAttribute("default", getDefaultDir().getPath());
+
+    // Everything else is handled by AbstractResource (super)
+    return cfg;
+  }
 
   protected boolean basicSaveConfig() {
     // If there's nothing to save, we're done.
@@ -137,7 +175,7 @@ public class Subsite extends ConfiguredResource implements Resource {
   }
 
   protected ActiveElement loadConfig() {
-    configFile = locateChildDocument(getConfigFileName());
+    configFile = locateChildFile(getConfigFileName());
     if (configFile == null) return null;
 
     // === really want to load the tagset here as well ===
@@ -148,12 +186,73 @@ public class Subsite extends ConfiguredResource implements Resource {
 
   protected void configure() {
     if (config == null) return;
-    super.configure();
+    String v;
 
     // Handle any attributes not handled by the parent. 
 
-    // Go through the children.
+    v = config.getAttribute("virtual");
+    if (v != null) {
+      if (virtualSearchPath == null) virtualSearchPath = new File[2];
+      virtualSearchPath[0] = new File(v);
+    }
+
+    v = config.getAttribute("default");
+    if (v != null) {
+      if (virtualSearchPath == null) virtualSearchPath = new File[2];
+      virtualSearchPath[1] = new File(v);
+    }
+
+    super.configure();
+
+    // === handle any issues raised by the content. 
   }
+
+  protected void configItem(String tag, ActiveElement item) {
+
+    // Resource, Document, Container
+    if (tag.equals("Resource") ||
+	tag.equals("Document") || tag.equals("Container")) {
+      configChildItem(tag, item);
+    }    
+
+    // <ext>
+    else if (tag.equals("ext")) configExtItem(tag, item);
+
+    // let ConfiguredResource (super) handle it
+    else super.configItem(tag, item);
+  }
+
+  protected void configNamespaceItem(Namespace ns) {
+    String name = ns.getName();
+
+    
+  }
+
+  protected void configChildItem(String tag, ActiveElement e) {
+    if (tag.equals("Container")) {
+      e.setAttribute("container", "yes");
+    }
+    String name = e.getAttribute("name");
+    childConfigCache.at(name, e);
+  }
+
+  protected void configExtItem(String tag, ActiveElement e) {
+    String ext = e.getAttribute("extension");
+    if (ext == null) ext = e.getAttribute("ext");
+    if (ext == null) ext = "";
+    String type = e.getAttribute("type");
+    if (type == null) type = "";
+    String ts = e.getAttribute("tagset");
+    if (ts == null) ts = "";
+
+    tagsetMap.put(ext, ts);
+    mimeTypeMap.put(ext, type);
+    if (! ts.startsWith("#")) {
+      if (extSearch == null) extSearch = new List();
+      extSearch.push(ext);
+    }
+  }
+
 
   /************************************************************************
   ** Predicates:
@@ -183,8 +282,8 @@ public class Subsite extends ConfiguredResource implements Resource {
   ** Container Access:
   ************************************************************************/
 
-  /** Locate a child document without using the location cache. */
-  protected File locateChildDocument(String name) {
+  /** Locate a (local) child document without using the location cache. */
+  protected File locateChildFile(String name) {
     File f = null;
     if (file != null && file.exists()) {
       f = new File(file, name);
@@ -192,12 +291,62 @@ public class Subsite extends ConfiguredResource implements Resource {
     }
     if (virtualSearchPath != null) {
       for (int j = 0; j < virtualSearchPath.length; ++j) {
-	if (!virtualSearchPath[j].isDirectory()) continue;
+	if (virtualSearchPath[j] == null 
+	    || !virtualSearchPath[j].isDirectory()) continue;
 	f = new File(virtualSearchPath[j], name);
 	if (f.exists()) return f;
       }
     }
     return null;
+  }
+
+  /** Locate a child document without using the location cache. */
+  protected Resource locateChild(String name) {
+    File f = null;
+    if (file != null && file.exists()) {
+      f = new File(file, name);
+      if (f.exists()) return configureChild(name, f);
+    }
+    if (virtualSearchPath != null) {
+      for (int j = 0; j < virtualSearchPath.length; ++j) {
+	if (virtualSearchPath[j] == null 
+	    || !virtualSearchPath[j].isDirectory()) continue;
+	f = new File(virtualSearchPath[j], name);
+	if (f.exists()) return configureChild(name, f);
+      }
+    }
+    if (childConfigCache != null) {
+      ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
+      return (cfg == null)? null :  configureChild(name, cfg);
+    }
+    return null;
+  }
+
+  /** Return the resource corresponding to a child file. */
+  protected Resource configureChild(String name, File f) {
+    ActiveElement cfg = null;
+    Resource result = null;
+    if (childConfigCache != null) 
+      cfg = (ActiveElement) childConfigCache.at(name);
+    if (f.isDirectory()) {
+      result = new Subsite(name, this, f, config, null);
+      subsiteCache.at(name, result);
+    } else {
+      result = new SiteDocument(name, this, f, config);
+    }
+    return result;
+  }
+
+  /** Return the resource corresponding to a configuration element. */
+  protected Resource configureChild(String name, ActiveElement cfg) {
+    Resource result = null;
+    if (cfg.hasTrueAttribute("collection")) {
+      result = new Subsite(name, this, null, config, null);
+      subsiteCache.at(name, result);
+    } else {
+      result = new SiteDocument(name, this, null, config);
+    }
+    return result;
   }
 
   /** Construct a new childLocationCache */
@@ -208,6 +357,9 @@ public class Subsite extends ConfiguredResource implements Resource {
     String list[];
     String name;
     Enumeration enum;
+
+    // === look in subsiteCache to see if any subsites have already been seen
+    // === make sure they're still valid. 
 
     // First look for the real contents
     if (file != null && file.isDirectory()) {
@@ -222,7 +374,8 @@ public class Subsite extends ConfiguredResource implements Resource {
     // Finally look at every directory in the virtual search path.
     if (virtualSearchPath != null) {
       for (int j = 0; j < virtualSearchPath.length; ++j) {
-	if (!virtualSearchPath[j].isDirectory()) continue;
+	if (virtualSearchPath[j] == null 
+	    || !virtualSearchPath[j].isDirectory()) continue;
 	list = virtualSearchPath[j].list();
 	for (int i = 0; i < list.length; ++i) 
 	  if (t.at(list[i]) == null) {
@@ -254,12 +407,13 @@ public class Subsite extends ConfiguredResource implements Resource {
    * @return <code>true</code> if the location cache is still valid.
    */
   protected boolean locationCacheValid() {
-    if (childConfigCache == null) return false;
+    if (childLocationCache == null) return false;
     if (file != null && file.isDirectory()
         && file.lastModified() > locationTimestamp) return false;
     if (virtualSearchPath != null) {
       for (int j = 0; j < virtualSearchPath.length; ++j) {
-	if (virtualSearchPath[j].isDirectory()
+	if (virtualSearchPath[j] != null 
+	    && virtualSearchPath[j].isDirectory()
 	    && virtualSearchPath[j].lastModified() > locationTimestamp) 
 	  return false;
       }
@@ -286,10 +440,14 @@ public class Subsite extends ConfiguredResource implements Resource {
 
   /** Returns a Resource that refers to a named child. */
   public Resource getChild(String name) {
-    ActiveElement cfg = null;
-    Resource result = null;
+    // If we haven't yet located all the children, just find this one.
+    if (childLocationCache == null) return locateChild(name);
+
+    // Update the location cache if necessary
     if (! locationCacheValid()) locateChildren();
 
+    ActiveElement cfg = null;
+    Resource result = null;
     Object loc = childLocationCache.at(name);
     if (loc == null) {			  	// No location -- it's a dud.
       return null;
@@ -298,31 +456,15 @@ public class Subsite extends ConfiguredResource implements Resource {
     } else if (loc instanceof File) { 	  	// Location is a file
       File f = new File((File)loc, name);
       // Check for any associated configuration information
-      if (childConfigCache != null) 
-	cfg = (ActiveElement) childConfigCache.at(name);
-      if (f.isDirectory()) {
-	result = new Subsite(name, this, f, config, null);
-	subsiteCache.at(name, result);
-	childLocationCache.at(name, result);
-      } else {
-	result = new SiteDocument(name, this, f, config);
-	if (cfg != null) childLocationCache.at(name, result);
-      }
+      result = configureChild(name, f);
     } else if (loc instanceof ActiveElement) { 	// Location is a config.
       // no file, so the location must be a configuration.
-      cfg = (ActiveElement)loc;
-      if (cfg.hasTrueAttribute("collection")) {
-	result = new Subsite(name, this, null, config, null);
-	subsiteCache.at(name, result);
-	childLocationCache.at(name, result);
-      } else {
-	result = new SiteDocument(name, this, null, config);
-	childLocationCache.at(name, result);
-      }
+      result = configureChild(name, (ActiveElement)loc);
     } else {
       getRoot().report(-2, "unknown type for child location " + loc, 0, false);
       return null;
     }
+    childLocationCache.at(name, result);
     return result;
   }
   /************************************************************************
@@ -338,9 +480,14 @@ public class Subsite extends ConfiguredResource implements Resource {
    * @return an empty List if there is no parent.
    */
   public List getDefaultExtensions() {
-    List l = new List();
-    l.push("xh"); l.push("html"); l.push("htm"); // === bogus
-    return l;
+    if (extSearch != null) return extSearch;
+    else if (base != null) extSearch = base.getDefaultExtensions();
+    else {
+      List l = new List();
+      l.push("xh"); l.push("html"); l.push("htm"); // === bogus
+      extSearch = l;
+    }
+    return extSearch;
   }
 
   /** Map a document name to a corresponding file type. */
@@ -368,7 +515,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     }
 
     // Then look for it as a local ".ts" file.
-    File tsfile = locateChildDocument(name + ".ts");
+    File tsfile = locateChildFile(name + ".ts");
     if (tsfile != null) {
       if (tsLoader == null) tsLoader = new SiteContext(this, null);
       ts = Loader.loadTagset(tsfile, tsLoader);
@@ -424,11 +571,50 @@ public class Subsite extends ConfiguredResource implements Resource {
   ** Construction and Initialization:
   ************************************************************************/
 
+  /** Construct a new Subsite with the given name, parent, and so on. 
+   *
+   *<p>	If the virtual search path is not set up by the configuration,
+   *	the default directory is inherited from the parent, and the
+   *	virtual location is inherited from the parent by appending
+   *	this resource's name to the parent's virtual location. 
+   *
+   *<p> The current implementation checks to see whether the virtual
+   *	location exists.  This means that the PIA has to be restarted
+   *	if a directory is added to its virtual (prototype) location.
+   *
+   *<p> There is a sequencing problem in initialization: we need the
+   *	virtual search path in order to load the configuration file,
+   *	but the configuration might override the virtual search path.
+   */
   public Subsite(String name, ConfiguredResource parent,
 		 File file, ActiveElement config, Namespace props) {
     super(name, parent, true, file, config, props);
+    if (virtualSearchPath == null && base != null) {
+      virtualSearchPath = new File[2];
+      virtualSearchPath[1] = base.getDefaultDir();
+      File f = base.getVirtualLoc();
+      if (f != null && f.exists()) {
+	f = new File(f, name);
+	if (f.exists() && f.isDirectory()) virtualSearchPath[0] = f;
+      }
+    }
+    if (config == null) {
+      setConfig(loadConfig());
+    }
   }
-  public Subsite(ConfiguredResource parent, ActiveElement config) {
-    super(parent, config);
+
+  /** Create a root Subsite.
+   *	Actually loading the configuration is left to the caller, presumably
+   *	a constructor for Site.
+   */
+  protected Subsite(String realLoc, String virtualLoc, String defaultDir) {
+    super("/", null, true, new File(realLoc), null, null);
+    virtualSearchPath = new File[2];
+    if (virtualLoc != null) virtualSearchPath[0] = new File(virtualLoc);
+    if (defaultDir != null) virtualSearchPath[1] = new File(defaultDir);    
+    for (int i = 0; i < virtualSearchPath.length; ++i) {
+      if (virtualSearchPath[i] != null && !virtualSearchPath[i].exists())
+	virtualSearchPath[i] = null;
+    }
   }
 }

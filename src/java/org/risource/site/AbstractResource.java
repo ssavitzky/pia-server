@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.1 1999-08-07 00:29:45 steve Exp $
+//	$Id: AbstractResource.java,v 1.2 1999-09-04 00:22:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.1 1999-08-07 00:29:45 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.2 1999-09-04 00:22:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -156,7 +156,6 @@ public abstract class AbstractResource implements Resource {
     cfg.setAttribute("name", getName());
     if (exists()) cfg.setAttribute("exists", "yes");
     if (isHidden()) cfg.setAttribute("hidden", "yes");
-    if (isReal()) cfg.setAttribute("real", "yes");
     if (isLocal()) cfg.setAttribute("local", "yes");
     if (isContainer()) cfg.setAttribute("container", "yes");
     if (isPassive()) cfg.setAttribute("passive", "yes");
@@ -350,12 +349,12 @@ public abstract class AbstractResource implements Resource {
    */
   public Resource getRelative(String path) {
     if (! isContainer()) { return getContainer().getRelative(path); }
+    if (path == null) return this;
     if (path.startsWith("./")) {
       path = path.substring(2);
       while (path.startsWith("/")) { path = path.substring(1); }
     }
-    if (path == null || path.length() == 0) {
-      // Null or empty path: it's this. 
+    if (path.length() == 0) {      // Null or empty path: it's this. 
       return this;
     }
     int si = path.indexOf('/');	// Look for a slash.
@@ -373,7 +372,7 @@ public abstract class AbstractResource implements Resource {
     } else {			// Somewhere underneath.
       Resource child = getChild(path.substring(0, si-1));
       if (child == null) return null;
-      path = path.substring(si+1);
+      path = path.substring(si);
       while (path.startsWith("/")) { path = path.substring(1); }
       return child.getRelative(path);
     }
@@ -397,28 +396,23 @@ public abstract class AbstractResource implements Resource {
     if (! isContainer()) { 
       return getContainer().locate(path, create, extensions); }
 
+    if (extensions == null) extensions = getDefaultExtensions();
+
     // Do all the same path manipulation as getRelative.
 
+    if (path == null) return this;
     if (path.startsWith("./")) {
       path = path.substring(2);
       while (path.startsWith("/")) { path = path.substring(1); }
     }
-    if (path == null || path.length() == 0) {
-      // Null or empty path: it's this. 
+    if (path.length() == 0) {	// Null or empty path: it's this. 
       return this;
     }
     int si = path.indexOf('/');	// Look for a slash.
     if (si < 0) {		// No slash: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
       if (path.equals(".")) return this;
-      Resource child = getChild(path);
-      if (child == null && extensions.nItems() != 0) {
-	// No child by that name: try the extension list
-	for (int i = 0; i < extensions.nItems(); ++i) {
-	  child = getChild(path + "." + extensions.at(i));
-	  if (child != null) break;
-	}
-      }
+      Resource child = locateChild(path, extensions);
       if (child == null && create) {
 	// Try to create a virtual resource for the child. 
 	child = create(path, false, true, null);
@@ -432,33 +426,34 @@ public abstract class AbstractResource implements Resource {
       while (path.startsWith("/")) { path = path.substring(1); }
       return getContainer().locate(path, create, extensions);
     } else {			// Somewhere underneath.
-      Resource child = locateChild(path.substring(0, si-1), extensions);
+      Resource child = getChild(path.substring(0, si));
       if (child == null && create) {
 	// Try to create a virtual container for the child. 
-	child = create(path.substring(0, si-1), true, true, null);
+	child = create(path.substring(0, si), true, true, null);
       }
       if (child == null) return null;
       path = path.substring(si+1);
       while (path.startsWith("/")) { path = path.substring(1); }
-      // If the path is now empty, return the directory we created
+      // If the path is now empty, return the directory we just found
       if (path.length() == 0) return child;
       return child.locate(path, create, extensions);
     }
   }
 
-  /** Locate a named child using an optional list of extensions. 
+  /** Locate a child using an optional list of extensions. 
    *
    *<p>	Subclasses that allow directory search paths may need to 
    *	override this in order to get the desired behavior.  Those
    *	that do not may still want to override it for efficiency.
    *
-   * @param name the name of the child to be located
+   * @param name the name to look for
    * @param extensions a list of extensions to try.  If <em>empty</em>, no
    *	extension processing will be done.  If <code>null</code>, the default
    *	list will be used. 
    */
   Resource locateChild(String name, List extensions) {
     Resource child = getChild(name);
+    if (child != null) return child;
     if (child == null && extensions != null && extensions.nItems() != 0) {
       // No child by that name: try the extension list
       // Get the default extension list if necessary
@@ -466,10 +461,40 @@ public abstract class AbstractResource implements Resource {
       if (extensions == null) return null;
       for (int i = 0; i < extensions.nItems(); ++i) {
 	child = getChild(name + "." + extensions.at(i));
-	if (child != null) break;
+	if (child != null) return child;
       }
     }
-    return child;
+    return null;
+  }
+
+  /** Locate one of a list of children using an optional list of extensions. 
+   *
+   *<p>	Subclasses that allow directory search paths may need to 
+   *	override this in order to get the desired behavior.  Those
+   *	that do not may still want to override it for efficiency.
+   *
+   * @param names the list of names to look for
+   * @param extensions a list of extensions to try.  If <em>empty</em>, no
+   *	extension processing will be done.  If <code>null</code>, the default
+   *	list will be used. 
+   */
+  Resource locateChild(List names, List extensions) {
+    for (int j = 0; j < names.nItems(); ++j) {
+      String name = names.at(j).toString();
+      Resource child = getChild(name);
+      if (child != null) return child;
+      if (child == null && extensions != null && extensions.nItems() != 0) {
+	// No child by that name: try the extension list
+	// Get the default extension list if necessary
+	if (extensions == null) extensions = getDefaultExtensions();
+	if (extensions == null) return null;
+	for (int i = 0; i < extensions.nItems(); ++i) {
+	  child = getChild(name + "." + extensions.at(i));
+	  if (child != null) return child;
+	}
+      }
+    }
+    return null;
   }
 
   /************************************************************************

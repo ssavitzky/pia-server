@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+//	$Id: Site.java,v 1.3 1999-09-04 00:22:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,6 +29,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.ds.*;
 
+import org.risource.site.util.*;
+
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
@@ -39,7 +41,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+ * @version $Id: Site.java,v 1.3 1999-09-04 00:22:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -132,6 +134,7 @@ public class Site extends Subsite implements Root {
   public void setServerURL(URL u) { serverURL = u; }
 
   public String getConfigFileName() { return configFileName; }
+
   /** Set configuration file name. */
   public void setConfigFileName(String configFileName) {
     if (configFileName != null) this.configFileName = configFileName;
@@ -141,12 +144,42 @@ public class Site extends Subsite implements Root {
   ** Construction:
   ************************************************************************/
 
+  /** Construct a Site from a location, configuration, and properties. */
   public Site(File location, ActiveElement config, Namespace props) {
     super("/", null, location, config, props);
   }
 
-  public Site(String location, String configFileName) {
-    this(new File(location), null, null);
+  /** Construct a Site from a location and configuration file.
+   *	
+   * @param location the pathname of the real location of the Site. 
+   * @param siteConfigPath the pathname of the site configuration file. 
+   *	The configuration file need not be accessible as part of the Site. 
+   */
+  public Site(String location, String siteConfigPath) {
+    this(location, null, null, null, siteConfigPath);
+  }
+
+  /** Construct a Site with an explicit virtual path.
+   *
+   *<p> This constructor allows both the real and virtual locations to be
+   *	specified before attempting to load the configuration file.  This
+   *	is necessary in case the configuration file is virtual.  
+   *
+   * @param realLoc the pathname of the real location of the Site
+   * @param virtualLoc the pathname of the virtual location of the Site
+   * @param defaultDir the pathname of the directory of default documents
+   * @param configFileName the default configuration file name
+   * @param siteConfigPath the pathname of the site configuration file. 
+   *	If omitted, the default configuration file is loaded.
+   */
+  public Site(String realLoc, String virtualLoc, String defaultDir,
+	      String configFileName, String siteConfigPath) {
+    super(realLoc, virtualLoc, defaultDir);
     setConfigFileName(configFileName);
+    if (siteConfigPath == null) {
+      setConfig(loadConfig());
+    } else {
+      setConfig(XMLUtil.load(new File(siteConfigPath), null));
+    }
   }
 }

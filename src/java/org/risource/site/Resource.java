@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.3 1999-08-31 23:32:11 steve Exp $
+//	$Id: Resource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.3 1999-08-31 23:32:11 steve Exp $
+ * @version $Id: Resource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -125,14 +125,19 @@ public interface Resource {
    *	element.  All configuration information with boolean 
    *	or String values is in the configuration's attributes.  The content
    *	consists of 
+   *
    *<ul>
    *	<li> <code>Resource</code> elements for children that have
-   *	     no configuration information of their own.
+   *	     no configuration information of their own.  These may also 
+   *	     have the tagnames <code>Document</code> or <code>Container</code>.
    *	<li> <code>ext</code> elements for extension mapping.
    *	<li> at most one <code>Namespace</code> element with the name
-   *	     <code>.properties</code>
+   *	     <code>DAV</code> for WebDAV properties
    *	<li> at most one <code>Namespace</code> element with the name 
-   *	     <code>.entities</code>
+   *	     <code>DOC</code> for document-specific entities
+   *	<li> at most one <code>Namespace</code> element with the name 
+   *	     <code>LOC</code> for location-specific entities shared by
+   *	     all children of a container.
    *</ul>
    *
    * @param depth If zero, report the configuration of this node, otherwise

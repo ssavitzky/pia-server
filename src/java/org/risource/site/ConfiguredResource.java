@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.3 1999-08-31 23:32:09 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.3 1999-08-31 23:32:09 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -77,6 +77,10 @@ public abstract class ConfiguredResource extends AbstractResource
   /** The associated metadata. */
   protected Namespace properties = null;
 
+  // === we wouldn't need these if base was a Subsite ===
+  protected File getVirtualLoc() { return null; }
+  protected File getDefaultDir() { return null; }
+
   /************************************************************************
   ** Configuration Management:
   ************************************************************************/
@@ -84,19 +88,7 @@ public abstract class ConfiguredResource extends AbstractResource
   /** Returns the <code>ActiveElement</code> node representing this 
    *	Resource's configuration.  
    * 
-   *<p>	By convention, the tagname of this ActiveElement is
-   *	<code>Resource</code>.  All configuration information with boolean 
-   *	or String values is in the configuration's attributes.  The content
-   *	consists of 
-   *<ul>
-   *	<li> <code>Resource</code> elements for children that have
-   *	     no configuration information of their own.
-   *	<li> <code>ext</code> elements for extension mapping.
-   *	<li> at most one <code>Namespace</code> element with the name
-   *	     <code>.properties</code>
-   *	<li> at most one <code>Namespace</code> element with the name 
-   *	     <code>.entities</code>
-   *</ul>
+   * @see org.risource.site.Resource#reportConfig
    */
   ActiveElement getConfig() {
     if (config == null) 
@@ -120,8 +112,54 @@ public abstract class ConfiguredResource extends AbstractResource
   void configure() {
     if (name != null) name = config.getAttribute("name");
     if (config.hasTrueAttribute("hidden")) hidden = true;
+    // exists and local can be determined from file
+    // container determined from class
+    if (config.hasTrueAttribute("real")) real = true;
+    if (config.hasTrueAttribute("passive")) passive = true;
+    if (config.hasTrueAttribute("suspect")) suspect = true;
     
-    // === have to hit the other items here.
+    // now go through the content:
+    for (ActiveNode item = config.getFirstActive(); 
+	 item != null;
+	 item = item.getNextActive()) {
+      ActiveElement e = item.asElement();
+      if (e != null) configItem(e.getTagName(), e);
+    }
+  }
+
+  /** Handle an element in the configuration. 
+   *	It is expected that subclasses will extend this by checking for
+   *	the tags they know how to handle, finally passing the buck to
+   *	<code>super</code> for the default case. 
+   */
+  protected void configItem(String tag, ActiveElement item) {
+    // <namespace> (entities, DAV, ...)
+    if (item instanceof Namespace) configNamespaceItem(item.asNamespace());
+
+    // unknown
+    else getRoot().report(-1, "Unknown config item <" + tag + "...>"
+			      + " in " + getPath(), 0, false); 
+  }
+  
+  /** Handle a <code>namespace</code> element in the configuration. 
+   *	It is expected that subclasses will extend this by checking for
+   *	the names they know how to handle, finally passing the buck to
+   *	<code>super</code> for the default case. 
+   */
+  protected void configNamespaceItem(Namespace ns) {
+    String name = ns.getName();
+
+    if (name.equals("DAV")) properties = ns;
+    else getRoot().report(-1, "Unknown config namespace " + name
+			      + " in " + getPath(), 0, false); 
+  }
+
+  protected ActiveAttrList reportConfigAttrs() {
+    ActiveAttrList cfg = super.reportConfigAttrs();
+    if (isReal()) cfg.setAttribute("real", "yes");
+    // Everything else is handled by AbstractResource (super)
+    // === probably need real location in attrs as well ===
+    return cfg;
   }
 
   /** Modify the configuration from a given ActiveElement. 
@@ -321,8 +359,4 @@ public abstract class ConfiguredResource extends AbstractResource
     if (config != null) setConfig(config);
   }
 
-  public ConfiguredResource(ConfiguredResource parent, ActiveElement config) {
-    this.base = parent;
-    setConfig(config);
-  }
 }
