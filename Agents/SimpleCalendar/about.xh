@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>About the SimpleCalendar agent</title>
+</head><body>
+<h1>About the SimpleCalendar</h1>
+
+
+<ul>
+
+  <li>Filter to show only events at a particular location, time, weekday etc
+       </li>
+
+  <li>Fit a whole year's display onto one page, e.g. by making each day only
+      one or two characters wide, making months nestle against each other
+      (no break in a week spanning months), making months side-by-side, etc.
+       And remove any lookup of events from that page, so it is purely
+       navigation rather than event display.
+       </li>
+
+  <li>Cache the files in memory for quicker calculation.
+       </li>
+       
+  <li>Put a title on each page.
+       </li>
+
+  <li>remove "all" from navbar, and make links from year point to the
+       stripped-down year display mentioned above.
+       </li>
+
+   <li>Add a year-navbar to the year display page, showing many years on
+   either side of the present one (with appropriate links).
+       </li>
+</ul>
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: about.xh,v 1.1 1999-10-07 18:37:44 bill Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~bill/"
+         ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
+         >bill@rsv.ricoh.com</a>&gt;</address>
+</body></html>
