@@ -16,6 +16,10 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Check</b> TopProcessor may no longer need prefix support. <br>
+       should do it via the root.  May still be needed for "process"
+       (1999-12-14) <br>
+
   <li> <b>Check</b> verify correct content model for HTML<br>
        The stuff in HTML_ts needs to be checked against the official DTD.
        (1999-12-03) <br>
@@ -51,12 +55,6 @@ See also:
        ConnectHandler should just close the Input or Output.  Requires a
        check. 
        (1999-11-04) <br>
-
-  <li> <b>Bug</b> parent tagsets not loaded by site. <br>
-       Not finding a parent tagset in a parent subsite.  Even "../tagset"
-       fails.  Probably Loader or tagsetHandler is sidestepping the site
-       stuff. 
-       (1999-10-04) <br>
 
   <li> <b>Impr</b> include using document's own tagset <br>
        There should be an option to include that allows a document to use
@@ -623,5 +621,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.45 1999-12-06 20:20:14 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.46 1999-12-14 19:16:32 steve Exp $</b><br>
 </body></html>

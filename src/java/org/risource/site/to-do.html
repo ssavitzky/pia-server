@@ -16,6 +16,11 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> Loop in tagset inheritance not detected <br>
+       If a tagset includes or inherits from itself, loading should resume
+       from one level up in the Subsite tree, or from /lib if at root
+       already.
+       (1999-12-14) <br>
 
   <li> <b>Bug</b> Subsite config loading and caching not thread-safe <br>
        (1999-11-19) <br>
@@ -53,6 +58,10 @@ See also:
        HOME.  (Could also use r:, v:, d:, pia:, usr:.)
        (1999-09-22) <br>
 
+  <li> <b>Impr</b> Want a way of getting at an overridden doc. <br>
+       Could maybe do this with a virtual container, e.g. -v/foo.
+       (1999-09-09) <br>
+
   <li> <b>Bug</b> Subsites don't get reconfigured when changed. <br>
        <code>subsiteCache</code> is always used.  If a config file is changed
        or a directory added to the virtual path, an existing Subsite won't
@@ -66,11 +75,6 @@ See also:
   <li> <b>Bug</b> Need "realizable" flag. <br>
        Hard to tell which things are pure virtual, and which can be realized. 
        (1999-09-16) <br>
-
-  <li> <b>Bug</b> Virtual search paths need work <br>
-       May need "file:", "real:", and "virtual:" for absolute, real
-       root, and virtual root; / means go to top.
-       (1999-09-15) <br>
 
   <li> <b>Impr</b> Should have ImaginaryDoc <br>
        parent of Listing; initialize with either config. or string.  Having a
@@ -91,10 +95,6 @@ See also:
   <li> <b>Impr</b> Listing should show virtual path <br>
        and indicate which path element each document is in.  The latter will
        probably require a <code>getFlags</code> method on Resource.
-       (1999-09-09) <br>
-
-  <li> <b>Impr</b> Want a way of getting at an overridden doc. <br>
-       Could maybe do this with a virtual container, e.g. -v/foo.
        (1999-09-09) <br>
 
   <li> <b>Impr</b> All resources need config and property fields.<br>
@@ -148,12 +148,6 @@ See also:
        it's the other way around because it's inherited from AbstractResource,
        which doesn't have a search path.
        (1999-09-03) <br>
-
-  <li> <b>Impr</b> Use &lt;container&gt; and &lt;document&gt; in cfg. <br>
-       Not clear whether to keep &lt;Resource&gt; or not; probably a good idea
-       to keep it for, e.g., files where we haven't determined whether it's a
-       directory or not.
-       (1999-08-23) <br>
 
   <li> <b>Impr</b> Need a way to turn off caching in Subsite <br>
        Do the basic lookup in ConfiguredResource, and use it if no location
@@ -224,5 +218,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.18 1999-11-24 22:43:32 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.19 1999-12-14 19:16:41 steve Exp $</b><br>
 </body></html>

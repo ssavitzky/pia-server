@@ -155,11 +155,53 @@ See also:
        -- now done differently: an agent doesn't have any significant state;
 	  it's all in its subsite.
 
+  <li> <b>Bug</b> Recursion on bogus tagset <br>
+       Specifying a tagset (pia-xhtml with no path) in &lt;include&gt;
+       bombs in an infinite recursion.  Genuinely missing tagset is OK.
+       <pre>
+        at org.risource.dps.handle.tagsetHandler.action(tagsetHandler.java:152)
+        at org.risource.dps.process.BasicProcessor.doAction(BasicProcessor.java:110)
+        at org.risource.dps.process.BasicProcessor.processNode(BasicProcessor.java:86)
+        at org.risource.dps.process.BasicProcessor.run(BasicProcessor.java:77)
+        at org.risource.dps.tagset.Loader.loadTagsetFromResource(Loader.java:192)
+        at org.risource.site.Subsite.loadTagsetFromResource(Subsite.java:682)
+        at org.risource.site.Subsite.loadTagset(Subsite.java:717)
+        at org.risource.dps.process.TopProcessor.loadTagset(TopProcessor.java:386)
+        at org.risource.dps.handle.tagsetHandler.action(tagsetHandler.java:152)
+        at org.risource.dps.process.BasicProcessor.doAction(BasicProcessor.java:110)
+        at org.risource.dps.process.BasicProcessor.processNode(BasicProcessor.java:86)
+        at org.risource.dps.process.BasicProcessor.run(BasicProcessor.java:77)
+        at org.risource.dps.tagset.Loader.loadTagsetFromResource(Loader.java:192)
+        at org.risource.site.Subsite.loadTagsetFromResource(Subsite.java:682)
+        at org.risource.site.Subsite.loadTagset(Subsite.java:717)
+        at org.risource.site.Subsite.loadTagset(Subsite.java:731)
+        at org.risource.site.Subsite.loadTagset(Subsite.java:731)
+        at org.risource.dps.process.TopProcessor.loadTagset(TopProcessor.java:386)
+        at org.risource.dps.handle.includeHandler.action(includeHandler.java:63)
+       </pre>
+       (1999-12-13) <br>
+       -- Pilot error: there was a tagset "pia-xhtml" in <code>.pia</code>
+	  that specified itself as parent.  Duh!
+
+  <li> <b>Impr</b> Use &lt;container&gt; and &lt;document&gt; in cfg. <br>
+       Not clear whether to keep &lt;Resource&gt; or not; probably a good idea
+       to keep it for, e.g., files where we haven't determined whether it's a
+       directory or not.
+       (1999-08-23) <br>
+
+  <li> 1999-12-14 <b>Bug</b> Virtual search paths need work <br>
+       May need "file:", "real:", and "vroot:" for absolute, real
+       root, and virtual root; / means go to top.
+       (1999-09-15) <br>
+       -- (1999-12-08) they work in include and tagset loader, at least.
+	  Really need to revise the stuff in TopContext to use site package
+	  all the time, with appropriate Resource nodes getting returned.
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.9 1999-10-18 21:57:22 steve Exp $</b><br>
+<b>$Id: done.html,v 1.10 1999-12-14 19:16:40 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -31,17 +31,6 @@ See also:
 <h2><a name="code">Code</a></h2>
 
 <ol>
-  <li> 1999-11-02 <b>Bug</b> Non-strict HTML parsing needed. <br>
-       Need a "nonstrict" attribute in &lt;tagset&gt;. Distinguish between
-       XHTML (XML) and HTMLX (HTML with eXtensions).  Need a more general way
-       to get at tagset attributes. 
-
-  <li> 1999-11-04 <b>Bug</b> Conversion of text to internal form broken. <br>
-       The consequence is that STRING nodes and &lt;include&gt; URL's
-       containing ampersands don't work.  It will be <em>absolutely</em>
-       necessary to correctly identify the places where we want the internal
-       or external form.
-
   <li> <b>Bug</b> Correct handling for attribute case <br>
        Need to case-fold attributes correctly for the tagset.  Mixed-case
        attributes need to work.
@@ -53,14 +42,46 @@ See also:
   <li> <b>Bug</b> shouldn't split on whitespace sometimes <br>
        e.g. in &lt;from&gt;, and possibly even &lt;foreach&gt;. 
 
+  <li> <b>Bug</b> subst bug <br>
+       seems to substitute for one char to the left of the match.  This
+       is either a bug in the library or a result of an old workaround (adding
+       null to end of string) that may no longer be necessary.
+
+  <li> <b>Bug</b> POST breaks when proxied through Apache. <br>
+       Just spins its wheels.  Should time out.
+       (1999-12-09) <br>
+
+       <p>
+
+  <li> 1999-12-13 <b>Bug</b> root prefixes in Site and Subsite. <br>
+       Subsite needs to handle "v" and "r", passing "vroot" and "root" to the
+       Site along with any prefix, like "file" and "pia", that it doesn't
+       understand.
+       (1999-12-09) <br>
+       -- v and r want to -> -v, -r.
+
+  <li> 1999-12-10 <b>Bug</b> tagsets not found in CLASSPATH <br>
+       because they're at the top level now rather than in the package
+       <code>org.risource.dps.tagset</code>.
+       (1999-12-09) <br>
+
+  <li> 1999-11-02 <b>Bug</b> Non-strict HTML parsing needed. <br>
+       Need a "nonstrict" attribute in &lt;tagset&gt;. Distinguish between
+       XHTML (XML) and HTMLX (HTML with eXtensions).  Need a more general way
+       to get at tagset attributes. 
+
+  <li> 1999-11-04 <b>Bug</b> Conversion of text to internal form broken. <br>
+       The consequence is that STRING nodes and &lt;include&gt; URL's
+       containing ampersands don't work.  It will be <em>absolutely</em>
+       necessary to correctly identify the places where we want the internal
+       or external form.
+
   <li> 1999-12-03 <b>Bug</b> parser doesn't insert &lt;/p&gt; properly <br>
        Block tags like &lt;h*&gt; and &lt;ul&gt; have to be notInside
        &lt;p&gt; for correct handling.<br>
        -- Almost certainly still buggy.  Really need to look at the DTD and do
 	  it right.
        
-       <p>
-
   <li> 1999-11-08 <b>Bug</b> PropertyTable needs a handler. <br>
        Need to be able to save PropertyTable objects, and read them back in.
        This may very well replace Namespace for everything except entities.
@@ -79,20 +100,16 @@ See also:
        with, e.g., a &lt;DOCTYPE&gt; element / documentBuilder handler. <br>
        -- &lt;make type=DOCTYPE&gt; works just fine. 
 
-  <li> <b>Bug</b> subst bug <br>
-       seems to substitute for one char to the left of the match.  This
-       is either a bug in the library or a result of an old workaround (adding
-       null to end of string) that may no longer be necessary.
+       <p>
+
+  <li> <b>Hole</b> Ability to re-read config files. <br>
+       Mainly needs the ability to uninstall agents.  Pretty easy if we keep a
+       list in the Subsite and uninstall them by object ID.
 
   <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
 
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
        Need access to files relative to root, vroot, and home. 
-
-  <li> <b>Hole</b> Ability to re-read config files. <br>
-       Mainly needs the ability to uninstall agents.  Pretty easy if we keep a
-       list in the Subsite and uninstall them by object ID.
-       <p>
 
   <li> <b>Hole</b> URL-manipulation tag <br>
        something like &lt;date&gt; but for URL's.
@@ -193,6 +210,25 @@ See also:
 <h2><a name="other">Other</a></h2>
 
 <ol>
+  <li> 1999-12-09 <b>Hole</b> Move tagsets <br>
+       Probably to PIA/lib, PIA/Tagsets, or PIA/lib/tagsets.  Might be
+       worthwhile adding lib to CLASSPATH to keep resource stuff working.
+       Possibly subdirs for <code>pia</code> and <code>dps</code> tagsets.
+       <br>
+       -- Combination of PIA/lib (for basic, etc.) and PIA/Tagsets.
+
+  <li> <b>Hole</b> Find places for mini-apps <br>
+       There are two kinds: PIA apps (for which Samples is the cannonical
+       location), and <code>process</code> apps -- need a good place for the
+       latter.  Possibly <code>bin</code> for scripts and <code>lib</code> for
+       tagsets. 
+
+  <li> <b>Hole</b> Move CVS tree outside firewall, tunnel server. <br>
+       This has to be done in order to give outside developers access.  It's
+       probably simpler to use <code>ssh</code> to tunnel the CVS password
+       server's port through the firewall, but more egalitarian to move the
+       server outside.
+
   <li> 1999-11-05 <b>Bug</b> GIF conversion <br>
        Need to convert all <code>.gif</code> files to <code>.jpeg</code> or
        <code>.png</code> to avoid patent entanglements.  See
@@ -239,5 +275,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.14 1999-12-06 20:20:23 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.15 1999-12-14 19:16:28 steve Exp $</b><br>
 </body></html>

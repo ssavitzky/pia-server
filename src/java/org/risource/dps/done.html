@@ -1119,9 +1119,24 @@ If 4th node is there, returns "four".
        -- Almost certainly still buggy.  Really need to look at the DTD and do
 	  it right.
        
+  <li> 1999-12-10 <b>Bug</b> tagsets not found in CLASSPATH <br>
+       because they're at the top level now rather than in the package
+       <code>org.risource.dps.tagset</code>.
+       (1999-12-09) <br>
+
+  <li> 1999-12-10 <b>Bug</b> TagsetProcessor not set up with location <br>
+       ... and hence can't load parent tagsets relative to document root.
+       (1999-12-09) <br>
+
+  <li> 1999-12-14 <b>Bug</b> parent tagsets not loaded by site. <br>
+       Not finding a parent tagset in a parent subsite.  Even "../tagset"
+       fails.  Probably Loader or tagsetHandler is sidestepping the site
+       stuff. 
+       (1999-10-04) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.41 1999-12-06 20:20:14 steve Exp $</b><br>
+<b>$Id: done.html,v 1.42 1999-12-14 19:16:31 steve Exp $</b><br>
 </body></html>
