@@ -1000,9 +1000,14 @@ If 4th node is there, returns "four".
   <li> 1999-10-29 <b>Bug</b> Define with no content fails <br>
        -- this was considered an error, but in fact it's perfectly legitimate.
 
+  <li> 1999-11-01 <b>Bug</b> end tags in PI's generate errors <br>
+       They shouldn't be getting parsed at all.  It seems to have something to
+       do with encountering entities inside the PI.
+       (1999-11-01) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.31 1999-10-29 17:17:20 steve Exp $</b><br>
+<b>$Id: done.html,v 1.32 1999-11-02 01:04:24 steve Exp $</b><br>
 </body></html>
