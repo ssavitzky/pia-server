@@ -121,7 +121,9 @@ Markup is preserved.
 
 </p><h3><a name='entenc'>Entity Encode</a></h3>
 <b>Description: </b>Use entity encoding to preserve an "&amp;" as text in an XML document.
-Currently, it is not clear that this is useful.
+Currently, this does not work correctly.  The parser needs to be able to output literals
+in order for encoding to make sense.  It does not yet have this capability.  When it does,
+this example will work as advertised.
 <p>
 <b>Input: </b>&lt;text encode entity&gt;&amp; Co.&lt;/text&gt;
 </p><p>
@@ -130,13 +132,15 @@ Currently, it is not clear that this is useful.
 <hr />
 
 </p><h3><a name='decent'>Entity Decode</a></h3>
-<b>Description: </b>Use entity decoding to decode an "&amp;" that has been preserved as text in an XML document.
+<b>Description: </b>Use entity decoding to decode an "&amp;" that has been preserved as text in an 
+XML document.  Note that when output, the text is turned back into an entity, so it is not clear that 
+entity decoding is useful in its current form.
 <p>
 <b>Input: </b>&lt;text decode entity&gt;&amp; Co. &lt;/text&gt;
 </p><p>
 <b>Result: </b><text decode='decode' entity='entity'>&amp; Co.</text>
 </p><p>
-<footer cvsid='$Id: demo_text.xh,v 1.6 1999-04-02 22:07:12 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_text.xh,v 1.7 1999-04-07 23:38:37 pgage Exp $'></footer>
 
 </p></body></html>
 
