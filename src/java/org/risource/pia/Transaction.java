@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.6 1999-04-23 00:25:23 steve Exp $
+// $Id: Transaction.java,v 1.7 1999-05-20 20:18:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -901,11 +901,11 @@ public abstract class Transaction
       obj = e.nextElement();
       if( obj instanceof Transaction ){
 	Transaction tran = (Transaction)obj;
-	if ( tran.handle( Pia.instance().resolver() ) == true )
+	if ( tran.handle( Pia.resolver() ) == true )
 	  satisfied = true;
       }else if( obj instanceof Agent ){
 	Agent agnt = (Agent)obj;
-	if ( agnt.handle(this, Pia.instance().resolver()) == true )
+	if ( agnt.handle(this, Pia.resolver()) == true )
 	  satisfied = true;
 	}
       else{

@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.5 1999-03-30 15:56:10 steve Exp $
+// $Id: Agent.java,v 1.6 1999-05-20 20:18:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ public class Agent extends TFComputer {
     if( path == null ) return null;
       
     org.risource.pia.Agent agent =
-      Pia.instance().resolver().agentFromPath(path);
+      Pia.resolver().agentFromPath(path);
 
     if (agent != null) {
       trans.assert("agent", agent.pathName());

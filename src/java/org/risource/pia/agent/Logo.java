@@ -1,5 +1,5 @@
 // Logo.java
-// $Id: Logo.java,v 1.5 1999-03-23 23:32:41 steve Exp $
+// $Id: Logo.java,v 1.6 1999-05-20 20:21:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -90,7 +90,7 @@ public class Logo extends GenericAgent {
       String redirUrlString = "http://gelion:8001"+path;
       String msg = "Extreme kludge: see "+redirUrlString;
       Content ct = new org.risource.content.text.StringContent(msg);
-      Transaction response = new HTTPResponse( Pia.instance().thisMachine(),
+      Transaction response = new HTTPResponse( Pia.thisMachine(),
 					       request.fromMachine(),
 					       ct, false);
       response.setHeader("Location", redirUrlString);

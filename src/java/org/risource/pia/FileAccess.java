@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.9 1999-04-23 00:29:50 steve Exp $
+// $Id: FileAccess.java,v 1.10 1999-05-20 20:18:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -370,7 +370,7 @@ public class FileAccess {
 	reply.setHeader( "Last-Modified", toGMTString(mDate) ); 
 	
 	try{
-	  Pia.instance().debug(agent, "Retrieving file :"+ filename );
+	  Pia.debug(agent, "Retrieving file :"+ filename );
 	  
 	  String contentType = contentType( filename );
 	  if(contentType.indexOf("html") == -1 ){
@@ -425,7 +425,7 @@ public class FileAccess {
 	      tmp.append( myurl.toExternalForm()+ "\">" );
 	      tmp.append( data.substring( afterindex ) );
 	    }
-	    Pia.instance().debug(agent, "before creating reply" );
+	    Pia.debug(agent, "before creating reply" );
 	    String ts = new String(tmp);
 	    Reader newdata  = new StringReader( ts );
 	    Content finalContent = new org.risource.content.text.html( newdata );
@@ -488,7 +488,7 @@ public class FileAccess {
     Pia.debug(msg);
 
     Content ct = new org.risource.content.text.html( new StringReader(msg) );
-    Transaction response = new HTTPResponse( Pia.instance().thisMachine,
+    Transaction response = new HTTPResponse( Pia.thisMachine(),
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
     response.setStatus(HTTP.MOVED_PERMANENTLY);

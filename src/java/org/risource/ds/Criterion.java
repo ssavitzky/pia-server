@@ -1,5 +1,5 @@
 ////// Criterion.java:  Superclass for match criteria
-//	$Id: Criterion.java,v 1.3 1999-03-12 19:28:36 steve Exp $
+//	$Id: Criterion.java,v 1.4 1999-05-20 20:20:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ public class Criterion implements java.io.Serializable {
    *	more than one feature.
    */
   public boolean match(Features features, HasFeatures parent) {
-    // org.risource.pia.Pia.instance().debug(this, "     feature "+name);
+    // org.risource.pia.Pia.debug(this, "     feature "+name);
     return match(features.getFeature(name, parent));
   }
 

@@ -1,5 +1,5 @@
 // Admin.java
-// $Id: Admin.java,v 1.5 1999-05-06 20:46:56 steve Exp $
+// $Id: Admin.java,v 1.6 1999-05-20 20:21:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,14 +60,14 @@ public class Admin extends GenericAgent {
    * Uninstall (unRegister) an agent.
    */
   public void unInstallAgent(String name){
-    Pia.instance().resolver().unRegisterAgent( name );
+    Pia.resolver().unRegisterAgent( name );
   }
 
   /**
    * Install (register) an agent.
    */
   public void installAgent(Agent newAgent){
-    Pia.instance().resolver().registerAgent( newAgent );
+    Pia.resolver().registerAgent( newAgent );
   }
 
   /**

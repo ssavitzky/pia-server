@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.6 1999-03-26 07:41:00 steve Exp $
+// $Id: HTTPResponse.java,v 1.7 1999-05-20 20:18:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -208,7 +208,7 @@ public class  HTTPResponse extends Transaction {
     StringReader inputStream = new StringReader( msg );
 
     Content ct = new org.risource.content.text.html( inputStream, this );
-    Transaction response = new HTTPResponse( Pia.instance().thisMachine,
+    Transaction response = new HTTPResponse( Pia.thisMachine(),
 					     toMachine(), ct, false);
     response.setStatus( code );
     response.setHeader("Server", Version.SERVER);
