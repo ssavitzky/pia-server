@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.6 2000-09-23 00:51:14 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.7 2000-10-05 19:03:26 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -436,6 +436,31 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 		       unchanged.</dd>
 		  <dt> <code>append-content</code> or <code>append</code>
 		  <dd> Append the expansion to the content. </dd>
+		  <dt> <code>defer-content</code> or <code>defer</code>
+		  <dd> Defer expansion of the content until
+		       <code>&amp;content;</code> actually occurrs in the
+		       content.  This provides a <em>correct</em> form of lazy
+		       evaluation.  The content is expanded, if necessary,
+		       <em>in the context of the tag being expanded</em>.  It
+		       is necessary for the action to expand the content
+		       <em>exactly once!</em>
+		  </dd>
+		  <dt> <code>before-content</code> or <code>before</code>
+		  <dd> Defer expansion of the content until after the action
+		       has been expanded.  This provides a crude form of lazy
+		       evaluation.  The content is expanded <em>in the context
+		       of the tag being expanded</em>.
+
+		       <p> There are two control variables the action may set:
+		           <code>wrapper</code> and <code>content</code>.
+		           <code>content</code> is expanded <em>after</em> the
+		           invoking node's content.   <code>wrapper</code> is
+		           either the tagname of an element wrapped
+		           <em>around</em> the expanded content, or one of the
+		           two special strings <code>#skip</code> or
+		           <code>#hide</code>. 
+		       </p>
+		  </dd>
 		  <dt> <code>silent</code></dt>
 		  <dd> The action is invoked only for side effects: the
 		       invoking element is passed unchanged to the output, but
