@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.14 2000-10-05 19:07:12 steve Exp $
+#	$Id: woad-index.pl,v 1.15 2000-10-06 00:28:11 steve Exp $
 # Create WOAD index files.
 #
 
@@ -12,7 +12,8 @@ sub usage {
     print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "	-v		Print version string and exit\n";
     print "	-q		Quiet\n";
-    print "	-x		also produce cross-reference\n";
+    print "	-x		also produce cross-reference index\n";
+    print "	-y		index definitions only (faster)\n";
     print "  parameters: \n";
     print "	source=<dir>	source root\n";
     print "	root=<dir>	annotation root (same as -root <dir>)\n";
@@ -29,7 +30,8 @@ $root 		= "$ENV{HOME}/.woad";
 $recursive 	= 1 ;
 $project	= "";
 
-$doXref		= 0;
+$xref		= 0;
+$yref		= 0;
 $quiet		= 0;
 
 $sourcePrefix	= ".source";
@@ -229,6 +231,9 @@ for ($i = 0; $i < @ARGV; ++$i) {
 	$root = $ARGV[++$i];
     } elsif ($arg eq '-x') {
 	$xref = 1;
+	$yref = 1;
+    } elsif ($arg eq '-y') {
+	$yref = 1;
     } elsif ($arg eq '-q') {
 	$quiet += 1;
     } elsif ($arg =~ /^-/) {		 # unrecognized switch
@@ -284,13 +289,15 @@ indexWoadDir("$root$project", "/");
 globalIndices();
 
 ## Increment $pass and re-index the sources looking for references
-# === do we need to clobber @roots here?
 if ($xref) {
-    @roots = ();
+    @roots = ();		# === do we need to clobber @roots here? 
     $roots[0] = getRealDirPath($source);
-
     $pass ++;
     indexDir($source, "/");
+}
+
+## Put out the cross-references.  -y means only the definitions.
+if ($yref) {
     makeCrossReference();
 }
 
@@ -303,7 +310,7 @@ print STDERR "files: $nSourceFiles, "
 	.    "($nSourceDirs dirs, $nPruned pruned), "
 	.    "notes: $nNoteFiles, " 
     	.    "defs: $nDefs\n";
-print STDERR "xrefs: $nWords\n" if ($xref);
+print STDERR "xrefs: $nWords\n" if ($yref);
 
 exit(0);
 
@@ -997,6 +1004,7 @@ sub makeCrossReference {
 	}
 
 	# write the cross-reference file entry for the word
+	# We don't bother to sort the entries, which saves a little time.
 	# As we go, clear out entries in %xrefs to save both time and space
 
 	my $xfile = "$dir/-$c-/$word.wi";
@@ -1004,9 +1012,10 @@ sub makeCrossReference {
 	print XREFS "<xref name=\"$word\">$xlink</xref>\n";
 	
 	open (INDEX, ">$xfile");
-	@entries = sort(split (/\n\n/, $xrefs{$word}));
+	print INDEX $xrefs{$word}; # we don't really have to sort.
+	## @entries = sort(split (/\n\n/, $xrefs{$word}));
 	$xrefs{$word} = '';	# save memory
-	print INDEX join ("\n", @entries);
+	##print INDEX join ("\n", @entries);
 	close (INDEX);
     }
     close (XREFS);
@@ -1094,7 +1103,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.14 2000-10-05 19:07:12 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.15 2000-10-06 00:28:11 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 
