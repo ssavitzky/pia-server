@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
+//	$Id: Resource.java,v 1.6 1999-10-04 17:42:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
+ * @version $Id: Resource.java,v 1.6 1999-10-04 17:42:37 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -161,7 +161,7 @@ public interface Resource {
    *	The <code>name</code> of the Namespace will be the same as
    *	the name of the Resource.
    */
-  public Namespace getProperties();
+  public PropertyMap getProperties();
 
   /** Write out any properties that have been changed, and check for 
    *	changes in the state of any underlying real resources. */

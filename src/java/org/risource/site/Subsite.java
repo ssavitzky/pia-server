@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.11 1999-09-24 22:05:36 steve Exp $
+//	$Id: Subsite.java,v 1.12 1999-10-04 17:42:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,8 @@ package org.risource.site;
 
 import org.risource.site.util.*;
 
+import org.risource.dps.namespace.PropertyTable;
+
 import org.w3c.dom.*;
 import org.risource.ds.*;
 import org.risource.dps.*;
@@ -50,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.11 1999-09-24 22:05:36 steve Exp $
+ * @version $Id: Subsite.java,v 1.12 1999-10-04 17:42:37 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -218,7 +220,7 @@ public class Subsite extends ConfiguredResource implements Resource {
    *<ul>
    *	<li> <code>Resource</code>, <code>Document</code>, 
    *	     <code>Container</code>: configure a child resource
-   *	<li> <code>Map</code>: configure an extension map item.
+   *	<li> <code>Ext</code>: configure an extension map item.
    *	<li> <code>Home</code>: register this Subsite as an agent's home
    *	     Resource.  The content is the name to register, defaulting if 
    *	     empty to the name of this Resource.
@@ -232,8 +234,8 @@ public class Subsite extends ConfiguredResource implements Resource {
       configChildItem(tag, item);
     }    
 
-    // <Map>
-    else if (tag.equals("Map")) configMapItem(tag, item);
+    // <Ext>
+    else if (tag.equals("Ext")) configExtItem(tag, item);
 
     // <Home>
     else if (tag.equals("Home")) configHomeItem(tag, item);
@@ -259,14 +261,13 @@ public class Subsite extends ConfiguredResource implements Resource {
     childConfigCache.at(name, e);
   }
 
-  /** Handle a &ltMap&gt element. 
+  /** Handle an &lt;Ext&gt; element. 
    *
    * <p> === has problems dealing with items that are already on the 
    *	 === extSearch list.  Ideally need separate hidden flag, too.
    */
-  protected void configMapItem(String tag, ActiveElement e) {
-    String ext = e.getAttribute("extension");
-    if (ext == null) ext = e.getAttribute("ext");
+  protected void configExtItem(String tag, ActiveElement e) {
+    String ext = e.getAttribute("name");
     if (ext == null) ext = "";
     String type = e.getAttribute("type");
     if (type == null) type = "";
@@ -356,7 +357,10 @@ public class Subsite extends ConfiguredResource implements Resource {
       ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
       if (cfg == null) return null; 
       Resource child = configureChild(name, cfg);
-      if (child != null) return child.getDocument().documentFile();
+      if (child != null) f = child.getDocument().documentFile();
+      if (f != null && f.exists()) return f;
+      else System.err.println("Bad documentFile from virtual " + getPath() 
+			      + "/" + name);
     }
     return null;
   }
@@ -765,8 +769,9 @@ public class Subsite extends ConfiguredResource implements Resource {
    *	Actually loading the configuration is left to the caller, presumably
    *	a constructor for Site.
    */
-  protected Subsite(String realLoc, String virtualLoc, String defaultDir) {
-    super("/", null, true, (realLoc != null), new File(realLoc), null, null);
+  protected Subsite(String realLoc, String virtualLoc, String defaultDir,
+		    PropertyTable props) {
+    super("/", null, true, (realLoc != null), new File(realLoc), null, props);
     if (file != null && file.exists()) real = true;
     virtualSearchPath = new File[2];
     if (virtualLoc != null) virtualSearchPath[0] = new File(virtualLoc);

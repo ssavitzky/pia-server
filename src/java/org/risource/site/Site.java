@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.5 1999-09-22 23:51:14 steve Exp $
+//	$Id: Site.java,v 1.6 1999-10-04 17:42:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.TopProcessor;
+import org.risource.dps.namespace.PropertyTable;
 
 import org.risource.ds.*;
 
@@ -43,7 +44,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.5 1999-09-22 23:51:14 steve Exp $
+ * @version $Id: Site.java,v 1.6 1999-10-04 17:42:37 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -226,7 +227,7 @@ public class Site extends Subsite implements Root {
    *	The configuration file need not be accessible as part of the Site. 
    */
   public Site(String location, String siteConfigPath) {
-    this(location, null, null, null, null);
+    this(location, null, null, null, null, null);
     loadConfigFile(new File(siteConfigPath));
   }
 
@@ -245,8 +246,9 @@ public class Site extends Subsite implements Root {
    * @param configTagsetName the tagset to use for loading configuration files.
    */
   public Site(String realLoc, String virtualLoc, String defaultDir,
-	      String configFileName, String configTagsetName) {
-    super(realLoc, virtualLoc, defaultDir);
+	      String configFileName, String configTagsetName,
+	      PropertyTable props) {
+    super(realLoc, virtualLoc, defaultDir, props);
     if (configFileName != null)   setConfigFileName(configFileName);
     if (configTagsetName != null) this.configTagsetName = configTagsetName;
   }

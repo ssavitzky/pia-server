@@ -16,6 +16,13 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Check</b> locateChildFile for virtual links <br>
+       (1999-09-28) <br>
+
+  <li> <b>Bug</b> MSIE thinks it knows what "." means! <br>
+       Stupid...  Maybe a question mark?  Underscore?
+       (1999-09-23) <br>
+
   <li> <b>Bug</b> default= not relative to document. <br>
        ... so ".." ends up with /home or worse.
        (1999-09-23) <br>
@@ -24,10 +31,12 @@ See also:
        ... in order to avoid initializing child resources before their
        parents.  May actually need a dummy Subsite for this.
        (1999-09-22) <br>
-
+       -- so far it seems to be working, though.  An alternative might be to
+	  invalidate caches where necessary.
+       
   <li> <b>Hole</b> Need convention for accessing real, virtual, etc. <br>
-       Suggest pseudo-subdirs -r, -v, -d, etc.  -pia, -usr for PIA_DIR,
-       USR_DIR.  (Could also use r:, v:, d:, pia:, usr:.)
+       Suggest pseudo-subdirs -r, -v, -d, etc.  -pia, -usr for PIA_HOME,
+       HOME.  (Could also use r:, v:, d:, pia:, usr:.)
        (1999-09-22) <br>
 
   <li> <b>Bug</b> Subsites don't get reconfigured when changed. <br>
@@ -249,5 +258,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.10 1999-09-24 22:05:37 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.11 1999-10-04 17:42:38 steve Exp $</b><br>
 </body></html>

@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.7 1999-09-17 23:39:51 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.8 1999-10-04 17:42:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,7 +30,7 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.tree.*;
 
-import org.risource.dps.namespace.BasicNamespace;
+import org.risource.dps.namespace.PropertyTable;
 
 import java.io.File;
 import java.net.URL;
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.7 1999-09-17 23:39:51 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.8 1999-10-04 17:42:36 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -78,7 +78,7 @@ public abstract class ConfiguredResource extends AbstractResource
   protected ActiveNodeList parsedContent = null;
 
   /** The associated metadata. */
-  protected Namespace properties = null;
+  protected PropertyTable properties = null;
 
   // === we wouldn't need these if base was a Subsite ===
   protected File getVirtualLoc() { return null; }
@@ -179,17 +179,8 @@ public abstract class ConfiguredResource extends AbstractResource
    *	<code>super</code> for the default case. 
    */
   protected void configItem(String tag, ActiveElement item) {
-    // <namespace> (entities, DAV, ...)
-    if (item instanceof Namespace) configNamespaceItem(item.asNamespace());
-
-    // unknown: put it into the properties
-    else {
-      if (properties == null) properties = new BasicNamespace(getName());
-      ActiveNode binding = properties.getBinding(tag);
-      if (binding != null) binding.appendChild(item);
-      else properties.setBinding(tag,
-				 new TreeEntity(tag, new TreeNodeList(item)));
-    }
+    if (properties == null) properties = new PropertyTable(getName());
+    properties.setPropertyBinding(item);
 
     if (tag.equals("DOCUMENT")) {
       parsedContent = item.getContent();
@@ -200,19 +191,6 @@ public abstract class ConfiguredResource extends AbstractResource
 			      + " in " + getPath(), 0, false); 
   }
   
-  /** Handle a <code>namespace</code> element in the configuration. 
-   *	It is expected that subclasses will extend this by checking for
-   *	the names they know how to handle, finally passing the buck to
-   *	<code>super</code> for the default case. 
-   */
-  protected void configNamespaceItem(Namespace ns) {
-    String name = ns.getName();
-
-    if (properties == null) properties = new BasicNamespace(getName());
-    properties.setBinding(name, (ActiveNode)ns);
-    
-  }
-
   protected ActiveAttrList reportConfigAttrs() {
     ActiveAttrList cfg = super.reportConfigAttrs();
     if (isReal()) cfg.setAttribute("real", "yes");
@@ -270,8 +248,8 @@ public abstract class ConfiguredResource extends AbstractResource
   ** Metadata:
   ************************************************************************/
 
-  /** Return the entire collection of properties as a Namespace. */
-  public Namespace getProperties() {
+  /** Return the entire collection of properties as a PropertyMap. */
+  public PropertyMap getProperties() {
     return properties;
   }
 
@@ -404,7 +382,7 @@ public abstract class ConfiguredResource extends AbstractResource
 
   public ConfiguredResource(String name, ConfiguredResource parent, 
 			    boolean container, boolean real, File file, 
-			    ActiveElement config, Namespace props) {
+			    ActiveElement config, PropertyTable props) {
     this.base = parent;
     this.name = name;
     this.real = real;

@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.5 1999-09-22 00:17:16 steve Exp $
+//	$Id: AbstractResource.java,v 1.6 1999-10-04 17:42:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.5 1999-09-22 00:17:16 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.6 1999-10-04 17:42:36 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -173,7 +173,7 @@ public abstract class AbstractResource implements Resource {
    *	if any.
    */
   protected void reportConfigNodes(Output out) {
-    Namespace props = getProperties();
+    PropertyMap props = getProperties();
     if (props != null) out.putNode((Node)props);
   }
 
@@ -213,7 +213,7 @@ public abstract class AbstractResource implements Resource {
   ************************************************************************/
 
   /** Return the entire collection of properties as a Namespace. */
-  public abstract Namespace getProperties();
+  public abstract PropertyMap getProperties();
 
   /** Write out any properties that have been changed. */
   public abstract boolean synchronize();
