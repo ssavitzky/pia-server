@@ -302,7 +302,7 @@
 <form action="options#attrs" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="attrs" value="Set" /> </th>
+          <input type='submit' name="attrs" value=" Set " /> </th>
       <th bgcolor="silver" align="left" width="90%"> Agent Attributes </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -338,16 +338,16 @@
 <form action="options#hooks" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="hooks" value="Set" /> </td>
+          <input type='submit' name="hooks" value=" Set " /> </td>
       <th bgcolor="silver" align="left" width="90%"> Hooks </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
-  <tr><th align="right" valign="top" bgcolor="silver">criteria</td>
+  <tr><td align="right" valign="top" bgcolor="silver">criteria</td>
       <td> &nbsp;<input name="criteria" size="50" value="&AGENT:criteria;"  />
       </td>
       <td bgcolor="silver">&nbsp;</td>
   </tr>
-  <tr><th align="right" valign="top" bgcolor="silver">act-on</td>
+  <tr><td align="right" valign="top" bgcolor="silver">act-on</td>
       <set name="rows"><if>&AGENT:act-on;<then>20</then><else>5</else></if></set>
       <td> &nbsp;<textarea name="act-on" rows="&rows;" cols=50
 	         ><get name="AGENT:act-on"/></textarea>
@@ -395,7 +395,7 @@
 <form action="options#others" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="others" value="Set" /> </th>
+          <input type='submit' name="others" value=" Set " /> </th>
       <th bgcolor="silver" align="left" width="90%"> Other Options </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -474,5 +474,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.8 1999-05-27 01:03:31 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.9 1999-06-22 22:53:14 steve Exp $' />
 </body></html>
