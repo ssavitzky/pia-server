@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.23 2000-08-26 00:38:01 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.24 2000-08-30 19:57:27 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -722,6 +722,7 @@ Note that we only need these inside the PIA.
       		 <else>
       			<describeIndex>&f;</describeIndex>
       		 </else>
+      	    </if>
 	</td>
     </tr>
   </action>
@@ -1114,10 +1115,20 @@ Note that we only need these inside the PIA.
   </doc>
   <action>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+	<th>keyword</th>
+	<td>
+	     <a href="/.words/">/contexts/</a> (
+	     <a href="/.words/file/">files</a>
+	     <a href="/.words/func/">functions</a>
+	     <a href="./words/title/">titles</a>
+	     ... )
+	</td>
     <form action="/.words/">
 	<td align="right"> look up: <input name="word" />
 	</td>
     </form>
+      </tr>
     </table>
   </action>
 </define>
@@ -1271,6 +1282,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.23 2000-08-26 00:38:01 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.24 2000-08-30 19:57:27 steve Exp $ -->
 </tagset>
 
