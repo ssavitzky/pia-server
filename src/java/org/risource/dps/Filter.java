@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.7 1999-04-23 00:21:19 steve Exp $
+//	$Id: Filter.java,v 1.8 1999-05-07 23:32:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -180,6 +180,7 @@ public class Filter {
      
     ToParseTree outputTree = null;
     Output output = null;
+    ToWriter writeout = null;
     if (loadTagset) {
       output = new org.risource.dps.output.DiscardOutput();
     } else if (parsing) {
@@ -188,7 +189,7 @@ public class Filter {
       outputTree.setRoot(new TreeElement("Document", (ActiveAttrList)null));
       output = outputTree;
     } else {
-      output = new ToWriter(out);
+      output = writeout = new ToWriter(out);
     }
 
     if (debug) output = new OutputTrace(output);
@@ -222,7 +223,8 @@ public class Filter {
       }
     } 
 
-    if (out != null) try {
+    if (writeout != null) writeout.close();
+    else if (out != null) try {
       out.close();
     } catch (java.io.IOException e){}
   }
