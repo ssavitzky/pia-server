@@ -1,5 +1,11 @@
 @echo off
-REM a batch script to start the pia on win95 in a dos box
+REM a batch script to start the pia on win95 in a dos box using a JDK
+REM This script will attempt to set PIA_DIR properly if possible
+REM You may need to indicate the location of your Java Developer Kit 
+REM below (JDKHOME) if you do not have a Java Runtime (JRE) in your path
+REM (Currently JDKHOME defaults to a directory as an example of how to 
+REM set it.  This should not cause any problems unless an old version of
+REM the JDK exists in that directory.)
 
 REM where is the PIA home??  If current dir is pia/bin then
 if  "%PIA_DIR%"==""  goto  NOPIAHOME
@@ -21,6 +27,9 @@ REM move up one
 REM
 :PIAHOMEFOUND 
 set PIAHOME=..
+REM You should set JDKHOME to the directory where the JDK is installed
+REM (May not be necessary with newer jdk's
+
 set JDKHOME=%PIAHOME%\..\java\windows\jdk1.1.4
 goto ENDPIAHOME
 REM
@@ -56,8 +65,13 @@ REM SET JDKHOME=c:\java\jdk
 
 path=%path%;%JDKHOME%\bin
 
+REM set the path for the JIGSAW and REGEXP libraries
+REM PIA uses a very small amount of code from these
+SET REGEXP=%PIAHOME%\lib\java\regexp.jar
+SET JIGSAW=%PIAHOME%\lib\java\jigsaw.zip
+
 REM the path
-SET CPATH=%PIAHOME%\lib\java\jigsaw.zip;%PIAHOME%\src\java;%PIAHOME%\lib\java\crc.zip;%JDKHOME%\classes;%JDKHOME%\lib\classes.zip
+SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\src\java;%PIAHOME%\lib\java\crc.zip;%JDKHOME%\classes;%JDKHOME%\lib\classes.zip
 
 java -classpath %CPATH% crc.pia.Pia -root %PIAHOME% -u %UHOME%
 
