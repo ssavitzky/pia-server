@@ -36,4 +36,4 @@ Default.class:	../StreamingContent.java
 
 html.class:  Default.java 
 annotatedhtml.class:  html.java
-ProcessedContent.class: ../../dps/process/ActiveDoc.java
+ProcessedContent.class: ../../pia/site/SiteDoc.java
