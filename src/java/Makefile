@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.13 2000-01-25 16:53:05 steve Exp $
+#	$Id: Makefile,v 1.14 2000-05-16 17:35:30 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,6 +44,7 @@ JIGSAWPACKAGE= \
 
 PIAPACKAGENAMES= \
 	org.risource.content org.risource.content.text \
+	org.risource.dom \
 	org.risource.ds \
 	org.risource.dps \
 	org.risource.dps.active \
@@ -66,7 +67,6 @@ PIAPACKAGENAMES= \
 	org.risource.util \
 	misc
 
-#	org.risource.dom \
 #	org.risource.sax \
 
 ### These are the names of the classes in the JDK that the PIA uses.  
@@ -86,7 +86,8 @@ MISCPACKAGENAMES= \
 	org.w3c.www.http \
 	org.w3c.www.mime \
 	org.w3c.dom \
-	org.w3c.dom.html
+	org.w3c.dom.html \
+	org.xml.sax
 
 REGEXPACKAGENAMES= \
 	JP.ac.osaka_u.ender.util.regex
@@ -101,45 +102,23 @@ PACKAGENAMES= $(PIAPACKAGENAMES) $(MISCPACKAGENAMES) $(REGEXPACKAGENAMES)
 include $(TOPDIR)/makefiles/package.make
 include $(TOPDIR)/makefiles/file.make
 
-#
-# Stuff for jarring class files.
-#
-pia_class.toc::
-	rm -f pia_class.toc
-	for p in $(PACKAGES); do \
-		find `echo $$p` -name "*.class" -print >> pia_class.toc; \
-	done
+###
+### Stuff for jarring class files.
+###
+###	We used to jar each group of classes separately.  This is neither
+###	necessary nor desirable: it prevents running the PIA with a simple:
+###	   java -cp /pia.jar org.risource.pia.Pia [options]
+###
+all:: all_classes.toc
 
-# make a toc file for the regex package
-regex_class.toc::
-	rm -f regex_class.toc
-	for p in $(REGEXPACKAGE); do \
-		find `echo $$p` -name "*.class" -print >> regex_class.toc; \
-	done
+all_classes.toc::
+	find . -name '*.class' -print > $@
 
-# make a toc file for the jigsaw package
-jigsaw_class.toc::
-	rm -f jigsaw_class.toc
-	for p in $(JIGSAWPACKAGE); do \
-		find `echo $$p` -name "*.class" -print >> jigsaw_class.toc; \
-	done
+jarfile::	$(PIADIR)/lib/pia.jar
+	@echo jar file written to $(PIADIR)/lib/pia.jar
 
-pia.zip: pia_class.toc
-	$(BINDIR)/jarcrc
-	for p in $(PACKAGES); do \
-		(cd `echo $$p`; make clean) ; \
-	done
-	mv $@ $(LIBDIR)
-
-# make a separate jar file for regex package
-regexp.jar: regex_class.toc
-	jar cv0f regexp.jar `cat regex_class.toc`
-	mv $@ $(LIBDIR)
-
-# make a separate jar file for jigsaw subset package
-jigsaw_s.jar: jigsaw_class.toc
-	jar cv0f jigsaw_s.jar `cat jigsaw_class.toc`
-	mv $@ $(LIBDIR)
+$(PIADIR)/lib/pia.jar: all_classes.toc
+	jar cf $@ `cat all_classes.toc`
 
 ### Recursive documentation:
 
