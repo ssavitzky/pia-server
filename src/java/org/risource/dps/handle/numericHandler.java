@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.6 1999-07-08 21:38:41 bill Exp $
+//	$Id: numericHandler.java,v 1.7 1999-10-07 19:20:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.6 1999-07-08 21:38:41 bill Exp $
+ * @version $Id: numericHandler.java,v 1.7 1999-10-07 19:20:21 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -63,13 +63,16 @@ public class numericHandler extends GenericHandler {
   /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
-    if (dispatch(e, "sum")    ) 	 return numeric_sum.handle(e);
-    if (dispatch(e, "difference")) 	 return numeric_difference.handle(e);
-    if (dispatch(e, "product")) 	 return numeric_product.handle(e);
-    if (dispatch(e, "quotient")) 	 return numeric_quotient.handle(e);
-    if (dispatch(e, "remainder")) 	 return numeric_remainder.handle(e);
-    if (dispatch(e, "sort"))    	 return numeric_sort.handle(e);
-    /*    if (dispatch(e, "pad"))       	 return numeric_pad.handle(e); */
+    if (dispatch(e, "sum", "op")) 	 return numeric_sum.handle(e);
+    if (dispatch(e, "difference", "op")) return numeric_difference.handle(e);
+    if (dispatch(e, "diff", "op"))	 return numeric_difference.handle(e);
+    if (dispatch(e, "product", "op")) 	 return numeric_product.handle(e);
+    if (dispatch(e, "prod", "op")) 	 return numeric_product.handle(e);
+    if (dispatch(e, "quotient", "op")) 	 return numeric_quotient.handle(e);
+    if (dispatch(e, "quot", "op")) 	 return numeric_quotient.handle(e);
+    if (dispatch(e, "remainder", "op"))	 return numeric_remainder.handle(e);
+    if (dispatch(e, "rem", "op"))	 return numeric_remainder.handle(e);
+    if (dispatch(e, "sort", "op"))    	 return numeric_sort.handle(e);
     return this;
   }
 
