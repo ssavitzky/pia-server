@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.4 2000-04-12 00:51:49 steve Exp $
+//	$Id: ServletDoc.java,v 1.5 2000-04-14 23:06:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.4 2000-04-12 00:51:49 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.5 2000-04-14 23:06:23 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -83,6 +83,7 @@ public class ServletDoc extends TopProcessor {
   protected HttpServlet		servlet		= null;
   protected String		servletURL	= null;
   protected String		serverURL	= null;
+  protected String		rootPath	= null;
 
   /************************************************************************
   ** PIA information:
@@ -125,6 +126,8 @@ public class ServletDoc extends TopProcessor {
   public void initializeEntities() {
     if (entities == null) super.initializeEntities();
 
+    Site site = (document == null)? null : (Site)document.getRoot();
+
     if (request != null) {
       serverURL = ("http://" 
 		    + request.getServerName()
@@ -132,9 +135,15 @@ public class ServletDoc extends TopProcessor {
 		       ? ":" + request.getServerPort()
 		       : ""));
 
-      servletURL = serverURL + request.getServletPath();
+      rootPath = request.getServletPath();
+      if (! rootPath.endsWith("/")) rootPath += "/";
+      servletURL = serverURL + rootPath;
 
       define("docURL", serverURL + request.getRequestURI());
+      if (site != null && site.getServerURL() == null) try {
+	URL u = new URL(servletURL);
+	site.setServerURL(u);
+      } catch (Exception e) {}
     }
 
     initializeNamespaceEntities();
@@ -155,15 +164,19 @@ public class ServletDoc extends TopProcessor {
 
     // === need servlet, context, request, and response namespaces.
 
+    if (servlet == null || request == null) return;
+
     // Fake a PIA namespace:
     Table pia = new Table();
-    if (request != null) pia.at("url", servletURL);
+    pia.at("url", servletURL);
+    pia.at("rootPath", rootPath);
     pia.at("servlet", this.getClass().getName());
 
     Enumeration names = servlet.getServletConfig().getInitParameterNames();
-    while (names.hasMoreElements()) {
+    while (names != null && names.hasMoreElements()) {
       String n = names.nextElement().toString();
-      pia.at(n, servlet.getServletConfig().getInitParameter(n));
+      String v = servlet.getServletConfig().getInitParameter(n);
+      if (v != null) pia.at(n, v);
     }
 
     define("PIA", pia);

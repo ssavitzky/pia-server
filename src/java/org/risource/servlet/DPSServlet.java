@@ -1,5 +1,5 @@
 ////// DPSServlet.java: PIA DPS Servlet implementation
-//	$Id: DPSServlet.java,v 1.4 2000-04-13 15:59:11 steve Exp $
+//	$Id: DPSServlet.java,v 1.5 2000-04-14 23:06:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import javax.servlet.http.*;
  *		of <code><em>ext</em></code>.
  * </ul>
  *
- * @version $Id: DPSServlet.java,v 1.4 2000-04-13 15:59:11 steve Exp $
+ * @version $Id: DPSServlet.java,v 1.5 2000-04-14 23:06:22 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.PIAServlet
  * @see org.risource.dps
@@ -172,16 +172,13 @@ public class DPSServlet
     // Go through the init parameters looking for "tagset.ext" entries.
     Enumeration names = config.getInitParameterNames();
     while (names.hasMoreElements()) {
-      String n = names.nextElement().toString();
-
+      n = names.nextElement().toString();
       if (n.startsWith("tagset.")) {
 	String v = config.getInitParameter(n);
 	n = n.substring("tagset.".length());
 	tagsetMap.at(n, v);
       }
     }
-
-    // === need to get tagset and mime type maps from config.
 
     context.log("DPSServlet initialization complete.");
   }
