@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.11 1999-10-11 21:54:54 steve Exp $
+#	$Id: pia_wrapper,v 1.12 1999-10-22 17:32:37 steve Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -84,7 +84,7 @@ export PIA_ROOT
 
 ### Build an environment string:
 
-ENV="PIA_HOME=$PIA_HOME PIA_ROOT=$PIA_ROOT HOME=$HOME USER=$USER"
+ENV="PIA_HOME=$PIA_HOME PIA_ROOT="$PIA_ROOT" HOME=$HOME USER=$USER"
 
 for key in DISPLAY http_proxy ftp_proxy wais_proxy gopher_proxy no_proxy
 do
