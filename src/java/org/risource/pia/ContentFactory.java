@@ -1,5 +1,5 @@
 // ContentFactory.java
-// $Id: ContentFactory.java,v 1.4 1999-11-05 01:12:57 steve Exp $
+// $Id: ContentFactory.java,v 1.5 2000-03-02 04:37:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -241,18 +241,14 @@ public class ContentFactory extends ContentHandler
     
     try{
       c = (Content)factory( className );
-    }catch(ClassNotFoundException nfe){
+    }catch(Exception e){
       //something is wrong. .class for the 
       //mime type is not found.  Now try to
       //load Default class
 
       c = makeContentFromDef( mimeType );
       
-    }catch(InstantiationException ie){
-      
-      c = makeContentFromDef( mimeType );
-      
-    }finally{
+    } finally{
       return c;
     }
   }
