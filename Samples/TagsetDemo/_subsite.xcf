@@ -1,0 +1,21 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-10-14 22:29:41 bill Exp $ -->
+
+<Container>
+ 
+  <!-- this line says to use the TagsetDemo tagset for all files with
+       ".xh" extensions -->
+  <Ext name="xh" 	type="text/html"	tagset="TagsetDemo-xhtml" />
+
+
+  <AGENT name=TagsetDemo criteria="false">
+     <initialize><user-message>TagsetDemo agent initialized</user-message>
+     </initialize>
+     <!-- The content will never be expanded.  This agent exists only as a
+	  marker, so that ~TagsetDemo works and the
+	  TagsetDemo-specific tags have a way of security-checking their
+	  directory.
+       -->
+  </AGENT>
+
+</Container>

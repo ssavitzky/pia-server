@@ -1,0 +1,22 @@
+
+ <?-- the special-purpose tags are defined in the TagsetDemo-xhtml.ts
+       tagset file--?>
+
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html> <head> 
+
+<title>Tagset Demo</title>
+</head>
+
+<body>
+
+<myfont> I am the Tagset demo, just like the Hello World demo but using a
+	 tagset for the special-purpose tags.  See how the _subsite.xcf file
+         instructs the PIA server to use the TagsetDemo tagset for these
+         special-purpose tags.</myfont>
+
+<br />
+
+<todaytag />
+
+</body></html> 
