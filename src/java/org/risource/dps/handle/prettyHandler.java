@@ -1,5 +1,5 @@
 ////// prettyHandler.java: <pretty> Handler implementation
-//	$Id: prettyHandler.java,v 1.1 1999-07-13 01:27:43 bill Exp $
+//	$Id: prettyHandler.java,v 1.2 1999-07-14 23:42:52 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import java.lang.StringBuffer;
  * pretty begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: prettyHandler.java,v 1.1 1999-07-13 01:27:43 bill Exp $
+ * @version $Id: prettyHandler.java,v 1.2 1999-07-14 23:42:52 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -71,6 +71,7 @@ public class prettyHandler extends GenericHandler {
     String hideBelowTag = "defaultMeansNoHideBelow";
     int hideBelowDepth = -1;
     int hideAboveDepth = -1;
+    boolean colorize = true;
 
     // Actually do the work. 
     OutputTrace trOut = new OutputTrace(out);
@@ -91,15 +92,17 @@ public class prettyHandler extends GenericHandler {
     if (atts.hasTrueAttribute("hide-above-depth") ){
 	hideAboveDepth = MathUtil.getInt(atts, "hide-above-depth", -1);
     }
-    
-	       
+    if (atts.hasTrueAttribute("nocolor") ){
+	colorize = false;
+    }
+    	       
     // Create a "pre" element as a parent node to
     // preserve indented prettyting
     ActiveNode preNode = new TreeElement("pre");
     for (int i = 0; i < content.getLength(); ++i) {
       // Print the node tree
       printTree(content.activeItem(i), 0, preNode, hideBelowDepth,
-		hideAboveDepth,	hideBelowTag, whitenTag, yellowTag);
+		hideAboveDepth,	hideBelowTag, whitenTag, yellowTag, colorize);
     }
     // Output the pre node
     out.putNode(preNode);
@@ -119,7 +122,8 @@ public class prettyHandler extends GenericHandler {
   protected void printTree(ActiveNode node, int depth, ActiveNode parent,
 			   int hideBelowDepth, int hideAboveDepth,
 			   String hideBelowTag, 
-			   String whitenTag, String yellowTag) {
+			   String whitenTag, String yellowTag, 
+			   boolean colorize) {
     // System.out.println("printTree Node: " + node.toString());
     if(node == null)
       return;
@@ -217,7 +221,11 @@ public class prettyHandler extends GenericHandler {
 	ActiveNode newNode = new TreeText(indStr);
 	fontNode.addChild(newNode);
 	// Add each node as a child of the parent <pre> element
-	parent.addChild(fontNode);	
+	// colorize if desired; otherwise use raw text string
+	if (colorize)
+	    parent.addChild(fontNode);	
+	else
+	    parent.addChild(newNode);	
     }    
 
     //    ActiveNodeList nl = node.getContent();
@@ -228,7 +236,8 @@ public class prettyHandler extends GenericHandler {
     if (!hideBelowNow){
 	for (int i = 0; i < nl.getLength(); i++)
 	    printTree(nl.activeItem(i), newDepth, parent, hideBelowDepth,
-		      hideAboveDepth, hideBelowTag, whitenTag, yellowTag);
+		      hideAboveDepth, hideBelowTag, whitenTag, yellowTag,
+		      colorize);
     }
 
     if (!hideAboveNow){
@@ -239,7 +248,12 @@ public class prettyHandler extends GenericHandler {
 	TreeElement fontNode2 = new TreeElement("font");
 	fontNode2.setAttribute("color", displayColor );
 	fontNode2.addChild(newNode2);
-	parent.addChild(fontNode2);	
+
+	// colorize if desired; otherwise use raw text string
+	if (colorize)
+	    parent.addChild(fontNode2);	
+	else
+	    parent.addChild(newNode2);	
 	// end end-tags
     }
   }
