@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.46 2000-11-30 00:10:03 steve Exp $
+#	$Id: Makefile,v 1.47 2001-01-11 23:35:04 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,8 +16,8 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com, pgage@rsv.ricoh.com,
- #		   wolff@rsv.ricoh.com
+ # Contributor(s): steve@rii.ricoh.com, pgage@rii.ricoh.com,
+ #		   wolff@rii.ricoh.com
  #
 ############################################################################## 
 
@@ -44,7 +44,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 1
-MINOR       = 4
+MINOR       = 5
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
