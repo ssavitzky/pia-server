@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.7 1999-06-25 00:41:13 steve Exp $
+//	$Id: BasicHandler.java,v 1.8 1999-10-14 21:50:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.7 1999-06-25 00:41:13 steve Exp $
+ * @version $Id: BasicHandler.java,v 1.8 1999-10-14 21:50:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -58,21 +58,23 @@ public class BasicHandler extends AbstractHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  /** Blythely assume that any active entities have EntityHandler as their
-   *	handler. 
+  /** Return an appropriate action code.
+   *	Checks to see whether the content needs to be expanded.
    */
   public int getActionCode() {
-    // There is no need to check for entities here; they use EntityHandler
-    return Action.EXPAND_NODE;
+    // We need to check to see whether the node needs to be expanded.
+    return expandContent? Action.EXPAND_NODE : Action.COPY_NODE;
   }
 
   /** This sort of action has no choice but to do the whole job.
    */
   public void action(Input in, Context aContext, Output out) {
-    if (in.hasActiveChildren() || in.hasActiveAttributes()) {
+    if (expandContent
+	&& (in.hasActiveChildren() || in.hasActiveAttributes())) {
       aContext.subProcess(in, out).expandCurrentNode();
     } else {
-      Copy.copyNode(in.getNode(), in, out);
+      aContext.subProcess(in, out).copyCurrentNode();
+      // Copy.copyNode(in.getNode(), in, out);
     }
   }
 
@@ -87,11 +89,21 @@ public class BasicHandler extends AbstractHandler {
   public void setSyntaxCode(int syntax) {
     syntaxCode = syntax;
     if (syntax != 0) {
-      parseElementsInContent = (syntax & Syntax.NO_ELEMENTS) == 0;
-      parseEntitiesInContent = (syntax & Syntax.NO_ENTITIES) == 0;
+      parseElementsInContent =	(syntax & Syntax.NO_ELEMENTS) == 0;
+      parseEntitiesInContent =	(syntax & Syntax.NO_ENTITIES) == 0;
+      expandContent = 		(syntax & Syntax.NO_EXPAND) == 0;
     }
   }
   
+  /** If <code>true</code>, the content is expanded. */
+  protected boolean expandContent;
+
+  /** If <code>true</code>, the content is expanded. */
+  public boolean expandContent() { return expandContent; }
+
+  /** If <code>true</code>, the content is expanded. */
+  public void setExpandContent(boolean value) { expandContent = value; }
+
   /** If <code>true</code>, Element tags are recognized in content. */
   protected boolean parseElementsInContent = true;
 
@@ -177,7 +189,9 @@ public class BasicHandler extends AbstractHandler {
   ** Construction:
   ************************************************************************/
 
-  public BasicHandler() {}
+  public BasicHandler() {
+    expandContent = true;
+  }
 
   /** Construct a BasicHandler for a passive element. 
    *
@@ -186,11 +200,8 @@ public class BasicHandler extends AbstractHandler {
    * @see org.risource.dps.Syntax
    */
   public BasicHandler(int syntax) {
-    syntaxCode = syntax;
-    if (syntax != 0) {
-      parseElementsInContent = (syntax & Syntax.NO_ELEMENTS) == 0;
-      parseEntitiesInContent = (syntax & Syntax.NO_ENTITIES) == 0;
-    }
+    this();
+    setSyntaxCode(syntax);
   }
 
   /** Construct a BasicHandler for a passive element. 
@@ -205,6 +216,7 @@ public class BasicHandler extends AbstractHandler {
    * @see org.risource.dps.handle.AbstractHandler#getSyntaxCode
    */
   public BasicHandler(boolean empty, boolean parseElts, boolean parseEnts) {
+    this();
     syntaxCode = empty? Syntax.EMPTY : Syntax.NORMAL;
     parseElementsInContent = parseElts;
     parseEntitiesInContent = parseEnts;

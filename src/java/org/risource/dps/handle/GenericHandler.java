@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.10 1999-07-14 20:20:11 steve Exp $
+//	$Id: GenericHandler.java,v 1.11 1999-10-14 21:50:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.10 1999-07-14 20:20:11 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.11 1999-10-14 21:50:01 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -62,24 +62,6 @@ public class GenericHandler extends BasicHandler {
   /************************************************************************
   ** State Used for Syntax:
   ************************************************************************/
-
-  /** Override to handle additional syntax codes. */
-  public void setSyntaxCode(int syntax) {
-    super.setSyntaxCode(syntax);
-    if (syntax != 0) {
-      expandContent = (syntax & Syntax.NO_EXPAND) == 0;
-    }
-  }
-  
-
-  /** If <code>true</code>, the content is expanded. */
-  protected boolean expandContent = true;
-
-  /** If <code>true</code>, the content is expanded. */
-  public boolean expandContent() { return expandContent; }
-
-  /** If <code>true</code>, the content is expanded. */
-  public void setExpandContent(boolean value) { expandContent = value; }
 
   /** If <code>true</code>, only Text in the content is retained. */
   protected boolean textContent = false;
