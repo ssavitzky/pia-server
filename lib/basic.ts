@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.7 2000-10-05 19:03:26 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.8 2000-10-19 00:06:07 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -581,12 +581,34 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 
 <define element="properties" handler="propertyBuilder">
   <doc> This defines a ``property list'' -- effectively a namespace for
-	elements. The content is expanded in a
-	context in which the namespace in question is the local one.  
+	elements.  The content is expanded in a context in which the namespace
+	in question is the local one.  Elements in the content are put into
+	the property list, with the ``name'' being the element's tagname and
+	the ``value'' being its content.
   </doc>
   <define attribute="name" optional="optional">
     <doc> Note that the <code>name</code> attribute is optional; it is
 	  perfectly meaningful to have an anonymous <tag>properties</tag>.
+    </doc>
+  </define>
+  <define attribute="hide" optional="optional">
+    <doc> If present, the namespace is not returned as a result.  The contents
+	  are simply expanded for their side-effects.
+    </doc>
+  </define>
+  <define attribute="pass" optional="optional">
+    <doc> If present, the namespace is not returned as a result, but
+	  everything in the content is passed through to the output.
+    </doc>
+  </define>
+</define>
+
+<define element="stringmap" handler="stringmapBuilder">
+  <doc> This defines a ``property list'' that maps names into strings. 
+  </doc>
+  <define attribute="name" optional="optional">
+    <doc> Note that the <code>name</code> attribute is optional; it is
+	  perfectly meaningful to have an anonymous <tag>propstrings</tag>.
     </doc>
   </define>
   <define attribute="hide" optional="optional">
