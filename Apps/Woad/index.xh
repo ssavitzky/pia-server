@@ -55,11 +55,30 @@
     </tr>
    </then>
  </if>
-    <tr><th align="right">Demos:&nbsp;</th><td></td></tr>
+    <tr><th align="right">Demos:&nbsp;</th>
+        <td><ss>WOAD</ss>'s view of this PIA installation.</td>
+    </tr>
     <tr><th valign="top" align="right" width="170"> &nbsp;</th>
-        <td valign="top">
-	    <a href="/.source"><b>.source</b></a> -- use <ss>WOAD</ss> to
-	    browse the PIA source tree.  
+        <td> <table cellspacing="0" cellpadding="0" border="0">
+	  	<tr> <th valign="top" align="left" > 
+		          <code><a href="/.source">/.source</a></code>
+		     </th>
+		     <td> the PIA source tree.
+		     </td>
+		</tr>
+		<tr> <th valign="top" align="left" >  
+		          <code><a href="/.notes">/.notes</a></code>  
+		     </th>
+		     <td> annotations for this website.   
+		    </td>
+		</tr>
+		<tr> <th valign="top" align="left" >  
+		          <code><a href="/.words">/.words</a> </code>
+		     </th>
+		     <td> <ss>WOAD</ss> keyword indices
+		  </td>
+		</tr>
+	     </table>
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
@@ -70,5 +89,5 @@
 <include src="app-info.inc" />
 
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.3 2000-06-17 00:03:06 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.4 2000-06-21 01:12:10 steve Exp $" />
 </p></body></html>
