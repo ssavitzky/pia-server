@@ -74,7 +74,7 @@
 	      </dl></dd>
 	 <dt> <a name='Cache'>Cache agent</a>
 	      (keeps a copy of every external doc...)
-	      <installed name="Cache"/>
+	      <installed name="Cache"/> </dt>
 	 <if><agent-running name='Cache'/><else>
 	 <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
 	      <input type='submit' value="Create" />
@@ -84,6 +84,7 @@
 	      once,...) 
 	      </form> </dd></else></if>
        </dl>
+  </dd>
 
   <dt> <a name='Demo'>Demo</a>
        (Active Document Demonstration and Test agent)
@@ -119,6 +120,7 @@
 <p> DOFS agents provide basic file browsing capabilities; their function is to
     serve local files.  They are usually created, using the form below, rather
     than being loaded from XML files. 
+</p>
 
 <dl>
   <dt> <a name='dofs'>the DOFS agent</a></dt>
@@ -128,11 +130,13 @@
        <form action='/&AGENT:name;/create-agent' method='POST'>
        <input type='submit' value='Install NOW!' />
        name:<input name='agent' value='DOFS' />
-       </form></else></if><p>
+       </form></else></if>
+  </dd>
 
   <dt> <a name='My'>DOFS/My</a> is no longer needed:</dt>
   <dd> <a href='/~/'>/~/</a> (the <a href='/ROOT'>ROOT</a> agent's data
        directory) has replaced it.
+  </dd>
        
   <dt> <a name='PIA'>DOFS/PIA</a> <installed name="PIA"/></dt>
   <if><agent-running name='PIA' /><else>
@@ -142,6 +146,7 @@
        root:<input name='root' value='&piaDIR;/Doc' />
        <input type='submit' value="Create" />
        </form></dd></else></if>
+
   <dt> <a name='PIA'>DOFS/Doc</a> <installed name="Doc"/></dt>
   <if><agent-running name='Doc' /><else>
   <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
@@ -150,6 +155,7 @@
        root:<input name='root' value='&piaDIR;/Doc' />
        <input type='submit' value="Create" />
        </form></dd></else></if>
+
   <dt> <a name='Home'>DOFS/Home</a> (possible security hole)
         <installed name="Home"/></dt>
   <if><agent-running name='Home'/><else>
@@ -160,7 +166,7 @@
        <input type='submit' value="Create" />
        </form></dd></else></if>
   <dt> <a name='Root'>DOFS/Root</a> (probable security hole)
-        <installed name="Root"/>
+        <installed name="Root"/> </dt>
   <if><agent-running name='Root'/><else>
   <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
        name:<input name='agent' value='Root' />
@@ -168,6 +174,7 @@
        root:<input name='root' value='/' />
        <input type='submit' value="Create" />
        </form></dd></else></if>
+
   <dt> Generic DOFS form:  </dt>
   <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
        name:<input name='agent' value='Name' />
@@ -249,5 +256,5 @@
     into your own <code> START-UP.html </code> file.  When you design a new
     agent, you can add a default install form to this page.</p> 
 
-<footer cvsid='$Id: installers.xh,v 1.12 1999-06-02 18:50:10 steve Exp $' />
+<footer cvsid='$Id: installers.xh,v 1.13 1999-07-09 22:06:12 steve Exp $' />
 </body></html>

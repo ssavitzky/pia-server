@@ -5,7 +5,7 @@
 <if><get name='FORM:agent' />
     <then><!--  do this before the sub-head, which lists agents  -->
 	  <!--  === unfortunately, they're not computed dynamically ===  -->
-      <set name='removed'><agent-remove name='&FORM:agent;'></agent-remove></set>
+      <set name='removed'><agent-remove name='&FORM:agent;'/></set>
 </then></if>
 
 <header>Remove Agent</header>
@@ -29,5 +29,5 @@ Name:<select name='agent'>
 </form>
 
 
-<footer cvsid='$Id: remove-agent.xh,v 1.7 1999-04-30 23:36:31 steve Exp $' />
+<footer cvsid='$Id: remove-agent.xh,v 1.8 1999-07-09 22:06:15 steve Exp $' />
 </body></html>

@@ -8,22 +8,25 @@
     &AGENT:name; is actually a sort of ``super-agent'' under which
     <em>all</em> of the agents that operate while proxying are collected.
     These include:
+</p>
 
 <dl>
-  <dt> <a href="/History">History</a>
-  <dd> maintains your browsing history.
-  <dt> <a href="/Toolbar">Toolbar</a>
+  <dt> <a href="/History">History</a> </dt>
+  <dd> maintains your browsing history. </dd>
+  <dt> <a href="/Toolbar">Toolbar</a> </dt>
   <dd> Toolbar agents put a ``toolbar'' of links on the front of pages.
        The Toolbar agents include:
        <ul>
 	 <li> <a href="/remoteTools">remoteTools</a> for remotely-located
-	      pages. 
+	      pages. </li>
 	 <li> <a href="/fileTools">fileTools</a> for local <em>non-active</em>
-	      HTML files. 
+	      HTML files. </li>
        </ul>
+  </dd>
 </dl>
 
 <p> You can find out more about proxying, and how to set up your browser, 
     <a href="using#proxy">here</a>.
+</p>
 
-<inc-footer cvsid="$Id: about.inc,v 1.3 1999-05-27 00:43:00 steve Exp $">
+<inc-footer cvsid="$Id: about.inc,v 1.4 1999-07-09 22:06:17 steve Exp $"/>

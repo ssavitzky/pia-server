@@ -6,17 +6,21 @@
 
 <set name='subs'><agent-list subs='subs' type='/&AGENT:name;/'></agent-list></set>
 <sub-head page='home'>
-    <tr><th></th><td> <a href='using'>Using &AGENT:name; Agents</a>
-    </td></tr><tr><th></th><td> <a href='writing'>Writing &amp; Customizing
+    <tr><th></th><td> <a href='using'>Using &AGENT:name; Agents</a> </td>
+    </tr>
+    <tr><th></th><td> <a href='writing'>Writing &amp; Customizing
 		    		      &AGENT:name; Agents</a>
-    </td></tr><tr><th align='right'>
+    </td></tr>
+    <tr><th align='right'>
            <if>&subs;
 	        <then><a href='/&agentName;/home'>&agentType;</a>:</then>
                 <else>&agentType; agents: </else></if>
-        </th><td><repeat list='&subs;'>
+	</th>
+        <td><repeat list='&subs;'>
                <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat>
-</td></tr></sub-head>
+	</td>
+    </tr></sub-head>
 <hr />
 <a href='/'>PIA</a> || <a href='/Admin'>Admin</a> ||
 <if><test not='not' exact='exact' match='&amp;agentType'>&AGENT:name;</test>
@@ -84,5 +88,5 @@
 <b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
 <b>Source:</b> <a href='/PIA/Agents/&AGENT:name;/&fileName;'>&fileName;</a>
 <b>File:</b> <a href='/Root/&filePath;'>&filePath;</a>
-<footer cvsid='$Id: home.xh,v 1.6 1999-05-06 20:36:49 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.7 1999-07-09 22:06:18 steve Exp $' />
 </p></body></html>

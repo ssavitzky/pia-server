@@ -64,7 +64,7 @@
 	      from the newly-loaded agent.</p>
 
 	  <p> The ``View'' button can be used to preview an agent's XML data
-	      before loading it. 
+	      before loading it. </p>
 	</form>
     </else>
 </if>
@@ -83,7 +83,7 @@
 <form>
 <table border="0">
 <tr><td valign="center">
-<h2>Known agent-description files</h2>
+<h2>Known agent-description files</h2> </td></tr>
 <td bgcolor="silver">
 <if>&AGENT:doNotSave;
     <else>
@@ -101,7 +101,7 @@
     </else>
 </if>
 </td>
-<tr><td></td>
+<tr><td></td></tr>
 </table>
 </form>
 
@@ -112,7 +112,7 @@
       <td> (click to view) </td>
   </tr>
 <repeat><foreach><extract><from>&AGENT:agent-files;</from>
-			  <name recursive>agent-file</name></foreach>
+			  <name recursive>agent-file</name></extract></foreach>
 	<set name=id><extract><from>&li;</from><attr>id</attr><eval/>
 		     </extract></set>
 	<set name=on-start><extract><from>&li;</from>
@@ -140,5 +140,5 @@
 </protect></pre>
 </verbosePage>
 
-<short-footer cvsid='$Id: load-agent.xh,v 1.2 1999-05-18 20:12:58 steve Exp $'/>
+<short-footer cvsid='$Id: load-agent.xh,v 1.3 1999-07-09 22:06:14 steve Exp $'/>
 </body></html>

@@ -20,9 +20,9 @@
 
 <h3>Contents:</h3>
 <ul>
-  <li> <a href="#actions">Immediate actions</a>
-  <li> <a href="#properties">PIA Properties</a>
-  <li> <a href="#options">&AGENT:name; Agent options</a>
+  <li> <a href="#actions">Immediate actions</a> </li>
+  <li> <a href="#properties">PIA Properties</a> </li>
+  <li> <a href="#options">&AGENT:name; Agent options</a> </li>
 </ul>
 
 <hr />
@@ -65,7 +65,7 @@
       <td>&nbsp;<b>text:</b>&nbsp;<input name="text" size="50" value="&text;" />
       <td bgcolor="silver">&nbsp;</td>
   </tr>
-  <tr><td bgcolor="silver" colspan=3>&nbsp;</td>
+  <tr><td bgcolor="silver" colspan=3>&nbsp;</td></tr>
 </table>  
 </form>
 
@@ -156,7 +156,7 @@
   </if>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="properties" value="Change" /> </td>
+          <input type='submit' name="properties" value="Change" /> </th>
       <th bgcolor="silver" align="left" width="90%"> PIA parameters. </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -192,7 +192,7 @@
       </td>
       <td bgcolor="silver">&nbsp;</td>
   </tr>
-  <tr><td bgcolor="silver" colspan=3>&nbsp;</td>
+  <tr><td bgcolor="silver" colspan=3>&nbsp;</td></tr>
 
 </table>
 </form>
@@ -216,7 +216,7 @@
   </if>
   <table cellspacing="0" border="0" width="90%" align="center">
     <tr><th bgcolor="silver" width="10%">
-	    <input type='submit' name="options" value="  Set  " /> </td>
+	    <input type='submit' name="options" value="  Set  " /> </th>
 	<th bgcolor="silver" align="left" width="90%"> Options </th>
 	<td bgcolor="silver">&nbsp;&nbsp;</td>
     </tr>
@@ -274,7 +274,7 @@
 <form action="control#locks" method='POST'>
 <table cellspacing="0" border="0" width="90%" align="center">
   <tr><th bgcolor="silver" width="10%">
-          <input type='submit' name="locks" value="*** Set" /> </td>
+          <input type='submit' name="locks" value="*** Set" /> </th>
       <th bgcolor="silver" align="left" width="90%"> Locks *** </th>
       <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
@@ -334,7 +334,8 @@
       (<code>AGENT.xml</code> file) from being overwritten.  The only way to
       set this permanently is to manually edit the appropriate &lt;bind&gt;
       element into the agent's state.
+  </p>
 </verbosePage>
 
-<footer cvsid='$Id: control.xh,v 1.3 1999-05-20 20:29:07 steve Exp $' />
+<footer cvsid='$Id: control.xh,v 1.4 1999-07-09 22:06:10 steve Exp $' />
 </body></html>
