@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.5 2000-04-14 23:06:23 steve Exp $
+//	$Id: ServletDoc.java,v 1.6 2000-04-18 19:02:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.5 2000-04-14 23:06:23 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.6 2000-04-18 19:02:14 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -84,6 +84,8 @@ public class ServletDoc extends TopProcessor {
   protected String		servletURL	= null;
   protected String		serverURL	= null;
   protected String		rootPath	= null;
+  protected String		host		= null;
+  protected int			port		= 0;
 
   /************************************************************************
   ** PIA information:
@@ -134,7 +136,8 @@ public class ServletDoc extends TopProcessor {
 		    + ((request.getServerPort() != 80)
 		       ? ":" + request.getServerPort()
 		       : ""));
-
+      host = request.getServerName();
+      port = request.getServerPort();
       rootPath = request.getServletPath();
       if (! rootPath.endsWith("/")) rootPath += "/";
       servletURL = serverURL + rootPath;
@@ -168,9 +171,11 @@ public class ServletDoc extends TopProcessor {
 
     // Fake a PIA namespace:
     Table pia = new Table();
-    pia.at("url", servletURL);
+    pia.at("url", servletURL.substring(0, servletURL.length()-1));
     pia.at("rootPath", rootPath);
     pia.at("servlet", this.getClass().getName());
+    pia.at("host", host);
+    pia.at("port", "" + port);
 
     Enumeration names = servlet.getServletConfig().getInitParameterNames();
     while (names != null && names.hasMoreElements()) {
