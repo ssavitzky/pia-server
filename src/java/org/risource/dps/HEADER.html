@@ -23,6 +23,8 @@ SGML-based, XML-ready, buzzword-compliant Document Processing System. <p>
 <dl>	
   <dt> <a href="active/">active/</a>
   <dd> Parse trees made out of ``<a href="Active.java">Active</a> nodes''.
+       This directory contains extensions to the W3C's Document Object Model
+       interfaces (<a href="../../w3c/dom">org.w3c.dom</a>).
   <dt> <a href="handle/">handle/</a>
   <dd> The Handler subclasses that implement actions (operations) attached to
        actors.  It turns out that <code>tags</code> is a bad name for a
@@ -43,11 +45,14 @@ SGML-based, XML-ready, buzzword-compliant Document Processing System. <p>
   <dd> Tagsets (lookup tables for syntax and semantic Handlers).
   <dt> <a href="test/">test/</a>
   <dd> test cases
+  <dt> <a href="tree/">tree/</a>
+  <dd> Classes that implement the ``Active Node'' (parse tree) interfaces in
+       <a href="active/">active/</a>
   <dt> <a href="util/">util/</a>
   <dd> Utility classes, not meant for use by the casual programmer.
-       Includes implementations of several <code>org.risource.dps</code> interfaces.
-       Was named "aux" until we discovered a conflict with DOS filename
-       conventions.  (You <em>don't</em> want to know.)
+       Includes implementations of several <code>org.risource.dps</code>
+       interfaces. Was named "aux" until we discovered a conflict with DOS
+       filename conventions.  (You <em>don't</em> want to know.)
        <p>
 </dl>
 
@@ -130,5 +135,5 @@ with full but perhaps limited functionality.
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 1999-03-23 23:31:39 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.5 1999-04-07 23:29:32 steve Exp $</b>
 <a name="files"><hr></a>
