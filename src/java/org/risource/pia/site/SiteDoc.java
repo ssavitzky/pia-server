@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.1 1999-09-09 21:54:44 steve Exp $
+//	$Id: SiteDoc.java,v 1.2 1999-09-17 23:39:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.1 1999-09-09 21:54:44 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.2 1999-09-17 23:39:47 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -73,7 +73,6 @@ public class SiteDoc extends TopProcessor {
   ** Variables:
   ************************************************************************/
 
-  protected Document 	document	= null;
   protected Agent 	agent 		= null;
   protected Transaction	request 	= null;
   protected Transaction	response 	= null;
@@ -82,8 +81,6 @@ public class SiteDoc extends TopProcessor {
   /************************************************************************
   ** PIA information:
   ************************************************************************/
-
-  public Document getDocument() { return document; }
 
   public String getAgentName() {
     return agent.name();
@@ -94,12 +91,6 @@ public class SiteDoc extends TopProcessor {
    */
   public String getAgentName(String name) {
     return (name == null)? agent.name() : name;
-  }
-
-  public String getAgentType(String name) {
-    if (name == null) return agent.type();
-    Agent ia = resolver.agent(name);
-    return (ia == null)? null : ia.type();
   }
 
   public Agent getAgent(String name) {
@@ -128,7 +119,7 @@ public class SiteDoc extends TopProcessor {
 
   static {
     // Preload known handler classes.
-    Loader.defHandle("submit", new org.risource.dps.handle.submitHandler());
+    //    Loader.defHandle("submit", new org.risource.pia.handle.submitHandler());
   }
 
   /** Initialize the various entities.  
@@ -141,15 +132,19 @@ public class SiteDoc extends TopProcessor {
    */
   public void initializeEntities() {
     if (entities == null) super.initializeEntities();
+    initializeNamespaceEntities();
+    initializeLegacyEntities();
     if (agent != null) {
-      initializeNamespaceEntities();
-      initializeLegacyEntities();
       initializeHookEntities();
     }
   }
 
   /** Initialize the entities that contain namespaces. */
   public void initializeNamespaceEntities() {
+
+    // These are done by super.initializeEntities()
+    // define("LOC", getLocConfig());
+    // define("PROPS", getDocConfig());
 
     define("PIA", Pia.instance().properties());
     define("AGENTS", Pia.resolver().getAgentTable());
@@ -232,9 +227,7 @@ public class SiteDoc extends TopProcessor {
 
     define("AGENT", (ActiveNode)agent);
     define("agentName", agent.name());
-    define("agentType", agent.type());
-    define("agentPath", agent.path());
-    define("agentPathName", agent.pathName());
+    define("agentHome", agent.getHome().getPath());
 
     define("agentNames", resolver.agentNames());
 
@@ -266,14 +259,17 @@ public class SiteDoc extends TopProcessor {
    */
   public File locateSystemResource(String path, boolean forWriting) {
     if (path.startsWith("file:")) {
-      // file: is handled by systemFileName
-      return new File(org.risource.pia.FileAccess.systemFileName(path));
+      // file: is handled by systemFileName === locateSystemResource bogus
+      return new File(path.substring("file:".length()));
     } else if (path.startsWith("pia:")) {
       path = path.substring(4);
       // pia: Strip the "pia:" and handle the rest with systemFileName
-      return new File(org.risource.pia.FileAccess.systemFileName(path));
+      // locateSystemResource bogus
+      return new File(path);
     } else if (path.indexOf(":") >= 0) {
       // URL: fail.
+      return null;
+    } else if (document == null) {
       return null;
     } else {
       Resource r = document.locate(path, forWriting, null);
@@ -350,10 +346,13 @@ public class SiteDoc extends TopProcessor {
     super();
   }
 
+  public SiteDoc(Document doc) {
+    super(doc);
+  }
+
   public SiteDoc(Document doc,
 		 Agent a, Transaction req, Transaction resp, Resolver res) {
-    super();
-    document = doc;
+    super(doc);
     agent = a;
     request = req;
     response = resp;
@@ -362,13 +361,12 @@ public class SiteDoc extends TopProcessor {
 
   public SiteDoc(Input in, Context cxt, Output out, Tagset ts, Document doc,
 		 Agent a, Transaction req, Transaction resp, Resolver res) {
-    super(in, cxt, out, ts);
-    document = doc;
+    super(in, cxt, out, ts, doc);
     agent = a;
     request = req;
     response = resp;
     resolver = res;
-    initializeEntities();
+    initializeEntities(); // this may not be necessary
   }
 
 }

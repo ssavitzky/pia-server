@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.3 1999-09-04 00:22:35 steve Exp $
+//	$Id: Site.java,v 1.4 1999-09-17 23:39:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,6 +27,8 @@ package org.risource.site;
 import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.process.TopProcessor;
+
 import org.risource.ds.*;
 
 import org.risource.site.util.*;
@@ -41,7 +43,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.3 1999-09-04 00:22:35 steve Exp $
+ * @version $Id: Site.java,v 1.4 1999-09-17 23:39:52 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -55,6 +57,10 @@ public class Site extends Subsite implements Root {
   protected PrintStream log = System.err;
   protected URL serverURL = null;
   protected String configFileName = "_subsite.xcf";
+  protected String configTagsetName = "xxml";
+  protected Tagset configTagset = null;
+
+  protected File siteConfigFile = null;
 
   protected Table agentHomes = null;
   protected int agentCount = 0;
@@ -72,7 +78,7 @@ public class Site extends Subsite implements Root {
     report(-2, message, 0, true);
   }
 
-  /** Report an message. */
+  /** Report a message. */
   public void report(int severity, String message,
 		     int indent, boolean noNewline) {
     if (getVerbosity() < severity) return;
@@ -110,6 +116,48 @@ public class Site extends Subsite implements Root {
     return list;
   }
 
+  /** Construct a suitable TopContext for processing a Document. 
+   *
+   *<p>	Note that this operation is used for processing configuration 
+   *	documents.  Therefore, it should not be assumed that the container
+   *	of the document to be processed is fully configured yet.
+   *
+   * @param doc the Document to be processed.  If null, an unconfigured
+   *	TopContext of the appropriate type is constructed.
+   * @param ts the tagset with which to process the document.  If omitted, 
+   *	the document provides its own Input.
+   * @return a suitable TopContext.
+   */
+  public TopContext makeTopContext(Document doc, Tagset ts) {
+    Input in = null;
+    if (doc == null) {
+    } else if (ts == null) {
+      in = doc.documentInput();
+      String tsname = doc.getTagsetName();
+      ts = doc.loadTagset(tsname);
+    } else {
+      /* Ask the Tagset for an appropriate parser, and set its Reader. */
+      Parser p = ts.createParser();
+      p.setReader(doc.documentReader());
+      in = p;
+    }
+    /* Finally, create a Processor and set it up. */
+    TopContext ii = makeTopContext();
+    if (doc != null) ii.setDocument(doc);
+    if (in != null) ii.setInput(in);
+    if (ts != null) ii.setTagset(ts);
+
+    return ii;
+  }
+
+  /** Construct a TopContext of the correct type. 
+   *	This method may be overridden in a subclass in order to provide
+   *	a suitable environment in which to run documents. 
+   */
+  protected TopContext makeTopContext() {
+    return new TopProcessor();
+  }
+
   /************************************************************************
   ** Resource interface:
   ************************************************************************/
@@ -120,10 +168,17 @@ public class Site extends Subsite implements Root {
    *	with tilde.
    */
   public Resource getChild(String name) {
-    if (name.startsWith("~")) 
+    if (name.startsWith("~") && agentHomes != null) 
       return (Resource) agentHomes.at(name.substring(1));
     else return super.getChild(name);
   }
+
+  protected Resource locateChild(String name) {
+    if (name.startsWith("~") && agentHomes != null) 
+      return (Resource) agentHomes.at(name.substring(1));
+    else return super.locateChild(name);
+  }
+
 
   /************************************************************************
   ** Initialization:
@@ -134,6 +189,20 @@ public class Site extends Subsite implements Root {
   public void setServerURL(URL u) { serverURL = u; }
 
   public String getConfigFileName() { return configFileName; }
+  public String getConfigTagsetName() { return configTagsetName; }
+
+  /** Load and return the tagset for loading configuration files. */
+  protected Tagset getConfigTagset() {
+    if (configTagset == null) {
+      configTagset = loadTagset(getConfigTagsetName());
+    }
+    if (configTagset == null) {
+      report(-2, "*** Failed to load specified config-file tagset "
+	     + getConfigTagsetName(), 0, false);
+      configTagset = loadTagset("xxml");
+    }
+    return configTagset;
+  }
 
   /** Set configuration file name. */
   public void setConfigFileName(String configFileName) {
@@ -145,8 +214,9 @@ public class Site extends Subsite implements Root {
   ************************************************************************/
 
   /** Construct a Site from a location, configuration, and properties. */
-  public Site(File location, ActiveElement config, Namespace props) {
-    super("/", null, location, config, props);
+  public Site(File location, ActiveElement config) {
+    super("/", null, null, location, config);
+    // === merge properties. 
   }
 
   /** Construct a Site from a location and configuration file.
@@ -156,7 +226,7 @@ public class Site extends Subsite implements Root {
    *	The configuration file need not be accessible as part of the Site. 
    */
   public Site(String location, String siteConfigPath) {
-    this(location, null, null, null, siteConfigPath);
+    this(location, null, null, null, null, siteConfigPath);
   }
 
   /** Construct a Site with an explicit virtual path.
@@ -169,17 +239,17 @@ public class Site extends Subsite implements Root {
    * @param virtualLoc the pathname of the virtual location of the Site
    * @param defaultDir the pathname of the directory of default documents
    * @param configFileName the default configuration file name
+   * @param configTagsetName the tagset to use for loading configuration files.
    * @param siteConfigPath the pathname of the site configuration file. 
-   *	If omitted, the default configuration file is loaded.
+   *	If omitted, configuration loading is deferred.
    */
   public Site(String realLoc, String virtualLoc, String defaultDir,
-	      String configFileName, String siteConfigPath) {
+	      String configFileName, String configTagsetName,
+	      String siteConfigPath) {
     super(realLoc, virtualLoc, defaultDir);
-    setConfigFileName(configFileName);
-    if (siteConfigPath == null) {
-      setConfig(loadConfig());
-    } else {
-      setConfig(XMLUtil.load(new File(siteConfigPath), null));
-    }
+    if (configFileName != null)   setConfigFileName(configFileName);
+    if (configTagsetName != null) this.configTagsetName = configTagsetName;
+    if (siteConfigPath != null) loadConfigFile(new File(siteConfigPath));
   }
+
 }

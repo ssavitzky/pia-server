@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.6 1999-09-11 00:26:17 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.7 1999-09-17 23:39:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.6 1999-09-11 00:26:17 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.7 1999-09-17 23:39:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -62,7 +62,7 @@ public abstract class ConfiguredResource extends AbstractResource
   protected ActiveElement config = null;
 
   // Variables corresponding to the configuration attributes.
-  protected String name = null;
+  protected String name;
   protected boolean hidden = false;
   protected boolean passive = false;
   protected boolean suspect = false;
@@ -73,6 +73,9 @@ public abstract class ConfiguredResource extends AbstractResource
 
   /** The associated real file or directory, if any. */
   protected File file;
+
+  /** The actual parsed content. */
+  protected ActiveNodeList parsedContent = null;
 
   /** The associated metadata. */
   protected Namespace properties = null;
@@ -95,6 +98,11 @@ public abstract class ConfiguredResource extends AbstractResource
     if (config == null) 
       config = new TreeElement("Resource", reportConfigAttrs());
     return config;
+  }
+
+  /** Load and return the tagset for loading configuration files. */
+  protected Tagset getConfigTagset() {
+    return (base != null) ? base.getConfigTagset() : null;
   }
 
   /** Set the configuration from a given ActiveElement. 
@@ -138,7 +146,7 @@ public abstract class ConfiguredResource extends AbstractResource
   protected boolean configAttrs(ActiveElement config) {
     // === configAttrs should loop and call configAttr on each attribute.
 
-    if (name != null) name = config.getAttribute("name");
+    if (name == null) name = config.getAttribute("name");
     if (config.hasTrueAttribute("hidden")) hidden = true;
     // exists and local can be determined from file
     // container determined from class
@@ -182,6 +190,11 @@ public abstract class ConfiguredResource extends AbstractResource
       else properties.setBinding(tag,
 				 new TreeEntity(tag, new TreeNodeList(item)));
     }
+
+    if (tag.equals("DOCUMENT")) {
+      parsedContent = item.getContent();
+    }
+
     if (true) ;
     else getRoot().report(-1, "Unknown config item <" + tag + "...>"
 			      + " in " + getPath(), 0, false); 
@@ -195,15 +208,9 @@ public abstract class ConfiguredResource extends AbstractResource
   protected void configNamespaceItem(Namespace ns) {
     String name = ns.getName();
 
-    if (name.equals(getName())) properties = ns;
-    else {
-      if (properties == null) properties = new BasicNamespace(getName());
-      properties.setBinding(name, (ActiveNode)ns);
-    }
-
-    if (true) ;
-    else getRoot().report(-1, "Unknown config namespace " + name
-			      + " in " + getPath(), 0, false); 
+    if (properties == null) properties = new BasicNamespace(getName());
+    properties.setBinding(name, (ActiveNode)ns);
+    
   }
 
   protected ActiveAttrList reportConfigAttrs() {
@@ -300,7 +307,10 @@ public abstract class ConfiguredResource extends AbstractResource
    *<p>	Note that <code>isReal</code> differs from <code>isLocal</code>: 
    *	a resource can be local without being real, e.g. if it is an alias.
    */
-  public boolean isReal() { return real; }
+  public boolean isReal() { 
+    if (file == null) real = false;
+    return real;
+  }
 
   /** Returns <code>true</code> if the resource is hidden. 
    *
@@ -393,10 +403,11 @@ public abstract class ConfiguredResource extends AbstractResource
   ************************************************************************/
 
   public ConfiguredResource(String name, ConfiguredResource parent, 
-			    boolean container, File file, 
+			    boolean container, boolean real, File file, 
 			    ActiveElement config, Namespace props) {
     this.base = parent;
     this.name = name;
+    this.real = real;
     this.file = file;
     this.properties = props;
     if (config != null) setConfig(config);

@@ -1,5 +1,5 @@
 ////// XMLUtil.java: the Document Processing System used stand-alone as a filter
-//	$Id: XMLUtil.java,v 1.3 1999-09-09 21:47:46 steve Exp $
+//	$Id: XMLUtil.java,v 1.4 1999-09-17 23:39:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,6 +34,7 @@ import org.risource.dps.process.TopProcessor;
 import org.risource.dps.tagset.TagsetProcessor;
 import org.risource.dps.tagset.Loader;
 
+import org.risource.site.*;
 
 /**
  * Load an XML configuration file.
@@ -41,7 +42,7 @@ import org.risource.dps.tagset.Loader;
 public class XMLUtil {
   static int verbosity = 0;
 
-  public static ActiveElement load(File file, Tagset ts) {
+  public static ActiveElement load(File file, Tagset ts, Resource r) {
     if (ts == null) {
       ts = Loader.loadTagset("xhtml");
     }
@@ -58,12 +59,25 @@ public class XMLUtil {
     ToNodeList out = new ToNodeList(null);
 
     /* Finally, create a Processor and set it up. */
-    TopContext ii = new TopProcessor();
+    TopContext ii = (r == null)
+      ? new TopProcessor()
+      : r.getRoot().makeTopContext(null, null);
     ii.setInput(p);
     ii.setTagset(ts);
+    return load(ii);
+  }
+
+
+  public static ActiveElement load(Document d, Tagset ts) {
+    TopContext ii = d.getRoot().makeTopContext(d, ts);
+    return load(ii);
+  }
+
+  public static ActiveElement load(TopContext ii) {
+    ToNodeList out = new ToNodeList(null);
     ii.setOutput(out);
     ii.run();
-    try { in.close(); } catch (IOException e) {}
+    ii.getInput().close();
     ActiveNodeList nl = out.getList();
     for (int i = 0; i < nl.getLength(); ++i) {
       ActiveNode node = nl.activeItem(i);

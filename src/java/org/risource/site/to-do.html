@@ -16,16 +16,44 @@ See also:
 </ul>
 
 <ol>
-  <li> <b>Bug</b> Virtual search paths relative to what? <br>
-       Right now you can't use a relative path in a <code>virtual</code>
-       configuration attribute (for example) because there's nothing to base
-       it on.  May need "file:", "real:", and "virtual:" for absolute, real
-       root, and virtual root.  Maybe assume virtual root, since that's the
-       only one that makes sense, or maybe the current virtual base. 
-       (1999-09-09) <br>
+  <li> <b>Bug</b> Subsites don't get reconfigured when changed. <br>
+       <code>subsiteCache</code> is always used.  If a config file is changed
+       or a directory added to the virtual path, an existing Subsite won't
+       notice.  Minor problem, and <em>very</em> hard to fix without the
+       ability to safely re-read config files.
+       (1999-09-17) <br>
+
+  <li> <b>Bug</b> DOCUMENT must be parsed with correct tagset. <br>
+       (1999-09-16) <br>
+
+  <li> <b>Bug</b> Need "realizable" flag. <br>
+       Hard to tell which things are pure virtual, and which can be realized. 
+       (1999-09-16) <br>
+
+  <li> <b>Bug</b> Virtual search paths need work <br>
+       May need "file:", "real:", and "virtual:" for absolute, real
+       root, and virtual root; / means go to top.
+       (1999-09-15) <br>
+
+  <li> <b>Impr</b> Should have ImaginaryDoc <br>
+       parent of Listing; initialize with either config. or string.  Having a
+       parsedContent field in ConfiguredResource is silly.
+       (1999-09-15) <br>
+
+  <li> <b>Bug</b> Need specialized Namespace for properties <br>
+       Needs to know where to save itself, and needs to be synchronized for
+       sharing across threads.
+       (1999-09-13) <br>
+
+  <li> <b>Hole</b> FileRoot needed <br>
+       We need something with a default configuration (for MIME types) and the
+       ability to handle paths under a document root, in order to make it 
+       possible for TopProcessor to use resources everywhere. 
+       (1999-09-13) <br>
 
   <li> <b>Impr</b> Listing should show virtual path <br>
-       and indicate which path element each document is in.
+       and indicate which path element each document is in.  The latter will
+       probably require a <code>getFlags</code> method on Resource.
        (1999-09-09) <br>
 
   <li> <b>Impr</b> Want a way of getting at an overridden doc. <br>
@@ -207,5 +235,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.7 1999-09-10 23:34:50 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.8 1999-09-17 23:39:53 steve Exp $</b><br>
 </body></html>

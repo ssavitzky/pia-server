@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.3 1999-08-31 23:32:09 steve Exp $
+//	$Id: FileDocument.java,v 1.4 1999-09-17 23:39:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.3 1999-08-31 23:32:09 steve Exp $
+ * @version $Id: FileDocument.java,v 1.4 1999-09-17 23:39:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -201,6 +201,10 @@ public class FileDocument extends FileResource implements Document {
 
   public FileDocument(String name, AbstractResource parent) {
     super(name, parent);
+  }
+
+  public FileDocument(String name, AbstractResource parent, File f) {
+    super(name, parent, f);
   }
 
   public FileDocument(String name, AbstractResource parent, Element config) {

@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.1 1999-09-09 21:54:45 steve Exp $
+// $Id: SiteMachine.java,v 1.2 1999-09-17 23:39:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,6 +57,9 @@ import java.text.SimpleDateFormat;
 /**
  * Subclass of Machine that serves as the source of documents located
  *	in the PIA's "Site".
+ *
+ * <p> For initialization and similar purposes, SiteMachine is also able
+ *	to process files entirely for their side-effects.
  *
  * @see org.risource.site
  * @see org.risource.site.Site
@@ -149,7 +152,7 @@ public class SiteMachine extends Machine {
     Pia.debug(this, msg);
 
     Content ct = new org.risource.content.text.html( new StringReader(msg) );
-    Transaction response = new HTTPResponse( Pia.thisMachine(),
+    Transaction response = new HTTPResponse( this,
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
     // Got a redirect message for all agency agents
@@ -175,6 +178,23 @@ public class SiteMachine extends Machine {
     return formatter.format(date);
   }
 
+  public SiteDoc getProcessor(Document doc) {
+    if (doc == null) return null;
+
+    String tsname = doc.getTagsetName();
+    SiteDoc proc = new SiteDoc(doc, null, null, null, Pia.resolver());
+    proc.setVerbosity((Pia.verbose()? 1 : 0) + (Pia.debug()? 2 : 0));
+
+    Tagset ts  = doc.loadTagset(tsname);
+    proc.setTagset(ts);
+    Reader reader =  doc.documentReader();
+
+    Parser p = ts.createParser();
+    p.setReader(reader);
+    proc.setInput(p);
+
+    return proc;
+  }
 
   /**
    * Respond to a transaction with a stream of HTML generated using the DPS.
@@ -184,7 +204,7 @@ public class SiteMachine extends Machine {
     Transaction response = new HTTPResponse( trans, false );
 
     SiteDoc proc = new SiteDoc(doc, null, trans, response, res);
-    proc.setVerbosity((Pia.verbose()? 1 : 0) + (Pia.debug()? 2 : 0));
+    proc.setVerbosity(Pia.getVerbosity());
 
     Tagset ts  = doc.loadTagset(tsn);
 
@@ -372,7 +392,8 @@ public class SiteMachine extends Machine {
   ** Construction:
   ************************************************************************/
 
-  public SiteMachine( Site theSite ){
+  public SiteMachine(String host, int port, Site theSite ){
+    super(host, port);
     site = theSite;
   }
 

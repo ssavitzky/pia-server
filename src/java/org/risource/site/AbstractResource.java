@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.3 1999-09-09 21:47:02 steve Exp $
+//	$Id: AbstractResource.java,v 1.4 1999-09-17 23:39:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.3 1999-09-09 21:47:02 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.4 1999-09-17 23:39:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -554,6 +554,26 @@ public abstract class AbstractResource implements Resource {
    * @return <code>false</code> if the Resource cannot be realized.
    */
   public abstract boolean realize();
+
+
+  /************************************************************************
+  ** Utilities:
+  ************************************************************************/
+
+  /** Return the current running time in milliseconds. */
+  protected static long time() {
+    return System.currentTimeMillis();
+  }
+
+  /** Return a string representing the number of seconds since a given
+   *	start time.  Useful for reporting timing information.
+   */
+  protected static String timing(long start) {
+    long t = time();
+    String s = "" + (t - start)/1000 + "." + ((t - start)%1000 + 5)/10;
+    return s;
+  }
+
 
   /************************************************************************
   ** Construction and Initialization:

@@ -1,5 +1,5 @@
 ###### pia/agent/Makefile:	Agent handlers and related classes
-#	$Id: Makefile,v 1.1 1999-09-09 21:54:44 steve Exp $
+#	$Id: Makefile,v 1.2 1999-09-17 23:39:46 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,7 +27,8 @@ TOPDIR=../../../..
 
 OTHER = \
 	SiteMachine.java \
-	SiteDoc.java
+	SiteDoc.java \
+	PiaSite.java
 
 HANDLERS = 
 
@@ -37,7 +38,14 @@ include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies:
 
-DocMachine.java:  ../Machine.java ../Resolver.java \
+SiteMachine.class:  ../Machine.java ../Resolver.java \
 	 ../Pia.java ../Content.java  ../../content/ByteStreamContent.java  \
 	../Transaction.java ../HTTPResponse.java
+
+SiteDoc.class:  ../Agent.java ../Resolver.java \
+	 ../Pia.java ../Content.java  ../../content/ByteStreamContent.java  \
+	../Transaction.java ../HTTPResponse.java
+
+PiaSite.class:  SiteDoc.java ../Pia.java
+
 

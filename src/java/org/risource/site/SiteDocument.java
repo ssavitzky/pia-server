@@ -1,5 +1,5 @@
 ////// SiteDocument.java -- implementation for a document resource
-//	$Id: SiteDocument.java,v 1.3 1999-09-09 21:47:04 steve Exp $
+//	$Id: SiteDocument.java,v 1.4 1999-09-17 23:39:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.ds.*;
+import org.risource.dps.input.FromNodeList;
 
 import java.io.*;
 import java.net.URL;
@@ -39,7 +40,7 @@ import java.net.URL;
  * <p> Some of a SiteDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: SiteDocument.java,v 1.3 1999-09-09 21:47:04 steve Exp $
+ * @version $Id: SiteDocument.java,v 1.4 1999-09-17 23:39:52 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -76,17 +77,24 @@ public class SiteDocument extends ConfiguredResource implements Document {
 
   /** @return <code>true</code> if the associated Document can be written.
    */
-  public boolean isWritable() { return file.canWrite(); }
+  public boolean isWritable() {
+    return (file == null)? false : file.canWrite();
+  }
 
   /** @return <code>true</code> if the associated Document can be read. */
-  public boolean isReadable() { return file.canRead(); }
+  public boolean isReadable() {
+    return (file == null)? true :  file.canRead();
+  }
 
   /************************************************************************
   ** Metadata Convenience Functions:
   ************************************************************************/
 
   /** Returns the time that the associated document was last modified. */
-  public long getLastModified() { return file.lastModified(); }
+  public long getLastModified() {
+    // === probably the wrong result for imaginary files.
+    return (file == null)? 0 : file.lastModified();
+  }
 
   /** Returns the MIME content type of the associated document. */
   public String getContentType() { return base.getContentTypeFor(getName()); }
@@ -118,7 +126,10 @@ public class SiteDocument extends ConfiguredResource implements Document {
   /** @return a <code>BufferedInputStream</code> for accessing the document.
    */
   public BufferedInputStream documentInputStream() {
-    try {
+    if (parsedContent != null) {
+      return new BufferedInputStream(new StringBufferInputStream
+				     (parsedContent.toString()));
+    } else try {
       return new BufferedInputStream(new FileInputStream(file));
     } catch (IOException e) {
       getRoot().reportException(e, "opening " + getPath());
@@ -129,7 +140,9 @@ public class SiteDocument extends ConfiguredResource implements Document {
   /** @return a <code>LineNumberReader</code> for accessing the document.
    */
   public LineNumberReader documentReader() {
-    try {
+    if (parsedContent != null) {
+      return new LineNumberReader(new StringReader(parsedContent.toString()));
+    } else try {
       return new LineNumberReader(new FileReader(file));
     } catch (IOException e) {
       getRoot().reportException(e, "opening " + getPath());
@@ -141,6 +154,7 @@ public class SiteDocument extends ConfiguredResource implements Document {
   /** @return an <code>OutputStream</code> for writing the document.
    */
   public OutputStream documentOutputStream() {
+    if (file == null) return null;
     try {
       return new FileOutputStream(file);
     } catch (IOException e) {
@@ -152,6 +166,7 @@ public class SiteDocument extends ConfiguredResource implements Document {
   /** @return a <code>Writer</code> for writing the document.
    */
   public Writer documentWriter() {
+    if (file == null) return null;
     try {
       return new FileWriter(file);
     } catch (IOException e) {
@@ -167,6 +182,9 @@ public class SiteDocument extends ConfiguredResource implements Document {
    *	Returns <code>null</code> if the resource is not readable.
    */
   public Input documentInput() {
+    if (parsedContent != null) 
+      return new FromNodeList(parsedContent);
+
     String tsname = getTagsetName();
     Tagset ts = loadTagset(tsname);
     Parser p = ts.createParser();
@@ -236,11 +254,11 @@ public class SiteDocument extends ConfiguredResource implements Document {
   ************************************************************************/
 
   public SiteDocument(String name, ConfiguredResource parent, File file, 
-		       ActiveElement config) {
-    super(name, parent, false, file, config, null);
+		      boolean real, ActiveElement config) {
+    super(name, parent, false, real, file, config, null);
   }
 
   public SiteDocument(ConfiguredResource parent, ActiveElement config) {
-    super(null, parent, false, null, config, null);
+    super(null, parent, false, false, null, config, null);
   }
 }

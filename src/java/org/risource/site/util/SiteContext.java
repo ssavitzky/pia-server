@@ -1,5 +1,5 @@
 ////// SiteContext.java: Top Processor for PIA active documents
-//	$Id: SiteContext.java,v 1.2 1999-08-20 00:03:30 steve Exp $
+//	$Id: SiteContext.java,v 1.3 1999-09-17 23:39:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,7 +57,7 @@ import org.risource.ds.Tabular;
 /**
  * A TopProcessor for processing active documents, typically in a Subsite.
  *
- * @version $Id: SiteContext.java,v 1.2 1999-08-20 00:03:30 steve Exp $
+ * @version $Id: SiteContext.java,v 1.3 1999-09-17 23:39:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps
@@ -212,7 +212,6 @@ public class SiteContext extends TopProcessor {
     this.subsite = (subsite != null)? subsite : locateSubsite(document);
     this.document = document;
     if (document != null) setTagset(document.loadTagset(null));
-    initializeEntities();
   }
 
   public SiteContext(Input in, Context cxt, Output out, Tagset ts,
@@ -221,7 +220,6 @@ public class SiteContext extends TopProcessor {
     this.subsite = (subsite != null)? subsite : locateSubsite(document);
     this.document = document;
     if (document != null && ts == null) setTagset(document.loadTagset(null));
-    initializeEntities();
   }
 
 }

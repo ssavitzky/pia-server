@@ -1,5 +1,5 @@
 ////// Root.java -- interface for the topmost resource in a site
-//	$Id: Root.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+//	$Id: Root.java,v 1.3 1999-09-17 23:39:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.net.URL;
  *
  * <p> 
  *
- * @version $Id: Root.java,v 1.2 1999-08-20 00:03:26 steve Exp $
+ * @version $Id: Root.java,v 1.3 1999-09-17 23:39:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -79,4 +79,18 @@ public interface Root extends Resource {
 
   /** List all registered agents. */
   public String[] listAgents();
+
+  /** Construct a suitable TopContext for processing a Document. 
+   *
+   *<p>	Note that this operation is used for processing configuration 
+   *	documents.  Therefore, it should not be assumed that the container
+   *	of the document to be processed is fully configured yet.
+   *
+   * @param doc the Document to be processed.  If null, an unconfigured
+   *	TopContext of the appropriate type is constructed.
+   * @param ts the tagset with which to process the document.  If omitted, 
+   *	the document provides its own Input.
+   * @return a suitable TopContext.
+   */
+  public TopContext makeTopContext(Document doc, Tagset ts);
 }

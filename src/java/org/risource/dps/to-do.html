@@ -16,10 +16,27 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> include using document's own tagset <br>
+       There should be an option to include that allows a document to use
+       its own tagset.
+       (1999-09-13) <br>
+
+  <li> <b>Hole</b> Replace File with Resource almost everywhere <br>
+       One known example is util.Forms where it wants a file's MIME type.
+       Another more egregious one is &lt;include&gt;!
+       (1999-09-13) <br>
+       -- (DONE: include) status ...
+
+  <li> <b>Impr</b> define !DOCTYPE for XML <br>
+       Should define the !DOCTYPE node in the default XML tagset with an
+       action that switches to the correct tagset as specified by the
+       doctype.
+       (1999-09-13) <br>
+
   <li> <b>Hole</b> locate*Resource now problematic <br>
        Should end up with a Resource rather than a File or URL.  A
        <em>lot</em> of things would be simpler if we used Resource, etc. for
-       <em>all</em> access to resources.
+       <em>all</em> access to resources.  
        (1999-09-07) <br>
 
   <li> <b>Bug</b> &lt;replace node&gt; buggy <br>
@@ -637,5 +654,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.29 1999-09-10 23:34:42 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.30 1999-09-17 23:39:38 steve Exp $</b><br>
 </body></html>
