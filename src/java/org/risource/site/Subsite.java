@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.5 1999-09-09 21:47:04 steve Exp $
+//	$Id: Subsite.java,v 1.6 1999-09-11 00:26:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.5 1999-09-09 21:47:04 steve Exp $
+ * @version $Id: Subsite.java,v 1.6 1999-09-11 00:26:18 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -145,6 +145,8 @@ public class Subsite extends ConfiguredResource implements Resource {
       ? null : virtualSearchPath[virtualSearchPath.length - 1];
   }
 
+  protected File[] getVirtualSearchPath() { return virtualSearchPath; }
+
   /************************************************************************
   ** Configuration Management:
   ************************************************************************/
@@ -214,7 +216,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     }    
 
     // <ext>
-    else if (tag.equals("ext")) configExtItem(tag, item);
+    else if (tag.equals("Map")) configMapItem(tag, item);
 
     // let ConfiguredResource (super) handle it
     else super.configItem(tag, item);
@@ -231,10 +233,11 @@ public class Subsite extends ConfiguredResource implements Resource {
       e.setAttribute("container", "yes");
     }
     String name = e.getAttribute("name");
+    if (childConfigCache == null) childConfigCache = new Table();
     childConfigCache.at(name, e);
   }
 
-  protected void configExtItem(String tag, ActiveElement e) {
+  protected void configMapItem(String tag, ActiveElement e) {
     String ext = e.getAttribute("extension");
     if (ext == null) ext = e.getAttribute("ext");
     if (ext == null) ext = "";
@@ -362,11 +365,12 @@ public class Subsite extends ConfiguredResource implements Resource {
   /** Return the resource corresponding to a configuration element. */
   protected Resource configureChild(String name, ActiveElement cfg) {
     Resource result = null;
-    if (cfg.hasTrueAttribute("collection")) {
-      result = new Subsite(name, this, null, config, null);
+    if (cfg.hasTrueAttribute("container") 
+	|| cfg.getTagName().equals("Container")) {
+      result = new Subsite(name, this, null, cfg, null);
       subsiteCache.at(name, result);
     } else {
-      result = new SiteDocument(name, this, null, config);
+      result = new SiteDocument(name, this, null, cfg);
     }
     return result;
   }
@@ -625,13 +629,17 @@ public class Subsite extends ConfiguredResource implements Resource {
   public Subsite(String name, ConfiguredResource parent,
 		 File file, ActiveElement config, Namespace props) {
     super(name, parent, true, file, config, props);
+    if (file != null && file.exists()) real = true;
     if (virtualSearchPath == null && base != null) {
-      virtualSearchPath = new File[2];
-      virtualSearchPath[1] = base.getDefaultDir();
-      File f = base.getVirtualLoc();
-      if (f != null && f.exists()) {
-	f = new File(f, name);
-	if (f.exists() && f.isDirectory()) virtualSearchPath[0] = f;
+      if (virtualSearchPath == null) virtualSearchPath = new File[2];
+      if (virtualSearchPath[1] == null)
+	virtualSearchPath[1] = base.getDefaultDir();
+      if (virtualSearchPath[0] == null) {
+	File f = base.getVirtualLoc();
+	if (f != null && f.exists()) {
+	  f = new File(f, name);
+	  if (f.exists() && f.isDirectory()) virtualSearchPath[0] = f;
+	}
       }
     }
     if (config == null) {
@@ -645,6 +653,7 @@ public class Subsite extends ConfiguredResource implements Resource {
    */
   protected Subsite(String realLoc, String virtualLoc, String defaultDir) {
     super("/", null, true, new File(realLoc), null, null);
+    if (file != null && file.exists()) real = true;
     virtualSearchPath = new File[2];
     if (virtualLoc != null) virtualSearchPath[0] = new File(virtualLoc);
     if (defaultDir != null) virtualSearchPath[1] = new File(defaultDir);    

@@ -1,5 +1,5 @@
 ////// Listing.java -- simple listing of a container document
-//	$Id: Listing.java,v 1.1 1999-09-09 21:44:47 steve Exp $
+//	$Id: Listing.java,v 1.2 1999-09-11 00:26:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.net.URL;
  * Simple implementation for a document resource that is a listing of a
  *	SubSite or other container resource.
  *
- * @version $Id: Listing.java,v 1.1 1999-09-09 21:44:47 steve Exp $
+ * @version $Id: Listing.java,v 1.2 1999-09-11 00:26:18 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -128,8 +128,8 @@ public class Listing extends FileResource implements Document {
 
   protected boolean ignoreFile(String name, Resource res) {
     // === really need lists for prefixes, suffixes, and names to reject ===
-    // === also ought to ignore hidden resources
-    return (name.startsWith(".") || name.startsWith("#")
+    return (res.isHidden()
+	    || name.startsWith(".") || name.startsWith("#")
 	    || name.endsWith("~")
 	    || name.equals("CVS"));
   }
@@ -166,69 +166,103 @@ public class Listing extends FileResource implements Document {
     }
   }
 
+  protected String flink(String fn) {
+    return "<a href=\"file:" + fn + "\">" + fn + "</a>";
+  }
+
+  protected String rlink(String name) {
+    return "<a href=\"" + name + "\">" + name + "</a>";
+  }
+
+  protected String alink(String name, String path) {
+    if (! path.endsWith("/")) path += "/";
+    return "<a href=\"" + path + name + "\">" + name + "</a>";
+  }
+
   /** Get a string for the contents of the listing page. 
    *  	=== really ought to return a DOM tree ===
    *	=== really needs to use parent resource, not File ===
    * @return a string corresponding to the listing.
    */
   protected String getListingString() {
-      String[] ls;
-      int i;
-      File f;
-      String head = null;
+      String[] ls = base.listNames();
       String mypath = base.getPath();
+
+      int i;
+      String head = null;
       String entry;
       SortTree entries = new SortTree();
 
       if (!mypath.endsWith("/")) mypath += "/";
 
-      for (ls = base.listNames(), i = 0; ls != null && i < ls.length; i++){
-	String   zfile = ls[i];
-	Resource zres  = base.getChild(zfile);
+      // Find the actual file paths
 
-	if (zfile.toLowerCase().equals("header.html") 
-	    && ! ignoreFile(zfile, zres)) {
+      String paths = "";
+      if (base.getRealPath() != null)
+	paths += flink(base.getRealPath());
+      else
+	paths += "<em>[virtual]</em>";
+
+      if (base instanceof Subsite) {
+	File vsp[] = ((Subsite)base).getVirtualSearchPath();
+	for (i = 0; vsp != null && i < vsp.length; ++i) {
+	  paths += ", ";
+	  if (vsp[i] != null) paths += flink(vsp[i].getPath());
+	  else if (i == vsp.length - 1) paths += "<em>[no defaults]</em>";
+	}
+      }
+
+      // Find the children.
+
+      for (i = 0; ls != null && i < ls.length; i++){
+	String   name = ls[i];
+	Resource zres  = base.getChild(name);
+
+	if (name.toLowerCase().equals("header.html") 
+	    && ! ignoreFile(name, zres)) {
 	  head = suckBody(zres);
 	  if (!all) continue;
-	} else if (zfile.toLowerCase().equals("header")
-		   && ! ignoreFile(zfile, zres)) {
+	} else if (name.toLowerCase().equals("header")
+		   && ! ignoreFile(name, zres)) {
 	  head = "<pre>"+suckBody(zres)+"</pre>";
 	  if (!all) continue;
 	}
 
-	if (all || !ignoreFile(zfile, zres)) {
-	  entry = "<li> ";
-	  if ( zres.isContainer() )
-	    entry += " <a href=\"" + mypath + zfile + "/\">" + zfile + "/</a>";
-	  else
-	    entry += "<a href=\"" + mypath + zfile + "\">" + zfile + "</a>" ;
-
-	  entries.insert(Association.associate(entry, zfile));
+	if (all || !ignoreFile(name, zres)) {
+	  entry = "<li> " + ((zres.isContainer())
+			     ? alink(name + "/", mypath)
+			     : alink(name, mypath));
+	  entries.insert(Association.associate(entry, name));
 	}
       }
 
-      /* Java doesn't list "..", so include it here. */
+      // Java doesn't list "..", so include it here. 
 
-      entry = "<li> <a href=\"" + mypath +  ".." + "/\">" + " / " + "</a>";
-      entries.insert(Association.associate(entry, ".."));
+      if (!mypath.equals("/")) {
+	entry = "<li> " + alink("../", mypath);
+	entries.insert(Association.associate(entry, ".."));
+      }
 
-      if (head == null) head = "<h1>Directory listing of "+ mypath +"</h1>";
+      if (head == null) head = "<h1>Listing for "+ mypath +"</h1>";
 
       List sortList = new List();
       entries.ascendingValues(sortList);
       String allurls = sortList.join("\n");
 
-      return "\n" + "<html>\n<head>" + "<title>" + mypath + "</title>"
-	+ "</head>\n<body>" + head
-	+ "<h3><a href=\"" + mypath + "\">" + mypath + "</a> " + "</h3>"
-	//+ "<h4><a href=\"file:" + realpath + "\">file:" + realpath + "</a></h4>"
-	+ "<ul>" + allurls + "</ul>" + "</body>\n</html>\n";
+      return "\n" + "<html>\n<head>"
+	+ "<title>Listing for " + mypath + "</title>"
+	+ "</head>\n<body>" + head + "\n"
+	+ "<h3>Listing for " + rlink(mypath) + "</h3>\n"
+	+ "<ul>" + allurls + "</ul>\n"
+	+ paths + "\n"
+	+ "</body>\n</html>\n";
   }
 
   /** @return a <code>BufferedInputStream</code> for accessing the document.
    */
   public BufferedInputStream documentInputStream() {
-    return new BufferedInputStream(new StringBufferInputStream(getListingString()));
+    return
+      new BufferedInputStream(new StringBufferInputStream(getListingString()));
   }
 
   /** @return a <code>LineNumberReader</code> for accessing the document.

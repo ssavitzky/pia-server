@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.6 1999-09-11 00:26:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.6 1999-09-11 00:26:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -80,6 +80,7 @@ public abstract class ConfiguredResource extends AbstractResource
   // === we wouldn't need these if base was a Subsite ===
   protected File getVirtualLoc() { return null; }
   protected File getDefaultDir() { return null; }
+  protected File[] getVirtualSearchPath() { return null; }
 
   /************************************************************************
   ** Configuration Management:
@@ -173,7 +174,15 @@ public abstract class ConfiguredResource extends AbstractResource
     // <namespace> (entities, DAV, ...)
     if (item instanceof Namespace) configNamespaceItem(item.asNamespace());
 
-    // unknown
+    // unknown: put it into the properties
+    else {
+      if (properties == null) properties = new BasicNamespace(getName());
+      ActiveNode binding = properties.getBinding(tag);
+      if (binding != null) binding.appendChild(item);
+      else properties.setBinding(tag,
+				 new TreeEntity(tag, new TreeNodeList(item)));
+    }
+    if (true) ;
     else getRoot().report(-1, "Unknown config item <" + tag + "...>"
 			      + " in " + getPath(), 0, false); 
   }
@@ -186,7 +195,13 @@ public abstract class ConfiguredResource extends AbstractResource
   protected void configNamespaceItem(Namespace ns) {
     String name = ns.getName();
 
-    if (name.equals("DAV")) properties = ns;
+    if (name.equals(getName())) properties = ns;
+    else {
+      if (properties == null) properties = new BasicNamespace(getName());
+      properties.setBinding(name, (ActiveNode)ns);
+    }
+
+    if (true) ;
     else getRoot().report(-1, "Unknown config namespace " + name
 			      + " in " + getPath(), 0, false); 
   }
