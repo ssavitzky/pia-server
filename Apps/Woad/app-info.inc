@@ -30,7 +30,7 @@
     <th bgcolor="silver"> source Root </th>
     <td> &SITE:sourceRoot;
     </td>
-    <td> <code>sources=<em>&SITE:sourceRoot;</em></code>
+    <td> <code>source=<em>&SITE:sourceRoot;</em></code>
 	 <!-- should probably do some configuration checking  -->
 	 <!-- to see exactly where this parameter was set     -->
     </td>
@@ -103,4 +103,4 @@
 
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.6 2000-07-21 22:55:39 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.7 2000-08-22 23:57:41 steve Exp $">
