@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.8 1999-07-14 20:20:56 steve Exp $
+//	$Id: BasicParser.java,v 1.9 1999-10-07 18:32:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.8 1999-07-14 20:20:56 steve Exp $
+ * @version $Id: BasicParser.java,v 1.9 1999-10-07 18:32:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -306,7 +306,7 @@ public class BasicParser extends AbstractParser {
       last = 0; ident = null;
       // note that -- is an identifier, so check for it with eatIdent
       eatIdent();
-      eatUntil('>', false);
+      eatUntil("?>", false);	// XML standard: <? .... ?>
       if (last == '>') last = 0;
       next = createActiveNode(Node.PROCESSING_INSTRUCTION_NODE, ident,
 			      buf.toString());
