@@ -1,5 +1,5 @@
 ////// TreeEntity.java -- implementation of ActiveEntity
-//	$Id: TreeEntity.java,v 1.7 1999-11-17 21:04:40 steve Exp $
+//	$Id: TreeEntity.java,v 1.8 2000-08-23 16:19:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntity.java,v 1.7 1999-11-17 21:04:40 steve Exp $
+ * @version $Id: TreeEntity.java,v 1.8 2000-08-23 16:19:09 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -141,10 +141,14 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
     if (v != null && v.getLength() > 0) {
       ActiveNode item = v.activeItem(0);
       if (item.getNodeType() == Node.TEXT_NODE &&
+	  item.getNodeValue() != null &&
+	  item.getNodeValue().length() > 0 &&
 	  item.getNodeValue().charAt(0) <= ' ') notrim = true;
       else {
 	item = v.activeItem(v.getLength() -1);
 	if (item.getNodeType() == Node.TEXT_NODE &&
+	  item.getNodeValue() != null &&
+	  item.getNodeValue().length() > 1 &&
 	    item.getNodeValue().charAt(item.getNodeValue().length()-1) <= ' ')
 	  notrim = true;
       }
