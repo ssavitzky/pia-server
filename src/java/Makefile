@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.11 1999-06-03 21:37:40 steve Exp $
+#	$Id: Makefile,v 1.12 1999-09-22 00:44:37 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,6 +44,7 @@ JIGSAWPACKAGE= \
 
 PIAPACKAGENAMES= \
 	org.risource.content org.risource.content.text \
+	org.risource.ds \
 	org.risource.dps \
 	org.risource.dps.active \
 	org.risource.dps.handle \
@@ -54,15 +55,18 @@ PIAPACKAGENAMES= \
 	org.risource.dps.tagset \
 	org.risource.dps.tree \
 	org.risource.dps.util \
-	org.risource.ds \
+	org.risource.site \
+	org.risource.site.util \
 	org.risource.pia \
 	org.risource.pia.agent \
 	org.risource.pia.handle \
+	org.risource.pia.site \
 	org.risource.tf \
 	org.risource.util \
 	misc
 
 #	org.risource.dom \
+#	org.risource.sax \
 
 ### These are the names of the classes in the JDK that the PIA uses.  
 ###	Assuming javadoc can find the source code, we should be able to
