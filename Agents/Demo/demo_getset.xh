@@ -20,9 +20,9 @@ this value using the get handler.
 <b> Input: </b>&lt;set name=today&gt;Friday&lt;/set&gt;
 <set name=today>Friday</set>
 <p>
-<b> Input: </b>&lt;get name=today&gt;&lt;/get&gt;
+<b> Input: </b>&lt;get name=today /&gt;&lt;/get&gt;
 <p>
-<b> Result: </b> <get name=today></get>
+<b> Result: </b> <get name=today /></get>
 <p>
 <hr>
 
@@ -30,9 +30,9 @@ this value using the get handler.
 <b> Description:</b> Attempt to "get" a value from a variable that has not been set.
 Returns nothing.
 <p>
-<b> Input: </b>&lt;get name=whatever&gt;&lt;/get&gt;
+<b> Input: </b>&lt;get name=whatever /&gt;&lt;/get&gt;
 <p>
-<b> Result: </b> <get name=whatever></get>
+<b> Result: </b> <get name=whatever /></get>
 <p>
 <footer />
 

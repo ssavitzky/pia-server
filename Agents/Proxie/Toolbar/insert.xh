@@ -1,8 +1,8 @@
-<!-- $Id: insert.xh,v 1.2 1999-03-12 19:22:37 steve Exp $ -->
+<!-- $Id: insert.xh,v 1.3 1999-03-27 01:35:32 steve Exp $ -->
 &AGENT:name; agent<br>
 <if><test exact match="&AGENT:name;">&AGENT:type;</test>
     <then> 
-<else><if><get name=AGENT:hidden>
+<else><if><get name=AGENT:hidden />
 <then>
 <form action="hide">
   <input type=hidden name=show value=true>

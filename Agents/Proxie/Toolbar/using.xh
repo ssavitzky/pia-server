@@ -56,22 +56,22 @@ href="/History">History</a> agent's data directory:
 <dl>
   <dt> [ <a href="/History">Hist:</a> 
   <dd> <a href="/History">/History</a> -- the History agent's home page
-  <dt> <a href="/~History">*</a> 
-  <dd> <a href="/~History">/~History</a> -- the History agent's data
+  <dt> <a href="/History/~">*</a> 
+  <dd> <a href="/History/~">/History/~</a> -- the History agent's data
        directory. 
-  <dt> <a href="/~History/&year;">&year;</a> /
-  <dd> <a href="/~History/&year;">/~History/&year;</a> --
+  <dt> <a href="/History/~/&year;">&year;</a> /
+  <dd> <a href="/History/~/&year;">/History/~/&year;</a> --
        the history for the current year
-  <dt> <a href="/~History/&year;/&month;">&month;</a> /
-  <dd> <a href="/~History/&year;/&month;">/~History/&year;/&month;</a> --
+  <dt> <a href="/History/~/&year;/&month;">&month;</a> /
+  <dd> <a href="/History/~/&year;/&month;">/History/~/&year;/&month;</a> --
        the history for the current month
-  <dt> <a href="/~History/&year;/&month;/&day;.html">&day;</a>
-  <dd> <a href="/~History/&year;/&month;/&day;.html">
-       /~History/&year;/&month;/&day;.html</a> --
+  <dt> <a href="/History/~/&year;/&month;/&day;.html">&day;</a>
+  <dd> <a href="/History/~/&year;/&month;/&day;.html">
+       /History/~/&year;/&month;/&day;.html</a> --
        the history for today
-  <dt> <a href="/~History/last.html">&hour;:&minute;</a>] --
-  <dd> <a href="/~History/last.html">/~History/last.html</a>
+  <dt> <a href="/History/~/last.html">&hour;:&minute;</a>] --
+  <dd> <a href="/History/~/last.html">/History/~/last.html</a>
 </dl>
 
-<footer cvsid="$Id: using.xh,v 1.2 1999-03-12 19:22:37 steve Exp $">
+<footer cvsid="$Id: using.xh,v 1.3 1999-03-27 01:35:33 steve Exp $">
 </body></html>

@@ -21,7 +21,7 @@
   <li> <a href="installers">install new agents</a>
   <li> <a href=options>view/change options</a>
   <li> <a href=debug>toggle debugging</a> (currently
-       <if><test zero><get pia name="PIA:debugging"></test>
+       <if><test zero><get pia name="PIA:debugging" /></test>
            <then>off</then><else>on</else></if>)
   <li> <a href=remove-agent> remove agent</a>
 </ul>
@@ -72,5 +72,5 @@
 	  (This file gets "executed" when a new &AGENT:name; agent is created)
 </ul>
 
-<footer cvsid="$Id: programming.xh,v 1.5 1999-03-23 20:35:00 steve Exp $">
+<footer cvsid="$Id: programming.xh,v 1.6 1999-03-27 01:35:06 steve Exp $">
 </body></html>

@@ -113,11 +113,11 @@ should be 'this did nothing': '<subst match=may result=did>this did nothing</sub
  should be 'xxyyzz': '<if>1<then>xx<protect>yy</protect>zz</then></if>'
  should be 'xxzz': '<if>1<then>xx<protect></protect>zz</then></if>'
  should be 'aabbcc': '<define element=xx><action>bb</define>aa<xx></xx>cc'
- should be 'aabb': '<define element=xxx><action></define>aaa<xxx></xxx>bbb'
+ should be 'aabb': '<define element=xxx><action></action></define>aaa<xxx></xxx>bbb'
  should be 'xxxyyy<i>zzz</i><i>zzz</i>': '<if>1<then>xxx<define element=baz empty
 	><action><i>zzz</i></define>yyy<baz></then></if><br><baz>'
- should be 'xxxyyyzzz': '<if>1<then>xxx<actor
- tag=bug><action>zzz</define>yyy<bug></then></if><br> <bug></bug>'
+ should be 'xxxyyyzzz': '<if>1<then>xxx<define element=bug>
+        <action>zzz</define>yyy<bug></then></if><br> <bug></bug>'
  should be 'xxxyyyzzz' 'xxx<define element=bat empty><action>zzz</define>yyy<bat>'
  should be 'xxxyyy..': '<if>1<then>xxx<define element=bar empty
 	><action></define>yyy</then></if><br><bar>..'
@@ -126,7 +126,7 @@ should be 'this did nothing': '<subst match=may result=did>this did nothing</sub
  should be 'xxxyyy': '<define element=zzz empty>xxx</define><zzz>yyy'
 </blockquote>
 <baz><bug></bug>
-should be 6 <if>1<then><sum>1 <sum>2 3</sum></sum></if>
+should be 6 <if>1<then><numeric sum>1 <numeric sum>2 3</numeric></numeric></if>
 
 <h2>Test arithmetic</h2>
 
@@ -142,13 +142,16 @@ should be 6: <numeric quotient>12 2</numeric> quotient
 <h2>Test set, get entities</h2>
 
 foo set to "value of foo": <set name=foo>value of foo</set>
-get: "<get name=foo>"
+get: "<get name=foo />"
+get def.: "<get name=foo>default value</get>"
 entity: "&foo;"
 fox defined as "value of fox": <define entity=fox><value>value of fox</define>
-get: "<get name=fox>"
+get: "<get name=fox />"
 entity: "&fox;"
+get undef: "<get name=undefined />"
+get default: "<get name=undefined>default value</get>"
 <!-- need to use test here to keep variable stuff out of output: -->
-date: <test exact match="&date"><get name=date></test>
+date: <test exact match="&date"><get name=date /></test>
 fileName: "&fileName;" should be "t3.if"
 filePath: "&filePath;" should be "./t3.if"
 
@@ -252,19 +255,8 @@ Entity used as list for repeat; expanded in attribute:
 
 <add-markup>THIS is a _test_ *of* add="markup"</add-markup>
 
-<h2>Actor information</h2>
-
-attrs: <actor-attrs name=get><br>
-syntax: <actor-syntax name=get><br>
-dscr: <actor-dscr name=get><br>
-...  <add-markup><actor-dscr name=get></add-markup>
-
-attrs: <actor-attrs name=set><br>
-syntax: <actor-syntax name=set><br>
-dscr: <actor-dscr name=set><br>
-
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
 <!-- the following conditional keeps the id out of the results --><if>
-<then><b>t6$Id: t6.xh,v 1.2 1999-03-12 19:28:02 steve Exp $</b><br></then></if>
+<then><b>t6$Id: t6.xh,v 1.3 1999-03-27 01:36:43 steve Exp $</b><br></then></if>
 </body></html>

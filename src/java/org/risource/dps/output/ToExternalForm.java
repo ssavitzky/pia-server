@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.3 1999-03-12 19:27:07 steve Exp $
+//	$Id: ToExternalForm.java,v 1.4 1999-03-27 01:36:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.3 1999-03-12 19:27:07 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.4 1999-03-27 01:36:15 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -64,6 +64,12 @@ public abstract class ToExternalForm extends CursorStack implements Output {
   ************************************************************************/
 
   protected EntityTable defaultEntityTable = null;
+
+  // === This currently isn't used -- conversion is done in ActiveElement
+  protected boolean minimizeAttributes = false;
+
+  // === This is used, but in a particularly ugly way.
+  protected boolean flagEmptyElements  = true;
 
   /************************************************************************
   ** Internal utilities:
@@ -111,6 +117,9 @@ public abstract class ToExternalForm extends CursorStack implements Output {
       Copy.copyNodes(aNode.getChildren(), this);
       endNode();
     } else {
+      if (flagEmptyElements && aNode instanceof ActiveElement
+	  && ((ActiveElement)aNode).isEmptyElement() )
+	((ActiveElement)aNode).setHasEmptyDelimiter(true);
       write(aNode.toString());
     }
   }

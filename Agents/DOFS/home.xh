@@ -62,7 +62,7 @@ This is the home page for the
        <form method=POST action="options"><table>
          <repeat list="&opts;" entity=opt><tr>
            <th align=right>&opt;:</th>
-           <td><set entity name=v><get agent name="&opt;"></set>
+           <td><set entity name=v><get agent name="&opt;" /></set>
            <input name="&opt;" value="&v;" size=50></td><p></tr>
          </repeat>
          <tr> <th><input type=submit value="Change Options"></th></tr>
@@ -128,5 +128,5 @@ There is some debate as to how ``DOFS'' should be pronounced.  ``Doffs'' means
 ``takes off'' (usually applied to an article of clothing), whereas ``doofus''
 means a foolish or incompetent person.  Neither is particularly appropriate.
 
-<footer cvsid="$Id: home.xh,v 1.3 1999-03-12 19:22:08 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.4 1999-03-27 01:35:10 steve Exp $">
 </body></html>

@@ -16,8 +16,8 @@
 	border=0 width=170 height=21></a></th>
     <th align=right valign=top width=170><a
 	href="/&agentName;">&agentName;</a>: </th>
-    <th align=left colspan=2><if><get entity name=title>
-	<then><get entity name=title></then>
+    <th align=left colspan=2><if><get entity name=title />
+	<then><get entity name=title /></then>
 	<else>&fileName;</else></if></th></tr>
 </table>
-<!-- $Id: heading.inc,v 1.2 1999-03-12 19:21:51 steve Exp $ -->
+<!-- $Id: heading.inc,v 1.3 1999-03-27 01:34:56 steve Exp $ -->

@@ -4,10 +4,10 @@
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 <header>Home Page</header>
 <sub-head page=home >
-    <tr><th><td><a href="/~History">/~History</a> /
-		<a href="/~History/&year;">&year;</a> /
-		<a href="/~History/&year;/&month;">&month;</a> /
-		<a href="/~History/&year;/&month;/&day;.html">&day;</a>
+    <tr><th><td><a href="/History/~">/History/~</a> /
+		<a href="/History/~/&year;">&year;</a> /
+		<a href="/History/~/&year;/&month;">&month;</a> /
+		<a href="/History/~/&year;/&month;/&day;.html">&day;</a>
 </sub-head>
 
 <if><agent-running name=History>
@@ -24,45 +24,45 @@
 <hr>
 <a href="/">PIA</a> | <a href="/Admin">Admin</a> |
 <a href="/Toolbar">Toolbar</a> | <a href="/History">History</a> |
-<a href="/~History/">/~History</a>
-		<a href="/~History/&year;">&year;</a> /
-		<a href="/~History/&year;/&month;">&month;</a> /
-		<a href="/~History/&year;/&month;/&day;.html">&day;</a>
+<a href="/History/~/">/History/~</a>
+		<a href="/History/~/&year;">&year;</a> /
+		<a href="/History/~/&year;/&month;">&month;</a> /
+		<a href="/History/~/&year;/&month;/&day;.html">&day;</a>
 <hr>
 
 <p>The <code>&agentName;</code> agent puts information into the history
-database, which is located in <a href="/~History">/~History</a>, the History
+database, which is located in <a href="/History/~">/History/~</a>, the History
 agent's data directory.  Most <a href="/Toolbar/">Toolbar</a> agents put a
 small control bar at the top of each page that refers to the history database.
 
 <p>The History control bar looks like this:<br>
 <dl>
-  <dt> <expand><get agent=History name=controls></expand>
+  <dt> <expand><get agent=History name=controls /></expand>
   <dd> 
        <dl compact>
 	 <dt> Hist
 	 <dd> -&gt; <a href="/History">/History</a>, the History Agent's home
 	      page  
 	 <dt> *
-	 <dd> -&gt; <a href="/~History">/~History</a>, the History Agent's
+	 <dd> -&gt; <a href="/History/~">/History/~</a>, the History Agent's
 	      data directory.
 	 <dt> &year; / &month; /
 	 <dd> -&gt; the directories for this year and month.
 	 <dt> &day;
-	 <dd> -&gt; <a href="/~History/&year;/&month;/&day;.html"
-	      >/~History/&year;/&month;/&day;.html</a>, the history file for
+	 <dd> -&gt; <a href="/History/~/&year;/&month;/&day;.html"
+	      >/History/~/&year;/&month;/&day;.html</a>, the history file for
 	      today. 
 	 <dt> &time;
-	 <dd> -&gt; <a href="/~History/last.html">/~History/last.html</a>, the
+	 <dd> -&gt; <a href="/History/~/last.html">/History/~/last.html</a>, the
 	      headers and other information for the most-recently-viewed page.
        </dl>
 </dl>
 
 <h3>Files:</h3>
 <ul>
-  <li>History directory: <a href="/~History">/~History</a>
-  <li>Page info: <a href="/~History/last.html">/~History/last.html</a>
-  <li>Last link: <a  href="/~History/last.link">/~History/last.link</a>
+  <li>History directory: <a href="/History/~">/History/~</a>
+  <li>Page info: <a href="/History/~/last.html">/History/~/last.html</a>
+  <li>Last link: <a  href="/History/~/last.link">/History/~/last.link</a>
 </ul>
 
 <p>The ``last link'' file is particularly useful; the following Emacs code
@@ -115,5 +115,5 @@ sorting files by date very easy.  <p>
 <pre><protect result markup>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid="$Id: home.xh,v 1.3 1999-03-23 20:35:10 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.4 1999-03-27 01:35:26 steve Exp $">
 </body></html>

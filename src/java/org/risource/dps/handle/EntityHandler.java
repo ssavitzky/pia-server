@@ -1,5 +1,5 @@
 ////// EntityHandler.java: Entity Node Handler implementation
-//	$Id: EntityHandler.java,v 1.3 1999-03-12 19:25:56 steve Exp $
+//	$Id: EntityHandler.java,v 1.4 1999-03-27 01:36:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityHandler.java,v 1.3 1999-03-12 19:25:56 steve Exp $
+ * @version $Id: EntityHandler.java,v 1.4 1999-03-27 01:36:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -154,24 +154,6 @@ public class EntityHandler extends AbstractHandler {
     // === An indexed name really wants a new handler with namepart and space
     // === fields defined, but the action method is clever enough to check.
     return (name.indexOf(':') >= 0)? INDEXED : ACTIVE;
-  }
-
-  /************************************************************************
-  ** Presentation Operations:
-  ************************************************************************/
-
-  /** Converts the Node to a String. 
-   *	=== eventually need to check for replacement on output ===
-   */
-  public String convertToString(ActiveNode n) {
-    return n.startString() + n.contentString() + n.endString();
-  }
-
-  /** Converts the Node to a String. 
-   *	=== eventually need to check for replacement on output ===
-   */
-  public String convertToString(ActiveNode n, int syntax) {
-    return n.startString() + n.contentString() + n.endString();
   }
 
 

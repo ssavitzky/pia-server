@@ -382,7 +382,7 @@ the value <code>~/.pia</code>.</p>
 <tt>&lt;h2&gt; Web pages visited Today&lt;/h2&gt;</tt>
 <br>
 <tt>&lt;include
-src="&amp;year;/&amp;month;/&amp;day;.html"&gt;</tt>
+src="&amp;year;/&amp;month;/&amp;day;.html" /&gt;</tt>
 <br>
 <tt>&lt;/body&gt;&lt;/html&gt;</tt></li>
 
@@ -450,7 +450,7 @@ Create the directory, <tt>~/.pia/Agents/HelloWorld</tt>.</li>
 &lt;h2&gt;
 I am the  agent &lt;/h2&gt;
 <br>
-&lt;if&gt;&lt;get name=FORM:data&gt;
+&lt;if&gt;&lt;get name="FORM:data" /&gt;
 <br>
 &lt;then&gt;You
 entered the greeting:
@@ -458,7 +458,7 @@ entered the greeting:
   &lt;p&gt;&lt;font size=+5 color="FF0000"&gt;
 <br>
  
-  &lt;get name=FORM:data&gt; &lt;/font&gt; &lt;/p&gt;
+  &lt;get name="FORM:data" /&gt; &lt;/font&gt; &lt;/p&gt;
 <br>
 &lt;/then&gt;
 <br>
@@ -555,10 +555,10 @@ the Agency home page.</td>
 
 <tr>
 <td><code>&lt;get&gt;</code></td>
-<td align="left"><code>&lt;get name=FORM:data&gt;</code></td>
+<td align="left"><code>&lt;get name="FORM:data" /&gt;</code></td>
 <td align="left">Retrieves the value, if any, of the <tt>data</tt>
-field of the interform submitted as part of the request for this
-document.</td>
+field of the form (query string or POST) submitted as part of the request for
+this document.</td>
 </tr>
 
 <tr>

@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.4 1999-03-25 00:42:29 steve Exp $
+//	$Id: AbstractHandler.java,v 1.5 1999-03-27 01:36:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.4 1999-03-25 00:42:29 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.5 1999-03-27 01:36:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -254,29 +254,6 @@ implements Handler {
    */
   public boolean isChildOf(String tag) { return true; }
 
-  /************************************************************************
-  ** Presentation Operations:
-  ************************************************************************/
-
-  /** Converts the Node to a String. 
-   *	Note that a Node is quite capable of doing this using the 
-   *	standard defaults; passing it off to the Handler means that
-   *	we can give the same Document different physical representations
-   *	if necessary.
-   */
-  public String convertToString(ActiveNode n) {
-    return n.startString() + n.contentString() + n.endString();
-  }
-
-  /** Converts the Node to a String. 
-   *	Note that a Node is quite capable of doing this using the 
-   *	standard defaults; passing it off to the Handler means that
-   *	we can give the same Document different physical representations
-   *	if necessary.
-   */
-  public String convertToString(ActiveNode n, int syntax) {
-    return n.startString() + n.contentString() + n.endString();
-  }
 
   /************************************************************************
   ** Convenience Functions:

@@ -1,5 +1,5 @@
 ////// TopContext.java: Top Context interface
-//	$Id: TopContext.java,v 1.3 1999-03-12 19:25:04 steve Exp $
+//	$Id: TopContext.java,v 1.4 1999-03-27 01:35:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	be done, for example, in order to insert a sub-document into the
  *	processing stream.  Even the ``root'' context may have a parent.
  *
- * @version $Id: TopContext.java,v 1.3 1999-03-12 19:25:04 steve Exp $
+ * @version $Id: TopContext.java,v 1.4 1999-03-27 01:35:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -130,6 +130,9 @@ public interface TopContext extends Processor {
 					    boolean createIfAbsent,
 					    boolean doNotOverwrite)
     throws IOException;
+
+  /** Determine whether a resource is local or remote */
+  public boolean isRemotePath(String path);
 
   /** Locate a resource accessible as a file. */
   public File locateSystemResource(String path, boolean forWriting);

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.10 1999-03-26 07:40:59 steve Exp $
+// $Id: GenericAgent.java,v 1.11 1999-03-27 01:36:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -1108,12 +1108,12 @@ public class GenericAgent implements Agent, Registered, Serializable {
     }
 
     // Remove agent's pathName from the given path.
-    //	=== For the moment accept a path starting with just name()
-    if (path.startsWith(mypath) || path.startsWith("/" + name())) {
-      if (path.startsWith(mypath))
-	path = path.substring(mypath.length());
-      else
-	path = path.substring(name().length());
+    if (path.startsWith(mypath)) {
+      path = path.substring(mypath.length());
+      hadName = true;
+    } else if (path.startsWith("/" + name())) {
+      // === For the moment accept a path starting with just name()
+      path = path.substring(name().length() + 1);
       hadName = true;
     }
 

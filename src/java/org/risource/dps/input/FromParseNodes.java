@@ -1,5 +1,5 @@
 ////// FromParseNodes.java: Input from NodeList
-//	$Id: FromParseNodes.java,v 1.3 1999-03-12 19:26:49 steve Exp $
+//	$Id: FromParseNodes.java,v 1.4 1999-03-27 01:36:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Input from a NodeList containing Active nodes.<p>
  *
- * @version $Id: FromParseNodes.java,v 1.3 1999-03-12 19:26:49 steve Exp $
+ * @version $Id: FromParseNodes.java,v 1.4 1999-03-27 01:36:13 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Fromken
  * @see org.risource.dps.Input
@@ -79,6 +79,7 @@ public class FromParseNodes extends ActiveInput implements Input {
 
   public FromParseNodes(NodeList nodes) {
     list = nodes;
+    if (list == null) list = new ParseNodeList();
     enum = list.getEnumerator();
     setNode(enum.getFirst());
   }

@@ -198,7 +198,7 @@
         <td valign=top> <repeat list="&agentNames;" entity="foo">
             <a href="/&foo;">&foo;</a> <a href="/&foo;/"><b> / </b></a>
             </repeat><br>
-   <get name=content>
+   <get name=content />
   </table>
 </table>
   </action>

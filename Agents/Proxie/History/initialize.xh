@@ -11,18 +11,18 @@
 <set name="AGENT:controls"><protect><!-- from History agent: -->
 <set name=pia>http://&piaHOST;:&piaPORT;</set>
 [<a href="&pia;/History" target="_top">Hist</a>
- <a href="&pia;/~History/" target="_top">*</a>/<a
-    href="&pia;/~History/&year;/" target="_top">&year;</a>/<a
-    href="&pia;/~History/&year;/&month;/" target="_top">&month;</a>/<a
-    href="&pia;/~History/&year;/&month;/&day;.html" target="_top">&day;</a>
- <a href="&pia;/~History/last.html" target="_top">&time;</a>]</protect></set>
+ <a href="&pia;/History/~/" target="_top">*</a>/<a
+    href="&pia;/History/~/&year;/" target="_top">&year;</a>/<a
+    href="&pia;/History/~/&year;/&month;/" target="_top">&month;</a>/<a
+    href="&pia;/History/~/&year;/&month;/&day;.html" target="_top">&day;</a>
+ <a href="&pia;/History/~/last.html" target="_top">&time;</a>]</protect></set>
 
 <set name="AGENT:act-on"><protect>
-   <set name=ct><get name=TRANS:Content-type></set>
+   <set name=ct><get name=TRANS:Content-type /></set>
    <set name=fn>&year;/&month;/&day;.html</set>
    <output directory dst="&year;/&month;/" /><!-- create dir. if necessary -->
    <if><test match=html>&ct;</test>
-       <then><set entity name=title><get name=TRANS:title></set>
+       <then><set entity name=title><get name=TRANS:title /></set>
 	     <output append dst="&fn;"><if><!-- dummy to suppress line brk -->
 	 	</if>&time; <a href="&url;">&url; : &title;</a><br>
 </output>
@@ -33,9 +33,9 @@
   <dt> <b>Link:</b>
   <dd> <protect result markup><a href="&url;">&url; : &title;</a></protect>
   <dt> <b>Reply Header</b>
-  <dd> <pre><get name=TRANS:HEADERS></pre>
+  <dd> <pre><get name=TRANS:HEADERS /></pre>
   <dt> <b>Request Header</b>
-  <dd> <pre><get name=REQ:HEADERS></pre>
+  <dd> <pre><get name=REQ:HEADERS /></pre>
 </dl>
 </output>
        </then>
@@ -51,5 +51,5 @@
        the user's browser; that's up to the <a href="/cia">cia</a> agent.
 </dl>
 
-<footer cvsid="$Id: initialize.xh,v 1.2 1999-03-12 19:22:31 steve Exp $">
+<footer cvsid="$Id: initialize.xh,v 1.3 1999-03-27 01:35:27 steve Exp $">
 </body></html>

@@ -11,8 +11,8 @@
     now <code>&usrDIR;/Admin/</code> .
 
 <form method=GET action="&url;">
-<if><get name=FORM:agent>
-    <then><set name=agent><get name=FORM:agent></set>
+<if><get name=FORM:agent />
+    <then><set name=agent><get name=FORM:agent /></set>
 	  <agent-save file="&agent;.dat" agent="&agent;">
 	  <user-message>Checkpointed &agent; in &agent;.dat</user-message>
 	  Checkpointed:
@@ -20,12 +20,12 @@
 	   <input type=submit value="Checkpoint Agent">
     </else>
 </if>
-  <set name=agent><get name=FORM:agent></set>
+  <set name=agent><get name=FORM:agent /></set>
   <input size=50 name=agent value="&agent;">
 </form>
 
 <form method=GET action="&url;">
-<if><get name=FORM:all>
+<if><get name=FORM:all />
     <then><code><agent-save file="checkpoint.dat" list="&agentNames;"/></code>
 	  written.<br>
 	  <set name=agentNames><extract sep=' '>&agentNames;</extract></set>
@@ -40,7 +40,7 @@
 </form>
 
 <form method=GET action="&url;">
-<if><get form name=remove>
+<if><get form name=remove />
     <then><!-- === this is totally broken: old interform stuff === -->
 	  <set name=path><read info=p interform file="checkpoint.dat"></set>
           <set name=message><file remove file="&path;"></set>
@@ -65,5 +65,5 @@ that its data structures will have changed enough to render your checkpoint
 file unreadable.  <strong>Checkpointing should not be used as the
 mechanism for making data persistent.</strong><p>
 
-<footer cvsid='$Id: checkpoint.xh,v 1.3 1999-03-23 23:31:22 steve Exp $'>
+<footer cvsid='$Id: checkpoint.xh,v 1.4 1999-03-27 01:35:03 steve Exp $'>
 </body></html>

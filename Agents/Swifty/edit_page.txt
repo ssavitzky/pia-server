@@ -16,7 +16,7 @@
 <!-- Note that appendlink and connectto are elements that have been defined
 <!-- for this agent.  Refer to Swifty-xhmtl.ts.
 <!-- =================================================================== -->
-<if><get name="FORM:submission"> <then>
+<if><get name="FORM:submission" /> <then>
 
 	<if>&FORM:fullname;<then>
 		<set name="AGENT:fname">&FORM:fullname;</set>

@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.4 1999-03-23 23:32:04 steve Exp $
+//	$Id: TopProcessor.java,v 1.5 1999-03-27 01:36:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.4 1999-03-23 23:32:04 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.5 1999-03-27 01:36:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -203,7 +203,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
   public void   setDocumentName(String s) { documentName = s; }
 
   /** Determine whether a resource name is local or remote. */
-  protected boolean isRemotePath(String path) {
+  public boolean isRemotePath(String path) {
     if (path.startsWith("file:")) return false;
     return (path.indexOf(":") > 0 && path.indexOf("/") > 0 
 	    && path.indexOf(":") < path.indexOf("/") );      

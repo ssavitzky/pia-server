@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.4 1999-03-25 00:42:35 steve Exp $
+//	$Id: defineHandler.java,v 1.5 1999-03-27 01:36:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.4 1999-03-25 00:42:35 steve Exp $
+ * @version $Id: defineHandler.java,v 1.5 1999-03-27 01:36:06 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -102,11 +102,16 @@ public class defineHandler extends GenericHandler {
     return null;
   }
 
+  /** Get the class name from the "handler" attribute.
+   *	Clumsy, because it has to take into account the SGML convention
+   *	that an attribute can be minimized if it's equal to its own name.
+   */
   protected String getHandlerClassName(ActiveAttrList atts, String dflt) {
     Attribute handler = atts.getAttribute("handler");
     return (handler == null)     ? null
-      : (handler.getSpecified()) ? handler.getValue().toString()
-      : dflt;
+      : (! handler.getSpecified()) ? dflt
+      : "handler".equals(handler.getValue().toString()) ? dflt
+      : handler.getValue().toString();
   }
 
 
@@ -163,6 +168,7 @@ class define_element extends defineHandler {
       // No action, no handler: it's an ordinary non-active Element
       ts.defTag(tagname, notIn, parents, syntax, null, null);
     } else if (handlerClass == null) {
+      if (newContent == null) newContent = new ParseNodeList();
       h = (GenericHandler)
 	ts.defTag(tagname, notIn, parents, syntax, null, newContent);
     } else  {
@@ -263,9 +269,13 @@ class define_entity extends defineHandler {
     // Get the action, if any.
     ActiveElement action = getAction(content);
     newContent  = (action == null)? null : action.getChildren();
-    // Get the value, if any.
+    // Get the value, if any.  
+    //	Ensure that it's non-null if the <value> node is present.
     ActiveElement value = getValue(content);
-    newContent  = (value == null)? null : value.getChildren();
+    if (value != null) {
+      newContent = value.getChildren();
+      if (newContent == null) newContent = new ParseNodeList();
+    }
 
     if (action != null && value != null)
       unimplemented(in, cxt, "entity with both action and value");

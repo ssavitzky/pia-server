@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.3 1999-03-12 19:25:54 steve Exp $
+//	$Id: BasicHandler.java,v 1.4 1999-03-27 01:36:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.3 1999-03-12 19:25:54 steve Exp $
+ * @version $Id: BasicHandler.java,v 1.4 1999-03-27 01:36:02 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -175,32 +175,6 @@ public class BasicHandler extends AbstractHandler {
   }
 
 
-  /************************************************************************
-  ** Presentation Operations:
-  ************************************************************************/
-
-  /** Converts the Token to a String according to the given syntax. 
-   */
-  public String convertToString(ActiveNode n, int syntax) {
-    if (syntax < 0) return n.startString();
-    else if (syntax == 0) return n.contentString();
-    else return n.endString();
-  }
-
-  /** Converts the Token to a String. 
-   *	Note that a Token is quite capable of doing this using the 
-   *	standard defaults; passing it off to the Handler means that
-   *	we can give the same Document different physical representations
-   *	if necessary.
-   */
-  public String convertToString(ActiveNode n) {
-    return convertToString(n, -1) +
-	convertToString(n, 0) + convertToString(n, 1); 
-  }
-
-  /************************************************************************
-  ** Documentation Operations:
-  ************************************************************************/
 
   /************************************************************************
   ** Construction:

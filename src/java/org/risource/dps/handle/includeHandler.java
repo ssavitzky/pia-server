@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.4 1999-03-25 00:42:45 steve Exp $
+//	$Id: includeHandler.java,v 1.5 1999-03-27 01:36:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.dps.input.FromParseNodes;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.4 1999-03-25 00:42:45 steve Exp $
+ * @version $Id: includeHandler.java,v 1.5 1999-03-27 01:36:08 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -90,17 +90,25 @@ public class includeHandler extends GenericHandler {
     try {
       stm = top.readExternalResource(url);
     } catch (IOException e) {
-      out.putNode(new ParseTreeComment(e.getMessage()));
-      return;
-    }
-
-    if (stm == null) {
-      out.putNode(new ParseTreeComment("Cannot open " + url));
+      reportError(in, cxt, e.getMessage());
+      if (content != null) Expand.processNodes(content, cxt, out);
+      else out.putNode(new ParseTreeComment(e.getMessage()));
       return;
     }
 
     if (ts == null) {
-      out.putNode(new ParseTreeComment("Cannot open tagset " + tsname));
+      reportError(in, cxt, "Cannot open tagset " + tsname);
+      if (content != null) Expand.processNodes(content, cxt, out);
+      else out.putNode(new ParseTreeComment("Cannot open tagset " + tsname));
+      return;
+    }
+
+    if (stm == null) {
+      if (content != null) Expand.processNodes(content, cxt, out);
+      else {
+	reportError(in, cxt, "Cannot open " + url);
+	out.putNode(new ParseTreeComment("Cannot open " + url));
+      }
       return;
     }
 
@@ -136,7 +144,7 @@ public class includeHandler extends GenericHandler {
     /* Syntax: */
     parseElementsInContent = true;	// false	recognize tags?
     parseEntitiesInContent = true;	// false	recognize entities?
-    syntaxCode = NORMAL;  		// EMPTY, QUOTED, 0 (check)
+    syntaxCode = QUOTED;  		// EMPTY, NORMAL, 0 (check)
   }
 
   includeHandler(ActiveElement e) {

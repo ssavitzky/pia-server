@@ -15,16 +15,16 @@
 <hr>
 
 <!-- See whether there's an "about" file for this agent. -->
-<include src="about.inc">
+<include src="about.inc"> </include>
 
 <hr>
 
 <repeat list="view slides source">
-  <extract><from><include tagset=HTML src="&li;.xh"></from>
+  <extract><from><include tagset=HTML src="&li;.xh" /></from>
 	   <name recursive>form</name>
   </extract>
 </repeat>
 
 <p>
-<footer cvsid="$Id: home.xh,v 1.2 1999-03-12 19:22:55 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.3 1999-03-27 01:35:44 steve Exp $">
 </body></html>

@@ -62,9 +62,9 @@
   </table>
 </table>
 <hr>
-<include src="/ROOT/welcome.inc">
+<include src="/ROOT/welcome.inc"> </include>
 <hr>
-<include src="/ROOT/doc-grid.inc">
+<include src="/ROOT/doc-grid.inc"> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.4 1999-03-15 23:12:57 steve Exp $'>
+<short-footer cvsid='$Id: index.xh,v 1.5 1999-03-27 01:35:40 steve Exp $'>
 </body></html>

@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.3 1999-03-12 19:27:15 steve Exp $
+//	$Id: BasicParser.java,v 1.4 1999-03-27 01:36:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.3 1999-03-12 19:27:15 steve Exp $
+ * @version $Id: BasicParser.java,v 1.4 1999-03-27 01:36:19 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -228,10 +228,10 @@ public class BasicParser extends AbstractParser {
 	  buf.append(ident);
 	  //debug(" "+a);
 	  ParseNodeList value = getValue();
-	  // By longstanding SGML tradition, a boolean attribute has its name
-	  // as a value. 
 	  if (value == null) {
-	    // === value = new ParseNodeList(createActiveText(a, false));
+	    // By longstanding SGML tradition (and XML _requirement_)
+	    //   a boolean attribute has its name as a value. 
+	    value = new ParseNodeList(createActiveText(a, false));
 	  }
 	  attrs.setAttributeValue(a, value);
 	} else if (last == '/') {

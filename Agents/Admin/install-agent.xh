@@ -8,9 +8,9 @@
 <set name="name"><if>&urlQuery;
     <then><agent-install>&urlQuery;</agent-install></set>
 
-<if><get name="name">
+<if><get name="name" />
 <then>
-  <set name=type><get name=FORM:type></set>
+  <set name=type><get name=FORM:type /></set>
 
   <table cellspacing=0 cellpadding=0>
     <tr><th width=340><td><br>
@@ -52,5 +52,5 @@ file.
 </else>
 </if>
 
-<short-footer cvsid="$Id: install-agent.xh,v 1.2 1999-03-12 19:22:00 steve Exp $">
+<short-footer cvsid="$Id: install-agent.xh,v 1.3 1999-03-27 01:35:05 steve Exp $">
 </body></html>

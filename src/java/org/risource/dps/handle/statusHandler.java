@@ -1,5 +1,5 @@
 ////// statusHandler.java: <status> Handler implementation
-//	$Id: statusHandler.java,v 1.4 1999-03-25 00:42:56 steve Exp $
+//	$Id: statusHandler.java,v 1.5 1999-03-27 01:36:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  *
  * <p>	Determine the status of a resource. 
  *
- * @version $Id: statusHandler.java,v 1.4 1999-03-25 00:42:56 steve Exp $
+ * @version $Id: statusHandler.java,v 1.5 1999-03-27 01:36:10 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -53,8 +53,9 @@ public class statusHandler extends GenericHandler {
   		     ActiveAttrList atts, NodeList content) {
     String entityName = atts.getAttributeString("entity");
     String srcURL     = atts.getAttributeString("src");
-    if (srcURL != null) getStatusForURL(srcURL, cxt, out, atts);
-    if (entityName != null) getStatusForEntity(entityName, cxt, out, atts);
+    if (srcURL != null) getStatusForURL(srcURL, cxt, out, atts, content);
+    if (entityName != null) getStatusForEntity(entityName, cxt, out,
+					       atts, content);
   }
 
   /** This does the parse-time dispatching.  */
@@ -78,7 +79,7 @@ public class statusHandler extends GenericHandler {
     /* Syntax: */
     parseElementsInContent = true;	// false	recognize tags?
     parseEntitiesInContent = true;	// false	recognize entities?
-    syntaxCode = EMPTY;  		// NORMAL, QUOTED, 0 (check)
+    syntaxCode = QUOTED;  		// EMPTY, NORMAL, 0 (check)
   }
 
   statusHandler(ActiveElement e) {
@@ -94,27 +95,34 @@ public class statusHandler extends GenericHandler {
    *	resource.
    */
   void getStatusForEntity(String name, Context cxt, Output out, 
-			  ActiveAttrList atts) {
+			  ActiveAttrList atts, NodeList content) {
     String item = atts.getAttributeString("item");
     ActiveEntity entity = cxt.getEntityBinding(name, false);
+    if (entity == null) {
+      if (content != null) Expand.processNodes(content, cxt, out);
+    }
     putList(out, Status.getStatusItem(entity, item));
   }
 
   /** Get the status for a URL that refers to an external resource. */
   void getStatusForURL(String url, Context cxt, Output out,
-		       ActiveAttrList atts) {
+		       ActiveAttrList atts, NodeList content) {
     String item = atts.getAttributeString("item");
     TopContext top = cxt.getTopContext();
-    if (url.indexOf(":") < 0 || url.startsWith("file:") ||
-	url.indexOf("/") >= 0 && url.indexOf(":") > url.indexOf("/")) {
-      File local = top.locateSystemResource(url, true);
-      // === specify forWriting in case it's a data file
-      if (local != null) {
-	putList(out, Status.getStatusItem(local, item));
+    if (top.isRemotePath(url)) {
+      URL remote = top.locateRemoteResource(url, false);
+      if (remote != null) {
+	putList(out, Status.getStatusItem(remote, item));
+      } else {
+	if (content != null) Expand.processNodes(content, cxt, out);
       }
     } else {
-      URL remote = top.locateRemoteResource(url, false);
-      putList(out, Status.getStatusItem(remote, item));
+      File local = top.locateSystemResource(url, false);
+      if (local != null) {
+	putList(out, Status.getStatusItem(local, item));
+      } else {
+	if (content != null) Expand.processNodes(content, cxt, out);
+      }
     }
   }
 }
@@ -123,7 +131,7 @@ class status_src extends statusHandler {
   public void action(Input in, Context cxt, Output out,
   		     ActiveAttrList atts, NodeList content) {
     String srcURL     = atts.getAttributeString("src");
-    getStatusForURL(srcURL, cxt, out, atts);
+    getStatusForURL(srcURL, cxt, out, atts, content);
   }
   public status_src(ActiveElement e) { super(e); }
   static Action handle(ActiveElement e) { return new status_src(e); }
@@ -133,7 +141,7 @@ class status_entity extends statusHandler {
   public void action(Input in, Context cxt, Output out,
   		     ActiveAttrList atts, NodeList content) {
     String entityName = atts.getAttributeString("entity");
-    getStatusForEntity(entityName, cxt, out, atts);
+    getStatusForEntity(entityName, cxt, out, atts, content);
   }
   public status_entity(ActiveElement e) { super(e); }
   static Action handle(ActiveElement e) { return new status_entity(e); }

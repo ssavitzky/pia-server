@@ -24,7 +24,7 @@
 <hr>
 
 <!-- See whether there's an "about" file for this agent. -->
-<include src="about.inc">
+<include src="about.inc"> </include>
 <p>
-<footer cvsid="$Id: home.xh,v 1.2 1999-03-12 19:21:53 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.3 1999-03-27 01:34:58 steve Exp $">
 </body></html>

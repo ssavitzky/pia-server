@@ -72,7 +72,7 @@ want to do is add a link.<p>
 Notice that the History portion of the banner is obtained from the <a
 href="/History">History</a> agent itself, using the code fragment:
 <pre><protect markup>
-<expand><get agent=History name=controls></expand>
+<expand><get agent=History name=controls /></expand>
 </protect></pre>
 This has the desirable effects of giving the History agent's controls a
 uniform look and feel, and of not inserting <em>anything</em> if the History
@@ -117,5 +117,5 @@ rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.<p>
 The logo icons used by the <a href="/&agentType;/fbi">fbi</a> and <a
 href="/&agentType;/cia">cia</a> are 24 pixels high.
 
-<footer cvsid="$Id: writing.xh,v 1.4 1999-03-23 20:35:08 steve Exp $">
+<footer cvsid="$Id: writing.xh,v 1.5 1999-03-27 01:35:23 steve Exp $">
 </body></html>

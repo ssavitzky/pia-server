@@ -47,7 +47,7 @@
        </repeat><br>
 </sub-head>
 
-<if><get name=AGENT:do-not-remove><then>
+<if><get name=AGENT:do-not-remove /><then>
 <hr>
 <dl>
   <dt> Note:
@@ -62,9 +62,9 @@
 <hr>
 
 <!-- See whether there's an "about" file for this agent. -->
-<include src="about.inc">
+<include src="about.inc"> </include>
 
-<if><get name=AGENT:criteria><then>
+<if><get name=AGENT:criteria /><then>
 <hr>
 <h3>&AGENT:name; Agent Match Criteria</h3>
 
@@ -80,7 +80,7 @@
 
 </if>
 
-<if><get name=AGENT:act-on><then>
+<if><get name=AGENT:act-on /><then>
 <h3>&agentName; Agent Act-On Hook</h3>
 
 <if><test exact match="&AGENT:name;">&AGENT:type;</test>
@@ -108,6 +108,6 @@
 </then></if>
 
 
-<footer cvsid="$Id: index.xh,v 1.4 1999-03-25 00:42:24 steve Exp $">
+<footer cvsid="$Id: index.xh,v 1.5 1999-03-27 01:34:59 steve Exp $">
 </body></html>
 

@@ -1,5 +1,5 @@
 ////// getHandler.java: <get> Handler implementation
-//	$Id: getHandler.java,v 1.4 1999-03-25 00:42:42 steve Exp $
+//	$Id: getHandler.java,v 1.5 1999-03-27 01:36:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.dps.util.*;
  *	<code>keys</code>, <code>values</code>, and <code>bindings</code>
  *	attributes are supported.
  *
- * @version $Id: getHandler.java,v 1.4 1999-03-25 00:42:42 steve Exp $
+ * @version $Id: getHandler.java,v 1.5 1999-03-27 01:36:07 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -65,7 +65,7 @@ public class getHandler extends GenericHandler {
       return;
     }
     NodeList value = Index.getIndexValue(aContext, name);
-    if (value == null) value = content;
+    if (value == null) value = Expand.processNodes(content, aContext);
     if (value != null) Copy.copyNodes(value, out);
   }
    
@@ -82,6 +82,6 @@ public class getHandler extends GenericHandler {
     /* Syntax: */
     parseElementsInContent = true;	// false	recognize tags?
     parseEntitiesInContent = true;	// false	recognize entities?
-    syntaxCode = EMPTY; 		// NORMAL, QUOTED, 0 (check)
+    syntaxCode = QUOTED; 		// NORMAL, EMPTY, 0 (check)
   }
 }

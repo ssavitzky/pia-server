@@ -2,7 +2,7 @@
 <html><head>
 <title>Remove Agent</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<if><get name=FORM:agent>
+<if><get name=FORM:agent />
     <then><!-- do this before the sub-head, which lists agents -->
 	  <!-- === unfortunately, they're not computed dynamically === -->
       <set name=removed><agent-remove name="&FORM:agent;"></set>
@@ -13,7 +13,7 @@
 
 <hr>
 
-<if><get name=FORM:agent>
+<if><get name=FORM:agen /t>
 <then>
   <h3>&removed; removed<h3>
 </then><else>
@@ -29,5 +29,5 @@ Name:<select name="agent">
 </form>
 
 
-<footer cvsid="$Id: remove-agent.xh,v 1.2 1999-03-12 19:22:04 steve Exp $">
+<footer cvsid="$Id: remove-agent.xh,v 1.3 1999-03-27 01:35:07 steve Exp $">
 </body></html>

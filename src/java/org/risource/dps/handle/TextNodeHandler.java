@@ -1,5 +1,5 @@
 ////// TextNodeHandler.java: Text Node Handler implementation
-//	$Id: TextNodeHandler.java,v 1.3 1999-03-12 19:26:04 steve Exp $
+//	$Id: TextNodeHandler.java,v 1.4 1999-03-27 01:36:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: TextNodeHandler.java,v 1.3 1999-03-12 19:26:04 steve Exp $
+ * @version $Id: TextNodeHandler.java,v 1.4 1999-03-27 01:36:05 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -117,25 +117,6 @@ public class TextNodeHandler extends AbstractHandler {
   public Action getActionForNode(ActiveNode n) {
     return this;
   }
-
-  /************************************************************************
-  ** Presentation Operations:
-  ************************************************************************/
-
-  /** Converts the Node to a String. 
-   *	=== eventually need to check for replacement on output ===
-   */
-  public String convertToString(ActiveNode n) {
-    return n.startString() + n.contentString() + n.endString();
-  }
-
-  /** Converts the Node to a String. 
-   *	=== eventually need to check for replacement on output ===
-   */
-  public String convertToString(ActiveNode n, int syntax) {
-    return n.startString() + n.contentString() + n.endString();
-  }
-
 
   /************************************************************************
   ** Construction:
