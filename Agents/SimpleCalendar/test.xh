@@ -5,18 +5,18 @@
 <h1></h1>
 
 <repeat start="1" stop="31" entity="day" >
-   day=&day; <br/>
+   day=&day; 
    longday=<weekday longday="yes">
              <date>&day;</date>
              <month>10</month>
              <year>1999</year>
            </weekday>
-
+   <br/>
 </repeat>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.1 1999-10-11 16:02:17 bill Exp $</b><br>
+<b>$Id: test.xh,v 1.2 1999-10-11 22:37:47 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~bill/"
          ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
          >bill@rsv.ricoh.com</a>&gt;</address>
