@@ -1,0 +1,16 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 2000-04-21 00:37:11 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
+
+<Container> 
+
+  <doc> The main function of this configuration file is to force the
+	name of the home document to be <code>home</code> rather than the
+	customary default of <code>index</code> in this directory and its
+	sub-directories. 
+  </doc>
+
+  <HomeDocumentName>home</HomeDocumentName>
+
+</Container>
