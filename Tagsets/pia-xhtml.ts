@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.6 2000-04-20 23:10:32 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.7 2000-04-21 20:56:16 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -135,7 +135,7 @@ Note that we only need these inside the PIA.
     <if><do name="test">
 	    <set name="match"><get name="page"/></set>
 	    <get name="attributes:pages"/></do>
-	<then><get name="content"/></then>
+	<then><expand><get name="content"/></expand></then>
     </if>
   </action>
 </define> 
