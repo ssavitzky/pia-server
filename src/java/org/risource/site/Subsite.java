@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.17 1999-12-14 18:44:00 steve Exp $
+//	$Id: Subsite.java,v 1.18 1999-12-17 22:15:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.17 1999-12-14 18:44:00 steve Exp $
+ * @version $Id: Subsite.java,v 1.18 1999-12-17 22:15:18 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -309,7 +309,10 @@ public class Subsite extends ConfiguredResource implements Resource {
     mimeTypeMap.put(ext, type);
     if (! ts.startsWith("#")) {
       tagsetMap.put(ext, ts);
-      if (extSearch == null) extSearch = new List();
+      if (extSearch == null)
+	extSearch = (getContainer() == null)
+	  ? new List()
+	  : getContainer().getDefaultExtensions();
       extSearch.push(ext);
     } else {
       // tagset name starting with # means don't search for this ext. 
