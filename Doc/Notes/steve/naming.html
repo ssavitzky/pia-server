@@ -1,14 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>The Naming of Names</title>
-<link rev="made" href="mailto:steve@rsv.ricoh.com">
+<link rev="made" href="mailto:steve@rsv.ricoh.com"/>
 </head><body>
 <h1>The Naming of Names (Again)</h1>
 <h2>Yet Another Great Renaming</h2>
 
 <blockquote><em>
   For the previous (January-July 1999) version of this file, see
-  <a href="Archives/naming.html">Archives/naming.html</a>.
+  <a href="Archives/naming.html">Archives/naming.html</a>.  It's worth keeping
+  around for the benefit of software paleontologists, and may be useful for
+  identifying any fossilized remnants left in the documentation and code.
 </em></blockquote>
 
 <h2>Parts of the PIA</h2>
@@ -22,7 +24,7 @@
     and the ability to ``satisfy'' or ``handle'' transactions to particular
     URL's.
 
-<p> All that is changed now, or soon will be.  A new millenium is upon us.
+<p> All that is changed now.  A new millenium is upon us.
 
 <blockquote>
     And what rough beast, its hour come 'round at last,<br>
@@ -45,9 +47,10 @@
        longer have anything to do with the mapping from URL's to documents or
        from (active) documents to tagsets.
 
-  <li> The third component of the PIA is the mapping from URL's to documents.  
-       Since agents are no longer associated with this process, it will
-       significantly simplify the Agent interface.
+  <li> The third component of the PIA is Site Resource Package, which performs
+       the mapping from URL's to documents.  Since agents are no longer
+       associated with this process, we were able to significantly simplify
+       the Agent interface.
 </ol>
 
 <h2>The PIA Site and its Sub-Sites</h2>
@@ -59,15 +62,24 @@
 <p> The top level <em>directory</em> corresponding to a PIA site is called the
     site's ``<dfn>root</dfn>''.  To a first approximation, every top-level
     subsite of the PIA corresponds to a subdirectory of the root, and so on
-    down the tree.  Each subsite directory contains a
-    <code>subsite.config</code> file that describes its configuration.
+    down the tree.  Each subsite directory may contain a
+    <code>_subsite.cfg</code> file that describes its configuration.
 
 <dl>
   <dt> <b>Note:</b>
-  <dd> We probably want to reconsider the name <code>subsite.config</code>.
-       It would, of course, be a configurable parameter, but we ought to make
-       a good choice for the default. 
+  <dd> We may want to reconsider the name <code>_subsite.cfg</code>.
+       It is, of course, be a configurable parameter, but we ought to make
+       a good choice for the default.  An initial choice of
+       <code>subsite.config</code> was rejected in part because Windows
+       systems have trouble with extensions longer than three characters.  The
+       initial underscore was chosen for both DOS compatibility and to make
+       the name sort early in a listing.  Hyphen or dollar sign might be
+       better. 
 </dl>
+
+<p> In addition, the topmost <code>_subsite.cfg</code> file may be superceded
+    by a Site Configuration File, which may come from anywhere.  This allows
+    the same directory tree to be viewed as any of several different sites. 
 
 <p> Many subsites in a working PIA are associated with agents; whether one
     chooses to refer to the <code>History</code> <em>agent</em> or the
@@ -99,20 +111,22 @@
   <li> The $PIA_CONFIG environment variable.  Again, this might contain either
        the pathname of the configuration file, or a complete command line. 
   <li> A file called <code>pia.config</code> or <code>.pia-config</code> in
-       one of the following places:
-       <ol>
-	 <li> the user's home directory
-	 <li> the current directory
-	 <li> $PIA_DIR ($PIA_HOME ?)
-	 <li> .. relative to the binary of the <code>pia</code> command; it is
-	      expected that this will be ...<code>/PIA</code>.
-       </ol>
+       the user's home directory.
+  <li> A file called <code>_subsite.cfg</code> in either $USR_DIR or
+       $PIA_DIR.  The latter is guaranteed to exist.
 </ol>
 
-<p> <code>PIA/pia-config</code> will, of course, exist; it will designate
-    <code>PIA/MySite</code> as the site root.  On a multi-user system, if
-    PIA/MySite is not in the user's home directory or is not writable by the
-    user, the pia's home page will contain a form for making a copy.
+<p> The default setup makes $PIA_DIR the site's virtual root, and $USR_DIR the
+    site's real root.  Several alternative configuration files are provided in
+    the PIA/Config/Site directory.
+
+<p> Once the PIA's root directory has been located, all of its active subsites
+    that contain agents can be initialized.
+
+<p> At some point we may want to ship a pre-configured real root,
+    e.g. <code>PIA/MySite</code>, for the user to explore.  It causes trouble
+    in a public installation, but may be simpler and easier to understand in
+    the more common case of a single-user installation.
 
 <p> It is possible that <code>PIA/MySite</code> might not exist, either
     because it hasn't been installed (it is generated, after all) or because
@@ -122,26 +136,21 @@
     it will almost certainly be better to treat this as an error, just as in
     any other case where the specified root does not exist. 
 
-<p> Once the PIA's root directory has been located, all of its active subsites
-    that contain agents can be initialized.
-
 <h3>Site Creation</h3>
 
 <p> One way to create a site, of course, would be to blindly copy
     <code>PIA/MySite</code> out of the installation.  This sidesteps the
     question of how <code>MySite</code> gets created in the first place.
 
-<p> The obvious way to create <em>any</em> subsite directory is to start with
-    a <em>virtual</em> subsite (or, equivalently, a reference to a subsite
+<p> The way we create <em>any</em> subsite directory is to start with a
+    <em>virtual</em> subsite (or, equivalently, a reference to a subsite
     directory) and <em>realize</em> it.  This process consists of the
     following steps:
 
 <ol>
   <li> Create the real directory
-  <li> Copy a <code>site.config</code> file if it has one.
-  <li> Create a <em>modified</em> <code>subsite.config</code> file that puts
-       the original directory in the default search path, but copies
-       the rest of the metadata.
+  <li> Create a <em>modified</em> <code>_subsite.cfg</code> file that
+       designates the new real directory as its location.
   <li> Create a new <code>README.html</code> file containing the date, user's
        name, and the pathname of the original directory.
 </ol>
@@ -149,6 +158,8 @@
 <p> One can go on to recursively realize more documents and subsites at this
     point. 
 
+<hr>
+<h2>Under construction past this point.</h2>
 
 <h3>Documents and Sheaves</h3>
 
@@ -166,7 +177,7 @@
     associated with a resource as ``properties''.
 </em></blockquote>
 
-<p> A directory's <code>subsite.config</code> file contains the following:
+<p> A directory's <code>_subsite.cfg</code> file contains the following:
 
 <ol>
   <li> Normal variables.  These correspond pretty much to the current Agent
@@ -184,20 +195,20 @@
 <p> It's important to note that if any of the variables associated with a
     virtual subsite is changed, the subsite (and all of its parents) must be
     realized at that point in order to have a suitable real directory in
-    which to store the modified <code>subsite.config</code> file.
+    which to store the modified <code>_subsite.cfg</code> file.
 
 <p> Note that information about a subsite is actually contained in three
     places that have to be merged:
 
 <ol>
-  <li> its <code>subsite.conf</code> file
-  <li> its <em>parent's</em> <code>subsite.conf</code> file
+  <li> its <code>_subsite.cfg</code> file
+  <li> its <em>parent's</em> <code>_subsite.cfg</code> file
   <li> its parent's <em>directory</em>. 
 </ol>
 
 <p> There are some problems with setting variables: it's not clear exactly
     when, or even whether, to synchronize an internal cache with the
-    <code>subsite.conf</code> file that contains a subsite's permanent
+    <code>_subsite.cfg</code> file that contains a subsite's permanent
     bindings.  Obviously it would be a lot less confusing for users if this
     happened invisibly.  It may be useful to designate some variables as
     volatile.
@@ -224,15 +235,15 @@
   <li> <em>Real</em> subsites.  <br>
        A <em>real</em> subsite corresponds to an actual subdirectory
        descending from the site's root directory.  A real subsite may contain
-       a <code>subsite.config</code> file, an XML file that describes the
+       a <code>_subsite.cfg</code> file, an XML file that describes the
        contents of the subsite and how they are to be processed.  In
        particular, it defines the mapping between filenames and tagsets.
   <li> <em>Virtual</em> subsites. <br>
        A <em>virtual</em> subsite is something like a symbolic link: it
-       consists of a real directory, containing a <code>subsite.config</code>
+       consists of a real directory, containing a <code>_subsite.cfg</code>
        file, but it is not a descendent of the root.  Instead, it is ``bound
        in'' or ``mounted'' by means of an entry in its parent's
-       <code>subsite.config</code> file.  A Virtual subsite can be effectively
+       <code>_subsite.cfg</code> file.  A Virtual subsite can be effectively
        ``realized'' by simply copying it into its real parent. 
   <li> <em>Imaginary</em> subsites <br>
        An <em>imaginary</em> subsite is <em>completely</em> ``unreal'' -- it
@@ -258,10 +269,10 @@
 
 <ol>
   <li> <em>Active</em> subsites<br>
-       May contain their own <code>subsite.config</code> file, as may any
+       May contain their own <code>_subsite.cfg</code> file, as may any
        active descendent.  
   <li> <em>Passive</em> subsites<br>
-       are ``locked'' -- any <code>subsite.config</code> file they or any of
+       are ``locked'' -- any <code>_subsite.cfg</code> file they or any of
        their descendents may contain is ignored, and only ``safe'' tagsets may
        be used to process files in them.  Data directories, for example, are
        almost invariably passive; otherwise someone who knew the PIA's naming
@@ -379,7 +390,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.14 1999-07-26 16:48:09 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.15 1999-09-24 00:25:21 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
