@@ -90,7 +90,7 @@
         <if>&AGENT:user-dir;
 	    <then><set name="saveFile">&AGENT:user-dir;/AGENT.xml</set></then>
 	    <else><set
-	    	    name="saveFile">/~&AGENT:pathName;/AGENT.xml</set></else>
+	    	    name="saveFile">.&AGENT:pathName;/AGENT.xml</set></else>
 	</if>	
       </else>
   </if>
@@ -113,6 +113,13 @@
 &AGENT;
 </output><!-- newline is required after AGENT element. -->
 		      <br /><status src="&saveFile;" item=path />&nbsp;WRITTEN
+		      <submit-forms><!-- register the saved agent -->
+			<form method="POST" action="/Admin/load-agent.xh">
+			  <input name="a-path" value="&AGENT:pathName;">
+			  <input name="dst" value="&saveFile;">
+			  <input name="on-start" value="&AGENT:onStart;">
+			</form>
+		      </submit-forms>
 	            </then>
 	        </if>
 	    <td bgcolor="silver">&nbsp;&nbsp;</td>
@@ -143,6 +150,14 @@
 		<checkbox value="&FORM:doNotOverwrite;" name="doNotOverwrite" />
 		<b>doNotOverwrite</b>: 
 		      Do not allow this save file to be overwritten. <br />
+	    </td>
+	    <td bgcolor="silver">&nbsp;</td>
+	</tr>
+	<tr><td bgcolor="silver">&nbsp;</td>
+	    <td valign="top">
+		You may need to use <code><a
+		href="/Admin/control">/Admin/control</a></code> to save the
+		agent list.
 	    </td>
 	    <td bgcolor="silver">&nbsp;</td>
 	</tr>
@@ -455,6 +470,6 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.5 1999-05-18 20:12:44 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.6 1999-05-20 20:28:04 steve Exp $' />
 
 </body></html>
