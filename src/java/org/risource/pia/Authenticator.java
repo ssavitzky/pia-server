@@ -1,5 +1,5 @@
 // Authenticator.java
-// $Id: Authenticator.java,v 1.3 1999-03-12 19:28:57 steve Exp $
+// $Id: Authenticator.java,v 1.4 1999-06-11 23:44:45 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -61,6 +61,7 @@ public class Authenticator implements java.io.Serializable{
 
   /**
    * return a new authenticator of type using password file for verification
+   * if passwordFile is null, all usernames will be accepted as ok
    */
 
   public Authenticator(String type, String passwordFile){
@@ -86,8 +87,17 @@ public class Authenticator implements java.io.Serializable{
      return authenticateRequestBasic(request,requestedFile, agent);
   }
 
+
+  String authorizationHeader(Transaction request)
+    {
+      // returns appropriate header for this kind of authorization
+      return request.header("authorization");
+    }
+  
   public boolean authenticateRequestBasic(Transaction request, String requestedFile, Agent agent){
-    String authorization = request.header("authorization");
+
+    String authorization = authorizationHeader(request);
+    
     if(authorization == null) return false;
     if( authorization.startsWith("Basic ") || authorization.startsWith("basic ") )  
       authorization =  authorization.substring(6); 
@@ -111,19 +121,32 @@ public class Authenticator implements java.io.Serializable{
     }
 
     if(verifyPassword(user, password)){
-      request.assert("AuthenticatedUser", user);	
-      request.assert("AuthenticationMethod", "Basic");	
-      // remove the password from the headers
-      request.setHeader("authorization",user);
+      assertApproval(request, user, "Basic");
+      
       return true;
     }  else {
       // should return403 e.g.  throw authentication exception
+      assertFailure(request, user, "Basic");
       // for now just return false
-      request.assert("UnauthenticatedUser", user);  
       return false;
     }
     // should not get here
   }
+
+  void assertApproval(Transaction request, String user, String method)
+    {
+      
+      request.assert("AuthenticatedUser", user);	
+      request.assert("AuthenticationMethod", "method");	
+      // remove the password from the headers
+      request.setHeader("authorization",user);
+    }
+
+  void assertFailure(Transaction request, String user, String method)
+    {
+      request.assert("UnauthenticatedUser", user);  
+    }
+  
 
   private boolean verifyPassword (String user, String password){
     Table users =(Table) attributes.at("users");
@@ -134,6 +157,9 @@ public class Authenticator implements java.io.Serializable{
     }
     // try to load from password file
     String file = (String) attributes.at("passwordFile");
+    // no password file specified implies that we should accept all users
+    if(file == ""){ return true; }
+         
     if(file != null){
       Reader pwfile = null;
 
@@ -179,7 +205,7 @@ public class Authenticator implements java.io.Serializable{
   }
 
   /**
-   * set headers of the response
+   * set headers of the response requesting auth from client
    */
   public void setResponseHeaders(Transaction response, Agent agent){
     // should dispatch on type for now assume basic
