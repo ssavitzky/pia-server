@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Prototype Home Page</title>
 </head>
@@ -26,17 +26,16 @@
 <!-- Use a table to layout an image column and a links column
 <!-- =================================================================== -->
 
-<TABLE BORDER=0 CELLSPACING=5 CELLPADDING=2 COLS=2 WIDTH="66%" HEIGHT="33%" NOSAVE >
+<TABLE BORDER=0 CELLSPACING=5 CELLPADDING=2 COLS=2 WIDTH="66%">
 <TR>
 <!-- Add column headers -->
-<TD><b><u><font size=+2>Photo Album</font></u></b></TD>
-<TD><b><u><font size=+2>Daily Distractions</font></u></b></TD>
+<TD><b><u><font size="+2">Photo Album</font></u></b></TD>
+<TD><b><u><font size="+2">Daily Distractions</font></u></b></TD>
 </TR>
 
 <!-- Add an image for some decoration -->
 <TR>
-<!--<TD><IMG SRC="images/jelly.jpg" HEIGHT=130 WIDTH=100></TD>-->
-<TD><IMG SRC="images/sm_snow.gif" HEIGHT=310 WIDTH=203></TD>
+<TD><IMG SRC="images/sm_snow.gif" HEIGHT=310 WIDTH=203 ALT="Display an Image"></TD>
 
 <!-- =================================================================== -->
 <!-- Display links, if there are any.  AGENT:links is an entity that is
@@ -50,11 +49,11 @@
 <TR>
 <!-- Add column headers -->
 <TD> </TD>
-<TD><b><u><font size=+2>Yahoo News</font></u></b></TD>
+<TD><b><u><font size="+2">Yahoo News</font></u></b></TD>
 </TR>
 
 <TR>
-<TD> <!  Blank cell>
+<TD> <!--  Blank cell -->
 
 <!-- =================================================================== -->
 <!-- Display results of connection to Yahoo.  AGENT:ynews is an entity
@@ -83,7 +82,7 @@
 <!-- =================================================================== -->
 <footer />
 <p>
-<code><A HREF="file:&piaDIR;/Agents/Swifty/home.txt" TARGET=_blank>View source code</A></code>
+<code><A HREF="file:&piaDIR;/Agents/Swifty/home.txt" TARGET="_blank">View source code</A></code>
 
 </BODY>
 </HTML>

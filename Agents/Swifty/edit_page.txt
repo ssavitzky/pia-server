@@ -1,4 +1,4 @@
-<!doctype html public "-//IETF//DTD HTML//EN//2.0"><TEXT>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Home Page Editor</title>
 </head>
@@ -63,6 +63,7 @@ Enter the name that will appear in the title of your home page.
 <footer />
 
 <p>
-<A HREF="file:&piaDIR;/Agents/Swifty/edit_page.txt" TARGET=_blank>View source code</A>
+<code><A HREF="file:&piaDIR;/Agents/Swifty/edit_page.txt" TARGET="_blank">View source code</A></code>
 
 </body></html>
+
