@@ -41,14 +41,19 @@
 <h2><a name="Installing">Installing the Files</a></h2>
 
 <big>
+<p> We will assume that you have already downloaded and unpacked the PIA
+    files.  You should now have a directory called <code>PIA</code>; this is
+    the PIA's ``<em>home directory</em>'' and will be referred to from now on
+    as ``<var>PIA_HOME</var>''.
+</p>
+
+<blockquote><small>
 
 <p> The files are supplied in the form of a <code>gzip</code>'ed
     <code>tar</code> file, obtained as described in 
     <a href="http://www.risource.org/PIA/Downloading.shtml">
     <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.
 </p>
-
-<blockquote><small>
 
 <p> You should unpack the <code>tar</code> archive inside the directory
     where you want the PIA to be installed; typically this will be your home
@@ -66,83 +71,9 @@
   <li> <code>gunzip pia_src.tgz; tar xf pia_src*</code>
 </ol>
 
-<p> Unpacking the files will create a directory called <code>PIA</code>.  This
-    is the PIA's ``home directory,'' and in the documentation that follows we
-    will refer to it as <code>$PIA_HOME</code>.
-</p>
-
 </small></blockquote>
 
 </big>
-
-<h1>Directory Structure</h1>
-
-<p> The following table describes the directory structure immediately under
-    the PIA directory.  Every directory also contains a file called
-    <code>HEADER.html</code> which describes its contents. 
-</p>
-
-<table border="1" frame="border">
-<caption> Directory Structure (inside the PIA directory)</caption>
-<tbody>
-<tr>
-<th align="left">Doc</th>
-<td> Complete documentation for the PIA.  </td>
-</tr>
-<tr>
-<th align="left">Agents</th>
-<td>Subdirectories for standard applications and agents. Each subdirectory
-contains the collection of XML and HTML files (active pages) that work together
-to form an application.  </td>
-</tr>
-<tr>
-<th align="left">Config</th>
-<td>Configuration information, including subdirectories for Makefiles and for
-XML site configuration files.</td>
-</tr>
-<tr>
-<th align="left">Samples</th>
-<td>Contains a few simplified active pages, which are meant to be copied and
-    modified as templates for writing your own active pages.</td>
-</tr>
-<tr>
-<th align="left">Contrib</th>
-<td>Used for contributed agents and other files that are not a part
-of the standard release.</td>
-</tr>
-<tr>
-<th align="left">bin</th>
-<td>Programs that actually run the PIA software either as a web
-server (<code> pia, pia.bat </code> or as a command line filter <code> process</code>.
- Note that <code>pia</code> and <code>process</code> run under Unix
-only.)</td>
-</tr>
-<tr>
-<th align="left">lib</th>
-<td>Currently not being used.  This directory is meant to  be used to hold
-class files and other libraries when the PIA is packaged as an application
-without its source code.</td>
-</tr>
-<tr>
-<th align="left">src</th>
-<td valign="top"><code>src/java/</code> contains the Java source
-files used in the PIA software.  The main code is in <code>src/java/org/risource/*</code> 
-corresponding to <code>org.risource.*</code> package names.  
-<br><code>src/org</code> and <code>src/misc</code> contain
-code referenced by the PIA software and included for convenience. <code>src/app</code> contains
-utility applications.</td>
-</tr>
-<tr>
-<th align="left">CVS</th>
-<td> CVS directories exist in <var>PIA_HOME</var>  and in each of the
-	directories under it, for keeping track of updates and source-code
-	versions; you shouldn't need to modify or even look in these
-	directories, and you should remove them when copying applications to
-	modify for your own use (e.g. copying the <code>HelloWorld</code>
-	application out of <code>PIA/Samples</code>). </td>
-</tr>
-</tbody>
-</table>
 
 <h1>Initial Setup</h1>
 
@@ -246,11 +177,11 @@ utility applications.</td>
     variable.
 </p>
 
-<p>It is convenient to put the directory <code>$PIA_HOME/bin</code>, which
-contains scripts (including the one that implements the <code>pia</code>
+<p>It is convenient to put the directory <code><var>PIA_HOME</var>/bin</code>,
+which contains scripts (including the one that implements the <code>pia</code>
 command!)  into your shell's search path.  You may also want to specify a
-different root.  On Linux you can do all of this by putting
-the following into your <code>~/.bash_profile</code> file: </p>
+different root.  On Linux you can do all of this by putting the following into
+your <code>~/.bash_profile</code> file: </p>
 
 <pre>
   # The following line will change depending on where the PIA is installed
@@ -267,7 +198,7 @@ the following into your <code>~/.bash_profile</code> file: </p>
     variable.  The PIA's wrapper script will try to set one up for
     you, but whether it succeeds will depend on how clever your java
     implementation is.  You <em>don't</em> have to have
-    <code>$<em>PIA_HOME</em>/src/java</code> in your <code>CLASSPATH</code>;
+    <code><em>PIA_HOME</em>/src/java</code> in your <code>CLASSPATH</code>;
     the wrapper script <em>is</em> smart enough to add it for you.
 </p>
 
@@ -371,7 +302,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.17 1999-10-20 06:05:54 steve Exp $</i><br>
+<i>$Id: install.html,v 1.18 1999-10-20 16:20:06 steve Exp $</i><br>
 
 
 </body></html>
