@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.18 1999-10-18 15:38:16 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.19 1999-10-19 22:10:50 bill Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -298,46 +298,35 @@
 	  <code>home</code>.
     </doc>
   </define>
-  <action><set name="page"><get name="attributes:page"/></set>
+  <action>
+ <set name="page"><get name="attributes:page"/></set>
 <table cellspacing=0 cellpadding=0 border=0>
 <tr><th align=center valign=center nowrap width=170><get name="A100"/>
     <td>
     <table cellspacing=0 cellpadding=0 border=0>
     <tr><th align=left nowrap width=170><get name="blank-170x1"/></th>
 	<td></td></tr>
+
+<?-- bad links
+
     <tr><th align=right>
 	     <xopt pages="home index help options"><get name="blue-dot"/></xopt>
 	</th>
-	<td> <xa href="home">Home</xa>
+ 	<td> <xa href="home">Home</xa>
     	     <xa href="help">Help</xa>
-	     <xa href="options">Options</xa>
+	     <xa href="options">Options</xa>  
+
 	</td></tr>
     <tr><th align=right>
 	     <xopt pages="config control"><get name="blue-dot"/></xopt> </th>
 	<td> <xa href="config">Configure</xa> /
 	     <xa href="control">Control</xa> PIA
 	</td></tr>
-  <if><then><!-- This stuff is currently obsolete! -->
-    <tr><th valign=top align=right>
-	     <xopt page="&attributes:page;"
-		   pages="agents installers load-agent remove-agent"
-		  ><get name="blue-dot"/></xopt>
-	     &nbsp; </th>
-	<td valign=top>
-	    <xa href="list-agents">list</xa> / 
-	    <xa href="installers">install</xa> / 
-	    <xa href="load-agent">load</xa> / 
- 	    <xa href="remove-agent">remove</xa>
-	    agents
-	</td></tr>
-      </then>
-  </if>
+--?>
+
     <tr><th valign=top align=right>Files: &nbsp; </th>
 	<td><a href="/Doc/"><b>Docs</b></a>
-	    <a href="/~/">Data</a>
-	    <a href="/PIA/src/">Sources</a>
 	    <a href="/PIA/Agents/">Agents</a>
-	    <a href="/~/Agents/">(Customized)</a>
 	</td></tr>
     <tr><th valign=top align=right><b>Agents:</b> &nbsp;
         <td valign=top>
@@ -401,6 +390,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.18 1999-10-18 15:38:16 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.19 1999-10-19 22:10:50 bill Exp $</b><br />
 </tagset>
 

@@ -5,11 +5,11 @@
 
 <set entity='entity' name='title'>Server administration</set>
 <header show-date='yes'>&title;</header>
-<sub-head page='home' />
+<sub-head page='home' /> 
 
 <hr />
 <p> This is the home page for the ``<strong>&agentName;</strong>''
-    application.  It is used for controlling the other applications running on
+    application.  It is used for showing the other applications running on
     this PIA.  A name with a ``<code>~</code>'' (tilde) character in front of
     it is a shortcut to an application's <em>home directory</em>, which may
     be anywhere in the PIA's URL space.
@@ -37,15 +37,13 @@
 <h3>Useful Documents and Forms:</h3>
 
 <ul>
-  <li> <a href='list-agents'>list running applications</a></li>
-  <li> <a href='installers'>install new agents</a></li>
-  <li> <a href='options'>view/change options</a></li>
+  <li> <a href='list-agents'>list initialized applications</a></li>
 <if><test not='not' exact='exact' match='pia'>&user.name;</test>
 <then>
-  <li> <a href='debug'>control debugging</a>(currently
-       <if><test zero='zero'><get name='PIA:debugging' /></test>
-           <then>off</then><else>on</else></if>)</li>
-  <li> <a href='remove-agent'> remove agent</a></li>
+<?--  <li> <a href='debug'>control debugging</a>(currently
+        <if><test zero='zero'><get name='PIA:debugging' /></test>
+           <then>off</then><else>on</else></if>)</li> 
+  <li> <a href='remove-agent'> remove agent</a></li> --?>
   <li> <a href='dump-agents'> display all agents in XML</a></li>
 </then>
 <else>
@@ -69,34 +67,11 @@
 </td></tr></table>
 
 <hr />
-<h2><a name='naming'>Naming Conventions:</a></h2>
-<set name='name'><em>AppName</em></set>
 
+Any application which has been initialized can have its home page, index,
+and directories accesses directly accessed by URLs
+of the form <code>http://piaHost:piaPort/agent-name</code>.  See 
+<a href="/Doc/naming.html">naming conventions</a> for details.
 
-<dl>
-  <dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
-  </dt>
-  <dd> An alias for the &name; agent's home directory.
-  </dd>
-  <dt> <a href='/~&AGENT:name;/-'>/~&name;/-</a>
-  </dt>
-  <dd> A generic listing of an application's home directory.  This will work
-       with <em>any</em> directory, not just agent homes, although it can be
-       hidden by the site designer.  For example, <a
-       href="/-"><code>/-</code></a> gives a generic listing of the PIA's home
-       directory. 
-  </dd>
-  <dt> <a href='/~&AGENT:name;/DATA/'>/~&name;/DATA/</a>
-  </dt>
-  <dd> Usually the application's data directory, if it has one.  This is just
-       a convention that may not be universal.
-  </dd>
-  <dt> <a href='/~&AGENT:name;/DATA/-'>/~&name;/-</a>
-  </dt>
-  <dd> A generic listing of the data directory.
-       </dd>
-</dl>
-
-
-<footer cvsid='$Id: home.xh,v 1.14 1999-10-18 15:38:16 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.15 1999-10-19 22:10:50 bill Exp $' />
 </body></html>
