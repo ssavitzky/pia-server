@@ -9,155 +9,24 @@
 <body>
 <center><h1>Basic Tagset Manual</h1></center>
 
-<p>This document introduces the <a
-href="tsdoc/basic.html"><code>basic</code></a> tagset, the most fundamental of
-several predefined tagsets available to users and developers working with the
-PIA.  <code>basic</code> defines all of the elements that make documents in
-the PIA ``active.''</p>
-
-The other commonly-used tagsets are:</p>
-
-<ul>
-  <li><a href="tsdoc/xxml.html"><code>xxml</code></a><br>the
-       basic tagset extended with some XML convenience functions</li>
-  <li><a href="tsdoc/xhtml.html"><code>xhtml</code></a><br>the
-       basic tagset extended with some HTML convenience functions</li>
-  <li><a href="tsdoc/pia-xhtml.html"><code>pia-xhtml</code></a><br>the
-       default XHTML tagset used by the PIA</li>
-</ul>
-
-<p>Some additional tagsets are defined for special-purpose applications.  For
-example, the <a href="tsdoc/tsdoc.html"><code>tsdoc</code></a> tagset is used
-to automatically generate documentation files from tagset files.  The
-<code>basic</code> constructs are all that the average author will need in
-most cases.</p>
-
-<p>Currently the best source of examples of tag set use is the demo agent. If
-you wish to view these examples without using the PIA, look at the listing of
-<a href="demo/index.html">demo files</a>.</p>
-
-<p>This document contains a <a href="#quick">quick reference</a> table that
-contains links to the automatically-generated documentation in <a
-href="tsdoc/basic.html"><code>tsdoc/basic.html</code></a>. </p>
-
-<p>If you are unfamiliar with the documentation, you should first look at <a
-href="#howtoread">How to Read Tagset Descriptions</a>.</p>
-
-<h2>Introducing the Basic Tagset</h2>
-
-<p>The basic tagset consists of <em>primitive</em> tags
-that are predefined. These tags provide generally useful functions
-and can be used as is. Primitive tags can also be used as components
-of new tags that you create yourself.</p>
-
-<p>Extending the primitive
-tagset requires the use of a special tag, <code>&#60;define></code> whose
-purpose is to construct other tags. The <code>&#60;define></code> tag
-is used to specify the tag name and all other necessary information
-about the tag including its attributes.</p><p><em>Tag</em> is used
-here in much the same way that <em>element</em> might be used in
-an XML or SGML DTD. Defining a tag requires the same information
-one might supply for a DTD element. This includes the following:</p>
-
-<ul>
-<li>the element name</li>
-<li>any attributes that element might have</li>
-<li>modifiers that specify whether the attributes are required or
-optional and what value types they may take on</li>
-<li>what subelements can occur as children of this element</li>
-<li>what parent element this element must have</li>
-</ul>
-
-<p>XHTML tags are <em>active</em> tags in that they constitute not merely
-markup but a directive to take some action. and can require some additional
-information not required of XML/SGML element definitions.  This information
-reflects the special uses to which these tags are put. This includes the tag's
-<em>handler</em>, a specification of the Java class that is associated with
-actions to be carried out when this element is present. The keyword
-<em>handler</em> can be followed with the name of the class to be used. If no
-class is named, the handler is assumed to have the same name as the tag.</p>
-
-<p>When viewed as active tags, XHTML tags are much like Java or C++ methods.
-They have a name, a documentation field, optional arguments, and they perform
-some sort of action. A combination of HTML, XML, or other XTHML tags can be
-used in the action clause. The last item evaluated in the action clause is
-returned, so long as it has a return value.</p>
-
-<p>Viewed in this light, a tag's attributes are analogous to the arguments
-that may be passed into a function. </p>
-
-<p>A simple tag definition
-for the user-defined tag <code>my_tag</code> is presented here:</p><blockquote><code>&#60;define
-element=my_tag></code>
-
-<blockquote><code>&#60;doc> Given a string
-attribute, prints that string in a bold font.&#60;/doc>&#60;define
-attribute=my_attr required>&#60;/define>&#60;action></code></blockquote><blockquote><blockquote><code>&#60;b>&#38;attributes:my_attr;&#60;/b></code></blockquote><code>&#60;/action></code></blockquote><code>&#60;/define></code></blockquote><p>The <code>&#60;doc></code> element
-serves to document the tag's actions. The <code>&#60;action></code> element
-specifies the action taken when this tag is evaluated. In this case
-it prints the tag's attribute using a bold font. The following example
-shows how, once defined, this tag might be used in an active document.</p>
-
-<blockquote><code>&#60;my_tag
-my_attr="Hello World">&#60;/my_tag></code></blockquote>
-
-<h2>Noteworthy</h2>
-
-<ul>
-  <li>A tagset file can be converted into HTML using the <a
-       href="tsdoc/tsdoc.html">tsdoc</a> tagset. Eventually it will be
-       possible to process tagset files into DTD's as well. It is conceivable
-       that we could even process them into Java or C, perhaps using embedded
-       <code>&#60;code></code> tags with a <code>language</code>
-       attribute.</li>
-  <li>SGML requires that the element named in the
-       <code>&#60;!doctype...></code> declaration must be the highest level
-       (outermost) element in the document.</li>
-  <li>This tagset includes documentation in HTML, in spite of the fact that
-       HTML is not a superset of the tagset being defined. The syntax of the
-       document that defines a tagset and the syntax defined <em>by</em> the
-       tagset are, potentially, completely disjoint. Because of the included
-       HTML, this document does <em>not</em> qualify as XML. It could,
-       however, be described in SGML or converted to XML by outputting empty
-       HTML tags with the XML empty-tag delimiter.</li></ul>
-
-<h2>Tagset Overview</h2>
-
-<p>The tagset categories and their elements described in this document are
-listed in the quick reference table that follows.  Each element and attribute
-name in the table is linked to a tagset definition file for that element. If
-you are unfamiliar with these files, read the following section before linking
-to a definition.</p>
-
-<h3><a name="howtoread">How to Read Tagset Descriptions</a></h3>
-
-<p>A tagset definition file consists of a sequence of
-<code>&#60;define></code> elements.  Some of these statements are nested
-inside others.  The outermost <code>&#60;define></code> elements define SGML
-<em>elements</em> and <em>entities</em>. Nested inside each element definition
-are the definitions of its <em>attributes</em>.  Any definition can also
-contain documentation. </p>
-
-<p>When converted to HTML for documentation purposes, the nested attribute
-definitions are indented. Documentation elements are nested one more level and
-typeset in italics.  The <code>&#60;/define></code>, <code>&#60;doc></code>,
-and <code>&#60;/doc></code> tags are omitted. </p>
-
-<p>Certain elements are only meaningful inside of other elements. For example,
-<code>&#60;then></code> elements only occur inside <code>&#60;if></code>
-elements.  By convention, the definitions of these elements follow that of
-their parent in element.  </p>
-
 <h3><a name="quick">Quick Reference Table</a></h3>
+
+<dl>
+  <dt> Note:
+  <dd> The links in the ``Element Type'' column refer to sections of this
+       manual.  Links in the ``Element'' and ``Attribute'' columns take you to
+       the definitive, automatically-generated documentation for that item, in
+       <a href="tsdoc/basic.html"><code>tsdoc/basic.html</code></a> 
+</dl>
 
 <table
     border="1" frame="border">
 <thead>
 <tr>
-<td>Element Type</td>
-<td>Element</td>
-<td>Attributes</td>
-<td>Subelements</td>
+<th>Element Type</th>
+<th>Element</th>
+<th>Attributes</th>
+<th>Subelements</th>
 </tr>
 </thead>
 <tbody>
@@ -431,6 +300,149 @@ href="tsdoc/xhtml.html#pretty.yellow-tag">yellow-tag</a></code><br> </td>
 </tr>
 </tbody>
 </table>
+
+<h2><a name="Intro">Introducing the Basic Tagset</a></h2>
+
+
+<p>This document introduces the <a
+href="tsdoc/basic.html"><code>basic</code></a> tagset, the most fundamental of
+several predefined tagsets available to users and developers working with the
+PIA.  <code>basic</code> defines all of the elements that make documents in
+the PIA ``active.''</p>
+
+The other commonly-used tagsets are:</p>
+
+<ul>
+  <li><a href="tsdoc/xxml.html"><code>xxml</code></a><br>the
+       basic tagset extended with some XML convenience functions</li>
+  <li><a href="tsdoc/xhtml.html"><code>xhtml</code></a><br>the
+       basic tagset extended with some HTML convenience functions</li>
+  <li><a href="tsdoc/pia-xhtml.html"><code>pia-xhtml</code></a><br>the
+       default XHTML tagset used by the PIA</li>
+</ul>
+
+<p>Some additional tagsets are defined for special-purpose applications.  For
+example, the <a href="tsdoc/tsdoc.html"><code>tsdoc</code></a> tagset is used
+to automatically generate documentation files from tagset files.  The
+<code>basic</code> constructs are all that the average author will need in
+most cases.</p>
+
+<p>Currently the best source of examples of tag set use is the demo agent. If
+you wish to view these examples without using the PIA, look at the listing of
+<a href="demo/index.html">demo files</a>.</p>
+
+<p>This document contains a <a href="#quick">quick reference</a> table that
+contains links to the automatically-generated documentation in <a
+href="tsdoc/basic.html"><code>tsdoc/basic.html</code></a>. </p>
+
+<p>If you are unfamiliar with the documentation, you should first look at <a
+href="#howtoread">How to Read Tagset Descriptions</a>.</p>
+
+
+
+<p>The basic tagset consists of <em>primitive</em> tags
+that are predefined. These tags provide generally useful functions
+and can be used as is. Primitive tags can also be used as components
+of new tags that you create yourself.</p>
+
+<p>Extending the primitive
+tagset requires the use of a special tag, <code>&#60;define></code> whose
+purpose is to construct other tags. The <code>&#60;define></code> tag
+is used to specify the tag name and all other necessary information
+about the tag including its attributes.</p><p><em>Tag</em> is used
+here in much the same way that <em>element</em> might be used in
+an XML or SGML DTD. Defining a tag requires the same information
+one might supply for a DTD element. This includes the following:</p>
+
+<ul>
+<li>the element name</li>
+<li>any attributes that element might have</li>
+<li>modifiers that specify whether the attributes are required or
+optional and what value types they may take on</li>
+<li>what subelements can occur as children of this element</li>
+<li>what parent element this element must have</li>
+</ul>
+
+<p>XHTML tags are <em>active</em> tags in that they constitute not merely
+markup but a directive to take some action. and can require some additional
+information not required of XML/SGML element definitions.  This information
+reflects the special uses to which these tags are put. This includes the tag's
+<em>handler</em>, a specification of the Java class that is associated with
+actions to be carried out when this element is present. The keyword
+<em>handler</em> can be followed with the name of the class to be used. If no
+class is named, the handler is assumed to have the same name as the tag.</p>
+
+<p>When viewed as active tags, XHTML tags are much like Java or C++ methods.
+They have a name, a documentation field, optional arguments, and they perform
+some sort of action. A combination of HTML, XML, or other XTHML tags can be
+used in the action clause. The last item evaluated in the action clause is
+returned, so long as it has a return value.</p>
+
+<p>Viewed in this light, a tag's attributes are analogous to the arguments
+that may be passed into a function. </p>
+
+<p>A simple tag definition
+for the user-defined tag <code>my_tag</code> is presented here:</p><blockquote><code>&#60;define
+element=my_tag></code>
+
+<blockquote><code>&#60;doc> Given a string
+attribute, prints that string in a bold font.&#60;/doc>&#60;define
+attribute=my_attr required>&#60;/define>&#60;action></code></blockquote><blockquote><blockquote><code>&#60;b>&#38;attributes:my_attr;&#60;/b></code></blockquote><code>&#60;/action></code></blockquote><code>&#60;/define></code></blockquote><p>The <code>&#60;doc></code> element
+serves to document the tag's actions. The <code>&#60;action></code> element
+specifies the action taken when this tag is evaluated. In this case
+it prints the tag's attribute using a bold font. The following example
+shows how, once defined, this tag might be used in an active document.</p>
+
+<blockquote><code>&#60;my_tag
+my_attr="Hello World">&#60;/my_tag></code></blockquote>
+
+<h2>Noteworthy</h2>
+
+<ul>
+  <li>A tagset file can be converted into HTML using the <a
+       href="tsdoc/tsdoc.html">tsdoc</a> tagset. Eventually it will be
+       possible to process tagset files into DTD's as well. It is conceivable
+       that we could even process them into Java or C, perhaps using embedded
+       <code>&#60;code></code> tags with a <code>language</code>
+       attribute.</li>
+  <li>SGML requires that the element named in the
+       <code>&#60;!doctype...></code> declaration must be the highest level
+       (outermost) element in the document.</li>
+  <li>This tagset includes documentation in HTML, in spite of the fact that
+       HTML is not a superset of the tagset being defined. The syntax of the
+       document that defines a tagset and the syntax defined <em>by</em> the
+       tagset are, potentially, completely disjoint. Because of the included
+       HTML, this document does <em>not</em> qualify as XML. It could,
+       however, be described in SGML or converted to XML by outputting empty
+       HTML tags with the XML empty-tag delimiter.</li></ul>
+
+<h2>Tagset Overview</h2>
+
+<p>The tagset categories and their elements described in this document are
+listed in the quick reference table that follows.  Each element and attribute
+name in the table is linked to a tagset definition file for that element. If
+you are unfamiliar with these files, read the following section before linking
+to a definition.</p>
+
+<h3><a name="howtoread">How to Read Tagset Descriptions</a></h3>
+
+<p>A tagset definition file consists of a sequence of
+<code>&#60;define></code> elements.  Some of these statements are nested
+inside others.  The outermost <code>&#60;define></code> elements define SGML
+<em>elements</em> and <em>entities</em>. Nested inside each element definition
+are the definitions of its <em>attributes</em>.  Any definition can also
+contain documentation. </p>
+
+<p>When converted to HTML for documentation purposes, the nested attribute
+definitions are indented. Documentation elements are nested one more level and
+typeset in italics.  The <code>&#60;/define></code>, <code>&#60;doc></code>,
+and <code>&#60;/doc></code> tags are omitted. </p>
+
+<p>Certain elements are only meaningful inside of other elements. For example,
+<code>&#60;then></code> elements only occur inside <code>&#60;if></code>
+elements.  By convention, the definitions of these elements follow that of
+their parent in element.  </p>
+
 
 <h2><a name="Construct">Construct Specification Elements</a></h2><p>The
 construct specification elements are used to create a tagset. They
