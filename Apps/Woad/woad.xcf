@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.12 2000-06-29 01:57:47 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.13 2000-06-30 00:06:04 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -53,6 +53,7 @@
     <IndexDocumentPath></IndexDocumentPath>
     <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
     <Ext name="html"	type="text/html" tagset="HTML" 			/>
+    <Ext name="slides"	type="text/html" tagset="pia:/Tagsets/slides"	/>
   </Container>
 
 <!-- Woad Keyword Indices -->

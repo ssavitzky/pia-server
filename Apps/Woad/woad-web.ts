@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.5 2000-06-29 01:58:46 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.6 2000-06-30 00:06:03 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -109,6 +109,7 @@
     <table>		
     <if> <get name="FORM:edit" />
 	 <then>
+      	    <if> &content; <else><let name="content"> </let></else></if>
       	    <tr> <th valign="top" align="left" width="100"> Title: </th>
 		 <td> <input name="title" value="&content;" size="40"/> </td>
 	    </tr>

@@ -22,11 +22,16 @@
 	     <a href="&SITE:sourcePrefix;/">
 		<font color="#0000ff" face="helvetica, sans-serif">sources
 	     </font></a>
-	   <if><get name="SITE:notesPrefix" /> <then>
+	   <if><get name="SITE:notesPrefix" /><then>
 	     || <a href="&SITE:notesPrefix;/"> 
 		<font color="#0000ff" face="helvetica, sans-serif">site
 		  annotation 
 	     </font></a> </then>
+      	   <else-if><get name="SITE:targetServer" /><then>
+	     || <a href="/"> 
+		<font color="#0000ff" face="helvetica, sans-serif">site
+		  annotation 
+	     </font></a> </then></else-if>
 	   </if>
 	   <if><get name="SITE:wordPrefix" /> <then>
 	     || <a href="&SITE:wordPrefix;/">
@@ -76,5 +81,5 @@
 
 <include src="app-info.inc"> no application information </include>
 <p>
-<short-footer cvsid="$Id: woad.xh,v 1.6 2000-06-23 17:31:22 steve Exp $" />
+<short-footer cvsid="$Id: woad.xh,v 1.7 2000-06-30 00:06:04 steve Exp $" />
 </p></body></html>

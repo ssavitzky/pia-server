@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.13 2000-06-29 01:57:18 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.14 2000-06-30 00:06:03 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -449,7 +449,7 @@ Note that we only need these inside the PIA.
 
 <h2>Note-listing components</h2>
 
-<!-- $Id: woad-xhtml.ts,v 1.13 2000-06-29 01:57:18 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.14 2000-06-30 00:06:03 steve Exp $ -->
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing
@@ -524,6 +524,21 @@ Note that we only need these inside the PIA.
 	</then>
 	<else> <em>( <ss>WOAD</ss> annotation file: untitled )</em>
 	</else>
+    </if>
+  </action>
+</define>
+
+<define element="displayNoteAsHeader">
+  <doc> The currently-loaded note is displayed as a page header.
+  </doc>
+  <action>
+    <if> <note-title /> <note-content />
+	 <then> <if> <note-title />
+		     <then> <big><strong><note-title /></strong></big><br />
+		     </then>
+		</if>
+		<blockquote><note-content /></blockquote>
+	</then>
     </if>
   </action>
 </define>
