@@ -41,7 +41,28 @@
 
   <set name="tpath"><mapSrcToTarget>&LOC:path;&tail;</mapSrcToTarget></set>
   <set name="npath"><mapSourceToNote>&LOC:path;&tail;</mapSourceToNote></set>
+
+  <if> <test not="not" match="\.[a-zA-Z0-9]+$">&spath;&tail;</test>
+       <then>
+	 <set name="xloc">&spath;&tail;</set>
+       </then>
+       <else>
+	 <set name="xloc">
+	    <subst match="/[^/]*$" result="">&spath;&tail;</subst></set>
+       </else>
+  </if>
+  <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
+
+  <!-- Ensure that form submissions don't get redirected!  -->
+  <set name="formLoc">
+    <if> <test match="\/$">&LOC:path;&tail;</test>
+         <then>&LOC:path;&tail;</then>
+         <else>&LOC:path;&tail;/</else>
+    </if>
+  </set>
+
 </hide>
+
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr> <td>
 	     <table><!-- the nested table shrink-wraps its contents     -->
@@ -118,7 +139,7 @@
 
 <index-bar name="Notes">Notes Files HEADER</index-bar>
 
-<form action="&xloc;" method="GET"><!-- === PIA isn't passing POST again === -->
+<form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
 <table bgcolor="white">
   <!-- First list the indices -->
@@ -336,5 +357,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.12 2000-06-30 00:07:37 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.13 2000-06-30 00:41:13 steve Exp $" />
 </body></html>
