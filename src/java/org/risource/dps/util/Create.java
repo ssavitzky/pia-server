@@ -1,5 +1,5 @@
 ////// Create.java: Utilities for Creating nodes.
-//	$Id: Create.java,v 1.5 1999-07-15 17:17:29 steve Exp $
+//	$Id: Create.java,v 1.6 1999-11-09 01:22:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.Enumeration;
 /**
  * Node Creation utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Create.java,v 1.5 1999-07-15 17:17:29 steve Exp $
+ * @version $Id: Create.java,v 1.6 1999-11-09 01:22:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -96,7 +96,7 @@ public class Create {
     case Node.ATTRIBUTE_NODE:
       return new TreeAttr(name, (ActiveNodeList)null);
     case Node.ENTITY_NODE:
-      return new TreeEntity(name, (ActiveNodeList)null);
+      return new TreeEntity(name, new TreeNodeList(new TreeText(data)));
     case Node.ENTITY_REFERENCE_NODE:
       return new TreeEntityRef(name);
     case Node.ELEMENT_NODE:
@@ -119,9 +119,9 @@ public class Create {
 					    ActiveNodeList value) {
     switch (nodeType) {
     case Node.COMMENT_NODE:
-      return new TreeComment("");
+      return new TreeComment(TextUtil.getCharData(value));
     case Node.PROCESSING_INSTRUCTION_NODE:
-      return new TreePI(name, "");
+      return new TreePI(name, TextUtil.getCharData(value));
     case Node.ATTRIBUTE_NODE:
       return new TreeAttr(name, value);
     case Node.ENTITY_NODE:
@@ -134,8 +134,9 @@ public class Create {
       return new TreeFragment();
     case Node.DOCUMENT_TYPE_NODE:
       return new TreeDocType(name, null); // really an error.
-      //    case Node.DECLARATION:
-      //return new TreeDecl(name, null, null);
+    case NodeType.DECLARATION:
+      return new TreeComment("Unsupported declaration type " + nodeType
+				  + " name=" + name + " value=" + value);
     default:
       return new TreeComment("Undefined type " + nodeType
 				  + " name=" + name + " value=" + value);
