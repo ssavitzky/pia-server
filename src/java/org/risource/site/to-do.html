@@ -16,11 +16,23 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Note</b> SiteMachine should allow header changes. <br>
+       Either by delaying headers until first non-blank content, or by
+       recognizing an extension/tagset as capable of generating headers.
+       (1999-09-03) <br>
+
+  <li> <b>Bug</b> Subsite.locateChild needs work <br>
+       Needs to have extension in inner loop, search path in outer.  Currently
+       it's the other way around.
+       (1999-09-03) <br>
+
   <li> <b>Goal</b> Implement and integrate with PIA <br>
        <ol>
-	 <li> finish implementing, mainly the loading of config files. 
+	 <li> [1999-09-02] finish implementing, mainly the loading of config
+	      files.  
+	 <li> [1999-09-03] Add to PIA as access for non-Agent paths.
 	 <li> simplify <code>org.risource.pia.Agent</code> and use
-	      <code>org.risource.site.Site</code> for URL lookup.
+	      <code>org.risource.site.Site</code> for all documents. 
        </ol>
        (1999-08-23) goal: 09-03<br>
 
@@ -33,17 +45,7 @@ See also:
   <li> <b>Impr</b> Need a way to turn off caching in Subsite <br>
        Do the basic lookup in ConfiguredResource, and use it if no location
        cache exists.  Check a flag to see whether to build the cache.
-
-  <li> <b>Hole</b> load config files.  <br>
-       This is half of the biggest pending hole:  getting the files loaded in
-       the first place.
-       (1999-08-20) <br>
-
-  <li> <b>Hole</b> process config elements.  <br>
-       This is the other half of the biggest pending hole:  processing the XML
-       once it's been loaded.  Need to extract child configurations, extension
-       mapping, and the default search path.
-       (1999-08-20) <br>
+       (1999-08-23) <br>
 
   <li> <b>Note</b> alien resources. <br>
        An ``alien'' resource is a link (alias) to something outside the site,
@@ -132,5 +134,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.4 1999-08-24 00:48:32 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.5 1999-09-04 01:01:51 steve Exp $</b><br>
 </body></html>
