@@ -1112,9 +1112,16 @@ If 4th node is there, returns "four".
        to make more sense.  Add stuff for arbitrary formatting.
        (1999-11-15) <br>
 
+  <li> 1999-12-03 <b>Bug</b> parser doesn't insert &lt;/p&gt; properly <br>
+       Block tags like &lt;h*&gt; and &lt;ul&gt; have to be notInside
+       &lt;p&gt; for correct handling.
+       (1999-12-01) <br>
+       -- Almost certainly still buggy.  Really need to look at the DTD and do
+	  it right.
+       
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.40 1999-11-17 18:33:45 steve Exp $</b><br>
+<b>$Id: done.html,v 1.41 1999-12-06 20:20:14 steve Exp $</b><br>
 </body></html>

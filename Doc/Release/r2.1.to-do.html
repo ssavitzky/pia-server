@@ -81,7 +81,8 @@ See also:
 
   <li> <b>Bug</b> subst bug <br>
        seems to substitute for one char to the left of the match.  This
-       appears to be a bug in the library.
+       is either a bug in the library or a result of an old workaround (adding
+       null to end of string) that may no longer be necessary.
 
   <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
 
@@ -93,6 +94,9 @@ See also:
        list in the Subsite and uninstall them by object ID.
        <p>
 
+  <li> <b>Hole</b> URL-manipulation tag <br>
+       something like &lt;date&gt; but for URL's.
+       
   <li> <b>Impr</b> Entity and Attr should keep value in children <br>
        This would fix many problems with entities, extract, etc. -- it will
        also break some things.  It's needed for cached entities.  Entities, at
@@ -235,5 +239,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.13 1999-12-03 19:48:14 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.14 1999-12-06 20:20:23 steve Exp $</b><br>
 </body></html>
