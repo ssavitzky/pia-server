@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.3 1999-07-14 20:20:25 steve Exp $
+//	$Id: nodeBuilder.java,v 1.4 1999-08-31 21:10:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.3 1999-07-14 20:20:25 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.4 1999-08-31 21:10:36 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -137,8 +137,11 @@ public class nodeBuilder extends GenericHandler {
     syntaxCode = NORMAL;  		// EMPTY, QUOTED, 0 (check)
   }
 
+  /** nodeBuilder uses the presence of children as a flag.  
+   *	We need a new one every time.  (Well, not the first time, but
+   *	it's not worth wasting a flag on.)
+   */
   nodeBuilder(ActiveElement e) {
-    this();
-    // customize for element.
+    return new nodeBuilder();
   }
 }
