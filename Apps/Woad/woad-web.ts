@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.7 2000-07-19 00:44:34 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.8 2000-07-21 22:49:55 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -57,10 +57,9 @@
 	         Summary:
 	      </th>
 	      <td>
-		 <textarea name="summary"
+		 <textarea name="summary" wrap="wrap"
       			   cols="60" rows="4"><protect result markup><get
-      		 	   name="content"/></protect>
-		 </textarea>
+      		 	   name="content"/></protect></textarea>
 	      </td>
 	    </tr>
 	    <tr> <th> &nbsp; </th>
@@ -143,10 +142,9 @@
 		   It can be arbitrarily long; HTML markup is permitted. 
 	      </td>
       	    <tr> <td>
-		 <textarea name="content"
+		 <textarea name="content" wrap="wrap"
       			   cols="72" rows="20"><protect result markup><get
-      		 	   name="content"/></protect>
-		 </textarea>
+      		 	   name="content"/></protect></textarea>
 		 </td>
 	    </tr>
 	 </then>
