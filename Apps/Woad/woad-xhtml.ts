@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.21 2000-07-28 23:01:04 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.22 2000-08-10 17:28:38 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -413,7 +413,7 @@ Note that we only need these inside the PIA.
 	  <test exact match="action">&n;</test>
 	  <then><let name="v"><a href="&v;">&v;</a></let></then>
       </if>
-    </hide><i>&n;="&v;"</i></action>
+    </hide>&n;="<i>&v;</i>"</action>
 </define>
 
 <define element="atl">
@@ -541,7 +541,7 @@ Note that we only need these inside the PIA.
   <action><text op="trim">
     <let name="basename"><subst match="\.wi$" result="">&content;</subst></let>
     <em>( <ss>WOAD</ss> <hide>
-        </hide><a href="/.Woad/help.xh#&basename;">&basename;</a> file )</em> 
+        </hide><a href="/.Woad/help.xh#&basename;">&basename;</a> index )</em> 
   </text></action>
 </define>
 
@@ -574,13 +574,15 @@ Note that we only need these inside the PIA.
 	header if present.
   </doc>
   <action>
-    <if> <note-title /> <note-content />
-	 <then> <if> <note-title />
-			 <then> <big><strong><note-title /></strong></big>
-			 </then>
-		</if>
-		<blockquote><note-content /></blockquote>
+    <if> <note-title />
+	 <then> <p align="center"><big><strong><note-title /></strong></big></p>
 	 </then>
+    </if>
+    <if> <note-content />
+	 <then> <blockquote><note-content /></blockquote>
+	 </then>
+	 <else> <blockquote><note-summary /></blockquote>
+	 </else>
     </if>
   </action>
 </define>
@@ -678,9 +680,10 @@ Note that we only need these inside the PIA.
   <action>
     <if> <get name="FORM:create" />
 	 <then>
-	   <if> <status item="exists" src="&content;&FORM:label;.ww" />
+	   <let name="dir"><get name="content" /></let>
+	   <if> <status item="exists" src="&dir;&FORM:label;.ww" />
 	        <else><!-- create new note -->
-<output dst="&content;&FORM:label;.ww"><make name="note">
+<output dst="&dir;&FORM:label;.ww"><make name="note">
 	<make name="title"><get name="FORM:title" /></make>
 	<make name="created">&dateString;</make>
 	<make name="summary">
@@ -1232,6 +1235,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.21 2000-07-28 23:01:04 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.22 2000-08-10 17:28:38 steve Exp $ -->
 </tagset>
 
