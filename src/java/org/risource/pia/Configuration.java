@@ -166,7 +166,7 @@ class Configuration {
   /** Print a usage table. */
   public void usage () {
     PrintStream o = System.out ;
-    o.println("usage");
+    o.println("options:");
 
     for (int i = 0; i < optTable.length; i += 4) {
       String msg = "\t"+optTable[i]+"\t";

@@ -77,6 +77,7 @@ class Setup extends Configuration {
     "-profile",	"pia.profile",	"file",		null,
     "-filemap",	"pia.filemap",	"file",		null,
     "-host",	"pia.host", 	"name",		null,
+    "-version", "pia.print-version",  "bool", 	null,
   };
 
   /* Perl options: ================================================
@@ -95,21 +96,6 @@ class Setup extends Configuration {
 	-x		exit after printing info, starting command (if any)
   */
 
-
-  /** Print a usage message. */
-  public void xusage () {
-	PrintStream o = System.out ;
-
-	o.println("usage: PIA [OPTIONS]") ;
-	o.println("-port <8888>          : URL contains given port number.");
-	o.println("-real <8888>          : listen on the given port number.");
-	o.println("-root <pia dir : /pia>: pia directory.");
-	o.println("-u    <~/Agent>       : user directory.") ;
-	o.println("-profile    </pia/config/pia.props>       : property file to read.");
-	o.println("-d                    : turns debugging on.") ;
-	o.println("-v                    : print pia Piaproperties.");
-	o.println("?                     : print this help.");
-  }
 
   /************************************************************************
   ** Construction:

@@ -1023,6 +1023,7 @@ public class Pia implements Tabular {
 
     Configuration config = Configuration.loadConfig(pia.setupClassName);
     if (config.configure(args)) {
+      System.out.println("PIA version " + org.risource.Version.VERSION);
       config.usage();
 
       /** Continue with the initialization if the user requested props. */
@@ -1034,9 +1035,15 @@ public class Pia implements Tabular {
       System.exit(1);
     }
 
+    if (pia.properties.getBoolean("pia.print-version", false)) {
+        System.out.println("PIA version " + org.risource.Version.VERSION);
+	System.exit(0);
+    }
+
     /** Initialize it from its properties. */
     if (! pia.initialize()) System.exit(1);
 
+    verbose("PIA version " + org.risource.Version.VERSION);
     reportProps(instance.properties, "System Properties:");
     reportProps(instance.piaFileMapping, "File (MIME type) mapping");
 
