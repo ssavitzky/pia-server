@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.34 1999-10-26 22:52:11 steve Exp $
+#	$Id: Makefile,v 1.35 1999-10-27 00:05:07 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -137,7 +137,7 @@ cvs_export::
 ### Release Components
 
 build_release::
-	cd $(REL_DIR)/PIA; $(MAKE) all version_id doc
+	cd $(REL_DIR)/PIA; $(MAKE) -k all version_id doc
 
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
