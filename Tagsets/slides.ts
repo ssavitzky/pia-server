@@ -22,27 +22,34 @@
 <p> This tagset is used for generating ``slide'' presentations from ordinary
     HTML documents.  The original document contains &lt;slide&gt; elements,
     each of which may contain an &lt;h2&gt; element as its caption along with
-    some text.  The document is readable as-is.
+    some text.  The document is semi-readable as-is.
 </p>
 <p> This tagset reformats each ``slide'' as a table with suitable decoration,
     making it look like a slide in a PowerPoint presentation.  Each slide
     contains forward, backward, and table-of-contents links. 
 </p>
+<p> This tagset accepts a query string with
+    <code>slide=<em>starting-slide</em></code> and
+    <code>n=<em>number-of-slides</em></code> to show.  Forward and backward
+    links work properly in this case, but links in (and to) the TOC are
+    currently broken.  The main use of the query is for printing, in order to
+    force an integral number of slides on a page.
+</p>
 <p> Tags Defined: </p>
 <ul>
   <li> &lt;slide&gt;&lt;h2&gt;slide caption&lt;/h2&gt; content &lt;/slide&gt;
-		The slide tag is designed so that the ``rough draft'' of
+	<br />	The slide tag is designed so that the ``rough draft'' of
 		a presentation is still a valid, readable HTML file.
   </li>
   <li> &lt;start&gt;text&lt;/start&gt;
-		A link to the first slide.  Use this to skip any unwanted
+	<br />	A link to the first slide.  Use this to skip any unwanted
 		front matter and get things lined up right.
   </li>
   <li> &lt;end&gt;text&lt;/end&gt;
-		An anchor for the last slide's ``next'' link.
+	<br />	An anchor for the last slide's ``next'' link.
   </li>
   <li> &lt;toc&gt;text&lt;/toc&gt;
-		Table of contents
+	<br />	Table of contents
   </li>
 </ul>
 </doc>
@@ -102,14 +109,14 @@
 
 <h3>Logos and Buttons</h3>
 
-<define entity=icons>
+<define entity="icons">
   <doc> This is the leading path for graphics.  It should begin and end with
 	a slash if necessary.
   </doc>
-  <value>Images/</value>
+  <value>/Icon/</value>
 </define>
 
-<define entity=logo>
+<define entity="logo">
   <doc> This appears in the upper-left-corner of each slide.  It needs to be
 	almost exactly the same height as the text, because it is used as the
 	anchor for the ``next slide'' button.
@@ -120,6 +127,12 @@
   </doc>
   <value><img src="&icons;logo16.png" height=16 width=16 alt="&nbsp;"></value>
 </define>
+<define entity="trans1x1">
+  <doc> <p> A transparent 1x1 pixmap for use as a spacer or placeholder.
+    </p>
+  </doc>
+  <value><img src="/Icon/trans1x1.png"/></value>
+</define>
 <define entity=toPrev><value>&lt;&lt;</value></define>
 <define entity=toNext><value>&gt;&gt;</value></define>
 <define entity=noPrev><value>&nbsp;&nbsp;</value></define>
@@ -127,7 +140,7 @@
 <define entity=toToc><value>^^</value></define>
 
 <h3>Default text</h3>
-<define entity=subCaption>
+<define entity="subCaption">
   <doc> the ``subCaption'' is the text along the <em>bottom</em> line of each
 	slide.  If your presentation is long, you may want to put your section
 	caption in here. 
@@ -140,7 +153,7 @@
 
 <h2>&lt;Slide&gt;</h2>
 
-<define element=xxx>
+<define element="xxx">
   <doc> This is a sample row using a 1x1 transparent gif.  Unfortunately it
 	works correctly only if cellpadding=0, which introduces other problems.
   </doc>
@@ -177,17 +190,47 @@
   </if>
   <if>&VAR:prev;<else><set name="VAR:prev"> </set></else></if>
   <if>&VAR:slidelist;<else><set name="VAR:slidelist"> </set></else></if>
+  <if>&FORM:slide;
+      <then>
+	<set name="VAR:start">&FORM:slide;</set>
+	<set name="VAR:stop">
+	     <numeric op="sum">&FORM:slide;
+		<get name="FORM:n">1</get> -1 </numeric>
+	</set>
+	<set name="VAR:nextQ">&DOC:name;?slide=&next;</set>
+	<set name="VAR:prevQ">&DOC:name;?slide=&prev;</set>
+	<if>&FORM:n;
+	  <then>
+	    <set name="VAR:nextQ">&DOC:name;?slide=&next;&amp;n=&FORM:n;</set>
+	    <set name="VAR:prevQ">&DOC:name;?slide=&prev;&amp;n=&FORM:n;</set>
+	  </then>
+	</if>
+      </then>
+      <else>
+	<set name="VAR:nextQ"></set>
+	<set name="VAR:prevQ"></set>
+      </else>
+  </if>
 </hide>
+<if><logical op="and">
+	<get name="FORM:slide" />
+	<logical op="or">
+	  <test negative><numeric op="diff">&slide; &start;</numeric></test>
+	  <test negative><numeric op="diff">&stop; &slide;</numeric></test>
+	</logical>
+    </logical>
+    <then><make type="comment">slide &slide; omitted</make></then>
+    <else><make type="comment">begin slide &slide;</make>
 <table width="100%" cellspacing=0 cellpadding=5 border=0>
   <tr><td bgcolor="&leftbg;" width="&leftW;" valign="top" align="center"
-          background="Images/bkgnd_grn.gif" rowspan="4"><br />
+          rowspan="4"><br />
         <if>&prev;
-  	      <then><a href="#&prev;">&toPrev;</a></then>
+  	      <then><a href="&prevQ;#&prev;">&toPrev;</a></then>
   	      <else>&noPrev;</else></if><?--
         --?><if><test exact match=TOC>&label;></test>
 	      <else><a href="#TOC">&nbsp;&slide;&nbsp;</a></else></if><?--
         --?><if>&next;
-	      <then><a href="#&next;">&toNext;</a></then>
+	      <then><a href="&nextQ;#&next;">&toNext;</a></then>
 	      <else>&noNext;</else></if><br />
 	<a href="#TOC">contents</a><br />
 	<a href="#0">start</a><br />
@@ -200,7 +243,7 @@
       </th>
   </tr>
   <!-- this green stripe occupies 11 pixels vertically -->
-  <tr><td bgcolor="&topBg;" height="3"><img src="Images/trans1x1.gif" /></td>
+  <tr><td bgcolor="&topBg;" height="3">&trans1x1;</td>
   </tr>
   <tr><!-- this table cell contains the actual content of the slide -->
       <td bgcolor="&mainBg;" valign="top" height="&hh;">
@@ -211,8 +254,9 @@
 	      width="100%"><em>&subCaption;</em>   <expand>&logo;</expand>
       </td>
   </tr>
-</table>
-<p /> <hide>
+</table><!-- end slide -->
+<p /> </else>
+</if><hide>
     <if><test zero>&slide;</test><then>
         <else><set entity name="slidelist"><get entity name="slidelist" />
 <li> <a href="#&slide;">&caption;</a></li></set></else></if>
@@ -221,7 +265,7 @@
     <set name=next><numeric sum digits=0>1 &slide;</numeric></set>
     <set name=label> </set>
     <set name=caption> </set>
-</hide><!-- end slide -->
+</hide>
 </action>
 </define>
      
@@ -251,7 +295,6 @@
 	text ``Start here'', linked to the top of the first slide.  
   </doc>
 <action>
-<h1>&content;</h1>
 <hide><!-- first time through we initialize the variables -->
   <set name=VAR:subCaption>&content;</set>
   <if>&VAR:slide;
@@ -264,8 +307,13 @@
   <if>&VAR:slidelist;
       <else><set name=VAR:slidelist> </set></else></if>
 </hide>
+<if><get name="FORM:slide"/>
+    <else>
+<h1>&content;</h1>
 <p> <start>Start here</start>
 </p>
+    </else>
+  </if>
   </action>
 </define>
      
@@ -286,5 +334,5 @@
 </define>
 --?>
 
-<em>$Id: slides.ts,v 1.2 2000-02-15 02:00:08 steve Exp $</em>
+<em>$Id: slides.ts,v 1.3 2000-02-25 23:27:07 steve Exp $</em>
 </tagset>
