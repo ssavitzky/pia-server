@@ -1,29 +1,34 @@
-
-
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html> <head> 
 <title>Liquid Document</title>
 </head>
 <body>
+<?--
 
-<let name="fontcolor">red green  purple black red green purple</let>
-<let name="fonttype"></let>
-<set name="keyvals"><split-query>&urlquery;</split-query></set>
-<hr/>
+      <set name="overcount">X</set>
+      <set name="count">-1</set>
+      <set name="fontcolor">red green  purple black red green purple</set>
+      <set name="fonttype"></set>
+      <set name="keyvals"><split-query>&urlquery;</split-query></set>
+      <set name="nowstate"></set>
+--?>
+
+<make-state>&urlquery;</make-state>
+
 
 <p>
-This is a paragraph describing the uses of <la lref="fluid.xh" flag="fluid">
+This is a paragraph describing the uses of <la lref="fluid.xh" >
 Liquid Documents.</la>  Such documents may revolutionize the display of text
 information by allowing the user to choose which links to follow without
 opening new pages or losing track of where he was. </p>
 
 <p>
-Liquid documents were first proposed by <la lref="xerox.xh" flag="xerox">Xerox
+Liquid documents were first proposed by <la lref="xerox.xh" >Xerox
 PARC,</la> a famous (or infamous) institution in Silicon Valley.  Liquid
 Documents take advantage of the dynamic nature of digital information display
 to preserve context when reading a document; it is no longer necessary to
 "leave the page" in order to view details, nor is it necessary to have a page
-full of details to ensure the details are at hand.
+full of details to ensure the details are at hand. <la lref="xerox.xh">Xerox again.</la>
 </p>
 
 
@@ -35,18 +40,23 @@ href="mailto:bill@rsv.ricoh.com">bill@rsv.ricoh.com</a>).</p>
 
 <p> This paragraph tests an alternate method for documentation, the
 
-   <lc  flag="liqcomment" atext="liquid comment.">
-       Liquid comments look just like
-       liquid anchors, but their text is in-line rather than kept in a separate
-       file.  In fact, liquid comments can be
-       <lc flag="nested" atext="nested,">
-           Nesting allows one comment to lie within the other
-       </lc>
-       although it makes the document look a bit odd at first.
+   <lc atext="liquid comment."> Liquid comments (<code>&lt;lc&gt;</code>) look
+       just like liquid anchors (<code>&lt;la&gt;</code>) , but their text is
+       in-line rather than kept in a separate file.  In fact, liquid comments
+       can be
+       <lc atext="nested,"> Nesting allows one comment to lie within
+       the other, as does 
+           <lc atext="double nesting. "> Double nesting is
+             pretty hard to understand
+           </lc>
+       </lc> although it makes the source
+       document look a bit odd at first.
     </lc>
 
     Both alternatives ought to present the same results, but they
     are composed differently on the page. </p>
+   
+
 <show-errors />
 <footer />
 </body></html> 
