@@ -4,7 +4,7 @@
 </head><body bgcolor="#99ccff">
 
 <set name="ltitle"><font face="Helvetica, sans-serif">WOAD</font>:</set>
-<header ltitle="&ltitle;">Application Information <br /> &DOC:path;
+<header ltitle="&ltitle;">Application Information <!-- <br /> &DOC:path; -->
 </header>
 
 <table cellspacing="0" cellpadding="0" border="0">
@@ -16,6 +16,24 @@
     <tr><th valign="top" align="right" width="170">&nbsp;</th>
         <td valign="top">&nbsp;</td></tr>
 
+    <tr> <th align="right"> view: &nbsp;</th>
+	 <td bgcolor="#99ccff">
+	     <a href="&SITE:sourcePrefix;/">
+		<font color="#0000ff" face="helvetica, sans-serif">sources
+	     </font></a>
+	   <if><get name="SITE:notesPrefix" /> <then>
+	     || <a href="&SITE:notesPrefix;/"> 
+		<font color="#0000ff" face="helvetica, sans-serif">site
+		  annotation 
+	     </font></a> </then>
+	   </if>
+	   <if><get name="SITE:wordPrefix" /> <then>
+	     || <a href="&SITE:wordPrefix;/">
+		<font color="#0000ff" face="helvetica, sans-serif">keywords
+	     </font></a> </then>
+	   </if>
+	 </td>
+    </tr>
     <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
         <td valign="top">
 	    <a href="quick">Quick start</a> ||
@@ -52,5 +70,5 @@
 
 <include src="app-info.inc"> no application information </include>
 <p>
-<short-footer cvsid="$Id: woad.xh,v 1.4 2000-06-08 23:55:43 steve Exp $" />
+<short-footer cvsid="$Id: woad.xh,v 1.5 2000-06-21 01:10:39 steve Exp $" />
 </p></body></html>
