@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.15 1999-11-06 01:05:51 steve Exp $
+//	$Id: AbstractParser.java,v 1.16 1999-11-09 01:17:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.15 1999-11-06 01:05:51 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.16 1999-11-09 01:17:24 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -127,7 +127,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    * 	don't use <code>'\n'</code> (linefeed) as part of their end-of-line 
    *	sequence (i.e. the Mac).
    */
-  protected String location() {
+  public String location() {
     org.risource.site.Document doc
       = getProcessor().getTopContext().getDocument();
     String docName = (doc == null)? "" : doc.getName() + ":";
