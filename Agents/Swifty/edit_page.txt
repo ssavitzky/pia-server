@@ -1,13 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Home Page Editor</title>
 </head>
 
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Edit Page</header>
 
-<!-- =================================================================== -->
-<!-- Process form variables
+<!--  ===================================================================  -->
+<!--  Process form variables
 <!-- The if/then/else control structure elements are part of the basic tagset.
 <!-- The processing logic here If the page is being displayed as a result 
 <!-- of a submit from the home page then set the two variables AGENT:fname 
@@ -15,55 +15,55 @@
 <!-- display the page with Title name field showing its current value.
 <!-- Note that appendlink and connectto are elements that have been defined
 <!-- for this agent.  Refer to Swifty-xhmtl.ts.
-<!-- =================================================================== -->
-<if><get name="FORM:submission" /> <then>
+<!-- ===================================================================  -->
+<if><get name='FORM:submission' /> <then>
 
 	<if>&FORM:fullname;<then>
-		<set name="AGENT:fname">&FORM:fullname;</set>
-	</if>
+		<set name='AGENT:fname'>&FORM:fullname;</set>
+	</then></if>
 
-	<!-- Process links selections -->
+	<!--  Process links selections  -->
 
-	<set name=AGENT:links>
+	<set name='AGENT:links'>
 		<appendlink>
+	</appendlink></set>
+
+	<!--  Connect to Yahoo news  -->
+
+	<set name='AGENT:ynews'>
+		<connectto url='http://www.yahoo.com' link='News'></connectto>
 	</set>
+</then></if>
 
-	<!-- Connect to Yahoo news -->
-
-	<set name=AGENT:ynews>
-		<connectto url="http://www.yahoo.com" link=News></connectto>
-	</set>
-</if>
-
-<form action="/Swifty/edit_page" method="POST">
+<form action='/Swifty/edit_page' method='POST'>
 
 <h1> Edit Your Home Page</h1>
 Enter a new or different name for your home page title, or select
 different links.
 <p>
 Enter the name that will appear in the title of your home page.
-<p>
-<b>Title name:</b> <input name="fullname" value="&AGENT:fname;">
-<p>
-<HR>
-<p>
-<h2> Select Links for Home Page </h2>
+</p><p>
+<b>Title name:</b> <input name='fullname' value='&AGENT:fname;' />
+</p><p>
+<HR />
+</p><p>
+</p><h2> Select Links for Home Page </h2>
 
-<input type="checkbox" name="wea" value="Weather">Weather
-<input type="checkbox" name="sjmn" value="San Jose Mercury News">San Jose Mercury News
-<input type="checkbox" name="yah" value="Yahoo">Yahoo
-<input type="checkbox" name="dej" value="DejaNews">DejaNews
-<input type="checkbox" name="his" value="History">History
+<input type='checkbox' name='wea' value='Weather' />Weather
+<input type='checkbox' name='sjmn' value='San Jose Mercury News' />San Jose Mercury News
+<input type='checkbox' name='yah' value='Yahoo' />Yahoo
+<input type='checkbox' name='dej' value='DejaNews' />DejaNews
+<input type='checkbox' name='his' value='History' />History
 <p>
-<HR>
+<HR />
 
-<input type="submit" name="submission" value="Submit"> 
-<input type="reset" value="Reset"> 
-</form> 
-<footer />
+<input type='submit' name='submission' value='Submit' /> 
+<input type='reset' value='Reset' /> 
+</p></form> 
+<footer cvsid='$Id: edit_page.txt,v 1.4 1999-03-31 20:18:15 pgage Exp $'></footer>
 
 <p>
-<code><A HREF="file:&piaDIR;/Agents/Swifty/edit_page.txt" TARGET="_blank">View source code</A></code>
+<code><A href='file:&piaDIR;/Agents/Swifty/edit_page.txt' target='_blank'>View source code</A></code>
 
-</body></html>
+</p></body></html>
 

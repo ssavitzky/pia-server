@@ -105,15 +105,13 @@ only.)</td>
 </tr>
 <tr>
 <th align = "left">lib</th>
-<td>Precompiled java libraries needed to run the software.</td>
+<td>Currently not being used.</td>
 </tr>
 <tr>
 <th align = "left">src</th>
 <td valign = "top"><code>src/java/</code> contains the Java source
-files used in the PIA software.<br> <strong> If you want to set
-the classpath by hand, set it to <code>PIA/src/java/</code> not <code>PIA/src</code>!</strong><br>The
- main code is in <code>src/java/org/risource/*</code> corresponding to <code>org.risource.*</code>  package
-names.  
+files used in the PIA software.  The main code is in <code>src/java/org/risource/*</code> 
+corresponding to <code>org.risource.*</code> package names.  
 <br><code>src/org</code> and <code>src/misc</code> contain
 code referenced by the PIA software and included for convenience. <code>src/app</code> contains
 utility applications.</td>
@@ -169,19 +167,21 @@ and <code><var>USR_DIR</var></code> environment
 variables, you can launch the PIA with the command: <code>PIA_DIR/bin/pia.</code>This
 is a one-line shell script that runs <em>pia_wrapper</em>. A complete
 list of command-line options can be found by running <kbd>PIA_DIR/bin/pia
--?</kbd> at the shell prompt.</p> Note that the <code>process</code> command
-allows the PIA software to be used as a unix filter for processing HTML and
-XML documents.
+-?</kbd> at the shell prompt.</p> 
+
+Note that the <code>process</code> command allows the PIA software to
+be used as a unix filter for processing HTML and XML documents.  Under Windows 95
+and NT the CLASSPATH must be set to <code><var>PIA_DIR</var>/src/java</code> for
+<code>process</code> to run.
 
 <p>Under Windows 95 and NT, launch the PIA with the command: <code>PIA_DIR/bin/pia.bat</code>.</p>
 
 <p>This is a batch file that makes use of the <var>PIA_DIR</var> and <var>USR_DIR</var> environment
-variables. It is equivalent to the following:<kbd>java -classpath <var>CPATH</var> or.risource.Pia
--root <var>PIA_DIR</var> -u <var>PIA_HOME</var></kbd></p>
+variables. It is equivalent to the following:<kbd>java -root <var>PIA_DIR</var> -u <var>PIA_HOME</var></kbd></p>
 
 <p>Note the <code>-root</code> and <code>-u</code> options. The
 <code>-p</code> option can be used to set the port (default is 8888, a
-non-priveleged port that allows normal user logins to run the PIA on Unix
+non-privileged port that allows normal user logins to run the PIA on Unix
 boxes.  You may set the port to 80 if you don't like including the port number
 in URL's of the form http://HOST:8888).</p>
 
