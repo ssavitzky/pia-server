@@ -1,0 +1,40 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-12-16 21:29:29 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
+
+<Container>
+  <Resource name="help.xh" virtual="../../defaults/help.xh" />
+  <Resource name="disable.xh" virtual="../disable.xh" />
+  <Resource name="home.xh" virtual="../home.xh" />
+
+  <AGENT name="buster" criteria="proxy-request" state="AGENT:enabled">
+     <initialize><read-vars src="state.inc"/>
+		 <user-message>    &AGENT:path; &AGENT:name; <if>&AGENT:enabled;
+			<then>enabled</then>
+			<else>disabled</else></if></user-message>
+		 <set name="AGENT:pattern"><subst match="\r" result=""><subst
+			match="[ \n\r]+"
+			result="|"><text trim><include quoted="yes"
+			src="pattern.txt"/></text></subst></subst></set>
+<user-message>      pattern=&AGENT:pattern;</user-message>
+     </initialize>
+     <doc> This agent takes any URL that matchs a particular pattern and
+	   rewrites it to point to a local image.  
+     </doc>
+     <action>
+       <if><logical op="and">
+	      &AGENT:enabled;
+	      <test match="&AGENT:pattern;">&TRANS:url;</test>
+	   </logical>
+	   <then>
+	     <user-message>BUSTED! &TRANS:url;</user-message>
+	     <set name="TRANS:url">&PIA:url;/Icon/1x1.xbm</set>
+	   </then>
+	   <else>
+	     <user-message>passed: &TRANS:url;</user-message>
+	   </else>
+       </if>
+     </action>
+  </AGENT>
+</Container>

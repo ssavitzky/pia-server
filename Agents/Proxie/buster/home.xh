@@ -1,0 +1,54 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+<title>Home Page for &AGENT:name;</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Home Page</header>
+
+<sub-head page='home'>
+    <tr><th></th>
+        <td><if><get name="AGENT:enabled"/>
+		<then>Enable/<a href="disable">Disable</a></then>
+		<else><a href="disable">Enable</a>/Disable</else>
+            </if>
+            Agent
+        </td>
+    </tr>
+</sub-head>
+<hr />
+<nav-bar/>
+<hr />
+
+<expand><include quoted="yes" src='about.inc'/></expand>
+
+<hr />
+
+<h3>&AGENT:name; Match Criteria</h3>
+
+<blockquote><em>
+  The match criteria specify the transactions in which this agent is
+  interested.  A <code>-</code> after a criterion name indicates that the
+  criterion must be <em>false</em>; criteria with no value specified must be
+  <em>true.</em>  <em>All</em> criteria must be met in order for the agent to
+  match and its ``Action'' hook (below) to be executed.
+</em></blockquote>
+
+<pre><protect result='result' markup='markup'>&AGENT:criteria;</protect></pre>
+
+<h3>&AGENT:name; Agent Action</h3>
+
+<blockquote><em>
+  This is the code that <a href='/~&AGENT:name;'>&AGENT:name;</a> runs
+  whenever its match criteria are satisfied.  
+</em></blockquote>
+
+<pre><protect result='result' markup='markup'><hide>
+ </hide><extract><from><get name="agentNode"/></from>
+		 AGENT <name recursive>action</name> <content/>
+	</extract></protect></pre>
+
+<hr />
+<b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
+<b>Source:</b> <a href='/~View/xml?url=&filePath;'>&fileName;</a>
+<b>File:</b> <a href='/&filePath;'>&filePath;</a>
+<footer cvsid='$Id: home.xh,v 1.1 1999-12-16 21:29:30 steve Exp $' />
+</body></html>

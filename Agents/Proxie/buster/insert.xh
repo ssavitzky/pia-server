@@ -1,0 +1,14 @@
+<!--  $Id: insert.xh,v 1.1 1999-12-16 21:29:31 steve Exp $  -->
+<if><get name='AGENT:enabled' />
+<then>
+<form action='disable'>
+  <input type='hidden' name='disable' value='true' />
+  <input type='submit' value='DISABLE' />
+</form>
+</then><else>
+<form action='disable'>
+  <input type='hidden' name='enable' value='true' />
+  <input type='submit' value='ENABLE' />
+</form>
+</else></if>
+<!--  end of insert.inc  -->

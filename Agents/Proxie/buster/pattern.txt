@@ -1,0 +1,8 @@
+doubleclick\.net
+yimg\.com.*promo
+ads\.lycos.com
+/ads/
+/[Bb]anners?/
+adverts
+promo
+	   
