@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA Application Areas</title>
+</head><body>
+<h1>PIA Application Areas</h1>
+
+<blockquote>
+  This document describes web applications for which I believe the PIA is
+  well-suited.  Emphasis is placed on applications which are <em>part</em> of
+  a website, rather than the whole thing; at the moment the PIA's performance
+  is insufficient for use in high-traffic websites, and in any case we believe
+  that webmasters are more likely to be interested in adding functionality
+  to existing sites than in rebuilding a site from scratch. 
+</blockquote>
+
+<hr /><!-- ============================================================== -->
+<h2>Online Applications</h2>
+
+<blockquote>
+<p> Note that the easiest way to add a PIA-based application to an existing
+    website is to use a <a
+    href="../../../src/java/org/risource/servlet">Servlet</a>.   This results
+    in the PIA being ``mounted'' as a subdirectory in the website's URL space.
+</p>
+</blockquote>
+
+<h3>Discussion Forums</h3>
+
+<p> Many sites, e.g. <a href="http://slashdot.org/">Slashdot</a> and <a
+    href="">Linux Today</a> consist almost entirely of reader contributions.
+    In some cases the discussions may be mirrored from newsgroups or mailing
+    lists, using software like <a href="">hypermail</a>, but increasingly
+    these are stand-alone web applications.  A discussion forum can be
+    particularly useful in an intranet, where it can serve as a combination
+    bulletin board, suggestion box, and help desk.
+</p>
+
+<h3>Collaborative Authoring</h3>
+
+<p> Here I'm thinking of collaborative environments like the <a
+    href="">Wiki-Wiki</a> and <a href="">FAQ-O-Matic</a> servers, where an
+    entire collection of web pages is constructed collaboratively.  In an
+    intranet, this can be particularly useful as a way of capturing group
+    knowledge.
+</p>
+
+<h3>Calendars</h3>
+
+<p> As we have seen with the IM<sup>3</sup> (<a
+    href="http://rsv.ricoh.com/advanced_dev_ctr.html">eCabinet</a> outside of
+    RSV), a calendar-like display can be useful for many things, not just
+    keeping track of appointments.  In particular, it could be used for
+    organizing any chronological sequence of documents or events, including
+    mail messages, forms, firewall logs, sales figures, and so on.
+</p>
+
+<h3>Form Workflow</h3>
+
+<p> We have usually just called this application category ``workflow,'' since
+    it is concerned with the flow of forms among the various people who have
+    to sign and otherwise handle them.  It's an obvious application for the
+    PIA, especially in a small office where the expected volume is small. 
+</p>
+
+<h3>Document Workflow</h3>
+
+<p> Something else that deserves to be called ``workflow'' involves the flow
+    of, not forms, but <em>documents.</em> Document workflow applications are
+    often found in print shops, publishing houses, technical writing
+    departments, libraries, advertising agencies, and indeed web application
+    development consultancies.  The distinguishing factor in these
+    applications is that the work product is a document or a collection of
+    documents.  The application and its forms exist simply to manage the flow
+    of documents between clients, authors, artists, editors, proofreaders,
+    typesetters, FTP sites, and the like. 
+</p>
+
+<p> This kind of application can be enormously useful to a small business,
+    which may have to handle a document workflow only occasionally (e.g. in
+    order to produce a catalog a few times a year).  
+</p>
+
+<hr /><!-- ============================================================== -->
+<h2>Offline Applications</h2>
+
+<h3>Formatting: Look and Feel</h3>
+
+<h3>Formatting: Macro Expansion</h3>
+
+<h3>Document Indexers</h3>
+
+<h3>Site Maps</h3>
+
+
+<hr /><!-- ============================================================== -->
+<h2>Client-Side Applications</h2>
+
+<p> In client-side applications, the PIA works seamlessly alongside a browser
+    that serves as its user interface, typically on the same CPU but always
+    under the control of an individual user.  
+</p>
+
+
+<h3>Directory Tree Browsing</h3>
+
+<p> It is possible, using the PIA, to make an entire directory tree ``look
+    like'' a single website: easy to navigate, with a uniform look-and-feel
+    and a complete set of searchable indices.  The <a
+    href="../../../frames.html">PIA Tree Browser</a> is a first step in this
+    direction.
+</p>
+
+<h3>File Viewers</h3>
+
+<p> Tagsets like <code>slides</code> and <code>tsdoc</code> make it clear that
+    the PIA is good for reformatting HTML and XML files; it's less obvious
+    that it can be used for viewing files in other formats, but in fact all it
+    takes is a suitable parser.
+</p>
+
+<h3>Browser Utilities</h3>
+
+<p> The PIA can be used to construct customized sidebars, framesets, link
+    pages, and so on for use with browsers.
+</p>
+
+<h3>Personal Proxy</h3>
+
+<p> The original PIA application, of course, was as a personal web proxy.
+</p>
+
+<h3>Configuration File Generators</h3>
+
+<p> Although the PIA can construct non-XML files, it's more interesting to
+    consider its uses for constructing and editing configuration files for
+    XML-based applications such as Mozilla (not to mention the next version of
+    Apache and the PIA itself).  XML data files (as opposed to documents) tend
+    to be unmanageably complex and rigidly-structured.  ``Wizard-like''
+    web-based tools for constructing them would be welcome, and the PIA
+    provides an easy means of building such tools.
+</p>
+
+
+<hr /><!-- ============================================================== -->
+<h2>Embedded Applications</h2>
+
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: applications.html,v 1.1 2000-04-26 18:34:23 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
