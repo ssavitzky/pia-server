@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.10 2000-11-22 22:56:13 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.11 2000-11-30 00:10:11 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -167,7 +167,7 @@
     </tr>
     <if><get name="content" />
         <then>
-	  <tr> <td> (defined)
+	  <tr> <td align="right"> -&gt;&nbsp;
 	       </td>
 	       <td> &nbsp;&nbsp;&nbsp; <get name="content" />
 	       </td>
@@ -198,9 +198,15 @@
 	           <then> <a href="&sourcePrefix;&path;#&line;">(&line;)</a>
 	           </then>
 	      </if>
+	      <if> &content;
+	           <then> <repeat><foreach><get name="content"></foreach>
+	      	       		<a href="&sourcePrefix;&path;#&li;">(&li;)</a>
+	                  </repeat>
+	           </then>
+	      </if>
 	 </td>
     </tr>
-    <if><get name="content" />
+    <if><!-- get name="content" /> === no longer used === -->
         <then>
 	  <tr> <td> (used)
 	       </td>
@@ -241,7 +247,7 @@
 <html><head>
 <title>&DOC:path;</title>
 </head><body bgcolor="99ccff">
-<header><subst match="\.[^.]*$" result="">&DOC:name;</subst> Index file</header>
+<header><subst match="\.[^.]*$" result="">&DOC:name;</subst> index</header>
 <set name="notesPrefix">
     <if> <test exact="yes" match="/"><get name="SITE:notesPrefix"/></test>
          <else><get name="SITE:notesPrefix"/></else>

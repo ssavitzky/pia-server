@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.18 2000-11-22 22:58:25 steve Exp $
+#	$Id: woad-index.pl,v 1.19 2000-11-30 00:10:17 steve Exp $
 # Create WOAD index files.
 #
 
@@ -14,7 +14,9 @@
 #	to invoke it, of course.  Simply map identifier -> space-separated
 #	list of path#line's.
 #
-# Internally, using an array of ref's for use would save much space.
+# Internally, much space could be saved by a different representation for 
+# the xrefs:  lc(name) => [\file-entry, [name], line#...]  Note that Perl
+# doesn't allow refs to strings, only to (possibly-scalar) variables.
 
 ### usage() -- print usage summary
 
@@ -177,6 +179,18 @@ $nNoteFiles	= 0;
 		    "fig"	=> "xfig figure",
 		);
 
+# Stopwords.  Note that we index these if they're defined, but we don't
+# cross-reference the uses.  Not all html tags and attributes are here, 
+# just the most common ones. 
+#
+$stopwords = "a b c d e f g h i j k l m n o p q r s t u v w x y z "
+    . "hr br code em dl ul ol li dd dt tr td th "
+    . "href name align valign "
+    . "an and are do for either if is me my no nor not of or our so "
+    . "the this they them then to we were what when where who why yes "
+    ;
+foreach $sw (split($stopwords)) { $stopword{$sw} = 1; }
+
 ### Global Indices:
 #
 #   Terminology:
@@ -209,7 +223,7 @@ $nNoteFiles	= 0;
 
 #   Word cross-reference map:
 #
-#	This maps words onto a string containing all references to that word.
+#	This maps words onto an array containing all references to that word.
 
 %xrefs		= ();
 
@@ -226,8 +240,9 @@ $nNoteFiles	= 0;
 #		type		markup / code / text / image / archive / bin
 #		mdate		last-modified date
 #		size		size in bytes
+#		path		WOAD path
 
-%pathIndex	= ();		# maps paths into hashes
+%pathIndex	= ();		# maps WOAD paths into hashes
 
 
 ###### Analyze Command Line #############################################
@@ -358,7 +373,7 @@ sub indexDir {
     # Open the corresponding index file for output
     my $xd = "$root$project/$sourcePrefix$path";
     $xd =~ s@//@/@g;
-    -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd/\n";
+    -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd\n";
 
     # === eventually compare dates on directory and dirIndex.wi
     if (!$pass) { 
@@ -533,7 +548,7 @@ sub indexFile {
     # indexDef($woadPath, 'path', $woadPath, 0, '', $dscr);
 
     # Insert entry into file index table.  We may possibly be needing it.
-    $pathIndex{$absPath} = \%entry;
+    $pathIndex{$woadPath} = \%entry;
     
     # Convert entry to xml format:
     $ent = "<File";
@@ -731,10 +746,11 @@ sub reindexFile {
 	++$line;
 
 	while (/$id/) {		# gobble words in the line
-	    my $word = $1;
+	    my $word = lc($1);
 	    s/$nids*$id//;
-	    if ($xrefs{lc($word)} ne '') {	# If the word has a definition,
-					# index its use here.
+	    if ($xrefs{$word} &&	# If the word has a definition, 
+		! $stopword{$word}	# and isn't a stopword
+		) {			# index its use here.
 		indexUse($1, '', $path, $line);
 	    }
 	}	
@@ -857,7 +873,7 @@ sub indexDef {
     $defs{$context} .= $entry;
 
     if ($ident eq $word) {
-	$xrefs{lc($word)} .= $entry;
+	pushXref($word, $entry);
     }
     # === Append to $context/$word/defs.wi as well ===
     # === it's possible, even likely, that a database _would_ be better ===
@@ -875,7 +891,7 @@ sub indexDoc {
 	   . "name=\"$name\">$def</Def>\n\n";
 
     $docs{$context} .= $entry;
-    $xrefs{lc($word)} .= $entry;
+    pushXref($word, $entry);
 }
 
 ### indexUse(word, context, file, lineNr)
@@ -885,17 +901,77 @@ sub indexDoc {
 sub indexUse {
     my ($word, $context, $path, $line) = (@_);
 
-    my $entry = "<Ref word=\"$word\" path=\"$path\" line=\"$line\" "
-	      . ($context ? "context=\"$context\" " : "") . " />\n\n";
+    # use an array instead of a hash to save space.
+    #my $entry = { 'word' => $word, 'path' => $path, 'line' => $line };
 
+    my $oldentry = $xrefs{lc($word)};
+    my $oldentry = (ref $oldentry)? $$oldentry[@$oldentry -1] : '';
+    my $entry = [ $word, $pathIndex{$path}, $context, $line ];
+
+    if (ref $oldentry 
+	&& $$oldentry[1] == $$entry[1]
+	&& $$oldentry[0] eq $$entry[0]
+	&& $$oldentry[2] eq $$entry[2]) {
+	# this is a duplicate entry.  Append the line number.
+	push(@$oldentry, $line);
+	return;
+    }
     if ($context ne '') {
-	$uses{$context} .= $entry;
+	# $$entry{'context'} = $context;
+	if (@{$uses{$context}} == 0) {
+	    $uses{$context} = [ $entry ];
+	} else {
+	    push( @{$uses{$context}}, $entry);
+	}
     }
 
-    # lowercase the word for the cross-reference key.
-    $xrefs{lc($word)} .= $entry;
+    # push the cross-reference entry.
+    pushXref($word, $entry);
 }
 
+### pushXref (word, entry)
+#	push a cross-reference entry for "word" onto %xrefs. 
+#	the word is lowercased; the entry may be either a string or 
+#	an array of the sort made by indexUse 
+#
+sub pushXref {
+    my ($word, $entry) = (@_);
+    $word = lc($word);
+
+    if (@{$xrefs{$word}} == 0) {
+	$xrefs{$word} = [ $entry ];
+    } else {
+	push(@{$xrefs{$word}}, $entry);
+    }
+}
+
+### Construct a cross-reference element.
+#	If the entry is a string, just return it.
+#	If it's an array, construct a <Ref> element.  Excess line numbers are 
+#	put in the content.
+#
+sub refElement {
+    my ($entry) = (@_);
+    if (!ref($entry)) { return $entry; }
+
+    my $path = $$entry[1]->{'path'};
+    my $ent = "<Ref" . " word=\"$$entry[0]\""
+		     . " path=\"$path\""
+		     . " line=\"$$entry[3]\"";
+    if ($$entry[2]) {
+	$ent .= "context=\"$$entry[2]\"";
+    }
+    if (@$entry <= 4) {
+	$ent .= " />";
+    } else {
+	$ent .= ">";
+	for (my $i = 4; $i < @$entry; ++$i) {
+	    $ent .= " $$entry[$i]";
+	}
+	$ent .= "</Ref>";
+    }
+    return $ent;
+}
 
 ###### Output the global indices ########################################
 
@@ -906,6 +982,7 @@ sub globalIndices {
     my $context;
     my $word;
     my @entries;
+    my @defs;
     my ($entry, $i, $c, $d);
     my @keys;
     my $k;
@@ -918,8 +995,8 @@ sub globalIndices {
 	$dir = "$root$project$words/$context";
 	print STDERR "defs for $context -> $dir/defs.wi\n" unless ($quiet);
 	mkdir ($dir, 0777);
-	open (INDEX, ">$dir/defs.wi");
 	@entries = sort(split /\n\n/, $defs{$context});
+	open (INDEX, ">$dir/defs.wi");
 	print INDEX join ("\n", @entries);
 	close (INDEX);
 	for ($i = 0; $i < 27; ++$i) {
@@ -978,6 +1055,7 @@ sub makeCrossReference {
     my $context;
     my $word;
     my @entries;
+    my $ents;
     my ($entry, $i, $c, $d);
     my @keys;
     my $k;
@@ -994,7 +1072,13 @@ sub makeCrossReference {
 	open (INDEX, ">>$dir/uses.wi");
 	print INDEX "See breakout files uses-*-.wi\n";
 	close (INDEX);
-	@entries = sort(split /\n\n/, $uses{$context});
+	
+	$ents = $uses{$context};
+	$entries = ();
+	for ($i = 0; $i < @$ents; ++$i) {
+	    push(@entries, refElement($$ents[$i]));
+	}
+	@entries = sort(@entries);
 	for ($i = 0; $i < 27; ++$i) {
 	    $c = substr('0ABCDEFGHIJKLMNOPQRSTUVWXYZ', $i, 1);
 	    if (-f "$dir/uses-$c-.wi") { unlink "$dir/uses-$c-.wi"; }
@@ -1026,7 +1110,9 @@ sub makeCrossReference {
 	my $word = $keys[$k];
 	++ $nWords;
 
-	# === This would be a good place to check for stopwords.
+	# This would be a plausible place to check for stopwords,
+	# but they might be interesting in some contexts and not others,
+	# so instead we simply don't record uses for them.
 
 	$c = substr($word, 0, 1);
 	$c = uc($c);
@@ -1050,7 +1136,11 @@ sub makeCrossReference {
 	# As we go, clear out entries in %xrefs to save both time and space
 
 	open (INDEX, ">$xfile");
-	print INDEX $xrefs{$word}; # we don't really have to sort.
+	$ents = $xrefs{$word};	# -> array of entries
+	for ($i = 0; $i < @$ents; ++$i) {
+	    print INDEX refElement($$ents[$i]), "\n";
+	}
+	#print INDEX $xrefs{$word}; # we don't really have to sort.
 	## @entries = sort(split (/\n\n/, $xrefs{$word}));
 	$xrefs{$word} = '';	# save memory
 	##print INDEX join ("\n", @entries);
@@ -1133,7 +1223,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.18 2000-11-22 22:58:25 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.19 2000-11-30 00:10:17 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 

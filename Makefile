@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.45 2000-10-06 00:32:02 steve Exp $
+#	$Id: Makefile,v 1.46 2000-11-30 00:10:03 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -236,8 +236,9 @@ all-dirs.log::
 ###
 ###	my-woad-xref 	constructed in $HOME/.pia  index plus cross-references
 ###
-###	  WARNING! At the moment, this requires about 200Mb of RAM!
-###		 The resulting cross-reference index eats 170Mb of disk.
+###	  WARNING! At the moment, this requires about 80Mb of RAM!
+###		 The resulting cross-reference index eats 43Mb of disk.
+###		 It was much worse, but compactifying <Ref>'s fixed it.
 ###
 ###	my-woad-yref 	constructed in $HOME/.pia  index plus cross-references
 ###
