@@ -1,5 +1,5 @@
 // TreeFragment.java
-// $Id: TreeFragment.java,v 1.2 1999-07-15 17:17:25 steve Exp $
+// $Id: TreeFragment.java,v 1.3 1999-07-15 17:33:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,7 @@ public class TreeFragment extends TreeNode implements ActiveFragment
    *  to return appropriate start tag.
    */
   public String startString(){
-    return (getChildNodes() == null)? "" : getChildNodes().toString();
+    return "";
   }
   
   /** Return the String equivalent of this node type's content or data.
@@ -63,7 +63,7 @@ public class TreeFragment extends TreeNode implements ActiveFragment
    *  to return appropriate content string.
    */
   public String contentString(){
-    return getContent().toString();
+    return (getChildNodes() == null)? "" : getChildNodes().toString();
   }
 
   /** Return SGML/XML comment right bracket; that is "-->".
