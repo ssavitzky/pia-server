@@ -358,33 +358,55 @@
 </p>
 </blockquote>
 
-<p> Corresponding to the  URL trees above, we have the following offsets.
+<p> Corresponding to the  URL trees above, we have the following parameters
+    that define their relationships.  Note that <em>all</em> of the following
+    parameters are expected to start with a ``<code>/</code>'' character and
+    <em>not</em> to end with one.
     (Note that the current ones are misnamed.)
 </p>
 
 <ul>
-  <li> <code>woadPrefix</code> / <code>prefix=</code> 
+  <li> <code>notesPrefix</code> 
        <p> The location of the root of the WOAD annotation tree relative to the
-           <em>target</em> root, <em>if they are on the same server</em>.
-           (Presently called <em>sourceOffset</em>.)  Note that we rarely need
+           root of the WOAD server.  It is normally only needed if the WOAD
+           tree is on the same server as the application.
+           (Presently called <em>sourceOffset</em>.)  Note that we do not need
            to put this on the command line -- if needed, it's guaranteed to be
            somewhere in the target server's configuration.
        </p>
+       <blockquote>
+       <p> <code>notesPrefix</code> defaults to null.  If a non-null value is
+	   required it should normally be ``<code>.notes</code>''.
+       </p>
+       </blockquote>
+  </li>
+  <li> <code>woadPrefix</code> 
+       <p> The location of the WOAD <em>application</em> (forms and documents)
+	   relative to the root of the WOAD server.  
+       </p>
+       <blockquote>
+       <p> <code>sourcePrefix</code> defaults to ``<code>.Woad</code>'' and
+	   will rarely, if ever, have to be changed.
+       </p>
+       </blockquote>
   </li>
   <li> <code>docOffset</code> / <code>offset=</code> <br />
        <p> The location of the document sources relative to the source root.
            (Presently called <code>targetPrefix</code>.)
        </p>
   </li>
-  <li> <code>sourcePrefix</code> / <code>source=</code> <br />
+  <li> <code>sourcePrefix</code> / <code>prefix=</code> <br />
        <p> The location of the source root relative to the WOAD server root.
            (Presently fixed at null.)  If a target URL corresponds to a real
            source document, the latter can be found at
-           <code>woadPrefix+sourcePrefix+docOffset/...</code>
+           <code>sourcePrefix+docOffset/...</code>
+       </p>
+       <p> Note that <code>notesPrefix</code> is <em>not</em> automatically
+	   prepended to <code>sourcePrefix</code> -- this allows a source tree
+	   and an annotation tree to be at the same level.
        </p>
        <blockquote>
-       <p> <code>sourcePrefix</code> should probably default to
-	   <code>.source</code>.  
+       <p> <code>sourcePrefix</code> defaults to ``<code>.source</code>''.
        </p>
        </blockquote>
   </li>
@@ -398,15 +420,21 @@
        </p>
        <blockquote>
        <p> <code>sourceSuffix</code> should probably default to
-	   <code>.notes</code>.  
+	   <code>.notes</code>.  This is ambiguous if
+	   <code>sourcePrefix</code> and <code>notesPrefix</code> are both
+	   null. 
        </p>
        </blockquote>
   </li>
-  <li> <code>wordMap</code> / <code>words=</code> <br />
+  <li> <code>wordPrefix</code> / <code>words=</code> <br />
        <p> The location of the keyword map relative to the WOAD server root.
            (Presently undefined.) If a keyword has a map entry, it can be found
-           under <code>woadOffset+wordMap</code>
+           under <code>wordMap</code>
        </p>
+       <blockquote>
+       <p> <code>sourcePrefix</code> defaults to ``<code>.words</code>''.
+       </p>
+       </blockquote>
   </li>
 </ul>
 
@@ -477,7 +505,7 @@
 
 <p> It will be possible to use WOAD as a ``pure'' source browser or directory
     browser: this simply corresponds to the situation where
-    <code>sourceOffset</code> is null, and there is no target server and no
+    <code>sourcePrefix</code> is null, and there is no target server and no
     corresponding target annotation tree.  Putting the target URL annotations
     further down in the tree, e.g. hanging off the source document root, is
     another possibility (for the future), as is putting source and URL
@@ -943,6 +971,6 @@
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: about.html,v 1.3 2000-06-14 17:07:16 steve Exp $</b><br />
+<b>$Id: about.html,v 1.4 2000-06-15 01:22:11 steve Exp $</b><br />
 <address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
 </body></html>
