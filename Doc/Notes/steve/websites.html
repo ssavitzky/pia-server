@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>On Maintaining a Website with the PIA</title>
+</head><body>
+<h1>On Maintaining a Website with the PIA</h1>
+
+<blockquote><em>
+  This document contains notes on maintaining a website using the PIA (and
+  especially the <code>process</code> command) to process documents offline.
+</em></blockquote>
+
+<p> There are few, if any, ISP's that will let you run a PIA on their
+    servers.  And even if you have a direct connection to the Internet with a
+    static IP address and a fast pipe, it's probably a bad idea to run the PIA
+    as your primary web server.  <em>(When we get a version of the PIA that
+    runs efficiently as an Apache module, this will change...)</em>
+
+<p> So, for a variety of reasons, you are probably going to want to run the
+    PIA's document processor (the <code>process</code> command) ``offline'' to
+    generate ordinary, static HTML files which you can then <em>upload</em> to
+    your external web site.  This gives you all the versatility of the PIA
+    with the security and efficiency of a ``traditional'' web server.
+
+<p> This document explains how to do this, in two sections:
+
+<ol>
+  <li> <a href="processing">Offline Document Processing</a>
+  <li> <a href="uploading">Uploading Documents</a>
+</ol>
+
+<p> It is also possible to run a PIA <em>in parallel</em> with a traditional
+    web server, letting the traditional server serve static pages, while
+    the PIA serves the dynamic ones.  This can be done in Apache, for example,
+    by means of the <a
+    href="http://www.apache.org/docs/mod/mod_proxy.html#proxypass">ProxyPass</a>
+    option.  The following 
+    line added to Apache's configuration file is all it takes:
+
+<pre>Proxypass /PIA http://localhost:8888/</pre>
+
+
+<h2><a name="processing">Offline Document Processing</a></h2>
+
+<h3>The Basic Idea</h3>
+
+<p> By far the simplest way to do offline document processing is to use the
+    <code>make</code> utility to process only the documents that you have
+    changed.  Assuming that you have a single directory full of
+    <code>.xh</code> files and want to make <code>.html</code> files out of
+    them, the following is a simple <code>Makefile</code> that will do the
+    job.
+</p>
+
+<table border=1 width="90%" align="center">
+<tr><td>
+<pre>
+### Files:
+###	These macros can be used in conjunction with the 
+###	.xh.html rule to generate HTML files offline.
+
+XH_FILES= $(wildcard *.xh)
+XH_HTML= $(XH_FILES:.xh=.html)
+
+### Commands:
+
+ifndef PIA_HOME
+  PROCESS = process
+else
+  PROCESS = $(PIA_HOME)/bin/process
+endif
+
+### Tagsets:
+
+ifndef TAGSET
+  TAGSET=xhtml
+endif
+
+### Rules:
+
+.SUFFIXES: .html .xh
+.xh.html:
+	$(PROCESS) -t $(TAGSET) $&lt; > $@
+	{ grep -s $@ .cvsignore } || echo $@ >> .cvsignore
+
+### Targets:
+
+all:: $(XH_HTML)
+</pre></tr></td>
+</table>
+
+<p> Now, the command ``<code>make all</code>'' will run the
+    <code>process</code> command on all files that have changed since the last
+    time you ran <code>make</code>. 
+
+<h3>Variations</h3>
+
+<p> With the PIA, it's possible to process a document through two different
+    tagsets to get different results.  I recently used this technique on a
+    personal web site after a major re-organization: the
+    <code>&lt;header&gt;</code> tag in the old directories created a ``moved''
+    sign in each page, with a link to the new location.
+
+<p> If you don't want separate <code>.html</code> and <code>.xh</code> files,
+    it is possible to process HTML files ``in place.''  The best way is with a
+    sequence of commands like:
+
+<pre>
+  mv foo.html foo.html.bak
+  process -t mytagset foo.html.bak &gt; foo.html
+</pre>
+
+<p> This has the benefit of leaving you with a backup file in case something
+    goes wrong.  If you expect to do this more than once, it's worthwhile
+    wrapping the sections you plan on updating with a <code>&lt;div&gt;</code>
+    or <code>&lt;span&gt;</code> tag with an appropriate <code>class</code> or
+    <code>id</code> attribute.
+
+
+
+<h2><a name="uploading">Uploading Documents</a></h2>
+
+<p> There are several different ways of uploading documents to a website.
+    Unless your connection is very fast or your website is very small, you
+    will want to upload only those documents which have <em>changed</em> since
+    the last upload.  There are three main ways of doing this:
+
+<ol>
+  <li> Use a utility that does the whole job.  This technique is often called
+       ``mirroring,'' since it produces a mirror image of your local working
+       directory on the remote machine.  If you have Linux or Unix on both the
+       internal and external sites, by far the easiest method to use is the
+       <code>rsync</code> program.  You will <em>still</em> probably want to
+       combine this with <code>make</code> for offline processing and other
+       preparation.
+
+  <li> Use the CVS version-control system to check out the files on the remote
+       machine, and do any necessary builds <em>there</em>.  This only works,
+       of course, if you have a shell account on the remote machine. 
+
+  <li> Use <code>make</code> to identify the changed files, then upload them
+       using <code>ftp</code>, <code>rsync</code>, <code>scp</code>, or some
+       other program.  Since you're probably going to use <code>make</code>
+       anyway for <a href="#processing">offline document processing</a>, this
+       technique is particularly simple.  It also gives you the widest choice
+       of uploading utilities, and the finest-grained control over what gets
+       uploaded. 
+
+</ol>
+
+
+<h3>Uploading with <code>rsync</code></h3>
+
+<p> This is easy -- <code>rsync</code> is basically an improved version of the
+    <code>rcp</code> remote copy program.  You can mirror an entire directory
+    tree with a command like:
+
+<pre>
+rsync -a --numeric-ids --delete -v PIA/ cvs.risource.org:/home/cvsroot/PIA
+</pre>
+
+<p> (You may have guessed that we use this technique to upload the PIA's CVS
+    repository -- this guarantees that the outside tree is an exact copy of
+    the inside one used by the developers.)
+
+<p> The <code>--delete</code> option means to delete files on the remote
+    system that have been deleted on the local system; the trailing slash on
+    the source directory transfers its entire contents, recursively.  It's a
+    little tricky: the following command:
+
+<pre>
+rsync -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot
+</pre>
+
+<p> transfers the PIA subdirectory to the destination directory, and deletes
+    everything else there!  Usually not a good idea.
+
+<p> The <code>-C</code> option to <code>rsync</code> ignores the same files
+    that CVS ignores for checkin; this is not usually what you want if your
+    source files are under CVS control but the ones you want to upload are
+    built by <code>make</code>.
+
+<p> You'll probably find it most convenient to put your <code>rsync</code>
+    commands into your top-level <code>Makefile</code> -- that's what we do in
+    the PIA and <a href="http://RiSource.org/">RiSource.org</a> website.
+
+
+<h3>Uploading with <code>cvs</code></h3>
+
+<p> This leads inevitably to the next variation, uploading using
+    <code>cvs</code>.  This works <em>very</em> well if the following two
+    conditions are true:
+
+<ol>
+  <li> You have a complete development environment on the host you're
+       uploading to.
+  <li> You don't mind making your source files public. 
+</ol>
+
+<p> In this case it's easy:  use CVS to update the working directory on your
+    remote host, and do a <code>make</code> to build everything that needs
+    building. 
+
+<p> We use a somewhat perverse variation on this technique for PIA releases:
+    we actually synchronize the CVS trees using <code>rsync</code>, then do a
+    complete <code>cvs&nbsp;checkout</code> into a brand-new directory, and
+    re-build everything from scratch.  Then we roll the whole thing up into a
+    <code>tar</code> file and upload <em>that</em> to <a
+    href="http://RiSource.org/">RiSource.org</a>.
+
+
+<h3>Uploading with <code>make</code></h3>
+
+<p> I've been using this technique for years on my public websites.  It relies
+    on the following fragment of <code>Makefile</code> code:
+</p>
+
+<table border=1 width="90%" align="center">
+<tr><td><pre>
+put:: $(FILES)
+	@echo cd $(RMTDIR) 		 > put
+	@echo binary 			>> put
+	for f in $? ; do echo put $$f 	>> put ; done
+	@echo bye 			>> put
+	ftp -i $(HOST) &lt; put > /dev/null
+</pre></tr></td>
+</table>
+
+<p> This is, of course, designed to use FTP, and it relies on having a
+    <code>.netrc</code> file in your home directory with your password in it so
+    that <code>ftp</code> doesn't have to ask.  If you have to recursively
+    descend into subdirectories you'll need to <code>cd</code> to the
+    <em>parent</em> directory in order to do a <code>mkdir</code> on the
+    (possibly new) child. 
+
+<p> It's even easier with something like <code>rcp</code> or <code>rsync</code>:
+</p>
+
+<table border=1 width="90%" align="center">
+<tr><td><pre>
+put:: $(FILES)
+	-rsh $(HOST) mkdir $(RMTDIR)
+	rsync $? $(HOST):$(RMTDIR)
+	touch put
+</pre></tr></td>
+</table>
+
+<p> Also note the use of <code>rsh</code> and <code>mkdir</code> to make the
+    remote directory if it's not there already.
+
+<p> The basic idea is always the same, though: use a file (called
+    <code>put</code> in this case) as a ``timestamp'' and upload everything
+    that has changed since the last time.
+
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: websites.html,v 1.1 1999-11-19 20:59:34 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
