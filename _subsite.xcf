@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.20 2000-08-24 22:54:59 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.21 2000-09-23 00:49:30 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -106,6 +106,28 @@
     <Ext name="xml"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
     <Ext name="inc"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
     <Ext name="ts" 	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+
+  <Ext name="java" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="c" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="C" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="cpp" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="cxx" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="h" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="H" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="hpp" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+  <Ext name="hxx" 	type="text/html" tagset="/.Woad/Tools/src-ccode" />
+
+  <Ext name="pl" 	type="text/html" tagset="/.Woad/Tools/src-file" />
+  <Ext name="pm" 	type="text/html" tagset="/.Woad/Tools/src-file" />
+  <Ext name="py" 	type="text/html" tagset="/.Woad/Tools/src-file" />
+  <Ext name="el" 	type="text/html" tagset="/.Woad/Tools/src-file" />
+
+  <Ext name="" 		type="text/html" tagset="/.Woad/Tools/src-file" />
+
+  <Ext name="class"	type="application/binary" />
+  <Ext name="o"		type="application/binary" />
+  <Ext name="obj"	type="application/binary" />
+  <Ext name="exe"	type="application/binary" />
 
   </Container>
 
