@@ -28,20 +28,18 @@
 
 <p> The following directories contain actual <em>agents</em> -- pieces of XML
     code that are expanded in response to certain conditions in the PIA
-    server: 
+    server, along with the active documents that control them: 
 
 <dl>
   <dt> <a href="Admin/">Admin</a>
   <dd> The server-administration agent.  (Strictly speaking this is an
        application, but it actually includes an Agent which is used to ensure
        that administration tags are only executed from inside the Admin
-       directory.) 
+       directory.)  If you are on a Unix machine, you will have to give your
+       username and password in order to use this agent. 
   <dt> <a href="Proxie/">Proxie</a>
-  <dd> This is also an application, but it serves as a front panel for a
+  <dd> This is also an application, but it serves as a ``front panel'' for a
        collection of agents that are active when the PIA is used as a proxy. 
-  <dt> <a href="HelloWorld/">HelloWorld/</a>
-  <dd> This is the sample agent described in the <a
-       href="/Doc/author.html">Author's Guide</a>.
 </dl>
 
 <h2>Applications</h2>
@@ -56,13 +54,13 @@
   <dd> This application consists entirely of pages that demonstrate the PIA's
        tag language.  It is more comprehensive than the <a
        href="Tutorial/">Tutorial</a>, and hence less comprehensible to the
-       average new user.
-  <dt> <a href="Swifty/">Swifty</a>
-  <dd> This is an application that helps you construct a ``home page''; it is
-       meant to serve as an example.
+       average new user; it is intended for use as a reference.
+  <dt> <a href="SimpleCalendar/">SimpleCalendar</a>
+  <dd> This is an application that displays calendar pages and dated events.
+       It is made available as <a href="/~Calendar/">/~Calendar</a>.
   <dt> <a href="View/">View</a>
   <dd> This application allows you to view pages using a variety of different
-       tagsets.  For example, you can view HTML pages as plain text, or as
+       tagsets.  For example, you can view HTML pages as plain text or as
        ``slide presentations''.
 </dl>
 
@@ -87,6 +85,6 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh California Research Center</b><br>
-<b>$Id: HEADER.html,v 1.5 1999-10-04 17:30:18 steve Exp $</b><br>
+<b>$Id: HEADER.html,v 1.6 1999-10-14 18:08:30 steve Exp $</b><br>
 <a name="files"><hr></a>
 
