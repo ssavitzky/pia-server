@@ -1,5 +1,5 @@
 ###### Doc/Tagset/demo Makefile:  Makes documentation pages from Demo agent.
-# 	$Id: Makefile,v 1.2 1999-03-31 20:18:23 pgage Exp $
+# 	$Id: Makefile,v 1.3 1999-04-02 22:06:31 pgage Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -42,9 +42,12 @@ XHTMLS = \
 	$(DEMO_AGENT_DIR)/demo_sel.xh \
 	$(DEMO_AGENT_DIR)/demo_subst.xh \
 	$(DEMO_AGENT_DIR)/demo_test.xh \
+	$(DEMO_AGENT_DIR)/demo_output.xh \
 	$(DEMO_AGENT_DIR)/demo_text.xh
 
 XHTML_DOCS = $(XHTMLS:.xh=.html)
+
+include $(MF_DIR)/file.make
 
 .SUFFIXES: .xh .html
 
