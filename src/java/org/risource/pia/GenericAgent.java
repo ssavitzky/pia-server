@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.15 1999-04-17 01:21:07 steve Exp $
+// $Id: GenericAgent.java,v 1.16 1999-04-21 22:19:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -1082,13 +1082,31 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
   }
 
   /**
+   * Make sure that the parent directory of a given file exists.
+   * 
+   * @param path the absolute path to a file to be created.
+   * @return the original path, or null if directories in the path cannot
+   *	be created.
+   */
+  public String forceParent(String path) {
+    File f = new File(path);
+    File p = new File(f.getParent());
+    if (! p.exists()) {
+      if (! userDirFile.exists()) // The userDir didn't exist.
+	documentFileList = null; // so play safe and recompute the path.
+      p.mkdirs();
+    }
+    return (p.exists() && p.isDirectory() && p.canWrite())? path : null;
+  }
+
+  /**
    * Find a data file. 
    */
   public String findDataFile(String path, String suffixPath[],
 			     boolean forWriting) {
     // === should be similar to findDocument below, but with data dir
     
-    return NameUtils.systemPath(dataDirectory(), path);
+    return forceParent(NameUtils.systemPath(dataDirectory(), path));
   }
 
   /**
@@ -1122,8 +1140,7 @@ public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
     String found =  FileAccess.findFile(path, dirPath, suffixPath);
     if (found != null) return found;
     if (forWriting) { // Didn't find anything, but it may be ok to create it.
-      return NameUtils.systemPath(userDirFile.getPath(), path);
-      // === return NameUtils.systemPath(dataDirectory(), path);       
+      return forceParent(NameUtils.systemPath(userDirFile.getPath(), path));
     }
     return null;
   }
