@@ -6,9 +6,6 @@
 This directory contains three kinds of configuration information:
 
 <ol>
-  <li> <a href="#app">Appliance</a> configurations.  Each
-       appliance's configuration is in a directory with the name of the
-       appliance's top-level agent.
   <li> <a href="#env">Environment</a> configurations, for various operating
        systems and environments. 
   <li> the ``<a href="#sdk">Software Development Kit</a>'', consisting of
@@ -27,57 +24,29 @@ This directory contains three kinds of configuration information:
   <dt> <a href="pia.props.proxied"><code>pia.props.proxied</code></a>
   <dd> This is a property file designed for use in a PIA that is accessed
        through a proxy such as Apache.
-</dl>
-
-<h3><a name="app">Appliances</a></h3>
-<dl>
-  <dt> <a href="Demos/">Demos/</a>
-  <dd> Configuration files for a PIA Demonstration appliance.
-  <dt> <a href="MB3/">MB3/</a>
-  <dd> Configuration files for a Media Board appliance.
-  <dt> <a href="CDRW/">CDRW/</a>
-  <dd> Configuration files for a CD-RW or CD-R appliance.
-  <dt> <a href="Photo/">Photo/</a>
-  <dd> Configuration files for a ``photo-album'' appliance.
-  <dt> <a href="Printer/">Printer/</a>
-  <dd> Configuration files for a Web Printer.
-  <dt> <a href="WebWort">WebWort/</a>
-  <dd> Configuration files for a ``generic'' web appliance.
+  <dt> <a href="filemap.props">filemap.props</a>
+  <dd> Default filemap (extension to MIME type) file.
 </dl>
 
 <h3><a name="env">Operating Systems &amp; Environments</a></h3>
 <dl>
-  <dt> <a href="cdrom/">cdrom/</a>
-  <dd> Content and Makefile for various CD-ROM release formats.
   <dt> <a href="unix/">unix/</a>
-  <dd> Configuration files for Unix or Linux users.  (This may eventually
-       include multiple setups for ordinary user and developer.)
-  <dt> win95/, win31/, mac/ (eventually)
-  <dd> 
+  <dd> Configuration files for Unix or Linux users.  Currently contains
+an Apache configuration file.
 </dl>
 
 <h3><a name="sdk">Software Development Kit</a></h3>
 <dl>
   <dt> <a href="makefiles/">makefiles/</a>
   <dd> Templates to be included in Makefile's.
-  <dt> <a href="pia.props">pia.props</a>
-  <dd> Default properties (profile) file.
-  <dt> <a href="filemap.props">filemap.props</a>
-  <dd> Default filemap (extension to MIME type) file.
 </dl>
 
 <h2>Conventions</h2>
 
 In general, directories with capitalized or uppercase names belong to specific
-appliances, while directories with lowercase names are more generic.  In all
-cases a ``<code>pia</code>'' subdirectory contains the appliance-specific
-contents of the ``<code>~pia</code>'' directory, and ``<code>pia/my</code>''
-the contents of the ``<code>~pia/.pia</code>'' directory--the names are
-changed to avoid having special characters in the names.<p>
-
-Subdirectories may also contain a <code>setup</code> script or Makefile.<p>
+applications, while directories with lowercase names are more generic.
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.2 1999-03-12 19:22:58 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.3 1999-03-31 01:42:34 pgage Exp $</b>
 <a name="files"><hr></a>
