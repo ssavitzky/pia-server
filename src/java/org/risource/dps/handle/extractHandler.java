@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.7 1999-04-07 23:21:23 steve Exp $
+//	$Id: extractHandler.java,v 1.8 1999-04-13 00:55:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.7 1999-04-07 23:21:23 steve Exp $
+ * @version $Id: extractHandler.java,v 1.8 1999-04-13 00:55:16 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -886,8 +886,8 @@ class appendHandler extends extract_subHandler {
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
       if (children) {
-	  parent = (ActiveNode)item;
-	  Copy.appendNodes(content, parent);	
+	  if (!NodeType.hasContent(item))
+	    Copy.appendNodes(content, parent);	
 	  // out.putNode(parent);
       } else {
 	ActiveNode p = (ActiveNode)item.getParentNode();
@@ -902,3 +902,43 @@ class appendHandler extends extract_subHandler {
   }
   appendHandler() { super(true, false); }
 }
+
+
+/** &lt;insert&gt; Insert nodes into the content of extracted nodes.
+ *	The <code>child</code> attribute contains a number thatt becomes 
+ *	the index of the inserted node.  Hence 0 inserts a new first node; 
+ *	-1 inserts a new last node.  
+ */
+class insertHandler extends extract_subHandler {
+  protected void action(Input in, Context aContext, Output out, 
+			ActiveAttrList atts, ActiveNodeList content) {
+    int child = MathUtil.getInt(atts, "child", -1);
+    ActiveNodeList extracted = getExtracted(aContext);
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      if (!NodeType.hasContent(item)) continue;
+      ActiveNodeList children = item.getContent();
+      int nchildren = (children == null) ? 0 : children.getLength();
+      if (child == -1 || nchildren == 0) {
+	// -1 always inserts at the end;
+	// just append if there are no children present to begin with.
+	Copy.appendNodes(content, item);	
+      } else if (child >= 0 && child >= nchildren) {
+	// >= 0 but off the end: just append.
+	Copy.appendNodes(content, item);	
+      } else {
+	int n = (child >= 0)? child : nchildren + 1 + child;
+	if (n < 0) n = 0;
+	ActiveNode next = children.activeItem(n);
+	int clen = content.getLength();
+	for (int j = 0; j < clen; j++) {
+	  item.insertBefore(content.item(j), next);
+	}
+      }
+    }
+  }
+  insertHandler() { super(true, false); }
+}
+

@@ -210,6 +210,17 @@ em: <extract><from><i> xx <em>xx yy zz</em> zzz</i></from>
 	    <child></child></extract>
 em: <extract><from>xx <em>yy</em> zz</from><child>0</child><parent /></extract>
 
+insert: <set name=ul><ul></ul></set>
+   <extract><from>&ul;</from> ul <insert><li>first</li></insert> </extract>
+   <extract><from>&ul;</from> ul <content /></extract>
+   <extract><from>&ul;</from> ul <insert child=-1><li>second</li></insert> </extract>
+   <extract><from>&ul;</from> ul <content /></extract>
+   <extract><from>&ul;</from> ul <insert child=0><li>0</li></insert></extract>
+   <extract><from>&ul;</from> ul <content /></extract>
+   <extract><from>&ul;</from> ul <insert child='-2'><li>-2</li></insert></extract>
+   <extract><from>&ul;</from> ul <content /></extract>
+	&ul;
+
 <h3>Recursive extract</h3>
 
 <set name='foo'>
@@ -269,5 +280,5 @@ Entity used as list for repeat; expanded in attribute:
 <hr />
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.5 1999-04-07 23:21:57 steve Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.6 1999-04-13 00:55:32 steve Exp $</b><br /></then></if>
 </baz></body></html>
