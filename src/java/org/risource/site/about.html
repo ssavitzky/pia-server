@@ -14,9 +14,9 @@
 
 <h2>Introduction</h2>
 
-<p> The Site Resource Package is designed to implement the mapping from URL's
-    passed to the PIA server, to documents returned by the browser.  This
-    breaks down into the following steps:
+<p> The Site Resource Package implements the mapping from URL's passed to the
+    PIA server, to documents returned by the browser.  This breaks down into
+    the following steps:
 
 <ol>
   <li> Mapping from the file part of the URL to the corresponding document
@@ -73,18 +73,19 @@
       <td>FileResource</td>
   </tr>
   <tr><th>Document</th>
-      <td>LocalDocument</td>
+      <td>SiteDocument</td>
       <td>FileDocument</td>
   </tr>
   <tr><th>Root</th>
       <td>Site</td>
-      <td>&nbsp;</td>
+      <td>(FileRoot)</td>
   </tr>
 </table>
 
 <p> The ``File'' classes are (comparatively) lightweight objects that contain
     no configuration information or associated XML metadata -- everything is
-    derived from the underlying file or directory.
+    derived from the underlying file or directory.  (<code>FileRoot</code> is
+    shown in parentheses because it is not presently implemented.)
 
 <p> One may well ask why the interface is called Resource and the
     implementation is called Subsite rather than the other way around, or
@@ -103,26 +104,30 @@
 
 <p> For this reason, Subsite objects are normally kept in memory as a tree.
     FileResource objects are not, since they are easy to reconstruct from the
-    available filesystem information.  Similarly, LocalDocument objects are
+    available filesystem information.  Similarly, FileDocument objects are
     easily reconstructed from a combination of filesystem information and
     the configuration information cached by their parent Subsite.
 
 <h2>Location</h2>
 
-<p> A Resource has a ``real'' location in the filesystem, which is a direct
-    descendent of the directory that corresponds to the Root resource.  A
-    container resource may also have a ``virtual search path'' of directories
-    in which to look for default children.  All writing is done in the real
-    location. 
+<p> A Resource normally has a ``real'' location in the filesystem, which is a
+    direct descendent of the directory that corresponds to the Root resource.
+    A container resource may also have a ``virtual search path'' of
+    directories in which to look for default children.  All writing is done in
+    the real location.
 
-<p> Typically the virtual search path of a resource has only two elements: a
-    ``prototype'' directory under the source-controlled PIA directory, and a
-    ``defaults'' directory that provides a fallback for documents like
-    <code>home.xh</code> which most directories are expected to have.  The
-    prototype directory corresponds roughly to <code>PIA/Agents</code>, and
-    most or all actual agents will have their prototype directories
-    <em>in</em> <code>PIA/Agents</code>.  The prototype for the standard,
-    out-of-the-box configuration ought to be <code>PIA</code> itself.
+<p> In most cases the real location of a resource will not exist at first; in
+    that case the resource has to be ``realized'' in order to write the
+    resource.
+
+<p> Typically the virtual search path of a resource has only one or two
+    elements: a ``prototype'' directory under the source-controlled PIA
+    directory, and possibly a ``defaults'' directory that provides a fallback
+    for documents like <code>home.xh</code> which most directories are
+    expected to have.  The prototype directory corresponds roughly to
+    <code>PIA/Agents</code>, and most or all actual agents will have their
+    prototype directories <em>in</em> <code>PIA/Agents</code>.  The prototype
+    for the standard, out-of-the-box configuration is <code>PIA</code> itself.
 
 <p> The real location of the PIA's root corresponds rather closely to the
     current <code>.pia</code> directory.  It is created in the first place by
@@ -155,10 +160,22 @@
     file.  A Subsite will normally have its configuration loaded from a file
     called, by default, ``<code>_subsite.xcf</code>''.
 
+<p> The configuration file of the Root resource may be specified separately;
+    if such a configuration file is provided the <code>_subsite.xcf</code>
+    file in the Root directory is <em>ignored</em>.  Alternative configuration
+    files for the PIA are provided in the <code><a
+    href="../../../../../Config/Site/">PIA/Config/Site</a></code> directory.
+
 <dl>
   <dt> <b>Note:</b>
-  <dd> <em>Although hooks are in place for XML configuration information, the
-       loading and saving of this information is presently unimplemented.</em> 
+  <dd> <em>Although hooks are in place for modifying and saving XML
+       configuration information, this feature is presently untested.</em>
+  <dt> Implementation note:
+  <dd> It is possible that the right way to save configuration information is
+       to save, not the <code>_subsite.xcf</code> file itself, but a copy of
+       the ``property Namespace'' that is derived from it.  On initialization
+       we first load the <code>_subsite.xcf</code> file, then override
+       properties from the property file to restore any changes.
 </dl>
 
 
@@ -166,7 +183,7 @@
 
 <p> One objective of the <code>site</code> package is to provide the machinery
     necessary to support ``agents,'' but without placing any constraints on
-    their implementation.  All that a Root really needs to do is to map names
+    their implementation.  All that the Root needs to do is to map names
     that start with a ``<code>~</code>'' (tilde) character into the ``home
     Resource'' (typically a container) for the named agent.  It is then up to
     the documents in that Resource to provide the agent's user interface.
@@ -177,28 +194,48 @@
     exists for sorting them out.  One way of doing this might be to make an
     Agent's ``home Resource'' a document rather than a container, but this may
     complicate things unnecessarily.  For the moment we can ignore the
-    problem, and simply make sure that every agent has its own home.
+    problem, and simply make sure that every registered agent has its own
+    home.
 
 <p> In the new PIA, then, agents will be considerably simpler than in the old
     scheme, because they will no longer have anything to do with interpreting
     URL's or processing documents.  Essentially, an agent will be nothing but
-    an XML namespace with a binding for <code>action</code> or
-    <code>act-on</code> that provides the hook.  An agent will correspond very
-    directly to the document resource its state is kept in (the
-    <code>AGENT.xml</code> file.
+    an XML Element with an <code>action</code> sub-element in its content that
+    provides the hook.  In most cases an agent's definition is simply a
+    sub-element of its home Subsite's configuration.
 
-<p> Note that an agent's state document is <em>contained in</em> its home
-    resource, along with all the other forms that manipulate the agent.  We
-    might want to have a specialized kind of Document for agents in order to
-    make state-saving more efficient; a better alternative might be to
-    classify the Agent's state as metadata -- there are already hooks in place
-    to save metadata.  We also ought to change the filename extension to take
-    advantage of the extension-to-tagset mapping.  An alternative would be to
-    put the tagset in the configuration.
+<p> Note that in this scheme, an agent no longer needs a state document!  All
+    of its state is contained in <em>ordinary</em> documents in its home
+    Subsite, which can be accessed in the usual way via entities or
+    <code>&lt;include&gt;</code> tags.  
+
+<h2>Index Files and Directory Listings</h2>
+
+<p> Normally the document associated with a container resource is its
+    <code>home</code> file (with any of several extensions taken from a
+    standard list).  If no <code>home</code> file exists, an
+    <code>index</code> is searched for.  Finally, if none of those exist, a
+    standardized listing is created (using the <code>Listing</code> class,
+    which implements the <code>Document</code> interface).
+
+<p> The standardized listing is always available (unless hidden) under the
+    name ``<code>.</code>'', which is the Unix shorthand for the current
+    directory.  The period is <em>only</em> recognized as a listing file when
+    it is the last filename in a path; otherwise it simply refers to the
+    current Container, so that ``<code>/./</code>'' is equivalent to
+    ``<code>/</code>'', as Unix users expect.  (This feature can be very
+    useful when constructing paths automatically, for example in a
+    <code>Makefile</code>.
+
+<p> This convention replaces the PIA's previous mechanism, which involved
+    distinguishing between paths ending and not ending with
+    ``<code>/</code>''.  This idea came from the original CERN
+    <code>httpd</code>, but since no other servers picked it up it proved
+    quite confusing for users.
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.6 1999-09-22 00:17:18 steve Exp $</b><br>
+<b>$Id: about.html,v 1.7 1999-09-22 16:41:20 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
