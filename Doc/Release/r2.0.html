@@ -36,16 +36,22 @@
   <li> The old-style agent checkpoint files, and the default <code><a
        href="/Admin/START-UP.html">Admin/START-UP.html</a></code>, have been
        eliminated.  If you have a customized <code>START-UP.html</code> file,
-       it will run as usual.  Browse to your new or customized agents'
-       <code>options</code> pages, and use the <b>Save Options</b> form to
-       write the XML data into files called <code>AGENT.xml</code> in
+       however, it will run as usual.  Browse to your new or customized
+       agents' <code>options</code> pages, and use the <b>Save Options</b>
+       form to write the XML data into files called <code>AGENT.xml</code> in
        the appropriate user directories.  Then use the <b>Save agent file
        list</b> button on either <a href="/Admin/control">/Admin/control</a>
        or <a href="/Admin/load-agent">/Admin/load-agent</a> to add the agent
-       to the list of known agents.  
+       to the list of known agents.
        <!-- === this will probably change before release. === -->
-       At some point there will be an option to save the file list
-       automatically when appropriate.
+       At some point there will be an option to save the file
+       list automatically when appropriate.
+
+  <li> There were two reasons for dropping the old checkpoint files, which
+       were implemented as serialized Java objects.  One is that they're not
+       robust across changes in the classes.  The other is that it turns out
+       that reading and writing XML files is faster.  Serialized tagsets
+       (<code>.tso</code> files) have been dropped for the same reason.
 
   <li> The <code>options</code> form has been significantly enhanced, as has
        the <a href="/Admin/configure">/Admin/configure</a> form.  A new form,
@@ -300,7 +306,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.21 1999-05-18 20:31:26 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.22 1999-05-25 23:09:56 steve Exp $</b><br>
 </body></html>
 
 
