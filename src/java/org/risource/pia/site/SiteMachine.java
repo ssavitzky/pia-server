@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.4 1999-10-05 15:08:49 steve Exp $
+// $Id: SiteMachine.java,v 1.5 1999-10-13 18:20:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -197,21 +197,6 @@ public class SiteMachine extends Machine {
   public void respondNotFound( Transaction req, String path){
     String msg = "File <code>" + path + "</code> not found. ";
     sendErrorResponse(req, HTTP.NOT_FOUND, msg);
-  }
-
-  /**
-   * Respond to a transaction with a stream of HTML.
-   */
-  public void sendStreamResponse ( Transaction trans, InputStream in ) {
-
-    Content c = new org.risource.content.text.html( in );
-
-    Transaction response = new HTTPResponse( trans, false );
-    response.setStatus( 200 ); 
-    response.setHeader("Server", Version.SERVER);
-    response.setContentType( "text/html" );
-    response.setContentObj( c );
-    response.startThread();
   }
 
   /**
