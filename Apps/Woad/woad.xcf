@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.22 2000-10-02 23:12:15 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.23 2000-10-06 17:45:39 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -15,7 +15,7 @@
 
   <targetServer><get name="PIA:target"/></targetServer>
   <sourcePrefix>/<get name="PIA:prefix">.source</get></sourcePrefix>
-  <sourceSuffix>/<get name="PIA:prefix">.notes</get></sourceSuffix>
+  <sourceSuffix>/<get name="PIA:suffix">.notes</get></sourceSuffix>
   <docOffset><get name="PIA:offset"/></docOffset>
   <wordPrefix>/.words</wordPrefix>
 
