@@ -27,47 +27,96 @@
 
 <h2>Annotated Contents</h2>
 
+<h3>Top Level Packages</h3>
 <dl>
-  <dt> <a href="content/">content/</a>
-  <dd> Representations for message content.
-  <dt> <a href="dom/">dom/</a>
-  <dd> Utilities that manipulate the W3C's <a href="../w3c/dom/">Document
-       Object Model</a>.  An implementation of the DOM, with local extensions,
-       is in <a href="dps/tree/">dps/tree/</a>.  The extended interfaces are
-       in <a href="dps/active/">dps/active/</a>.
   <dt> <a href="dps/">dps/</a>
+  </dt>
   <dd> Document Processing System.  This is the PIA's mechanism for expanding
-       ``active content'' represented in XML.
-  <dt> <a href="ds/">ds/</a>
-  <dd> Data Structures
+       ``active content'' represented in XML, and for operating on HTML and
+       other documents from the Web.  You will need to understand parts of
+       this package if you want to implement new tag handlers in Java, or use
+       the DPS in situations not covered by the simplified interfaces in the
+       <a href="sax/">sax</a> package.
+  </dd>`
   <dt> <a href="pia/">pia/</a>
-  <dd> The PIA proxy server itself, including the Agent interface and its
-       implementations. 
-  <dt> <a href="sax/">sax/</a>
-  <dd> Adapter classes that allow the DPS to be used in applications based on
-       the SAX (Simple API for XML) interface.
-  <dt> <a href="servlet/">servlet/</a>
-  <dd> Servlet implementation classes, for use in servlet engines such as
-       Tomcat and Apache-JServ
+  </dt>
+  <dd> The PIA proxy server itself.  You will need to understand parts of this
+       package if you want to implement new agents in Java, in order to
+       perform unusual operations on web transactions. 
+  </dd>`
   <dt> <a href="site/">site/</a>
+  </dt>
   <dd> The Site Resource Package, which provides flexible web-site
        configuration and management to PIA-based servers.
+  </dd>`
+</dl>
+
+<h3>Simplified API's</h3>
+
+<dl>
+  <dt> <a href="dom/">dom/</a>
+  </dt>
+  <dd> Interfaces and classes for use by application programmers who want to
+       use the Document Processing System in applications based on the W3C's
+       <a href="../w3c/dom/">Document Object Model</a>.  The DPS includes an
+       implementation, with extensions, of the DOM in <a
+       href="dps/tree/">dps/tree/</a>; the extended interfaces are in <a
+       href="dps/active/">dps/active/</a>.
+  </dd>`
+  <dt> <a href="sax/">sax/</a>
+  </dt>
+  <dd> Interfaces and classes for use by application programmers who want to
+       use the Document Processing System in applications based on
+       <a href="../xml/sax/">SAX</a>, the Simple API for XML. 
+  </dd>`
+  <dt> <a href="servlet/">servlet/</a>
+  </dt>
+  <dd> Servlet implementation classes, for use in servlet engines such as
+       Tomcat and Apache-JServ
+  </dd>`
+</dl>
+
+<h3>Subsidiary Packages</h3>
+
+<p> In most cases, the average application programmer will not need to make
+    direct use of these packages.  You may need to refer to some of their
+    interfaces if you are writing extensions in the <a href="dps/">dps</a> or
+    <a href="pia/">pia</a> packages.
+</p>
+
+</dl>
+  <dt> <a href="content/">content/</a>
+  </dt>
+  <dd> Representations for message content.
+  </dd>`
+  <dt> <a href="ds/">ds/</a>
+  </dt>
+  <dd> Data Structures
+  </dd>`
   <dt> <a href="test/">test/</a>
+  </dt>
   <dd> Test cases and drivers (mostly <strong>obsolete</strong>)
+  </dd>`
   <dt> <a href="tf/">tf/</a>
+  </dt>
   <dd> Classes that compute Transaction Features.  These are lazily-evaluated
        values matched by the PIA against each agent's selection criteria.
+  </dd>`
   <dt> <a href="util/">util/</a>
+  </dt>
   <dd> Utilities
+  </dd>`
 </dl>
 
 <h2>Naming Conventions</h2>
 
-<p>Every effort has been made to reduce directory depth in order to accommodate
-Microsoft and ISO9660 restrictions.  In particular, the hierarchy extends only
-two more levels below this directory (e.g. <code>dps/handle</code>).
+<p> Every effort has been made to reduce directory depth in order to
+    accommodate Microsoft and ISO9660 restrictions.  In particular, the
+    hierarchy extends only two more levels below this directory
+    (e.g. <code>dps/handle</code>).
+</p>
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.11 2000-04-20 22:35:36 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.12 2000-05-01 18:04:11 steve Exp $</b>
 <a name="files"><hr></a>
