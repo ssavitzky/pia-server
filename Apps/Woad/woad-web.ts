@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.12 2000-12-06 02:11:35 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.13 2000-12-15 19:55:48 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -229,7 +229,7 @@
 <hr />
 <if> <get name="FORM:edit"/>
      <then><!-- === PIA is barfing on POST again... === -->
-	<form method="GET" action="&DOC:path;">
+	<form method="POST" action="&DOC:path;">
 	  <table cellpadding="0" border="0">
 	    <tr>
 	      <th bgcolor="#ffffff">
