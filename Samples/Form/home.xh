@@ -1,0 +1,57 @@
+<?-- the tag definitions below can be incorporated into a "tagset" if
+      desired --?>
+
+<define element="todaytag" >
+  <doc> This sample tag expands to show today's date </doc>
+  <action>
+     Today is &dayname; , &monthname; &day; &year;
+  </action>
+</define>
+
+<define element="myfont">
+   <doc>Wraps a user-selected font around text. </doc>
+   <action>
+      <font size="+4" color="green"><b> &content; </b></font>
+    </action>
+</define>
+
+
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html> <head> 
+
+<title>Sample Form Demo</title>
+</head>
+
+<body bgcolor='#ffffff' >
+
+<h2> I am a sample Form </h2> 
+
+
+
+<if>
+  <get name='FORM:data' />
+     <then> 
+	You have entered the greeting:
+	<p>
+	 <font size='+5' color='#FF0000'><get name='FORM:data' /> </font>
+	</p>
+
+        which appeared via the query string &urlQuery;
+     </then>
+
+       <else> 
+	<form action='&urlPath;' method='post'> 
+	My mission impossible is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
+	My owner, &user.name;, may decide.
+	<p>
+	<input type='submit' value='Enter' /> 
+	A Greeting: <input name='data' /> 
+</p></form> 
+
+<!-- here is a comment which will appear in the browser -->
+<?-- here is a comment which won't appear in the browser --?>
+
+</else> 
+</if> 
+
+</body></html> 
