@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.19 2000-08-10 17:29:51 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.20 2000-08-24 22:54:59 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -71,8 +71,8 @@
 <!-- Woad Keyword Indices -->
 
   <wordPrefix>/.words</wordPrefix>
-  <Container name=".words" virtual="/Apps/Woad/Words" suspect="true">
-    <HomeDocumentName>words</HomeDocumentName>
+  <Container name=".words" virtual="pia:/Apps/Woad/Words" suspect="true">
+    <HomeDocumentName>word-index</HomeDocumentName>
     <IndexDocumentPath>/.Woad/Tools/word-listing.xh</IndexDocumentPath>
     <Ext name="html"	type="text/html" tagset="HTML" 			/>
     <!-- These are the tagsets used for woad's active documents: -->
