@@ -239,13 +239,13 @@ is t")
 (defvar html-helper-image-map nil
   "Keymap used for images.")
 (defvar html-helper-struct-map nil
-  "Keymap used for interform control sturctures.")
+  "Keymap used for dps control sturctures.")
 (defvar intf-tests-map nil
-  "Keymap used for interform tests.")
+  "Keymap used for dps tests.")
 (defvar intf-num-map nil
-  "Keymap used for interform numeric processing.")
+  "Keymap used for dps numeric processing.")
 (defvar intf-listproc-map nil
-  "Keymap used for interform list processing.")
+  "Keymap used for dps list processing.")
 (defvar intf-form-map nil
   "Keymap used for PIA form processing.")
 (defvar intf-nb-map nil
@@ -471,46 +471,46 @@ requested."
    (image   "a"       nil               "html-align-image"	  ("<img align=\"" (r . "Alignment: ") "\" src=\"" (r . "Image URL: ") "\">"))
    (image   "e"       "<img align="     "html-align-alt-image"	  ("<img align=\"" (r . "Alignment: ") "\" src=\"" (r . "Image URL: ") "\" alt=\"" (r . "Text URL: ") "\">"))
 
-   ;;interform control structures
-   (struct   "r"       "<repeat>"	"interform-repeat"	  ("<repeat " (P . "Attribute entry(list=\"...\" | start=start stop=stop [step=step] [entity=\"name\"]): ") ">" (r) "\n</repeat>") "Repeat content with entity (default &amp;li;) in list. start and stop specify a numeric list from start to stop with step stepsize (default +/-1). Return the repeated content")
-   (struct   "i"       "<if>"	        "interform-if"	          (&"<if>" "\n<then>" > (p . "Statements: ")"</then>" "\n<else>" > (p . "Statements: ") "</else>" "\n</if>" >) "If test non-null, expand then, else else.")
-   (struct   "f"       "<foreach>"	"interform-foreach"	  ("<foreach " (P . "Attribute entry(list=\"list\" [entity=ident]): ") ">" (r . "Content: ") "\n</foreach>") "Repeat content for each entity (default &amp;li;) in list. Return the repeated
+   ;;dps control structures
+   (struct   "r"       "<repeat>"	"dps-repeat"	  ("<repeat " (P . "Attribute entry(list=\"...\" | start=start stop=stop [step=step] [entity=\"name\"]): ") ">" (r) "\n</repeat>") "Repeat content with entity (default &amp;li;) in list. start and stop specify a numeric list from start to stop with step stepsize (default +/-1). Return the repeated content")
+   (struct   "i"       "<if>"	        "dps-if"	          (&"<if>" "\n<then>" > (p . "Statements: ")"</then>" "\n<else>" > (p . "Statements: ") "</else>" "\n</if>" >) "If test non-null, expand then, else else.")
+   (struct   "f"       "<foreach>"	"dps-foreach"	  ("<foreach " (P . "Attribute entry(list=\"list\" [entity=ident]): ") ">" (r . "Content: ") "\n</foreach>") "Repeat content for each entity (default &amp;li;) in list. Return the repeated
     content")
 
-   ;;interform tests
-   (intftests   "t"      "<test>"	"interform-test"	  ("<test " 
+   ;;dps tests
+   (intftests   "t"      "<test>"	"dps-test"	  ("<test " 
 								  (P "Attribute entry ([iftrue=\"value\"][iffalse=\"value\"])<cr> to see more: ") " "
 								  (P "Attribute entry ([not][text|link][zero|positive|negative|null||markup|match=\"pattern\"[exact][case]]): ")
  ">" (r) "\n</test>") "Test content; return null or iffalse if false, else '1' or iftrue. Tests: default (non-whitespace), zero, positive, negative, null, (contains) markup, match='pattern'. Modifiers: not, case (sensitive), text, link, exact (match)")
-   (intftests   "e"       "<equal>"	"interform-equal"	  ("<equal " (P . "Attribute entry([not][case][text][numeric]): ") ">" (r) "</equal>") "Test list items in content for equality; return null or iffalse if false, else '1' or iftrue. Modifiers: not, case (sensitive), text, numeric.")
-   (intftests   "s"       "<sorted>"	"interform-sorted"	  ("<sorted " (P . "Attribute entry([case][text][numeric][reverse]): ") ">" "</sorted>") "Test whether items in content are sorted. Optionally case (sensitive), text, numeric, reverse. ")
+   (intftests   "e"       "<equal>"	"dps-equal"	  ("<equal " (P . "Attribute entry([not][case][text][numeric]): ") ">" (r) "</equal>") "Test list items in content for equality; return null or iffalse if false, else '1' or iftrue. Modifiers: not, case (sensitive), text, numeric.")
+   (intftests   "s"       "<sorted>"	"dps-sorted"	  ("<sorted " (P . "Attribute entry([case][text][numeric][reverse]): ") ">" "</sorted>") "Test whether items in content are sorted. Optionally case (sensitive), text, numeric, reverse. ")
 
-   ;;interform numeric processing
-   (intfnum   "s"      "<sum>"	"interform-sum"	  ("<sum " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</sum>") "Return sum of numbers in content. Shows D digits after the decimal point.  (Default D=-1 which shows all digits.)")
-   (intfnum   "d"      "<difference>"	"interform-difference"	  ("<difference " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</difference>") "Return difference of numbers in content Shows D digits after the decimal point. (Default D=-1 which shows all digits.) ")
-   (intfnum   "p"      "<product>"	"interform-product"	  ("<product "  (P . "Attribute entry([digits=D]): ")   ">" (r) "\n</product>") "Return product of numbers in content Shows D digits after the decimal point. (Default D=-1 which shows all digits.) ")
-   (intfnum   "q"      "<quotient>"	"interform-quotient"	  ("<quotient " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</quotient>") "Return difference (n1/n2/...) of numbers in content. Shows D digits after the decimal point. (Default D=-1 which shows all digits.)")
+   ;;dps numeric processing
+   (intfnum   "s"      "<sum>"	"dps-sum"	  ("<sum " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</sum>") "Return sum of numbers in content. Shows D digits after the decimal point.  (Default D=-1 which shows all digits.)")
+   (intfnum   "d"      "<difference>"	"dps-difference"	  ("<difference " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</difference>") "Return difference of numbers in content Shows D digits after the decimal point. (Default D=-1 which shows all digits.) ")
+   (intfnum   "p"      "<product>"	"dps-product"	  ("<product "  (P . "Attribute entry([digits=D]): ")   ">" (r) "\n</product>") "Return product of numbers in content Shows D digits after the decimal point. (Default D=-1 which shows all digits.) ")
+   (intfnum   "q"      "<quotient>"	"dps-quotient"	  ("<quotient " (P . "Attribute entry([digits=D]): ") ">" (r) "\n</quotient>") "Return difference (n1/n2/...) of numbers in content. Shows D digits after the decimal point. (Default D=-1 which shows all digits.)")
 
-   ;;interform list processing
-   (intflistproc   "s"      "<sort>"	"interform-sort"	  ("<sort " (P "Attribute entry ([case][text][numeric][reverse]): ") ">" (r) "\n</sort>") "Sort items in content. Optionally case (sensitive), text, numeric, reverse. ")
+   ;;dps list processing
+   (intflistproc   "s"      "<sort>"	"dps-sort"	  ("<sort " (P "Attribute entry ([case][text][numeric][reverse]): ") ">" (r) "\n</sort>") "Sort items in content. Optionally case (sensitive), text, numeric, reverse. ")
 
-   ;;interform form processing
-   (intfform   "f"      "<form>"	"interform-form"	  ("<form " (P "Attribute entry ([submit][copy][if-processed=\"repl\"]): ") ">" "<process>"(r) "</process>" "\n</form>") "html <form> tag. Process or copy content if submitted, and contains <process> element.  Optional id. Optionally submit. If processed, replace with value of if-processed if present. Increment &forms; entity when finished.")
+   ;;dps form processing
+   (intfform   "f"      "<form>"	"dps-form"	  ("<form " (P "Attribute entry ([submit][copy][if-processed=\"repl\"]): ") ">" "<process>"(r) "</process>" "\n</form>") "html <form> tag. Process or copy content if submitted, and contains <process> element.  Optional id. Optionally submit. If processed, replace with value of if-processed if present. Increment &forms; entity when finished.")
 
-   (intfform   "s"      "<submit-forms>"	"interform-submit-forms"	  ("<submit-forms " 
+   (intfform   "s"      "<submit-forms>"	"dps-submit-forms"	  ("<submit-forms " 
 										  (P "Attribute entry ([hour=hh][minute=mm][day=dd][month=[\"name\"|mm]][weekday=[\"name\"|n]])<cr> to see more: ") " "
 										  (P "Attribute entry ([repeat=count][until=mm-dd-hh]): ")
- ">" (r . "<a href=\"query\">...</a>|...form...") "\n</submit-forms>") "Submit a form or link element or every form (not links) in content.  Optionally submit at hour, minute, day, month, weekday. Optionally repeat=N times (missing hour, day, month, weekday are wildcards).Optionally until=mm-dd-hh time when submissions are halted. Use options interform of agent to delete repeating entries. ")
+ ">" (r . "<a href=\"query\">...</a>|...form...") "\n</submit-forms>") "Submit a form or link element or every form (not links) in content.  Optionally submit at hour, minute, day, month, weekday. Optionally repeat=N times (missing hour, day, month, weekday are wildcards).Optionally until=mm-dd-hh time when submissions are halted. Use options dps of agent to delete repeating entries. ")
 
-   ;;interform name bindings
-   (intfnb   "s"      "<set>"	"interform-set"	  ("<set " (P "Attribute entry (name=\"name\" | index=\"index\"): ") " "                                              (P "Attribute entry ([copy][attr=attr|insert=where[replace]])<cr> to see more: ") " "
+   ;;dps name bindings
+   (intfnb   "s"      "<set>"	"dps-set"	  ("<set " (P "Attribute entry (name=\"name\" | index=\"index\"): ") " "                                              (P "Attribute entry ([copy][attr=attr|insert=where[replace]])<cr> to see more: ") " "
 						   (P "Attribute entry ([pia|agent|trans[feature]|env|[element[tag=ident]]|)<cr> to see more: " where 'noinsert)
 						   (if (equal (tempo-lookup-named 'where) "") (tempo-forget-insertions))
 						   (P "Attribute entry (entity[global|local]]): " where 'noinsert)
 (s where)
  ">" (r) "</set>" ""))
 
-   (intfnb   "g"      "<get>"	"interform-get"	  ("<get " (P "Attribute entry ([name=\"name\" | index=\"index\"]): ") " " 
+   (intfnb   "g"      "<get>"	"dps-get"	  ("<get " (P "Attribute entry ([name=\"name\" | index=\"index\"]): ") " " 
 						  (P "Attribute entry ([file=\"filename\"|href=\"url\"|[file|href] name=\"string\"])<cr> to see more: " where 'noinsert) 
 						  (if (equal (tempo-lookup-named 'where) "") (tempo-forget-insertions))
 						  (P "Attribute entry (pia|agent|form|trans|env|element[tag=tag]|local|global): " where 'noinsert)
@@ -521,44 +521,44 @@ requested."
  (s misc)						 
  ">" ""))
 
-   ;;interform string processing
-   (intfsp   "a"       "<add-markup>"   "interform-add-markup"  ("<add-markup>" (r) "</add-markup>"))
-   (intfsp   "p"       "<pad>"          "interform-pad"         ("<pad " (P "Attribute entry(width=N [align=[left|right|center]][spaces]): ") ">" (r) "</pad>"))
-   (intfsp   "t"       "<trim>"         "interform-trim"        ("<trim " (P "Attribute entry([all]): ") ">"(r) "</trim>"))
+   ;;dps string processing
+   (intfsp   "a"       "<add-markup>"   "dps-add-markup"  ("<add-markup>" (r) "</add-markup>"))
+   (intfsp   "p"       "<pad>"          "dps-pad"         ("<pad " (P "Attribute entry(width=N [align=[left|right|center]][spaces]): ") ">" (r) "</pad>"))
+   (intfsp   "t"       "<trim>"         "dps-trim"        ("<trim " (P "Attribute entry([all]): ") ">"(r) "</trim>"))
 
-   ;;interform calendar
-   (intfca   "c"       "<calendar>"      "interform-calendar"   ("<calendar " (P "Attribute entry(month=\"month\" year=\"year\"): ") ">")) 
-   (intfca   "d"       "<calendar-day>"  "interform-calendar-day"   ("<calendar-day " (P "Attribute entry(cal=\"calendar-table\" day=\"day\"): ") ">" (r) "</calendar-day>")) 
+   ;;dps calendar
+   (intfca   "c"       "<calendar>"      "dps-calendar"   ("<calendar " (P "Attribute entry(month=\"month\" year=\"year\"): ") ">")) 
+   (intfca   "d"       "<calendar-day>"  "dps-calendar-day"   ("<calendar-day " (P "Attribute entry(cal=\"calendar-table\" day=\"day\"): ") ">" (r) "</calendar-day>")) 
 
 
-   ;;interform os processing
-   (intfos   "a"       "<authenticate>"   "interform-authenticate"  ("<authenticate " (P "Attribute entry(user=ident password=\"string\"[file=\"fn\"]): ") ">"))
-   (intfos   "o"       "<os-command>"   "interform-os-command"  ("<os-command " (P "Attribute entry([bypass]): ") ">" (r) "</os-command>"))
-   (intfos   "t"       "<os-command-output>"   "interform-os-command-output"  ("<os-command-output " (P "Attribute entry([bypass]): ") ">" (r) "</os-command-output>"))
-   (intfos   "p"       "<password-file-entry>"   "interform-password-file-entry"  ("<password-file-entry " (P "Attribute entry(user=ident password=\"string\"[file=\"fn\"]): ") ">" (r) "</password-file-entry>"))
-   (intfos   "r"       "<read>"   "interform-read"  ("<read " 
-        (P "Attribute entry([file=\"name\"[interform[agent=\"agentName\"]][info|head|directory[links][tag=tag][all|match=\"regexp\"]] |)<cr> to see more: " file 'noinsert)
+   ;;dps os processing
+   (intfos   "a"       "<authenticate>"   "dps-authenticate"  ("<authenticate " (P "Attribute entry(user=ident password=\"string\"[file=\"fn\"]): ") ">"))
+   (intfos   "o"       "<os-command>"   "dps-os-command"  ("<os-command " (P "Attribute entry([bypass]): ") ">" (r) "</os-command>"))
+   (intfos   "t"       "<os-command-output>"   "dps-os-command-output"  ("<os-command-output " (P "Attribute entry([bypass]): ") ">" (r) "</os-command-output>"))
+   (intfos   "p"       "<password-file-entry>"   "dps-password-file-entry"  ("<password-file-entry " (P "Attribute entry(user=ident password=\"string\"[file=\"fn\"]): ") ">" (r) "</password-file-entry>"))
+   (intfos   "r"       "<read>"   "dps-read"  ("<read " 
+        (P "Attribute entry([file=\"name\"[dps[agent=\"agentName\"]][info|head|directory[links][tag=tag][all|match=\"regexp\"]] |)<cr> to see more: " file 'noinsert)
         (if (equal (tempo-lookup-named 'file) "") (tempo-forget-insertions))
         (P "Attribute entry (href=\"url\" [resolve] ]): " file 'noinsert)
 (s file) " "
         (P "Attribute entry ([base=\"path\"] [process [tagset=\"name\"]]): ")
  ">"))
-    (intfos   "w"       "<write>"   "interform-write"  ("<write " 
-        (P "Attribute entry([file=\"name\" [interform] [append] | href=\"url\" [post]]): ") " "
+    (intfos   "w"       "<write>"   "dps-write"  ("<write " 
+        (P "Attribute entry([file=\"name\" [dps] [append] | href=\"url\" [post]]): ") " "
         (P "Attribute entry([base=\"path\"][trim][line][copy[protect [markup]]]): ")
  ">" (r) "</write>"))
 
 
-   ;;interform os processing
-   (intfac   "a"       "<agent-criteria>"   "interform-agent-criteria"  ("<agent-criteria " (P "Attribute entry([agent=ident]): ") ">"))
-   (intfac   "h"       "<agent-home>"   "interform-agent-home"  ("<agent-home " (P "Attribute entry(name=ident [link]): ") ">"))
-   (intfos   "i"       "<agent-install>"   "interform-agent-install"  ("<agent-install " (P "Attribute entry(name=ident [type=ident]): ") ">" (r) "</agent-install>"))
-   (intfac   "l"       "<agent-list>"   "interform-agent-list"  ("<agent-list " (P "Attribute entry([type=type][subs]): ") ">"))
-   (intfac   "o"       "<agent-options>"   "interform-agent-options"  ("<agent-options " (P "Attribute entry([name=\"agent-name\"]): ") ">"))
-   (intfac   "r"       "<agent-remove>"   "interform-agent-remove"  ("<agent-remove " (P "Attribute entry(name=\"agent-name\"): ") ">"))
-   (intfac   "n"       "<agent-running>"   "interform-agent-running"  ("<agent-running " (P "Attribute entry(name=\"agent-name\"): ") ">"))
-   (intfac   "s"       "<agent-set-criterion>"   "interform-agent-set-criterion"  ("<agent-set-criterion " (P "Attribute entry(name=\"name\"[value=\"value\"][agent=\"agent-name\"]): ") ">"))
-   (intfac   "p"       "<agent-set-options>"   "interform-agent-set-options"  ("<agent-set-options " (P "Attribute entry([name=\"agent-name\"]): ") ">" (r) "</agent-set-options>"))
+   ;;dps os processing
+   (intfac   "a"       "<agent-criteria>"   "dps-agent-criteria"  ("<agent-criteria " (P "Attribute entry([agent=ident]): ") ">"))
+   (intfac   "h"       "<agent-home>"   "dps-agent-home"  ("<agent-home " (P "Attribute entry(name=ident [link]): ") ">"))
+   (intfos   "i"       "<agent-install>"   "dps-agent-install"  ("<agent-install " (P "Attribute entry(name=ident [type=ident]): ") ">" (r) "</agent-install>"))
+   (intfac   "l"       "<agent-list>"   "dps-agent-list"  ("<agent-list " (P "Attribute entry([type=type][subs]): ") ">"))
+   (intfac   "o"       "<agent-options>"   "dps-agent-options"  ("<agent-options " (P "Attribute entry([name=\"agent-name\"]): ") ">"))
+   (intfac   "r"       "<agent-remove>"   "dps-agent-remove"  ("<agent-remove " (P "Attribute entry(name=\"agent-name\"): ") ">"))
+   (intfac   "n"       "<agent-running>"   "dps-agent-running"  ("<agent-running " (P "Attribute entry(name=\"agent-name\"): ") ">"))
+   (intfac   "s"       "<agent-set-criterion>"   "dps-agent-set-criterion"  ("<agent-set-criterion " (P "Attribute entry(name=\"name\"[value=\"value\"][agent=\"agent-name\"]): ") ">"))
+   (intfac   "p"       "<agent-set-options>"   "dps-agent-set-options"  ("<agent-set-options " (P "Attribute entry([name=\"agent-name\"]): ") ">" (r) "</agent-set-options>"))
 
 
 
@@ -851,50 +851,50 @@ Written by nelson@reed.edu, http://www.reed.edu/~nelson/
 
 (provide 'html-helper-mode)
 
-(setq mymenu (list "Interform"      
-		                    (vector "Agent-criteria" 'tempo-template-interform-agent-criteria t)
-				    (vector "Agent-home" 'tempo-template-interform-agent-home t)
-				    (vector "Agent-install" 'tempo-template-interform-agent-install t)
-				    (vector "Agent-list" 'tempo-template-interform-agent-list t)
-				    (vector "Agent-options" 'tempo-template-interform-agent-options t)
-				    (vector "Agent-remove" 'tempo-template-interform-agent-remove t)
-				    (vector "Agent-running" 'tempo-template-interform-agent-running t)
-				    (vector "Agent-set-criterion" 'tempo-template-interform-agent-set-criterion t)
-				    (vector "Agent-set-options" 'tempo-template-interform-agent-set-options t)
+(setq mymenu (list "Dps"      
+		                    (vector "Agent-criteria" 'tempo-template-dps-agent-criteria t)
+				    (vector "Agent-home" 'tempo-template-dps-agent-home t)
+				    (vector "Agent-install" 'tempo-template-dps-agent-install t)
+				    (vector "Agent-list" 'tempo-template-dps-agent-list t)
+				    (vector "Agent-options" 'tempo-template-dps-agent-options t)
+				    (vector "Agent-remove" 'tempo-template-dps-agent-remove t)
+				    (vector "Agent-running" 'tempo-template-dps-agent-running t)
+				    (vector "Agent-set-criterion" 'tempo-template-dps-agent-set-criterion t)
+				    (vector "Agent-set-options" 'tempo-template-dps-agent-set-options t)
 
-		                    (vector "Cal-calendar" 'tempo-template-interform-calendar t)
-				    (vector "Cal-calendar-day" 'tempo-template-interform-calendar-day t)
+		                    (vector "Cal-calendar" 'tempo-template-dps-calendar t)
+				    (vector "Cal-calendar-day" 'tempo-template-dps-calendar-day t)
 
-				    (vector "Formproc-form" 'tempo-template-interform-form t)
-				    (vector "Formproc-submit-forms" 'tempo-template-interform-submit-forms t)
+				    (vector "Formproc-form" 'tempo-template-dps-form t)
+				    (vector "Formproc-submit-forms" 'tempo-template-dps-submit-forms t)
 
-				    (vector "Listproc-sort" 'tempo-template-interform-sort t)
+				    (vector "Listproc-sort" 'tempo-template-dps-sort t)
 
-				    (vector "Namebnd-set" 'tempo-template-interform-set t)
-				    (vector "Namebnd-get" 'tempo-template-interform-get t)
+				    (vector "Namebnd-set" 'tempo-template-dps-set t)
+				    (vector "Namebnd-get" 'tempo-template-dps-get t)
 
-				    (vector "Numproc-sum" 'tempo-template-interform-sum t)
-				    (vector "Numproc-difference" 'tempo-template-interform-difference t)
-				    (vector "Numproc-product" 'tempo-template-interform-product t)
-				    (vector "Numproc-quotient" 'tempo-template-interform-quotient t)
+				    (vector "Numproc-sum" 'tempo-template-dps-sum t)
+				    (vector "Numproc-difference" 'tempo-template-dps-difference t)
+				    (vector "Numproc-product" 'tempo-template-dps-product t)
+				    (vector "Numproc-quotient" 'tempo-template-dps-quotient t)
 
-				    (vector "OS-authenticate" 'tempo-template-interform-authenticate t)
-				    (vector "OS-command" 'tempo-template-interform-os-command t)
-				    (vector "OS-command-output" 'tempo-template-interform-os-command-output t)
-				    (vector "OS-password-file-entry" 'tempo-template-interform-password-file-entry t)
-				    (vector "OS-read" 'tempo-template-interform-read t)
-				    (vector "OS-write" 'tempo-template-interform-write t)
+				    (vector "OS-authenticate" 'tempo-template-dps-authenticate t)
+				    (vector "OS-command" 'tempo-template-dps-os-command t)
+				    (vector "OS-command-output" 'tempo-template-dps-os-command-output t)
+				    (vector "OS-password-file-entry" 'tempo-template-dps-password-file-entry t)
+				    (vector "OS-read" 'tempo-template-dps-read t)
+				    (vector "OS-write" 'tempo-template-dps-write t)
 
-				    (vector "Stringp-add-markup" 'tempo-template-interform-add-markup t)
-				    (vector "Stringp-pad" 'tempo-template-interform-pad t)
-				    (vector "Stringp-trim" 'tempo-template-interform-trim t)
+				    (vector "Stringp-add-markup" 'tempo-template-dps-add-markup t)
+				    (vector "Stringp-pad" 'tempo-template-dps-pad t)
+				    (vector "Stringp-trim" 'tempo-template-dps-trim t)
 
-		                    (vector "Struct-if" 'tempo-template-interform-if t)
-		                    (vector "Struct-foreach" 'tempo-template-interform-foreach t)
-				    (vector "Struct-repeat" 'tempo-template-interform-repeat t)
-				    (vector "Test-test" 'tempo-template-interform-test t)
-				    (vector "Test-equal" 'tempo-template-interform-equal t)
-				    (vector "Test-sorted" 'tempo-template-interform-sorted t)
+		                    (vector "Struct-if" 'tempo-template-dps-if t)
+		                    (vector "Struct-foreach" 'tempo-template-dps-foreach t)
+				    (vector "Struct-repeat" 'tempo-template-dps-repeat t)
+				    (vector "Test-test" 'tempo-template-dps-test t)
+				    (vector "Test-equal" 'tempo-template-dps-equal t)
+				    (vector "Test-sorted" 'tempo-template-dps-sorted t)
 ))
 
 
