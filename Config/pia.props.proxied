@@ -1,6 +1,0 @@
-pia.port=80
-pia.realport=8888
-pia.debug=false
-pia.verbose=false
-pia.reqtimeout=40000
-

@@ -1,7 +1,0 @@
-pia.root=~/pia
-pia.usrroot=~/.pia
-pia.port=8888
-pia.debug=false
-pia.verbose=false
-pia.logger=org.risource.pia.Logger
-pia.reqtimeout=40000
