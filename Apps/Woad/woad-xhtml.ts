@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.26 2000-10-02 23:13:02 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.27 2000-10-05 19:00:25 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -708,10 +708,10 @@ Note that we only need these inside the PIA.
 	<make name="title"><get name="FORM:title" /></make>
 	<make name="created">&dateString;</make>
 	<make name="summary">
-	    <parse><get name="FORM:summary" /></parse>
+	    <parse tagset="HTML"><get name="FORM:summary" /></parse>
 	</make>
 	<make name="content">
-	    <parse><get name="FORM:content" /></parse>
+	    <parse tagset="HTML"><get name="FORM:content" /></parse>
 	</make>
 </make><!-- note created using quick form -->
 </output>
@@ -1142,7 +1142,9 @@ Note that we only need these inside the PIA.
 </define>
 
 <define element="tool-bar">
-  <doc> A toolbar or collection of useful forms and other gizmos.
+  <doc> A toolbar or collection of useful forms and other gizmos.  In WOAD, it
+	is currently entirely devoted to <code>/.word</code> and its contents
+	and should probably be renamed <tag>word-bar</tag>.
   </doc>
   <action>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -1150,9 +1152,11 @@ Note that we only need these inside the PIA.
 	<th>keyword</th>
 	<td>
 	     <a href="/.words/">/contexts/</a> (
+	     <a href="/.words/class/">classes</a>
 	     <a href="/.words/file/">files</a>
 	     <a href="/.words/func/">functions</a>
-	     <a href="./words/title/">titles</a>
+	     <a href="/.words/title/">titles</a>
+	     <a href="/.words/xref/">xrefs</a>
 	     ... )
 	</td>
     <form action="/.words/">
@@ -1313,6 +1317,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.26 2000-10-02 23:13:02 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.27 2000-10-05 19:00:25 steve Exp $ -->
 </tagset>
 
