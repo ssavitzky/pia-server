@@ -1,0 +1,57 @@
+<h1>Package org.risource.content</h1>
+
+<a href="../">[..]</a>
+<a href="#files">[files]</a><p>
+
+This directory contains generic implementations of the <a
+href=../pia/Content.java> Content </a> interface.
+A content objects is used to represent the "content" of a <A
+href=../pia/Transaction.java>transaction</a>, usually streaming data (HTML page, JPEG
+file, etc.) being sent from a Web server to a browser.  The content interface
+provides a very generic way for <a href=../pia/Agent.java>agents</a> to get
+access to or modify
+the data in transit.  Some agents (e.g. cache agent) grab a copy of the data and
+put it into a file (using the <code>tapIn or tapOut</code> methods), while others modify the data  (e.g. Proxie inserts a
+toolbar just after the body tag of HTML pages using the <code>add</code> method). <p>
+
+The content classes in this directory are normally instantiated by a <a
+href=../pia/ContentFactory.java> ContentFactory</a>.  The default
+ContentFactory uses mime type to find a name of the corresponding content
+class, so <a href=text/html.java> text/html.class</a> would be the class
+instantiated for data of type text/html.  If no specific type is found a
+default is used <a href=ByteStreamContent.java>ByteStreamContent</a>.
+
+<p>
+All of these classes inherit from <a
+href=StreamingContent.java>StreamingContent</a> which provides all of the
+machinery for a circular buffer.  It also keeps track of state changes and
+uses that to notify interested agents when at appropriate times.  
+In theory, new content classes can be implemented by subclassing
+StreamingContent and providing appropriate <code>readData</code> and
+<code>writeData</code> methods.
+Note that
+these classes are complicated by the fact that we want to start shipping the
+data out to a browser as soon as possible (without waiting for the entire data
+structure to be in memory), so a content object has to keep track of any
+modifications specified by an agent and perform them at the appropriate time
+as the data is being shipped through the circular buffer.
+
+
+<h2>Annotated Contents</h2>
+
+<dl>
+   <dt> <a href="GenericContent.java">GenericContent.java</a>
+  <dd> abstract implementation of content interface
+  <dt> <a href="StreamingContent.java">StreamingContent.java</a>
+  <dd> base implementation for streaming data (implements circular buffer and
+       state tracking), generic agent interaction 
+ <dt> <a href="ByteStreamContent.java">ByteStreamContent.java</a>
+  <dd> default content object
+  <dt> <a href="text/">text/</a>
+  <dd> specialized implementations of content for various types of text
+       objects (e.g. text/html)
+ </dl>
+
+
+<b>$Id: HEADER.html,v 1.1 1999-04-13 20:11:48 wolff Exp $</b>
+<a name="files"><hr></a>

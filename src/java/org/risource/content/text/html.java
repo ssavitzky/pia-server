@@ -1,5 +1,5 @@
 //  html.java
-// $Id: html.java,v 1.4 1999-03-12 19:24:18 steve Exp $
+// $Id: html.java,v 1.5 1999-04-13 20:11:53 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -70,10 +70,10 @@ public class html extends Default
 	  re = new RegExp("</(head|Head|HEAD)[^>]*>");
 	  mi = re.match(s );
 	  hend = mi.end();
-	  bend = hend;
+	  //	  bend = hend;
 
 	  re = new RegExp("<(body|Body|BODY)[^>]*>");
-	  mi = re.match(s, bend, s.length() );
+	  mi = re.match(s, hend, s.length() );
 	  bend=mi.end();
 
 	  // if there is a head, but no body, assume it is a frame

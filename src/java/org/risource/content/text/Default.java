@@ -1,5 +1,5 @@
 //  Default.java
-// $Id: Default.java,v 1.3 1999-03-12 19:24:13 steve Exp $
+// $Id: Default.java,v 1.4 1999-04-13 20:11:51 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -450,10 +450,32 @@ public class Default extends StreamingContent {
    * at next opportunity
    */
   protected void insertAddition(int  location){
-      String k =  new Integer(location).toString();
-      if(additions == null || !additions.has(k)) return ;
+    if(additions == null) return;
+    String addition ="";
+    String k =  new Integer(location).toString(); 
 
-    String addition = (String) additions.at(k);
+    if(location == -1){ 
+       if(additions.has(k)) addition = (String) additions.at(k);
+       additions.remove(k);
+
+       //insert anything that is left as white space to make up        
+        //for the changes in content length 
+       StringBuffer sb = new StringBuffer();
+       Enumeration e = additions.elements();
+        while (e.hasMoreElements()) {
+         String s = (String) e.nextElement();
+          for(int i=0;i<s.length();i++){
+            sb.append(' ');
+            // note we should probably remove element from table..
+	  }
+	}
+	addition = sb.insert(0,addition).toString();
+    } else {
+       if(!additions.has(k)) return ;
+       addition = (String) additions.at(k);
+    }
+    
+    
     if( addition != null){
       if( location == 0)
 	insert( addition, nextOut); // earliest possible spot
@@ -545,7 +567,8 @@ public class Default extends StreamingContent {
    * character operations are performed on segment between
    * outLimit and nextIn as data moves through
    * these operations may impact things like content length
-   * === TBD alter content length ===
+   * === TBD fix content length for special cases===
+   * Fix content length operations other than add
    */
   public void add(String addition, int location) throws ContentOperationUnavailable
   {
@@ -557,11 +580,21 @@ public class Default extends StreamingContent {
       additions = new Table();
     }
     String add = addition;
+
+    int addLength = add.length();  //need to update the content length header
+
     String k =  new Integer(location).toString();
     if(additions.at(k) != null){
       add = additions.at(k) + add;
     }
     additions.at(k, add);
+    // change the length specified in the content header -- this may do no good
+    // if we have already started writing data out...
+    if(headers.contentLength() > 0) {
+      headers.setContentLength(headers.contentLength() + addLength);
+    }
+    
+
     Pia.debug("adding "+add + " at "+  location);
   }
   

@@ -1,0 +1,28 @@
+<h1>Package org.risource.content</h1>
+
+<a href="../">[..]</a>
+<a href="#files">[files]</a><p>
+
+This directory contains implementations of the <a
+href=../pia/Content.java> Content </a> interface for text mime types.
+These classes inherit from <a href=../StreamingContent.java>../StreamingContent.java</a>.
+
+<h2>Annotated Contents</h2>
+
+<dl>
+   <dt> <a href="Default.java">Default.java</a>
+  <dd> base implementation for streaming text objects -- uses character
+       reader/writer,  implements insertion of text
+  <dt> <a href="html.java">html.java</a>
+  <dd>  generic implementation for <code>text/html</code> -- text insertions
+	go after a body tag
+	
+ <dt> <a href="StringContent.java">StringContent.java</a>
+  <dd> content wrapper for string objects
+  <dt> <a href="ProcessedContent.java">ProcessedContent.java</a>
+  <dd> content wrapper for documents that have been run through the <a href=../../dps/>document  processor </a>
+ </dl>
+
+
+<b>$Id: HEADER.html,v 1.1 1999-04-13 20:11:52 wolff Exp $</b>
+<a name="files"><hr></a>
