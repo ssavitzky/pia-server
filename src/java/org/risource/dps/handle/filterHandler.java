@@ -1,5 +1,5 @@
 ////// filterHandler.java: <filter> Handler implementation
-//	$Id: filterHandler.java,v 1.1 2000-08-30 19:55:39 steve Exp $
+//	$Id: filterHandler.java,v 1.2 2000-08-30 23:01:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import org.risource.dps.tree.TreeComment;
  *	shell attribute is present, it is used as a shell to run the script
  *	specified by the cmd attribute. 
  *
- * @version $Id: filterHandler.java,v 1.1 2000-08-30 19:55:39 steve Exp $
+ * @version $Id: filterHandler.java,v 1.2 2000-08-30 23:01:31 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -73,8 +73,29 @@ public class filterHandler extends GenericHandler {
     InputStream  rstm = null;
     OutputStream ostm = null;
     InputStream  estm = null; 
+    String	  pia = null;
 
-    // === should recognize pia: and file: on cmd and shell.  
+    // recognize pia: on cmd and shell.   
+    //   Can't just use locateResource because there might be spaces in the
+    //   command strings.  Besides that, locateResource returns a file.
+
+    if (cmd != null && cmd.startsWith("pia:")) {
+      pia = locatePia(cxt);
+      if (pia == null) {
+	reportError(in, cxt, "cannot locate PIA_HOME");
+	return;
+      }
+      cmd = org.risource.util.NameUtils.systemPath(pia, cmd);
+    }
+      
+    if (shell != null && shell.startsWith("pia:")) {
+      if (pia == null) pia = locatePia(cxt);
+      if (pia == null) {
+	reportError(in, cxt, "cannot locate PIA_HOME");
+	return;
+      }
+      shell = org.risource.util.NameUtils.systemPath(pia, shell);
+    }
 
     // === content used as stdin not supported yet ===
 
@@ -143,6 +164,10 @@ public class filterHandler extends GenericHandler {
       } else {
 	process = runtime.exec(cmd);
       }
+      if (process == null) {
+	reportError(in, cxt, "could not create process\n");
+	return;
+      }
       rstm = process.getInputStream();
       rdr  = new InputStreamReader(rstm);
       estm = process.getErrorStream();
@@ -159,8 +184,7 @@ public class filterHandler extends GenericHandler {
 	if (ostm != null) ostm.close();
 	if (estm != null) estm.close();
       } catch (IOException ee) {}
-      reportError(in, cxt, "attempting to run '"+cmd+"' ->\n"+e.toString()
-		  + "\n STDERR=" + error + "\n");
+      reportError(in, cxt, e.toString() + "\n STDERR=" + error + "\n");
       return;
     }
 
@@ -191,7 +215,7 @@ public class filterHandler extends GenericHandler {
       } catch (IOException e) {}
       return;
     } else if (ts == null) {
-      reportError(in, cxt, "Cannot open tagset " + tsname);
+      reportError(in, cxt, "Cannot open tagset " + tsname + "\n");
       if (content != null) Expand.processNodes(content, cxt, out);
       else out.putNode(new TreeComment("Cannot open tagset " + tsname));
       try {      
@@ -244,9 +268,9 @@ public class filterHandler extends GenericHandler {
 	}
       } catch (IOException ee) {}
       if (process.exitValue() != 0) 
-	reportError(in, cxt, "exit value=" + process.exitValue());
+	reportError(in, cxt, "exit value=" + process.exitValue() + "\n");
       if (error.length() != 0) 
-	reportError(in, cxt, "STDERR=" + error );
+	reportError(in, cxt, "STDERR=" + error + "\n" );
       if (rstm != null) rstm.close();
       if (ostm != null) ostm.close();
       if (estm != null) estm.close();
@@ -305,5 +329,4 @@ class Pump implements Runnable {
       try { in.close(); out.close(); } catch (Exception ex) {}
     }
   }
-
 }
