@@ -1,6 +1,19 @@
 <!-- This file is included in the root home page for personal PIA's -->
 <h3>Welcome to the PIA</h3>
 
+<dl>
+  <dt> <b>ALERT!</b>
+  <dd> Many things have changed recently!  If you've been using the PIA for a
+       while it is <em>strongly</em> suggested that you look at the following
+       documents: 
+
+       <a href="/src/java/org/risource/site/about">About the Site Resource
+       Package</a>,
+       <a href="/src/java/org/risource/site/about">About the PIA</a>,
+       <a href="/Doc/Notes/steve/naming">Steve's notes</a>.
+
+</dl>
+
 <p> This is the home page of your personal PIA.  It is running as a process
     under your own user name, and is accessible through the URL
 &lt;<a href="http://&piaHOST;:&piaPORT;/">http://&piaHOST;:&piaPORT;/</a>&gt;.
@@ -24,4 +37,4 @@
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
     may not be running yet.
 <p>
-<!-- $Id: welcome.inc,v 1.7 1999-09-22 23:50:16 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.8 1999-09-24 22:59:30 steve Exp $ -->
