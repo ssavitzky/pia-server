@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.20 1999-10-06 23:39:12 bill Exp $
+//	$Id: extractHandler.java,v 1.21 1999-10-06 23:58:34 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.20 1999-10-06 23:39:12 bill Exp $
+ * @version $Id: extractHandler.java,v 1.21 1999-10-06 23:58:34 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -1545,13 +1545,6 @@ class tm_likeHandler extends extract_subHandler {
 		// get content item and name
 		ActiveNode item = treematched.activeItem(i);
 
-                if (checking == false)
-		    System.out.println("------------ TOP-level search, checking = false");
-
-		System.out.println("TRYING " + i +"/" + len + 
-                                  " keyItem=" + keyItem + 
-                                  " and item = " + item );
-
 		String nodeName = getNodeName(item, false);
 		String nodeText = "";
 		if (nodeName == null){  // only load nodeText if no node name
@@ -1564,27 +1557,12 @@ class tm_likeHandler extends extract_subHandler {
 		    keyText = "?";
 
 
-
-
-		    System.out.println("before test block; depthsearch= "
-				           + depthSearch);
-
-
-		    System.out.println("compareNodes = " + 
-		      compareNodes(keyItem, item)  );
-
-		    System.out.println("keyNametest = " + 
-		     keyName.equalsIgnoreCase("any-tag") );
-
-		    System.out.println("text index of = " + 
-                   			nodeText.indexOf(keyText)  );
-
-
-
+                // if the nodes at this level match, great; otherwise, see
+		// if there is a match in their content instead.
 		if ( depthSearch == 0 && 
 		     !( compareNodes(keyItem, item) || 
 			keyName.equalsIgnoreCase("any-tag") ||
-			nodeText.indexOf(keyText) >= 0 )  ){
+			(keyName == null && nodeText.indexOf(keyText) >= 0) )  ){
 
 
 		    if (checking == true){
@@ -1600,13 +1578,10 @@ class tm_likeHandler extends extract_subHandler {
 
 
 		   if (itemResult == 0){
-		       System.out.println(" failure; try again" );
 		       continue; 
 		       // no match if depth-first still doesn't find it
 		   }
-		   else{
-		       System.out.println(" Success!" );
-		   }
+
 		}
                 
 		// got a candidate! ... keep track of node, whether to
@@ -1615,14 +1590,9 @@ class tm_likeHandler extends extract_subHandler {
 		// pass on keyList and itemList (empty or not);
 		// nonzero result means a true  or default match
 		if (depthSearch == 0){
-		    System.out.println("before tm, itemResult = " +
-				       itemResult );
 		    itemResult +=   treematch( item.getContent(), 
 					   keyItem.getContent(),
 					   myChecking, keepLike, out);
-
-		    System.out.println("just got itemResult = " +
-				       itemResult );
 		}
 		else // dropping the whole topNode search down a level,
 		    // using whole template and source-item's contents.
@@ -1633,10 +1603,6 @@ class tm_likeHandler extends extract_subHandler {
 					   false, keepLike, out);
 
 		if (itemResult > 0 && depthSearch == 0){
-
-		    System.out.println("GOT a match; keyItem=" + keyItem + 
-                                  " and item = " + item +
-                                  " depthSearch = " + depthSearch);
 
 		    // matched! ==> look for next key
 		    myKey = nextNonNullIdx( templateList, myKey + 1);
