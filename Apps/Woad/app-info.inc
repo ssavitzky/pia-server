@@ -12,8 +12,8 @@
   </tr>
   <tr>
     <th bgcolor="silver"> <em>parameter</em> </th>
-    <th bgcolor="silver"> value </th>
-    <th bgcolor="silver"> command-line option </th>
+    <th bgcolor="silver"> <em>value</em> </th>
+    <th bgcolor="silver"> <em><code>command-line option</code></em> </th>
   </tr>
   <tr>
     <th bgcolor="silver"> target Server </th>
@@ -41,7 +41,7 @@
     </td>
   </tr>
   <tr>
-    <th bgcolor="silver"> Annotation root </th>
+    <th bgcolor="silver"> annotation Root </th>
     <td>  &SITE:file;
     </td>
     <td> <code>-root <em>&SITE:file;</em></code> </td>
@@ -61,8 +61,8 @@
   </tr>
   <tr>
     <th bgcolor="silver"> <em>parameter</em> </th>
-    <th bgcolor="silver"> value </th>
-    <th bgcolor="silver"> description </th>
+    <th bgcolor="silver"> <em>value</em> </th>
+    <th bgcolor="silver"> <em>description</em> </th>
   </tr>
   <tr>
     <th bgcolor="silver"> annotation Prefix </th>
@@ -89,7 +89,7 @@
     <th bgcolor="silver"> source Suffix </th>
     <td>  <get name="SITE:sourceSuffix">&nbsp;</get>
     </td>
-    <td> Location of notes relative to a source directory
+    <td> Location of annotations relative to a source directory
     </td>
   </tr>
 </table>
@@ -97,4 +97,4 @@
 
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.4 2000-06-21 01:11:42 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.5 2000-07-19 00:43:22 steve Exp $">
