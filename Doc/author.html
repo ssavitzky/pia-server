@@ -15,9 +15,13 @@
 system. In particular it describes:</p>
 
 <ul>
+<li><a href="#Naming">Agent naming</a></li>
+
+<li><a href="#Types">Agent types</a></li>
+
 <li><a href="#Files">Agent files</a></li>
 
-<li><a href="#Naming">Agent naming</a></li>
+<li><a href="#Code">Agent data structures and code</a></li>
 
 <li><a href="#Tips">Tips on agent creation</a></li>
 </ul>
@@ -31,34 +35,275 @@ Agents</a> directory at the top-level of the PIA's installation
 tree. Feel free to use these files as a source of ideas and
 examples, and as a basis for creating new agents.</p>
 
+<h2><a name="Naming"></a>Agent Naming and Directories</h2>
+
+<p> Every agent has a <em>name</em> and a <em>path</em>.  The file portion of
+    the agent's URL consists of the path and name concatenated together; the
+    path always begins and ends with the slash (<code>/</code>) character (and
+    may consist of only one slash, and nothing else).  The combination of path
+    and name is called the agent's <em>pathname</em>. 
+</p>
+
+<p> An agent's pathname can be combined with the tilde (<code>~</code>)
+    character in various ways to address its four directories:  foot, home,
+    user, and data.  (In most cases the root and home directories are the
+    same.)
+</p>
+
+<p> The base directories PIA_DIR and USR_DIR can be set on the
+    <code>pia</code> command line or in the corresponding environment
+    variables.  They are normally the root of the PIA directory tree (called
+    PIA and located wherever the PIA is installed in your system) and (on
+    Unix) a directory called <code>.pia</code> in your home directory.
+</p>
+
+<p> In the table that follows, the leading and trailing slashes of the path
+    are shown explicitly for clarity. 
+</p>
+
+<table width="90%" align=center border=1>
+  <tr> <th align=left> URL </th>
+	<th align=left> Default Directory </th>
+	<th align=left> Entity </th>
+       <th align=left> Description </th>
+  </tr>
+  <tr> <td> <code>/<em>path</em>/<em>name</em></code>  			</td>
+       <td> <code>PIA_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td> 
+       <td> &nbsp; 		</td>
+       <td> root directory 	</td>
+  </tr>
+  <tr> <td> <code>/<em>path</em>/<em>name</em>~</code> 			</td>
+       <td> <code>PIA_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td> 
+       <td> AGENT:home-dir 	</td>
+       <td> home directory 	</td>
+  </tr>
+  <tr> <td> <code>/<em>path</em>/<em>name</em>/~</code> 		</td>
+       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> AGENT:data-dir  	</td>
+       <td> data directory 	</td>
+  </tr>
+  <tr> <td> <code>/~<em>name</em></code> 		</td>
+       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> AGENT:data-dir  	</td>
+       <td> data directory (deprecated)	</td>
+  </tr>
+  <tr> <td> <code>/~/Agents/<em>path</em>/<em>name</em></code> 		</td>
+       <td> <code>USR_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td>
+       <td> AGENT:user-dir 	</td>
+       <td> data directory 	</td>
+  </tr>
+  <tr> <td> <code>/~/<em>path</em>/<em>name</em>~</code> 		</td>
+       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> AGENT:data-dir 	</td>
+       <td> data directory 	</td>
+  </tr>
+</table>
+
+<p> The paths involving <code>/~/</code> are simply a consequence of the fact
+    that the ROOT agent's root directory is its data directory, and is mapped
+    to the PIA data directory.  There is normally no way to address the user
+    directory directly; files in it simply override (replace) corresponding
+    files in the home directory.
+</p>
+
+<p> The path <code>/~<em>name</em></code> is an older construct; it's
+    ambiguous if the path starts with the name of some other agent.  It is
+    still useful, however, because it follows the standard convention for
+    ``user directories'' on Unix systems and the Web.  You could, for example,
+    define an agent with your login name as its name; its data directory would
+    then look like your web home page.
+</p>
+
+<p> By convention, agent names intended to be seen at the top level of an
+    agent listing are capitalized, but this is not required. Name lookup is
+    case-sensitive, and there may be good reasons to prefer uppercase or
+    lowercase names in some cases. For example, DOFS is uppercase because it
+    is an acronym. Most agents with DOFS as their type have names that match
+    their corresponding root directory; for example, <code>/PIA</code>.  For
+    another example, <code>fileTools</code> and <code>remoteTools</code> are
+    sub-agents of <code>Proxie/Toolbar</code>, and so have lowercase names.
+</p>
+
+<p> For historical reasons, it is currently possible to address an agent by
+    its name (for example, <code>/<em>name</em></code> for the home directory)
+    even if it has a non-null path.  This will eventually disappear.
+</p>
+
+
+<h2><a name="Types">Agent Types</a></h2>
+
+<p>Every agent also has a <em>type</em>, which can be 
+used to create a family of agents with similar behavior but
+different options. The <a href="/DOFS">DOFS</a> agents form such a
+family. So do the <a href="/Toolbar">&Toolbar;</a> agents <a href= 
+"/Toolbar/Remote">Remote</a> and <a href="/Toolbar/Localfile">
+Localfile</a>. In most case, the type classification name
+represents not only the family name but names an agent of which the
+others are "sub-agents."</p>
+
+<p> To be specific, the type is the complete pathname of an agent from which
+    files are ``inherited''.  An agent will search for files first in its user
+    directory, then its home directory, and then in the directories of its
+    type agent.  An agent without a type will finally look in the
+    <code>Agent</code> subdirectories of USR_DIR and PIA_DIR.
+</p>
+
+<p> Agents that are not "sub-agents" of some type have their type the same as
+    their name.  An XHTML script can verify this with the following test:
+</p>
+
+<blockquote><code>&lt;test exact
+match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
+
+
 <h2><a name="Files"></a>Agent Files</h2>
 
-<p>This section describes the files that make up an agent and the
-search path the PIA uses in locating those files.</p>
+<p>This section describes the files that make up an agent.</p>
+
+<h3>File Names</h3>
+
+<p> Unlike most web servers, the PIA does not require filename extensions
+    (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
+    possible to refer to a document without revealing to the user whether it
+    is an ordinary HTML file or is created on-the-fly from an active document.
+</p>
+
+<p> Documents in an agent's home and user directories are looked up with
+    a different (larger) set of suffixes from files in the data directory;
+    this reflects the fact that active documents are not permitted in the data
+    directory, for security reasons.
+</p>
+
+<p> A file's extension, as usual, determines its MIME type.  For active
+    documents, it also determines the tagset used to process the file:
+</p>
+
+<table>
+  <tr><th> &nbsp; </th>
+      <th> tagset </th>
+      <th> meaning </th>
+  </tr>
+  <tr><th> .xh </th> <td> xhtml </td>
+      <td> Extended HTML </td>
+  </tr>
+  <tr><th> .xx </th> <td> xxml </td>
+      <td> Extended XML </td>
+  </tr>
+  <tr><th> .xml </th> <td> from DOCTYPE </td>
+      <td> Ordinary XML </td>
+  </tr>
+  <tr><th> .html </th> <td> html </td>
+      <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .htm </th> <td> html </td>
+      <td> Ordinary HTML </td>
+  </tr>
+
+  <tr><th colspan=2>&nbsp;</th><th>&nbsp;</th></tr>
+
+  <tr><th colspan=2>&nbsp;</th>
+      <th> (used internally) </th>
+  </tr>
+
+  <tr><th> .inc </th> <td> xhtml </td>
+      <td> ``include'' files </td>
+  </tr>
+  <tr><th> .ts </th> <td> tagset </td>
+      <td> tagset files </td>
+  </tr>
+</table>
+
+<p> File names passed to the PIA in URL's are always handled by the
+    appropriate agent.  Relative filenames always have the current base
+    (pathname) prepended by the browser.
+</p>
+
+<p> Inside the PIA things are somewhat more complex: there are two additional
+    contexts to consider.  These are the form fields used during agent
+    initialization, and the attributes that designate system resources:
+    ``<code>src</code>'' in the &lt;include&gt;, &lt;connect&gt;, and
+    &lt;status&gt; elements, and the ``system names'' of entities.  The
+    following conventions are used for agent initialization:
+</p>
+
+<table>
+  <tr><td> <code>~/</code></td>
+      <td> The user's home directory </td>
+  <tr><td> <code>./</code></td>
+      <td> (or any relative path) the PIA agent directory</td>
+  <tr><td> <code>../</code></td>
+      <td> the PIA home directory <code>PIA_DIR</code></td>
+  <tr><td> <code>/~/</code></td>
+      <td> The PIA user directory <code>USR_DIR</code></td>
+  <tr><td> <code>/</code></td>
+      <td> An absolute path in URL format.</td>
+  <tr><td> <code>file:</code></td>
+      <td> An absolute path in system format.</td>
+</table>
+
+<p> When the <code>file:</code> prefix is not present, paths are in ``URL
+    format'':  slash characters are converted, if necessary, to the
+    operating system's file separator.
+</p>
+
+
+<p> In elements that may access URL's as well as files, for example an
+    additional prefix of <code>pia:</code> is used to distinguish between
+    normal file lookup, as above, and agent-based lookup, which is the
+    default.  In agent-based lookup, extensions and paths are handled
+    according to the agents naming rules, above.  In other words, anything
+    that looks like the file part of a URL is treated as if it was.
+</p>
+
+<table>
+  <tr><td> <code>/<em>path</em>/<em>name</em></code></td>
+      <td> looked up relative to the given agent </td>
+  <tr><td> <code>&nbsp;</code></td>
+      <td> relative paths are looked up by the <em>current</em> agent </td>
+  <tr><td> <code>pia:~/</code></td>
+      <td> The user's home directory </td>
+  <tr><td> <code>pia:./</code></td>
+      <td> (or any relative path) the PIA agent directory</td>
+  <tr><td> <code>pia:../</code></td>
+      <td> the PIA home directory <code>PIA_DIR</code></td>
+  <tr><td> <code>pia:/~/</code></td>
+      <td> The PIA user directory <code>USR_DIR</code></td>
+  <tr><td> <code>pia:/</code></td>
+      <td> An absolute path in URL format.</td>
+  <tr><td> <code>file:</code></td>
+      <td> An absolute path in system format.</td>
+</table>
 
 <h3>Standard Files</h3>
 
 <p>A PIA Agent consists of little more than a collection of
-extended HTML (XHTML) files organized in a directory and
-automatically generated. Agents require a set of standard files.
+extended HTML (XHTML) files organized in a directory.
+Agents require a set of standard files.
 Those files, listed below, are "inherited" from the root directory
-if they are not found in the agent's home directory.</p>
+(PIA_DIR/Agents) if they are not found in the agent's home directory.</p>
 
 <ul>
-<li><code>home.xh</code>
-<br>
-The agent's "home page." This is the page that appears when he
-agent is selected from the Agency's list of running agents. It is
-therefore the first page seen by a user. It includes an index of
-the agent's other pages. It is returned from a request for <code>
-/AgentName</code>.</li>
+<li> <code>home.xh</code><br>
+     
+     The agent's "home page." This is the page that appears when the agent is
+     selected from the Agency's list of running agents. It is therefore
+     usually the first page seen by a user, and should include links to at
+     least the most useful of the agent's other pages. It is returned from a
+     request for <code>/AgentName</code>.</li>
 
-<li><code>index.xh</code>
-<br>
-The page returned from a request for <code>/AgentName/</code>. Note
-the trailing slash that distinguishes this page from the home page.
-It gives a standardized listing of the agent's top-level extended
-HTML form. Typically, it needs no customization.</li>
+<li> <code>index.xh</code> and <code>about.inc</code><br>
+     
+     The page returned from a request for <code>/AgentName/</code>. Note
+     the trailing slash that distinguishes this page from the home page.
+     It gives a standardized listing of the agent's default pages, sub-agents,
+     and so on.  Typically, it needs no customization.  The default includes
+     the agent-specific file <code>about.inc</code> if it is present.</li>
+
+<li> <code>help.xh</code> and <code>help.inc</code><br>
+     
+     This page is meant to provide general and context-specific help for the
+     agent.  The default page is customized by including the agent-specific
+     file <code>help.inc</code>, if present. </li>
 
 <li><code>options.xh</code>
 <br>
@@ -70,125 +315,12 @@ customization.</li>
 This XHTML file is invoked automatically when the agent is
 installed. It defines default values for any options and sets the
 "match criteria" for transactions that the agent acts on. This file
-does <em>not</em> have a default, and can be omitted if not
+does <em>not</em> have a default, but can be omitted if not
 needed.</li>
 </ul>
 
-<h3>Search Path</h3>
 
-<p>The PIA follows a search path in seeking the extended HTML files
-that comprise an agent. Agents look first in directories under
-<var><code>USR_DIR</code></var>, then in those under <var><code>
-PIA_DIR</code></var> and finally in <code><var>
-PIA_DIR</var>/src</code> That path is as follows:</p>
-
-<ol>
-<li>The <code>AgentType/AgentName</code> directory.
-
-<ul>
-<li><code>USR_DIR/Agents/AgentType/AgentName/</code>
-<br>
-The user's custom XHTML files for this agent.</li>
-
-<li><code>PIA_DIR/Agents/AgentType/AgentName/</code>
-<br>
-The Agent's home directory.</li>
-
-<li><code>PIA_DIR/src/Agents/AgentType/AgentName/</code>
-<br>
-The home directory for experimental agents and development
-tools.</li>
-</ul>
-</li>
-
-<li>The <code>Agents/AgentName</code> directory
-
-<ul>
-<li>The <code>AgentName</code> directory <code>
-USR_DIR/Agents/AgentName/</code>
-<br>
-The user's custom XHTML forms for this agent.</li>
-
-<li><code>PIA_DIR/Agents/AgentName/</code>
-<br>
- The agent's home directory</li>
-
-<li><code>PIA_DIR/src/Agents/AgentName/</code>
-<br>
- The home directory for experimental agents and development
-tools.</li>
-</ul>
-</li>
-
-<li>The <code>Agents/AgentType</code> directory.
-
-<ul>
-<li><code>USR_DIR/Agents/AgentType/</code>
-<br>
-The user's custom XHTML files for this agent type.</li>
-
-<li><code>PIA_DIR/Agents/AgentType/</code>
-<br>
-The agent type's home directory.</li>
-
-<li><code>PIA_DIR/src/Agents/AgentType/</code>.</li>
-</ul>
-</li>
-
-<li>The <code>Agents</code> directory
-
-<ul>
-<li><code>USR_DIR/Agents/</code>
-<br>
-The user's customized default XHTML files.</li>
-
-<li><code>PIA_DIR/Agents/</code>
-<br>
-The PIA's default XHTML files.</li>
-</ul>
-</li>
-</ol>
-
-<code><var>USR_DIR</var></code>
-<p>is normally <code>$HOME/.pia</code>, and is accessible as the
-DOFS agent <code>/&Root;</code>. <code>PIA_DIR</code> is normally
-either <code>$HOME/pia</code> (if the user has their own working
-copy of the PIA source code), or wherever the PIA is installed; it
-is accessible as the DOFS agent <code>/PIA</code>.</p>
-
-<h2><a name="Naming"></a>Agent Naming</h2>
-
-<p>Every agent has a <em>name</em> and a <em>type</em>. The type is
-used to create a family of agents with similar behavior but
-different options. The <a href="/DOFS">DOFS</a> agents form such a
-family. So do the <a href="/Toolbar">&Toolbar;</a> agents <a href= 
-"/Toolbar/Remote">Remote</a> and <a href="/Toolbar/Localfile">
-Localfile</a>. In most case, the type classification name
-represents not only the family name but names an agent of which the
-others are "sub-agents."</p>
-
-<p>Agents that are not "sub-agents" of some type have the name
-(<code>&amp;agentName;</code>) and type
-(<code>&amp;agentType;</code>). An XHTML form can verify this with
-the following test:</p>
-
-<blockquote><code>&lt;test exact
-match="&amp;agentName;&gt;"&amp;agentType;&lt;/test&gt;</code></blockquote>
-
-<p>By convention, agent names intended to be seen at the top level
-of an agent listing are capitalized, but this is not required. Name
-lookup is case-sensitive, and there may be good reasons to prefer
-uppercase or lowercase names in some cases. For example, DOFS is
-uppercase because it is an acronym. Most agents with DOFS as their
-type have lowercase names except for the "standard" ones <code>
-/&Root;</code> and <code>/PIA</code>. For another example, <code>
-Localfile</code> and <code>Remote</code> are sub-agents of <code>
-&Toolbar;</code>, and so have lowercase names.</p>
-
-<p>At some point it will be possible to make sub-agents invisible
-at the top level.</p>
-
-<h3>Agent Data Structures and Code</h3>
+<h2><a name="Code">Agent Data Structures and Code</a></h2>
 
 <p>Every installed agent has an associated software object which
 contains its options (stored as entities in the <code>AGENT</code>
@@ -204,36 +336,40 @@ lowercase, and all period (<code>.</code>) and hyphen
 (<code>_</code>) characters), it is loaded automatically when the
 agent is installed.</p>
 
-<p>It is sometimes necessary to use a different programming
-language other than Java for part of an agent. For example, PERL is
-good for text manipulation). One choice is to put the external code
-into a CGI script (with a <code>.cgi</code> extension); another is
-to use the OS-command <code>actor</code>. PERL is a good choice for
-a scripting language because it is nearly as ubiquitous as Java. Be
-warned, though, that not all of its libraries or extensions are
-available on all systems.</p>
+<p>It is sometimes necessary to use a different programming language from Java
+for part of an agent. (For example, PERL is good for text manipulation).  The
+best technique is to put the external code into a CGI script (with a
+<code>.cgi</code> extension). PERL is a popular choice for a scripting
+language because it is nearly as ubiquitous as Java. Be warned, though, that
+not all of its libraries or extensions are available on all systems.</p>
+
+<p> An alternative to CGI scripts is the Java native interface, or Java code
+    that uses the <code>exec</code> method of the
+    <code>java.lang.Runtime</code> class to invoke an operating-system
+    command.  These techniques are not likely to be portable.  At one point,
+    there was an element &lt;os-command&gt; that did this; it was removed
+    partly for security reasons, and partly to encourage portability.  CGI
+    scripts in PERL are more likely to be portable.
+</p>
 
 <h2><a name="Tips"></a>Tips on Agent Creation</h2>
 
-<p>PIA agents, and active documents are so new that few conventions
+<p>PIA agents and active documents  are so new that few conventions
 have become established for their use and there is considerable
 room for experimentation. A few rules of thumb have become
 clear:</p>
 
 <h3>Uniform Look and Feel</h3>
 
-<p>Use "include" files to give a family of related agents a similar
-appearance. The PIA uses <code>header.inc</code> in this way;
-almost every agent XHTML page includes the code which expands into
-a standardized heading.:</p>
+<p>Use tagsets to give a family of related agents a similar appearance. The
+PIA uses <code>&lt;header&gt;</code>, <code>&lt;subhead&gt;</code>, and
+<code>&lt;footer&gt;</code> in this way; almost every agent XHTML page
+includes the code which expands into a standardized heading.</p>
 
-<blockquote><code>&lt;set entity name=title&gt;<em>short
-title</em>&lt;/set&gt;</code>
-<br>
- <code>read interform file=heading.inc process</code></blockquote>
-
-<p>The standard <code>include</code> files currently available
-are:</p>
+<p> Use ``include'' files and agent-specific entities to customze inherited
+    pages.  The standard <code>include</code> files currently available
+    are:
+</p>
 
 <ul>
 <li><code>heading.inc</code>
@@ -245,8 +381,8 @@ are:</p>
  Information "about" an agent. This information is similar to what
 you might see on the "about" menu item on a Windows or Macintosh
 application. This is displayed by the default <code>home.xh</code>
-file just underneath the quick reference described in the section
-that follows.</li>
+file just underneath the quick reference generated by the
+<code>&lt;subhead&gt;</code> element.</li>
 
 <li><code>insert.inc</code>
 <br>
@@ -279,9 +415,8 @@ columns of icons or of mixed icons and text.</p>
 
 <p>It is perfectly possible to put a query string into a link, and
 so have an ordinary-looking link or icon that is equivalent to
-submitting a form. In a PIA this can have drastic effects (there
-is, for example, an XHTML form you can use to <a href= 
-"/Admin/shutdown.if">shut down the PIA</a>).</p>
+submitting a form. In a PIA this can have drastic effects -- some of our
+prototype appliances included a form for shutting down the system!</p>
 
 <p>Many users experiment, clicking links at random. You may want to
 use a robot to build an index of your PIA, or to identify broken
@@ -330,7 +465,7 @@ developers).</p>
 <p>Remember, an agent's XHTML files are read not only by their
 author, but by any users who want to customize or extend them. If
 the agent is complicated, consider writing an "implementation
-detail" document.</p>
+details" document.</p>
 
 <h4><a name="Directory">Directory Structure</a></h4>
 
@@ -340,17 +475,17 @@ detail" document.</p>
 <li><var>PIA_DIR</var> contains the code, documentation, agents and
 other files released by the PIA group.</li>
 
-<li><var>PIA_HOME</var> (typically <tt>~/.pia</tt> stores agent
-data and customized <dfn>interforms</dfn>.</li>
+<li><var>USR_DIR</var> (typically <tt>~/.pia</tt> stores agent
+data and customized active documents.</li>
 </ul>
 
 <p>By default, agents read and write their data files into <var>
-PIA_HOME/AGENT_NAME</var> (where <var>AGENT_NAME</var> is the name
+USR_DIR/AGENT_NAME</var> (where <var>AGENT_NAME</var> is the name
 of the agent. For example, the <var>History</var> agent keeps lists
 of visited URLs in <tt>~/.pia/History/</tt>)</p>
 
-<p>In seeking their interforms, agents look first in <code><var>
-PIA_HOME/Agents/AGENT_NAME</var></code>, where <var>
+<p>In seeking their documents, agents look first in <code><var>
+USR_DIR/Agents/AGENT_NAME</var></code>, where <var>
 AGENT_NAME</var> is the name of the agent in question. If that
 search fails, the agent then checks <var><code>
 PIA_DIR/Agents/AGENT_NAME</code></var>. Thus the <var>History</var>
@@ -358,8 +493,8 @@ agent searches for its files in <kbd>~/.pia/Agents/History</kbd>
 and then in <kbd>/usr/local/bin/pia/Agents/History</kbd>.</p>
 
 <p>This makes it easy to customize your agents by simply putting
-new interform files in <code><var>
-PIA_HOME/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a
+new documents in <code><var>
+USR_DIR/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a
 customized form, <tt>foo.xh</tt> for the <var>History</var> agent
 would go in <tt>~/.pia/Agents/History/foo.xh</tt>.)</p>
 
@@ -369,7 +504,7 @@ would go in <tt>~/.pia/Agents/History/foo.xh</tt>.)</p>
 History</var> agent. The new feature allows you to see a display of
 all web pages visited on the current day.</p>
 
-<p>In the example that follows, assume that <var>PIA_HOME</var> has
+<p>In the example that follows, assume that <var>USR_DIR</var> has
 the value <code>~/.pia</code>.</p>
 
 <ol>
@@ -381,8 +516,7 @@ the value <code>~/.pia</code>.</p>
 <br>
 <tt>&lt;h2&gt; Web pages visited Today&lt;/h2&gt;</tt>
 <br>
-<tt>&lt;include
-src="&amp;year;/&amp;month;/&amp;day;.html" /&gt;</tt>
+<tt>&lt;include src="~/&amp;year;/&amp;month;/&amp;day;.html" /&gt;</tt>
 <br>
 <tt>&lt;/body&gt;&lt;/html&gt;</tt></li>
 
@@ -396,31 +530,32 @@ get a listing of all places you visited today.</li>
 
 <h5>What Is Going On?</h5>
 
-<p>To understand the workings of this interform, it is necessary to
+<p>To understand the workings of this document, it is necessary to
 understand both the <var>History</var> agent and the specifics of
-this particular interform file.</p>
+this particular active document.</p>
 
 <p>The <var>History</var> agent stores information on URLs visited
 in files organized by date. For example, the file <tt>
 ~/.pia/History/1997/07/11.html</tt> stores all the URLs visited on
-July 11, 1997. The interform <var>today.xh</var> exploits this
+July 11, 1997. The document <var>today.xh</var> exploits this
 fact.</p>
 
-<p>The interform shown above contains the standard HTML tags <code>
+<p>The document shown above contains the standard HTML tags <code>
 &lt;html&gt;</code>, <code>&lt;body&gt;</code>, <code>
 &lt;h2&gt;</code> and one non-standard tag <code>
-&lt;include&gt;</code>. The power of the interform comes from this
+&lt;include&gt;</code>. The power of the code comes from this
 special tag.</p>
 
-<p>The interform also makes use of three entities, <var>
+<p>The code also makes use of three entities, <var>
 &amp;year;</var>, <var>&amp;month;</var> and <var>&amp;day;</var>.
 By assigning the value of the <var>file</var> attribute to these
-entities, rather than a hard-coded date, the interform always makes
-use of the current day's date.</p>
+entities, rather than a hard-coded date, the document always refers to
+the current day's date.</p>
 
-<p>Putting it all together, the tag <tt>&lt;read
-file="&amp;year;/&amp;month;/&amp;day;.html"&gt;</tt> tells the
-<var>History</var> agent to read the specified file and insert the
+<p>Putting it all together, the tag <tt>&lt;include
+src="~/&amp;year;/&amp;month;/&amp;day;.html"&gt;</tt> tells the
+<var>History</var> agent to read the specified file (starting with the agent's
+data directory, as indicated by the <tt>~/</tt>) and insert the
 contents at this location. The entities are resolved and if there
 is a file for the current day it is displayed. If not, the <code>
 &lt;read&gt;</code> tag results in no new text being inserted.</p>
@@ -596,7 +731,7 @@ objects, agent installation creates the object that corresponds to
 the agent in question.</p>
 
 <p>On start-up, the Information Agency looks in the directory <var>
-PIA_HOME</var> and then <var>PIA_DIR</var> for the subdirectory
+USR_DIR</var> and then <var>PIA_DIR</var> for the subdirectory
 <code>/Admin/Agency/START-UP.html.</code> This file specifies those
 agents that should be installed. You should copy and modify this
 file to start your own agents.</p>
@@ -607,25 +742,28 @@ a file for your agent in <code>initialize.xh</code>. This file
 typically contains default values for variables are used by your
 agent.</p>
 
-<h4>Interforms</h4>
+<h4>Entities</h4>
 
 <p>Entity variables can be several levels deep. For example, <tt>
 &amp;AGENT:employees;</tt> might return the first item in a list of
-employees associated with this agent.</p>
+employees associated with this agent.  Entities in the <code>AGENT:</code>
+namespace are shared by all of that agent's documents, and can even be
+accessed from <em>other</em> agents.  (The History agent does this with its
+toolbar segment, for example.)</p>
 
 <h4>Inheritance</h4>
 
 <p>Standard forms such as <code>options.xh</code>, can be inherited
 from the Agents directory. The PIA Agent looks in the <var>
-Agents</var> directory if this form is not found in that agents
+Agents</var> directory if this form is not found in that agent's
 subdirectory, <code>/Agents/<var>AGENT_NAME</var></code>.</p>
 
 <h3>Processing Documents Not Specifically Requested</h3>
 
 <p>Agents can process documents moving through the agency even if
 they are not specifically directed to that agent. For example, the
-History and CIA agents process all proxied documents. Each agent
-registers a criteria for the documents it is interested in.
+History and remoteTools agents process all proxied documents. Each agent
+registers a set of <dfn>criteria</dfn> for the documents it is interested in.
 Whenever the agency sees a document that matches an agent's
 registered criteria, (requests for documents are considered
 documents in their own right), that agent is given a chance to
@@ -649,7 +787,9 @@ data=Hello+World</code>.
 
 <li>Look at the HTML source that is generated, using <var>
 View/Document Source</var> in the browser menu. This gives a good
-indication of where the code broke down.</li>
+indication of where the code broke down.  Some elements, such as
+&lt;include&gt;, insert comments into the output document when an error
+occurs. </li>
 
 <li>Put in print statements and expand variables inside tagset
 elements to check whether they have been set correctly.  Keep in mind
@@ -659,6 +799,12 @@ that only the last value is returned from an element.</li>
 parse tree.  This shows how the document parser interprets the document,
 or document fragment, and sees the relationships between the various nodes.
 </li>
+
+<li> Run the pia with the <code>-d</code> (debug) option.  This will produce
+     voluminous output about what the pia thinks it's doing.  Adding the
+     <code>-v</code> (verbose) flag will produce even more output, tracing the
+     progress of the document processing system. </li>
+     
 </ul>
 
 <hr><b>Copyright &copy; 1999 Ricoh Silicon Valley</b>

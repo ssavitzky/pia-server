@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.6 1999-03-23 23:32:14 steve Exp $
+// $Id: FileAccess.java,v 1.7 1999-03-28 23:26:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -93,7 +93,7 @@ public class FileAccess {
    * <p> The following prefixes are accepted:
    *<dl compact>
    *  <dt> <code>~/</code>
-   *  <dd> The user's home directory (currently the only one allowed)
+   *  <dd> The user's home directory
    *  <dt> <code>./</code>
    *  <dd> (or any relative path) the PIA agent directory
    *  <dt> <code>../</code>
