@@ -1,5 +1,5 @@
 // ObservableProperties.java
-// $Id: Piaproperties.java,v 1.3 1999-03-12 19:29:34 steve Exp $
+// $Id: Piaproperties.java,v 1.4 1999-05-18 20:26:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ public class Piaproperties extends Properties implements Tabular {
    */
   public synchronized void put(String name, Object value) {
     if (value == null) super.remove(name);
-    else super.put(name, value);
+    else super.put(name, value.toString());
   }
 
   /** Get value associated with a name.  (From Tabular interface).
