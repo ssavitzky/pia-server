@@ -1,0 +1,12 @@
+#!/bin/sh
+# Hack to change e-mail addresses from [@]rsv.ricoh.com to rii.ricoh.com
+# $Id: fix-rsv,v 1.1 2001-01-11 23:42:23 steve Exp $
+# NOTE: other instances of "rsv", and of "Ricoh Silicon Valley", are being
+#	done by hand -- there are a couple of places where they shouldn't 
+#	be changed, and others where I decided to remove them altogether.
+#
+find .  '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \
+	-o -name '*.tex' -o -name '*.make' -o -name '*.cdrom'\
+        -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f \
+    -exec grep -q -i '@rsv.ricoh.com' {} \; -print \
+    -exec perl -p -i -e 's;\@rsv.ricoh.com;\@rii.ricoh.com;g' {} \; 
