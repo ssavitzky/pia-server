@@ -1,5 +1,5 @@
 ////// PropertiesWrap.java: Wrap a Properties or Tabular as a Namespace
-//	$Id: PropertiesWrap.java,v 1.1 2000-10-19 00:03:01 steve Exp $
+//	$Id: PropertiesWrap.java,v 1.2 2000-10-19 00:23:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import org.risource.ds.Tabular;
  * <p> PropertiesWrap must not be confused with PropertyTable: the keys
  *	of a PropertiesWrap are not required to be valid tagnames.
  *
- * @version $Id: PropertiesWrap.java,v 1.1 2000-10-19 00:03:01 steve Exp $
+ * @version $Id: PropertiesWrap.java,v 1.2 2000-10-19 00:23:07 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
@@ -83,7 +83,7 @@ public class PropertiesWrap extends NamespaceWrap {
 
   /** Replace an individual named item with value <em>v</em>. */
   public void setProperty(String key, String v) { 
-    if (propsByName != null) propsByName.setProperty(key, v);
+    if (propsByName != null) propsByName.put(key, v);
     else		     itemsByName.put(key, v); }
 
   /** Replace an individual named item with value <em>v</em>. */
