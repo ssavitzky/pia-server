@@ -1038,9 +1038,24 @@ If 4th node is there, returns "four".
        (1999-07-15) <br>
        -- the filename is no longer needed because you can (usually) get the
 	  document name from the TopProcessor.
+
+  <li> 1999-11-08 <b>Bug</b> PropertyTable/propertyBuilder buggy <br>
+       Doesn't convert to text correctly, and properties not accessible to XML
+       inside.  Probably also means that the properties aren't getting copied
+       where necessary.  Attributes aren't correctly converted to strings.
+       (1999-11-08) <br>
+       -- one problem was using ToNamespace, the other was using &lt;test&gt;
+	  as the test property -- &lt;test&gt; is active.  (oops)
+
+  <li> 1999-11-08 <b>Bug</b> Namespace attrs not copied by handler <br>
+       Leaves open the question of whether to build at parse time.
+       (1999-11-08) <br>
+       -- Several problems, including incorrect string conversion in
+	  AbstractNamespace. 
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.35 1999-11-06 01:09:05 steve Exp $</b><br>
+<b>$Id: done.html,v 1.36 1999-11-09 01:21:32 steve Exp $</b><br>
 </body></html>

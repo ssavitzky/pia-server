@@ -50,18 +50,21 @@ See also:
 
        <p>
 
-  <li> <b>Bug</b> PropertyTable needs a handler. <br>
+  <li> 1999-11-08 <b>Bug</b> PropertyTable needs a handler. <br>
        Need to be able to save PropertyTable objects, and read them back in.
        This may very well replace Namespace for everything except entities.
        It should also simplify site configuration files.
        -- 1999-11-05 in progress; need tagset entry and testing.
 
-  <li> <b>Bug</b> Need a way to construct named nodes <br>
+  <li> 1999-11-08 <b>Bug</b> Need a way to construct named nodes <br>
        For example, declarations and processing instructions need both a name
        and a type.  nodeBuilder currently doesn't handle them.
 
+  <li> <b>Bug</b> Can't make arbitrary decl's with nodeBuilder. <br>
+       basically need to fix constructor for TreeDecl.
+       
   <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
-       with, e.g., a &lt;DOCTYPE&gt; element. 
+       with, e.g., a &lt;DOCTYPE&gt; element / documentBuilder handler. 
 
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
        Need access to files relative to root, vroot, and home. 
@@ -211,5 +214,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.9 1999-11-06 01:18:16 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.10 1999-11-09 01:21:28 steve Exp $</b><br>
 </body></html>
