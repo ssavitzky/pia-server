@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.8 2000-06-17 00:03:07 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.9 2000-06-21 01:09:32 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -16,6 +16,7 @@
   <targetServer><get name="PIA:target"/></targetServer>
   <sourcePrefix>/<get name="PIA:prefix">.source</get></sourcePrefix>
   <docOffset><get name="PIA:offset"/></docOffset>
+  <wordPrefix>/.words</wordPrefix>
 
   <HomeDocumentName>woad-index.wh</HomeDocumentName>
   <ConfigFileName>_woad.xcf</ConfigFileName>
@@ -51,6 +52,14 @@
     <HomeDocumentName>woad</HomeDocumentName>
     <IndexDocumentPath></IndexDocumentPath>
     <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="html"	type="text/html" tagset="HTML" 			/>
+  </Container>
+
+<!-- Woad Keyword Indices -->
+
+  <Container name=".words" virtual="pia:/Apps/Woad/Words" suspect="true">
+    <HomeDocumentName>words</HomeDocumentName>
+    <IndexDocumentPath>/.Woad/Tools/word-index.xh</IndexDocumentPath>
     <Ext name="html"	type="text/html" tagset="HTML" 			/>
   </Container>
 
