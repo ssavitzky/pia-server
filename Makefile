@@ -1,5 +1,5 @@
-###### Makefile for pia
-#	$Id: Makefile,v 1.40 2000-04-25 23:43:25 steve Exp $
+###### Top-level Makefile for PIA
+#	$Id: Makefile,v 1.41 2000-05-02 21:45:25 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 1
-MINOR       = 2
+MINOR       = 3
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
@@ -80,7 +80,7 @@ CVS_RMT  = /home/cvsroot
 #	If part of this fails, it breaks down into these substeps:
 #	make do_checkout build_release tar_file
 #   5. upload tar file: "make upload" works if running under ssh-agent. 
-#   6. Fix RiSource.org/{latest.html, PIA/{latest.html, downloading.html}}
+#   6. Fix RiSource.org/{News/news.html, PIA/latest.html}
 
 ### src-release:
 ###   1. do_checkout	A complete "cvs checkout" from the PUBLIC SERVER.
