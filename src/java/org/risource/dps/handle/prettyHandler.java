@@ -1,5 +1,5 @@
 ////// prettyHandler.java: <pretty> Handler implementation
-//	$Id: prettyHandler.java,v 1.3 1999-07-15 17:09:22 bill Exp $
+//	$Id: prettyHandler.java,v 1.4 1999-07-15 17:42:03 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.lang.StringBuffer;
  * pretty begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: prettyHandler.java,v 1.3 1999-07-15 17:09:22 bill Exp $
+ * @version $Id: prettyHandler.java,v 1.4 1999-07-15 17:42:03 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -105,7 +105,8 @@ public class prettyHandler extends GenericHandler {
     if (colorize)
 	preNode = new TreeElement("pre");
     else
-        preNode = new TreeElement("");
+	preNode = new TreeFragment();
+	//        preNode = new TreeElement("");
     for (int i = 0; i < content.getLength(); ++i) {
       // Print the node tree
       printTree(content.activeItem(i), 0, preNode, hideBelowDepth,
