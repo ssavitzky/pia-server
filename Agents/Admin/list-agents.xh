@@ -1,12 +1,12 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>Agent Index</title>
+<title>Agent/Application Index</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
-<header>Agent Index</header>
+<header>Agent/Application Index</header>
 <sub-head page='agents' />
 <hr/>
 <nav-bar />
 <hr/>
 <agent-index />
-<footer cvsid='$Id: list-agents.xh,v 1.5 1999-07-09 22:06:14 steve Exp $' />
+<footer cvsid='$Id: list-agents.xh,v 1.6 1999-09-24 22:07:10 steve Exp $' />
 </body></html>
