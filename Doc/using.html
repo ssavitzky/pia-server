@@ -134,17 +134,50 @@ in order for <code>process</code> to run.
     like.  See the <code>Proxie</code> for more details.
 </p>
 
+<p> The list of available applications and their descriptions can be found in
+    the <a href="agents.html">Application Guide</a>.
 
-<h2><a href="Processing">Processing Documents</a></h2>
+
+<h2><a name="Processing">Processing Documents</a></h2>
 
 <p> If you want to use the pia as a XML-to-XML processor---reading and writing
     XML files using active tags, no web ports involved---you can use the
     command <code>process [filename]</code>, which sends the converted XML
-    directly to the console (standard output).
+    directly to the console (standard output).  The command syntax is:
 </p>
 
+<blockquote>
+<pre>
+process <em>[option]...</em> <em>input_filename</em>
+</pre>
+</blockquote>
 
-<p> <strong>=== this section needs lots more work ===</strong>
+<p>The command-line options are:</p>
+
+<dl compact="compact">
+  <dt> <code>-e</code></dt>
+  <dd> Do not define standard entities.</dd>
+  <dt> <code>-h</code></dt>
+  <dd> Print a help string.</dd>
+  <dt> <code>-o <em>filename</em></code></dt>
+  <dd> Specify output file.</dd>
+  <dt> <code>-p</code></dt>
+  <dd> Build a parse tree (which is output as a serialized Java
+       object)</dd>
+  <dt> <code>-t <em>tagset-name</em></code></dt>
+  <dd> Specify tagset (default <code>xhtml</code>).</dd>
+  <dt> <code>-s</code></dt>
+  <dd> Silent. Non-fatal error messages are suppressed.</dd>
+  <dt> <code>-q</code></dt>
+  <dd> Quiet. Warnings and informational messages are suppressed.</dd>
+  <dt> <code>-v</code></dt>
+  <dd> Verbose. Additional informational messages are output.</dd>
+  <dt> <code>-d</code></dt>
+  <dd> Debugging. Information is output which may be of use for
+       debugging the interpreter.</dd>
+</dl>
+
+<p> <strong>=== this section needs more work ===</strong>
 
 
 <h2><a name="Configuring">Configuring the PIA</a></h2>
@@ -179,6 +212,9 @@ href="../Config/Site/"><code>$PIA_HOME/Config/Site/</code></a>.  </p>
     <code>_subsite.xcf</code> file or renaming a tagset file), you should
     re-start the PIA to ensure the server knows about those changes.  The
     results may be very confusing otherwise.</p>
+
+<p> <strong>=== this section needs LOTS more work ===</strong>
+    In particular, it needs a list of configuration and command-line options. 
 
 
 <h2><a name="Updating">Updating the PIA</a></h2>
@@ -304,6 +340,6 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: using.html,v 1.1 1999-10-19 19:52:01 steve Exp $</i><br>
+<i>$Id: using.html,v 1.2 1999-10-19 22:42:31 steve Exp $</i><br>
 
 </body></html>
