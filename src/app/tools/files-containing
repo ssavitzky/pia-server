@@ -4,7 +4,8 @@
 
 re=${1-hhmts start}
 
-find . '(' -name '*.java' -o -name '*.html' -o -name '*.if' -o -name '*.tex' \
+find . '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \
+	-o -name '*.tex' \
         -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f  \
 	\! -path '*JavaDoc*' \! -path '*/other/*' \
     -exec grep -q -i "$re" {} \; -print 
