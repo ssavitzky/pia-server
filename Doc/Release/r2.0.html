@@ -28,8 +28,8 @@
   <li> The PIA has gone from having essentially two major components (the
        <code><a href="../../src/java/org/risource/pia/">pia</a></code> server
        engine and the <code><a
-       href="../../src/java/org/risource/dps/">dps</a></code> document
-       processor) to three, adding the <code><a
+       href="../../src/java/org/risource/dps/">dps</a></code> Document
+       Processing System) to three, adding the <code><a
        href="../../src/java/org/risource/site/">site</a></code> Site Resource
        Package.  You can get a summary and overview by reading:
        <ol>
@@ -124,7 +124,12 @@
        is still around, but refers to the agent's attribute list.  Most things
        that used to be entities in the agent's namespace are now files (still
        capable of being referred to as entities) in the agent's home
-       directory. 
+       directory.
+  <li> The PIA's command line has been substantially overhauled; it now takes
+       a pathname, which can be either the root directory or the top-level
+       configuration file.  Everything else can be configured in the top-level
+       configuration file, although it is still possible to override the more
+       common items (e.g. port) on the command line.
 </ol>
 
 <p> The net effect is that the PIA's core engine has undergone a tectonic
@@ -137,15 +142,15 @@
 <h4>Known Problems</h4>
 
 <p> Because of the extent of the changes in this release, many things are
-    still broken.  If you have been relying on the PIA to get your other work
-    done, please save a copy of your current working directory and put it
-    someplace safe!
+    still broken.  If you have been relying on a PIA application to get your
+    other work done, please save a copy of your current working directory and
+    put it someplace safe!
 
 <ol>
   <li> Several old agents have not even been looked at, especially
-       <code>BugReport</code>, <code>Swifty</code>, <code>View</code>, and
+       <code>BugReport</code>, <code>View</code>, and
        <code>Proxie/fileTools</code>.  The non-Agent applications
-       <code>Tutorial</code> and <code>Demo</code> are basically working,
+       <code>Tutorial</code> and <code>Demo</code> are working,
        blissfully unaware of the changes that whirl around them.
   <li> Lots of pages in agents that <em>are</em> working (after a fashion) are
        still full of broken links and obsolete code.  Many pages.  These
@@ -155,11 +160,15 @@
   <li> Much of the documentation needs to be rewritten, including large parts
        of 
        <ol>
-	 <li>  <a href="../agents.html"><code>agents.html</code></a>
 	 <li>  <a href="../author.html"><code>author.html</code></a>
 	 <li>  <a href="../entities.html"><code>entities.html</code></a>
 	 <li>  <a href="../intro.html"><code>intro.html</code></a>
        </ol>
+       This is in progress.
+  <li> There is no good way to list or access files in directories under a
+       specific (real or virtual) root; they are all merged at the moment.
+  <li> Agent initialization is somewhat broken -- it happens when you first
+       enter a directory.  It really needs to be done recursively up front.
 </ol>
 
 
@@ -499,5 +508,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.27 1999-10-04 17:43:43 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.28 1999-10-19 20:16:39 steve Exp $</b><br>
 </body></html>
