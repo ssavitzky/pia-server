@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Naming Conventions</title>
+</head><body>
+<h1></h1>
+<h2><a name='naming'>Naming Conventions:</a></h2>
+
+
+Once an application has been initialized, the PIA server "knows about it" and
+can recognize various shorthand forms of addressing the application and its
+constituent parts.  For example, consider the agent SimpleCalendar:
+
+<dl>
+  <dt> <font color="blue"> /~SimpleCalendar/ </font>
+  </dt>
+  <dd> An alias for the SimpleCalendar agent's home directory.
+  </dd>
+  <dt> <font color="blue">/~SimpleCalendar/- </font>
+  </dt>
+  <dd> A generic listing of an SimpleCalendar's home directory.  This will work
+       with <em>any</em> directory, not just agent homes, although it can be
+       hidden by the site designer.  For example, <a
+       href="/-"><code>/-</code></a> gives a generic listing of the PIA's home
+       directory. 
+  </dd>
+  <dt> <font color="blue">/~SimpleCalendar/DATA/ </font>
+  </dt>
+  <dd> Usually the application's data directory, if it has one.  This is just
+       a convention that may not be universal (in the case of SimpleCalendar,
+       the DATA directory, where all the calendar events are stored, is
+       actually a collection of directory trees like /~SimpleCalendar/1999/ ).
+  </dd>
+  <dt><font color="blue"> /~SimpleCalendar/DATA/- </font>
+  </dt>
+  <dd> A generic listing of the data directory.
+       </dd>
+</dl>
+
+
+<?--   old stuff, with links for viewing by the PIA
+<set name='name'><em>AppName</em></set>
+<set name="AGENT:name">SimpleCalendar</se>
+
+
+Once an application has been initialized, the PIA server "knows about it" and
+can recognize various shorthand forms of addressing the appliation and its
+consstituent parts.  For example, consider the agent SimpleCalendar:
+
+<dl>
+  <dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
+  </dt>
+  <dd> An alias for the &name; agent's home directory.
+  </dd>
+  <dt> <a href='/~&AGENT:name;/-'>/~&name;/-</a>
+  </dt>
+  <dd> A generic listing of an application's home directory.  This will work
+       with <em>any</em> directory, not just agent homes, although it can be
+       hidden by the site designer.  For example, <a
+       href="/-"><code>/-</code></a> gives a generic listing of the PIA's home
+       directory. 
+  </dd>
+  <dt> <a href='/~&AGENT:name;/DATA/'>/~&name;/DATA/</a>
+  </dt>
+  <dd> Usually the application's data directory, if it has one.  This is just
+       a convention that may not be universal.
+  </dd>
+  <dt> <a href='/~&AGENT:name;/DATA/-'>/~&name;/-</a>
+  </dt>
+  <dd> A generic listing of the data directory.
+       </dd>
+</dl>
+ --?>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: naming.html,v 1.1 1999-10-19 21:08:26 bill Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~bill/"
+         ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
+         >bill@rsv.ricoh.com</a>&gt;</address>
+</body></html>
