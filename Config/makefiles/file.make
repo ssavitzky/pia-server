@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-#   $Id: file.make,v 1.3 1999-07-14 22:18:58 steve Exp $
+#   $Id: file.make,v 1.4 1999-10-14 18:05:45 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -34,6 +34,10 @@
 #	include $(MF_DIR)/file.make
 #
 
+
+### Commands:
+
+PROCESS = $(PIADIR)/bin/process
 
 ### Targets:
 #	all	build executables, etc.
@@ -72,6 +76,19 @@ HEADER.html:
 	echo "  <dd> "							>> $@
 	echo "</dl>"							>> $@
 	echo "<hr>"							>> $@
-	echo "<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>"	>> $@
+	echo "<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>"	>> $@
 	echo "<b>$$"Id"$$</b>"						>> $@
 	echo "<a name=\"files\"><hr></a>"				>> $@
+
+### Rules:
+
+.SUFFIXES: .ts .html .tso .tss
+
+### Convert tagsets to ``stripped'' (.tss) files by removing documentation.
+###
+.ts.tss:
+	$(PROCESS) -t tsstrip -q $< > $@.tmp
+	rm -f $@; mv $@.tmp $@
+
+.ts.html:
+	$(PROCESS) -t tsdoc -q $<  > $@
