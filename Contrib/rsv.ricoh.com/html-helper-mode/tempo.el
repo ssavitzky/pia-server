@@ -5,7 +5,7 @@
 ;; Created: 16 Feb 1994
 ;; Version: 1.2.2
 ;; Keywords: extensions, languages, tools
-;; 1.1
+;; $Revision: 1.2 $
 
 ;; This file is part of GNU Emacs.
 
