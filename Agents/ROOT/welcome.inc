@@ -17,9 +17,11 @@
 <p> You can find out more about the PIA framework and its role in information
     applications from the online documentation described in the table below,
     and from the PIA Developer's Website at <a
-    href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>.  You
-    can obtain updates and additional open-source software from <a
+    href="http://www.RiSource.org/PIA"><code>/www.RiSource.org/PIA</code></a>.
+    You can obtain updates and additional open-source software from <a
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
-
+    Eventually we will have a working demonstration PIA server at <a
+    href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
+    may not be running yet.
 <p>
-<!-- $Id: welcome.inc,v 1.5 1999-03-23 20:35:20 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.6 1999-05-06 20:38:23 steve Exp $ -->
