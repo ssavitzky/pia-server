@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.3 2000-06-02 23:30:21 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.4 2000-06-29 01:55:17 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -1693,12 +1693,6 @@ The logical elements are <tag>logical</tag> and <tag>test</tag>.
 	  contain a numeric value in its text. 
     </doc>
   </define>
-  <define attribute="pad" optional="optional" handler>
-    <doc> The content is taken to be a list of items each of which must
-	  contain a numeric value in its text, which is then zero-padded 
-	to two digits (as in dates).
-    </doc>
-  </define>
   <define attribute="reverse" optional="optional">
     <doc> Causes a sort to be done in reverse order.
     </doc>
@@ -1725,6 +1719,12 @@ The logical elements are <tag>logical</tag> and <tag>test</tag>.
   <define attribute="base" optional="optional">
     <doc> The value is the base (radix) by which the result is converted.
 	  Only applies to integer operations.  Default is 10.
+    </doc>
+  </define>
+  <define attribute="pad" optional="optional">
+    <doc> The value of the attribute is a width.  If the result of the
+	  computation is an integer, it is padded on the left with zeros to at
+	  least that width.
     </doc>
   </define>
   <define attribute="integer" optional="optional">
