@@ -1,5 +1,5 @@
 // TreeAttrList.java
-// $Id: TreeAttrList.java,v 1.5 1999-11-09 21:29:56 steve Exp $
+// $Id: TreeAttrList.java,v 1.6 2000-02-25 16:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,8 @@ public class TreeAttrList extends TreeNodeMap
 {
 
   public TreeAttrList(){
-    caseSensitive=false;
+    // === wrong: should get from tagset === caseSensitive=false;
+    caseSensitive=true;		// === for now. 
   }
 
   /**
