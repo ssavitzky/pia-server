@@ -24,11 +24,23 @@
     been cleaned up, and extended to the point where the DPS can be dropped
     into any SAX or DOM application as a document-processing extension.
 
+<p> A significant upheaval in the way URL's are mapped onto files, and a total
+    rethinking of the role of agents, is in progress.  Preliminary notes and
+    code exist (see item 1 below) but have not yet been integrated with the
+    PIA as a whole.
+
 <h4>Changes since 2.0.5:</h4>
 
 <ol>
+  <li> Added new <a href="../Notes/steve/naming.html">notes on naming</a>,
+       including design notes toward a radical change in the way URL's,
+       files, and agents interrelate.  Preliminary source code can be
+       found in the <code>org.risource.site</code> package.
+  <li> Added a sizeable number of new demonstrations, in the
+       <code>Tutorial</code> agent.
   <li> Added methods to the <code>org.risource.dps.Output</code> interface
        that don't start with a DOM node (one is constructed if necessary).
+       This makes it easy to drive an Output from, e.g., a SAX driver.
   <li> Added the <code>org.risource.dps.output.ToProcessor</code> class, an
        Output that drives a Processor.  This makes it easy to drive the DPS
        from any event-driven parser, e.g. SAX, by writing a trivial adapter
@@ -36,8 +48,9 @@
   <li> Eliminated the need for entities as variables, clearing the way for use
        with SGML and XML parsers, most of which substitute entities ``up
        front''.  Entities defined in a document's environment, e.g. PIA: and
-       the tagset, will still work; they behave like ``traditional''
-       entities. 
+       the tagset, will still work and will behave like ``traditional''
+       entities.  For the moment, it <em>also</em> still works to access
+       variables using entities.
   <li> Central to eliminating entities is a new tag, &lt;element&gt; (or,
        equivalently, &lt;E&gt;), for constructing an element and then
        processing it. 
@@ -340,5 +353,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.25 1999-07-28 17:47:54 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.26 1999-08-06 23:58:03 steve Exp $</b><br>
 </body></html>
