@@ -1,0 +1,22 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-10-14 22:29:06 bill Exp $ -->
+
+<Container>
+ 
+
+  <!-- this included file gives the mapping of filename extensions to file
+  types, including the extension "foo" used on the home.foo file --> 
+
+  <include  src="extensions.xci"/>
+
+  <AGENT name=ExtensionDemo criteria="false">
+     <initialize><user-message>ExtensionDemo agent initialized</user-message>
+     </initialize>
+     <!-- The content will never be expanded.  This agent exists only as a
+	  marker, so that ~ExtensionDemo works and the
+	  ExtensionDemo-specific tags have a way of security-checking their
+	  directory.
+       -->
+  </AGENT>
+
+</Container>

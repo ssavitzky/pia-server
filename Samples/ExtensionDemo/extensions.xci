@@ -1,0 +1,12 @@
+<!-- $Id: extensions.xci,v 1.1 1999-10-14 22:29:07 bill Exp $ -->
+<!-- see the file PIA/Config/Site/extensions.xci for more complete examples -->
+
+
+  <Ext name="xh" 	type="text/html"	tagset="ExtensionDemo-xhtml" />
+
+  <Ext name="foo" 	type="text/html"	tagset="ExtensionDemo-xhtml" />
+
+  <Ext name="jpeg"	type="image/jpeg"				/>
+  <Ext name="jpg"	type="image/jpeg"				/>
+  <Ext name="gif"	type="image/gif"				/>
+
