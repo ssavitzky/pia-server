@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.11 1999-09-22 00:34:25 steve Exp $
+//	$Id: includeHandler.java,v 1.12 1999-12-14 18:48:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.11 1999-09-22 00:34:25 steve Exp $
+ * @version $Id: includeHandler.java,v 1.12 1999-12-14 18:48:36 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -95,14 +95,24 @@ public class includeHandler extends GenericHandler {
       rdr = doc.documentReader();
     } else {			// Try to open the stream.  Croak if it fails. 
       try {
-	stm = top.readExternalResource(url);
+	if (top.isRemotePath(url)) {
+	  stm = top.readExternalResource(url);
+	  rdr = new InputStreamReader(stm);
+	} else if (top.getDocument() == null) {
+	  // fail immediately if the path is not remote, but top has a
+	  // document; this means that locateResource tried and failed.
+	  File f = top.locateSystemResource(url, false);
+	  if (f != null) rdr = new FileReader(f);
+	}
       } catch (IOException e) {
-	reportError(in, cxt, e.getMessage());
 	if (content != null) Expand.processNodes(content, cxt, out);
-	else out.putNode(new TreeComment(e.getMessage()));
+	else {
+	  reportError(in, cxt, e.toString());
+	  out.putNode(new TreeComment(e.toString()));
+	}
 	return;
       }
-      if (stm == null) {
+      if (rdr == null) {
 	if (content != null) Expand.processNodes(content, cxt, out);
 	else {
 	  reportError(in, cxt, "Cannot open " + url);
@@ -110,7 +120,6 @@ public class includeHandler extends GenericHandler {
 	}
 	return;
       }
-      rdr = new InputStreamReader(stm);
     }
 
     if (ts == null) {
