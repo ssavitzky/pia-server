@@ -16,6 +16,24 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Hole</b> Event-driven Processor; SAX output. <br>
+       Processor needs to be an Output, and Output in turn needs to be a
+       SAXApplication as well as a tree builder.  Processor needs to call
+       element handler's <code>startAction</code> and <code>endAction</code>;
+       on active nodes the former starts building a tree (perhaps by pushing
+       something onto the Output), and the latter interprets the
+       tree.  Trivial.  Need a flag of some sort that says the Processor is in
+       tree-building mode; event-driven mode is indicated by the lack of an
+       Input.  The flag essentially <em>has</em> to be a depth.  What we push
+       on the output might be another Processor, or we might do it with a
+       <code>pushInPlace</code>. 
+       (1999-06-30) <br>
+
+  <li> <b>Hole</b> Need split and join attributes on text, etc. <br>
+       Anything that processes lists should have "split" and "join"
+       attributes, replacing the old "sep".
+       (1999-06-29) <br>
+
   <li> <b>Bug</b> nodeBuilder doesn't support all node types yet <br>
        (1999-06-24) <br>
        
@@ -209,8 +227,9 @@ See also:
        -- CDATASection done 1999-06-24
 
   <li> <b>Hole</b> SAX and DOM input and output <br>
-       FromSAX, FromDOM, ToSAX, ToDOM shims.  Note that FromDOM can be used to
-       redecorate a parse tree with new semantics.
+       FromDOM, ToSAX, ToDOM shims.  Note that FromDOM can be used to
+       redecorate a parse tree with new semantics.  (From SAX requires an
+       event-driven Processor).
        (1999-04-07) <br>
 
   <li> <b>Bug</b> &lt;include&gt;Directory broken <br>
@@ -567,7 +586,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.21 1999-06-25 00:41:03 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.22 1999-07-02 00:14:56 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
