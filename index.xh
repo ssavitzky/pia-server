@@ -1,62 +1,62 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
   <title>&piaUSER;'s Agency on &piaHOST;</title>
-</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 
-<set name='piaURL'>http://&piaHOST;:&piaPORT;/</set>
-<set name='ltitle'><if><test exact='exact' match='pia'>&piaUSER;</test>
+<set name="piaURL">http://&piaHOST;:&piaPORT;/</set>
+<set name="ltitle"><if><test exact="exact" match="pia">&piaUSER;</test>
 		     <then> </then>
-		     <else><a href='/~/'>&piaUSER;'s</a> </else></if></set>
-<header show-date='yes' ltitle='&ltitle;'>
-  <if><test exact='exact' match='pia'>&piaUSER;</test>
+		     <else><a href="/~/">&piaUSER;"s</a> </else></if></set>
+<header show-date="yes" ltitle="&ltitle;">
+  <if><test exact="exact" match="pia">&piaUSER;</test>
 			    <then>An Information Appliance</then>
 	    		    <else>Personal Information Agency</else>
 			</if><br />
-	 &lt;<a href='&piaURL;'>&piaURL;</a>&gt;</header>
+	 &lt;<a href="&piaURL;">&piaURL;</a>&gt;</header>
 
-<table cellspacing='0' cellpadding='0' border='0'>
+<table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width='170'><img src='/Icon/logo100.gif' height='100' width='111' alt=' ' />
-  </th><td valign='top'>
-    <table cellspacing='0' cellpadding='0' border='0' valign='top'>
-    <tr><th valign='top' align='right' width='170'></th>
-        <td valign='top'></td></tr>
-   <if><agent-running name='Admin'/><then>
-    <tr><th valign='top' align='right' width='170'>
-	    <a href='/~Admin'><b>Admin:</b></a>&nbsp;
-	</th><td valign='top'>
-	    <a href='/~Admin/list-agents'>list</a> /
-	    <a href='/~Admin/installers'>install</a> / 
-	    <a href='/~Admin/remove-agent'>remove</a> agents.<br />
-	    <if><test exact='exact' match='pia'>&piaUSER;</test>
-	      <then><a href='/~Admin/shutdown'>shut down</a> appliance<br />
+  <th width="170"><img src="/Icon/logo100.gif" height="100" width="111" alt=" " />
+  </th><td valign="center">
+    <table cellspacing="0" cellpadding="0" border="0" valign="center">
+    <tr><th valign="top" align="right" width="170"></th>
+        <td valign="top"></td></tr>
+   <if><agent-running name="Admin"/><then>
+    <tr><th valign="top" align="right" width="170">
+	    <a href="/~Admin"><b>Admin:</b></a>&nbsp;
+	</th><td valign="top">
+	    <a href="/~Admin/list-agents">list</a> /
+	    <a href="/~Admin/installers">install</a> / 
+	    <a href="/~Admin/remove-agent">remove</a> agents.<br />
+	    <if><test exact="exact" match="pia">&piaUSER;</test>
+	      <then><a href="/~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
     </td></tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
-    <tr><th valign='top' align='right' width='170'><a href='/.'><b>Files:</b></a>&nbsp;
-	</th><td valign='top'> <a href='/Agents/'>Agents</a>
-	    <a href='/Doc/'>Documentation</a>
-	    <a href='/src/'>source code</a>
+    <tr><th valign="top" align="right" width="170"><a href="/."><b>Files:</b></a>&nbsp;
+	</th><td valign="top"> <a href="/Agents/">Agents</a>
+	    <a href="/Doc/">Documentation</a>
+	    <a href="/src/">source code</a>
       </td></tr>
-    <if><agent-running name='History'/><then>
-	    <tr><th valign='top' align='right'>
-		    <a href='/~History'><b>History:</b></a>&nbsp;
+    <if><agent-running name="History"/><then>
+	    <tr><th valign="top" align="right">
+		    <a href="/~History"><b>History:</b></a>&nbsp;
 		</th>
-	        <td valign='top'> 
-		    [<a href='/~/History'>All</a> | 
-		     <a href='/~/History/&year;/'>&year;</a>/<a href='/~/History/&year;/&month;/'>&month;</a>/<a href='/~/History/&year;/&month;/&day;.html'>&day;</a>]
+	        <td valign="top"> 
+		    [<a href="/~/History">All</a> | 
+		     <a href="/~/History/&year;/">&year;</a>/<a href="/~/History/&year;/&month;/">&month;</a>/<a href="/~/History/&year;/&month;/&day;.html">&day;</a>]
 	        </td>
 	    </tr>
 	</then>
         <else><tr><td>&nbsp;</td><td></td></tr>
         </else></if>
-    <tr><td width='170'>&nbsp;</td><td></td></tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
   </table>
 </td></tr></table>
 <hr />
-<include src='/Agents/ROOT/welcome.inc'> </include>
+<include src="/Agents/ROOT/welcome.inc"> </include>
 <hr />
-<include src='/Agents/ROOT/doc-grid.inc'> </include>
+<include src="/Agents/ROOT/doc-grid.inc"> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.3 1999-09-24 22:59:14 steve Exp $' />
+<short-footer cvsid="$Id: index.xh,v 1.4 1999-09-24 23:12:40 steve Exp $" />
 </p></body></html>
