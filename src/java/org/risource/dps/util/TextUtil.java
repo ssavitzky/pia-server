@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.7 1999-05-06 20:42:21 steve Exp $
+//	$Id: TextUtil.java,v 1.8 1999-05-18 20:27:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.7 1999-05-06 20:42:21 steve Exp $
+ * @version $Id: TextUtil.java,v 1.8 1999-05-18 20:27:35 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -200,6 +200,7 @@ public class TextUtil {
 
     for (int i = startIndex; i <= endIndex; ++i) {
       ActiveNode n = nl.activeItem(i);
+      if (n == null) continue;
       if(NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
 	if (i == startIndex) {
