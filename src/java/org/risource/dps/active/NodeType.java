@@ -1,5 +1,5 @@
 ////// NodeType.java: Document Processor basic implementation
-//	$Id: NodeType.java,v 1.3 1999-04-13 21:45:41 steve Exp $
+//	$Id: NodeType.java,v 1.4 1999-06-25 00:16:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
  * <p> This type also performs type-related tests on nodes, partially
  *	compensating for the lack of inheritance in the DOM types.
  *
- * @version $Id: NodeType.java,v 1.3 1999-04-13 21:45:41 steve Exp $
+ * @version $Id: NodeType.java,v 1.4 1999-06-25 00:16:09 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.w3c.dom.Node
@@ -64,8 +64,10 @@ public class NodeType {
   public static final short 	FRAGMENT	= Node.DOCUMENT_FRAGMENT_NODE;
   public static final short 	NOTATION	= Node.NOTATION_NODE;
 
-  public static final short	MIN_TYPE 	= -4;
-  public static final short	MAX_TYPE 	= NOTATION;
+  public static final short	STRING		= (short)(((int)NOTATION)+1);
+
+  public static final short	MIN_TYPE 	= ALL;
+  public static final short	MAX_TYPE 	= STRING;
 
   /** This maps types into names.  They are only used for debugging,
    *	so they needn't match the names defined by either the DOM
@@ -75,7 +77,7 @@ public class NodeType {
     "ALL",	"DECLARATION", 	"NODELIST",	"ENDTAG",  	"NONE",
     /* .. 1: */	"ELEMENT",	"ATTRIBUTE",	"TEXT",	  	"CDATA", 
     "REFERENCE","ENTITY",	"PI",		"COMMENT",	"DOCUMENT",
-    "DOCTYPE",	"FRAGMENT",	"NOTATION",
+    "DOCTYPE",	"FRAGMENT",	"NOTATION",	/* added */	"STRING",
   };
 
   public static String getName(int type) {
@@ -112,12 +114,13 @@ public class NodeType {
   /** Test for the node containing text.  
    *	
    * <p> Note that although DOM comment nodes inherit from CharacterData, 
-   *	 are not considered text in the DPS.
+   *	 they are not considered text in the DPS.
    */
   public static final boolean isText(Node n) {
     switch (n.getNodeType()) {
     case Node.TEXT_NODE:
     case Node.CDATA_SECTION_NODE:
+    case STRING:
       return true;
     default:
       return false;
