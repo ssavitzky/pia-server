@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.8 2000-04-19 00:02:45 steve Exp $
+//	$Id: PIAServlet.java,v 1.9 2000-04-19 23:53:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.8 2000-04-19 00:02:45 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.9 2000-04-19 23:53:40 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -66,7 +66,7 @@ public class PIAServlet
 
   /** Cache for the servlet engine context. */
   protected ServletContext context;
-  protected static String revision = "$Revision: 1.8 $";
+  protected static String revision = "$Revision: 1.9 $";
 
   /** The configuration of this servlet, including any parameters passed
     * to the servlet.
@@ -235,18 +235,25 @@ public class PIAServlet
     String vroot = config.getInitParameter("vroot");
     String configfile = config.getInitParameter("configfile");
     String siteconfig = config.getInitParameter("siteconfig");
+    String filesep  = System.getProperty("file.separator");
 
     // tell the tagset loader where .../lib is
     if (home != null) {
-      String filesep  = System.getProperty("file.separator");
-      String tsHome = home + filesep + "lib";
-      Loader.setTagsetHome(tsHome);
+      Loader.setTagsetHome(home + filesep + "lib");
     }
 
     // Root defaults to server root.  (Maybe only if configfile == null?)
     if (root == null) {
       root = context.getRealPath("/");
     }
+
+    if (home == null) {
+      home = root;
+      File f = new File(root + filesep + "lib");
+      if (f.exists()) {
+	Loader.setTagsetHome(root + filesep + "lib");
+      }
+    }	
 
     log("Site: home=" + home +
 	",root=" + root + 
