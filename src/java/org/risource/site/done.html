@@ -62,11 +62,17 @@ See also:
        -- Pilot error: <code>-config</code> sets the config file name;
 	  <code>-site</code> sets the site configuration file path.
 
+  <li> <b>Bug</b> pia-tagset not found if a virtual resource <br>
+       The java-resource version is loaded, so it doesn't have a proper
+       timestamp and is not reloaded if changed.  The problem is that
+       locateChildFile is used instead of locateChild.
+       (1999-09-26) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.4 1999-09-22 23:51:15 steve Exp $</b><br>
+<b>$Id: done.html,v 1.5 1999-09-24 22:05:37 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

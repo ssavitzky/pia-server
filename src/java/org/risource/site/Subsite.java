@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.10 1999-09-24 00:28:02 steve Exp $
+//	$Id: Subsite.java,v 1.11 1999-09-24 22:05:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.10 1999-09-24 00:28:02 steve Exp $
+ * @version $Id: Subsite.java,v 1.11 1999-09-24 22:05:36 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -352,6 +352,12 @@ public class Subsite extends ConfiguredResource implements Resource {
 	if (f.exists()) return f;
       }
     }
+    if (childConfigCache != null) {
+      ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
+      if (cfg == null) return null; 
+      Resource child = configureChild(name, cfg);
+      if (child != null) return child.getDocument().documentFile();
+    }
     return null;
   }
 
@@ -649,7 +655,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     } else {
       if (tagsetCache == null) tagsetCache = new Table();
       tagsetCache.at(name, ts);
-      getRoot().report(0, getPath() + " Loaded tagset '" + name 
+      getRoot().report(0, getPath() + " Loaded system tagset '" + name 
 		       + "' in " + timing(start) + " seconds.", 4, false);
     }
     return ts;
