@@ -605,11 +605,26 @@ See also:
        -- &lt;action mode=XXX&gt; where XXX includes replace-element,
 	  replace-content, append-content, silent, delete.
 
+  <li> 1999-03-26 <b>Bug</b> Boolean attributes should eval. to name <br>
+       ...following the ancient SGML tradition.  Best done by fixing what the
+       parser does when no = is present. 
+       (1998-11-02)<br>
+       -- see BasicParser.java line 214.  Unfortunately it breaks some things
+	  (like handlers); this needs to be fixed.  The problem is that some
+	  handlers need to distinguish between an entity which is present but
+	  has no value, and one which is present with a non-default value.
+       
+  <li> 1999-03-2x <b>Bug</b> SGML/XML cleanup <br>
+       &lt;p&gt; needs to be non-empty.  Boolean attributes need to get
+       their name as value.  There needs to be a flag somewhere that says
+       whether to output as SGML or XML.
+       (1999-03-11) <br>
+       
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.3 1999-03-12 19:25:07 steve Exp $</b><br>
+<b>$Id: done.html,v 1.4 1999-03-30 23:40:17 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -16,12 +16,28 @@ See also:
 </ul>
 
 <ol>
-  <li> <b>Bug</b> SGML/SML cleanup <br>
-       &lt;p&gt; needs to be non-empty.  Boolean attributes need to get
-       their name as value.  There needs to be a flag somewhere that says
-       whether to output as SGML or XML.
-       (1999-03-11) <br>
+  <li> <b>Bug</b> getAttributeString needs to return internal form <br>
+       Probably, <em>everything</em> should return internal form, and
+       <code>ToExternalForm</code> should do the encoding as needed.
+       (1999-03-30) <br>
+
+  <li> <b>Impr</b> SGML/XML output flag <br>
+       There needs to be a flag somewhere that says whether to output as SGML
+       or XML. 
+       (1999-03-30) <br>
        
+  <li> <b>Impr</b> Need ways of getting at node names, types, keys <br>
+       Mainly in &lt;extract&gt;, though a general mechanism would be good.
+       It's possible that the empty &lt;extract&gt; sub-elements could be
+       generalized so that they operate on their content, if present, instead
+       of on &amp;list;.
+       (1999-03-29) <br>
+
+  <li> <b>Bug</b> Permanent tagsets aren't. <br>
+       Need to copy the tagset when a document includes a &lt;define&gt;.
+       Otherwise the PIA's permanent tagsets get polluted.
+       (1999-03-29) <br>
+
   <li> <b>Impr</b> Really need &lt;action mode=prepend&gt; <br>
        The action should be able to edit the attributes of &amp;element;, but
        the content would then be streamed through.
@@ -139,15 +155,6 @@ See also:
        doesn't.  Probably best to fix this in <code>setValue</code>.
        (1998-11-18) <br>
 
-  <li> <b>Bug</b> Boolean attributes should eval. to name <br>
-       ...following the ancient SGML tradition.  Best done by fixing what the
-       parser does when no = is present. 
-       (1998-11-02)<br>
-       -- see BasicParser.java line 214.  Unfortunately it breaks some things
-	  (like handlers); this needs to be fixed.  The problem is that some
-	  handlers need to distinguish between an entity which is present but
-	  has no value, and one which is present with a non-default value.
-       
   <li> <b>Impr</b> Pipelined &lt;select&gt; <br>
        Should be possible to stream selection through a series of
        processors.  Bind &amp;item; to current item; evaluate
@@ -456,7 +463,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.4 1999-03-12 19:25:10 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.5 1999-03-30 23:40:20 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
