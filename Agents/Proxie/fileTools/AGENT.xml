@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:59 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.2 1999-05-28 21:34:33 steve Exp $ -->
 
 <AGENT name='fileTools' path='/Proxie/Toolbar/'
        type='/Proxie/Toolbar' home-dir='Proxie/fileTools'
        pathName='/Proxie/Toolbar/fileTools'>
   <bind name='criteria'>response agent-response html</bind>
+  <bind name='onStart'>on</bind>
   <bind name='act-on'><if><get name='AGENT:hidden' /><else>
 <trans-control>
 <set name='pia'>http://&piaHOST;:&piaPORT;</set>

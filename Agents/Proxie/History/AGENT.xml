@@ -1,9 +1,10 @@
 <!DOCTYPE AGENT SYSTEM "Admin-agent">
-<!-- $Id: AGENT.xml,v 1.2 1999-05-18 20:13:10 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.3 1999-05-28 21:34:28 steve Exp $ -->
 
 <AGENT name='History' path='/' type='History' pathName='/History'
        home-dir='./Proxie/History' user-dir='/~/Agents/Proxie/History'>
   <bind name='criteria'>response agent-response-</bind>
+  <bind name='onStart'>on</bind>
   <bind name='act-on'>
    <set name='ct'><get name='TRANS:Content-type' /></set>
    <set name='fn'>~/&year;/&month;/&day;.html</set>

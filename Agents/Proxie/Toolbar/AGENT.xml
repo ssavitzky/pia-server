@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:56 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.2 1999-05-28 21:34:30 steve Exp $ -->
 
 <AGENT name='Toolbar' path='/Proxie/' type='Toolbar'
        pathName='/Proxie/Toolbar'>
   <bind name='criteria'></bind>
+  <bind name='onStart'>on</bind>
   <bind name='controls'><!--   Generic Toolbar controls:   -->
 <set name='pia'>http://&piaHOST;:&piaPORT;</set>
 <a href='&pia;/~/' target='_top'>[~]</a>

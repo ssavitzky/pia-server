@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:37:02 steve Exp $ -->
+<!-- $Id: AGENT.xml,v 1.2 1999-05-28 21:34:36 steve Exp $ -->
 
 <AGENT name='remoteTools' path='/Proxie/Toolbar/'
        type='/Proxie/Toolbar' home-dir='Proxie/remoteTools'
        pathName='/Proxie/Toolbar/remoteTools'>
   <bind name='criteria'>response agent-response- html</bind>
+  <bind name='onStart'>on</bind>
   <bind name='act-on'><!--   this is remoteTools' act-on hook   -->
 <if>&AGENT:hidden;<else>
 <trans-control>
