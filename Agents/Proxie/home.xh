@@ -8,7 +8,7 @@
     <then>
       <set name='subs'><agent-list subs='subs' type='/&AGENT:name;/'/></set>
     </then>
-    <else><set name="subs">History Toolbar remoteTools</set></else>
+    <else><set name="subs">History Toolbar remoteTools buster</set></else>
 </if>
 <sub-head page='home'>
     <tr><th></th><td> <a href='using'>Using &AGENT:name; Agents</a> </td>
@@ -50,7 +50,7 @@
 </if>
 <hr />
 
-<include src='about.inc'/>
+<expand><include quoted="yes" src='about.inc'/></expand>
 
 <hr />
 
@@ -66,19 +66,21 @@
 
 <pre><protect result='result' markup='markup'>&AGENT:criteria;</protect></pre>
 
-<h3>&AGENT:name; Agent Action Hook</h3>
+<h3>&AGENT:name; Agent Action</h3>
 
 <blockquote><em>
   This is the code that <a href='/~&AGENT:name;'>&AGENT:name;</a> runs
   whenever its match criteria are satisfied.  
 </em></blockquote>
 
-<pre><protect result='result' markup='markup'><get name="AGENT:action"/></protect>
-</pre>
+<pre><protect result='result' markup='markup'><hide>
+ </hide><extract><from><get name="agentNode"/></from>
+		 AGENT <name recursive>action</name> <content/>
+	</extract></protect></pre>
 
 <hr />
 <b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
 <b>Source:</b> <a href='/~View/xml?url=&filePath;'>&fileName;</a>
 <b>File:</b> <a href='/&filePath;'>&filePath;</a>
-<footer cvsid='$Id: home.xh,v 1.9 1999-11-23 18:40:55 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.10 1999-12-16 21:30:25 steve Exp $' />
 </body></html>

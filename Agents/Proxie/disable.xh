@@ -1,0 +1,80 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+<title>Disable/Enable &AGENT:name; agent</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Enable/Disable</header>
+
+<!-- as usual, we have to process the form before displaying the state -->
+<if><test match='false'><get name='FORM:enable' /></test>
+    <then><set name='AGENT:enabled'> </set></then>
+<else><if><get name='FORM:enable' />
+    <then><set name='AGENT:enabled'>true</set></then>
+<else><if><get name='FORM:disable' />
+    <then><set name='AGENT:enabled'> </set></then>
+</if></else></if></else></if>
+
+<if><get name='FORM:enable' /><get name='FORM:disable' />
+    <then><write-vars dst="state.inc" list="&AGENT:state;"/>
+    </then>
+</if>
+
+<sub-head page="enable">
+    <tr><th align='right'>&blue-dot;
+	</th>
+        <td><if><get name="AGENT:enabled"/>
+		<then>Enable/<a href="disable">Disable</a></then>
+		<else><a href="disable">Enable</a>/Disable</else>
+            </if>
+            Agent
+        </td>
+    </tr>
+</sub-head>
+<hr />
+<nav-bar />
+<hr />
+
+<table>
+  <tr><td>
+	<h3>&AGENT:name; Agent
+	    <em><if><get name='AGENT:enabled' />
+		  <then>Enabled</then><else>Disabled</else>
+	        </if>
+	    </em>
+	</h3>
+     </td>
+     <td>
+	<if><get name='AGENT:enabled' />
+	<then>
+	<form action='disable'>
+	  <input type='hidden' name='disable' value='true' />
+	  <input type='submit' value='DISABLE' />
+	</form>
+	</then><else>
+	<form action='disable'>
+	  <input type='hidden' name='enable' value='true' />
+	  <input type='submit' value='ENABLE' />
+	</form>
+	</else></if>
+     </td>
+  </tr>
+</table>
+
+<hr>
+
+<p> This agent is normally distributed in the ``<b>disabled</b>'' state in
+    order to avoid disrupting your normal browsing in unexpected ways.  This
+    page can be used to enable or disable the agent's action, which is to
+    silently respond to proxied requests that match its pattern by returning a
+    1x1 transparent bitmap. 
+</p>
+
+<p> Note that some pages contain evil Javascript code that actually looks at
+    files obtained from the advertising source.  This code usually complains
+    about an illegal character in the unexpected <code>.xbm</code> file we
+    return.  Don't worry about it.  If the error popups become bothersome,
+    either change the pattern, disable <code>&AGENT:name;</code>, or turn off
+    Javascript.  I prefer the latter.
+</p>
+
+<footer cvsid='$Id: disable.xh,v 1.1 1999-12-16 21:30:25 steve Exp $' />
+</body></html>
