@@ -1,0 +1,17 @@
+<note><title>Function declarations</title>
+
+  <summary> This context contains words declared as functions.  
+  </summary>
+
+  <content> The ``parser'' is crude (nothing more than a short list of regular
+	    expressions) but effective, and finds functions in Perl, shell
+	    scripts, C, C++, Java, and PHP.  It is possible, and indeed fairly
+	    easy, to fool it, but it seems to work well with common
+	    programming styles.  Amazingly enough, it only looks at one line
+	    at a time.  In C, C++, and Java all it's looking for is an
+	    identifier followed by a left parentheses and preceeded by any
+	    identifier (presumably a type) that is not one of of the small set
+	    of keywords that take a parenthesized expression.
+  </content>
+</note>
+		

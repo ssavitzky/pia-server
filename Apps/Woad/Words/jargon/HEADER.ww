@@ -1,0 +1,13 @@
+<note><title>The Jargon File</title>
+
+  <summary> This context contains words defined in the
+	    <a href="http://www.tuxedo.org/~esr/jargon/">Jargon File</a>.
+  </summary>
+
+  <content> The <a href="http://www.tuxedo.org/~esr/jargon/">Jargon File</a>
+	    is an external index -- although interesting (and fun to browse)
+	    in its own right, it serves primarily as an example of how to
+	    incorporate an external word index into WOAD.
+  </content>
+</note>
+		

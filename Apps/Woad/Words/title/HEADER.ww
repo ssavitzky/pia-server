@@ -1,0 +1,20 @@
+<note><title>Web page and other titles</title>
+
+  <summary>This context contains the titles of web pages and other documents.  
+  </summary>
+
+  <content> Phrases such as titles are converted to words as follows:
+    <ol>
+      <li> The special characters <code>&amp;</code>, <code>@</code>, and
+	   <code>%</code> are converted to the corrresponding words.
+      </li>
+      <li> All other non-alphanumeric characters, including spaces,
+		are converted to underscores.
+      </li>
+      <li> Finally, underscores between uppercase and lowercase letters are
+	   removed.   [This is controversial.]
+      </li>
+    </ol>
+  </content>
+</note>
+		

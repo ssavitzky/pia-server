@@ -1,0 +1,9 @@
+<note><title>File names</title>
+
+  <summary>This context contains words used as the names of files.</summary>
+
+  <content> Note that the ``words'' defined in this context are the ``base
+	    names'' of the files, without extensions.
+  </content>
+</note>
+		
