@@ -26,7 +26,7 @@
     <title>Calendar for
 	   <weekday monthname="yes">&mypack;</weekday> &myyear;</title>
   </head>
-  <body bgcolor="white">
+  <body><!--  bgcolor="white" gives insufficient contrast on some screens -->
 
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
     <tr><th align=left colspan=8><font size="+2">
@@ -107,13 +107,13 @@
 	<table cellspacing="1"  cellpadding="2" border="0" width="100%">
 
             <tr>
-               <th><tt>--Sunday---</tt></th>
-               <th><tt>--Monday---</tt></th>
-               <th><tt>--Tuesday--</tt></th>
-               <th><tt>-Wednesday-</tt></th>
-               <th><tt>--Thursday-</tt></th>
-               <th><tt>--Friday---</tt></th>
-               <th><tt>-Saturday--</tt></th>
+               <td align="center"><tt>--Sunday---</tt></td>
+               <td align="center"><tt>--Monday---</tt></td>
+               <td align="center"><tt>--Tuesday--</tt></td>
+               <td align="center"><tt>-Wednesday-</tt></td>
+               <td align="center"><tt>--Thursday-</tt></td>
+               <td align="center"><tt>--Friday---</tt></td>
+               <td align="center"><tt>-Saturday--</tt></td>
             </tr>
 
 	    <set name="thisMonth">&myMonth;</set>
@@ -170,6 +170,6 @@
 
        <show-errors />
 
-    <short-footer cvsid="$Id: month.xh,v 1.2 1999-10-11 22:38:11 steve Exp $"/>
+    <short-footer cvsid="$Id: month.xh,v 1.3 1999-10-12 00:23:32 steve Exp $"/>
   </body>
 </html>
