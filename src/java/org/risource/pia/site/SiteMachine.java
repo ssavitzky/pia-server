@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.7 1999-11-06 01:06:25 steve Exp $
+// $Id: SiteMachine.java,v 1.8 1999-12-14 18:38:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -332,7 +332,7 @@ public class SiteMachine extends Machine {
 
   /** Compute the appropriate redirection for a path. */
   protected String getRedirection(Resource resource, String path) {
-    if (path.startsWith("~") && redirectHome(resource)) {
+    if (path.startsWith("/~") && redirectHome(resource)) {
       if (resource.isContainer() && !path.endsWith("/")) {
 	return resource.getPath() + "/";
       } else {
