@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.10 2000-09-25 23:22:09 steve Exp $
+#	$Id: woad-index.pl,v 1.11 2000-09-26 23:13:10 steve Exp $
 # Create WOAD index files.
 #
 
@@ -11,6 +11,7 @@ sub usage {
     print "	-l		local (no recursion)\n";
     print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "	-v		Print version string and exit\n";
+    print "	-q		Quiet\n;";
     print "  parameters: \n";
     print "	source=<dir>	source root\n";
     print "	root=<dir>	annotation root (same as -root <dir>)\n";
@@ -52,6 +53,10 @@ $id		= "($ids($idc*$ids)?)"; # pattern for C identifiers
 
 %noIndexDirs 	= ( "CVS"	  => "CVS control directory",
 		    $sourceSuffix => "WOAD source annotations" );
+
+%noIndexNotes 	= ( "CVS"	=> "CVS control directory",
+		    "logs"	=> "PIA logs",
+		    "DATA" 	=> "PIA data directory" );
 
 %noIndexExt	= ( "log"	=> "log",
 		    "bak"	=> "backup",
@@ -427,7 +432,7 @@ sub indexFile {
     # Convert entry to xml format:
     $ent = "<File";
     for (my @keys = keys(%entry), my $k = 0; $k < @keys; ++$k) {
-	$ent .= " " . $keys[$k] . '="' . $entry{$keys[$k]} . '"';
+	$ent .= " " . $keys[$k] . '="' . stringify($entry{$keys[$k]}) . '"';
     }
     $ent .= ">$woadPath</File>";
     print PATHINDEX "    $ent\n";
@@ -597,7 +602,7 @@ sub indexWoadDir {
 
     # Open and read the directory.
     if (! opendir(DIR, "$d")) {
-	print STDERR "cannot open directory $d\n";
+	print STDERR "cannot open notes directory $d\n";
 	return;
     }
     my @files = sort(readdir(DIR));
@@ -607,10 +612,13 @@ sub indexWoadDir {
     print STDERR "indexing notes in $d \n";
 
     for (my $i= 0; $i < @files; ++$i) {
-	if ($files[$i] eq "." || $files[$i] eq "..") { next; }
-	if ($files[$i] =~ /\.wi$/) { next; }
-	if ($files[$i] =~ /\.ww$/) { indexWoadNote($files[$i], $path); }
-	elsif (-d "$d/$files[i]") { push (@subdirs, $files[$i]); }
+	my $f = $files[$i];
+	if ($f eq "." || $f eq "..") { next; }
+	if ($noIndexNotes{$f}) { next; }
+	if ($f =~ /\.wi$/) { next; }
+	if (-l "$d/$f") { next; }
+	if (-d "$d/$f") { push (@subdirs, $f); }
+	elsif ($f =~ /\.ww$/) { indexWoadNote($f, $path); }
     }
 
     # now do the subdirectories
@@ -618,7 +626,7 @@ sub indexWoadDir {
     if ($recursive) {
 	for (my $i = 0; $i < @subdirs; ++$i) { 
 	    my $dd = $subdirs[$i];
-	    indexWoadDir("$d/$dd", "$path/$dd" );
+	    if (-d "$d/$dd") { indexWoadDir("$d/$dd", "$path/$dd" ); }
 	}
     }
 }
@@ -642,8 +650,8 @@ sub indexWoadNote {
     my $woadPath = "$path/$f";
     $woadPath =~ s@//@/@g;
 
-    #if (-d $absPath) { return 1; } # index directories
-    #if ($f !~ /\.ww$/) { return 0; } # otherwise, only look at notes
+    if (-d $absPath) { return 1; } # index directories
+    if ($f !~ /\.ww$/) { return 0; } # otherwise, only look at notes
 
     my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
 	$mtime, $ctime, $blksiz, $blks) = stat $absPath;
@@ -660,7 +668,7 @@ sub indexWoadNote {
     # Convert entry to xml format:	=== this is probably wrong
     my $ent = "<Wfile";
     for (my @keys = keys(%entry), my $k = 0; $k < @keys; ++$k) {
-	$ent .= " " . $keys[$k] . '="' . $entry{$keys[$k]} . '"';
+	$ent .= " " . $keys[$k] . '="' . stringify($entry{$keys[$k]}) . '"';
     }
     $ent .= "> $summary </Wfile>\n";
 
@@ -776,7 +784,7 @@ sub globalIndices {
     }
 
     # Here we do the chronological notes index
-    open (INDEX, ">$root$project/notesByTime.wi");
+    open (INDEX, ">$root$project/AllNotesByTime.wi");
     @keys = sort(keys(%notesByTime));
     for ($k = @keys - 1; $k >= 0; --$k) {
 	print INDEX $notesByTime{$keys[$k]};
@@ -857,6 +865,6 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.10 2000-09-25 23:22:09 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.11 2000-09-26 23:13:10 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 
