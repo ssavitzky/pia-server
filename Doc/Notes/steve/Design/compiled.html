@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Compiled Document Representations</title>
+</head><body>
+<h1>Compiled Document Representations</h1>
+
+<h2>Introduction</h2>
+
+<p> Several times I have alluded to the idea of representing documents as
+    compiled code in some programming language such as C.  Such a
+    representation is one of the extrema on the time-space continuum, and
+    close to an extremum on the efficiency-portability continuum.  (The
+    corresponding executable is <em>at</em> the extremum.)
+
+<p> There are actually two distinct ways of representing documents as
+    programs:
+
+<ol>
+  <li> as an initialized data structure that corresponds to a representation
+       of its parse tree
+
+  <li> as a program that, when executed, outputs the document as a character
+       stream, with all active constructs expanded.
+</ol>
+
+<p> The first technique is significantly more versatile, and avoids problems
+    that arise when trying to compile constructs like &lt;expand&gt; that are
+    most easily implemented if one has a parse tree representation of the
+    document in the first place.  Given a document representation as compiled
+    parse trees, the corresponding program is essentially an interpretor.
+
+<p> Note also that the distinction disappears in interpreted languages such as
+    LISP, in which trees are used as the base representation of both programs
+    and data.
+
+<h2>Document Data Structures</h2>
+
+<p> Even though the W3C's Document Object Model (DOM) specifies a
+    representation for document parse trees, it is not really a particularly
+    good internal representation for documents, for the following reasons:
+
+<ul>
+  <li> The presence of explicit parent links make structure-sharing
+       impossible.  Since the DPS always traverses documents in a forward
+       direction, parent links are unnecessary.
+
+  <li> There is no explicit support in the DOM for document-formatting
+       operations; the only way to compute something like the number of lines,
+       columns, or characters in a node is recursively.
+
+  <li> A naive implementation of the DOM requires class inheritance and
+       virtual functions, which preclude compile-time initialization in
+       languages like C++.  (The question doesn't arise in C, which lacks
+       classes.) 
+</ul>
+
+
+<p> There are three plausible organizations for documents:
+
+<ol>
+  <li> Represent the entire document as a single array of identical Node
+       structures.  This has the advantage of being very simple to construct.
+       The drawbacks are that it may require more space (since text, elements,
+       attributes, and end tags all need the same size node), and that some
+       compilers break when confronted with enormous arrays.
+
+  <li> Represent each Node as a separate, named static variable (or group of
+       variables, in some cases).  This is definitely the most straightforward
+       method. 
+
+  <li> Represent the document as a list of pointers to, or indices of, nodes.
+       This corresponds roughly to a ``threaded-code'' or ``byte-code''
+       representation of the document.
+</ol>
+
+<p> There is a separate but related decision about the extent to which
+    contiguous blocks of text ought to be broken up into words.  This trades
+    space overhead for efficiency in operations that split their text content
+    on whitespace.  One possible compromise is to make this decision on an
+    element-by-element basis.  It's also possible (likely, even) that
+    structure sharing (i.e., the <b>flyweight</b> pattern) will gain back more
+    space than it costs.
+
+
+<h2>Design Sketch</h2>
+
+<p> There are two alternatives for representing the children; both have their
+    uses. 
+
+<ol>
+  <li> Represent a nodelist (either an attribute list or the content of an
+       element) as an array of pointers to (or indices of) nodes.  This
+       permits structure sharing but requires a complete parse tree for
+       construction.
+
+  <li> Using <code>nextSibling</code> and <code>firstChild</code> pointers
+       would take the same amount of space, but precludes structure sharing
+       within content.  On the other hand, it permits on-the-fly
+       construction since it would not be necessary to count children.
+       Combined with a special "end-of-list" node that points back to the
+       parent, this would allow stackless tree traversal (as in the DOM).
+</ol>
+
+<p> Number the elements in the document, and use these numbers in the node
+    identifiers.  Use, e.g., <code>e<em>NNN</em></code> for the element,
+    <code>a<em>NNN</em></code> for its attribute list array, and
+    <code>c<em>NNN</em></code> for its content array.
+
+<p> Alternatively, keep a separate count for each type of element, and
+    incorporate the tagname into the identifier, e.g.
+    <code>h1_<em>NNN</em></code>.  This would be a little more complex, but
+    would result in more readable code. 
+
+<p> Tagnames will normally be represented as indices into a table of
+    handlers or as references to descriptor structures.  Here the use of the
+    tag name in the corresponding identifier or <code>#define</code> symbol is
+    almost obligatory for debugging purposes.
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: compiled.html,v 1.1 1999-06-02 18:50:33 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

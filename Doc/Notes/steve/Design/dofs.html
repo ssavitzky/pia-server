@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>DOFS: Representing Documents Efficiently</title>
+</head><body>
+<h1>DOFS: Representing Documents Efficiently</h1>
+
+<h2>Architectural Notes</h2>
+
+<p> One of the dreams of people in the PIA project has always been an
+    efficient representation for collections of documents.  Such a ``Document
+    Oriented Filing System'' (DOFS) would allow SGML documents, and
+    <em>portions of documents</em>, to be accessed by programs such as the PIA
+    without the need for parsing.
+
+
+<h3>External Representation</h3>
+
+<p> Possible solutions to this problem break down into the following general
+    categories:
+
+<dl>
+  <dt> <strong>OODB</strong>
+  <dd> Probably the first thing that occurs to anyone thinking about the
+       problem is an object-oriented database.  This gives a very close
+       coupling between the documents and their internal representation as
+       parse trees.  It may be difficult, though, to find a good, open source
+       OODB to use for this purpose.
+
+       <p>An additional problem with this approach is that OODB's suffer from
+       the ``schema migration'' problem.  If a change is made in one of the
+       classes used to represent documents, the entire database has to be
+       modified.
+
+       <p>Also, the obvious object representation to use is the DOM, but the
+       DOM has serious problems when ripped out of a single process and put
+       into a client-server system like a database.
+
+  <dt> <strong>Serialized Objects</strong>
+  <dd> Serialized Java objects suffer from the same problems as an OODB.
+       Worse, they are known to be less efficient than simply parsing XML
+       files!  Why bother?
+
+  <dt> <strong><a href="compiled.html">Compiled Code</a></strong>
+  <dd> Going even farther down the garden path to specialized representations,
+       we come to compiled code.  It is relatively easy to map an XML document
+       into a C program that, when compiled and run, supports any desired
+       document-access API or protocol very efficiently.  Effectively, the
+       program might be a specialized server, or even a library.  This
+       approach may have merit for embedded systems or high-performance
+       applications, but of course is not a general-purpose solution.
+
+  <dt> <strong>Indexed Text Files</strong>
+  <dd> Something that goes ``all the way'' in the opposite direction from an
+       OODB is some way of keeping the object metadata in files that are
+       separate from the actual documents.  Such an index file would list the
+       elements and their attributes in some convenient format, and their
+       offsets in the actual documents.
+
+       <p>This technique has the obvious problem of keeping the document and
+       its index synchronized.  Also, if a document has a high ratio of tags
+       to text, the index file will actually take longer to read than the
+       document itself.
+
+  <dt> <strong>Binary File Formats</strong>
+  <dd> A third direction to go is toward an efficient binary representation
+       for document files.  Such a binary representation should include an
+       element index toward the front, element sizes (rather than end tags),
+       and should allow multiple documents to be aggregated into a single
+       file.  It's worth noting that a binary interchange format for SGML
+       files exists, and this needs to be investigated.
+
+       <p>Unlike an OODB, the data in a binary file does not need to be the
+       same as the in-memory representation (which is presently derived from
+       the DOM).  This allows the two representations to be optimized
+       independently. 
+
+</dl>
+
+<p> My present leaning is toward a binary file format.  However, I think that
+    compiled code also bears investigation; this is described in a <a
+    href="compiled.html">separate document</a>.
+
+
+<h3>Access Interface</h3>
+
+<p> There are also several possible choices for the API used to
+    <em>access</em> documents.
+
+<dl>
+  <dt> <strong>CORBA</strong>
+  <dd> CORBA obviously needs to be part of <em>any</em> solution.  This will
+       give a uniform, network-oriented API for the system.
+
+  <dt> <strong>Cursors</strong>
+  <dd> The DPS's <code>Cursor</code> interface also needs to be part of any
+       solution (and this interface needs to be improved to make it
+       complete). 
+
+  <dt> <strong>Streams</strong> (i.e. HTTP)
+  <dd> Another interface that needs to be part of any solution is an efficient
+       interface to character streams.  This will allow a DOFS to be accessed
+       as a web server.  Document streams also need to be positionable, for
+       efficient access to any portion of a document.
+
+  <dt> <strong>File System</strong>
+  <dd> Taking the stream interface to yet another extreme is the idea of
+       making a document collection into a virtual filesystem.  This, of
+       course, is not particularly portable across operating systems. 
+</dl>
+
+
+<hr><!-- ========================================================== -->
+<h2>Design Notes</h2>
+
+<p> This section will concentrate on design considerations for a binary file
+    format, since that seems to be the best direction in which to proceed at
+    this point. 
+
+<dl>
+  <dt> <b>Note:</b>
+  <dd> An interchange format for SGML exists, called SDIF; this should be
+       investigated. 
+</dl>
+
+<h3>Design Considerations</h3>
+
+<dl>
+  <dt> Time-space tradeoffs
+  <dd> The classical tradeoff in computing is time vs. space.  By throwing
+       additional space at a problem (for example, by padding the file so that
+       each element starts on a block boundary) one can make it more
+       efficient.  Similarly, by throwing computation at it (say, by
+       compressing the text) one can make it more space-efficient.   I suspect
+       that the proper balance is probably somewhere close to a packed linear
+       file, with embedded navigational aids such as indices and element
+       lengths but without compression.
+
+  <dt> Read-write tradeoffs
+  <dd> Another tradeoff is reading vs. writing.  It is possible to design a
+       format that is easy to read sequentially, and even easy to search, but
+       is not efficient to write.  Similarly, one might devise s format that
+       is easy to write sequentially, but not to modify.  <em>Appending</em>
+       to a file presents its own set of problems. 
+</dl>
+
+<p> My current thinking is that we should have a <em>parametrized</em>
+    representation so that different files can occupy different points along
+    these two tradeoff continua.  Each file in the system can be optimized for
+    its particular task. 
+
+<p> Here are a couple of more-or-less random things to consider:
+
+<ul>
+  <li> If each node is stored in the document as a header (containing a
+       length) followed by its contents, any node on the right-hand edge of
+       the parse tree can be appended to without having to do anything more
+       than seek back and fix up the length.  In particular, the &lt;body&gt;
+       node can be appended to without having to rewrite any end ``tags''.
+  <li> Nodes may need to contain (at least) four lengths:
+       <dl>
+	 <dt> size
+	 <dd> the number of bytes in the file occupied by the node and its
+	      contents 
+	 <dt> length
+	 <dd> the total width of the node when ``flattened'' into the minimum
+	      number of lines of text.
+	 <dt> width
+	 <dd> the minimum number of columns it takes to represent the node. 
+	 <dt> height
+	 <dd> the minimum number of lines it takes to represent the node.
+       </dl>
+  <li> Indices should either be at the front of the file (with some extra
+       padding if the file can be appended to), or possibly in a separate
+       file.  
+  <li> It would be possible to have, as an option, a journalled form of a file
+       in which indexing information is distributed, (and possibly in which
+       nodes are stored non-sequentially) so that all writes can be done by
+       appending.  Such a journalled file that has only been appended to can
+       be re-arranged into its natural form (indexes at the front) in at most
+       two passes; more efficient formats exist that require
+       one-and-a-fraction passes.  Randomized insertions may take longer or
+       use more space.
+  <li> A good binary representation for files may (but need not) be closely
+       related to a good representation for compile-time-initialized data
+       structures.
+</ul>
+
+<h3>Structure</h3>
+
+<p> The typical node will consist of:
+
+<ol>
+  <li> A fixed-size header, followed by:
+  <li> A variable-size attribute list (for Element nodes)
+  <li> A variable-size contents list or string.
+</ol>
+
+The header, in turn, will contain:
+
+<ul>
+  <li> node type
+  <li> header size
+  <li> content type (nodes, characters, references)
+  <li> flag bits
+  <li> node name/tagname
+  <li> total size (in bytes) (?)
+  <li> content size (in bytes)
+  <li> number of content nodes
+  <li> attribute list size
+  <li> number of attributes
+  <li> additional fields that depend on the node type
+</ul>
+
+<p> The tagname could be either a string, or a reference to a descriptor node;
+    the latter is probably more useful as well as having a fixed length.
+
+<p> Note that without loss of generality, indices as well as content may
+    (should) be represented as nodes.
+
+<p> It is straightforward to either normalize files by combining adjacent text
+    nodes, or to split text into words.  In that case it would be useful to
+    have preceeding and following spaces indicated by flag bits to save
+    space.
+
+<p> Reference content could be used to compress text by making every word a
+    reference.
+
+<p> The node type, header size, content type, and flag bits should fit into 32
+    bits, and might even fit into 16 bits, which would allow 16 bits for the
+    nodename.  That might not be enough for some files; there should be a
+    global option.
+
+<p> Note that <em>total size = header size + content size + attribute list
+    size</em>, but it may be more efficient to make this explicit.
+
+<p> It's an open question whether it would help to have an explicit
+    "content-end" pseudo-node at the end of elements and text nodes.  It would
+    make it possible to seek to the end of a file and locate a node being
+    appended to, but after appending we would then have to rewrite the end
+    nodes.
+
+<p> Perhaps the deciding factor is that end nodes would also make it possible
+    to perform a stackless tree traversal.
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: dofs.html,v 1.1 1999-06-02 18:50:35 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
