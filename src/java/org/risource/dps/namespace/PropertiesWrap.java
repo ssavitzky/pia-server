@@ -1,5 +1,5 @@
-////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	$Id: NamespaceWrap.java,v 1.6 2000-10-19 00:03:00 steve Exp $
+////// PropertiesWrap.java: Wrap a Properties or Tabular as a Namespace
+//	$Id: PropertiesWrap.java,v 1.1 2000-10-19 00:03:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,70 +34,76 @@ import org.risource.dps.output.ToString;
 import org.risource.dps.util.Copy;
 
 import java.util.Enumeration;
+import java.util.Properties;
 
 import org.risource.ds.List;
 import org.risource.ds.Table;
 import org.risource.ds.Tabular;
 
 /**
- * Make a Tabular implementation look like a Namespace.
+ * Make a Properties or Tabular implementation look like a Namespace.
  *
- * <p> Note that a NamespaceWrap <em>implements</em> Tabular as well;
- *	it simply <em>delegates</em> the Tabular operations to a Tabular
- *	called <code>itemsByName</code>.  The Namespace operations, in turn,
- *	use only these delegated operations.
+ * <p> A PropertiesWrap is a NamespaceWrap that always maps names to Strings. 
+ *	It is essentially a wrapper for the Java class java.util.Properties,
+ *	and in fact can be used to map one. 
  *
- * <p> It is easy to extend an existing Tabular implementation with no parent
- *	class into a NamespaceWrap by simply making it extend NamespaceWrap.  
- *	A Tabular implementation with a parent can be wrapped in the usual
- *	way by assigning it to <code>itemsByName</code> on initialization.
+ * <p> PropertiesWrap must not be confused with PropertyTable: the keys
+ *	of a PropertiesWrap are not required to be valid tagnames.
  *
- * ===	The implementation is crude, and will probably want to be revisited. ===
- * ===	We may want to insist that NamespaceWrap implement Entity.
- *
- * @version $Id: NamespaceWrap.java,v 1.6 2000-10-19 00:03:00 steve Exp $
+ * @version $Id: PropertiesWrap.java,v 1.1 2000-10-19 00:03:01 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
- * @see org.risource.ds.Tabular */
+ * @see org.risource.dps.NamespaceWrap
+ * @see org.risource.dps.PropertyTable
+ * @see org.risource.ds.Tabular
+ * @see java.util.Properties
+ */
 
-public class NamespaceWrap extends AbstractNamespace implements Tabular {
+public class PropertiesWrap extends NamespaceWrap {
 
   /************************************************************************
   ** Data:
   ************************************************************************/
 
-  protected Tabular itemsByName	   = null;
+  protected Properties propsByName = null;
 
   /************************************************************************
   ** Tabular Operations:
   ************************************************************************/
 
+  /** Access an individual string item by name. */
+  public String getProperty(String key) {
+    return (propsByName != null)? propsByName.getProperty(key)
+      : itemsByName.get(key).toString();
+  }
+
   /** Access an individual item by name. */
-  public Object get(String key) {return itemsByName.get(key); }
+  public Object get(String key) { return getProperty(key); }
 
   /** Replace an individual named item with value <em>v</em>. */
-  public void put(String key, Object v) { itemsByName.put(key, v); }
+  public void setProperty(String key, String v) { 
+    if (propsByName != null) propsByName.setProperty(key, v);
+    else		     itemsByName.put(key, v); }
+
+  /** Replace an individual named item with value <em>v</em>. */
+  public void put(String key, Object v) { setProperty(key, v.toString()); }
 
   /** Return an enumeration of all the  keys. */
-  public Enumeration keys() { return itemsByName.keys(); }
+  public Enumeration keys() { 
+    return (propsByName != null)? propsByName.keys() : itemsByName.keys();
+  }
 
 
   /************************************************************************
   ** Lookup Operations:
   ************************************************************************/
 
-  /** Wrap an object as a binding.  This would work better if we had
-   *	some kind of EntityWrap to go with NamespaceWrap.
+  /** Wrap an object as a binding.  
+   *	We know that the object is a String, which makes it easy.
    */
   public ActiveNode wrap(String name, Object o) {
     if (o == null) return null;
-    if (o instanceof ActiveNode) return (ActiveNode)o;
-    if (o instanceof Tabular) return new NamespaceWrap(name, (Tabular)o);
-    if (o instanceof ActiveNodeList)
-      return new TreeEntity(name, (ActiveNodeList)o);
-
-    // Have to make a wrapper. === should be EntityWrap
     ActiveNode n = new TreeText(o.toString());
     return new TreeEntity(name, new TreeNodeList(n));
   }
@@ -106,21 +112,17 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
    */
   public ActiveNodeList wrapValue(Object o) {
     if (o == null) return null;
-    if (o instanceof ActiveNodeList) return (ActiveNodeList)o;
-    if (o instanceof ActiveNode) return new TreeNodeList((ActiveNode)o);
-    if (o instanceof Tabular)
-      return new TreeNodeList(new NamespaceWrap(name, (Tabular)o));
     ActiveNode n = new TreeText(o.toString());
     return new TreeNodeList(n);
   }
 
-  /** Unwrap a binding as an Object. */
+  /** Unwrap a binding as an Object (and in particular, a String). */
   public Object unwrap(ActiveNode binding) {
     if (binding == null) return null;
-    if (binding instanceof TreeExternal) return binding; //preserve external refs
-    if (binding instanceof ActiveValue) 
-      return ((ActiveValue)binding).getValueNodes();
-    return binding;
+    if (binding instanceof ActiveElement) 
+      return binding.getContent().toString();
+    String s = binding.getNodeValue();
+    return (s != null)? s : binding.toString();
   }
 
   /** Look up a name and get a (local) binding. */
@@ -143,24 +145,15 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
 
   /** Add a new binding or replace the <em>value of</em> an existing one. 
    *
-   * <p> The new value will be copied if necessary.  This function allows a
-   *	 specialized Namespace to construct a binding of the proper type, and
-   *	 (in the present case) perform any associated updating that may be 
-   *	 needed.
+   * <p> In our particular case we insist that the value be a string, 
+   *	 so the "binding" we return is a complete fabrication.
    *
    * @return the new or updated binding.
    */
   public ActiveNode setValueNodes(Context cxt, String name,
 				  ActiveNodeList value) {
-    ActiveNode binding = getBinding(name);
-    if (binding != null) {
-      binding.setValueNodes(cxt, value); 
-      put(name, unwrap(binding));
-    } else {
-      binding = bind(cxt, name, value);
-      setBinding(name, binding);
-    } 
-    return binding;
+    setProperty(name, value.toString());
+    return getBinding(name);
   }
 
   /** Obtain the <em>value of</em> an existing binding. 
@@ -178,25 +171,8 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
    *	cannonized if necessary.   Can be useful for initialization.
    */
   protected void addBinding(String name, ActiveNode binding) {
-    if (binding instanceof Namespace) namespaceItems ++;
     put(name, unwrap(binding));
   }
-
-  /** Create a new binding node for a value. */
-  protected ActiveNode bind(Context cxt, String name, ActiveNodeList value) {
-    return cxt.getTopContext().getTagset().createActiveEntity(name, value);
-  }
-
-  /************************************************************************
-  ** Information Operations:
-  ************************************************************************/
-
-  /** Returns an Enumeration of the entity names defined in this table. 
-   */
-  public Enumeration getNames() { 
-    return keys();
-  }
-
 
   /************************************************************************
   ** ActiveNode operations:
@@ -204,7 +180,7 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
 
   /** contentString has to explicitly iterate over the bindings because
    *	they are generated on-the-fly rather than being the children of
-   *	the NamespaceWrap.
+   *	the PropertiesWrap.
    */
   public String contentString() {
     String s = "\n";
@@ -221,12 +197,19 @@ public class NamespaceWrap extends AbstractNamespace implements Tabular {
   ** Construction:
   ************************************************************************/
 
-  public NamespaceWrap() { this("#Table", new Table()); }
-  public NamespaceWrap(String name, Tabular t) { 
+  public PropertiesWrap() { this("#Properties", new Properties()); }
+  public PropertiesWrap(String name, Tabular t) { 
     this("#Table", name, t);
   }
-  public NamespaceWrap(String tag, String name, Tabular t) {
-    super(tag, name);
+  public PropertiesWrap(String name, Properties t) { 
+    this("#Properties", name, t);
+  }
+  public PropertiesWrap(String tag, String name, Properties t) {
+    super(tag, name, (Tabular)null);
+    propsByName = t;
+  }
+  public PropertiesWrap(String tag, String name, Tabular t) {
+    super(tag, name, t);
     itemsByName = t;
   }
 
