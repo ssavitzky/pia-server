@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.25 1999-06-16 18:39:21 wolff Exp $
+// $Id: GenericAgent.java,v 1.26 1999-07-08 21:39:06 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -465,8 +465,9 @@ public class GenericAgent extends BasicNamespace
       }
       Parser        p = proc.getTagset().createParser();
       p.setReader(new FileReader(fn));
-      proc.setOutput(new DiscardOutput());
       proc.setInput(p);
+      proc.setOutput(new DiscardOutput());
+      //      proc.setInput(p);
       proc.define("filePath", fn);
       proc.run();
     } catch (Exception e) {

@@ -1,5 +1,5 @@
 //   ProcessedContent.java
-// $Id: ProcessedContent.java,v 1.5 1999-05-07 23:32:42 steve Exp $
+// $Id: ProcessedContent.java,v 1.6 1999-07-08 21:38:19 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -232,9 +232,12 @@ public class ProcessedContent extends  GenericContent {
     if (sink == null) throw new NullPointerException("no sink");
     Writer w = new OutputStreamWriter(sink);
     ToWriter out = new ToWriter(w);
+
+
     processor.setOutput(out);
     processor.run();
     out.close();
+
     return -1;
   }
 

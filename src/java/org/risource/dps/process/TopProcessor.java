@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.11 1999-07-01 20:37:31 steve Exp $
+//	$Id: TopProcessor.java,v 1.12 1999-07-08 21:38:54 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,8 +43,7 @@ import java.net.MalformedURLException;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
-import org.risource.dps.tree.TreeNodeList;
-import org.risource.dps.tree.TreeEntity;
+import org.risource.dps.tree.*;
 import org.risource.dps.namespace.BasicEntityTable;
 import org.risource.dps.namespace.BasicNamespace;
 import org.risource.dps.namespace.EntityWrap;
@@ -65,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.11 1999-07-01 20:37:31 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.12 1999-07-08 21:38:54 bill Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -472,6 +471,8 @@ public class TopProcessor extends BasicProcessor implements TopContext
 
     define("piaUSER",		System.getProperty("user.name"));
     define("piaHOME",		System.getProperty("user.home"));
+    define("ERROR",		"" );
+    define("VERBOSITY",		"0");
 
     define("entityNames", 	"");
   }
@@ -491,18 +492,20 @@ public class TopProcessor extends BasicProcessor implements TopContext
   }
 
   public TopProcessor(Input in, Output out) {
-    super(in, null, out, null);
+    this(in, (Context)null, out, (Namespace)null);
     initializeEntities();
-    top = this;
   }
 
   public TopProcessor(Input in, Output out, Namespace ents) {
-    super(in, null, out, ents);
-    top = this;
+    this(in, (Context)null, out, ents);
   }
 
   public TopProcessor(Input in, Context prev, Output out, Namespace ents) {
     super(in, prev, out, ents);
+
+    if (input instanceof ProcessorInput) 
+      ((ProcessorInput)input).setProcessor(this);
+
     top = this;
   }
 

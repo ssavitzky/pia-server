@@ -1,5 +1,5 @@
 ////// ContextStack.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.8 1999-06-25 00:42:14 steve Exp $
+//	$Id: ContextStack.java,v 1.9 1999-07-08 21:39:03 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,7 @@ import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.process.BasicProcessor;
 import org.risource.dps.namespace.BasicNamespace;
 import org.risource.dps.namespace.BasicEntityTable;
@@ -40,7 +41,7 @@ import org.risource.dps.namespace.BasicEntityTable;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.8 1999-06-25 00:42:14 steve Exp $
+ * @version $Id: ContextStack.java,v 1.9 1999-07-08 21:39:03 bill Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -211,11 +212,31 @@ public class ContextStack  implements Context {
   public void setLog(PrintStream stream) { log = stream; }
 
   public void message(int level, String text, int indent, boolean endline) {
+
+      //      int nodeValue(
     if (verbosity < level) return;
     String s = "";
     for (int i = 0; i < indent; ++i) s += " ";
     s += text;
+
     if (endline) log.println(s); else log.print(s);
+
+
+
+
+    //    if (false &&  level < 2 ) try{
+    if ( level < 2 ) try{ // Bill's error-inserting method
+	
+	ActiveNode temp = getBinding("ERROR", false);
+	if (temp != null){
+	    temp.getValueNodes(this).append(new TreeText(text));
+	    if (endline) 	
+		temp.getValueNodes(this).append(new TreeElement("br") );
+	}
+    }
+    catch(Exception e){};
+
+
   }
 
   public final boolean debug() { return verbosity >= 2; }

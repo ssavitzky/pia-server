@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.6 1999-04-17 01:19:27 steve Exp $
+//	$Id: BasicParser.java,v 1.7 1999-07-08 21:38:49 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,6 +35,8 @@ import org.risource.dps.tree.TreeAttrList;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeComment;
 
+import org.risource.dps.Context;
+
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -54,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.6 1999-04-17 01:19:27 steve Exp $
+ * @version $Id: BasicParser.java,v 1.7 1999-07-08 21:38:49 bill Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */

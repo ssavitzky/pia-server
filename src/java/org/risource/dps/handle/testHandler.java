@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.8 1999-05-18 20:18:22 steve Exp $
+//	$Id: testHandler.java,v 1.9 1999-07-08 21:38:43 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.8 1999-05-18 20:18:22 steve Exp $
+ * @version $Id: testHandler.java,v 1.9 1999-07-08 21:38:43 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -71,6 +71,9 @@ public class testHandler extends GenericHandler {
     ActiveElement e = n.asElement();
 
     if (dispatch(e, "zero")) 	 return test_zero.handle(e);
+    if (dispatch(e, "equals")) 	 return test_equality.handle(e);
+    if (dispatch(e, "greater"))  return test_greater.handle(e);
+    if (dispatch(e, "less")) 	 return test_less.handle(e);
     if (dispatch(e, "positive")) return test_positive.handle(e);
     if (dispatch(e, "negative")) return test_negative.handle(e);
     if (dispatch(e, "match")) 	 return test_match.handle(e);
@@ -194,6 +197,69 @@ class test_zero extends testHandler {
   public test_zero(ActiveElement e) { super(e, true, true); }
   static Action handle(ActiveElement e) { return new test_zero(e); }
 }
+
+/* Test for equality. */
+class test_equality extends testHandler {
+  public void action(Input in, Context aContext, Output out) {
+    String cstring = textContent
+      ? Expand.getProcessedTextString(in, aContext)
+      : Expand.getProcessedContentString(in, aContext);
+    Association a = Association.associateNumeric(null, cstring);
+
+    ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
+    String attstring = atts.getAttribute("equals");
+    Association att = Association.associateNumeric(null, attstring);
+
+    returnBoolean( a.isNumeric() && att.isNumeric() &&
+		   a.doubleValue() ==  att.doubleValue() , 
+		   aContext, out);
+  }
+  public test_equality(ActiveElement e) { super(e, true, true); }
+  static Action handle(ActiveElement e) { return new test_equality(e); }
+}
+
+
+/* Test for for less-than. */
+class test_less extends testHandler {
+  public void action(Input in, Context aContext, Output out) {
+    String cstring = textContent
+      ? Expand.getProcessedTextString(in, aContext)
+      : Expand.getProcessedContentString(in, aContext);
+    Association a = Association.associateNumeric(null, cstring);
+
+    ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
+    String attstring = atts.getAttribute("less");
+    Association att = Association.associateNumeric(null, attstring);
+
+    returnBoolean( a.isNumeric() && att.isNumeric() &&
+		   a.doubleValue() <  att.doubleValue() , 
+		   aContext, out);
+  }
+  public test_less(ActiveElement e) { super(e, true, true); }
+  static Action handle(ActiveElement e) { return new test_less(e); }
+}
+
+
+/* Test for greater than. */
+class test_greater extends testHandler {
+  public void action(Input in, Context aContext, Output out) {
+    String cstring = textContent
+      ? Expand.getProcessedTextString(in, aContext)
+      : Expand.getProcessedContentString(in, aContext);
+    Association a = Association.associateNumeric(null, cstring);
+
+    ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
+    String attstring = atts.getAttribute("greater");
+    Association att = Association.associateNumeric(null, attstring);
+
+    returnBoolean( a.isNumeric() && att.isNumeric() &&
+		   a.doubleValue() >  att.doubleValue() , 
+		   aContext, out);
+  }
+  public test_greater(ActiveElement e) { super(e, true, true); }
+  static Action handle(ActiveElement e) { return new test_greater(e); }
+}
+
 
 class test_positive extends testHandler {
   public void action(Input in, Context aContext, Output out) {

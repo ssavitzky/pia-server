@@ -1,5 +1,5 @@
 // Machine.java
-// $Id: Machine.java,v 1.6 1999-06-16 18:39:23 wolff Exp $
+// $Id: Machine.java,v 1.7 1999-07-08 21:39:08 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -169,15 +169,15 @@ public class Machine implements java.io.Serializable {
   * Closing socket.
   */
   public void closeConnection() {
-    try {
-      if( socket != null ) socket.close();
-      if( inputStream != null ) inputStream.close();
-      if( outputStream != null ) outputStream.close();
+      try {
+	if( inputStream != null ) inputStream.close();
+	if( outputStream != null ) outputStream.close();
+	if( socket != null ) socket.close();
     }catch(IOException e) {
 
 	Pia.debug( this, "Exception while closing socket streams." );
 	Pia.errLog( this, "Exception while closing socket streams." );
-    }
+	} 
   }
 
   public String getHostName()
@@ -275,7 +275,7 @@ public class Machine implements java.io.Serializable {
       content.writeTo(out);
 
       Pia.debug(this, "Flushing...");
-      out.flush();
+      out.flush();  // maybe remove this
       closeConnection();
       
     } catch (PiaRuntimeException e){

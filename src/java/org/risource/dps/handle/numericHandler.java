@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
+//	$Id: numericHandler.java,v 1.6 1999-07-08 21:38:41 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
+ * @version $Id: numericHandler.java,v 1.6 1999-07-08 21:38:41 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -69,6 +69,7 @@ public class numericHandler extends GenericHandler {
     if (dispatch(e, "quotient")) 	 return numeric_quotient.handle(e);
     if (dispatch(e, "remainder")) 	 return numeric_remainder.handle(e);
     if (dispatch(e, "sort"))    	 return numeric_sort.handle(e);
+    /*    if (dispatch(e, "pad"))       	 return numeric_pad.handle(e); */
     return this;
   }
 
@@ -341,4 +342,14 @@ class numeric_sort extends numericHandler {
   }
   static Action handle(ActiveElement e) { return new numeric_sort(e); }
 }
+
+
+
+
+
+
+
+
+
+
 

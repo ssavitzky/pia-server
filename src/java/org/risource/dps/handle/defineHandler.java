@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.12 1999-05-28 21:49:24 steve Exp $
+//	$Id: defineHandler.java,v 1.13 1999-07-08 21:38:39 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,6 +34,7 @@ import org.risource.dps.handle.Loader;
 import org.risource.dps.output.ToNamespace;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeExternal;
+import org.risource.dps.tree.TreeComment;
 
 import org.w3c.dom.Node;
 
@@ -42,7 +43,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.12 1999-05-28 21:49:24 steve Exp $
+ * @version $Id: defineHandler.java,v 1.13 1999-07-08 21:38:39 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -75,6 +76,7 @@ public class defineHandler extends GenericHandler {
     if (dispatch(e, "entity"))   	 return define_entity.handle(e);
     if (dispatch(e, "attribute")) 	 return define_attribute.handle(e);
     if (dispatch(e, "word"))    	 return define_word.handle(e);
+
     return this;
   }
    
@@ -167,6 +169,13 @@ class define_element extends defineHandler {
       (atts.hasTrueAttribute("quoted"))? Syntax.QUOTED :
       (atts.hasTrueAttribute("empty")) ? Syntax.EMPTY  :
       Syntax.NORMAL;
+
+    // verify that content is ok
+    if (content == null ){
+	reportError(in, cxt, "Defining element " + tagname + " with empty content");
+	out.putNode(new TreeComment(" Defining element " + tagname + " with empty content"));
+	return;
+    }
 
     // Get the action, if any.
     ActiveElement action = getAction(content);
@@ -277,6 +286,12 @@ class define_entity extends defineHandler {
     String	mode = atts.getAttribute("mode");
     String writeMode = atts.getAttribute("write-mode");
     String    method = atts.getAttribute("method");
+
+    if (content == null ){
+	reportError(in, cxt, "Defining entity " + name + " with empty content");
+	out.putNode(new TreeComment(" Defining entity " + name + " with empty content"));
+	return;
+    }
 
     ActiveNodeList newContent = null;
     // Get the action, if any.

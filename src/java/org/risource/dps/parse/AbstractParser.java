@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.8 1999-06-25 00:42:06 steve Exp $
+//	$Id: AbstractParser.java,v 1.9 1999-07-08 21:38:47 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.8 1999-06-25 00:42:06 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.9 1999-07-08 21:38:47 bill Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -168,6 +168,9 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** If <code>true</code>, entities must be terminated by ';' */
   protected boolean strictEntities = true;
+
+  /** If <code>true</code>, missing end tags generate error messages */
+  protected boolean strictEndTags = true;
 
   /** The character that starts an entity (default '<code>&amp;</code>'). */
   protected char entityStart = '&';
@@ -426,6 +429,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected int checkEndTag(String tag) {
     if (stack == null) {
       next = createActiveNode(Node.COMMENT_NODE, "Bad end tag: " + tag);
+      getProcessor().message(-2, "Bad end tag </" + getTagName(depth-1) + "> near </" + tag + ">", 0, true);
       return -1;
     }
     String inside = stack.getTagName();
@@ -438,10 +442,14 @@ public abstract class AbstractParser extends CursorStack implements Parser
       return 0;
     } if (insideElement(tag, caseFoldTagnames)) {
       // ... Yes, we're OK.  End the current element.
-      return 1;
+	if (strictEndTags == true){
+	    getProcessor().message(-2, "Missing end tag </" + getTagName(depth-1) + "> inserted before </" + tag + ">", 0, true);	
+	}
+	return 1;
     } else {
       // ... Bad nesting.  Change next to an appropriate comment.
-      next = createActiveNode(Node.COMMENT_NODE, "Bad end tag: /" + tag);
+      next = createActiveNode(Node.COMMENT_NODE, "Badly nested end tag: /" + tag);
+      getProcessor().message(-2, "Badly nested end tag </" + getTagName(depth-1) + "> before </" + tag + ">", 0, true);
       return -1;
     }
   }
@@ -537,10 +545,11 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   protected void initialize() { advanceParser(); }
 
+   
   public AbstractParser() {
     if (isIdent == null) initializeTables();
   }
-
+   
   public AbstractParser(InputStream in) {
     setReader(new InputStreamReader(in));
     if (isIdent == null) initializeTables();

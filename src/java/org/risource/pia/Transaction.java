@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.7 1999-05-20 20:18:12 steve Exp $
+// $Id: Transaction.java,v 1.8 1999-07-08 21:39:09 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -973,10 +973,12 @@ public abstract class Transaction
       errorResponse(e);
       Thread.currentThread().stop();      
       notifyThreadPool();
+      return;
     }catch( IOException ioe ){
       errorResponse(ioe);
       Thread.currentThread().stop();      
       notifyThreadPool();
+      return;
     }
 
     Pia.debug(this, "Got a body...");

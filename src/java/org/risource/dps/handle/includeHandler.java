@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.8 1999-05-20 20:15:12 steve Exp $
+//	$Id: includeHandler.java,v 1.9 1999-07-08 21:38:40 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.8 1999-05-20 20:15:12 steve Exp $
+ * @version $Id: includeHandler.java,v 1.9 1999-07-08 21:38:40 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -80,7 +80,8 @@ public class includeHandler extends GenericHandler {
 
     // === at this point we should consider checking for file= and href=
     if (url == null) {
-      reportError(in, cxt, "No SRC document specified.");
+      reportError(in, cxt, "No SRC document specified in include.");
+      out.putNode(new TreeComment("No SRC document specified in include")); 
       return;
     }
 

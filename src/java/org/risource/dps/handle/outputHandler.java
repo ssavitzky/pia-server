@@ -1,5 +1,5 @@
 ////// outputHandler.java: <output> Handler implementation
-//	$Id: outputHandler.java,v 1.5 1999-05-11 01:31:12 steve Exp $
+//	$Id: outputHandler.java,v 1.6 1999-07-08 21:38:42 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.tree.TreeComment;
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: outputHandler.java,v 1.5 1999-05-11 01:31:12 steve Exp $
+ * @version $Id: outputHandler.java,v 1.6 1999-07-08 21:38:42 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -62,7 +62,7 @@ public class outputHandler extends GenericHandler {
 
     // === at this point we should consider checking for file= and href=
     if (url == null) {
-      reportError(in, cxt, "No DST document specified.");
+      reportError(in, cxt, "No DST document specified in <output/>.");
       return;
     }
 
