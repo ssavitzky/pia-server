@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>About the PIA's SAX Utilities</title>
+</head><body>
+<h1>About the PIA's SAX Utilities</h1>
+
+<h2>This is <em>NOT</em> the SAX interface!</h2>
+
+<p> The actual interfaces that constitute the SAX API are located in 
+    <code><a href="../../xml/sax">org.xml.sax</a></code>.
+
+<p> The DPS uses a set of interfaces that that are quite different from those
+    of SAX, and are based on a different model of document processing.  While
+    SAX is primarily <em>event-driven</em>, a DPS ``document processor''
+    operates by using a <em>cursor</em> that allows the processor to
+    <em>traverse</em> a document.  This puts the <em>processor</em> in
+    control of the traversal process, rather than the SAX parser or driver.
+
+<p> Nevertheless, the DPS <em>does</em> contain an interface, <a
+    href="../dps/Output.java"><code>Output</code></a>, that closely resembles
+    the SAX <code>DocumentHandler</code>.  An adapter class is present in this
+    directory.  Similarly, an adapter can make an <code>Output</code> or
+    <code>Processor</code> implement a SAX <code>DocumentHandler</code> so
+    that it can be driven by a SAX parser.
+
+<hr>
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
+<i>$Id: about.html,v 1.1 2000-03-29 17:35:39 steve Exp $</i><br>
+</body></html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>About the PIA's Servlet implementations</title>
+</head><body>
+<h1>About the PIA's Servlet implementations</h1>
+
+<p> The PIA includes two implementations of the Servlet interface: PIAServlet
+    and DPSServlet.
+</p>
+
+<ol>
+  <li> <a href="PIAServlet.java">PIAServlet</a> is as faithful an
+       implementation of the PIA server as is feasible within a Servlet engine
+       environment:  it reads a PIA configuration file, sets up the Site
+       structure, and essentially takes over.  It should be mapped onto the
+       root of the server's URL (virtual path) tree.   About the only thing it
+       <em>doesn't</em> do is run agents on proxied requests. 
+  </li>
+  <li> <a href="DPSServlet.java">DPSServlet</a> assumes that its context
+       can map a URL onto a file, and simply runs that file through the DPS.
+       The only complication is the need to construct the table that maps
+       filenames into tagsets. 
+  </li>
+</ol>
+
+<hr />
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
+<i>$Id: about.html,v 1.1 2000-03-29 17:35:50 steve Exp $</i><br />
+</body></html>
