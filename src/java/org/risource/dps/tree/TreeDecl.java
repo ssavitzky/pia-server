@@ -1,5 +1,5 @@
 ////// TreeDecl.java -- implementation of ActiveDeclaration
-//	$Id: TreeDecl.java,v 1.2 1999-06-04 22:40:35 steve Exp $
+//	$Id: TreeDecl.java,v 1.3 2000-06-07 19:11:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
  * An implementation of the ActiveDecl interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeDecl.java,v 1.2 1999-06-04 22:40:35 steve Exp $
+ * @version $Id: TreeDecl.java,v 1.3 2000-06-07 19:11:31 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -75,6 +75,8 @@ public class TreeDecl extends TreeNode implements ActiveDecl {
    */
   public String getDeclName() 		{ return declName; }
   public void setDeclName(String value) { declName = value; }
+
+  public String getNodeValue() 		{ return getData(); }
 
   public void setData(String value) 	{ data = value; }
   public String getData() 	   	{ return data; }
