@@ -87,10 +87,11 @@ tagsets are used.
 </p>
 
 <p> The first time the user visits an application's location, its local
-    configuration file, <code>_subsite.xcf</code>, is loaded (if it exists),
-    which gives the application a chance to perform any necessary setup.  This
-    includes making the application's ``home directory'' available at the top
-    of the PIA's URL space as <code>/~<em>AppName</em></code>.
+    configuration file, <code>_subsite.xcf</code> (if it exists) is loaded
+    into the PIA server, which gives the application a chance to perform any
+    necessary setup.  This includes making the application's ``home
+    directory'' available at the top of the PIA's URL space as
+    <code>/~<em>AppName</em></code>.
 </p>
 
 <p> It is possible to pre-load applications by accessing them in the PIA's
@@ -165,20 +166,21 @@ tagsets are used.
     any links.
 </p>
 
+<p> See also <a href="naming.html">shorthand application names</a>.</p>
 
 <h2><a name="Structure"></a>Web Site Structure</h2>
 
 <h3>Resources and Locations</h3>
 
-<p> When a PIA is running and in use it functions as a web server, so that it
-    looks to the user like a web site.  The user's view of the PIA is as a a
-    collection of documents, each with its own URL.  URL stands for
-    <em>Uniform Resource Locator</em>, so the technical term for something
-    ``addressed'' by a URL is a <em>Resource</em>.  The PIA follows this
-    terminology.
+<p> A running PIA functions as a web server, so that it looks to the user like
+   a web site (or a collection of web sub-sites).  The user's view of the PIA
+   is as a a collection of documents, each with its own URL.  URL stands for
+   <em>Uniform Resource Locator</em>, so the technical term for something
+   ``addressed'' by a URL is a <em>Resource</em>.  The PIA follows this
+   terminology.
 </p>
 
-<p> URL's form a branching structure called the ``<em>URL tree</em>'' (when
+<p> URLs form a branching structure called the ``<em>URL tree</em>'' (when
     its structure is being emphasized) or ``<em>URL space</em>'' (to emphasize
     the space-like uniformity of URL's).  This structure is at least partially
     hidden from the user by the browser, which lets the user jump around at
@@ -330,9 +332,10 @@ tagsets are used.
 <p> A file's extension, as usual, determines its MIME type -- the information
     the browser needs in order to display the file correctly.  But because the
     PIA processes active documents at the server level, it not only needs to
-    know what is in the file, but also what rules (contained in a so-called
-    ``tagset'' file) to apply in processing that
-    file type.
+    know what is in the file, but also which rules (contained in a so-called
+    ``tagset'' file) to apply in processing that file type.  9You can have more
+    than one tagset in an application's directory, but each file-extension
+    is assigned at most  one tagset.)
 
 <p> The mapping from extensions to MIME types and tagsets is usually specified
     in a file called <code>extensions.xci</code>; however the default mapping
@@ -679,6 +682,11 @@ style in particular: </p>
        as well as tags that are unique to the application. </li> 
 </ul>
 
+You can not only have many different pages within one application (of
+course!), but you can have many different tagsets as well.  Just make sure
+that each file-extension type (<code>file1.xh, file2.foo</code>) is assigned
+its proper tagset.
+
 <h3>Quick Reference Up Front</h3>
 
 <p>An application's home page is the easiest to access. Additionally,
@@ -811,9 +819,6 @@ details'' document.</p>
 
 <h4><a name="Directory">Directory Structure</a></h4>
 
-
-????????????Steve-- are these corrections  true????????????
-
 <p>Your Information Agency makes use of two parallel directory trees:</p>
 
 <ul>
@@ -936,7 +941,7 @@ Manual</a>.</p>
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: author.html,v 1.18 1999-10-19 00:29:43 bill Exp $</i><br>
+<i>$Id: author.html,v 1.19 1999-10-20 00:29:04 bill Exp $</i><br>
 </body>
 </html>
 
