@@ -16,7 +16,7 @@
     PIA-announce@RiSource.org</a> to be notified of new releases.
 
 
-<h2><A NAME="announce">Release Announcements</A></h2>
+<h2><a name="announce">Release Announcements</a></h2>
 <h3>Release 2.0.6</h3>
 
 <p> This release includes a slightly-revised language that is more readable
@@ -27,6 +27,12 @@
 <h4>Changes since 2.0.5:</h4>
 
 <ol>
+  <li> Added methods to the <code>org.risource.dps.Output</code> interface
+       that don't start with a DOM node (one is constructed if necessary).
+  <li> Added the <code>org.risource.dps.output.ToProcessor</code> class, an
+       Output that drives a Processor.  This makes it easy to drive the DPS
+       from any event-driven parser, e.g. SAX, by writing a trivial adapter
+       class. 
   <li> Eliminated the need for entities as variables, clearing the way for use
        with SGML and XML parsers, most of which substitute entities ``up
        front''.  Entities defined in a document's environment, e.g. PIA: and
@@ -264,7 +270,7 @@ Installation manual</a> for instructions.)
 Once the agency is running, you can view further documentation and try
 customizing the demonstration agents.
 
-<h3><A NAME="newfeatures">New Features</A></h3>
+<h3><a name="newfeatures">New Features</a></h3>
 <h4>Document Processing System</h4>
 
 <p>The Document Processing System is a completely new rewrite of the PIA's
@@ -321,7 +327,7 @@ ftp://ftp.risource.org/pub/regex-0_11.tgz
     version (which is incompatible with our current implementation) is
     available from the <a href=http://www.w3c.org/> W3C</a>.
 
-<h3><A NAME="information"> Additional Information</A></h3>
+<h3><a name="information"> Additional Information</a></h3>
 <p>
 The latest information regarding PIA technology can be found PIA 
 web site: 
@@ -334,9 +340,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.24 1999-06-25 00:23:23 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.25 1999-07-28 17:47:54 steve Exp $</b><br>
 </body></html>
-
-
-
-
