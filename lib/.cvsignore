@@ -1,4 +1,6 @@
 perl
+*.jar
+*.tss
 basic.html
 xxml.html
 xhtml.html
