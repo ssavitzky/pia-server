@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.1 2000-03-29 21:31:04 steve Exp $
+//	$Id: ServletDoc.java,v 1.2 2000-04-05 18:11:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.1 2000-03-29 21:31:04 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.2 2000-04-05 18:11:07 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -123,7 +123,6 @@ public class ServletDoc extends TopProcessor {
   public void initializeEntities() {
     if (entities == null) super.initializeEntities();
     initializeNamespaceEntities();
-    initializeLegacyEntities();
     if (agent != null) {
       initializeHookEntities();
     }
@@ -137,6 +136,8 @@ public class ServletDoc extends TopProcessor {
     // define("PROPS", getDocConfig());
     // define("SITE", getRootConfig());
     // define("ENV", System.getProperties());
+
+    // === need servlet, context, request, and response namespaces.
 
     /* === 
     define("PIA", Pia.instance().properties());
@@ -153,39 +154,6 @@ public class ServletDoc extends TopProcessor {
 	define("FORM", "FORM", req.getParameters());
       }
     }
-    === */
-  }
-
-  /** Initialize the entities that correspond to entities in the old
-   *	(legacy) InterForm processor.  Many files still use them.
-   */
-  public void initializeLegacyEntities() {
-    /* ===
-    Transaction transaction = getTransaction();
-
-    if (transaction != null) {
-      Transaction req = transaction.requestTran();
-
-      URL url = transaction.requestURL();
-      if (url != null) {
-	define("url", transaction.requestURL().toString());
-	String path = transaction.requestURL().getFile();
-	define("urlPath", path);
-	if (agent == null) agent = resolver.agentFromPath(path);
-      }
-      // form parameters might be either query string or POST data
-      if (req != null && req.hasQueryString()){
-        define("urlQuery",  req.queryString());
-      } else {
-	define("urlQuery",  "");
-	define("FORM", new Table());
-      }
-      // if no parameters this is an empty table
-    }
-
-    Pia pia = Pia.instance();
-    define("agentNames", resolver.agentNames());
-
     === */
   }
 

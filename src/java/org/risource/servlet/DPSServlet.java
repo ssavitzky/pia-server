@@ -1,5 +1,5 @@
 ////// DPSServlet.java: PIA DPS Servlet implementation
-//	$Id: DPSServlet.java,v 1.1 2000-03-29 21:31:03 steve Exp $
+//	$Id: DPSServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.risource.dps.*;
 import org.risource.dps.process.*;
 import org.risource.ds.*;
 import org.risource.site.*;
+import org.risource.dps.tagset.Loader;
 
 import java.io.IOException;
 import java.io.File;
@@ -44,7 +45,7 @@ import javax.servlet.http.*;
  *	is used -- everything is obtained from its ServletContext and
  *	ServletConfig.
  *
- * @version $Id: DPSServlet.java,v 1.1 2000-03-29 21:31:03 steve Exp $
+ * @version $Id: DPSServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.PIAServlet
  * @see org.risource.dps
@@ -107,9 +108,22 @@ public class DPSServlet
     config = getServletConfig();
     context = config.getServletContext();
 
+    //get home, etc. out of config 
+
+    String home = config.getInitParameter("home");
+    String root = config.getInitParameter("root");
+    String configfile = config.getInitParameter("configfile");
+
+    // tell the tagset loader where .../lib is
+    if (home != null) {
+      String filesep  = System.getProperty("file.separator");
+      String tsHome = home + filesep + "lib";
+      Loader.setTagsetHome(tsHome);
+    }
+
     // === need to get tagset and mime type maps from config.
 
-    context.log("PIA Servlet initialization complete.");
+    context.log("DPSServlet initialization complete.");
   }
 
   /** A finalization routine which is called once by the HTTP server
@@ -224,7 +238,8 @@ public class DPSServlet
       ii.run();
     } catch (Exception X) {
       out.close();
-      throw new ServletException("A processing error occurred", X);
+      context.log(X, "exception thrown while running the document processor");
+      throw new ServletException("A processing error occurred: " + X.toString());
     }
     out.close();
   }

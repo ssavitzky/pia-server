@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.1 2000-03-29 21:31:04 steve Exp $
+//	$Id: PIAServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,9 @@ package org.risource.servlet;
 import org.risource.Version;
 import org.risource.pia.*;
 import org.risource.dps.*;
+import org.risource.dps.namespace.BasicNamespace;
+import org.risource.dps.util.Create;
+import org.risource.dps.tagset.Loader;
 import org.risource.dps.process.*;
 import org.risource.ds.*;
 import org.risource.site.*;
@@ -34,7 +37,10 @@ import org.risource.util.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.File;
 
 import java.util.Enumeration;
 
@@ -47,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.1 2000-03-29 21:31:04 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -55,7 +61,7 @@ import javax.servlet.http.*;
  */
 public class PIAServlet 
   extends javax.servlet.http.HttpServlet
-  implements javax.servlet.SingleThreadModel 
+	  // implements javax.servlet.SingleThreadModel 
 {
 
   /** Cache for the servlet engine context. */
@@ -68,6 +74,51 @@ public class PIAServlet
 
   /** The Site representing this server. */
   protected Site site;
+
+  protected String logFileName = null;
+  protected PrintStream logStream = null;
+
+  /** Returns a Namespace containing the attributes of the servlet
+   *  configuration. 
+   */
+  public Namespace getConfigNamespace() {
+    Enumeration names = config.getInitParameterNames();
+    BasicNamespace ns = new BasicNamespace();
+    while (names.hasMoreElements()) {
+      String n = names.nextElement().toString();
+      ns.setValueNodes(null, n,
+		       Create.createNodeList(config.getInitParameter(n)));
+    }
+    return ns;
+  }
+
+  /** Returns a Namespace containing the attributes of the servlet
+   *  context. 
+   */
+  /*
+  public Namespace getContextNamespace() {
+    Enumeration names = context.getAttributeNames();
+    BasicNamespace ns = new BasicNamespace();
+    while (names.hasMoreElements()) {
+      String n = names.nextElement().toString();
+      // === This is bogus: getAttribute returns an Object, not a String ===
+      ns.setValueNodes(null, n,
+		       Create.createNodeList(context.getAttribute(n).toString()));
+    }
+    return ns;
+  }
+  */
+
+  /** Log a message. 
+   *
+   */
+  public void log(String msg) {
+    if (logStream != null) {
+      logStream.println(msg);
+      logStream.flush();
+    }
+    super.log(msg);
+  }
 
   /** Constructor.
     *
@@ -91,21 +142,114 @@ public class PIAServlet
   /** An initialization routine which is called once by the HTTP server
     * when the servlet is initialized.
     * 
-    * Initializes the servlet and logs the initialization. The init method 
+    * <p> Initializes the servlet and logs the initialization. The init method 
     * is called once, automatically, by the network service each time it 
     * loads the servlet. It is guaranteed to finish before any service 
     * requests are accepted. On fatal initialization errors, an 
     * UnavailableException should be thrown. It will not call the method 
     * System.exit. 
+    *
+    * <p> Servlet initialization parameters look like this in the properties
+    *	  file:
+    * <pre>
+    # These properties define init parameters for each servlet that is invoked 
+    # by its classname.
+    # Syntax: servlet.[classname].initArgs=[name]=[value],[name]=[value],...
+    # Default: NONE
+    # servlet.org.fool.Dummy.initArgs=message=I'm a dummy servlet
+    * </pre>
+    *
+    * <p> It seems safe to assume that what's passed in <code>config</code>
+    *	  will be the simple name=value pairs above.
+    *
+    * <p> The PIAServlet looks for the following properties:
+    * <ul>
+    *	<li> <code>home</code>
+    *	<li> <code>root</code>
+    *	<li> <code>vroot</code>
+    *	<li> <code>configfile</code> subsite config file name
+    *	<li> <code>siteconfig</code> full path to the site config file
+    *	<li> <code>logfile</code>    full path to log file (optional)
+    * </ul>
+    *
+    * <p> If none of the above properties are present, the PIA will set itself 
+    *	up with <code>root</code> pointing to the server's root (i.e. the
+    *	directory that <code>context</code> maps <code>/</code> into).
+    *
+    * <p> Note that if a log file is not specified, some logging information
+    *	  will end up being sent to STDERR, which may be redirected to 
+    *	  <code>/dev/null</code> in a typical web server.
     */
-  public void init() throws ServletException
+  public void init(ServletConfig conf) throws ServletException
   {
+    super.init(conf);
+    //config = conf;
     config = getServletConfig();
     context = config.getServletContext();
 
-    // === get home, etc. out of config and set up site.
+    // Start by opening the log file, if there is one.
+    String logfile = config.getInitParameter("logfile");
+    if (logfile != null) {
+      try {
+	logFileName = logfile;
+	logStream   = new PrintStream(new FileOutputStream(logFileName));
+	Loader.setLog(logStream);
+	Site.setReporting(logStream);
+	Loader.setVerbosity(1);
+	Site.setVerbosity(1);
+      } catch (IOException e) {
+	logFileName = null;
+	logStream = null;
+	log(e.toString() + " attempting to open log file " + logFileName);
+      }
+    }
 
-    context.log("PIA Servlet initialization complete.");
+    if (context == null) log("*** context is null");
+
+    Enumeration names = config.getInitParameterNames();
+    if (!names.hasMoreElements()) { 
+      log("*** no initialization parameters!");
+    } else {
+      log("Servlet initialization parameters:");
+    }
+    while (names.hasMoreElements()) {
+      String n = names.nextElement().toString();
+      log("    " + n + "=" + config.getInitParameter(n));
+    }
+
+    //get home, etc. out of config 
+
+    String home = config.getInitParameter("home");
+    String root = config.getInitParameter("root");
+    String vroot = config.getInitParameter("vroot");
+    String configfile = config.getInitParameter("configfile");
+    String siteconfig = config.getInitParameter("siteconfig");
+
+    // tell the tagset loader where .../lib is
+    if (home != null) {
+      String filesep  = System.getProperty("file.separator");
+      String tsHome = home + filesep + "lib";
+      Loader.setTagsetHome(tsHome);
+    }
+
+    // Root defaults to server root.  (Maybe only if configfile == null?)
+    if (root == null) {
+      root = context.getRealPath("/");
+    }
+
+    log("Site: home=" + home +
+	",root=" + root + 
+	",vroot=" + vroot + 
+	",configfile=" + configfile +
+	",siteconfig=" + siteconfig
+	);
+
+    // set up the Site
+    site = new Site(root, vroot, null, configfile, null, null);
+    if (siteconfig == null) site.loadConfig() ;
+    else site.loadConfigFile(new File(siteconfig));
+
+    log("initialization complete.");
   }
 
   /** A finalization routine which is called once by the HTTP server
@@ -126,6 +270,9 @@ public class PIAServlet
     */
   public void destroy()
   {
+    if (logStream != null) {
+      try { logStream.close(); } catch (Exception e) {}
+    }
     super.destroy();
   }
 
@@ -183,7 +330,7 @@ public class PIAServlet
     //    String cxtPath = req.getContextPath();    // path before servlet name
     String query   = req.getQueryString();
 
-    Enumeration headerNames = req.getHeaderNames();
+    //Enumeration headerNames = req.getHeaderNames();
 
     try {
       if (!respondWithDocument(req, docPath, query, resp)) {
@@ -192,7 +339,8 @@ public class PIAServlet
     } catch (IOException e) {
       throw e;
     } catch (Exception e) {
-      throw new ServletException("A processing error occurred", e);
+      sendErrorResponse(resp, 500, "exception in respondWithDocument: "
+			+ reportString(e));
     }
   }
 
@@ -328,7 +476,7 @@ public class PIAServlet
 
     if (ts == null) {
       sendErrorResponse(resp, 500, "cannot load tagset " +tsn);
-      return false;
+      return true;
     }
 
     proc.setTagset(ts);
@@ -336,7 +484,7 @@ public class PIAServlet
 
     if (reader == null) {
       sendErrorResponse(resp, 500, "Cannot read document " + doc.getPath());
-      return false;
+      return true;
     }
 
     resp.setStatus( 200 ); 
@@ -419,8 +567,8 @@ public class PIAServlet
 				    HttpServletResponse resp)
     throws IOException
   {
-
-    resp.sendRedirect(resp.encodeRedirectURL(path));
+    path = req.getServletPath() + "/" +  path;
+    resp.sendRedirect(path /*resp.encodeRedirectURL(path)*/);
 
     return true;
   }
@@ -440,6 +588,14 @@ public class PIAServlet
     // Perform URL decoding:
     path = Utilities.urlDecode(path);
 
+    if (path == null) {
+      return sendErrorResponse(resp, 500, "path is null");
+    }
+
+    if (site == null) {
+      return sendErrorResponse(resp, 500, "site is null");
+    }
+
     // Locate the resource.  Fail if it can't be found.
     Resource resource = site.locate(path, false, null);
     if (resource == null) return false;
@@ -453,6 +609,8 @@ public class PIAServlet
       return sendRedirection(request, redirection, resp);
 
     /* === no resolver, so no way to get authenticator yet.
+       === In any case, the servlet engine should do most of the work.
+
     // See if the request needs to be authenticated.
     Agent auth = res.getAuthenticatorForResource(resource);
     if (auth != null && !auth.authenticateRequest(request, resource)) {
@@ -465,18 +623,19 @@ public class PIAServlet
     if (doc == null) {
       resource = resource.locate("home", false, null);
       if (resource == null) {
-	context.log("=== cannot locate home in " + path);
+	log("*** cannot locate home in " + path);
 	if (resource == null) return false;
       }
       doc = resource.getDocument();
       if (doc == null) {
-	context.log("=== no document for home in " + path);
+	log("*** no document for home in " + path);
 	return false;
       }
     }
 
     String tsname = doc.getTagsetName();
     String ctype  = doc.getContentType();
+    if (ctype == null) log("*** null content type for " + path);
     if (ctype == null) ctype = doc.getContentTypeFor(".*");
     if (ctype == null) ctype = "text/plain";
 
@@ -484,7 +643,7 @@ public class PIAServlet
       return sendStreamResponse(doc, ctype, request, resp);
     } else if (tsname.startsWith("!")) {
       sendErrorResponse(resp, 500, "servlet cannot handle CGI request");
-      context.log("servlet cannot handle CGI request");
+      log("servlet cannot handle CGI request");
     } else if (tsname.startsWith("#")) {
       return false;
     } else {
@@ -496,11 +655,23 @@ public class PIAServlet
   /** 
    * Send an error response.
    */
-  public void sendErrorResponse(HttpServletResponse resp,
-				int code, String msg)
+  public boolean sendErrorResponse(HttpServletResponse resp,
+				   int code, String msg)
     throws IOException
   {
+    log("*** Error " + code + ": " + msg);
     resp.sendError(code, msg);
+    return true;
+  }
+
+  /** 
+   * Obtain a complete report on an exception as a String;
+   */
+  public static String reportString(Exception e) {
+    java.io.StringWriter s = new java.io.StringWriter();
+    //s.write(e.toString() + " " + e.getMessage());
+    e.printStackTrace(new java.io.PrintWriter(s));
+    return s.toString();
   }
 
 
