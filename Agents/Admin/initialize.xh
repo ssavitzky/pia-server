@@ -7,12 +7,10 @@
 <user-message>Initializing &AGENT:name; from &filePath;</user-message>
 <set agent='agent' name='do-not-remove'>true</set>
 
-<if><logical op='and'>
-	<status src='checkpoint.dat' item='exists' />
-	<agent-restore file='checkpoint.dat'></agent-restore>
-    </logical>
+<if><status src="START-UP.html" item="exists" />
     <then>
-	<user-message>Restored from checkpoint.dat</user-message>
+	<user-message>Submitting forms in '<status src="START-UP.html"
+				            item='path' />'</user-message>
     </then>
     <else-if><status src='agent-files.xml' item='exists' />
     <then><user-message>Loading XML from '<status src='agent-files.xml'
@@ -20,9 +18,8 @@
 	  <include src='agent-files.xml' />
     </then></else-if>
     <else>
-	  <user-message>Loading startup file</user-message> 
-	  <submit-forms><include src='/&AGENT:name;/START-UP.html' />
-	  </submit-forms>
+	  <user-message>Starting default DOFS and Demo agents.</user-message> 
+	  <agent-files>./DOFS/AGENTS.xml ./Demo/AGENT.xml</agent-files>
     </else>
 </if>
 
@@ -31,14 +28,14 @@
     following initialization techniques, stopping on the first one that works:
 </p>
 <ol>
-  <li> Restoring serialized objects from <code>checkpoint.dat</code>
+  <li> Submitting all the forms in (legacy) <code>START-UP.html</code>
   <li> Loading XML from <code>load-agents.inc</code>
-  <li> Submitting all the forms in <code>START-UP.html</code>
+  <li> Starting the default DOFS and Demo agents.
 </ol>
 
 <p> It is also possible to override <em>this</em> file with your own version,
     in (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code
     into it. </p>
 
-<short-footer cvsid='$Id: initialize.xh,v 1.6 1999-05-06 20:36:35 steve Exp $' />
+<short-footer cvsid='$Id: initialize.xh,v 1.7 1999-05-07 23:28:15 steve Exp $' />
 </p></body></html>

@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.8 1999-05-06 20:36:27 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.9 1999-05-07 23:28:09 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -217,45 +217,49 @@
 <tr><th align=center valign=center nowrap width=170>&A100;
     <td>
     <table cellspacing=0 cellpadding=0 border=0>
-    <tr><th align=left nowrap width=170>&blank-170x1;<td><br>
+    <tr><th align=left nowrap width=170>&blank-170x1;</th><td></td></tr>
     <tr><th align=right><xopt page="&attributes:page;"
-			      pages="home index config help options">&blue-dot;</xopt>
+			      pages="home index help
+			      options">&blue-dot;</xopt></th>
 	<td> <xa href="home" page="&attributes:page;">Home</xa>
     	     <xa href="index" page="&attributes:page;">Index</xa>
-    	     <xa href="config" page="&attributes:page;">Configure</xa>
     	     <xa href="help" page="&attributes:page;">Help</xa>
 	     <xa href="options" page="&attributes:page;">Options</xa>
+	</td></tr>
     <tr><th align=right>
 	     <xopt page="&attributes:page;"
-		   pages="checkpoint restore shutdown">&blue-dot;</xopt>
-	<td> <xa href="checkpoint" page="&attributes:page;">checkpoint</xa> /
-	     <xa href="restore" page="&attributes:page;">restore</xa> state
+		   pages="config shutdown">&blue-dot;</xopt> </th>
+	<td> <xa href="config" page="&attributes:page;">Configure</xa>
 	     <if><test exact match='pia'>&piaUSER;</test>
-	         <then><a href="shutdown">shut down</a> appliance<br>
-	     </if>
+	         <then><a href="shutdown">shut down</a>
+	     </if> PIA
+	</td></tr>
     <tr><th valign=top align=right>
 	     <xopt page="&attributes:page;"
 		   pages="agents installers load-agent remove-agent"
-		  >&blue-dot;</xopt>
+		  >&blue-dot;</xopt> </th>
 	     &nbsp;
 	<td valign=top>
 	    <xa href="list-agents" page="&attributes:page;">list</xa> / 
 	    <xa href="installers" page="&attributes:page;">install</xa> / 
 	    <xa href="load-agent" page="&attributes:page;">load</xa> / 
  	    <xa href="remove-agent" page="&attributes:page;">remove</xa>
-	     agents<br>
-    <tr><th valign=top align=right>Files: &nbsp;
+	     agents
+	</td></tr>
+    <tr><th valign=top align=right>Files: &nbsp; </th>
 	<td><a href="/Doc/"><b>Docs</b></a>
 	    <a href="/~/">Data</a>
 	    <a href="/PIA/src/">Sources</a>
 	    <a href="/PIA/Agents/">Agents</a>
 	    <a href="/~/Agents/">(Customized)</a>
+	</td></tr>
     <tr><th valign=top align=right><b>Agents:</b> &nbsp;
         <td valign=top> <repeat list="&agentNames;" entity="foo">
             <a href="/&foo;">&foo;</a> <a href="/&foo;/"><b> / </b></a>
             </repeat><br>
+	</td></tr>
    <get name=content />
-  </table>
+  </table></td></tr>
 </table>
   </action>
 </define>
@@ -305,6 +309,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.8 1999-05-06 20:36:27 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.9 1999-05-07 23:28:09 steve Exp $</b><br />
 </tagset>
 

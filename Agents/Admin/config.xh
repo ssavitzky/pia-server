@@ -4,7 +4,7 @@
 <link rev='made' href='mailto:steve@rsv.ricoh.com' />
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header show-date='yes'>Edit PIA Configuration Settings</header>
-<sub-head page='configure' />
+<sub-head page='config' />
 <hr />
 This page lets you edit PIA configuration variables.  The default values are 
 found in <code><var>PIA_DIR</var>/Config/pia.props</code>.  If you choose
@@ -101,5 +101,5 @@ to edit any of these values, they will be written to
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.1 1999-04-01 01:25:29 pgage Exp $' />
+<footer cvsid='$Id: config.xh,v 1.2 1999-05-07 23:28:15 steve Exp $' />
 </body></html>
