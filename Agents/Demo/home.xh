@@ -1,6 +1,6 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>The &AGENT:name; agent home page</title>
+<title>The Demo home page</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
 <sub-head page='home'>
@@ -30,6 +30,6 @@ formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid='$Id: home.xh,v 1.9 1999-04-13 19:53:57 pgage Exp $' /></p>
+<footer cvsid='$Id: home.xh,v 1.10 1999-10-14 21:43:45 steve Exp $' /></p>
 </body></html>
 
