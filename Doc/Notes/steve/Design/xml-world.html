@@ -26,13 +26,16 @@
 <p> The goal here is to represent as many PIA internal objects as possible in
     XML.  This is comparatively easy:  we have an interface, ActiveElement,
     that satisfies both DOM and DPS requirements, and an implementation for it
-    (currently called <code>ParseTreeGeneric</code>) that is easy to
+    (currently called <code>TreeGeneric</code>) that is easy to
     subclass.  (In a previous implementation phase, GenericAgent actually
     <em>did</em> descend from the class that implemented Elements.)
 
 <p> The parser is already capable of building elements with classes other than
-    the default ParseTreeElement, but this capability has not been tested and
-    more work needs to be done.
+    the default TreeElement, but this capability has not been tested and
+    more work needs to be done.  It would be particularly tricky to use
+    something that looks like an element (e.g. &lt;ENTITY&gt;) and use it to
+    construct something else, like a TreeEntity.  Again, this machinery is in
+    the parser, but hasn't been tested.
 
 <p> There are two main ways to represent PIA objects as XML: make them
     subclasses of an existing ActiveElement implementation, or make them
@@ -77,7 +80,7 @@
 <dl>
   <dt> Tagsets and Namespaces
   <dd> Actually, BasicTagset and BasicNamespace <em>already</em> inherit from
-       ParseTreeGeneric.  The only difficulty is that there is no set of
+       TreeGeneric.  The only difficulty is that there is no set of
        handlers to construct them directly from XML documents, and writing
        them out doesn't produce something that could be read back in because
        the implementation is incomplete.  The &lt;define&gt; tag imposes an
@@ -89,6 +92,11 @@
        There is a complexity for agents: if you don't know <em>both</em> the
        home and user directories at initialization time, you don't know where
        to look for the XML metadata.
+       <ul>
+	 <li> As of 4/22 GenericAgent actually extends from BasicNamespace,
+	      but there are glitches that I haven't had time to fix; in the
+	      code actually in use, it is still wrapped.
+       </ul>
   <dt> Match Criteria
   <dd> Presently an agent's criteria are initialized by means of a rather
        simpleminded conversion from strings.  It would be easier if
@@ -331,7 +339,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: xml-world.html,v 1.3 1999-04-23 00:21:11 steve Exp $</b><br>
+<b>$Id: xml-world.html,v 1.4 1999-04-27 16:16:01 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
