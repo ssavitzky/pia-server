@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=xhtml parent=basic include="debug HTML" recursive>
-<cvs-id>$Id: xhtml.ts,v 1.1 1999-12-14 18:28:34 steve Exp $</cvs-id>
+<cvs-id>$Id: xhtml.ts,v 1.2 1999-12-17 23:59:20 bill Exp $</cvs-id>
 
 <h1>XHTML Tagset</h1>
 
@@ -80,13 +80,13 @@
 	advantage is that whether it exists can depend on the content.
   </doc>
 
-  <action>
+  <action><text trim="yes">
     <if>&content;
 	<then>
            <option>&content;</option>
         </then>
     </if>
-  </action>
+  </text></action>
 </define>
 
 <define element="date" handler="date">

@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=ehtml parent=HTML include="basic debug" recursive>
-<cvs-id>$Id: ehtml.ts,v 1.1 1999-12-14 18:28:32 steve Exp $</cvs-id>
+<cvs-id>$Id: ehtml.ts,v 1.2 1999-12-17 23:59:19 bill Exp $</cvs-id>
 
 <h1>EHTML Tagset</h1>
 
@@ -89,13 +89,13 @@
 	advantage is that whether it exists can depend on the content.
   </doc>
 
-  <action>
+  <action><text trim="yes">
     <if>&content;
 	<then>
            <option>&content;</option>
         </then>
     </if>
-  </action>
+  </text></action>
 </define>
 
 <define element="weekday" handler="handler">
