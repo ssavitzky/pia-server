@@ -11,19 +11,19 @@
 <body><center><h1>Installing the PIA</h1></center><p>This manual
 describes how to install the Platform for Information Applications
 (PIA).  Developers intending
-to create applications should also consult the <a href = "author.html">Author's
+to create applications should also consult the <a href="author.html">Author's
 Guide</a>.</p><p>Topics covered include:</p>
 
-<ul><li><a href = "#Before">Before You Begin</a></li>
-<li><a href = "#Obtaining">Obtaining the Files</a></li>
-<li><a href = "#Installing">Installing the Files</a></li>
-<li><a href = "#Running">Running the PIA</a></li>
-<li><a href = "#Questions">Questions, Problems and Comments</a></li></ul>
+<ul><li><a href="#Before">Before You Begin</a></li>
+<li><a href="#Obtaining">Obtaining the Files</a></li>
+<li><a href="#Installing">Installing the Files</a></li>
+<li><a href="#Running">Running the PIA</a></li>
+<li><a href="#Questions">Questions, Problems and Comments</a></li></ul>
 <p>
-For information on use of the PIA, see the <a href = "doclist.html">PIA
+For information on use of the PIA, see the <a href="doclist.html">PIA
 Document List</a>.</p>
 <hr>
-<h2><a name = "Before"></a>Before You Begin</h2>
+<h2><a name="Before"></a>Before You Begin</h2>
 <p>
 You need the following software to run the PIA:</p>
 <ul>
@@ -31,7 +31,7 @@ You need the following software to run the PIA:</p>
      needed to use the software.  Programmers wishing to modify the code will
      need a Java Development Kit <code>JDK</code>.) Java for Solaris and
      Windows can be obtained from <code>
-     <a href = "http://www.javasoft.com">java.sun.com</a></code> (direct links
+     <a href="http://www.javasoft.com">java.sun.com</a></code> (direct links
      to <a
      href="http://www.javasoft.com/products/jdk/1.2/jre/index.html">JRE</a> or
      <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>).  Java for
@@ -51,10 +51,10 @@ You need the following software to run the PIA:</p>
 </ul>
 
 
-<h2><a name = "Obtaining">Obtaining the Files</a></h2>
+<h2><a name="Obtaining">Obtaining the Files</a></h2>
 <p>
 The PIA files are available via HTTP, from <code>
-<a href = "http://www.risource.org/PIA/">http://www.risource.org/PIA/</a>.</code></p>
+<a href="http://www.risource.org/PIA/">http://www.risource.org/PIA/</a>.</code></p>
 <p>
 The latest stable releases are maintained in compressed form in the
 directories <code>ftp://ftp.risource.org/PIA/pia_src.tgz</code>.  This is
@@ -83,7 +83,7 @@ be uncompressed.  For example:
     PIA they have been working on is stable enough for others to try.
 </p>
 
-<h2><a name = "Installing">Installing the Files</a></h2>
+<h2><a name="Installing">Installing the Files</a></h2>
 <p>
 The files are supplied in the form of a gzip'ed tar file. Set your working
 directory to the intended parent directory for the PIA files.
@@ -96,39 +96,39 @@ Extract the files using <code>tar</code>.  For example:
 This creates the directory <code>PIA/</code> under your current directory. </p>
 
 <table
-    border = "1" frame = "border">
+    border="1" frame="border">
 <caption> Directory Structure (inside the PIA directory)</caption>
 <tbody>
 <tr>
-<th align = "left">Agents</th>
+<th align="left">Agents</th>
 <td>Subdirectories for standard agents and applications. Each subdirectory
 contains the collection of XML files (active pages) that work together
 to form an application.  </td>
 </tr>
 <tr>
-<th align = "left">Config</th>
+<th align="left">Config</th>
 <td>Configuration information, including subdirectories for Makefiles and for
 XML site configuration files.</td>
 </tr>
 <tr>
-<th align = "left">Contrib</th>
+<th align="left">Contrib</th>
 <td>Used for contributed agents and other files that are not a part
 of the standard release.</td>
 </tr>
 <tr>
-<th align = "left">bin</th>
+<th align="left">bin</th>
 <td>Programs that actually run the PIA software either as a web
 server (<code> pia, pia.bat </code> or as a command line filter <code> process</code>.
  Note that <code>pia</code> and <code>process</code> run under Unix
 only.)</td>
 </tr>
 <tr>
-<th align = "left">lib</th>
+<th align="left">lib</th>
 <td>Currently not being used.</td>
 </tr>
 <tr>
-<th align = "left">src</th>
-<td valign = "top"><code>src/java/</code> contains the Java source
+<th align="left">src</th>
+<td valign="top"><code>src/java/</code> contains the Java source
 files used in the PIA software.  The main code is in <code>src/java/org/risource/*</code> 
 corresponding to <code>org.risource.*</code> package names.  
 <br><code>src/org</code> and <code>src/misc</code> contain
@@ -138,7 +138,7 @@ utility applications.</td>
 </tbody>
 </table>
 
-<h3 id = "CHDCECIE">Setting Up</h3>
+<h3 id="CHDCECIE">Setting Up</h3>
 <p>
 The
 PIA uses two environment variables:</p>
@@ -158,30 +158,39 @@ location of the PIA directory you just installed
 reset its location if desired.  On Unix, the default directory for
 <var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On Windows, the default directory is
 <code>c:\PIAUSERS\<var>username</var></code> (if a username is not available
-<code> nobody</code> is used).</p>
+<code>nobody</code> is used).</p>
 
 <p>If you use the <kbd>-root</kbd> command line option to specify
 <var>PIA_ROOT</var>, that setting takes precedence over the one you specify in
 the environment variable.</p>
 
-<!-- === The next two paragraphs need to be changed! === -->
-<p>When the PIA starts, it looks for the
-<code>pia.props</code> under <code>~/.pia/Config</code>.  You can create a
-customizable copy in your home directory under <code>~/.pia/Config</code> by
-copying <tt>pia/Config/pia.props</tt> and modifying it using a text
-editor. (Note that this example assumes <var>PIA_ROOT is ~/.pia)</var></p>
+<p>When the PIA starts, it looks for either a configuration file or a ``root''
+directory (which should <em>contain</em> a configuration file).  The PIA will
+look for its top-level configuration file in the following places:</p>
 
-<p>The default settings of the PIA are contained in
-<code>PIA/Config/pia.props</code>. These settings can be overridden by a local
-copy of <code>pia.props</code> in <code>PIA_ROOT/Config/pia.props</code>, by
-environment variables or on the command line.  Command lines options can be
-given in the form of switches (e.g. <code>-p 8000</code>) or at the end of the
-command line in the form of <code> prop=value </code> (e.g. <code> pia.port=8000</code>.)
+<ol>
+  <li> A file or directory specified on the command line.
+  <li> The environment variable <var>PIA_ROOT</var>
+  <li> A system-specific default root directory (see above)
+  <li> The PIA's ``home directory,'' <var>PIA_HOME</var>
+</ol>
+
+<p>The default configuration file name is <var>_subsite.xcf</var>; this can be
+changed with the <code>-config</code> command-line option or in the top-level
+configuration file.  Any directory may contain a configuration file with the
+specified name, except that the configuration file in the root is ignored if a
+separate top-level configuration file is specified. </p>
+
+<p>Once a configuration file is found, all of the PIA's configuration
+information is loaded from it -- <em>including</em> the path of the root
+directory.  Several sample configuration files can be found in the directory
+<code>$PIA_HOME/Config/Site/</code>.
 </p>
 
-<p>It is convenient to put the directory <code>$PIA_HOME</code> into your
-shell's search path.  On Linux you can do this by putting the following into
-your <code>~/.bash_profile</code> file: </p>
+<p>It is convenient to put the directory <code>$PIA_HOME/bin</code>, which
+contains scripts (including the one that implements the <code>pia</code>
+command!)  into your shell's search path.  On Linux you can do this by putting
+the following into your <code>~/.bash_profile</code> file: </p>
 
 <pre>
   # The following line will change depending on where the PIA is installed
@@ -197,7 +206,7 @@ your <code>~/.bash_profile</code> file: </p>
     the wrapper script <em>is</em> smart enough to add it for you.
 </p>
 
-<h2><a name = "Running">Running the PIA </a></h2>
+<h2><a name="Running">Running the PIA </a></h2>
 
 <p>On UNIX or Linux, once you have set up the <code><var>PIA_HOME</var></code>
 and <code><var>PIA_ROOT</var></code> environment variables you can launch the
@@ -239,10 +248,11 @@ in order for <code>process</code> to run.
 the PIA as well. In most cases, <code>http://localhost:8888</code> will
 work.</p>
 
-<h2><a name = "Questions">Questions, Problems, or Comments</a></h2>
+<h2><a name="Questions">Questions, Problems, or Comments</a></h2>
 
-<p>You can check for known bugs by going to <code><a href =
-"http://www.RiSource.org/PIA/">http://www.risource.org/PIA/</a></code></p>
+<p>You can check for known bugs by going to <code><a
+href="http://www.RiSource.org/PIA/">
+http://www.risource.org/PIA/</a></code></p>
 
 <p> Questions, problems and comments should be directed to <code><a
 href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
