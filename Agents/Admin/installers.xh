@@ -144,7 +144,16 @@ Provides basic file browsing capabilities.
   <dd> <form action="/&AGENT:name;/install-agent" method="POST">
        name:<input name="agent" value="PIA">
        type:<input name="type" value="DOFS"><br>
-       root:<input name="root" value="~/pia">
+       root:<input name="root" value="&piaDIR;/Doc">
+       <input type="submit" value="Install">
+       </form></if>
+  <dt> <a name="PIA">DOFS/Doc</a>
+       <if><agent-running name=Doc><then><em>installed</em></then>
+       <else>
+  <dd> <form action="/&AGENT:name;/install-agent" method="POST">
+       name:<input name="agent" value="Doc">
+       type:<input name="type" value="DOFS"><br>
+       root:<input name="root" value="&piaDIR;/Doc">
        <input type="submit" value="Install">
        </form></if>
   <dt> <a name="Home">DOFS/Home</a> (possible security hole)
@@ -192,5 +201,5 @@ Provides basic file browsing capabilities.
        form.
 </dl>
 
-<footer cvsid="$Id: installers.xh,v 1.4 1999-03-12 19:22:01 steve Exp $">
+<footer cvsid="$Id: installers.xh,v 1.5 1999-03-15 23:12:43 steve Exp $">
 </body></html>

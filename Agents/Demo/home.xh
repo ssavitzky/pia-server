@@ -16,7 +16,7 @@
     <tr><th><td> <a href="demo_sel.xh">Extract Examples</a>
     <tr><th><td> <a href="demo_test.xh">Test Handler Examples</a>
     <tr><th><td> <a href="hello-world.xh">Hello World Example</a>
-    <tr><th><td> <a href="/PIA/Doc/tagsets.html">Tagset Manual</a>
+    <tr><th><td> <a href="/Doc/tagsets.html">Tagset Manual</a>
 </sub-head>
 
 
@@ -28,6 +28,6 @@ formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid="$Id: home.xh,v 1.3 1999-03-12 23:15:53 pgage Exp $"></footer>
+<footer cvsid="$Id: home.xh,v 1.4 1999-03-15 23:12:48 steve Exp $"></footer>
 </body></html>
 

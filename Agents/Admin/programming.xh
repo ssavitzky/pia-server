@@ -28,13 +28,13 @@
 
 <h3>Other Information:</h3>
 <ul>
-  <li> <a href="/PIA/Doc/"><b>Documentation</b> </a>
+  <li> <a href="/Doc/"><b>Documentation</b> </a>
        <if><agent-running name=PIA>
            <then>
        <ul>
-	 <li> <a href="/PIA/Doc/Tutorial">Tutorial</a>
-	 <li> <a href="/PIA/Doc/Release">Release Notes</a>
-	 <li> <a href="/PIA/Doc/Manuals">Manuals</a>
+	 <li> <a href="/Doc/Tutorial">Tutorial</a>
+	 <li> <a href="/Doc/Release">Release Notes</a>
+	 <li> <a href="/Doc/Manuals">Manuals</a>
        </ul>
            </then>
            <else><a href="installers#PIA"><em>install
@@ -71,5 +71,5 @@
 	  (This file gets "executed" when a new &AGENT:name; agent is created)
 </ul>
 
-<footer cvsid="$Id: programming.xh,v 1.3 1999-03-12 19:22:03 steve Exp $">
+<footer cvsid="$Id: programming.xh,v 1.4 1999-03-15 23:12:45 steve Exp $">
 </body></html>

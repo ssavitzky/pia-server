@@ -31,15 +31,15 @@ you get a generic <em><a href="index">index</a></em> page.
 <td valign=top>
 <h3>Other Information:</h3>
 <ul>
-  <li> <a href="/PIA/Doc/"><b>Documentation</b> </a>
+  <li> <a href="/Doc/"><b>Documentation</b> </a>
        <if><agent-running name=PIA><then></then>
        <else><a href="/&AGENT:name;/installers#PIA"><em>install needed!</em></a>
        </else></if>
        <ul>
-	 <li> <a href="/PIA/Doc/doclist.html">Complete list</a>
-	 <li> <a href="/PIA/Doc/Release">Release Notes</a>
-	 <li> <a href="/PIA/Doc/Manuals">Manuals</a>
-	 <li> <a href="/PIA/Doc/Notes">Notes</a>
+	 <li> <a href="/Doc/doclist.html">Complete list</a>
+	 <li> <a href="/Doc/Release">Release Notes</a>
+	 <li> <a href="/Doc/Manuals">Manuals</a>
+	 <li> <a href="/Doc/Notes">Notes</a>
        </ul>
   <li> <a href="/&AGENT:name;/programming">Programming information</a>
   <li> <a href="/&AGENT:name;/help">Online Help</a>
@@ -77,5 +77,5 @@ generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
 </dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.3 1999-03-12 19:21:57 steve Exp $'>
+<footer cvsid='$Id: home.xh,v 1.4 1999-03-15 23:12:42 steve Exp $'>
 </body></html>

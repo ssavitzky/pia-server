@@ -43,7 +43,7 @@
 	<th valign=top align=right><a href="/PIA/"><b>Files:</b></a>&nbsp;
 	<td valign=top> <a href="/PIA/Agents/">Agents</a>
 	    <a href="/~/Agents/">(custom)</a>
-	    <a href="/PIA/Doc/">Doc</a>
+	    <a href="/Doc/">Doc</a>
 	    <a href="/PIA/src/">src</a>
       </if><br></tr>
     <if><agent-running name=History>
@@ -66,5 +66,5 @@
 <hr>
 <include src="/ROOT/doc-grid.inc">
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.3 1999-03-12 19:22:45 steve Exp $'>
+<short-footer cvsid='$Id: index.xh,v 1.4 1999-03-15 23:12:57 steve Exp $'>
 </body></html>

@@ -29,10 +29,10 @@
 <input type="submit" value="View slides">
 <input type=hidden name=tagset value=slides>
 <b>URL:</b> <input name=url size=55 maxlength=200
-  value="http://&piaHOST;:&piaPORT;/PIA/Doc/Papers/LinuxWorld1999/lw99.html">
+  value="http://&piaHOST;:&piaPORT;/Doc">
 </form>
 
-<footer cvsid="$Id: slides.xh,v 1.2 1999-03-12 19:22:55 steve Exp $">
+<footer cvsid="$Id: slides.xh,v 1.3 1999-03-15 23:13:01 steve Exp $">
 </body></html>
 </else>
 </if>

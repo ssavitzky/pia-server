@@ -189,7 +189,7 @@
  	    <xa href="remove-agent" page="&attributes:page;">remove</xa>
 	     agents<br>
     <tr><th valign=top align=right>Files: &nbsp;
-	<td><a href="/PIA/Doc/"><b>Docs</b></a>
+	<td><a href="/Doc/"><b>Docs</b></a>
 	    <a href="/~/">Data</a>
 	    <a href="/PIA/src/">Sources</a>
 	    <a href="/PIA/Agents/">Agents</a>

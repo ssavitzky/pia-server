@@ -11,13 +11,13 @@
     <th align=right valign=top bgcolor=silver>Release 2.0:
     <td>
 	<a href="/PIA/README">README</a>,
-        &nbsp;<a href="/PIA/Doc/Release">/Release&nbsp;notes/</a>, 
-        &nbsp;<a href="/PIA/Doc/FAQ/">/FAQs/</a>
+        &nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a>, 
+        &nbsp;<a href="/Doc/FAQ/">/FAQs/</a>
     </td><td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp; 
     <th align=right valign=top bgcolor=silver>Getting Started:
     <td>
-	<a href="/PIA/Doc/intro.html">Introduction</a>
+	<a href="/Doc/intro.html">Introduction</a>
     </td><td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>Introductions:
@@ -26,15 +26,15 @@
     </td> <td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>
-	<a href="/PIA/Doc/Manuals/">Manuals:</a>
+	<a href="/Doc/Manuals/">Manuals:</a>
     <td>
-	<a href="/PIA/Doc/doclist.html">Documentation List</a>
+	<a href="/Doc/doclist.html">Documentation List</a>
     </td> <td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>
-	<a href="/PIA/Doc">Other Docs:</a>
-    <td><a href="/PIA/Doc/Notes/">/Notes/</a> 
+	<a href="/Doc">Other Docs:</a>
+    <td><a href="/Doc/Notes/">/Notes/</a> 
     </td> <td bgcolor=silver>&nbsp; 
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.3 1999-03-12 19:22:43 steve Exp $">
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.4 1999-03-15 23:12:56 steve Exp $">
