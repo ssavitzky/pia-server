@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.3 2000-06-24 00:44:28 steve Exp $
+#	$Id: woad-index.pl,v 1.4 2000-06-27 18:36:19 steve Exp $
 # Create WOAD index files.
 #
 
@@ -205,11 +205,7 @@ print STDERR "indexing $sources$rec -> $root$project \n";
 ###### Do the Work ######################################################
 
 open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
-
-print PATHINDEX '<index>', "\n";
 indexDir($sources, "/");
-print PATHINDEX '</index>', "\n";
-
 close (PATHINDEX);
 
 globalIndices();
@@ -235,8 +231,6 @@ sub indexDir {
     -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd\n";
 
     open (DIRINDEX, ">$xd/dirIndex.wi") || die "cannot open $xd/dirIndex.wi";
-    #print DIRINDEX '<namespace name="dirIndex">', "\n";
-
     print STDERR "indexing $d -> $xd\n";
 
     for (my $i= 0; $i < @files; ++$i) {
@@ -245,7 +239,7 @@ sub indexDir {
 	    push (@subdirs, $files[$i]); 
 	}
     }
-    #print DIRINDEX '</namespace>', "\n";
+
     close (DIRINDEX);
 
     # now do the subdirectories
@@ -279,16 +273,20 @@ sub indexFile {
     $f =~ /\.([^.]*)$/;		# extract extension.  
     my $ext = $1;
 
-    my $pf = "$sources$path/$f";
-    $pf =~ s@//@/@g;
+    my $absPath = "$sources$path/$f";
+    $absPath =~ s@//@/@g;
+
+    my $woadPath = "$path/$f";
+    $woadPath =~ s@//@/@g;
+
 
     my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime,
-	$mtime, $ctime, $blksiz, $blks) = stat $pf;
+	$mtime, $ctime, $blksiz, $blks) = stat $absPath;
 
     # file index entry
     my %entry = ("name" => $f, "size" => $size, "mtime" => $mtime);
 
-    if (-d $pf) {		# Fill out entry for directory
+    if (-d $absPath) {		# Fill out entry for directory
 	$type = "dir";
 	$tdscr = $noIndexDirs{$f};
 	if (! $tdscr) {
@@ -302,16 +300,16 @@ sub indexFile {
 	if (($tdscr = $textFileNames{$f}) ne '' ||
 	    ($tdscr = $textFileExt{$ext}) ne '') {
 	    $type = "text";
-	    indexTextFile($pf, \%entry);
+	    indexTextFile($absPath, \%entry);
 
 	} elsif (($tdscr = $codeFileNames{$f}) ne '' ||
 		 ($tdscr = $codeFileExt{$ext}) ne '') {
 	    $type = "code";
-	    indexCodeFile($pf, \%entry);
+	    indexCodeFile($absPath, \%entry);
 
 	} elsif (($tdscr = $markupExt{$ext}) ne '') {
 	    $type = "markup";
-	    indexMarkupFile($pf, \%entry);
+	    indexMarkupFile($absPath, \%entry);
 
 	} elsif (($tdscr = $noIndexExt{$ext}) ne '') {
 	    return 0;		# don't even look at it.
@@ -324,7 +322,7 @@ sub indexFile {
 
 	} elsif (($tdscr = $imageFileExt{$ext}) ne '') {
 	    $type = "image";
-	    $ftype = `file -b $pf`;
+	    $ftype = `file -b $absPath`;
 	    $entry{"dscr"} = $ftype;
 	    $ftype =~ /([0-9]+)\s*x\s*([0-9]+)/;
 	    $entry{"width"} = $1;
@@ -332,7 +330,7 @@ sub indexFile {
 
 	} else {
 	    $type = "unknown";	# could actually call `file` here.
-	    $ftype = `file -b $pf`;
+	    $ftype = `file -b $absPath`;
 	    $entry{"dscr"} = "(?) $ftype";
 	}
     }
@@ -342,15 +340,15 @@ sub indexFile {
     if ($tdscr ne '') { $entry{"tdscr"} = $tdscr; }
 
     # Insert entry into file index table.  We may possibly be needing it.
-    $pathIndex{$pf} = \%entry;
+    $pathIndex{$absPath} = \%entry;
 
     # Convert entry to xml format:
     $ent = "<File";
     for (my @keys = keys(%entry), my $k = 0; $k < @keys; ++$k) {
 	$ent .= " " . $keys[$k] . '="' . $entry{$keys[$k]} . '"';
     }
-    $ent .= ' />';
-    print PATHINDEX "    <bind name=\"$pf\">$ent</bind>\n";
+    $ent .= ">$woadPath</File>";
+    print PATHINDEX "    $ent\n";
     print DIRINDEX  "    $ent\n";
     return $indexme;
 }
@@ -401,5 +399,5 @@ sub globalIndices {
 ###### Utilities ########################################################
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.3 2000-06-24 00:44:28 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.4 2000-06-27 18:36:19 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
