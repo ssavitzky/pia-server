@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.6 1999-11-04 22:33:44 steve Exp $
+//	$Id: nodeBuilder.java,v 1.7 1999-11-09 01:19:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.6 1999-11-04 22:33:44 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.7 1999-11-09 01:19:59 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -55,11 +55,23 @@ public class nodeBuilder extends GenericHandler {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     if (atts == null) atts = new TreeAttrList();
     String name = atts.getAttribute("name");
+    String type = atts.getAttribute("type");
+    if (type != null) type = type.trim();
     if (name != null) name = name.trim();
-    if (name == null) {
-      reportError(in, cxt, "No 'name' attribute");
+    if (name == null && type == null) {
+      reportError(in, cxt, "No 'name' or 'type' attribute");
       return;
     }
+    if (name.startsWith("#")) {
+      if (type != null) {
+	reportError(in, cxt,
+		    "Node types specified in both 'name' or 'type' attributes");
+	return;
+      }
+      type = name.substring(1);
+      name = null;
+    }
+
     ToNodeList content = new ToNodeList(cxt.getTopContext().getTagset());
 
     TreeAttrList ns = new TreeAttrList();
@@ -69,7 +81,7 @@ public class nodeBuilder extends GenericHandler {
     Processor p = cxt.subProcess(in, loader, ns);
     // === need special recognition for <name> ===
     p.processChildren();
-    ActiveNode result = finish(cxt, name, ns, content.getList(), atts);
+    ActiveNode result = finish(cxt, name, type, ns, content.getList(), atts);
     if (result == null) return;
     if (this.hasChildNodes()) {
       p = cxt.subProcess(new FromParseTree(result), out, null);
@@ -81,8 +93,9 @@ public class nodeBuilder extends GenericHandler {
 
   /** Actually construct the new node. 
    */
-  protected ActiveNode finish(Context cxt, String tagname, TreeAttrList ns,
-			      ActiveNodeList content, ActiveAttrList atts) {
+  protected ActiveNode finish(Context cxt, String tagname, String type,
+			      TreeAttrList ns, ActiveNodeList content,
+			      ActiveAttrList atts) {
     Tagset ts = cxt.getTopContext().getTagset();
 
     // If there's a binding for "...", that's the content.
@@ -100,18 +113,26 @@ public class nodeBuilder extends GenericHandler {
     }
 
     // check for tagname starting with #
-    if (tagname.startsWith("#")) {
+    if (type != null && ! type.equalsIgnoreCase("element")) {
       // === need to use the tagset for this...
-      if (tagname.equalsIgnoreCase("#comment")) {
+      if (type.equalsIgnoreCase("comment")) {
 	return new TreeComment(TextUtil.getCharData(content));
-      } else if (tagname.equalsIgnoreCase("#cdata")) {
+      } else if (type.equalsIgnoreCase("cdata")) {
 	return new TreeCDATA(TextUtil.getCharData(content));
-      } else if (tagname.equalsIgnoreCase("#text")) {
+      } else if (type.equalsIgnoreCase("text")) {
 	return new TreeText(TextUtil.getCharData(content));
-      } else if (tagname.equalsIgnoreCase("#string")) {
+      } else if (type.equalsIgnoreCase("string")) {
 	return new TreeCharData(NodeType.STRING, TextUtil.getCharData(content));
+      } else if (type.equalsIgnoreCase("pi")) {
+	return ts.createActiveNode(NodeType.PI, tagname,
+				   TextUtil.getCharData(content));
+      } else if (type.equalsIgnoreCase("doctype")) {
+	return ts.createActiveNode(NodeType.DOCTYPE, tagname,
+				   TextUtil.getCharData(content));
+      } else if (type.equalsIgnoreCase("declaration")) {
+	return  ts.createActiveNode(NodeType.DECLARATION, tagname, content);
       } else {
-	return new TreeComment("** unrecognized type " + tagname);
+	return new TreeComment("** unrecognized type " + type);
       }
     } else {
       ActiveElement e = ts.createActiveElement(tagname, ns,
