@@ -16,8 +16,9 @@ details.
 For information on installing and using the PIA, see the files in the Doc
 directory (install.html and intro.html). 
 
-The latest information can be obtained from http://www.RiSource.org/PIA/
+The latest information can be obtained from http://RiSource.org/PIA/
+The C version can be obtained from http://sourceforge.net/projects/cpia
 
 ========================================================================
 Copyright 1999-2001 Ricoh Innovations, Inc.
-$Id: README,v 1.4 2001-01-11 23:36:28 steve Exp $
+$Id: README,v 1.5 2001-04-03 23:26:22 steve Exp $

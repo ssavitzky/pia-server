@@ -35,18 +35,19 @@
   <tr>	 <td>&nbsp;</td> 
     <th align=right valign=top bgcolor=silver>On the Web:</th>
     <td>
-	||&nbsp;<a href="http://www.RiSource.org/">[www.RiSource.org]</a>
-	 (&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
+	||&nbsp;<a href="http://RiSource.org/">[RiSource.org]</a>
+	 (&nbsp;<a href="http://RiSource.org/PIA">/PIA</a> )
 	||&nbsp;<a href="http://pia.rii.ricoh.com/">[pia.rii.ricoh.com]</a>
+	||&nbsp;<a href="http://cPIA.SourceForge.net/">[cPIA.SourceForge.net]</a>
     </td>
     <td bgcolor=silver>&nbsp;</td>  
   </tr>
   <tr> <td>&nbsp; </td>
        <td align="right" bgcolor="silver" colspan=2>
        <font size="-3">
-         "$Id: doc-grid.inc,v 1.19 2001-01-11 23:36:32 steve Exp $"</font>
+         "$Id: doc-grid.inc,v 1.20 2001-04-03 23:26:31 steve Exp $"</font>
        </td> 
        <td bgcolor=silver>&nbsp;</td>  
   </tr>
 </table>
-<!--  cvsid="$Id: doc-grid.inc,v 1.19 2001-01-11 23:36:32 steve Exp $"-->
+<!--  cvsid="$Id: doc-grid.inc,v 1.20 2001-04-03 23:26:31 steve Exp $"-->
