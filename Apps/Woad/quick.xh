@@ -96,6 +96,7 @@
 </p>
 
 <pre>
+    ~/PIA/src/app/tools/woad-index.pl sources=/home/httpd/html 
     woad sources=/home/httpd/html target=localhost:80
 </pre>
 
@@ -104,6 +105,7 @@
 </p>
 
 <pre>
+    ~/PIA/src/app/tools/woad-index.pl sources=/home/httpd prefix=/html
     woad sources=/home/httpd prefix=/html target=localhost:80 
 </pre>
 
@@ -112,6 +114,11 @@
 <p> for <code>woad</code> in the sample commands.
 </p>
 
+<p> If you have a personal copy of the PIA running, you can also use Woad to
+    view and annotate it.  To create the index, use the command:
+</p>
+<pre>    ~/PIA/src/app/tools/woad-index.pl sources="~/PIA" root="~/.pia"
+</pre>
 
 <hr />
 <h2><a name="why">Why Blue?  Why Woad?</a></h2>
@@ -162,5 +169,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: quick.xh,v 1.5 2000-06-23 17:31:21 steve Exp $" />
+<short-footer cvsid="$Id: quick.xh,v 1.6 2000-07-19 22:19:47 steve Exp $" />
 </p></body></html>
