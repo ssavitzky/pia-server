@@ -1,9 +1,12 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.5 1999-10-20 16:21:47 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.6 1999-10-22 17:34:43 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
+  <Resource name="hide.xh" virtual="../Toolbar/hide.xh" />
+  <Resource name="help.xh" virtual="../../defaults/help.xh" />
+
   <AGENT name="remoteTools" criteria="response proxy-response html">
     <initialize><user-message>    remoteTools agent initialized</user-message>
     </initialize>
