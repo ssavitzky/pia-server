@@ -79,23 +79,6 @@ See also:
        and of course fix the corresponding files.
        (1999-09-23) <br>
 
-  <li> <b>Hole</b> Simplified command line<br>
-       Command line should specify config file (with no option flag) or root
-       directory (with <code>_subsite.xcf</code> file), and optional
-       assignments, e.g. <code>port=8001</code> that override attributes in
-       the outer &lt;Container&gt; element.  No property file.  Everything
-       else should come from the config.  Add <code>pia:</code> to specify
-       directories in the PIA_HOME hierarchy.  Ignore the Java property list
-       except during initialization.
-       (1999-09-23) <br>
-
-  <li> <b>Hole</b> Use <code>Site</code> to simplify Pia. <br>
-       <em>All</em> of the metadata on Pia should be obtained from the
-       configuration.  Maybe Pia should simply extend Site.  If not, at least
-       it should get its metadata (port, etc.) from the Site.  There does need
-       to be a PIA <em>namespace</em>, but it, too, should be site metadata.
-       (1999-09-10) <br>
-
   <li> <b>Bug</b> need global flag that suppresses agent initialization <br>
        Need to separate the &lt;AGENT&gt; tag's action from the actual
        initialization -- at the very least the whole directory has to be
@@ -172,16 +155,6 @@ See also:
        page.
        (1998-11-16) <br>
 
-  <li> <b>Hole</b> Namespaces needed: PIA, ENV, LOG, AGENTS <br>
-       PIA: PiaProperties; basically everything on the Pia class.
-       ENV: the environment (Java system props)
-       LOG: User messages.  names include "debug", "message", "verbose", ...
-       AGENTS: Resolver's agent table.  Initialize an agent with
-       <code>&lt;set name=AGENTS:foo&gt;options&lt;/&gt;</code>.
-       Need version info in PIA namespace.
-       (1998-11-02)<br>
-       -- PIA (1999-03), AGENTS (1999-04-27)
-       
   <li> <b>Hole</b> Interface Cleanup <br>
        Make most attributes conform to get/set convention instead of the
        legacy perl convention.  Remove most convenience methods,
@@ -221,7 +194,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.32 1999-12-14 19:16:37 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.33 1999-12-16 21:28:41 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
