@@ -1,5 +1,5 @@
 ////// elseHandler.java: Node Handler generic implementation
-//	$Id: elseHandler.java,v 1.6 1999-06-04 22:39:47 steve Exp $
+//	$Id: elseHandler.java,v 1.7 1999-06-25 00:41:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: elseHandler.java,v 1.6 1999-06-04 22:39:47 steve Exp $
+ * @version $Id: elseHandler.java,v 1.7 1999-06-25 00:41:29 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -53,7 +53,7 @@ public class elseHandler extends GenericHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.COPY_NODE;
   }
 

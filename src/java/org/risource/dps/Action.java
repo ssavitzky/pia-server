@@ -1,5 +1,5 @@
 ////// Action.java: Active Node action handler interface
-//	$Id: Action.java,v 1.5 1999-04-07 23:20:45 steve Exp $
+//	$Id: Action.java,v 1.6 1999-06-25 00:40:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import org.risource.dps.active.*;
  *	processing (including presenting) a Node.  <p>
  *
  *
- * @version $Id: Action.java,v 1.5 1999-04-07 23:20:45 steve Exp $
+ * @version $Id: Action.java,v 1.6 1999-06-25 00:40:51 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -58,10 +58,7 @@ public interface Action {
    *
    * @return integer ``action code'' indicating what additional action to take:
    */
-  public int actionCode(Input in, Processor p);
-
-  /** Action code: <code>actionCode</code> has completed the action. */
-  public static final int COMPLETED   = -1;
+  public int getActionCode();
 
   /** Action code: copy the node and its contents. */
   public static final int COPY_NODE   =  0;
@@ -71,10 +68,9 @@ public interface Action {
    */
   public static final int EXPAND_NODE =  1;
 
-  /** Action code: expand entities in the node's attributes; blindly copy
-   *	its content. 
+  /** Action code: call the node's Action handler. 
    */
-  public static final int EXPAND_ATTS =  2;
+  public static final int ACTIVE_NODE =  2;
 
   /** Action code: put the node on the output.  Its content has either 
    *	already been parsed, or (more likely) does not exist. 
@@ -87,7 +83,7 @@ public interface Action {
     "PUT_NODE", "PUT_VALUE" };
 
   /** Performs the action associated with the current Node in a given Context.
-   *	Calling this instead of calling <code>actionCode</code> should always
+   *	Calling this instead of calling <code>getActionCode</code> should always
    *	produce correct results. 
    */
   public void action(Input in, Context aContext, Output out);

@@ -1,5 +1,5 @@
 ////// finallyHandler.java: <finally> sub-element of <repeat>
-//	$Id: finallyHandler.java,v 1.1 1999-04-23 00:21:44 steve Exp $
+//	$Id: finallyHandler.java,v 1.2 1999-06-25 00:41:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,8 +43,8 @@ import java.util.Enumeration;
 class finallyHandler extends repeat_subHandler {
 
   /** Special case: does nothing except during cleanup. */
-  public int actionCode(Input in, Processor p) {
-    return Action.COMPLETED;
+  public int getActionCode() {
+    return Action.ACTIVE_NODE;
   }
   public void action(Input in, Context aContext, Output out) {
   }

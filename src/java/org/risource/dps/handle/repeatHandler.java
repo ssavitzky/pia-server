@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.8 1999-06-17 01:02:52 steve Exp $
+//	$Id: repeatHandler.java,v 1.9 1999-06-25 00:41:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.8 1999-06-17 01:02:52 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.9 1999-06-25 00:41:41 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -65,7 +65,7 @@ public class repeatHandler extends GenericHandler {
 
     if (iterationInit(content, process, repeatSubs) > 0) {
       while (process.run()) {
-	  src.toFirstNode();
+	  src.toFirst();
       }
       iterationFinish(process, repeatSubs);
     }
@@ -92,7 +92,7 @@ public class repeatHandler extends GenericHandler {
 		      ActiveEntity var, Input src) {
     var.setValueNodes(p, new TreeNodeList(n));
     p.run();
-    src.toFirstNode();
+    src.toFirst();
   }
 
   /** Scan the content and tell each sub-element to set itself up.

@@ -1,5 +1,5 @@
 ////// FromEnumeration.java: Input from NodeList
-//	$Id: FromEnumeration.java,v 1.1 1999-04-07 23:21:32 steve Exp $
+//	$Id: FromEnumeration.java,v 1.2 1999-06-25 00:41:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
 /**
  * Input from an enumeration of ActiveNodes.<p>
  *
- * @version $Id: FromEnumeration.java,v 1.1 1999-04-07 23:21:32 steve Exp $
+ * @version $Id: FromEnumeration.java,v 1.2 1999-06-25 00:41:51 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -55,22 +55,22 @@ public class FromEnumeration extends ActiveInput implements Input {
   ** Overridden Methods:
   ************************************************************************/
 
-  public Node toNextSibling() {
-    if (depth > 0) return super.toNextSibling();
-    if (enum == null) return null;
-    if (!enum.hasMoreElements()) { enum = null; active = null; return null; }
+  public boolean toNext() {
+    if (depth > 0) return super.toNext();
+    if (enum == null) return false;
+    if (!enum.hasMoreElements()) { enum = null; active = null; return false; }
     atFirst = (active == null);
     setNode((ActiveNode)enum.nextElement());
-    return active;
+    return active != null;
   }
 
   /************************************************************************
   ** Local Methods:
   ************************************************************************/
 
-  public Node toFirstNode() {
-    if (active == null) return toNextSibling();
-    else return atFirst? active : null;
+  public boolean toFirst() {
+    if (active == null) return (toNext());
+    else return atFirst && active != null;
   }
 
   /************************************************************************
@@ -78,6 +78,6 @@ public class FromEnumeration extends ActiveInput implements Input {
   ************************************************************************/
 
   public FromEnumeration(Enumeration e) {
-    toFirstNode();
+    toFirst();
   }
 }

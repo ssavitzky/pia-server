@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.14 1999-05-18 20:34:30 steve Exp $
+//	$Id: extractHandler.java,v 1.15 1999-06-25 00:41:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.14 1999-05-18 20:34:30 steve Exp $
+ * @version $Id: extractHandler.java,v 1.15 1999-06-25 00:41:32 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -72,10 +72,11 @@ public class extractHandler extends GenericHandler {
     ents.setBinding("list", extracted);
     Processor process = cxt.subProcess(in, collect, ents);
 
-    for (Node item = in.toFirstChild();
-	 item != null;
-	 item = in.toNextSibling()) {
+    if (! in.toFirstChild()) return;
+    do {
       if (terminateExtract) continue;
+      ActiveNode item = in.getActive();
+      if (item == null) break;
 
       switch (item.getNodeType()) {
       case Node.COMMENT_NODE:
@@ -108,7 +109,7 @@ public class extractHandler extends GenericHandler {
 	extracted.setValueNodes(currentSet);
 	collect.clearList();
       }
-    }
+    } while (in.toNext());
     in.toParent();
 
     putList(out, extracted.getValueNodes(cxt), sep);

@@ -1,5 +1,5 @@
 ////// IgnorableHandler.java: Ignorable Node Handler implementation
-//	$Id: IgnorableHandler.java,v 1.5 1999-06-04 22:39:44 steve Exp $
+//	$Id: IgnorableHandler.java,v 1.6 1999-06-25 00:41:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import org.risource.ds.Table;
  *	<p> The children, if any, are processed, but nothing is done with
  *	    the node itself.  
  *
- * @version $Id: IgnorableHandler.java,v 1.5 1999-06-04 22:39:44 steve Exp $
+ * @version $Id: IgnorableHandler.java,v 1.6 1999-06-25 00:41:21 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -69,9 +69,8 @@ public class IgnorableHandler extends AbstractHandler {
    *
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
-  public int actionCode(Input in, Processor p) {
-    action(in, p, p.getOutput());
-    return Action.COMPLETED;
+  public int getActionCode() {
+    return Action.ACTIVE_NODE;
   }
 
   /** Process the content, but do nothing with the node itself. */

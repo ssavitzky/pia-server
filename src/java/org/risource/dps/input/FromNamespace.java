@@ -1,5 +1,5 @@
 ////// FromNamespace.java: Input from NodeList
-//	$Id: FromNamespace.java,v 1.1 1999-04-23 00:21:59 steve Exp $
+//	$Id: FromNamespace.java,v 1.2 1999-06-25 00:41:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import java.util.NoSuchElementException;
  *	Namespace's list of item names (obtained by its <code>getNames</code>
  *	method.
  *
- * @version $Id: FromNamespace.java,v 1.1 1999-04-23 00:21:59 steve Exp $
+ * @version $Id: FromNamespace.java,v 1.2 1999-06-25 00:41:52 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -61,25 +61,25 @@ public class FromNamespace extends ActiveInput implements Input {
   ** Overridden Methods:
   ************************************************************************/
 
-  public Node toNextSibling() {
-    if (depth > 0) return super.toNextSibling();
-    if (names == null) return null;
-    if (!names.hasMoreElements()) { names = null; active = null; return null; }
+  public boolean toNext() {
+    if (depth > 0) return super.toNext();
+    if (names == null) return false;
+    if (!names.hasMoreElements()) { names = null; active = null; return false; }
     atFirst = (active == null);
     String name = names.nextElement().toString();
     setNode(namespace.getBinding(name));
-    return active;
+    return active != null;
   }
 
   /************************************************************************
   ** Local Methods:
   ************************************************************************/
 
-  public Node toFirstNode() {
+  public boolean toFirst() {
     names = namespace.getNames();
     atFirst = true;
     active = null;
-    return toNextSibling();
+    return toNext();
   }
 
   /************************************************************************
@@ -88,6 +88,6 @@ public class FromNamespace extends ActiveInput implements Input {
 
   public FromNamespace(Namespace ns) {
     namespace = ns;
-    toFirstNode();
+    toFirst();
   }
 }

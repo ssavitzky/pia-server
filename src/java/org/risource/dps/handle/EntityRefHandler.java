@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.3 1999-06-04 22:39:41 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.4 1999-06-25 00:41:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.3 1999-06-04 22:39:41 steve Exp $
+ * @version $Id: EntityRefHandler.java,v 1.4 1999-06-25 00:41:18 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -92,10 +92,9 @@ public class EntityRefHandler extends AbstractHandler {
    *
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     if (active) {
-      action(in, p, p.getOutput());
-      return Action.COMPLETED;
+      return Action.ACTIVE_NODE;
     } else return Action.PUT_NODE;
   }
 

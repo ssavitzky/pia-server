@@ -16,6 +16,9 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> nodeBuilder doesn't support all node types yet <br>
+       (1999-06-24) <br>
+       
   <li> <b>Bug</b> Bad end tag comment sometimes eaten. <br>
        Actually, if it's not quoted it seems to be replaced by a copy of the
        previous token. 
@@ -86,11 +89,6 @@ See also:
        needed for TopProcessor.subDocument and subDocumentEnd when the input
        is not a parser.
        (1999-05-19) <br>
-
-  <li> <b>Hole</b> Comment and string handling <br>
-       Need a way to get information (especially entity expansions) into
-       comments and CDATA sections.  
-       (1999-05-18) <br>
 
   <li> <b>Hole</b> XML Attribute handling <br>
        Almost everything currently done in the PIA using the Syntax interface
@@ -208,6 +206,7 @@ See also:
        extracting the DocumentType and document element nodes from the content
        and putting them in their proper places.
        (1999-04-07) <br>
+       -- CDATASection done 1999-06-24
 
   <li> <b>Hole</b> SAX and DOM input and output <br>
        FromSAX, FromDOM, ToSAX, ToDOM shims.  Note that FromDOM can be used to
@@ -275,19 +274,12 @@ See also:
 
 
   <li> <b>Bug</b>Connect<br>
-    When doing a "connect put" cannot specify src="/RHServer/persist.out"
-    from an agent.  It throws an exception.  src="persist.out" does not
-    throw an exception, but it does fail to write output to file.  The same
-    code run using process works fine.  "connect entity" requires 
-    "/RHServer/persist.out" when running from an agent.
-    (1999-01-26)
-
-  <li> <b>Hole</b> Constructing and editing elements. <br>
-       We want to be able to modify the attributes and content of an existing
-       element, or construct a new one out of pieces.  Probably by adding back
-       &lt;replace&gt; in &lt;select&gt;, and adding some new ones for value,
-       insertion, etc.
-       (1998-12-15) <br>
+       When doing a "connect put" cannot specify src="/RHServer/persist.out"
+       from an agent.  It throws an exception.  src="persist.out" does not
+       throw an exception, but it does fail to write output to file.  The same
+       code run using process works fine.  "connect entity" requires 
+       "/RHServer/persist.out" when running from an agent.
+       (1999-01-26) <br>
 
   <li> <b>Impr</b> passthrough action for elements. <br>
        Not at all clear how best to do this.  One possibility is lazy
@@ -575,7 +567,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.20 1999-06-17 01:02:48 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.21 1999-06-25 00:41:03 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

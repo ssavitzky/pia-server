@@ -1,5 +1,5 @@
 ////// elsfHandler.java: Node Handler generic implementation
-//	$Id: elsfHandler.java,v 1.5 1999-06-04 22:39:49 steve Exp $
+//	$Id: elsfHandler.java,v 1.6 1999-06-25 00:41:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: elsfHandler.java,v 1.5 1999-06-04 22:39:49 steve Exp $
+ * @version $Id: elsfHandler.java,v 1.6 1999-06-25 00:41:30 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -51,7 +51,7 @@ public class elsfHandler extends GenericHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.COPY_NODE;
   }
 

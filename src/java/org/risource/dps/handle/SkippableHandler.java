@@ -1,5 +1,5 @@
 ////// SkippableHandler.java: Skippable Node Handler implementation
-//	$Id: SkippableHandler.java,v 1.5 1999-06-04 22:39:45 steve Exp $
+//	$Id: SkippableHandler.java,v 1.6 1999-06-25 00:41:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import org.risource.ds.Table;
  *	No processing is done for the node or its children -- they 
  *	just disappear. <p>
  *
- * @version $Id: SkippableHandler.java,v 1.5 1999-06-04 22:39:45 steve Exp $
+ * @version $Id: SkippableHandler.java,v 1.6 1999-06-25 00:41:23 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -69,18 +69,17 @@ public class SkippableHandler extends AbstractHandler {
    *
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
-  public int actionCode(Input in, Processor p) {
-    action(in, p, p.getOutput());
-    return Action.COMPLETED;
+  public int getActionCode() {
+    return Action.ACTIVE_NODE;
   }
 
   /** Process the content, but do nothing with the node itself. */
   public void action(Input in, Context aContext, Output out) {
-    skipNode(null, in, out);
+    skipNode(in, out);
   }
 
-  static final void skipNode(Node n, Input in, Output out) {
-    if (n == null) n = in.getNode();
+  static final void skipNode(Input in, Output out) {
+    Node n = in.getNode();
     if (in.hasChildren() && ! n.hasChildNodes()) {
       skipChildren(in, out);
     }
@@ -89,9 +88,10 @@ public class SkippableHandler extends AbstractHandler {
   /** Copy the children of the input's current Node
    */
   static final void skipChildren(Input in, Output out) {
-    for (Node n = in.toFirstChild(); n != null; n = in.toNextSibling()) {
-      skipNode(n, in, out);
-    }
+    if (! in.toFirstChild()) return;
+    do {
+      skipNode(in, out);
+    } while (in.toNext());
     in.toParent();
   }
 

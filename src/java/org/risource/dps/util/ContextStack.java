@@ -1,5 +1,5 @@
 ////// ContextStack.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.7 1999-04-23 00:22:35 steve Exp $
+//	$Id: ContextStack.java,v 1.8 1999-06-25 00:42:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.namespace.BasicEntityTable;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.7 1999-04-23 00:22:35 steve Exp $
+ * @version $Id: ContextStack.java,v 1.8 1999-06-25 00:42:14 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -156,7 +156,10 @@ public class ContextStack  implements Context {
       if (entities == null && (local || nameContext == null))
 	entities = new BasicEntityTable();
       Tagset ts = this.getTopContext().getTagset();
-      getNamespace(null).setBinding(name, ts.createActiveEntity(name, value));
+      // We can't just create a binding because the namespace might be 
+      // a specialized subclass, e.g. TreeAttrList.
+      //getNamespace(null).setBinding(name, ts.createActiveEntity(name, value));
+      getNamespace(null).setValueNodes(this, name, value);
     } 
   }
 

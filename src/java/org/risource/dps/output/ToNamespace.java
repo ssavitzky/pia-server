@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Namespace.<p>
  *
- * @version $Id: ToNamespace.java,v 1.2 1999-06-04 22:40:13 steve Exp $
+ * @version $Id: ToNamespace.java,v 1.3 1999-06-25 00:42:01 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  */
@@ -116,14 +116,15 @@ public class ToNamespace extends ActiveOutput implements Output {
     setNode(aNode);
   }
 
-  public Node toParent() {
+  public boolean toParent() {
+    if (depth == 0) return false;
     if (depth != 1) return super.toParent();
     Node aNode = getNode();
     setNode((Node)null);
     depth--;
     if (depth == 0) appendNode(aNode, active);
     atFirst = false;
-    return active;
+    return active != null;
   }
 
   protected void appendNode(Node aNode, Node aParent) {

@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.6 1999-06-04 22:39:36 steve Exp $
+//	$Id: BasicHandler.java,v 1.7 1999-06-25 00:41:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.6 1999-06-04 22:39:36 steve Exp $
+ * @version $Id: BasicHandler.java,v 1.7 1999-06-25 00:41:13 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -61,10 +61,9 @@ public class BasicHandler extends AbstractHandler {
   /** Blythely assume that any active entities have EntityHandler as their
    *	handler. 
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     // There is no need to check for entities here; they use EntityHandler
-    return (in.hasActiveChildren() || in.hasActiveAttributes())
-      ? Action.EXPAND_NODE: Action.COPY_NODE;
+    return Action.EXPAND_NODE;
   }
 
   /** This sort of action has no choice but to do the whole job.

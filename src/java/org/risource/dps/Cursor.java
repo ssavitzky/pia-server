@@ -1,5 +1,5 @@
 ////// Cursor.java: Shared interface for a ``current node''
-//	$Id: Cursor.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+//	$Id: Cursor.java,v 1.5 1999-06-25 00:40:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.active.*;
  *	trees) run-time type checking.  This makes the most common operations
  *	in the DPS significantly more efficient. <p>
  *
- * @version $Id: Cursor.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+ * @version $Id: Cursor.java,v 1.5 1999-06-25 00:40:52 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Input
@@ -96,23 +96,13 @@ public interface Cursor {
   public String getTagName();
 
   /** Returns <code>true</code> if and only if <code>toParent</code> will
-   *	return <code>null</code>. <p>
+   *	return <code>false</code>. <p>
    *
    *	Note that <code>atTop</code> may be <code>true</code> even if the
    *	current node actually has a parent, if the Input is iterating over
    *	a subtree or fragment of a document. <p>
    */
   public boolean atTop();
-
-  /************************************************************************
-  ** Navigation:
-  ************************************************************************/
-
-  /** Returns the parent of the current Node.
-   * @return <code>null</code> if it is not possible to return to the 
-   *	parent of the current Node.
-   */
-  public Node toParent();
 
   /************************************************************************
   ** Nesting:
@@ -136,15 +126,5 @@ public interface Cursor {
    *	Element, or if the level does not exist.
    */
   public String getTagName(int level);
- 
-  /** Return the Node at the given level.
-   *
-   *	Note that the Node's children are not guaranteed to be valid;
-   *	the node might be under construction or its children might be
-   *	being dynamically enumerated. 
-   *
-   * @return <code>null</code> if the level does not exist.
-   */
-  public Node getNode(int level);
  
 }

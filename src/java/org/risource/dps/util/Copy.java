@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.7 1999-06-17 01:03:20 steve Exp $
+//	$Id: Copy.java,v 1.8 1999-06-25 00:42:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.*;
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.7 1999-06-17 01:03:20 steve Exp $
+ * @version $Id: Copy.java,v 1.8 1999-06-25 00:42:15 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
@@ -54,6 +54,7 @@ public class Copy {
    */
   public static final void copyNode(Node n, Input in, Output out) {
     if (n == null) n = in.getNode();
+    if (n == null) return;
     if (in.hasChildren() && ! n.hasChildNodes()) {
       // Copy recursively only if the node hasn't been fully parsed yet.
       out.startNode(n);
@@ -70,19 +71,14 @@ public class Copy {
    * === of depth.  Note that we're using the Input's stack for state.
    */
   public static final void copyChildren(Input in, Output out) {
-    Node n = in.toFirstChild();
-    if (n == null) return;
-    for (; n != null; n = in.toNextSibling()) {
-      copyNode(n, in, out);
-    }
+    if (!in.toFirstChild()) return;
+    copyNodes(in, out);
     in.toParent();
   }
 
   /** Copy nodes from an Input to an Output. */
   public static final void copyNodes(Input in, Output out) {
-    for (Node n = in.getNode(); n != null; n = in.toNextSibling()) {
-      copyNode(n, in, out);
-    }
+    do { copyNode(null, in, out); } while (in.toNext());
   }
 
   /** Copy the content of a NodeList to an Output.

@@ -1,5 +1,5 @@
 ////// actionHandler.java: <action> Handler implementation
-//	$Id: actionHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
+//	$Id: actionHandler.java,v 1.5 1999-06-25 00:41:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: actionHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
+ * @version $Id: actionHandler.java,v 1.5 1999-06-25 00:41:27 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -49,7 +49,7 @@ public class actionHandler extends GenericHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.COPY_NODE;
   }
 

@@ -1,5 +1,5 @@
 ////// ToAttributeList.java: Output to attribute list
-//	$Id: ToAttributeList.java,v 1.5 1999-06-04 22:40:09 steve Exp $
+//	$Id: ToAttributeList.java,v 1.6 1999-06-25 00:41:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.tree.TreeAttrList;
 /**
  * Output to an AttributeList.<p>
  *
- * @version $Id: ToAttributeList.java,v 1.5 1999-06-04 22:40:09 steve Exp $
+ * @version $Id: ToAttributeList.java,v 1.6 1999-06-25 00:41:59 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveAttrList
  * @see org.risource.dps.Input
@@ -85,12 +85,13 @@ public class ToAttributeList extends ActiveOutput implements Output {
     setNode(aNode);
   }
 
-  public Node toParent() {
+  public boolean toParent() {
+    if (depth == 0) return false;
     if (depth != 1) return super.toParent();
     setNode((Node)null);
     depth--;
     atFirst = false;
-    return active;
+    return active != null;
   }
 
   /************************************************************************

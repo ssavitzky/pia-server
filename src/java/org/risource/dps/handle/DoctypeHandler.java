@@ -1,5 +1,5 @@
 ////// DoctypeHandler.java: Doctype Node Handler implementation
-//	$Id: DoctypeHandler.java,v 1.2 1999-06-04 22:39:39 steve Exp $
+//	$Id: DoctypeHandler.java,v 1.3 1999-06-25 00:41:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: DoctypeHandler.java,v 1.2 1999-06-04 22:39:39 steve Exp $
+ * @version $Id: DoctypeHandler.java,v 1.3 1999-06-25 00:41:15 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -74,7 +74,7 @@ public class DoctypeHandler extends AbstractHandler {
   /** Since we know what has to be done, it's cheaper to actually perform 
    *	the expansion if the entity is active. 
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.PUT_NODE;
   }
 

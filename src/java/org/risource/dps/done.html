@@ -866,7 +866,7 @@ If 4th node is there, returns "four".
 	  child of the current node.  There was ``excess cleverness'' to
 	  prevent a child from being added more than once. 
 
-  <li> <b>Bug</b> Unmatched end tag causes havoc in nodelists. <br>
+  <li> 1999-06-16 <b>Bug</b> Unmatched end tag causes havoc in nodelists. <br>
        The previous node is repeatedly inserted, probably because the end tag
        isn't getting gobbled.  Happens on copy, not process; the bad end tag
        comment is repeated when quoted.  Another depth=2 effect.
@@ -874,11 +874,35 @@ If 4th node is there, returns "four".
        -- The problem was the test for an already-present sibling in
 	  AbstractParser.toNextSibling.
        
+  <li> 1999-06-22 <b>Impr</b> Interface cleanup on Action <br>
+       Remove parameters from actionCode, rename to getActionCode.  Replace
+       COMPLETED with ACTIVE_NODE.
+       (1999-06-22) <br>
+
+  <li> 1999-06-22 <b>Impr</b> Interface cleanup on Cursor <br>
+       remove getNode(level) -- unused.  Make to* methods return boolean.
+       (1999-06-22) <br>
+
+  <li> 1999-06-23 <b>Hole</b> Constructing and editing elements. <br>
+       We want to be able to modify the attributes and content of an existing
+       element, or construct a new one out of pieces.  Probably by adding back
+       &lt;replace&gt; in &lt;select&gt;, and adding some new ones for value,
+       insertion, etc.
+       (1998-12-15) <br>
+
+  <li> 1999-06-24 <b>Hole</b> No implementation for CDATASection. <br>
+       (1999-06-24) <br>
+
+  <li> 1999-06-24 <b>Hole</b> Comment and string handling <br>
+       Need a way to get information (especially entity expansions) into
+       comments and CDATA sections.  
+       (1999-05-18) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.18 1999-06-17 01:02:44 steve Exp $</b><br>
+<b>$Id: done.html,v 1.19 1999-06-25 00:40:58 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
 ////// Input.java: Depth-first enumerator for parse trees
-//	$Id: Input.java,v 1.4 1999-04-07 23:20:47 steve Exp $
+//	$Id: Input.java,v 1.5 1999-06-25 00:40:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import org.w3c.dom.Node;
  *	have to ``look ahead'' to ensure that <code>hasMoreElements</code>
  *	can return an accurate result. <p>
  *
- * @version $Id: Input.java,v 1.4 1999-04-07 23:20:47 steve Exp $
+ * @version $Id: Input.java,v 1.5 1999-06-25 00:40:54 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Processor
@@ -65,53 +65,50 @@ public interface Input extends Cursor {
   ** Navigation Operations:
   ************************************************************************/
 
-  /** Returns to the node from this source and makes it current.  
+  /** Returns to the first node from this source and makes it current.  
    *	May ascend levels if necessary. <p>
    *
-   * @return  <code>null</code> if no nodes were ever
+   * @return  <code>false</code> if no nodes were ever
    *	available from this source, or if the source cannot be reset. 
    */
-  public Node toFirstNode();
-
-
-  /** Returns the next node from this source and makes it current.  
-   *	 <p>
-   *
-   * @return  <code>null</code> if and only if no more nodes are
-   *	available from this source. 
-   */
-  public Node toNextNode();
+  public boolean toFirst();
 
   /** Returns the next sibling of the current node and makes it current.  
    *	May require traversing all of the (old) current node if its
    *	children have not yet been seen. <p>
    *
-   * @return  <code>null</code> if and only if no more nodes are
+   * @return  <code>false</code> if and only if no more nodes are
    *	available at this level. 
    */
-  public Node toNextSibling();
+  public boolean toNext();
 
-  /** Returns the parent of the current Node.
-   *	After calling <code>toParent</code>, <code>toNextNode</code> will
-   *	return the parent's next sibling.
+  /** Moves the Input to the parent of the current Node.
+   *	After calling <code>toParent</code>, <code>toNext</code> will
+   *	move to the parent's next sibling.
+   *
+   * @return <code>false</code> if the current Node has no parent, or if 
+   *	<code>depth&nbsp;==&nbsp;0</code>.
    */
-  public Node toParent();
+  public boolean toParent();
 
-  /** Returns the first child of the current Node. 
-   *	A subsequent call on <code>toNextNode</code> will return the 
+  /** Moves the Cursor to the first child of the current Node. 
+   *	A subsequent call on <code>toNext</code> will move the Cursor to the 
    *	second child, if any.
+   *
+   * @return <code>false</code> if and only if the current Node has no 
+   *	children. 
    */
-  public Node toFirstChild();
+  public boolean toFirstChild();
 
   /** Returns <code>true</code> if and only if the current node has no
    *	previous siblings.  This occurs only with a node returned by
-   *	<code>toFirstChild</code>.
+   *	<code>toFirstChild</code> or <code>toFirst</code>.
    */
   public boolean atFirst();
 
   /** Returns <code>true</code> if and only if the current node has no next
-   *	sibling.  A subsequent call on <code>toNextNode</code> will return
-   *	<code>null</code>
+   *	sibling.  A subsequent call on <code>toNext</code> will return
+   *	<code>false</code>
    */
   public boolean atLast();
 

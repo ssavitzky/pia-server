@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.7 1999-06-17 01:03:01 steve Exp $
+//	$Id: AbstractParser.java,v 1.8 1999-06-25 00:42:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.7 1999-06-17 01:03:01 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.8 1999-06-25 00:42:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -415,7 +415,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** Perform syntax checking for an end tag. 
    *	The normal action for an end tag is to set the atLast flag,
-   *	causing the next call on <code>toNextSibling</code> to return null.
+   *	causing the next call on <code>toNext</code> to return false.
    *
    * @return <dl compact> 
    *		<dt>-1<dd> if it is unmatched (and should be ignored), 
@@ -569,7 +569,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 	setNode(n);
 	if (retainTree) {
 	  if (depth > 0) {
-	    Node parent = getNode(depth-1);
+	    Node parent = getNode().getParentNode();
 	    if (parent != null) Copy.appendNode(n, parent);
 	  } else {
 	    if (document != null) Copy.appendNode(n, document);
@@ -602,7 +602,9 @@ public abstract class AbstractParser extends CursorStack implements Parser
     }
   }
 
-  /** toNextSibling does not test for real siblings; we <em>must</em>
+  public boolean toParent() { return super.toParent(); }
+
+  /** toNext does not test for real siblings; we <em>must</em>
    *	be making a single left-to-right traversal of the file being parsed.
    *
    *<p> We used to check for the presence of an actual sibling.
@@ -611,45 +613,28 @@ public abstract class AbstractParser extends CursorStack implements Parser
    *	generated from one token.  This had better not happen; if it does
    *	we will have to add some kind of pushback mechanism to nextToken.
    */
-  public Node toNextSibling() {
+  public boolean toNext() {
     // Check for, and consume, any unparsed children.
     if (hasUnparsedChildren() && !sawChildren) {
-      Node c = toFirstChild();
-      if (c != null) {
-	for (; c != null; c = toNextSibling()) {}
+      if (toFirstChild()) {
+	for ( ; toNext(); ) {}
 	toParent();
       }
     }
-    return advanceParser();
+    return advanceParser() != null;
   }
 
-  public Node toFirstChild() {
+  public boolean toFirstChild() {
     pushInPlace();
-    if (false && node.hasChildNodes()) { // === this is almost certainly bad
-      setNode(node.getFirstChild());
-      return node;
-    } 
     Node n = advanceParser();
     if (n == null) { popInPlace(); }
-    return n;
+    return n != null;
   }
 
-  public Node toNextNode() {
-    // Actually need a bit to say whether we should start the children.
-    Node n = toNextSibling();
-    if (n == null) {
-      if (toParent() == null) return null;
-      return toNextSibling();
-    } else {
-      return n;
-    }
+  public boolean toFirst() {
+    if (active == null && atFirst()) return toNext();
+    else return false;
   }
-
-  public Node toFirstNode() {
-    return (active==null && atFirst()) ? toNextNode()
-      :    (atFirst()) ? active : null;
-  }
-
 
   public boolean atLast() {
     return atLast;

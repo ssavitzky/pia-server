@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.8 1999-06-04 22:39:42 steve Exp $
+//	$Id: GenericHandler.java,v 1.9 1999-06-25 00:41:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.8 1999-06-04 22:39:42 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.9 1999-06-25 00:41:19 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -128,9 +128,8 @@ public class GenericHandler extends BasicHandler {
   /** We're assuming that this is an <em>active</em> node, so call
    *	the three-argument <code>action</code> routine to do the work.
    */
-  public int actionCode(Input in, Processor p) {
-    action(in, p, p.getOutput());
-    return Action.COMPLETED;
+  public int getActionCode() {
+    return Action.ACTIVE_NODE;
   }
 
   /** The default action for active elements is to obtain the expanded

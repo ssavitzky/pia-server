@@ -1,5 +1,5 @@
 ////// hideHandler.java: <hide> Handler implementation
-//	$Id: hideHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
+//	$Id: hideHandler.java,v 1.6 1999-06-25 00:41:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.output.*;
  *
  *	
  *
- * @version $Id: hideHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
+ * @version $Id: hideHandler.java,v 1.6 1999-06-25 00:41:40 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -45,14 +45,6 @@ public class hideHandler extends GenericHandler {
   /************************************************************************
   ** Semantic Operations:
   ************************************************************************/
-
-  /** We're assuming that this is an <em>active</em> node, so call
-   *	the three-input <code>action</code> routine to do the work.
-   */
-  public int actionCode(Input in, Processor p) {
-    action(in, p, p.getOutput());
-    return Action.COMPLETED;
-  }
 
   /** This routine does the work, such as it is.  */
   public void action(Input in, Context aContext, Output out) {

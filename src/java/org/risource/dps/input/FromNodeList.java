@@ -1,5 +1,5 @@
 ////// FromNodeList.java: Input from NodeList
-//	$Id: FromNodeList.java,v 1.2 1999-06-17 01:02:56 steve Exp $
+//	$Id: FromNodeList.java,v 1.3 1999-06-25 00:41:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Input from a NodeList containing Active nodes.<p>
  *
- * @version $Id: FromNodeList.java,v 1.2 1999-06-17 01:02:56 steve Exp $
+ * @version $Id: FromNodeList.java,v 1.3 1999-06-25 00:41:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -57,27 +57,27 @@ public class FromNodeList extends ActiveInput implements Input {
   ** Overridden Methods:
   ************************************************************************/
 
-  public Node toNextSibling() {
-    if (depth > 0) return super.toNextSibling();
+  public boolean toNext() {
+    if (depth > 0) return super.toNext();
     setNode(list.item(++index));
     atFirst = false;
-    return active;
+    return active != null;
   }
 
   /************************************************************************
   ** Local Methods:
   ************************************************************************/
 
-  public Node toFirstNode() {
+  public boolean toFirst() {
     atFirst = true;
     index = 0;
     setNode(list.item(index));
-    return active;
+    return active != null;
   }
 
   public void setList(NodeList nl) {
     list = nl;
-    toFirstNode();
+    toFirst();
   }
 
   /************************************************************************
@@ -87,6 +87,6 @@ public class FromNodeList extends ActiveInput implements Input {
   public FromNodeList(NodeList nodes) {
     list = nodes;
     if (list == null) list = new TreeNodeList();
-    toFirstNode();
+    toFirst();
   }
 }

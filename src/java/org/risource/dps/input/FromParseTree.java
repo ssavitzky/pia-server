@@ -1,5 +1,5 @@
 ////// FromParseTree.java: Input from ParseTree
-//	$Id: FromParseTree.java,v 1.5 1999-06-04 22:39:56 steve Exp $
+//	$Id: FromParseTree.java,v 1.6 1999-06-25 00:41:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ import org.risource.dps.active.*;
 /**
  * Input from a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: FromParseTree.java,v 1.5 1999-06-04 22:39:56 steve Exp $
+ * @version $Id: FromParseTree.java,v 1.6 1999-06-25 00:41:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -52,13 +52,13 @@ public class FromParseTree extends ActiveInput implements Input {
   public ActiveNode getRoot() { return root; }
   public void setRoot(ActiveNode newRoot) { root = newRoot; setNode(newRoot); }
 
-  public org.w3c.dom.Node toFirstNode() {
+  public boolean toFirst() {
     while (!atTop()) toParent();
     if (active != root) {
       setNode(root.getFirstChild());
     }
     atFirst = true;
-    return active;
+    return active != null;
   }
 
 

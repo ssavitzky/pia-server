@@ -1,5 +1,5 @@
 ////// CursorStack.java: A linked-list stack of current nodes.
-//	$Id: CursorStack.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+//	$Id: CursorStack.java,v 1.5 1999-06-25 00:42:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.active.*;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: CursorStack.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+ * @version $Id: CursorStack.java,v 1.5 1999-06-25 00:42:18 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -253,7 +253,7 @@ public class CursorStack implements Cursor {
     else return stack.getTagName(level);
   }
 
-  public Node getNode(int level) {
+  protected Node getNode(int level) {
     if (level > depth) return null;
     else if (level == depth) return node;
     else if (stack == null) return null;
@@ -274,17 +274,17 @@ public class CursorStack implements Cursor {
   ** Navigation Operations:
   ************************************************************************/
 
-  /** Returns the parent of the current Node.
-   *	After calling <code>toParent</code>, <code>toNextNode</code> will
-   *	return the parent's next sibling.
+  /** Moves to the parent of the current Node.
+   *	After calling <code>toParent</code>, <code>toNext</code> will
+   *	move the Cursor to the parent's next sibling.
    */
-  public Node toParent() {
-    if (atTop()) return null;
+  protected boolean toParent() {
+    if (atTop()) return false;
     popInPlace();
     atFirst = false;
     atLast = false;
     sawChildren = true;
-    return node;
+    return node != null;
   }
 
 }

@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	$Id: CurrentActive.java,v 1.5 1999-06-17 01:03:21 steve Exp $
+//	$Id: CurrentActive.java,v 1.6 1999-06-25 00:42:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version $Id: CurrentActive.java,v 1.5 1999-06-17 01:03:21 steve Exp $
+ * @version $Id: CurrentActive.java,v 1.6 1999-06-25 00:42:17 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -184,7 +184,7 @@ public class CurrentActive implements Cursor {
       ? null : n.getNodeName();
   }
 
-  public Node getNode(int level) {
+  protected Node getNode(int level) {
     if (level > depth || level < 0) return null;
     ActiveNode n = active;
     int d = depth;
@@ -211,57 +211,42 @@ public class CurrentActive implements Cursor {
   ************************************************************************/
 
   /** Returns the parent of the current Node.
-   *	After calling <code>toParent</code>, <code>toNextNode</code> will
-   *	return the parent's next sibling.
+   *	After calling <code>toParent</code>, <code>toNext</code> will
+   *	move the Cursor to the parent's next sibling.
    */
-  public Node toParent() {
-    if (atTop()) return null;
+  protected boolean toParent() {
+    if (atTop()) return false;
     ActiveNode p = active.getActiveParent();
-    if (p == null) return null;
+    if (p == null) return false;
     setNode(p);
     depth--;
     atFirst = false;
-    return active;
+    return true;
   }
 
   /************************************************************************
   ** Input Operations:
   ************************************************************************/
 
-  protected Node toFirstNode() {
+  protected boolean toFirst() {
     while (!atTop()) toParent();
     atFirst = true;
-    return active;
+    return active != null;
   }
 
   /** Returns the first child of the current Node. 
-   *	A subsequent call on <code>toNextNode</code> will return the 
+   *	A subsequent call on <code>toNext</code> will move the cursor to the 
    *	second child, if any.
    *
    *	Must be overridden if the tree is being built on the fly.
    */
-  protected Node toFirstChild() {
+  protected boolean toFirstChild() {
     Node n = active.getFirstActive();
-    if (n == null) return null;
+    if (n == null) return false;
     descend();
     setNode(n);
     atFirst = true;
-    return active;
-  }
-
-  /** Returns the next node from this source and makes it current.  
-   *	May descend or ascend levels.  This can be detected by tracking
-   *	the depth with <code>getDepth()</code>. <p>
-   *
-   * @return  <code>null</code> if and only if no more nodes are
-   *	available from this source. 
-   */
-  public Node toNextNode() {
-    Node n = active.getNextActive(); // toNextNode bogus at this point ===
-    if (n == null) return null;
-    setNode(n);
-    atFirst = false;
-    return active;
+    return true;
   }
 
   /** Returns the next node at this level and makes it current.  
@@ -271,12 +256,12 @@ public class CurrentActive implements Cursor {
    * @return  <code>null</code> if and only if no more nodes are
    *	available at this level. 
    */
-  protected Node toNextSibling() {
+  protected boolean toNext() {
     Node n = active.getNextActive();
-    if (n == null) return null;
+    if (n == null) return false;
     setNode(n);
     atFirst = false;
-    return active;
+    return active != null;
   }
 
 
@@ -354,7 +339,7 @@ public class CurrentActive implements Cursor {
    * @return <code>false</code> if the current Node has no parent.
    */
   protected boolean endNode() {
-    return toParent() != null;
+    return toParent();
   }
 
   /** Adds <code>anElement</code> to the document under construction,
@@ -375,7 +360,7 @@ public class CurrentActive implements Cursor {
    */
   public boolean endElement(boolean optional) {
     // === set optional end-tag flag if the element has one. ===
-    return toParent() != null;
+    return toParent();
   }
 
   /** Perform any necessary actions before descending a level. 

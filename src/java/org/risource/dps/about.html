@@ -93,7 +93,7 @@ The fundamental implementation is to <em>traverse</em> an active document
 <ul>
   <li> It may be unidirectional, implementing only the navigation operations
        <ul>
-	 <li> <code>toNextSibling</code>
+	 <li> <code>toNext</code>
 	 <li> <code>toParent</code>
 	 <li> <code>toFirstChild</code>
        </ul>
@@ -158,7 +158,7 @@ The basic main loop, without evaluation, is:
 	 <dt> no:
 	 <dd> output.putNode
        </dl>
-  <li> input.toNextSibling <em>(get a new node)</em>
+  <li> input.toNext <em>(advance to a new node)</em>
   <li> repeat until no more siblings
 </ol>
 
@@ -193,7 +193,7 @@ active nodes are present:
 		     </dl>
 	      </ol>
        </dl>
-  <li> node = input.toNextSibling <em>(get a new node)</em>
+  <li> input.toNext(); node = input.getNode(); <em>(get a new node)</em>
   <li> if (n != null) process(input, context, output)
 </ol>
 
@@ -343,7 +343,7 @@ operating in ``push mode''.
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.4 1999-03-23 23:31:40 steve Exp $</b><br>
+<b>$Id: about.html,v 1.5 1999-06-25 00:40:56 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

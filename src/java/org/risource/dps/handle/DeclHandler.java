@@ -1,5 +1,5 @@
 ////// DeclHandler.java: Declaration Node Handler implementation
-//	$Id: DeclHandler.java,v 1.2 1999-06-04 22:39:38 steve Exp $
+//	$Id: DeclHandler.java,v 1.3 1999-06-25 00:41:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: DeclHandler.java,v 1.2 1999-06-04 22:39:38 steve Exp $
+ * @version $Id: DeclHandler.java,v 1.3 1999-06-25 00:41:14 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -74,7 +74,7 @@ public class DeclHandler extends AbstractHandler {
   /** Since we know what has to be done, it's cheaper to actually perform 
    *	the expansion if the entity is active. 
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.PUT_NODE;
   }
 

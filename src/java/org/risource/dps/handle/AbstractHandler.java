@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.7 1999-06-04 22:39:34 steve Exp $
+//	$Id: AbstractHandler.java,v 1.8 1999-06-25 00:41:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,7 @@ import org.risource.dps.util.*;
 import org.risource.dps.tree.TreeGeneric;
 import org.risource.dps.tree.TreeElement;
 import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeNodeArray;
 
 import java.util.Enumeration;
 
@@ -44,7 +45,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.7 1999-06-04 22:39:34 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.8 1999-06-25 00:41:10 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -62,10 +63,8 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
   /** The default action is to return the code that tells the Processor
    *	to process the node in the ``usual'' way.
    */
-  public int actionCode(Input in, Processor p) {
-    return (in.hasActiveChildren() || in.hasActiveAttributes()
-	    || in.getNode().getNodeType() == Node.ENTITY_REFERENCE_NODE)
-      ? Action.EXPAND_NODE: Action.COPY_NODE;
+  public int getActionCode() {
+    return Action.EXPAND_NODE;
   }
 
   /** This sort of action has no choice but to do the whole job.

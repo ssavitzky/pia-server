@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.9 1999-06-17 01:05:27 steve Exp $
+//	$Id: BasicProcessor.java,v 1.10 1999-06-25 00:42:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.tree.TreeElement;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.9 1999-06-17 01:05:27 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.10 1999-06-25 00:42:11 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -62,11 +62,9 @@ public class BasicProcessor extends ContextStack implements Processor {
 
   /** Copy nodes from the input to the output. */
   public void copy() {
-    Node n = input.getNode();
-    while (n != null) {
-      copyCurrentNode(n);
-      n = input.toNextSibling();
-    }
+    do {
+      copyCurrentNode(input.getNode());
+    } while (input.toNext());
   }
 
   /** Run the Processor, constructing a new (possibly virtual) tree via its
@@ -77,7 +75,7 @@ public class BasicProcessor extends ContextStack implements Processor {
     running = true;
     input.getNode();		// initialize the input if necessary
     processNode();
-    while (running && input.toNextSibling() != null) processNode();
+    while (running && input.toNext()) processNode();
     return running;
   }
 
@@ -85,8 +83,8 @@ public class BasicProcessor extends ContextStack implements Processor {
   public final void processNode() {
     Action handler = input.getAction();
     if (handler != null) {
-      additionalAction(handler.actionCode(input, this));
-      // MUST BE equivalent to: handler.action(input, this, output);
+      doAction(handler.getActionCode(), handler);
+      // Equivalent to calling handler.action(input, this, output)
     } else {
       //System.err.println("No handler! " + logNode(input.getActive()));
       expandCurrentNode();
@@ -96,25 +94,21 @@ public class BasicProcessor extends ContextStack implements Processor {
 
   /** Process the children of the current Node */
   public final boolean processChildren() {
-    Node node = input.toFirstChild();
-    if (node == null) return true;
-    for (;
-	 node != null && running;
-	 node = input.toNextSibling()) {
+    if (! input.toFirstChild()) return true;
+    do {
       processNode();
-    }
+    } while (running && input.toNext());
     input.toParent();
     return running;
   }
 
   /** Perform any additional action requested by the action routine. */
-  protected final void additionalAction(int flag) {
+  protected final void doAction(int flag, Action handler) {
     //debug("   -> " + Action.actionNames[flag+1] + " (" + flag + ")\n");
     switch (flag) {
     case Action.COPY_NODE: copyCurrentNode(input.getNode()); return;
-    case Action.COMPLETED: return;
+    case Action.ACTIVE_NODE: handler.action(input, this, output); return;
     case Action.EXPAND_NODE: expandCurrentNode(); return;
-    case Action.EXPAND_ATTS: expandCurrentAttrs(); return;
     case Action.PUT_NODE: putCurrentNode(); return;
     }
   }
@@ -170,15 +164,15 @@ public class BasicProcessor extends ContextStack implements Processor {
    *	This is done by recursively traversing its children.
    */
   protected final void copyCurrentNode(Node n) {
+    if (n == null) return;
     if (input.hasChildren() && ! n.hasChildNodes()) {
       // Copy recursively only if the node hasn't been fully parsed yet.
-      Node c = input.toFirstChild();
-      if (c == null) output.putNode(n);
+      if (!input.toFirstChild()) output.putNode(n);
       else {
 	output.startNode(n);
-	for ( ; c != null; c = input.toNextSibling()) {
-	  copyCurrentNode(c);
-	}
+	do {
+	  copyCurrentNode(input.getNode());
+	} while (input.toNext());
 	input.toParent();
 	output.endNode();
       }
@@ -198,13 +192,8 @@ public class BasicProcessor extends ContextStack implements Processor {
 
   /** Copy the children of the current Node */
   public final void copyChildren() {
-    Node node = input.toFirstChild();
-    if (node == null) return;
-    for (;
-	 node != null;
-	 node = input.toNextSibling()) {
-      copyCurrentNode(node);
-    }
+    if (! input.toFirstChild()) return;
+    do { copyCurrentNode(input.getNode()); } while (input.toNext());
     input.toParent();
   }
 

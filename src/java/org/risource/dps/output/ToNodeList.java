@@ -1,5 +1,5 @@
 ////// ToNodeList.java:  Output to node list
-//	$Id: ToNodeList.java,v 1.7 1999-06-17 01:02:59 steve Exp $
+//	$Id: ToNodeList.java,v 1.8 1999-06-25 00:42:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to an (active) NodeList.<p>
  *
- * @version $Id: ToNodeList.java,v 1.7 1999-06-17 01:02:59 steve Exp $
+ * @version $Id: ToNodeList.java,v 1.8 1999-06-25 00:42:02 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.NodeList
  */
@@ -80,12 +80,13 @@ public class ToNodeList extends ActiveOutput implements Output {
     startNode(shallowCopy(anElement));
   }
 
-  public Node toParent() {
+  public boolean toParent() {
+    if (depth == 0) return false;
     if (depth != 1) return super.toParent();
     setNode((Node)null);
     depth--;
     atFirst = false;
-    return active;
+    return active != null;
   }
 
   protected void appendNode(Node aNode, Node aParent) {

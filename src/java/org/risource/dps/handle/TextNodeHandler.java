@@ -1,5 +1,5 @@
 ////// TextNodeHandler.java: Text Node Handler implementation
-//	$Id: TextNodeHandler.java,v 1.6 1999-06-04 22:39:46 steve Exp $
+//	$Id: TextNodeHandler.java,v 1.7 1999-06-25 00:41:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: TextNodeHandler.java,v 1.6 1999-06-04 22:39:46 steve Exp $
+ * @version $Id: TextNodeHandler.java,v 1.7 1999-06-25 00:41:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -84,10 +84,9 @@ public class TextNodeHandler extends AbstractHandler {
    *
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     if (active) {
-      action(in, p, p.getOutput());
-      return Action.COMPLETED;
+      return Action.ACTIVE_NODE;
     } else return Action.PUT_NODE;
   }
 

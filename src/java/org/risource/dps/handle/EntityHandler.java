@@ -1,5 +1,5 @@
 ////// EntityHandler.java: Entity Node Handler implementation
-//	$Id: EntityHandler.java,v 1.7 1999-06-04 22:39:40 steve Exp $
+//	$Id: EntityHandler.java,v 1.8 1999-06-25 00:41:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityHandler.java,v 1.7 1999-06-04 22:39:40 steve Exp $
+ * @version $Id: EntityHandler.java,v 1.8 1999-06-25 00:41:16 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -92,10 +92,9 @@ public class EntityHandler extends AbstractHandler {
    *
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     if (active) {
-      action(in, p, p.getOutput());
-      return Action.COMPLETED;
+      return Action.ACTIVE_NODE;
     } else return Action.PUT_NODE;
   }
 

@@ -1,5 +1,5 @@
 ////// thenHandler.java: Node Handler generic implementation
-//	$Id: thenHandler.java,v 1.5 1999-06-04 22:39:52 steve Exp $
+//	$Id: thenHandler.java,v 1.6 1999-06-25 00:41:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: thenHandler.java,v 1.5 1999-06-04 22:39:52 steve Exp $
+ * @version $Id: thenHandler.java,v 1.6 1999-06-25 00:41:45 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -53,7 +53,7 @@ public class thenHandler extends GenericHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  public int actionCode(Input in, Processor p) {
+  public int getActionCode() {
     return Action.COPY_NODE;
   }
 
