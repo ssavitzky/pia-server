@@ -15,7 +15,8 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="&PIA:rootPath;Icon/logo100.png" height="100" width="111" alt=" " />
+  <th width="170"><img src="&PIA:rootPath;Icon/logo100.png" height="100"
+  			width="111" alt=" " /> 
   </th>
   <td valign="center">
     <table cellspacing="0" cellpadding="0" border="0" valign="center">
@@ -118,5 +119,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.21 2000-06-21 01:12:57 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.22 2000-07-25 22:20:13 steve Exp $" />
 </p></body></html>

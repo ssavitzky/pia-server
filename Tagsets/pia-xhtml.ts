@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.9 2000-06-17 14:10:39 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.10 2000-07-25 22:17:02 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -57,11 +57,12 @@ Note that we only need these inside the PIA.
 <h3>Graphics and pseudo-graphics</h3>
 
 <define entity="blank-170x1">
-  <value><img src="&PIA:rootPath;Icon/white170x1.png" width="170" height="1" alt=" "></value>
+  <value><img src="&PIA:rootPath;Icon/white170x1.png" width="170" height="1"
+  alt=" " /></value>
 </define>
 <define entity="blue-dot">
   <value><img src="&PIA:rootPath;Icon/dot-blue.png"
-		height="20" width="20" alt="*"></value>
+		height="20" width="20" alt="*" /></value>
 </define>
 
 <define entity="RiSource.org">
@@ -242,7 +243,8 @@ Note that we only need these inside the PIA.
 <action><hide>
     <if><get name="content"/>
 	<then><set name=title><get name="content"/></set></then></if>
-    <set name="agentNames"><text sort case><get name="agentNames"/></text></set>
+    <set name="agentNames">
+	<text sort case><get name="agentNames"/></text></set>
     <if><get name="ltitle" /><then> </then>
         <else><set name="ltitle"><do name="a">
 		<set name="href"><get name="locPath"/></set>
@@ -251,12 +253,13 @@ Note that we only need these inside the PIA.
 </hide>
 <table cellpadding=0 cellspacing=0>
 <tr><th><a href="&PIA:rootPath;"><img src="&PIA:rootPath;Icon/pia45.png"
-			 border=0 width=85 height=45 alt="P I A"></a></th>
+			 border=0 width=85 height=45 alt="P I A" /></a></th>
     <td valign=bottom>
       <table>
 	<tr><th valign=bottom align=left>
 	       &RiSource.org;'s Platform for Information Applications</th></tr>
-	<tr height=6><td><img src="&PIA:rootPath;Icon/rule.png" height=6 width=469></td></tr>
+	<tr height=6><td><img src="&PIA:rootPath;Icon/rule.png" height=6
+			      width=469 /></td></tr>
       </table>
     </td>
 </tr>
