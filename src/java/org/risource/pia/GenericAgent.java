@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.19 1999-05-06 20:43:37 steve Exp $
+// $Id: GenericAgent.java,v 1.20 1999-05-07 23:36:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -67,6 +67,8 @@ import org.risource.dps.tagset.Loader;
 import org.risource.dps.process.ActiveDoc;
 import org.risource.dps.active.*;
 import org.risource.dps.namespace.*;
+import org.risource.dps.output.DiscardOutput;
+import org.risource.dps.input.FromNodeList;
 
 import org.risource.util.NullOutputStream;
 import org.risource.util.NameUtils;
@@ -385,8 +387,8 @@ public class GenericAgent extends BasicNamespace
     initialized = true;
     ActiveNodeList initHook = getValueNodes(null, "initialize");
     if (initHook != null) {
-      proc.setInput(new org.risource.dps.input.FromNodeList(initHook));
-      proc.setOutput(new org.risource.dps.output.DiscardOutput());
+      proc.setInput(new FromNodeList(initHook));
+      proc.setOutput(new DiscardOutput());
       proc.run();
     }
 
@@ -422,7 +424,7 @@ public class GenericAgent extends BasicNamespace
 	ActiveDoc   proc = makeDPSProcessor(req, res);
 	org.risource.dps.Parser p = proc.getTagset().createParser();
 	p.setReader(new FileReader(fn));
-	proc.setOutput(new org.risource.dps.output.DiscardOutput());
+	proc.setOutput(new DiscardOutput());
 	proc.setInput(p);
 	proc.define("filePath", fn);
 	proc.run();
@@ -888,7 +890,7 @@ public class GenericAgent extends BasicNamespace
       return true;
     } else {
       Pia.debug(this, name()+".handleHook", "= ???: "+handleHook.toString());
-      return false;      // run DPS hook!
+      return false;
     }
   }
 
@@ -900,8 +902,8 @@ public class GenericAgent extends BasicNamespace
 			  Transaction trans, Resolver res ) {
     if (hook == null || hook.getLength() == 0) return;
     ActiveDoc proc = makeDPSProcessor(trans, res);
-    proc.setInput(new org.risource.dps.input.FromNodeList(hook));
-    proc.setOutput(new org.risource.dps.output.DiscardOutput());
+    proc.setInput(new FromNodeList(hook));
+    proc.setOutput(new DiscardOutput());
     proc.run();
   }
 
@@ -931,7 +933,7 @@ public class GenericAgent extends BasicNamespace
   public void respond(Transaction trans, Resolver res)
        throws PiaRuntimeException{
 
-    org.risource.pia.Pia.debug(this, "Running active doc...");
+    Pia.debug(this, "Running active doc...");
     if (! respondWithDocument( trans, res ) ){
       respondNotFound( trans, trans.requestURL().getFile() );
     }
@@ -1481,7 +1483,7 @@ public class GenericAgent extends BasicNamespace
     } else if (isDPSType(file)) {
       sendProcessedResponse(file, destFileName, request, res);
     } else {
-      org.risource.pia.FileAccess.retrieveFile(file, request, this);
+      FileAccess.retrieveFile(file, request, this);
     }
     return true;
     }
