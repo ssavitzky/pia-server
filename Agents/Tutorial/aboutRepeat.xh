@@ -7,7 +7,8 @@
          <td><form action="tutorial.xh" name="getDemo">
             <input type="hidden" name="demoName" value="editRepeat.xh"/>
             <td><input  type="submit" value="Back to Hello demo"  checked/>
-         </form></td>
+         </td>
+         </form>
          <td><a href='home.xh' target="_top">  Demo menu</a></td>
         </tr>
  </table>
@@ -19,15 +20,20 @@
     <name all="yes">body</name></extract></protect></pre>
     </code>
 
-
-    <p> The enclosing <code>&lt;repeat></code> tag iterates the value of its
-	loop variable (here <code>index</code>, but <code>n</code> is the
-	default) from a start through a stop value.  Whatever lies inside that
-	tag gets repeated.
+    <p> Inside the <code>&lt;table></code>  there is an active
+	<code>&lt;repeat></code> tag, which creates several rows in the
+	table. The <code>&lt;repeat></code> tag iterates the value of its loop
+	variable (here <code>index</code>, but <code>n</code> is the default)
+	from a start through a stop value.  Whatever lies inside that tag gets
+	repeated.... in this case, a row with  entries being  numbers and the
+	<code>Hello</code> text. </p>
 
     <p> The <code> &lt;get></code> tag substitutes the value of
         <code>index</code> for itself (in technical terms, it substitutes the
-        value of whatever entity is designated by its name attribute).
+        value of whatever entity is designated by its name attribute).  So
+        wherever the  <code> &lt;get name="index"></code> tag appears, it will
+        be replaced by the corresponding value (1,2,3 etc.) upon processing.
+         </p>
 
         <p>In this case, the <code>&lt;repeat></code> tag is used like a
         "for-loop," with a preset number of iterations and an entity
@@ -37,7 +43,7 @@
         iteration entity, named "li", is the list-item itself (instead of an
         integer).  For example, you can try clipping and processing the code
         below, which prints "I say" before each of three elements in a list of
-        hello's:
+        hello's: </p>
 
         <code><pre>
          &lt;repeat>
@@ -50,7 +56,7 @@
 
      <p> The <code>&lt;show-errors></code> tag at the bottom is there to help
 	 you catch (some of) the errors you may make in modifying the code; it
-	 has no other effects. 
+	 has no other effects.  </p>
 </body>
 </html>  
 

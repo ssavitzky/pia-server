@@ -1,0 +1,61 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Javascript-wrapper demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+        <td>   <form action="javascript.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editJavascript.xh"/>
+            <td><input  type="submit" value="Try Javascript-wrapper demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+
+    <h2> <a name="intro">The Javascript Wrapper Demo</a></h2>
+
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="javascript.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> A simple but useful appliction of custom-defined tags is to "wrap"
+	ungainly bits of HTML or Javascript into conveniently small packages.
+	The first tag above, <code>&lt;widgetJavascript></code>, is defined
+	(elsewhere) to expand into the following Javascript code: </p>
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="Tutorial-xhtml.ts" quoted="yes"/></from>
+    <name all="yes">SCRIPT</name></extract></protect></pre>
+    </code>
+
+    <p> The other tag above, <code>&lt;widgetForm></code>, expands into the
+	following simple HTML form: </p>
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="Tutorial-xhtml.ts" quoted="yes"/></from>
+    <name all="yes">widgetForm</name>
+
+
+    </extract></protect></pre>
+    </code>
+
+     <p> <h3> Stuff to try </h3>
+
+Not much.
+    <p> You can change the size or type of the form's fields, add more fields,
+	and add multiple if/then clauses to the processing depending on the
+	input data.  You can even add fancier processing, such as printing out
+	the sum or product of various numbers submitted as input (see the <a
+	href="aboutFactorial.xh">factorial demo</a> for numeric processing),
+	or sorting a list of submitted names (see the <a
+	href="aboutSort2.xh">sort demo</a> for sorting).
+
+        But if you try changing "instantiate.xh" all bets are off.
+
+
+</body>
+</html>  
+

@@ -3,10 +3,13 @@
 <head> <title> </title> </head>
 <body><!-- Prints "Hello" three times, with index at left. -->
 
-<repeat start="1" stop='3' entity="index">
-   <get name='index'/> Hello World Wide Web <br/>
-</repeat>
-
+<table bgcolor="mistyrose">
+  <repeat start="1" stop='6' entity="index">
+    <tr>
+      <td><get name='index'/></td> <td> Hello </td> <td> World Wide Web</td>
+    </tr>
+  </repeat>
+</table>
 </body>
 </html>  
 

@@ -1,0 +1,2 @@
+<edit demo-name="aboutJavascript.xh"><extract><from><include src="javascript.xh" quoted="yes"/></from>
+<name all="all">body</name><content/></extract> </edit>

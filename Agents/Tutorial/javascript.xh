@@ -1,0 +1,12 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<body>
+   <!-- One tag below wraps some Javascript verificiation functions,
+        the other wraps a simple submission form calling them -->
+
+   <widgetJavaScript/>
+   <widgetForm min="5" max="9"/>
+
+</body>
+</html>
+

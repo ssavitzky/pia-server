@@ -19,7 +19,7 @@
 
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.1 1999-07-13 22:59:17 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.2 1999-07-29 21:55:10 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -50,10 +50,8 @@
     <if><get name='content'/><then>
     <html>
       <head><title>Instantiation (full)</title></head>
-      <body >
-        <table width='100%'>
+      <body>
           <tr><td><expand><parse><get name='content'/></parse></expand></td></tr>
-        </table>
         <show-errors/>
       </body>
 
@@ -124,7 +122,64 @@
 
 </define>
 
+<define element="widgetJavaScript">
+  <action>
+
+     <SCRIPT LANGUAGE="JavaScript">
+
+    <!--  hide this stuff 
+
+     function isaPosNum(s) {
+	return (parseInt(s) > 0)
+     }
+
+     function qty_check(item, min, max) {
+	var returnVal = false
+	if (!isaPosNum(item.value)) 
+	   alert("Please enter a positive number")
+	else if (parseInt(item.value) < min) 
+	   alert("Please enter a " + item.name + " greater than " + min)
+	else if (parseInt(item.value) > max) 
+	   alert("Please enter a " + item.name + " less than " + max)
+	else 
+	   returnVal = true
+	return returnVal
+     }
+
+     function validateAndSubmit(theform, min, max) {
+	if (qty_check(theform.quantity, min, max)) {
+	   alert("Order submitted successfully")
+	   return true
+	}
+	else {
+	   alert("Sorry, order invalid... try again.")
+	   return false
+	}
+     }
+     -->
+     </SCRIPT>
+
+  <action>
+</define>
+
+<define element="widgetForm">
+  <action>
+     <FORM NAME="widget_order" ACTION="test.xh" METHOD="get">
+     How many widgets do you want today?
+       (min=&attributes:min; max=&attributes:max;) 
+     <INPUT TYPE="text" NAME="quantity"  />
+     <BR> 
+     <INPUT TYPE="button" VALUE="Enter Order"
+     onClick="validateAndSubmit(this.form, &attributes:min;, &attributes:max;)">
+     </FORM>
+  </action>
+</define>
 
 
 </tagset>
+
+
+
+
+
 
