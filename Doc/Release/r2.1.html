@@ -5,11 +5,6 @@
 </head><body>
 <h1>Release Notes for PIA Release 2.1</h1>
 
-<p> <strong>Release 2.1 is not out yet.</strong>  This document is a
-    place-holder.  For the list of things that still have to be done between
-    r2.0 and r2.1, see <a href="r2.1.to-do.html">r2.1.to-do.html</a>.
-</p>
-
 <p> Release 2.1.1 is the first <strong>stable</strong> release of the PIA.  We
     intend to keep incompatible changes to the tag language and configuration
     files to a minimum after this point, so as to provide a stable base on
@@ -28,8 +23,6 @@
 
 <h2><a name="announce">Release Announcements</a></h2>
 <h3>Release 2.1.1</h3>
-
-<p> <em>Watch this space</em>
 
 <p> Release 2.1.1 is the first <strong>stable</strong> release of the PIA
     (Platform for Information Applications).  Several non-trivial applications
@@ -70,6 +63,11 @@
   <li> <strong>No support for DTD's.</strong>  Our parser still does not
        properly handle the internal subset of the DTD.
   </li>
+  <li> In addition, a small number of tags are unimplemented (for example,
+       &lt;URL&gt;), and some ``xml-style'' attributes (see item 1 below) are
+       unimplemented or undocumented.  Applications written using the current
+       tagsets will, however, continue to function.
+  </li>
 </ol>
 
 <h4>Changes since 2.0.8</h4>
@@ -109,5 +107,5 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.html,v 1.2 2000-02-26 00:15:45 steve Exp $</b><br>
+<b>$Id: r2.1.html,v 1.3 2000-03-01 23:35:37 steve Exp $</b><br>
 </body></html>
