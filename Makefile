@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.35 1999-10-27 00:05:07 steve Exp $
+#	$Id: Makefile,v 1.36 1999-12-14 19:02:35 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,7 +26,11 @@ MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=pia
 MYPATH=
 
-SUBDIRS= src bin lib Doc
+### Subdirectories.  
+#	Order is important -- code built in src needs to be in place
+#	before we can use the DPS to process documentation, for example.
+
+SUBDIRS= src bin lib Tagsets Doc
 
 ### Standard includes.  Targets "all", "doc", "clean", etc.
 
@@ -40,7 +44,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 7
+MINOR       = 8
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
