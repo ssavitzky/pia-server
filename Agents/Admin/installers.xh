@@ -9,14 +9,16 @@
 <nav-bar/>
 <hr>
  
-<p> An agent is represented in the information agency by a persistent software
+<p> An agent is represented in the information Agency by a persistent software
     object.  In order for the agency to know about an Agent and direct
     requests like <code> http://localhost:8888/Agent/home </code> to an
-    <code>Agent</code>, the agent must be "installed" which creates the
-    corresponding software object.  When the Agency is started, it looks in
-    the Agency's <code><a href=START-UP.html>START-UP.html</a></code> and
-    installs any agents found there.  (Like all agent files, the original file
-    found in the &AGENT:name;agent's home directory, in this case
+    <code>Agent</code>, the agent must be "installed," which creates the
+    corresponding software object.
+
+<p> When the Agency is started, it looks in the Agency's <code><a
+    href=START-UP.html>START-UP.html</a></code> and installs any agents found
+    there.  (Like all agent files, the original file found in the
+    &AGENT:name;agent's home directory, in this case
     &piaDIR;/Agents/&AGENT:name;/ can be overridden by local files in
     &usrDIR;/Agents/&AGENT:name;/.)
 
@@ -33,69 +35,81 @@
 <ul>
   <li> <a href="#agents">Standard Agents</a> (what most users want)
   <li> <a href="#DOFS">Document-Oriented File Systems</a>
-  <li> <a href="#app">Appliances</a> (includes demonstrations)
   <li> <a href="#generic">Generic form</a>
-  <li> <a href="#exp">Experimental</a>
 </ul>
 
 <hr>
 <h3><a name="agents">Standard Agents</a></h3>
 <dl> 
-  <dt> <a name="History">History agent</a>
-       <if><agent-running name=History><then><em>installed</em></then><else>
-  <dd> <form action="/&AGENT:name;/install-agent" method="POST">
-       <input type="submit" value="Install">
-       name: <input name="agent" value="History">
-       </form></if>
   <dt> <a name="View">View agent</a>
        <if><agent-running name=View><then><em>installed</em></then><else>
   <dd> <form action="/&AGENT:name;/install-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="View">
        </form></if>
-  <dt> <a name="Toolbar">Toolbar agent</a>
-       <if><agent-running name=Toolbar><then><em>installed</em></then><else>
+  <dt> <a name="Proxie">Proxie agent</a>
+       <if><agent-running name=Proxie><then><em>installed</em></then><else>
   <dd> <form action="/&AGENT:name;/install-agent" method="POST">
        <input type="submit" value="Install">
-       name: <input name="agent" value="Toolbar">
+       name: <input name="agent" value="Proxie">
        </form></if>
        <dl>
-	 <dt> <a name="remote">remote agent</a>
-	 <if><agent-running name=remote><then><em>installed</em></then><else>
+	 <dt> <a name="History">History agent</a>
+	      <if><agent-running name=History>
+	      <then><em>installed</em></then><else>
 	 <dd> <form action="/&AGENT:name;/install-agent" method="POST">
 	      <input type="submit" value="Install">
-	      name: <input name="agent" value="remote">
-	      type: <input name="type" value="Toolbar">
+	      name: <input name="agent" value="History">
+	      type: <input name="type" value="Proxie">
 	      </form></if>
-	 <dt> <a name="localFile">localFile agent</a>
-	 <if><agent-running name=localFile><then><em>installed</em></then><else>
-	 <dd> <form action="/&AGENT:name;/install-agent" METHOD="POST">
+	 <dt> <a name="Toolbar">Toolbar agent</a>
+	      <if><agent-running name=Toolbar>
+	      <then><em>installed</em></then><else>
+	 <dd> <form action="/&AGENT:name;/install-agent" method="POST">
 	      <input type="submit" value="Install">
-	      name: <input name="agent" value="localFile">
-	      type: <input name="type" value="Toolbar">
+	      name: <input name="agent" value="Toolbar">
+	      type: <input name="type" value="Proxie">
 	      </form></if>
+	 <dt> <em>Note:</em>
+	 <dd> The following are properly sub-agents of Toolbar, but are
+	      currently implemented as sub-agents of Proxie in order to get
+	      around a naming bug.  <dl>
+		<dt> <a name="remoteTools">remoteTools agent</a>
+		     <if><agent-running name=remoteTools>
+		     <then><em>installed</em></then>
+		     <else>
+		<dd> <form action="/&AGENT:name;/install-agent" method="POST">
+		     <input type="submit" value="Install">
+		     name: <input name="agent" value="remoteTools">
+		     type: <input name="type" value="Proxie">
+		     </form></if>
+		<dt> <a name="fileTools">fileTools agent</a>
+		     <if><agent-running name=fileTools>
+		     <then><em>installed</em></then><else>
+		<dd> <form action="/&AGENT:name;/install-agent" METHOD="POST">
+		     <input type="submit" value="Install">
+		     name: <input name="agent" value="fileTools">
+		     type: <input name="type" value="Proxie">
+		     </form></if>
+	      </dl>
+	 <dt> <a name="Cache">Cache agent</a> (keeps a copy of every external
+	      doc...) 
+	      <if><agent-running name=Cache>
+	      <then><em>installed</em></then><else>
+	 <dd> <form action="/&AGENT:name;/install-agent" method="POST">
+	      <input type="submit" value="Install">
+	      name:<input name="agent" value="Cache">
+	      type: <input name="type" value="Proxie"><br>
+	      (could add more options here, like update frequency: always, never,
+	      once,...) 
+	      </form> </if>
        </dl>
-  <dt> <a name="Cache">Cache agent</a> (keeps a copy of every external doc...)
-       <if><agent-running name=Cache><then><em>installed</em></then><else>
-  <dd> <form action="/&AGENT:name;/install-agent" method="POST">
-       <input type="submit" value="Install">
-       name:<input name="agent" value="Cache"><br>
-       (could add more options here, like update frequency: always, never,
-       once,...) 
-       </form> </if>
 
-  <dt> <a name="Demo">(new) InterForm Demonstration and Test agent</a>
+  <dt> <a name="Demo">Demo: InterForm Demonstration and Test agent</a>
        <if><agent-running name="Demo"><then><em>installed</em></then><else>
   <dd> <FORM ACTION="/&AGENT:name;/install-agent" METHOD="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="Demo">
-       </form></if>
-
-  <dt> <a name="InterForm">(Old) InterForm Demonstration and Test agent</a>
-       <if><agent-running name="InterForm"><then><em>installed</em></then><else>
-  <dd> <FORM ACTION="/&AGENT:name;/install-agent" METHOD="POST">
-       <input type="submit" value="Install">
-       name: <input name="agent" value="InterForm">
        </form></if>
 
   <dt> <a name="Swifty">Tutorial agent</a> (Illustrates how to create an agent)
@@ -133,22 +147,22 @@ Provides basic file browsing capabilities.
        root:<input name="root" value="~/pia">
        <input type="submit" value="Install">
        </form></if>
-  <dt> <a name="Root">DOFS/Root</a>
-       <if><agent-running name=Root><then><em>installed</em></then>
-       <else>
-  <dd> <form action="/&AGENT:name;/install-agent" method="POST">
-       name:<input name="agent" value="Root">
-       type:<input name="type" value="DOFS"><br>
-       root:<input name="root" value="/">
-       <input type="submit" value="Install">
-       </form></if>
-  <dt> <a name="Home">DOFS/Home</a>
+  <dt> <a name="Home">DOFS/Home</a> (possible security hole)
        <if><agent-running name=Home><then><em>installed</em></then>
        <else>
   <dd> <form action="/&AGENT:name;/install-agent" method="POST">
        name:<input name="agent" value="Home">
        type:<input name="type" value="DOFS"><br>
        root:<input name="root" value="~/">
+       <input type="submit" value="Install">
+       </form></if>
+  <dt> <a name="Root">DOFS/Root</a> (probable security hole)
+       <if><agent-running name=Root><then><em>installed</em></then>
+       <else>
+  <dd> <form action="/&AGENT:name;/install-agent" method="POST">
+       name:<input name="agent" value="Root">
+       type:<input name="type" value="DOFS"><br>
+       root:<input name="root" value="/">
        <input type="submit" value="Install">
        </form></if>
   <dt> Generic DOFS form:
