@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.4 1999-03-12 19:24:08 steve Exp $
+#	$Id: Makefile,v 1.5 1999-09-09 22:27:21 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,7 @@ PACKAGES = \
 	util \
 	dom \
 	dps \
+	site \
 	content \
 	tf \
 	pia
