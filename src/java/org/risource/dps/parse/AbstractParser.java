@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.5 1999-04-17 01:19:25 steve Exp $
+//	$Id: AbstractParser.java,v 1.6 1999-05-07 23:34:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.BitSet;
 
 import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.IOException;
@@ -57,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.5 1999-04-17 01:19:25 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.6 1999-05-07 23:34:07 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -68,11 +69,11 @@ public abstract class AbstractParser extends CursorStack implements Parser
   ** State:
   ************************************************************************/
 
-  protected Processor   processor;
-  protected ActiveNode 	document 	= null;
-  protected Reader 	in 		= null;
-  protected Tagset 	tagset 		= null;
-  protected EntityTable entities	= null; 
+  protected Processor   	processor	= null;
+  protected ActiveNode 		document 	= null;
+  protected BufferedReader 	in 		= null;
+  protected Tagset 		tagset 		= null;
+  protected EntityTable 	entities	= null; 
 
   /************************************************************************
   ** Access:
@@ -88,7 +89,14 @@ public abstract class AbstractParser extends CursorStack implements Parser
   public void setProcessor(Processor aProcessor) { processor = aProcessor; }
 
   public Reader getReader() { return in; }
-  public void setReader(Reader aReader) { in = aReader; }
+
+  /** Set the Reader.  Forcing this to be a <em>Buffered</em> reader
+   *	roughly doubles the speed of the parser!
+   */
+  public void setReader(Reader aReader) { 
+    if (aReader instanceof BufferedReader) in = (BufferedReader) in;
+    else				   in = new BufferedReader(aReader);
+  }
 
   public Tagset getTagset() { return tagset; }
   public void setTagset(Tagset aTagset) {
@@ -111,6 +119,11 @@ public abstract class AbstractParser extends CursorStack implements Parser
    *	permitted at the <em>beginning</em> of an identifier. */
   public static BitSet isIdent;
 
+  /** Non-zero for every character that is part of an identifier. 
+   *	This appears to be marginally faster than either a BitSet or
+   *	a boolean array. */
+  public static byte idc[] = new byte[Character.MAX_VALUE];
+
   /** True for every character that is whitespace. */
   public static BitSet isSpace;
   
@@ -130,13 +143,13 @@ public abstract class AbstractParser extends CursorStack implements Parser
     isURL = new BitSet();
     notAttr = new BitSet();
     for (i = 0; i <= ' '; ++i) { isSpace.set(i); notAttr.set(i); }
-    for (i = 'A'; i <= 'Z'; ++i) { isIdent.set(i); isURL.set(i); }
-    for (i = 'a'; i <= 'z'; ++i) { isIdent.set(i); isURL.set(i); }
-    for (i = '0'; i <= '9'; ++i) { isIdent.set(i); isURL.set(i); }
-    isIdent.set('-'); isURL.set('-');
-    isIdent.set('.'); isURL.set('.');
-    isIdent.set('_'); isURL.set('_');
-    isIdent.set(':'); isURL.set(':');
+    for (i = 'A'; i <= 'Z'; ++i) { isIdent.set(i); isURL.set(i); idc[i]=1; }
+    for (i = 'a'; i <= 'z'; ++i) { isIdent.set(i); isURL.set(i); idc[i]=1; }
+    for (i = '0'; i <= '9'; ++i) { isIdent.set(i); isURL.set(i); idc[i]=1; }
+    isIdent.set('-'); isURL.set('-'); idc['-']=1; 
+    isIdent.set('.'); isURL.set('.'); idc['.']=1; 
+    isIdent.set('_'); isURL.set('_'); idc['_']=1; 
+    isIdent.set(':'); isURL.set(':'); idc[':']=1; 
     String url = "/?+~%&;";
     for (i = 0; i < url.length(); ++i) isURL.set(url.charAt(i));
     String s = "<>\"'";
@@ -236,11 +249,12 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatIdent() throws IOException {
     if (last == 0) last = in.read();
     String id = "";
-    if (last < 0 || ! isIdent.get(last)) return false;
+    if (last < 0 || 0 == idc[last]) return false;
     do {
       id += (char)last;
       last = in.read();
-    } while (last >= 0 && isIdent.get(last));
+    } while (last > 0 && 0 != idc[last]);
+    // was while (last > 0 && isIdent.get(last))
     ident = id;
     return true;    
   }
@@ -529,12 +543,12 @@ TreeComment("Bad end tag: " + tag);
   }
 
   public AbstractParser(InputStream in) {
-    this.in = new InputStreamReader(in);
+    setReader(new InputStreamReader(in));
     if (isIdent == null) initializeTables();
   }
 
   public AbstractParser(Reader in) {
-    this.in = in;
+    setReader(in);
     if (isIdent == null) initializeTables();
   }
 
