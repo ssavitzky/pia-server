@@ -84,11 +84,11 @@
        once,...) 
        </form> </if>
 
-  <dt> <a name="demo">(new) InterForm Demonstration and Test agent</a>
-       <if><agent-running name="demo"><then><em>installed</em></then><else>
+  <dt> <a name="Demo">(new) InterForm Demonstration and Test agent</a>
+       <if><agent-running name="Demo"><then><em>installed</em></then><else>
   <dd> <FORM ACTION="/&AGENT:name;/install-agent" METHOD="POST">
        <input type="submit" value="Install">
-       name: <input name="agent" value="demo">
+       name: <input name="agent" value="Demo">
        </form></if>
 
   <dt> <a name="InterForm">(Old) InterForm Demonstration and Test agent</a>
