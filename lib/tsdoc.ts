@@ -131,12 +131,33 @@
 </define>
 
 <define element="action" quoted="quoted">
-  <action> <p> &lt;action&gt; ... &lt;/action&gt; </p> 
+  <action>
+    <if>&FORM:code;
+	<then><pre> &lt;action&gt;<protect result
+	       markup>&content;</protect> &lt;/action&gt; </pre></then>
+	<else><p>
+		<if>&DOC:name;
+		    <then><a href="&DOC:name;?code=y#&VAR:current-element;">
+		            [action]</a> 
+		    </then>
+		</if></p>
+	</else>
+    </if>
   </action>
 </define>
 
 <define element="value" quoted="quoted">
-  <action> <p> &lt;value&gt; ... &lt;/value&gt; </p>
+  <action>
+    <if>&FORM:code;
+	<then><pre> &lt;value&gt;<protect result markup>&content;</protect> &lt;/value&gt; </pre></then>
+	<else><p>
+		<if>&DOC:name;
+		    <then><a href="&DOC:name;?code=y#&VAR:current-element;">
+		      [value]</a>
+		    </then>
+		</if></p>
+	</else>
+    </if>
   </action>
 </define>
 
@@ -181,6 +202,6 @@
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: tsdoc.ts,v 1.2 2000-02-25 22:30:28 steve Exp $</b><br>
+<b>$Id: tsdoc.ts,v 1.3 2000-03-14 17:18:02 steve Exp $</b><br>
 </tagset>
 
