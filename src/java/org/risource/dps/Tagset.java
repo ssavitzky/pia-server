@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.9 1999-07-14 20:19:55 steve Exp $
+//	$Id: Tagset.java,v 1.10 1999-08-20 00:00:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -25,6 +25,7 @@
 package org.risource.dps;
 
 import java.util.Enumeration;
+import java.io.File;
 
 import org.risource.dps.active.*;
 import org.w3c.dom.NamedNodeMap;
@@ -52,7 +53,7 @@ import org.w3c.dom.NamedNodeMap;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.9 1999-07-14 20:19:55 steve Exp $
+ * @version $Id: Tagset.java,v 1.10 1999-08-20 00:00:58 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -139,7 +140,7 @@ public interface Tagset  {
   public void setHandlerForAttr(String attrName, Handler newHandler);
 
   /************************************************************************
-  ** Locking status:
+  ** Status:
   ************************************************************************/
 
    /** Test whether the Tagset is ``locked.''
@@ -151,6 +152,12 @@ public interface Tagset  {
 
   /** Change the lock status. */
   public void setLocked(boolean value);
+
+  /** Test whether the Tagset is up to date.  */
+  public boolean upToDate();
+
+  /** Set the Tagset's source File for timestamp check. */
+  public void setSourceFile(File f);
 
   /************************************************************************
   ** Parsing Operations:
