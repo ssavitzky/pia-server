@@ -57,7 +57,7 @@
                    <day>15</day><month>&thisMonth;</month>
                    <year>&myYear;</year>
             </weekday></set>
-	    <set name="lastday"><weekday lastdate="yes">
+	    <set name="lastday"><weekday lastday="yes">
                  <day>15</day><month>&thisMonth;</month>
                  <year>&myYear;</year>
             </weekday></set>
@@ -99,6 +99,6 @@
     </repeat>
     <show-errors />
 
-    <short-footer cvsid="$Id: year.xh,v 1.6 1999-11-16 18:46:35 steve Exp $"/>
+    <short-footer cvsid="$Id: year.xh,v 1.7 1999-11-17 00:55:17 steve Exp $"/>
   </body>
 </html>

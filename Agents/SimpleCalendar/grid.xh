@@ -80,7 +80,7 @@
                    <day>15</day><month>&thisMonth;</month>
                    <year>&myYear;</year>
             </weekday></set>
-	    <set name="lastday"><weekday lastdate="yes">
+	    <set name="lastday"><weekday lastday="yes">
                  <day>15</day><month>&thisMonth;</month>
                  <year>&myYear;</year>
             </weekday></set>
