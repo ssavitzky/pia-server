@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.18 2000-07-28 23:06:01 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.19 2000-08-10 17:29:51 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -75,6 +75,10 @@
     <HomeDocumentName>words</HomeDocumentName>
     <IndexDocumentPath>/.Woad/Tools/word-listing.xh</IndexDocumentPath>
     <Ext name="html"	type="text/html" tagset="HTML" 			/>
+    <!-- These are the tagsets used for woad's active documents: -->
+    <Ext name="wh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="ww"	type="text/html" tagset="/.Woad/woad-web"	/>
+    <Ext name="wi"	type="text/html" tagset="/.Woad/woad-index"	/>
   </Container>
 
 <!-- Woad Source Tree -->
@@ -94,6 +98,8 @@
     <Ext name="wl"	type="text/html" tagset="/.Woad/Tools/src-file"	/>
 
     <Ext name="html"	type="text/html" tagset="/.Woad/Tools/src-html"	/>
+    <!-- PIA doesn't use any other extended HTML types: don't map them -->
+
     <Ext name="xh"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
     <Ext name="xcf"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
     <Ext name="xci"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
