@@ -1,6 +1,6 @@
                         RICOH SOURCE CODE PUBLIC LICENSE
 
-                                    Version 1.0
+                                    Version 1.0a
 
 
 1. Definitions. 
@@ -55,14 +55,14 @@ Governed Code is released as a series of files, a Modification is:
              
 
 1.10. "Original Code" means the "Platform for Information Applications"
-Source Code as released under this License by RSV.
+Source Code as released under this License by RII.
 
 1.11 "Patent Claims" means any patent claim(s), now owned or hereafter
 acquired, including without limitation, method, process, and apparatus
 claims, in any patent Licensable by the grantor of a license thereto.
 
 
-1.12. "RSV" means Ricoh Silicon Valley, Inc., a California corporation with
+1.12. "RII" means Ricoh Innovations, Inc., a California corporation with
 offices at 2882 Sand Hill Road, Suite 115, Menlo Park, CA 94025-7022.
  
 
@@ -89,7 +89,7 @@ the outstanding shares or beneficial ownership of such entity.
 2. Source Code License. 
 
 
-2.1. Grant from RSV. RSV hereby grants You a worldwide, royalty-free,
+2.1. Grant from RII. RII hereby grants You a worldwide, royalty-free,
 non-exclusive license, subject to third party intellectual property claims:
 
 
@@ -159,7 +159,7 @@ Mechanism is maintained by a third party.
 you contribute to contain a file documenting the changes You made to create
 that Governed Code and the date of any change. You must include a prominent
 statement that the Modification is derived, directly or indirectly, from
-Original Code provided by RSV and including the name of RSV in (a) the
+Original Code provided by RII and including the name of RII in (a) the
 Source Code, and (b) in any notice in an Executable Code version or related
 documentation in which You describe the origin or ownership of the Governed
 Code.
@@ -176,7 +176,7 @@ party making the claim in sufficient detail that a recipient will know whom
 to contact. If you obtain such knowledge after You make Your Modification
 available as described in Section 3.2, You shall promptly modify the LEGAL
 file in all copies You make available thereafter and shall take other steps
-(such as notifying RSV and appropriate mailing lists or newsgroups)
+(such as notifying RII and appropriate mailing lists or newsgroups)
 reasonably calculated to inform those who received the Governed Code that
 new knowledge has been obtained. In the event that You are a Contributor,
 You represent that, except as disclosed in the LEGAL file, your
@@ -203,10 +203,10 @@ you must include such notice in a location (such as a relevant directory
 file) where a user would be likely to look for such a notice. You may choose
 to offer, and to charge a fee for, warranty, support, indemnity or liability
 obligations to one or more recipients of Governed Code. However, You may do
-so only on Your own behalf, and not on behalf of RSV or any Contributor. You
+so only on Your own behalf, and not on behalf of RII or any Contributor. You
 must make it absolutely clear than any such warranty, support, indemnity or
 liability obligation is offered by You alone, and You hereby agree to
-indemnify RSV and every Contributor for any liability incurred by RSV or
+indemnify RII and every Contributor for any liability incurred by RII or
 such Contributor as a result of warranty, support, indemnity or liability
 terms You offer.
 
@@ -227,8 +227,8 @@ attempt to limit or alter the recipient's rights in the Source Code version
 from the rights set forth in this License. If You distribute the Executable
 Code version under a different license You must make it absolutely clear
 that any terms which differ from this License are offered by You alone, not
-by RSV or any Contributor. You hereby agree to indemnify RSV and every
-Contributor for any liability incurred by RSV or such Contributor as a
+by RII or any Contributor. You hereby agree to indemnify RII and every
+Contributor for any liability incurred by RII or such Contributor as a
 result of any such terms You offer.
  
 
@@ -256,32 +256,33 @@ to be able to understand it.
 
 5.1. Advertising Materials. All advertising materials mentioning features or
 use of the Governed Code must display the following acknowledgement: "This
-product includes software developed by Ricoh Silicon Valley, Inc."
+product includes software developed by Ricoh Innovations, Inc."
 
 
-5.2. Endorsements. The names "Ricoh," "Ricoh Silicon Valley," and "RSV" must
+5.2. Endorsements. The names "Ricoh," "Ricoh Innovations," and "RII" must
 not be used to endorse or promote Contributor Versions or Larger Works
-without the prior written permission of RSV.
+without the prior written permission of RII.
  
 
 5.3. Product Names. Contributor Versions and Larger Works may not be called
 "Ricoh" nor may the word "Ricoh" appear in their names without the prior
-written permission of RSV.
+written permission of RII.
  
 
 6. Versions of the License. 
 
 
-6.1. New Versions. RSV may publish revised and/or new versions of the
+6.1. New Versions. RII may publish revised and/or new versions of the
 License from time to time. Each version will be given a distinguishing
-version number.
+version number.  [Version 1.0a changes the name ``Ricoh Silicon Valley'' to
+that of its successor company, ``Ricoh Innovations, Inc.'']
 
 
 6.2. Effect of New Versions. Once Governed Code has been published under a
 particular version of the License, You may always continue to use it under
 the terms of that version. You may also choose to use such Governed Code
 under the terms of any subsequent version of the License published by
-RSV. No one other than RSV has the right to modify the terms applicable to
+RII. No one other than RII has the right to modify the terms applicable to
 Governed Code created under this License.
 
 
@@ -293,7 +294,7 @@ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT
 LIMITATION, WARRANTIES THAT THE GOVERNED CODE IS FREE OF DEFECTS,
 MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE
 RISK AS TO THE QUALITY AND PERFORMANCE OF THE GOVERNED CODE IS WITH
-YOU. SHOULD ANY GOVERNED CODE PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT RSV
+YOU. SHOULD ANY GOVERNED CODE PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT RII
 OR ANY OTHER CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR
 OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF
 THIS LICENSE. NO USE OF ANY GOVERNED CODE IS AUTHORIZED HEREUNDER EXCEPT
@@ -311,8 +312,8 @@ of this License. Provisions which, by their nature, must remain in effect
 beyond the termination of this License shall survive.
  
 
-8.2. If You initiate patent infringement litigation against RSV or a
-Contributor (RSV or the Contributor against whom You file such action is
+8.2. If You initiate patent infringement litigation against RII or a
+Contributor (RII or the Contributor against whom You file such action is
 referred to as "Participant") alleging that:
 
 
@@ -362,7 +363,7 @@ termination shall survive termination.
 
 
 UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER TORT (INCLUDING
-NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL RSV, ANY CONTRIBUTOR, OR ANY
+NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL RII, ANY CONTRIBUTOR, OR ANY
 DISTRIBUTOR OF GOVERNED CODE, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE
 LIABLE TO YOU OR ANY OTHER PERSON FOR ANY DIRECT, INDIRECT, SPECIAL,
 INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT
@@ -374,12 +375,12 @@ INJURY RESULTING FROM SUCH PARTY'S NEGLIGENCE TO THE EXTENT APPLICABLE LAW
 PROHIBITS SUCH LIMITATION. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR
 LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THAT EXCLUSION AND
 LIMITATION MAY NOT APPLY TO YOU. TO THE EXTENT THAT ANY EXCLUSION OF DAMAGES
-ABOVE IS NOT VALID, YOU AGREE THAT IN NO EVENT WILL RSV?S LIABILITY UNDER OR
+ABOVE IS NOT VALID, YOU AGREE THAT IN NO EVENT WILL RII'S LIABILITY UNDER OR
 RELATED TO THIS AGREEMENT EXCEED FIVE THOUSAND DOLLARS ($5,000). THE
 GOVERNED CODE IS NOT INTENDED FOR USE IN CONNECTION WITH ANY NUCLEAR,
 AVIATION, MASS TRANSIT OR MEDICAL APPLICATION OR ANY OTHER INHERENTLY
 DANGEROUS APPLICATION THAT COULD RESULT IN DEATH, PERSONAL INJURY,
-CATASTROPHIC DAMAGE OR MASS DESTRUCTION, AND YOU AGREE THAT NEITHER RSV NOR
+CATASTROPHIC DAMAGE OR MASS DESTRUCTION, AND YOU AGREE THAT NEITHER RII NOR
 ANY CONTRIBUTOR SHALL HAVE ANY LIABILITY OF ANY NATURE AS A RESULT OF ANY
 SUCH USE OF THE GOVERNED CODE.
  
@@ -409,7 +410,7 @@ related to this Agreement shall be brought in the Federal Courts of the
 Northern District of California, with venue lying in Santa Clara County,
 California. The losing party shall be responsible for costs, including
 without limitation, court costs and reasonable attorneys? fees and
-expenses. Notwithstanding anything to the contrary herein, RSV may seek
+expenses. Notwithstanding anything to the contrary herein, RII may seek
 injunctive relief related to a breach of this Agreement in any court of
 competent jurisdiction. The application of the United Nations Convention on
 Contracts for the International Sale of Goods is expressly excluded. Any law
@@ -435,7 +436,7 @@ affected parties to distribute responsibility on an equitable basis.
 
 
 "The contents of this file are subject to the Ricoh Source Code Public
-License Version 1.0 (the "License"); you may not use this file except in
+License Version 1.0a (the "License"); you may not use this file except in
 compliance with the License. You may obtain a copy of the License at
 http://www.risource.org/RPL
  
@@ -445,8 +446,8 @@ WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
 the specific language governing rights and limitations under the License.
  
 
-This code was initially developed by Ricoh Silicon Valley, Inc. Portions
-created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999. All
+This code was initially developed by Ricoh Innovations, Inc. Portions
+created by Ricoh Innovations, Inc. are Copyright (C) 1995-2000. All
 Rights Reserved.
 
  
