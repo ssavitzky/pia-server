@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.25 1999-11-17 18:35:52 steve Exp $
+// $Id: Pia.java,v 1.26 1999-12-14 18:36:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.25 1999-11-17 18:35:52 steve Exp $
+  * @version $Id: Pia.java,v 1.26 1999-12-14 18:36:12 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -141,8 +141,13 @@ public class Pia implements Tabular {
   private Properties specified		= null;
 
   private String  piaHomePath 		= null;
+  private File	  piaHomeDir		= null;
+
   private String  piaRootPath		= null;
   private String  piaVirtualRootPath	= null;
+
+  private String  piaConfigTagsetPath 	= "pia-config";
+
 
   private String  host       	= null;
   private int	  realPort   	= 8888;
@@ -204,6 +209,12 @@ public class Pia implements Tabular {
 
   /** Return the root of the site resource tree, typed as a Site. */
   public static Site getSite() { return rootResource; }
+
+  /** Return the PIA home directory. */
+  public static String getHome() { return instance.piaHomePath; }
+
+  /** Return the PIA home directory as a File. */
+  public static File getHomeDir() { return instance.piaHomeDir; }
 
   /** Get (construct, if necessary) our SiteMachine.
    *	The SiteMachine is constructed out of the host:virtualPort pair
@@ -665,7 +676,7 @@ public class Pia implements Tabular {
     /* Try to find the PIA's root directory.  If it doesn't exist, 
      *	complain.
      */
-    File piaHomeDir = new File( piaHomePath );
+    piaHomeDir = new File( piaHomePath );
     if (piaHomeDir.exists() && piaHomeDir.isDirectory()) {
       piaHomePath = piaHomeDir.getAbsolutePath();
     } else {
@@ -718,9 +729,7 @@ public class Pia implements Tabular {
     if (piaVirtualRootPath == null) piaVirtualRootPath = piaHomePath;
 
     if (piaHomePath != null) {
-      String tsHome = piaHomePath + filesep + "src" + filesep + "java"
-	+ filesep + "org" + filesep + "risource" + filesep + "dps"
-	+ filesep + "tagset";
+      String tsHome = piaHomePath + filesep + "lib";
       Loader.setTagsetHome(tsHome);
     }
 
@@ -803,7 +812,8 @@ public class Pia implements Tabular {
     siteProperties = null; //new PropertyTable("/");
     
     rootResource = new PiaSite(piaRootPath, piaVirtualRootPath, null, 
-			       configFileName, "pia-config", siteProperties);
+			       configFileName, piaConfigTagsetPath,
+			       siteProperties);
     rootResource.setVerbosity(getVerbosity());
     if (siteConfigPath == null) rootResource.loadConfig() ;
     else rootResource.loadConfigFile(cfgFile);
