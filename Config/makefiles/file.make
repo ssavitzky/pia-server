@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-#   $Id: file.make,v 1.4 1999-10-14 18:05:45 steve Exp $
+#   $Id: file.make,v 1.5 1999-11-09 23:23:11 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -38,6 +38,17 @@
 ### Commands:
 
 PROCESS = $(PIADIR)/bin/process
+
+ifndef TAGSET
+  TAGSET=xhtml
+endif
+
+### Files:
+###	These macros can be used in conjunction with the .xh.html rule
+###	to generate HTML files offline.
+
+XH_FILES= $(wildcard *.xh)
+XH_HTML= $(XH_FILES:.xh=.html)
 
 ### Targets:
 #	all	build executables, etc.
@@ -82,13 +93,22 @@ HEADER.html:
 
 ### Rules:
 
-.SUFFIXES: .ts .html .tso .tss
+.SUFFIXES: .ts .html .tso .tss .xh
 
 ### Convert tagsets to ``stripped'' (.tss) files by removing documentation.
-###
+#
 .ts.tss:
 	$(PROCESS) -t tsstrip -q $< > $@.tmp
 	rm -f $@; mv $@.tmp $@
 
+### Convert tagsets to documentation
+#
 .ts.html:
 	$(PROCESS) -t tsdoc -q $<  > $@
+
+### Convert .xh files to HTML:
+#
+.xh.html:
+	$(PROCESS) -t $(TAGSET) $< > $@
+	{ grep -s $@ .cvsignore } || echo $@ >> .cvsignore
+
