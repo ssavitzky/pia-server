@@ -31,11 +31,17 @@ See also:
        real location, the virtual location and the defaults.  
        (1999-08-20) <br>
 
+  <li> 1999-09-09 <b>Bug</b> Listing needs to use Resource, not File.<br>
+       Currently it uses <code>base.listNames()</code> to get names, but
+       needs to look at the children as resources, not files.  Similarly, it
+       needs to use a Document for <code>HEADER.html</code>, not a File. 
+       (1999-09-08) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.1 1999-09-09 21:47:04 steve Exp $</b><br>
+<b>$Id: done.html,v 1.2 1999-09-10 23:34:50 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

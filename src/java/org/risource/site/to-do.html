@@ -16,25 +16,42 @@ See also:
 </ul>
 
 <ol>
-  <li> <b>Bug</b> pure-virtual resources give null pointer exc. <br>
+  <li> <b>Bug</b> Virtual search paths relative to what? <br>
+       Right now you can't use a relative path in a <code>virtual</code>
+       configuration attribute (for example) because there's nothing to base
+       it on.  May need "file:", "real:", and "virtual:" for absolute, real
+       root, and virtual root.  Maybe assume virtual root, since that's the
+       only one that makes sense, or maybe the current virtual base. 
+       (1999-09-09) <br>
+
+  <li> <b>Impr</b> Listing should show virtual path <br>
+       and indicate which path element each document is in.
+       (1999-09-09) <br>
+
+  <li> <b>Impr</b> Want a way of getting at an overridden doc. <br>
+       (1999-09-09) <br>
+
+  <li> <b>Hole</b> Unknown config sub-elts should become props. <br>
+       Any unknown element in the configuration should be appended to a
+       property entity with that name.  Maybe the known ones, too.
+       (1999-09-09) <br>
+
+  <li> <b>Bug</b> pure-virtual document gives null pointer exc. <br>
+       ... which is not surprising, since there's no way to specify its
+       content at the moment.
        (1999-09-09) <br>
 
   <li> <b>Bug</b> Subsite doesn't inherit files properly <br>
-       Need to set real, virtual, and default files properly.
+       Need to set real, virtual, and default files properly.  Currently
+       <code>file</code> gets the virtual location if the real one doesn't
+       exist. 
        (1999-09-09) <br>
 
   <li> <b>Impr</b> All resources need config and name fields.<br>
        This is most clearly seen in Listing.
        (1999-09-08) <br>
 
-  <li> <b>Bug</b> Listing needs to use Resource, not File.<br>
-       Currently it uses <code>base.listNames()</code> to get names, but
-       needs to look at the children as resources, not files.  Similarly, it
-       needs to use a Document for <code>HEADER.html</code>, not a File, and
-       use DOM trees instead of strings. 
-       (1999-09-08) <br>
-
-  <li> <b>Impr</b> Need a way to get generic listing.<br>
+  <li> <b>Impr</b> Want a way to get generic listing.<br>
        The simplest way would be a virtual child called ``<code>.</code>'';
        this can be constructed using the default ``<code>.xh</code>'',
        defaulting to a Listing if it's not present.
@@ -190,5 +207,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.6 1999-09-09 21:47:05 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.7 1999-09-10 23:34:50 steve Exp $</b><br>
 </body></html>
