@@ -1,5 +1,5 @@
 // Accepter.java
-// $Id: Accepter.java,v 1.4 1999-03-12 19:28:54 steve Exp $
+// $Id: Accepter.java,v 1.5 1999-07-08 19:20:51 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -98,6 +98,7 @@ public class Accepter extends Thread {
         while(!finish){
 	  if(listenSocket == null) {
 	    listenSocket = new ServerSocket( port ); 
+            
 	  } else  // listen for connections only if listen is not null
 	  {	  
 	    Socket clientSocket = listenSocket.accept();
@@ -108,9 +109,9 @@ public class Accepter extends Thread {
 	}
       }catch(IOException e){
         Pia.debug(this, "There is an exception while listening for connection.");
-        Pia.errSys(e, "There is an exception while listening for connection.");
+        Pia.warningMsg(e, "There is an exception while listening for connection.");
       }catch(Exception e){
-        Pia.errSys(e, "General exception while listening for connection.");
+        Pia.warningMsg(e, "General exception while listening for connection.");
       }
     //at this point acceptor has thrown an error...clean up (and loop if !finished)
     cleanup(false);
