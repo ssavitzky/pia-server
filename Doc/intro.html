@@ -272,48 +272,65 @@ at the other applications (such as those in the <code>Agents</code> directory)
 <p>Topics covered in this section include:</p>
 
 <ul>
-<li><a href="#Applications">Applications and Interforms</a></li>
+<li><a href="#Applications">Applications and Agents</a></li>
 
 <li><a href="#Running">Running an Information Agency</a></li>
 
 <li><a href="#viewing">Viewing an Application's Home Page</a></li>
 </ul>
 
-<h3><a name="Applications">Applications and Interforms</a></h3>
+<h3><a name="Applications">Applications and Agents</a></h3>
 
-<p>That portion of the PIA that processes web documents is deemed
-an Information Agency because each document request passed through
-the agency is processed by applications and  <dfn>agents</dfn>. Agents
-are persistent software objects running on the Information Agency.
-They perform one or more tasks on behalf of the agency's owner
-while maintaining state and context information.</p>
+<p> The PIA is called an ``Information Agency'' because it serves as a
+    platform for ``information agents'' -- pieces of semi-autonomous code that
+    operate behalf of the PIA's user.  For example, each HTTP transaction
+    (request or response) that passes through it can be operated on by agents
+    whose ``criteria'' match features of the transaction.  Other agents can be
+    set to operate at a particular time or time interval.  Some just look for
+    requests to particular ``shorthand'' URL's (like <code>~Calendar</code>)
+    and redirect them someplace else (like
+    <code>Agents/SimpleCalendar</code>).
+</p>
+
+<p> Earlier in the PIA's development, <em>every</em> application was
+    associated with an agent, so the two terms have come to be used almost
+    interchangeably.  This can be seen most clearly in the continued use of
+    <code>Agents</code> as the name for the directory that contains the PIA's
+    standard set of applications.  Since most applications are associated with
+    an agent, and since in any case it's difficult to distinguish those that
+    are from those that aren't, the custom continues.
+</p>
 
 <p>State maintenance along with the agency framework allows agents
 to be more flexible, and much easier to generate and maintain than
 traditional web processes such as CGI scripts.</p>
 
-<p>The basis for each Information Agency is a set of XML documents
-that can include one or more:</p>
+<p> The basis for each application is a location (the application's ``home
+    resource'') that contains active XML documents that can include one or
+    more:</p>
 
 <ul>
-<li>Standard HTML tags</li>
+  <li>Standard HTML tags</li>
 
-<li>Predefined PIA tags</li>
+  <li>Predefined PIA tags</li>
 
-<li>User defined tags created using the interform language</li>
+  <li>User defined tags created using the PIA's tag language</li>
 </ul>
 
 <p>When an application receives a request for a document, it looks for
-the file that matches that request. Once the file is found, it is
+the file that matches that request.  Once the file is found, it is
 interpreted and the result returned.</p>
 
-<p>For the end user, these files provide a <i>form-based</i>
-interface for interacting with the application, hence they are called
-interforms. By convention, interform files are given the <tt>
-.xh</tt> filename extension, reflecting the fact that they contain
-an e<em>x</em>tended set of <em>H</em>TML tags.</p>
+<p> For the end user, these files provide a <i>form-based</i> interface for
+    interacting with the application.  By convention, active documents are
+    given the <tt> .xh</tt> filename extension, reflecting the fact that they
+    contain an e<em>x</em>tended set of <em>H</em>TML tags.  The PIA allows
+    the user to leave off the extension; this lets the application designer
+    hide from the user such details as which files are active and which are
+    ordinary HTML.
+</p>
 
-<p>The simplest applications might consist of one or more pages where
+<p>The simplest applications consist of a small number of pages where
 each page is defined using a combination of HTML, XML and extended
 XML tags. There are also a number of predefined PIA tags available
 for use. See the <em><a class="Tagsets/basic.html" href= 
@@ -322,16 +339,15 @@ tags.</p>
 
 <h3><a name="Running"></a>Running an Information Agency</h3>
 
-<p>To run an Information Agency, the PIA must be <a href= 
-"install.html">installed</a> at your site. If you install your own
-agency you can choose a custom set of applications as opposed to the
-default set.</p>
+<p>To run the PIA, it must be <a href= "install.html">installed</a> at your
+site.  Even if it has been installed in a shared location, you can customize
+your own PIA by means of its configuration file.  </p>
 
 <p>Once it is installed, you can start the PIA by executing the command
 <tt><em>PIA_HOME</em>/bin/pia</tt>, where <tt><em>PIA_HOME</em></tt> is the
-PIA's ``home directory'' -- the directory it was installed in.  If the PIA was
-installed normally, this directory will be called PIA.  If you installed it in
-your home directory, for example, the command to run the PIA would be:</p>
+PIA's ``home directory'' -- the directory it was installed in.  If you
+installed it in your home directory, for example, the command to run the PIA
+would be:</p>
 
 <pre>
   ~/PIA/bin/pia
@@ -343,17 +359,15 @@ like this:
 
 <pre>
 &lt;jaguar:717&gt; ~/PIA/bin/pia
-CLASSPATH is not set and the current directory is not the 
-Java source directory (/home/steve/PIA/bin/../src/java).
-We will try to set an appropriate CLASSPATH, but you may experience problems
- -- if so try running from /home/steve/PIA/bin/../src/java or setting your 
-CLASSPATH environment variable to include the necessary java classes.
-ROOT Loaded tagset 'pia-xhtml' in 5.53 seconds.
-Admin Loaded tagset 'Admin-xhtml' in 1.94 seconds'.
-running initialize.xh in PIA
-History agent initilizing
+PIA version 2.0.6
+    / Loaded system tagset 'pia-config' in 3.70 seconds.
+  / Loaded tagset 'pia-xhtml' in 2.67 seconds.
+Running initialize.xh in PIA
+Admin agent initialized  authenticated with /etc/passwd 
+SimpleCalendar agent initialized
 Proxie agent initializing
-Admin agent initializing
+History agent initializing
+remoteTools agent initializing
 Point your browser to &lt;URL: http://jaguar.crc.ricoh.com:8888&gt;
 </pre>
 
@@ -506,7 +520,7 @@ debugging the interpreter.</dd>
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: intro.html,v 1.9 1999-10-19 00:29:44 bill Exp $</i><br>
+<i>$Id: intro.html,v 1.10 1999-10-19 21:22:50 steve Exp $</i><br>
 </body>
 </html>
 
