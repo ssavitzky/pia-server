@@ -135,7 +135,7 @@
 <!-- at this point include content of HEADER.ww if there is one. -->
 <displayHeaderIfPresent>&notePath;HEADER.ww</displayHeaderIfPresent>
 
-<index-bar name="Notes">Notes Links Lookup</index-bar>
+<index-bar name="Notes">Notes Words Lookup</index-bar>
 
 <form action="&xloc;/" method="GET"><!-- === PIA isn't passing POST === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
@@ -162,11 +162,44 @@
 
 <!-- ==================================================================== -->
 
-<index-bar name="Links">Notes Links Lookup</index-bar>
+<index-bar name="Words">Notes Words Lookup</index-bar>
 
-<!-- === In the top level, replace this with Words, the word index. === -->
+<if> <get name="atRoot">
+     <then>
+	<yellow-note> This table lists all of the top-level contexts in which
+		      words are defined.
+	</yellow-note>
+     </then>
+     <else>
+	<yellow-note> This table lists all words for which <ss>WOAD</ss>
+		      annotations or indices exist in this context.
+	</yellow-note>
+     </else>
+</if>
 
-<index-bar name="Lookup">Notes Links Lookup</index-bar>
+<table bgcolor="white" border="3">
+  <repeat><foreach>&files;</foreach>
+    <if> <logical op="and">
+  	    <status item="directory" src="&li;" />
+  	    <test not="not" exact="exact" match="CVS">&li;</test>
+         </logical>
+         <then>
+  	    <tr>
+	      <td valign="top"><a href="&li;/">&li;</a></td>
+	      <td> <if> <status item="exists" src="&li;/HEADER.ww" />
+		        <then><describeNote>&li;/HEADER.ww</describeNote>
+		        </then>
+		        <else>&nbsp;
+		        </else>
+		   </if>
+	      </td>
+  	    </tr>
+         </then>
+    </if>
+  </repeat>
+</table>
+
+<index-bar name="Lookup">Notes Words Lookup</index-bar>
 <p>
 <form  action="/.words/">
 <table cellpadding="5" cellspacing="0" >
@@ -248,5 +281,5 @@
 </table>
 
 
-<short-footer cvs-id="$Id: word-listing.xh,v 1.5 2000-07-25 22:18:52 steve Exp $" />
+<short-footer cvs-id="$Id: word-listing.xh,v 1.6 2000-08-23 00:00:04 steve Exp $" />
 </body></html>
