@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.9 2000-10-20 23:54:54 steve Exp $
+//	$Id: TextParser.java,v 1.10 2000-10-27 23:16:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -66,7 +66,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a number of different ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.9 2000-10-20 23:54:54 steve Exp $
+ * @version $Id: TextParser.java,v 1.10 2000-10-27 23:16:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -111,12 +111,14 @@ public class TextParser extends ShallowParser {
   ** State:
   ************************************************************************/
 
-  /** State outside of a tag. */
-  protected int outsideTag = 0;
+  /** State outside of the current tag or other markup. */
+  protected int stateOutsideMarkup = 0;
 
   /** string that will end current markup */
   protected String markupEnd = null;
   protected char   markupEndChar = 0;
+
+  protected String markupTag = null;
 
   /** Character that will end the current string */
   protected char currentStringDelim = 0;
@@ -124,14 +126,25 @@ public class TextParser extends ShallowParser {
   /** Escape character for the current string */
   protected char currentStringEscape = 0;
 
-  protected void markupEnd(String s) {
-    markupEnd = s;
-    if (s != null) markupEndChar = s.charAt(0);
+  /** indicate an end to the current markup and
+   *	return <code>state</code> to what it was before the markup started.
+   */
+  protected void markupEnd() {
+    markupEnd = null;
+    markupEndChar = 0;
+    state = stateOutsideMarkup;
   }
 
-  protected void markup(String end, String tag) {
-    markupEnd = end;
+  /** Set the markupEnd string to <code>s</code>,
+   *	save the current state in <code>stateOutsideMarkup</code> and
+   *	set <code>state</code> to <code>newState</code>.
+   */
+  protected void markup(String s, String tag, int newState) { 
+    markupEnd = s;
     markupEndChar = s.charAt(0);
+    markupTag = tag;
+    stateOutsideMarkup = state;
+    state = newState;
   }
 
 
@@ -197,14 +210,32 @@ public class TextParser extends ShallowParser {
    *
    *<p> The content of SGML comment and processing instruction nodes is
    *	parsed as code.  The values of attributes are parsed as strings.
+   *	
+   *<p> There are a couple of major limitations:  (1) because we don't buffer 
+   *	an entire line at a time, we don't detect things like `comment line 
+   *	ending with ":"'.  (2) Because we only do a token at a time we can't
+   *	easily distinguish filenames or URL's from their components.  (3) 
+   *	Because of single-character lookahead, we can't distinguish between
+   *	a word at the end of a sentence and an identifier ending with ".".
    */
   protected ActiveNode getToken() throws IOException {
     String id = null;
+    int count = 0;		// count of consecutive markupEndChar's
 
     if (last == 0) last = in.read();
     if (last < 0) return null;
 
-    if (last == lf || last == cr) { 	// end of line
+    // The implementation could probably be cleaner, but this gets the job 
+    // done.  The basic idea is to dispatch on the current character, then
+    // gobble the entire next token.  The big problem is that this approach
+    // only gives you one character's worth of lookahead, which isn't enough
+    // to do some things properly.  What we _really_ need is a Java version
+    // of "lex".
+
+    // Also, a lot of things would be simplified if we could buffer a 
+    // line at a time.  This would allow lookahead over multiple tokens.
+
+    if (last == lf || last == cr) { 	////// end of line //////////////////
       if (state == IN_COMMENT) { 	// ... which ends a comment.
 	nextEnd = "rem";
 	state = IN_CODE;
@@ -214,16 +245,16 @@ public class TextParser extends ShallowParser {
       next = createActiveElement("line", null, true);
     } else if (last <= ' ') {		// generic whitespace
       eatSpacesInLine();
-    } else if (state == IN_TEXT && last == '<') { // tag
+    } else if (state == IN_TEXT && last == '<') { ////// tag ////////////////
       // we skip over the "<" for the moment and look at the next char:
       last = in.read();
       if (last < 0) {		// unexpected EOF
 	buf.append('<');
-      } else if (last == '/') {	// end tag.
+      } else if (last == '/') {		////// end tag.
 	last = in.read();
 	if (eatIdent()) {
 	  if (last == '>') {
-	    last = 0;
+	    last = in.read();
 	    next = createActiveText("/" + ident, false);
 	    nextEnd = "tag";
 	    return createActiveElement("tag", null, false);
@@ -233,40 +264,56 @@ public class TextParser extends ShallowParser {
 	} else {
 	  buf.append("</");
 	}
-      } else if (last == '?') {	// processing instruction
+      } else if (last == '?') {		////// processing instruction
 	buf.append("<?");	// ===temp
 	last = 0;
-	markup("?>", "pi");
-	
-      } else if (last == '!') {	// declaration or comment
+	markup("?>", "pi", IN_CODE);
+	next = createActiveText(buf.toString(), false);
+	return createActiveElement("pi", null, false);
+      } else if (last == '%') {		////// JSP/ASP processing instruction
+	buf.append("<%");	// ===temp
+	last = 0;
+	markup("%>", "pi", IN_CODE);
+	next = createActiveText(buf.toString(), false);
+	return createActiveElement("pi", null, false);
+      } else if (last == '!') {		////// declaration or comment
 	last = in.read();
 	if (last == '-') {
 	  last = in.read();
 	  if (last == '-') {
-	    last = 0;
+	    last = in.read();
 	    buf.append("<!--");	// === temp.
-	    markup("-->", "comment");
+	    markup("-->", "comment", IN_TEXT); // neither CODE nor TEXT is right
+	    next = createActiveText("<!--", false);
+	    return createActiveElement("comment", null, false);
 	  } else {
 	    buf.append("<!-");
 	  }
-	} else {
-	  markup(">", "decl");
+	} else {			////// declaration
+	  // markup(">", "decl", IN_TAG);
+	  state = IN_TAG;
+	  markupTag = "decl";
 	  buf.append("<!");	// === temp.
+	  next = createActiveText("<!", false);
+	  return createActiveElement("decl", null, false);
 	}
 
-      } else if (idc[last] == 0) { // stray '<'
+      } else if (idc[last] == 0) { 	////// stray '<'
 	buf.append('<');
-      } else {
+      } else {				////// Start tag
 	state = IN_TAG;
+	markupTag = "tag";
 	eatIdent();		// === look up tagname for style
 	next = createActiveText(ident, false); // === tagname should be xref
 	return createActiveElement("tag", null, false);
       }
     } else if (state == IN_TAG && last == '>') {
       last = 0; 
+      nextEnd = markupTag;
+      markupTag = null;
       state = IN_TEXT;
-      nextEnd = "tag";
-      return null;
+      if (nextEnd == "tag") { return null; }
+      else return createActiveText(">", false);
     } else if (state == IN_CODE && stringDelim(last) != null) {
       String delims = stringDelim(last);
       currentStringDelim = delims.charAt(0);
@@ -297,10 +344,23 @@ public class TextParser extends ShallowParser {
     } else if (0 == idc[last]) { 	// other punctuation ================
       while (last > ' ' && idc[last] == 0 
 	     && (state != IN_CODE || stringDelim(last) == null)
-	     && (state != IN_TAG || last != '>')) {
+	     && (state != IN_TAG || last != '>')
+	     && (count == 0 || last != '>')
+	     ) {
 	buf.append((char)last);
+	if (last == markupEndChar) ++count; else count = 0;
 	last = in.read();
       }
+
+      // This ends a PI or declaration.
+      if (count > 0 && last == '>') {
+	buf.append((char)last);
+	last = in.read();
+	// === string or comment may need an end tag here ===
+	markupEnd();
+	return createActiveText(buf.toString(), false);
+      }
+
       // Check for start of comment terminated by EOL. 
       // === for now, just start comment with # or // as first nonblank.
       if (state == IN_CODE && clength > 0 && lookingAt(comment, clength) ) {
@@ -326,8 +386,19 @@ public class TextParser extends ShallowParser {
     } else {				// identifier
       while (last > 0 && idc[last] != 0) {
 	buf.append((char)last);
+	if (last == '-') ++count; else count = 0;
 	last = in.read();
       }
+      // Take advantage of the fact that "-" can occur in identifiers, and
+      // see whether this is actually the end of a comment.
+      if (last == '>' && markupEndChar == '-' && count >= 2) {
+	buf.append((char)last);
+	last = 0;
+	nextEnd = markupTag;
+	markupEnd();
+	return createActiveText(buf.toString(), false);
+      }	  
+
       // Is this a language keyword, cross-referenced identifier, or other?
       id = buf.toString();
       nextEnd = (keywords.at(id) == null)? null : "kw";
