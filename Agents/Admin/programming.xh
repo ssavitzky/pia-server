@@ -24,8 +24,6 @@
        <if><test zero><get pia name="PIA:debugging"></test>
            <then>off</then><else>on</else></if>)
   <li> <a href=remove-agent> remove agent</a>
-  <li> <a href="os-cmd">run OS commands</a>
-  <li> <a href="shutdown">Shut down the PIA or the computer</a>
 </ul>
 
 <h3>Other Information:</h3>

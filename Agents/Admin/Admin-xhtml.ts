@@ -28,12 +28,12 @@
 
 <h2>Legacy operations</h2>
 
-<note author=steve> Note the use of <code>handler=crc.pia.agent.xxx</code> in
+<note author=steve> Note the use of <code>handler=org.risource.pia.agent.xxx</code> in
    the following definitions.  This puts agent-specific handlers where they
-   belong, in the <code>crc.pia.agent</code> package.
+   belong, in the <code>org.risource.pia.agent</code> package.
 </note>
 
-<define element=agent-home empty handler=crc.pia.agent.agentHome>
+<define element=agent-home empty handler=org.risource.pia.agent.agentHome>
    <doc> Determine the home directory of an agent.  Prefixes the agent's name
 	 with its type, if necessary, to produce a complete path.
    </doc>
@@ -48,21 +48,21 @@
    </define>
 </define>
 
-<define element=agent-restore empty handler=crc.pia.agent.agentRestore>
+<define element=agent-restore empty handler=org.risource.pia.agent.agentRestore>
    <define attribute=file required>
       <doc> specifies the name of the file to be restored from.
       </doc>
    </define>
 </define>
 
-<define element=agent-remove empty handler=crc.pia.agent.agentRemove>
+<define element=agent-remove empty handler=org.risource.pia.agent.agentRemove>
    <define attribute=agent required>
       <doc> specifies the name of the agent to be removed
       </doc>
    </define>
 </define>
 
-<define element=agent-save empty handler=crc.pia.agent.agentSave>
+<define element=agent-save empty handler=org.risource.pia.agent.agentSave>
    <define attribute=file required>
       <doc> specifies the name of the file to be saved into.
       </doc>
@@ -82,7 +82,7 @@
    </define>
 </define>
 
-<define element=agent-install handler=crc.pia.agent.agentInstall>
+<define element=agent-install handler=org.risource.pia.agent.agentInstall>
 </define>
 
 <h2>Page Components</h2>
@@ -90,10 +90,9 @@
 <h3>Graphics</h3>
 
 <define entity=A100>
-  <doc> Large pentagonal A, which serves as an identifying logo for the 
-	Admin agent.
+  <doc> Large logo.  
   </doc>
-  <value><img src="Logo/A100.gif" height=100 width=111 
+  <value><img src="/Icon/logo100.gif" height=100 width=111 
 		alt="ADMIN"></value>
 </define>
 <!-- these two aren't being picked up from pia-xhtml; check namespace stuff

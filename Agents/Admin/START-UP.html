@@ -3,7 +3,7 @@
 <title>Agency Start-up File</title>
 </head><body bgcolor="#ffffff">
 
-<h1><img src="/PIA/Doc/Graphics/sm_pent.gif" align=center>
+<h1><img src="/Icon/logo72.gif" align=center>
 Prototype Agency Start-up File
 </h1>
 
@@ -33,33 +33,43 @@ You can get additional installation forms from:
        name:<input name="agent" value="DOFS">
        </form>
        
+  <dt> <a name="Proxie">Proxie agent</a>
+  <dd> <form action="/Admin/install-agent" method="POST">
+       <input type="submit" value="Install">
+       name: <input name="agent" value="Proxie">
+       </form>
+
   <dt> <a name="History">History agent</a>
   <dd> <form action="/Admin/install-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="History">
+       type: <input name="type" value="Proxie">
        </form>
        
   <dt> <a name="Toolbar">Toolbar agent</a>
   <dd> <form action="/Admin/install-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="Toolbar">
+       <!-- parent should be like a mount point -->
+       parent: <input name="parent" value="Proxie">
+       type: <input name="type" value="Proxie">
        </form>
   <dt> <a name="remote">remote agent</a>
   <dd> <form action="/Admin/install-agent" method="POST">
        <input type="submit" value="Install">
-       name: <input name="agent" value="remote">
-       type: <input name="type" value="Toolbar">
+       name: <input name="agent" value="remoteTools">
+       type: <input name="type" value="Proxie">
        </form>
   <dt> <a name="localFile">localFile agent</a>
   <dd> <form action="/Admin/install-agent" method="POST">
        <input type="submit" value="Install">
-       name: <input name="agent" value="localFile">
-       type: <input name="type" value="Toolbar">
+       name: <input name="agent" value="fileTools">
+       type: <input name="type" value="Proxie">
        </form>
-  <dt> <a name="demo">InterForm Demo agent</a>
+  <dt> <a name="Demo">InterForm Demo agent</a>
   <dd> <form action="/Admin/install-agent" method="POST">
        <input type="submit" value="Install">
-       name: <input name="agent" value="demo">
+       name: <input name="agent" value="Demo">
        </form>
 </dl>
 
