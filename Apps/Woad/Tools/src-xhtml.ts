@@ -20,7 +20,7 @@
 <tagset name="src-xhtml"  include="src-html" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.2 2000-08-10 16:00:48 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.3 2000-08-24 22:59:30 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 
@@ -544,7 +544,7 @@
 </define>
 
 <define element="#pi" syntax="quoted">
-  <action><font color="red">&lt;?&name; &value;?&gt;</font><hide>
+  <action><font color="red">&lt;?<get name="name"/> &value;?&gt;</font><hide>
     </hide></action>
 </define>
 
