@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.6 1999-10-12 15:53:57 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.7 1999-10-13 20:51:57 bill Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -291,7 +291,7 @@
 	    <a href="home">Today</a> is 
 	      <weekday>&todaypack;</weekday>,
 	    <a href="month"><weekday monthname="yes">&todaypack;</weekday>
-	      &day;, &year;</a>
+	      </a> &day;, &year;
 	  </td>
       </tr>
       <tr><td colspan=2>&nbsp;</td></tr>
@@ -319,7 +319,7 @@
 	   </td>
 	   <th align="center" colspan=10>
 		   <font size="+2">
-	     <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;&mpage=&mpage;">
+	     <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&myYear;&mpage=&mpage;">
 		   &myYear;</a>
 	     </font>
 	   </th>
