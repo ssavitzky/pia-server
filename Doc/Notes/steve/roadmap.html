@@ -49,10 +49,12 @@
   <dd> The idea is to define a constructor for elements, so that we don't have
        to use entities to refer to variables.  This will require a fair amount
        of grunt work to fix all the <code>.xh</code> files.  An alternative
-       requiring more work would be to add an attribute to any element that
-       indicates that more attributes are contained in the content.
+       requiring more work would have been to add an attribute to any element
+       that indicates that more attributes are contained in the content, or to
+       use a special sub-element to set attributes.
 
-       <p>In any case, it will still be possible to use entities defined
+  <dt> Enforce correct entity processing
+  <dd> In any case, it will still be possible to use entities defined
        <em>before processing the document</em>, since the parser will be using
        the TopContext as its entity manager.  We can enforce this behavior by
        <em>always</em> looking up entities at parse time, and always in the top
@@ -102,6 +104,11 @@
 </dl>
 
 <h3>Apache/C</h3>
+<blockquote><strong>
+  See <a href="porting.html">porting.html</a> and
+  <a href="Design/c-port.html">Design/c-port.html</a>
+</strong></blockquote>
+
 <dl>
   <dt> <code>mod_pia</code>
   <dd> Implement a PIA module, probably using <code>mod_java</code> as a
@@ -373,7 +380,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.9 1999-06-25 00:23:17 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.10 1999-06-29 00:53:40 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
