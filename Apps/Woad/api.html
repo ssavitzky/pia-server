@@ -7,11 +7,9 @@
 <h3>Abstract:</h3>
 
 <blockquote>
-<p> This document describes the structures and interfaces of the <font
-    face="sans-serif">WOAD</font> system at the level required for extending
+<p> This document describes the structures and interfaces of the <font face="sans-serif">WOAD</font> system at the level required for extending
     and customizing it.  The intended audience is web-page and software
-    developers -- its purpose is both to help you integrate <font
-    face="sans-serif">WOAD</font> into an existing suite of applications, and
+    developers -- its purpose is both to help you integrate <font face="sans-serif">WOAD</font> into an existing suite of applications, and
     to help you make existing applications and documentation (such as
     cross-indexers, pretty-printers, and web-accessible reference material)
     useful in the <font face="sans-serif">WOAD</font> environment.
@@ -36,12 +34,28 @@
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-1.4">1.4: The <code>.Woad</code> subtree</a></font>
  <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-2">2: WOAD Web Pages and their Tagsets</a>
  <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-3">3: Index Files and Databases</a>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-4">4: Annotation and Documentation Files</a>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-5">5: Listers, Parsers and Formatters</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-4">4: Word Contexts and Indices</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-4.1">4.1: Specifics</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-4.2">4.2: Occurrences</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-5">5: Annotation and Documentation Files</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-6">6: Listers, Parsers and Formatters</a>
   </toc>
 
 
 <h2> <a name="section-1">1:</a> The <font face="sans-serif">WOAD</font> Tree</h2>
+
+<dl>
+  <dt> <b>Note:</b> Watch out for empty files in Woad's annotation directories.
+  </dt>
+  <dd> If somebody has done, e.g., <code>touch&nbsp;~/.pia/.words/foo</code>
+       and you later ask for <code>/.words/foo</code> you get a ``document
+       contains no data'' error, which is perfectly correct but potentially
+       confusing, especially in <code>.words</code> where you're expecting a
+       directory listing.  This can easily happen if someone is ``playing
+       around'' in the annotation directories, creating files just to see what
+       happens.
+  </dd>
+</dl>
 
 <h3><a name="section-1.1">1.1:</a> The <code>.notes</code> subtree</h3>
 
@@ -85,7 +99,7 @@
     Woad server running on Unix), making the source annotation directory
     <code>~/.woad/.source</code>, and one under the <em>source</em> root,
     passed to the Woad server on the command line with the
-    <code>sources=<em>path</em></code> option.  Whenever a URL starting with
+    <code>source=<em>path</em></code> option.  Whenever a URL starting with
     <code>/.source</code> is requested, the Woad server looks in <em>both</em>
     places: first under its own root, then under the source root.
 </p>
@@ -138,13 +152,34 @@
     identifiers in most programming-languages can be treated as words.  A
     <em>phrase</em> can be turned into a word by, for example, replacing
     spaces with underscores and punctuation characters with hyphens.  A word
-    is not allowed to start with a period.
+    is not allowed to start <em>or end</em> with a period.
 </p>
 
-<!-- === this represents a significant change: not yet implemented === -->
+<blockquote>
+<p> Not allowing words to end with period prevents ambiguities at the end of
+    sentences and avoids trouble with operating systems that append a
+    gratuitous period to filenames.  Not allowing words to <em>begin</em> with
+    a period follows the Unix convention of hiding filenames that start with a
+    period -- some web servers will refuse to serve them, and most will leave
+    them out of directory listings.
+</p>
 
-<p> The <code>.word</code> subtree is comparatively ``flat,'' having only two
-    directory levels underneath it.
+<p> Note, too, that <em>case is significant</em> in word directory names (WOAD
+    is designed to run on Unix), but lookup is normally case-folded and will
+    find all words that differ only in case.  In some contexts (e.g. English
+    text), words may be automatically case-smashed in case at the beginnings of
+    sentences, but this is not always the correct thing to do: I am grateful
+    to Isaac Asimov for pointing out the fact that the pronunciation of POLISH
+    is ambiguous, depending on whether you're talking about shoe
+    <em>polish</em> or <em>Polish</em> shoes.  Hence it is correct to
+    lowercase all the words in ``Polish my shoes, please,'' but not in
+    ``Polish shoes please me.''
+</p>
+</blockquote>
+
+<p> The <code>.word</code> subtree is comparatively ``flat,'' initially having
+    only two directory levels underneath it.  (More levels can be added,
+    forming a hierarchy of topics like Yahoo or DMOZ.)
 </p>
 
 <p> The first level contains directories corresponding to ``contexts;'' the
@@ -209,6 +244,14 @@
 <p> At some point (possibly quite soon, since it's simple) we will probably
     extend the scheme to allow a hierarchy of context directories.
 </p>
+
+<p> It's not entirely clear how to handle cross-references, i.e. finding all
+    the places where a given identifier is <em>used</em>.  Conceptually, at
+    least, this is just an index, but maintaining it could be a problem.
+    Probably it should have &lt;xref&gt; entries instead of &lt;Word&gt;
+    entries. 
+</p>
+
 
 <h3><a name="section-1.4">1.4:</a> The <code>.Woad</code> subtree</h3>
 
@@ -353,7 +396,7 @@
 
 <p> &nbsp;</p>
 
-<table bgcolor="white" bgcolor="white" border="2" cellpadding="3">
+<table bgcolor="white" border="2" cellpadding="3">
   <caption>Directory-listing files</caption>
   <tr>
     <th bgcolor="#cccccc">subtree</th>
@@ -400,15 +443,196 @@
     to construct indices.
 </p>
 
+<h3>External Indexers</h3>
+
+<blockquote>
+  <p> <em>What's emerging in my investigation of <a
+      href="http://lxr.linux.no/"> LXR</a> and other indexing tools is a
+      realization that we need better ways of integrating WOAD with other
+      tools. </em>
+  </p>
+</blockquote>
+
+<p> One observation about indexers like <a href="http://lxr.linux.no/">
+    LXR</a> is that each one essentially defines a <em>context</em> within
+    which certain classes of names are recognized.  For example, LXR
+    recognizes identifiers in C and C++ code, but ignores comments.  Full-text
+    indexers like <a
+    href="http://ls6.cs.uni-dortmund.de/ir/projects/freeWAIS-sf/">
+    FreeWAIS-sf</a> avoid <em>that</em> problem, but are unable to identify
+    declarations.  So both have their place.
+</p>
+
+<p> Indexing programs generally also come with a compatible search engine
+    (typically a CGI, though in the case of the WAIS family there might also
+    be a server version), and often a cross-reference listing program (for
+    example LXR's) that makes recognized identifiers into links.
+</p>
+
+<p> Integrating indexing programs into WOAD is complicated by the fact that
+    they all use different database files, including application-specific
+    binary files (WAIS), <code>dbx</code> and other database formats, and
+    files tied to Perl hashes (LXR).
+</p>
+
 <hr />
-<h2> <a name="section-4">4:</a> Annotation and Documentation Files</h2>
+<h2> <a name="section-4">4:</a> Word Contexts and Indices</h2>
+
+<h3><a name="section-4.1">4.1:</a> Specifics</h3>
+
+<p> This section lists the default contexts and gives some information about
+    how the indexing information is obtained:
+</p>
+
+<dl>
+  <dt> files
+  </dt>
+  <dd> all filenames and directory names need to be indexed, both with and
+       without extensions.
+  </dd>
+  <dt> javadoc
+  </dt>
+  <dd> A comprehensive list of methods can be found in the top-level file
+       <code>index-all.html</code>.  Unfortunately it isn't always present; in
+       particular, it's missing in Sun's online Java documentation.  The list
+       can be reliably computed only by recursively expanding the
+       documentation and selecting name anchors that contain types in
+       parentheses. 
+  </dd>
+  <dt> HTML and its derivatives
+  </dt>
+  <dd> The simplest way to index general HTML is to index only phrases
+       enclosed in name anchors.  In addition, ``active'' pages may contain
+       declarations; these also have to be indexed.
+  </dd>
+  <dt> Programming languages
+  </dt>
+  <dd> In object-oriented languages all package, class and function (method)
+       declarations need to be indexed.  Instance variables and global
+       variables may need to be indexed in languages that have them (e.g. C
+       and C++).
+  </dd>
+  <dt> English text
+  </dt>
+  <dd> Normal text does not contain definitions.  Places where words are
+       <em>used</em> are treated in the next section.  Files that <em>do</em>
+       contain definitions (e.g. glossaries and manuals) may need special
+       treatment, although in most cases they will actually be in HTML and
+       have the necessary name anchors already in place in one form or
+       another.
+  </dd>
+</dl>
+
+<h3><a name="section-4.2">4.2:</a> Occurrences</h3>
+
+<p> Occurrences, i.e., places where a word is <em>used</em> (as opposed to
+    <em>defined</em>), are best turned into links (to the word's page)
+    ``on-the-fly'' while a page is being viewed.  Locating and listing
+    <em>all</em> of the places where an identifier occurs is an expensive
+    process.
+</p>
+
+<p> However, it's not impossible -- it ``merely'' requires a complete pass
+    through all the files in the system.  However, carrying this off requires
+    either (1) having a good way to determine which words are going to need
+    indexing, or (2) indexing everything (full text indexing).
+</p>
+
+<p> So the simplest method is almost certainly going to be full-text
+    indexing, which allows us to use a totally separate index for it.  This
+    implies that only words with indexed definitions will get links; others
+    (e.g. ``<em>this</em>'' will have to be looked up via the form.  There's a
+    big advantage to this: it shows the user which words are actually worth
+    looking up (in the sense that they have local definitions).
+</p>
+
+<p> There are two ways to anchor occurrences:
+</p>
+<ul>
+  <li> Link to line numbers.  This works well if we can ensure that the parser
+       will insert &lt;line&gt; elements.  It's essentially the <em>only</em>
+       option if we're going to use a separate full-text indexer.
+  </li>
+  <li> Link to occurences.  This requires that we keep track of the occurrences
+       of each identifier in the file, so that we can link to, e.g.,
+       <pre>&lt;a name="foo.50" href="/.word/foo"&gt;foo&lt;/a&gt;</pre>
+  </li>
+</ul>
+
+
+
+<hr />
+<h2> <a name="section-5">5:</a> Annotation and Documentation Files</h2>
 
 
 <hr />
-<h2> <a name="section-5">5:</a> <a name="listers">Listers, Parsers and Formatters</a></h2>
+<h2> <a name="section-6">6:</a> <a name="listers">Listers, Parsers and Viewers</a></h2>
+
+<h3>External Viewers</h3>
+
+<blockquote>
+  <p> <em>One of the things that emerged in my investigation of <a
+      href="http://lxr.linux.no/"> LXR</a> and other indexing tools is a
+      realization that we need better ways of integrating WOAD with other
+      tools.  This section explains how to do that.</em>
+  </p>
+</blockquote>
+
+<p> Just as we will often want to use external tools for indexing, so we will
+    often want to integrate external viewing and formatting tools.  Examples
+    include Javadoc and <code>tsdoc</code>, which generate documentation from
+    source code, and <a href="http://www.mozilla.org/bonsai.html"> Bonsai
+    </a>, which adds CVS annotation to source files.
+</p>
+
+<p> There are three cases that need to be considered:
+</p>
+
+<ul>
+  <li> The tool does its work offline, and generates HTML files, ideally
+       somewhere parallel to the source tree.  This is comparatively easy to
+       handle -- as long as WOAD can locate the marked-up files given the
+       corresponding source path, it can offer them as an alternative.  It has
+       the additional advantage that WOAD can easily add its own markup, for
+       example linking identifiers to their WOAD referent.  This is not always
+       desirable, though, as it may conflict with the tool's own
+       cross-reference links.
+  </li>
+  <li> The tool operates as a CGI script.  This is somewhat more difficult,
+       and presents two possibilities: either WOAD simply <em>links</em> to
+       the CGI, or it does an <code>&lt;include&gt;</code> (which has higher
+       overhead, but allows WOAD to add its own annotation and identifier
+       links). 
+  </li>
+  <li> The tool operates as a separate server.  This presents a situation
+       almost identical to that of the CGI script.
+  </li>
+</ul>
+
+<p> The main thing that needs to happen in order to integrate an external
+    viewer is defining the mapping between the <code>.source</code> tree and
+    the URL's provided by the viewer.  There are several plausible methods:
+</p>
+
+<ul>
+  <li> Add an index file to every source or source annotation directory,
+       e.g. <code>map.wi</code>, which can be included by the listing page.
+  </li>
+  <li> Put the mapping information into the <code>woad.xcf</code>
+       configuration files.
+  </li>
+  <li> Put a configuration file at the <em>root</em> of the source or source
+       annotation tree, and include <em>that</em>.  
+  </li>
+  <li> Have an auxiliary tagset (or several) which is (are) <em>included</em>
+       in <code>src-listing</code> and so on.  This is by far the most
+       versatile technique, so that's what we do.
+  </li>
+</ul>
+
 
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: api.html,v 1.3 2000-07-28 22:30:59 steve Exp $</b><br />
+<b>$Id: api.html,v 1.4 2000-08-22 23:52:46 steve Exp $</b><br />
 </body></html>
