@@ -7,9 +7,12 @@
 <sub-head page='options' />
 
 <hr />
-<p>This is a ``dump'' of the internal Agent data structure in XML format.
+<p> This is a ``dump'' of all of this Agent's data in XML format.  It can be
+    put in a file, edited, and ``<a href="/Admin/load-agent">loaded</a>'' to
+    create a new agent. 
+</p>
 
-<pre><protect result markup>&AGENT;</protect></pre>
+<pre><protect result markup> &AGENT;</protect></pre>
 <hr />
 <set entity='entity' name='title'>Options Page</set>
 
@@ -54,6 +57,6 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.3 1999-04-23 00:25:12 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.4 1999-05-06 20:36:24 steve Exp $' />
 
 </body></html>

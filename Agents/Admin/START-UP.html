@@ -28,32 +28,32 @@ You can get additional installation forms from:
 <h2>Start up agents</h2>
 <dl> 
   <dt> DOFS agent
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name:<input name="agent" value="DOFS">
        </form>
        
   <dt> <a name="Proxie">Proxie agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="Proxie">
        </form>
 
   <dt> <a name="History">History agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="History">
        home: <input name="home-dir" value="./Proxie/History">
        </form>
        
   <dt> <a name="Toolbar">Toolbar agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="Toolbar">
        path: <input name="path" value="Proxie">
        </form>
   <dt> <a name="remote">remoteTools agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="remoteTools">
        type: <input name="type" value="Proxie/Toolbar">
@@ -61,7 +61,7 @@ You can get additional installation forms from:
        home: <input name="home-dir" value="Proxie/remoteTools">
        </form>
   <dt> <a name="fileTools">fileTools agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="fileTools">
        type: <input name="type" value="Proxie/Toolbar">
@@ -69,7 +69,7 @@ You can get additional installation forms from:
        home: <input name="home-dir" value="Proxie/fileTools">
        </form>
   <dt> <a name="Demo">Active Document Demo agent</a>
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name: <input name="agent" value="Demo">
        </form>
@@ -79,7 +79,7 @@ You can get additional installation forms from:
 
 <dl>
   <dt> dofs/PIA
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        name:<input name="agent" value="PIA">
        type:<input name="type" value="DOFS"><br>
        root:<input name="root" value="&piaDIR;"> -- note the use of an
@@ -89,7 +89,7 @@ You can get additional installation forms from:
   <dt> dofs/My
   <dd> is no longer needed.
   <dt> dofs/Doc
-  <dd> <form action="/Admin/install-agent" method="POST">
+  <dd> <form action="/Admin/create-agent" method="POST">
        <input type="submit" value="Install">
        name:<input name="agent" value="Doc">
        type:<input name="type" value="DOFS"><br>
@@ -104,5 +104,5 @@ You can get additional installation forms from:
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh California Research Center</b><br>
-<b>$Id: START-UP.html,v 1.5 1999-03-23 23:31:21 steve Exp $</b>
+<b>$Id: START-UP.html,v 1.6 1999-05-06 20:36:29 steve Exp $</b>
 </body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:52 steve Exp $ -->
+
+<AGENT name='History' path='/' type='History' pathName='/History'
+       home-dir='./Proxie/History'>
+  <bind name='criteria'>response agent-response-</bind>
+  <bind name='act-on'>
+   <set name='ct'><get name='TRANS:Content-type' /></set>
+   <set name='fn'>~/&year;/&month;/&day;.html</set>
+   <output directory='directory' dst='~/&year;/&month;/' /><!--   create dir. if necessary   -->
+   <if><test match='html'>&ct;</test>
+       <then><set entity='entity' name='title'><get name='TRANS:title' /></set>
+             <output append='append' dst='&fn;'><if><!--   dummy to suppress line brk   -->
+                </if>&time; <a href='&url;'>&url; : &title;</a><br />
+</output>
+             <output dst='~/last.link'><a href='&url;'>&url; : &title;</a>
+</output>
+             <output dst='~/last.html'>&date; &time; <a href='&url;'>&url; : &title;</a>
+<dl>
+  <dt> <b>Link:</b>
+  </dt><dd> <protect result='result' markup='markup'><a href='&url;'>&url; : &title;</a></protect>
+  </dd><dt> <b>Reply Header</b>
+  </dt><dd> <pre><get name='TRANS:HEADERS' /></pre>
+  </dd><dt> <b>Request Header</b>
+  </dt><dd> <pre><get name='REQ:HEADERS' /></pre>
+</dd></dl>
+</output>
+       </then>
+       <else><output append='append' dst='&fn;'>&time; --&ct;- <a href='&url;'>&url;</a><br />
+</output></else>
+    </if>
+</bind>
+  <bind name='controls'><!--   from History agent:   -->
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+[<a href='&pia;/History' target='_top'>Hist</a>
+ <a href='&pia;/History/~/' target='_top'>*</a>/<a href='&pia;/History/~/&year;/' target='_top'>&year;</a>/<a href='&pia;/History/~/&year;/&month;/' target='_top'>&month;</a>/<a href='&pia;/History/~/&year;/&month;/&day;.html' target='_top'>&day;</a>
+ <a href='&pia;/History/~/last.html' target='_top'>&time;</a>]</bind>
+</AGENT>

@@ -1,0 +1,74 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Create Agent</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Create Agent</header>
+
+<hr />
+<set name='name'><if>&urlQuery;
+    <then><agent-install>&urlQuery;</agent-install></then></if></set>
+
+<if><get name='name' />
+<then>
+  <set name='type'><get name='FORM:type' /></set>
+
+  <table cellspacing='0' cellpadding='0'>
+    <tr><th width='340'></th><td><br />
+    </td></tr><tr><th align='right'> <h3>Agent <a href='/&name;'>&name;</a>:</h3>
+	</th><td> <h3>Created</h3>
+    </td></tr><tr><th width='340'>
+	</th><td> <a href='/&name;'>home</a>
+    	     <a href='/&name;/'>index</a>
+    	     <a href='/&name;/options'>options</a>
+    <if>&type;
+      <then>
+      <tr><th width='340'></th><td> <a href='/&type;'>/&type;</a> (type agent)
+      </td></tr><tr><th width='340'></th><td> <a href='/&type;/&name;'>/&type;/&name;</a>
+      </td></tr></then>
+    </if>
+    </td></tr><tr><th width='340'>
+	</th><td>
+	   <form action='/&AGENT:name;/remove-agent' method='POST'>
+	     <input name='agent' value='&name;' type='hidden' />
+	     <input type='submit' value='Remove &name;' />
+	   </form>
+    
+    
+  </td></tr></table>
+  <if><get name="FORM:verbose">
+      <then><pre><protect result markup><get name="AGENTS:&name;"/>
+	         </protect></pre>
+      </then>
+  </if>
+  <hr />
+  Query string: <code>&urlQuery;</code>
+</then>
+<else>
+<hr />
+<h2> Form for creating an agent</h2>
+  <form action='create-agent' method='POST'>
+       <table>
+         <tr><th><input type='submit' value="Create" /></th>
+             <th>Name:</th><td><input name='agent' value='' /></td></tr>
+         <tr><th><input type='checkbox' name='verbose' /> verbose</th>
+             <th>Type:</th><td><input name='type' value='' /></td></tr>
+         <tr><th>&nbsp;</th>
+             <th>Path:</th><td><input name='path' value='' /></td></tr>
+         <tr><th>&nbsp;</th>
+             <th>Home:</th><td><input name='home-dir' value='' /></td></tr>
+         <tr><th>&nbsp;</th>
+             <th>Data:</th><td><input name='data-dir' value='' /></td></tr>
+         <tr><th>&nbsp;</th>
+             <th>Class:</th><td><input name='class' value='' /></td></tr>
+       </table>
+  </form>
+
+  <p> Everything but the Name is optional.  Home, User, and Data directories
+       only need to be specified if they differ from the defaults, which are
+       derived from the Agent's pathname (path/name).  Check ``verbose'' to
+       see the created agent's data. </p>
+</else>
+</if>
+
+<short-footer cvsid='$Id: create-agent.xh,v 1.1 1999-05-06 20:36:32 steve Exp $' />
+</body></html>

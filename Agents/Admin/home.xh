@@ -16,18 +16,20 @@ you get a generic <em><a href='index'>index</a></em> page.
 <table><tr><td width='340' valign='top'>
 <h3>Useful Documents and Forms:</h3>
 <ul>
-  <li> <a href='/&AGENT:name;/list-agents'>list running agents</a>
-  </li><li> <a href='/&AGENT:name;/installers'>install new agents</a>
-  </li><li> <a href='/&AGENT:name;/options'>view/change options</a>
+  <li> <a href='/&AGENT:name;/list-agents'>list running agents</a></li>
+  <li> <a href='/&AGENT:name;/installers'>install new agents</a></li>
+  <li> <a href='/&AGENT:name;/options'>view/change options</a>
 <if><test not='not' exact='exact' match='pia'>&piaUSER;</test><then>
   <li> <a href='/&AGENT:name;/debug'>control debugging</a>(currently
        <if><test zero='zero'><get name='PIA:debugging' /></test>
-           <then>off</then><else>on</else></if>)
-  </li><li> <a href='/&AGENT:name;/remove-agent'> remove agent</a>
-</li></then><else>
+           <then>off</then><else>on</else></if>)</li>
+  <li> <a href='/&AGENT:name;/remove-agent'> remove agent</a></li>
+  <li> <a href='/&AGENT:name;/dump-agents'> display all agents in XML</a></li>
+</then>
+<else>
 <!--  was a link to shutdown.if  -->
 </else></if>       
-</li></ul>
+</ul>
 </td><td valign='top'>
 <h3>Other Information:</h3>
 <ul>
@@ -76,5 +78,5 @@ name.
 </dd></dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.8 1999-04-30 23:36:30 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.9 1999-05-06 20:36:34 steve Exp $' />
 </p></body></html>

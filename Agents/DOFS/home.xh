@@ -49,8 +49,8 @@ This is the home page for the
 </if>
 
 <hr />
-<h2>Install a new DOFS:</h2>
-       <form action='/Admin/install-agent.xh' method='POST'>
+<h2>Create a new DOFS:</h2>
+       <form action='/Admin/create-agent.xh' method='POST'>
            <input name='type' value='DOFS' type='hidden' />
            name:<input name='agent' value='' size='10' /> 
            root:<input name='root' value='' size='30' />
@@ -127,5 +127,5 @@ There is some debate as to how ``DOFS'' should be pronounced.  ``Doffs'' means
 ``takes off'' (usually applied to an article of clothing), whereas ``doofus''
 means a foolish or incompetent person.  Neither is particularly appropriate.
 
-<footer cvsid='$Id: home.xh,v 1.6 1999-04-15 22:22:53 pgage Exp $' />
+<footer cvsid='$Id: home.xh,v 1.7 1999-05-06 20:36:41 steve Exp $' />
 </body></html>

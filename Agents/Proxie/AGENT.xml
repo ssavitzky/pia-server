@@ -1,0 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:47 steve Exp $ -->
+
+<AGENT name='Proxie' path='/' type='Proxie' pathName='/Proxie'>
+  <bind name='criteria'></bind>
+  <bind name='controls'><!--  Proxie controls:   -->
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+<a href='&pia;/~/' target='_top'>[~]</a>
+<a href='&pia;&AGENT:path;/&AGENT:name;/hide?hide=true' target='_top'>[X]</a>
+<a href='&pia;&AGENT:path;/&AGENT:name;/help?topic=toolbar' target='_top'>[help]</a>
+</bind>
+</AGENT>

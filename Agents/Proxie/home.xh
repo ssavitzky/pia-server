@@ -36,9 +36,9 @@
 	are not nearly as useful without it.
         See the <a href='/Admin/installers#History'>installation page</a>
         or <br />
-        <form method='POST' action='/Admin/install-agent'>
-		<input name='agent' value='History' size='30' />
-		<input type='submit' value='Install History Now' />
+        <form method='POST' action='/Admin/load-agent'>
+          <input name='src' value='./Proxie/History/AGENT.xml' size='30' />
+	  <input type='submit' value='Install History Now' />
         </form>
   </else>
 </if>
@@ -84,5 +84,5 @@
 <b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
 <b>Source:</b> <a href='/PIA/Agents/&AGENT:name;/&fileName;'>&fileName;</a>
 <b>File:</b> <a href='/Root/&filePath;'>&filePath;</a>
-<footer cvsid='$Id: home.xh,v 1.5 1999-03-27 02:29:36 pgage Exp $' />
+<footer cvsid='$Id: home.xh,v 1.6 1999-05-06 20:36:49 steve Exp $' />
 </p></body></html>

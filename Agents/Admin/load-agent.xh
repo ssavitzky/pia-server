@@ -1,0 +1,63 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Load Agent</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Load Agent</header>
+<if>&FORM:quiet;<else><sub-head page='load-agent' /></else></if>
+<hr />
+<if><get name='FORM:src' />
+    <then><!-- ============== Load a file and report =============== -->
+	  <set name='a-path'><agent-load>&FORM:src;</agent-load></set>
+	  <if><get name='a-path'>
+	      <then>
+		 <!-- Need to record path and src in a namespace. -->
+		 <h3>Agent &a-path; loaded</h3>
+		 <user-message>Agent &a-path; loaded from &FORM:src;</user-message>
+		 <if>&FORM:quiet;
+		     <else><!-- Not quiet: report information -->
+		       <table>
+			 <tr><th align='right'>Root: </th>
+			     <td><a href="&a-path;">&a-path;</a></td>
+			 </tr>
+			 <tr><th align='right'>Home: </th>
+			     <td><a href="&a-path;~">&a-path;~</a></td>
+			 </tr>
+			 <tr><th align='right'>Index: </th>
+			     <td><a href="&a-path;~/">&a-path;~/</a></td>
+			 </tr>
+			 <tr><th align='right'>Options: </th>
+			     <td><a href="&a-path;~/options"
+				    >&a-path;~/options</a></td>
+			 </tr>
+		       </table>
+		     </else>
+	        </if>
+	     </then>
+	     <else>
+		<h3>Loading &FORM:src; failed</h3>
+		<p> Either the file does not exist, or it does not contain an
+		    AGENT element. </p>
+	     </else>
+	 </if>
+    </then>
+    <else><!-- ============== No source file: ask for one =============== -->
+	<h2>Load an agent from an XML file:</h2>
+	<form action='/&AGENT:name;/load-agent' method='POST'>
+	  <input type='submit' value='Load Agent from:' />
+	  &nbsp;<input name='src' value='' size='40' />
+
+	  <p> This form is used to ``load'' an Agent from an XML file that
+	      specifies the internal data structure to be constructed.  If you
+	      want to create an agent from its attributes, you should use
+	      <code><a href="create-agent">create-agent</a></code>. </p>
+
+	  <p> The ``<input name=quiet type=checkbox> <strong>quiet</strong>''
+	      option is mainly used during initialization, to skip the
+	      possibly-expensive step of extracting and reporting information
+	      from the newly-loaded agent.</p>
+	</form>
+    </else>
+</if>
+
+<short-footer cvsid='$Id: load-agent.xh,v 1.1 1999-05-06 20:36:38 steve Exp $'/>
+</body></html>

@@ -1,0 +1,23 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Agent Data Dump</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Agent Data Dump</header>
+<sub-head page='dump-agents' />
+<hr />
+<p> This page contains a printout of the XML data for each Agent
+    currently installed in the PIA.  It can be used for debugging purposes,
+    for documentation, or to create an XML initialization file for a new
+    agent. 
+</p>
+<hr />
+
+<repeat><foreach><text sort>&AGENTS:;</text></foreach>
+	<h2>&li;</h2>
+<pre><protect result='result' markup='markup'>
+ <get name='AGENTS:&li;'/>
+</protect></pre>
+</repeat>
+
+<footer cvsid='$Id: dump-agents.xh,v 1.1 1999-05-06 20:36:33 steve Exp $' />
+</body></html>

@@ -5,33 +5,40 @@
 <h1>The &AGENT:name; agent initialization document</h1>
 
 <user-message>Initializing &AGENT:name; from &filePath;</user-message>
+<set agent='agent' name='do-not-remove'>true</set>
 
-<if><status src='checkpoint.dat' item='exists' />
+<if><logical op='and'>
+	<status src='checkpoint.dat' item='exists' />
+	<agent-restore file='checkpoint.dat'></agent-restore>
+    </logical>
     <then>
-	<if><agent-restore file='checkpoint.dat'>
-	    </agent-restore><then>
-		<user-message>Restored from checkpoint.dat</user-message>
-            </then><else>
- 		<set agent='agent' name='do-not-remove'>true</set>
-		<user-message>Restore failed because of Java class updates.
-Loading start-up file.</user-message>
-		<submit-forms><include src='/&AGENT:name;/START-UP.html' /></submit-forms>
-	    </else></if>
+	<user-message>Restored from checkpoint.dat</user-message>
     </then>
+    <else-if><status src='agent-files.xml' item='exists' />
+    <then><user-message>Loading XML from '<status src='agent-files.xml'
+				           item='path' />'</user-message>
+	  <include src='agent-files.xml' />
+    </then></else-if>
     <else>
-	<set agent='agent' name='do-not-remove'>true</set>
-	<user-message>Loading startup file</user-message> 
-	<submit-forms><include src='/&AGENT:name;/START-UP.html' /></submit-forms>
+	  <user-message>Loading startup file</user-message> 
+	  <submit-forms><include src='/&AGENT:name;/START-UP.html' />
+	  </submit-forms>
     </else>
 </if>
 
 <hr />
-This form gets requested by the agency at start-up.  It looks for a <a href='START-UP.html'>START-UP.html</a> file and submits each of the forms
-found in that file in turn.
-<p>
+<p> This form gets requested by the Admin agent at start-up.  It tries the
+    following initialization techniques, stopping on the first one that works:
+</p>
+<ol>
+  <li> Restoring serialized objects from <code>checkpoint.dat</code>
+  <li> Loading XML from <code>load-agents.inc</code>
+  <li> Submitting all the forms in <code>START-UP.html</code>
+</ol>
 
-It is also possible to override <em>this</em> file with your own version, in
-(<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code into it.
+<p> It is also possible to override <em>this</em> file with your own version,
+    in (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code
+    into it. </p>
 
-<short-footer cvsid='$Id: initialize.xh,v 1.5 1999-03-27 02:29:22 pgage Exp $' />
+<short-footer cvsid='$Id: initialize.xh,v 1.6 1999-05-06 20:36:35 steve Exp $' />
 </p></body></html>

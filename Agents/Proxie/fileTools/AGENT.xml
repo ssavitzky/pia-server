@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:59 steve Exp $ -->
+
+<AGENT name='fileTools' path='/Proxie/Toolbar/'
+       type='/Proxie/Toolbar' home-dir='Proxie/fileTools'
+       pathName='/Proxie/Toolbar/fileTools'>
+  <bind name='criteria'>response agent-response html</bind>
+  <bind name='act-on'><if><get name='AGENT:hidden' /><else>
+<trans-control>
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+<a href='&pia;/' target='_top'><img src='&pia;/Icon/pia24.gif' height='24' width='43' border='0' /></a>
+<expand>&AGENTS:Toolbar:controls;</expand>
+<expand><get name='AGENTS:History:controls' /></expand>
+( <if><test not='not' exact='exact' match='&transAgentType;'>&transAgentName;</test>
+    <then><a href='&pia;/&transAgentType;'>&transAgentType;</a>
+          <a href='&pia;/&transAgentType;/'> / </a></then>
+</if>
+<a href='&pia;/&transAgentName;'>&transAgentName;</a>
+<a href='&pia;/&transAgentName;/'> / </a> )
+<a href='/PIA/Agents/&urlPath;'>&urlPath;</a>
+<hr />
+</trans-control></else></if>
+</bind>
+</AGENT>

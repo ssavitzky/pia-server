@@ -1,0 +1,15 @@
+<!-- This file is meant to be included. -*-html-helper-*- -->
+<!-- Copyright 1999 Ricoh Silicon Valley -->
+
+<agent-files>
+  ./DOFS/AGENTS.xml
+  ./Demo/AGENT.xml
+  ./Proxie/AGENT.xml
+  ./Proxie/History/AGENT.xml
+  ./Proxie/Toolbar/AGENT.xml
+  ./Proxie/fileTools/AGENT.xml
+  ./Proxie/remoteTools/AGENT.xml
+</agent-files>
+
+
+<!-- $Id: agent-files.xml,v 1.1 1999-05-06 20:36:31 steve Exp $ -->

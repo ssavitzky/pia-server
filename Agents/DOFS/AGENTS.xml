@@ -1,0 +1,21 @@
+<!DOCTYPE AGENTS SYSTEM Admin-agent>
+<!-- $Id: AGENTS.xml,v 1.1 1999-05-06 20:36:40 steve Exp $ -->
+
+<AGENTS>
+  <AGENT name='DOFS' path='/' type='DOFS'
+	 class='org.risource.pia.agent.Dofs' pathName='/DOFS'>
+    <bind name='criteria'></bind>
+  </AGENT>
+
+  <AGENT name='PIA' path='/' type='/DOFS'
+	  class='org.risource.pia.agent.Dofs' pathName='/PIA'>
+    <bind name='criteria'></bind>
+    <bind name='root'>/home/steve/PIA</bind>
+  </AGENT>
+
+  <AGENT name='Doc' path='/' type='/DOFS'
+	  class='org.risource.pia.agent.Dofs' pathName='/Doc'>
+    <bind name='criteria'></bind>
+    <bind name='root'>/home/steve/PIA/Doc</bind>
+  </AGENT>
+</AGENTS>

@@ -1,27 +1,30 @@
-<!doctype tagset system "tagset.dtd">
-<!-- -------------------------------------------------------------------------- -->
-<!-- The contents of this file are subject to the Ricoh Source Code Public      -->
-<!-- License Version 1.0 (the "License"); you may not use this file except in   -->
-<!-- compliance with the License.  You may obtain a copy of the License at      -->
-<!-- http://www.risource.org/RPL                                                -->
-<!--                                                                            -->
-<!-- Software distributed under the License is distributed on an "AS IS" basis, -->
-<!-- WITHOUT WARRANTY OF ANY KIND, either express or implied.  See the License  -->
-<!-- for the specific language governing rights and limitations under the       -->
-<!-- License.                                                                   -->
-<!--                                                                            -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.  Portions  -->
-<!-- created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All    -->
-<!-- Rights Reserved.                                                           -->
-<!--                                                                            -->
-<!-- Contributor(s):                                                            -->
-<!-- -------------------------------------------------------------------------- -->
+<!DOCTYPE tagset SYSTEM "tagset.dtd">
+<!-- ---------------------------------------------------------------------- -->
+<!-- The contents of this file are subject to the Ricoh Source Code Public  -->
+<!-- License Version 1.0 (the "License"); you may not use this file except  -->
+<!-- in compliance with the License.  You may obtain a copy of the License  -->
+<!-- at http://www.risource.org/RPL                                         -->
+<!--                                                                        -->
+<!-- Software distributed under the License is distributed on an "AS IS"    -->
+<!-- basis, WITHOUT WARRANTY OF ANY KIND, either express or implied.  See   -->
+<!-- the License for the specific language governing rights and limitations -->
+<!-- under the License.                                                     -->
+<!--                                                                        -->
+<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
+<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
+<!--                                                                        -->
+<!-- Contributor(s):  steve@rsv.ricoh.com                                   -->
+<!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.8 1999-05-06 20:36:27 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
-<doc> This tagset is local to the Admin agent.
+<doc> This tagset is local to the Admin agent.  In addition to defining local
+      headers and logos, it defines a number of agent-specific tags with
+      handlers that require the presence of the Admin agent class.
 </doc>
 
 <h2>Agent-specific tags</h2>
@@ -47,6 +50,35 @@
       <doc> specifies the name of the agent to be removed
       </doc>
    </define>
+</define>
+
+<define element=agent-load>
+  <doc> Load agents from the file specified in the content, using the
+	Admin-agent tagset.  Return the pathName of each agent loaded.
+  </doc>
+  <action><text trim>
+    <set name='loaded'><include src='&content;' tagset='Admin-agent'/></set>
+    <extract sep=' '>
+	     <from>&loaded;</from>
+	     <name recursive>AGENT</name>
+	     <name>pathName</name>
+	     <eval />
+    </extract>
+  </text></action>
+</define>
+
+<define element='agent-files'>
+  <doc> Load agents from the whitespace-separated list of files specified in
+	the content.  Reports progress using &lt;user-message&gt;.
+  </doc>
+  <action>
+    <repeat><foreach>&content;</foreach>
+	    <user-message>  loaded <hide>
+		    </hide><agent-load>&li;</agent-load><hide>
+		    </hide> from <status src='&li;' item='path'/></user-message>
+    </repeat>
+    <user-message>Loading complete.</user-message>
+  </action>
 </define>
 
 <h2>Legacy operations</h2>
@@ -203,11 +235,13 @@
 	     </if>
     <tr><th valign=top align=right>
 	     <xopt page="&attributes:page;"
-		   pages="agents installers remove-agent">&blue-dot;</xopt>
+		   pages="agents installers load-agent remove-agent"
+		  >&blue-dot;</xopt>
 	     &nbsp;
 	<td valign=top>
 	    <xa href="list-agents" page="&attributes:page;">list</xa> / 
 	    <xa href="installers" page="&attributes:page;">install</xa> / 
+	    <xa href="load-agent" page="&attributes:page;">load</xa> / 
  	    <xa href="remove-agent" page="&attributes:page;">remove</xa>
 	     agents<br>
     <tr><th valign=top align=right>Files: &nbsp;
@@ -269,5 +303,8 @@
   </action>
 </define>
 
+<hr />
+<b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.8 1999-05-06 20:36:27 steve Exp $</b><br />
 </tagset>
 
