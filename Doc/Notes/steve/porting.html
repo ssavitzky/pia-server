@@ -98,12 +98,19 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
   <li> Mozilla<br>
        Has a DOM in C++ (unfortunately), along with XML and HTML parsers.
 
-  <li> A C DOM interface exists in the form of a header file.
+  <li> A C DOM interface exists in the form of a header file -- see
+       <a href=" http://www.sinica.edu.tw/~ricko/src/dom_interface.h"
+       >http://www.sinica.edu.tw/~ricko/src/dom_interface.h</a>.  It doesn't
+       include an implementation, however.
 
-  <li> The James Clark  parser is probably the one to use.  It's possible that
-       a SAX-style interface exists for it.
+  <li> <a href="http://www.jclark.com/">James Clark</a>'s SP parser or one of
+       its derivatives is probably the one to use.  It's written in C++ and
+       has an event-oriented interface.  Clark also has an XML parser called
+       Expat, and a Java XML parser called XP.
 
-  <li> Other XML parsers exist.
+  <li> Other XML parsers exist.  There are some additional requirements on a
+       parser if the application needs to process HTML documents obtained from
+       other sites:
        <ul>
 	 <li> An XML parser would have to be extended slightly to handle tags
 	      that the tagset flags as "empty", i.e. not requiring either a
@@ -300,7 +307,7 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: porting.html,v 1.5 1999-06-09 01:13:02 steve Exp $</b><br>
+<b>$Id: porting.html,v 1.6 1999-06-17 00:06:17 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

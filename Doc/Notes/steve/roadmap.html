@@ -68,12 +68,30 @@
 <p> Note that if Output extends SAX, and Processor extends Output, it becomes
     possible to use the DPS to process XML delivered by a SAX parser.  You
     couldn't use it on documents with embedded DPS control structures or
-    entities, but you <em>could</em> use it for other kinds of processing. 
+    entities, but you <em>could</em> use it for other kinds of processing.
+    Actually, you could use it for XXML as well if you had a way to avoid
+    entities; this would have other advantages.  There are three possibilities:
+<ol>
+  <li> Add a constructor for elements, so that an attribute list could be
+       built dynamically.  We need this anyway.
+  <li> Define sub-elements as alternatives to <em>every</em> attribute.  We
+       might not want this in all cases, but a small number of standard
+       elements would cover the common ones (e.g. name, href, ...). 
+  <li> Define a general-purpose sub-element to replace <em>any</em>
+       attribute.  This could be handled in BasicHandler and GenericHandler,
+       so it's much simpler than the previous alternative.
+       <code>&lt;o&gt;</code> (for ``option'') comes to mind. 
+</ol>
 
 <p> The event-driven Processor is somewhat related to the old
     <em>Token</em>-oriented ``interform interpretor'' enshrined in
     <code>pia/src/java/crc/interform</code> -- not that it's a particularly
-    good example. 
+    good example.
+
+<p> <a href="http://www.jclark.com/xml/xp/index.html">XP</a> is a fast XML
+    parser written in Java by James Clark; it provides almost everything we
+    need except that it doesn't seem to report external entities in attribute
+    values.  (All of the DPS's entities are effectively external.)
 
 <h3>PIA: Servlet and Apache</h3>
 
@@ -85,21 +103,35 @@
        allows the PIA's own Agent name resolution and proxying to work
        cleanly.  It reduces the parent server to a mere shell.
 
-  <li> Each Agent is a Servlet.  This gives up the Resolver unless you use the
-       PIA's own server, but has the potential to greatly clean up the
-       interface between the server portion of the PIA and the Agents, and
-       probably gets rid of a lot of junk on Transaction as well.
+  <li> Each Agent is a Servlet.  This bypasses the Resolver, but has the
+       potential to greatly clean up the interface between the server portion
+       of the PIA and the Agents, and probably gets rid of a lot of junk on
+       Transaction as well.
 </ol>
 
 <p> The best is probably a hybrid approach: the Resolver is a Servlet in its
     own right, but delegates the actual response (<code>respond</code> method)
     to <code>Agent</code>s that are <em>also</em> <code>Servlet</code>s.  This
     gives the option of wrapping ordinary third-party <code>Servlet</code>s as
-    <code>Agent</code>s. 
+    <code>Agent</code>s.  Essentially, both <code>Resolver.push</code> and
+    <code>Agent.respond</code> would get replaced by
+    <code>Servlet.service</code>.
+
+<p> The Servlet package contains ServletRequest and ServletResponse interfaces
+    that include most of the functionality of the PIA's Machine and
+    Transaction classes.  The thread machinery of Transaction and much of
+    Content would still be required, and it's not clear whether Servlet is
+    adequate for dealing with proxying.  It's likely that we would have to
+    retain Transaction in some form in order to support threads, XML
+    representations, and some DPS features.
 
 <p> An Apache module is most easily implemented using <code>mod_java</code>,
     but any design should allow a C version of the PIA to be dropped in
-    instead. 
+    instead.  Apache uses a unified transaction structure that contains
+    <em>both</em> request and response information in one place.  (Of course,
+    if the servlet interface is used, it becomes even easier to interface the
+    PIA to <code>mod_java</code>.)
+
 
 <h2><a name="C-port">C Port</a></h2>
 
@@ -227,7 +259,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.6 1999-06-11 23:29:59 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.7 1999-06-17 00:06:18 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
