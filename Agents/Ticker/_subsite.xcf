@@ -1,11 +1,11 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-10-29 23:11:28 bill Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-11-01 17:33:32 bill Exp $ -->
 
 <Container>
  
   <?-- This line tells the PIA to run the code inside the <action> tag
        every 23:01 daily,  forever. --?>
-  <AGENT name=Ticker minute="01" hour="23" repeat="-1">
+  <AGENT name=Ticker minute="50" hour="-1" repeat="-1">
      <initialize><user-message>Ticker agent initialized at &time;</user-message>
      </initialize>
 

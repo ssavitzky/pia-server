@@ -35,21 +35,12 @@
        &yen;
      </td>
      <td>
-       <font color="red">
        <extract>
 	  <from>&goodrow;</from>
-	  <name all="yes">font</name>
-          0
+          <name all="yes">td</name>
+          <match>%</match>
+          <content />
        </extract>
-       &yen;
-       (
-       <extract>
-	  <from>&goodrow;</from>
-	  <name all="yes">font</name>
-          1
-       </extract>
-       )
-       </font>
      </td>
 
      <td>
