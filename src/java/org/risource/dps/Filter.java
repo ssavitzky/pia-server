@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.11 1999-12-14 18:50:51 steve Exp $
+//	$Id: Filter.java,v 1.12 2000-02-15 01:51:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -154,9 +154,10 @@ public class Filter {
     p.setReader(new InputStreamReader(in));
 
     /* Finally, create a Processor and set it up. */
-    TopContext ii = new TopProcessor();
+    TopProcessor ii = new TopProcessor();
     ii.setInput(p);
     ii.setTagset(ts);
+    ii.define("docName", infile);
 
     if (debug && (ii.getNamespace(null) != null)) {
       System.err.println("Entities defined: ");

@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.16 1999-11-09 01:17:24 steve Exp $
+//	$Id: AbstractParser.java,v 1.17 2000-02-15 01:52:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.16 1999-11-09 01:17:24 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.17 2000-02-15 01:52:01 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -130,7 +130,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
   public String location() {
     org.risource.site.Document doc
       = getProcessor().getTopContext().getDocument();
-    String docName = (doc == null)? "" : doc.getName() + ":";
+    String docName = (doc == null)? "" : doc.getPath() + ":";
     return docName + (in.getLineNumber() + 1) + ":";
   }
 
@@ -553,9 +553,9 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected ActiveNode createActiveNode(short nodeType,
 					String name, String data) {
-    ActiveNode n = (tagset == null)
+    ActiveNode n = /* (tagset == null)
       ? Create.createActiveNode(nodeType, name, data)
-      : tagset.createActiveNode(nodeType, name, data);
+      : */tagset.createActiveNode(nodeType, name, data);
     return n;
   }
 
