@@ -1,5 +1,5 @@
 ###### tf/Makefile:	Transaction Feature computation classes
-# 	$Id: Makefile,v 1.5 1999-06-11 23:44:49 wolff Exp $
+# 	$Id: Makefile,v 1.6 1999-06-25 01:12:23 wolff Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -42,6 +42,7 @@ FILES = \
 	 IsProxyRequest.java \
 	 IsProxyResponse.java \
 	 ProxyUser.java \
+	 Protocol.java \
 	 IsRequest.java \
 	 IsResponse.java \
 	 IsText.java \

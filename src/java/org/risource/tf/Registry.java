@@ -1,5 +1,5 @@
 // Registry.java
-// $Id: Registry.java,v 1.5 1999-06-11 23:44:51 wolff Exp $
+// $Id: Registry.java,v 1.6 1999-06-25 01:12:25 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -115,6 +115,7 @@ public class Registry {
       "proxy-request",	"IsProxyRequest",
       "proxy-response",	"IsProxyResponse",
       "proxy-user",     "ProxyUser",
+      "protocol",       "Protocol",
       "request",	"IsRequest",
       "response",	"IsResponse",
       "text",		"IsText",
