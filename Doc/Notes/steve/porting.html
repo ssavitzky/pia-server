@@ -9,10 +9,12 @@
 <h2>Alternatives</h2>
 <h3>OS Alternatives:</h3>
 <ul>
-  <li> VxWorks -- already in use.
   <li> <a href="http://www.cygnus.com/ecos/">eCOS</a> -- attractive, but
        requires C++ for some components; hasn't been ported to many processors
        yet. 
+  <li> Linux -- becoming the OS of choice for high-end embedded applications.
+       Several different embedded versions exist. 
+  </li>
 </ul>
 
 <h3>Language Alternatives:</h3>
@@ -24,16 +26,21 @@
        believe, are based on either the Guile or SIOD implementation of
        Scheme, both of which are in C and fairly lightweight.  Parsers exist;
        data structures and memory management are free.
-  <li> Java: trivial to port, but probably too big/slow. <br>
+  <li> Java: trivial to port, but probably too big/slow for most embedded
+       applications. <br>
+
        <a href="http://www.cygnus.com/product/javalang/">Cygnus</a> is working
        on it, but too preliminary at this point.  VxWorks JVM's exist, but
        probably not for Hitachi CPU's.
   <li> C++: Easier to port to than C; possibly worse size/speed.
-  <li> Perl/Python/Smalltalk: Easier to port to than C/C++, but unfamiliar. <br>
+  <li> Perl/Python/Smalltalk: Easier to port to than C/C++, but unfamiliar to
+       many programmers. <br>
+
        Data structures and memory management come free; XML and HTML parsers
-       exist.  (There are web browsers and servers in Smalltalk already).
-       Smalltalk has a history of being used in embedded applications, but is
-       likely to be slow and bulky.
+       exist.  (There are web browsers and servers in Smalltalk and PERL
+       already).  Smalltalk has a history of being used in embedded
+       applications, but is likely to be slow and bulky.  The Squeak version
+       of Smalltalk, however, is <em>extremely</em> easy to port.
 </ul>
 
 Note that the <a href="http://egcs.cygnus.com/">EGCS</a> compilers now
@@ -133,7 +140,8 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
        </ul>
 
   <li> PERL<br>
-       has data structures very similar to the ones in <code>crc.ds</code>; in
+       has data structures very similar to the ones in
+       <code>org.risource.ds</code>; in 
        fact the <code>ds</code> module was originally designed to make a port
        from PERL to Java as simple as possible.  
 
@@ -184,25 +192,30 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
   This is roughly equivalent to ``where to start.''
 </em></div> 
 <ul>
-  <li> Data structures defined in <code>crc.ds</code>.  These are basically a
+  <li> Data structures defined in <code>org.risource.ds</code>.  These are
+       basically a 
        portable data structure library, and everything in the PIA can be built
        out of them.  In particular, <code>List</code> and <code>Table</code>
        are <em>almost essential</em>.
   <li> You will probably have to add a string datatype. 
-  <li> The basic server classes: <code>crc.pia.Acceptor</code>,
-       <code>crc.pia.Transaction</code>, the <code>crc.pia.Content</code>
+  <li> The basic server classes: <code>org.risource.pia.Acceptor</code>,
+       <code>org.risource.pia.Transaction</code>, the
+       <code>org.risource.pia.Content</code> 
        interface and at least some of its implementations.  These can probably
        be omitted if Apache is used as the server base.
-  <li> The <code>crc.pia.Agent</code> interface and its implementations
-       <code>crc.pia.GenericAgent</code>, <code>crc.pia.agent.Admin</code>,
-       and <code>crc.pia.Root</code>.  Possibly <code>crc.pia.agent.Dofs</code>.
+  <li> The <code>org.risource.pia.Agent</code> interface and its implementations
+       <code>org.risource.pia.GenericAgent</code>,
+       <code>org.risource.pia.agent.Admin</code>, 
+       and <code>org.risource.pia.Root</code>.  Possibly
+       <code>org.risource.pia.agent.Dofs</code>. 
        These are essential for actually serving pages, no matter how they are
        eventually implemented.
   <li> The DOM objects.  In embedded applications, it should be possible to
        pre-parse all the documents and convert them to C data structures,
        though this is not necessarily a good itea.
-  <li> The Document Processing System, in the <code>crc.dps</code> package.
-       The main loop, in <code>crc.dps.process.BasicProcessor</code>, is
+  <li> The Document Processing System, in the <code>org.risource.dps</code>
+       package. The main loop, in
+       <code>org.risource.dps.process.BasicProcessor</code>, is 
        essentially trivial.  You will also need the handlers, tagsets, and
        some of the Input and Output implementations. 
 </ul>
@@ -210,20 +223,23 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 <h3>What can be Left Out?</h3>
 <ul>
   <li> Certainly, any agents (in <code>pia/Agents</code> and
-       <code>crc.pia.agent</code>) that you don't need.  Probably the only
+       <code>org.risource.pia.agent</code>) that you don't need.  Probably the
+       only 
        ones you'll need are <code>Admin</code>, <code>Root</code> and
        <code>DOFS</code>. <code>Admin</code> should be severely restricted,
        and <code>Root</code> will probably be totally changed. 
-  <li> The Resolver (in <code>crc.pia.Resolver</code>) can be left out if you
+  <li> The Resolver (in <code>org.risource.pia.Resolver</code>) can be left
+       out if you 
        don't want to use your device as a proxy.  A lot of other machinery
        could go away if you got rid of this -- essentially you'd be left with
        an ordinary web server that replaces CGI scripts with the DPS and its
        active documents.
   <li> Everything having to do with Java serialized objects (implemented using
-       <code>crc.util.Utilities.readObjectFrom</code> and
+       <code>org.risource.util.Utilities.readObjectFrom</code> and
        <code>writeObjectTo</code>.  Unfortunately there are other things in
        <code>Utilities</code> that you may need.
-  <li> You could leave out the parser (<code>crc.dps.parse</code>) if you used
+  <li> You could leave out the parser (<code>org.risource.dps.parse</code>) if
+       you used 
        pre-build data structures for the parse trees of all your documents.
        This would make your system significantly faster and reduce the amount
        of RAM needed, but would leave it impossible to customize.
@@ -241,21 +257,24 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 </em></blockquote>
 
 <ul>
-  <li> <code>crc.dom</code> and <code>crc.dps.active</code> implement an
+  <li> <code>org.risource.dom</code> and <code>org.risource.dps.active</code> implement an
        <em>obsolete version</em> of the W3C's Document Object Model.  The most
        recent version of the interfaces is in <code>org.w3c.dom</code>; the
        entire DPS needs to be rewritten to use it.  This will probably be
        done sometime in late March, 1999.  The names of several classes and
        methods will have to be changed.  The basic algorithms will stay
        intact, however.
-  <li> <code>crc.pia</code> needs to be re-organized to make better use of
-       interfaces.  <code>crc.pia.Agent</code> is far too complicated;
-       <code>crc.pia.Transaction</code> is also too complex and should be
+  <li> <code>org.risource.pia</code> needs to be re-organized to make better
+       use of 
+       interfaces.  <code>org.risource.pia.Agent</code> is far too complicated;
+       <code>org.risource.pia.Transaction</code> is also too complex and
+       should be 
        redone as an interface.
-  <li> <code>crc.pia.GenericAgent</code> is far too complex; it needs to be
+  <li> <code>org.risource.pia.GenericAgent</code> is far too complex; it needs
+       to be 
        split up and simplified:
        <ul>
-	 <li> The methods in <code>crc.pia.GenericAgent</code> that put
+	 <li> The methods in <code>org.risource.pia.GenericAgent</code> that put
 	      together various kinds of response transaction could also go
 	      into a utility class.
 	 <li> <code>dirAttribute</code> and <code>fileAttribute</code> need to
@@ -267,24 +286,26 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 <h3>Recommended Sequence</h3>
 
 <ol>
-  <li> crc.ds.{Table, List}
-  <li> crc.dps.active.{ParseTreeNode, ParseTreeText, ParseTreeElement, ...}
-  <li> crc.dps.output.ToParseTree<br>
+  <li> org.risource.ds.{Table, List}
+  <li> org.risource.dps.active.{ParseTreeNode, ParseTreeText,
+       ParseTreeElement, ...} 
+  <li> org.risource.dps.output.ToParseTree<br>
        at this point you can build parse trees in memory.  Any parser can
        construct them.
-  <li> crc.dps.input.FromParseTree
-  <li> crc.dps.output.ToExternalForm<br>
+  <li> org.risource.dps.input.FromParseTree
+  <li> org.risource.dps.output.ToExternalForm<br>
        at this point you can traverse a parse tree and output it as a
        character stream.
-  <li> crc.dps.handle.{BasicHandler, GenericHandler}
-  <li> crc.dps.util.{BasicNamespace, BasicEntityTable}; other classes  in util
+  <li> org.risource.dps.handle.{BasicHandler, GenericHandler}
+  <li> org.risource.dps.util.{BasicNamespace, BasicEntityTable}; other classes
+       in util 
        as needed.  Most of them are simple.  Many are just class wrappers for
        a lot of global functions.
-  <li> crc.dps.process.BasicProcessor<br>
+  <li> org.risource.dps.process.BasicProcessor<br>
        At this point you can actually <em>process</em> documents.  You can
        parse them offline and create initialized C data structures if you
        like. 
-  <li> crc.dps.parse.BasicParser<br>
+  <li> org.risource.dps.parse.BasicParser<br>
        This is optional -- you only need it if you are going to process
        documents that are represented as character strings.  If you can stick
        with parse trees, you can leave it out.
@@ -315,7 +336,7 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: porting.html,v 1.7 1999-06-22 18:38:47 steve Exp $</b><br>
+<b>$Id: porting.html,v 1.8 2000-04-26 18:26:21 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
