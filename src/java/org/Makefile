@@ -1,5 +1,5 @@
 ###### org/Makefile:	Imported organizations' Java classes
-#	$Id: Makefile,v 1.4 1999-07-14 20:09:07 steve Exp $
+#	$Id: Makefile,v 1.5 1999-10-12 17:38:50 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -29,8 +29,9 @@ TOPDIR=..
 
 PACKAGES = \
 	w3c \
-	xml \
 	risource 
+
+# incomplete -- let's not build it now. 	xml \
 
 include $(TOPDIR)/makefiles/package.make
 include $(TOPDIR)/makefiles/file.make
