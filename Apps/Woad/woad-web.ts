@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.10 2000-10-24 20:55:11 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.11 2000-10-25 20:05:48 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -239,14 +239,17 @@
 	<table width="100%" border="2" cellpadding="3" cellspacing="0"
 	       bgcolor="99ccff">
 	  <tr>
-	    <td> <a href="&DOC:path;?edit">[edit]</a>
-		 <a href="&annotates;">[annotates &annotates;]</a>
+	    <td> <a href="&DOC:path;?edit">[edit this note]</a>
+		 <a href="&annotates;">[go to `&annotates;' (1)]</a>
 	    </td>
 	    <td align="right">
 		 <code>&DOC:path;</code>
 	    </td>
 	  </tr>
 	</table>
+	<p> (1) `&annotates;' is the WOAD page for the file, directory, or URL
+	    that this note annotates.
+	</p>
      </else>
 </if>
 <hr />
