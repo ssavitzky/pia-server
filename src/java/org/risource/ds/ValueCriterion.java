@@ -1,5 +1,5 @@
 ////// StringCriterion.java:  Match a string.
-//	$Id: ValueCriterion.java,v 1.3 1999-03-12 19:28:52 steve Exp $
+//	$Id: ValueCriterion.java,v 1.4 1999-06-18 18:33:37 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ public class ValueCriterion extends Criterion {
 
   /** Convert to a string. */
   public String toString() {
-    return super.toString() + "=" + ((value == null) ? value : "");
+    return super.toString() + "=" + ((value != null) ? value : "");
   }
 
   /** Match the feature's value.  The default is to match if the
