@@ -50,17 +50,21 @@
 <h2>To-Do list</h2>
 
 <ul>
-  <li> <b>Bug</b> Logging uses a PrintStream. <br />
-       really need to have a logger class that can pass the buck to the
-       servlet.  There should be a static pointer to it, i.e. Log.logger, so
-       that classes like tagset.Loader and TopProcessor can find it.
-       (2000-04-05)
+  <li> <b>Bug</b> Doesn't handle queries. <br />
+       This one's serious.
+       (2000-04-18)
   </li>
   <li> <b>Impr</b> URL space for include, etc. still rooted at / <br />
        ... instead of PIA:rootPath, which might be more consistent.  Right now
        paths used for tagsets and include files that start with "/" are
        relative to the servlet rather than the server.
        (2000-04-18)
+  </li>
+  <li> <b>Impr</b> Logging uses a PrintStream. <br />
+       really need to have a logger class that can pass the buck to the
+       servlet.  There should be a static pointer to it, i.e. Log.logger, so
+       that classes like tagset.Loader and TopProcessor can find it.
+       (2000-04-05)
   </li>
 </ul>
 
@@ -86,5 +90,5 @@
 
 <hr />
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
-<i>$Id: about.html,v 1.4 2000-04-18 22:04:06 steve Exp $</i><br />
+<i>$Id: about.html,v 1.5 2000-04-18 22:10:22 steve Exp $</i><br />
 </body></html>
