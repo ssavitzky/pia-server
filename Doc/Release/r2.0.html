@@ -63,6 +63,29 @@ Manual.</a>.
 You will notice that are classes/package names are prefixed with crc.  This stands for California
 Research Center.  We are considering changing the prefix to org.risource.
 
+
+<h4>Miscellaneous items</h4>
+
+In preparing the code for external release, several obsolete modules were
+removed.  Some of these modules are referenced in the test code and may lead
+to error messages when doing a full make.  You can safely ignore these
+messages.
+<p>
+Small pieces of a few external packages are used in places by the PIA software
+(Jigsaw,Jcrypt, regexp).  
+Thanks to Anselm, John Dumans, Shugo Maeda, and the others who have
+contributed their software to the community.
+These are provided as libraries in PIA/lib/java.
+The source for the regexp package can be retrieved from
+ftp://ftp.risource.org/pub/regex-0_11.tgz
+
+
+<p> The current version of the DOM that we use is not the latest (we are
+    hoping to upgrade soon.)  The interface classes provided by the W3C for
+    the version we are using is provided in PIA/src/java/w3c.  The latest
+    version (which is incompatible with our current implementation) is
+    available from the <a href=http://www.w3c.org/> W3C</a>.
+
 <h3><A NAME="information"> Additional Information</A></h3>
 <p>
 The latest information regarding PIA technology can be found PIA 
