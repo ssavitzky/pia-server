@@ -1,5 +1,5 @@
 ////// ToCharData.java: Token output Stream to Character data
-//	$Id: ToCharData.java,v 1.3 1999-03-12 19:27:05 steve Exp $
+//	$Id: ToCharData.java,v 1.4 1999-04-07 23:21:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,8 +26,7 @@ package org.risource.dps.output;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
-import org.risource.dom.*;
-import org.risource.dps.NodeType;
+import org.w3c.dom.*;
 import org.risource.dps.active.ActiveEntity;
 
 import java.util.NoSuchElementException;
@@ -35,7 +34,7 @@ import java.util.NoSuchElementException;
 /**
  * Output a Token stream to a String in <em>internal</em> form. <p>
  *
- * @version $Id: ToCharData.java,v 1.3 1999-03-12 19:27:05 steve Exp $
+ * @version $Id: ToCharData.java,v 1.4 1999-04-07 23:21:39 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToString
@@ -66,14 +65,15 @@ public class ToCharData extends ToExternalForm {
   ************************************************************************/
 
   public void putNode(Node aNode) { 
-    if (aNode.getNodeType() == NodeType.ENTITY && expandEntities) {
+    if (aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE && expandEntities) {
       ActiveEntity e = (ActiveEntity)aNode;
       // === Should really check value in the entity itself as well ===
-      NodeList value = entityTable.getEntityValue(null, e.getName());
+      NodeList value = entityTable.getEntityValue(null, e.getNodeName());
       if (value != null) write(value.toString());
       else write(aNode.toString());
-    } else if (aNode.getNodeType() == NodeType.TEXT) {
-      write(((Text)aNode).getData());
+    } else if (aNode.getNodeType() == Node.TEXT_NODE || 
+	       aNode.getNodeType() == Node.CDATA_SECTION_NODE) {
+      write(aNode.getNodeValue());
     } else {
       write(aNode.toString());
     }

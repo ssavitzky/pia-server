@@ -1,5 +1,5 @@
 ////// ifHandler.java: Node Handler generic implementation
-//	$Id: ifHandler.java,v 1.5 1999-03-25 17:00:19 steve Exp $
+//	$Id: ifHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,12 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+
+import org.w3c.dom.Node;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,14 +38,13 @@ import org.risource.dps.util.*;
  *	<code>else</code> children.  
  *	<p>
  *
- * @version $Id: ifHandler.java,v 1.5 1999-03-25 17:00:19 steve Exp $
+ * @version $Id: ifHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node
  */
 
 public class ifHandler extends GenericHandler {
@@ -63,21 +58,21 @@ public class ifHandler extends GenericHandler {
   ************************************************************************/
 
   public void action(Input in, Context aContext, Output out) {
-    ParseNodeList content = Expand.getProcessedContent(in, aContext);
+    ActiveNodeList content = Expand.getProcessedContent(in, aContext);
     processConditional(in, aContext, out, content);
   }
 
   public boolean processConditional(Input in, Context aContext, Output out,
-				 ParseNodeList content) {
+				    ActiveNodeList content) {
     boolean trueCondition = false;
-    NodeEnumerator enum = content.getEnumerator();
-
-    for (Node child = enum.getFirst(); child != null; child = enum.getNext()) {
+    int len = content.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode child = content.activeItem(i);
       /* 
        * Use a fast, efficient test for determining the syntactic class of
        * the children:  simply compare the classes of their handlers.
        */
-      if (child.getNodeType() == NodeType.ELEMENT) {
+      if (child.getNodeType() == Node.ELEMENT_NODE) {
 	ActiveElement ct = (ActiveElement)child;
 	Class cl = ct.getSyntax().getClass();
 	if (cl == thenHandlerClass) {
@@ -89,7 +84,7 @@ public class ifHandler extends GenericHandler {
 	  if (!trueCondition) {
 	    // else-if: just delegate to <else-if>'s (expanded) children.
 	    if (processConditional(in, aContext, out,
-				   Expand.processNodes(ct.getChildren(),
+				   Expand.processNodes(ct.getContent(),
 						       aContext)))
 	      return true;
 	  }

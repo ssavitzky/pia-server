@@ -1,5 +1,5 @@
 ////// CursorStack.java: A linked-list stack of current nodes.
-//	$Id: CursorStack.java,v 1.3 1999-03-12 19:28:13 steve Exp $
+//	$Id: CursorStack.java,v 1.4 1999-04-07 23:22:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,10 +24,9 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.NamedNodeMap;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -37,7 +36,7 @@ import org.risource.dps.active.*;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: CursorStack.java,v 1.3 1999-03-12 19:28:13 steve Exp $
+ * @version $Id: CursorStack.java,v 1.4 1999-04-07 23:22:15 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -57,10 +56,9 @@ public class CursorStack implements Cursor {
   /** The Action handler associated with the current Node. */
   protected Action action;
 
-  /** If <code>node</code> is an element, this is equal to it. 
+  /** If <code>node</code> is an element, this is its tagname
    *	Otherwise it's <code>null</code>. 
    */
-  protected Element element;
   protected String tagName;
 
   /** If <code>node</code> is an active node, this is equal to it. 
@@ -85,7 +83,6 @@ public class CursorStack implements Cursor {
     depth 	= old.depth;
     node 	= old.node;
     action 	= old.action;
-    element 	= old.element;
     tagName 	= old.tagName;
     active 	= old.active;
     retainTree 	= old.retainTree;
@@ -108,13 +105,12 @@ public class CursorStack implements Cursor {
   }
     
 
-  public CursorStack(int d, Node n, Action act, Element elt, String tag,
+  public CursorStack(int d, Node n, Action act, String tag,
 		     ActiveNode an, boolean retain, boolean first, 
 		     boolean last, CursorStack old) {
     depth 	= d;
     node 	= n;
     action 	= act;
-    element 	= elt;
     tagName 	= tag;
     active 	= an;
     retainTree 	= retain;
@@ -151,7 +147,7 @@ public class CursorStack implements Cursor {
    *	the alternative generalizes better to subclasses.
    */
   protected void pushInPlace() { 
-    stack = new CursorStack(depth, node, action, element, tagName, active, 
+    stack = new CursorStack(depth, node, action, tagName, active, 
 			    retainTree, atFirst, atLast, stack);
     sawChildren = false;
     depth++;
@@ -166,23 +162,20 @@ public class CursorStack implements Cursor {
     if (node == null) initialize();
     return node;
   }
-  public final Element    getElement()	{  
+  public final ActiveAttrList getAttributes() {
     if (node == null) initialize();
-    return element; }
+    return active.getAttrList();
+  }
+  public final String	  getNodeName() {
+    if (node == null) initialize();
+    return active.getNodeName();
+  }
   public final ActiveNode getActive() 	{  
     if (node == null) initialize();
-    return active; }
+    return active;
+  }
   public final int	  getDepth() 	{ return depth; }
   public final String 	  getTagName() 	{ return tagName; }
-
-  /** === could implement this with another state variable... */
-  public Attribute getAttribute() {
-    if (active != null) return active.asAttribute();
-    else if (node.getNodeType() == NodeType.ATTRIBUTE) 
-      return (Attribute)node;
-    else
-      return null;
-  }
 
   /** Set the current node.  Set <code>active</code> and <code>element</code>
    *	if applicable. */
@@ -191,22 +184,11 @@ public class CursorStack implements Cursor {
     active = (node instanceof ActiveNode)? (ActiveNode)node : null;
     action = (active == null)? null : active.getAction();
 
-    if (node.getNodeType() == NodeType.ELEMENT) {
-      element = (active == null)? (Element) aNode : active.asElement();
-      tagName = element.getTagName();
+    if (node.getNodeType() == Node.ELEMENT_NODE) {
+      tagName = node.getNodeName();
     } else {
-      element = null;
       tagName = null;
     }
-  }
-
-  /** Set the current node to an element */
-  protected void setNode(Element anElement, String aTagName) {
-    node   = anElement;
-    element= anElement;
-    active = (node instanceof ActiveNode)? (ActiveNode)node : null;
-    action = (active == null)? null : active.getAction();
-    tagName = (aTagName == null)? element.getTagName() : aTagName;
   }
 
   protected void setNode(ActiveNode aNode) {
@@ -214,11 +196,9 @@ public class CursorStack implements Cursor {
     active = aNode;
     if (active != null) action = active.getAction();
 
-    if (node != null && node.getNodeType() == NodeType.ELEMENT) {
-      element = active.asElement();
-      tagName = element.getTagName();
+    if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+      tagName = ((ActiveElement)active).getTagName();
     } else {
-      element = null;
       tagName = null;
     }
   }
@@ -227,7 +207,6 @@ public class CursorStack implements Cursor {
     node   = aNode;
     active = aNode;
     action = active.getAction();
-    element = active.asElement();
     tagName = aTagName;
   }
 
@@ -248,8 +227,7 @@ public class CursorStack implements Cursor {
 
   /** This will have to be overridden if the tree is being built on the fly. */
   public boolean hasAttributes() {
-    if (element == null) return false;
-    org.risource.dom.AttributeList atts = element.getAttributes();
+    NamedNodeMap atts = node.getAttributes();
     return (atts != null) && (atts.getLength() > 0);
   }
 
@@ -260,7 +238,7 @@ public class CursorStack implements Cursor {
 
   /** This will have to be overridden if the tree is being built on the fly. */
   protected boolean hasChildren() {
-    return node.hasChildren();
+    return node.hasChildNodes();
   }
 
   /** This should be overridden to if more information is available. */
@@ -307,15 +285,6 @@ public class CursorStack implements Cursor {
     atLast = false;
     sawChildren = true;
     return node;
-  }
-
-  public Element toParentElement() {
-    if (atTop()) return null;
-    popInPlace();
-    atFirst = false;
-    atLast = false;
-    sawChildren = true;
-    return element;
   }
 
 }

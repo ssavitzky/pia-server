@@ -1,5 +1,5 @@
 ////// connectHandler.java: <connect> Handler implementation
-//	$Id: connectHandler.java,v 1.4 1999-03-25 00:42:34 steve Exp $
+//	$Id: connectHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,13 +24,12 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.NodeList;
+import java.io.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
-
-import java.io.*;
+import org.risource.dps.tree.TreeExternal;
 
 /**
  * Handler for &lt;connect&gt;....&lt;/&gt;  <p>
@@ -39,7 +38,7 @@ import java.io.*;
  *	within external entities.  That suggests that the best implementation
  *	is simply to create a suitable entity and return its value.
  *
- * @version $Id: connectHandler.java,v 1.4 1999-03-25 00:42:34 steve Exp $
+ * @version $Id: connectHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -51,14 +50,14 @@ public class connectHandler extends GenericHandler {
 
   /** Action for &lt;connect&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     TopContext  top = cxt.getTopContext();
-    String      src = atts.getAttributeString("src");
-    String    ename = atts.getAttributeString("entity");
-    String   tsname = atts.getAttributeString("tagset");
-    String   method = atts.getAttributeString("method");
-    String     mode = atts.getAttributeString("mode");
-    String   result = atts.getAttributeString("result");
+    String      src = atts.getAttribute("src");
+    String    ename = atts.getAttribute("entity");
+    String   tsname = atts.getAttribute("tagset");
+    String   method = atts.getAttribute("method");
+    String     mode = atts.getAttribute("mode");
+    String   result = atts.getAttribute("result");
 
     result = (result == null)? "" : result.toLowerCase();
     boolean  status = result.equals("status");
@@ -69,14 +68,14 @@ public class connectHandler extends GenericHandler {
     TopContext proc = null;
     InputStream stm = null;
 
-    ParseTreeExternal ent = null;
+    TreeExternal ent = null;
     if (ename != null) {
       ename = ename.trim();
-      ent = new ParseTreeExternal(ename, src, null);
+      ent = new TreeExternal(ename, src, null);
       // If the user gave a name, he is expecting it to be bound.
       cxt.setEntityBinding(ename, ent, false);
     } else {
-      ent = new ParseTreeExternal(in.getTagName(), src, null);
+      ent = new TreeExternal(in.getTagName(), src, null);
       // not clear whether to bind the entity or not here.
     }
 
@@ -104,7 +103,7 @@ public class connectHandler extends GenericHandler {
     if (status) {
       putList(out, Status.getStatusItem(ent, null));
     } else if (doc) {
-      out.putNode(ent.getDocument(cxt));
+      out.putNode(ent.getDocumentAsElement(cxt));
     } else if (!hide) {
       Input xin = ent.getValueInput(cxt);
       Copy.copyNodes(xin, out);

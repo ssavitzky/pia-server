@@ -1,5 +1,5 @@
 ////// ActiveDocument.java: Active Document (parse tree) interface
-//	$Id: ActiveDocument.java,v 1.3 1999-03-12 19:25:17 steve Exp $
+//	$Id: ActiveDocument.java,v 1.4 1999-04-07 23:20:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,8 +23,7 @@
 
 
 package org.risource.dps.active;
-import org.risource.dom.Node;
-import org.risource.dom.Document;
+import org.w3c.dom.*;
 
 import org.risource.dps.Action;
 import org.risource.dps.Syntax;
@@ -35,14 +34,8 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveDocument.java,v 1.3 1999-03-12 19:25:17 steve Exp $
+ * @version $Id: ActiveDocument.java,v 1.4 1999-04-07 23:20:56 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dom.Node
- * @see org.risource.dps.Active
- * @see org.risource.dps.ActiveNode
- * @see org.risource.dps.Action
- * @see org.risource.dps.Syntax
- * @see org.risource.dps.Processor
  */
 
 public interface ActiveDocument extends Document, ActiveNode {

@@ -1,5 +1,5 @@
 ////// ToString.java: Token output Stream to String
-//	$Id: ToString.java,v 1.3 1999-03-12 19:27:11 steve Exp $
+//	$Id: ToString.java,v 1.4 1999-04-07 23:21:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,16 +26,18 @@ package org.risource.dps.output;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
-import org.risource.dom.*;
-import org.risource.dps.NodeType;
+
+import org.w3c.dom.*;
+
 import org.risource.dps.active.ActiveEntity;
+import org.risource.dps.tree.TreeText;
 
 import java.util.NoSuchElementException;
 
 /**
  * Output a Token stream to a String <em>in external form</em>. <p>
  *
- * @version $Id: ToString.java,v 1.3 1999-03-12 19:27:11 steve Exp $
+ * @version $Id: ToString.java,v 1.4 1999-04-07 23:21:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToCharData
@@ -66,10 +68,10 @@ public class ToString extends ToExternalForm {
   ************************************************************************/
 
   public void putNode(Node aNode) { 
-    if (aNode.getNodeType() == NodeType.ENTITY && expandEntities) {
+    if (aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE && expandEntities) {
       ActiveEntity e = (ActiveEntity)aNode;
       // === Should really check value in the entity itself as well ===
-      NodeList value = entityTable.getEntityValue(null, e.getName());
+      NodeList value = entityTable.getEntityValue(null, e.getNodeName());
       if (value != null) write(value.toString());
       else write(aNode.toString());
     } else {

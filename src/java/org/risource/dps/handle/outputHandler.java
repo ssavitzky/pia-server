@@ -1,5 +1,5 @@
 ////// outputHandler.java: <output> Handler implementation
-//	$Id: outputHandler.java,v 1.3 1999-03-12 19:26:26 steve Exp $
+//	$Id: outputHandler.java,v 1.4 1999-04-07 23:21:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import java.io.OutputStream;
 import java.io.IOException;
@@ -38,11 +35,12 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.output.ToWriter;
+import org.risource.dps.tree.TreeComment;
 
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: outputHandler.java,v 1.3 1999-03-12 19:26:26 steve Exp $
+ * @version $Id: outputHandler.java,v 1.4 1999-04-07 23:21:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -54,9 +52,9 @@ public class outputHandler extends GenericHandler {
 
   /** Action for &lt;output&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     TopContext top  = cxt.getTopContext();
-    String     url  = atts.getAttributeString("dst");
+    String     url  = atts.getAttribute("dst");
     boolean append  = atts.hasTrueAttribute("append");
     boolean directory = atts.hasTrueAttribute("directory");
 
@@ -79,12 +77,12 @@ public class outputHandler extends GenericHandler {
     try {
       stm = top.writeExternalResource(url, append, true, false);
     } catch (IOException e) {
-      out.putNode(new ParseTreeComment(e.getMessage()));
+      out.putNode(new TreeComment(e.getMessage()));
       return;
     }
 
     if (stm == null) {
-      out.putNode(new ParseTreeComment("Cannot open " + url));
+      out.putNode(new TreeComment("Cannot open " + url));
       return;
     }
 

@@ -1,5 +1,5 @@
 ////// submitHandler.java: <submit> Handler implementation
-//	$Id: submitHandler.java,v 1.4 1999-03-23 23:31:47 steve Exp $
+//	$Id: submitHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,9 +24,7 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -48,7 +46,7 @@ import org.risource.pia.Pia;
  *
  * <p> The intent is for this to be equivalent to the old <submit-forms> tag. 
  *
- * @version $Id: submitHandler.java,v 1.4 1999-03-23 23:31:47 steve Exp $
+ * @version $Id: submitHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -60,7 +58,7 @@ public class submitHandler extends GenericHandler {
 
   /** Action for &lt;submit&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc top = (ActiveDoc)cxt.getTopContext();
 
     if ("form".equalsIgnoreCase(in.getTagName())) {
@@ -108,9 +106,9 @@ public class submitHandler extends GenericHandler {
     if (!Forms.containsTimedSubmission(times)) times = null;
 
     if ( form.getTagName().equalsIgnoreCase("form") ){
-      String url = form.getAttributeString("action");
-      String method = form.getAttributeString("method");
-      String encType = form.getAttributeString("encType");
+      String url = form.getAttribute("action");
+      String method = form.getAttribute("method");
+      String encType = form.getAttribute("encType");
       // Set default encoding type if not specified
       if (encType == null) {
 	encType = "application/x-www-form-urlencoded";
@@ -139,7 +137,7 @@ public class submitHandler extends GenericHandler {
 
     } else if (form.hasTrueAttribute("href")) {
 
-      String url = form.getAttributeString("href");
+      String url = form.getAttribute("href");
       if (times == null) 
 	a.createRequest("GET", url, (String) null, null);
       else {
@@ -149,13 +147,14 @@ public class submitHandler extends GenericHandler {
     }
   }
 
-  /** Process forms in a NodeList
+  /** Process forms in a ActiveNodeList
    */
-  protected void handleContent(Agent a, NodeList forms,
+  protected void handleContent(Agent a, ActiveNodeList forms,
 			       ActiveAttrList times) {
     if (forms != null){
-      NodeEnumerator nodes = forms.getEnumerator();
-      for (Node n = nodes.getFirst(); n != null; n = nodes.getNext()) {
+      int len = forms.getLength();
+      for (int i = 0; i < len; i++) {
+	ActiveNode n = forms.activeItem(i);
 	if (n instanceof ActiveElement) handleNode(a, (ActiveElement)n, times);
       }
     }
@@ -168,8 +167,8 @@ public class submitHandler extends GenericHandler {
 			    ActiveAttrList times) {
     if (node.getTagName().equalsIgnoreCase("form") ) {
       submit(a, node, times);
-    } else if (node.hasChildren()) {
-      handleContent(a, node.getChildren(), times);
+    } else if (node.hasChildNodes()) {
+      handleContent(a, node.getContent(), times);
     }
   }
 

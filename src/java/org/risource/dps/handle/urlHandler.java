@@ -1,5 +1,5 @@
 ////// urlHandler.java: <URL> Handler implementation
-//	$Id: urlHandler.java,v 1.3 1999-03-12 19:26:45 steve Exp $
+//	$Id: urlHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.NodeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -35,7 +35,7 @@ import org.risource.dps.util.*;
  *
  * This is a data structure object<p>	
  *
- * @version $Id: urlHandler.java,v 1.3 1999-03-12 19:26:45 steve Exp $
+ * @version $Id: urlHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -47,7 +47,7 @@ public class urlHandler extends GenericHandler {
 
   /** Action for &lt;URL&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
   }
 

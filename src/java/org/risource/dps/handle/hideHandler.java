@@ -1,5 +1,5 @@
 ////// hideHandler.java: <hide> Handler implementation
-//	$Id: hideHandler.java,v 1.4 1999-03-25 00:42:44 steve Exp $
+//	$Id: hideHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -39,7 +36,7 @@ import org.risource.dps.output.*;
  *
  *	
  *
- * @version $Id: hideHandler.java,v 1.4 1999-03-25 00:42:44 steve Exp $
+ * @version $Id: hideHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 

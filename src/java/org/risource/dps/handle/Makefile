@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.5 1999-03-25 00:42:32 steve Exp $
+# 	$Id: Makefile,v 1.6 1999-04-07 23:21:20 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,10 @@ TOPDIR=../../../..
 BASE_CLASSES = \
 	AbstractHandler.java \
 	BasicHandler.java \
+	DeclHandler.java \
+	DoctypeHandler.java \
 	EntityHandler.java \
+	EntityRefHandler.java \
 	GenericHandler.java \
 	IgnorableHandler.java \
 	SkippableHandler.java \

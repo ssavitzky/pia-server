@@ -1,5 +1,5 @@
 ////// Subst.java:  Handler for <subst>
-//	$Id: substHandler.java,v 1.5 1999-03-23 23:31:48 steve Exp $
+//	$Id: substHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,14 +24,10 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.AttributeList;
-
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.tree.TreeText;
 
 import JP.ac.osaka_u.ender.util.regex.RegExp;
 
@@ -44,10 +40,10 @@ public class substHandler extends GenericHandler {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
     String text = Expand.getProcessedContentString(in, aContext);
       
-    String match = atts.getAttributeString("match");
+    String match = atts.getAttribute("match");
     //if (ii.missing(ia, "match", match)) return;
 
-    String repl = atts.getAttributeString("result");
+    String repl = atts.getAttribute("result");
     //System.err.println("*** match = " + match + ", result = " + repl
     //		         + " in " + atts.toString());
 
@@ -60,7 +56,7 @@ public class substHandler extends GenericHandler {
     }
 
     //System.err.println("result: " +text);
-    out.putNode(new ParseTreeText(text));
+    out.putNode(new TreeText(text));
   }
 
 

@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.4 1999-03-31 23:08:43 steve Exp $
+//	$Id: Expand.java,v 1.5 1999-04-07 23:22:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,19 +24,18 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Entity;
+import org.w3c.dom.EntityReference;
+import org.w3c.dom.DOMException;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
-import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.input.FromNodeList;
 import org.risource.dps.input.FromParseTree;
+import org.risource.dps.tree.TreeAttr;
 
 /**
  * Node-expansion utilities (static methods) for the Document Processor. 
@@ -49,7 +48,7 @@ import org.risource.dps.input.FromParseTree;
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.4 1999-03-31 23:08:43 steve Exp $
+ * @version $Id: Expand.java,v 1.5 1999-04-07 23:22:16 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -60,7 +59,7 @@ public class Expand {
   ************************************************************************/
 
   /** Get the processed content of the current node. */
-  public static ParseNodeList getProcessedContent(Input in, Context c) {
+  public static ActiveNodeList getProcessedContent(Input in, Context c) {
     ToNodeList out = new ToNodeList();
     c.subProcess(in, out).processChildren();
     return out.getList();
@@ -74,7 +73,7 @@ public class Expand {
   }
 
   /** Get the unprocessed content of the current node. */
-  public static ParseNodeList getContent(Input in, Context c) {
+  public static ActiveNodeList getContent(Input in, Context c) {
     ToNodeList out = new ToNodeList();
     Copy.copyChildren(in, out);
     return out.getList();
@@ -88,7 +87,7 @@ public class Expand {
   }
 
   /** Extract text from the processed content of the current node. */
-  public static ParseNodeList getProcessedText(Input in, Context c) {
+  public static ActiveNodeList getProcessedText(Input in, Context c) {
     ToNodeList out = new ToNodeList();
     c.subProcess(in, new FilterText(out)).processChildren();
     return out.getList();
@@ -103,7 +102,7 @@ public class Expand {
   }
 
   /** Extract text from the unprocessed content of the current node. */
-  public static ParseNodeList getText(Input in, Context c) {
+  public static ActiveNodeList getText(Input in, Context c) {
     ToNodeList out = new ToNodeList();
     Copy.copyChildren(in, new FilterText(out));
     return out.getList();
@@ -122,8 +121,8 @@ public class Expand {
   ************************************************************************/
 
   /** Process a node list and return the result. */
-  public static ParseNodeList processNodes(NodeList nl, Context c) {
-    Input in = new FromParseNodes(nl);
+  public static ActiveNodeList processNodes(NodeList nl, Context c) {
+    Input in = new FromNodeList(nl);
     ToNodeList out = new ToNodeList();
     if (nl != null) c.subProcess(in, out).run();
     return out.getList();
@@ -132,12 +131,12 @@ public class Expand {
   /** Process a node list and return the result. */
   public static void processNodes(NodeList nl, Context c, Output out) {
     if (nl == null || nl.getLength() == 0) return;
-    Input in = new FromParseNodes(nl);
+    Input in = new FromNodeList(nl);
     c.subProcess(in, out).run();
   }
 
   /** Process the children of a Node and return the result. */
-  public static ParseNodeList processChildren(ActiveNode aNode, Context c) {
+  public static ActiveNodeList processChildren(ActiveNode aNode, Context c) {
     Input in = new FromParseTree(aNode);
     ToNodeList out = new ToNodeList();
     c.subProcess(in, out).processChildren();
@@ -160,9 +159,9 @@ public class Expand {
    */
   public static ActiveAttrList getExpandedAttrs(Input in, Context c) {
     if (in.hasActiveAttributes()) {
-      return expandAttrs(c, in.getElement().getAttributes());
+      return expandAttrs(c, in.getAttributes());
     } else if (in.hasAttributes()) {
-      return Copy.copyAttrs(in.getElement().getAttributes());
+      return Copy.copyAttrs(in.getAttributes());
     } else {
       return null;
     }
@@ -172,38 +171,38 @@ public class Expand {
   ** Expansion:
   ************************************************************************/
 
-  /** Expand entities in an AttributeList, getting values from a Context. */
-  public static ActiveAttrList expandAttrs(Context c, AttributeList atts) {
+  /** Expand entities in an ActiveAttrList, getting values from a Context. */
+  public static ActiveAttrList expandAttrs(Context c, ActiveAttrList atts) {
     ToAttributeList dst = new ToAttributeList();
     expandAttrs(c, atts, dst);
     return dst.getList();
   }
 
   /** Copy an attribute list without expansion. */
-  public static ActiveAttrList copyAttrs(AttributeList atts) {
+  public static ActiveAttrList copyAttrs(ActiveAttrList atts) {
     ToAttributeList dst = new ToAttributeList();
     Copy.copyNodes(atts, dst);
     return dst.getList();
   }
 
-  /** Expand entities in an AttributeList with results going to a given
+  /** Expand entities in an ActiveAttrList with results going to a given
    *	Output. */ 
-  public static void expandAttrs(Context c, AttributeList atts, Output dst) {
+  public static void expandAttrs(Context c, ActiveAttrList atts, Output dst) {
     for (int i = 0; i < atts.getLength(); i++) { 
       try {
-	expandAttribute(c, (ActiveAttribute) atts.item(i), dst);
-      } catch (org.risource.dom.NoSuchNodeException ex) {}
+	expandAttribute(c, (ActiveAttr) atts.item(i), dst);
+      } catch (DOMException ex) {}
     }
   }
 
   /** Expand entities in an Attribute and put the result to an Output. */
-  public static void expandAttribute(Context c, ActiveAttribute att,  Output dst) {
-    dst.putNode(new ParseTreeAttribute(att.getName(),
-				       expandNodes(c, att.getValueNodes())));
+  public static void expandAttribute(Context c, ActiveAttr att,  Output dst) {
+    dst.putNode(new TreeAttr(att.getName(),
+			     expandNodes(c, att.getValueNodes(c))));
   }
 
   /** Expand entities in a NodeList. */
-  public static NodeList expandNodes(Context c, NodeList nl) {
+  public static ActiveNodeList expandNodes(Context c, ActiveNodeList nl) {
     if (nl == null) return null;
     ToNodeList dst = new ToNodeList();
     expandNodes(c, nl, dst);
@@ -211,11 +210,14 @@ public class Expand {
   }
 
   /** Expand entities in a NodeList and put the result to an Output. */
-  public static void expandNodes(Context c, NodeList nl, Output dst) {
-    NodeEnumerator e = nl.getEnumerator();
-    for (Node n = e.getFirst(); n != null; n = e.getNext()) {
-      if (n.getNodeType() == NodeType.ENTITY) {
+  public static void expandNodes(Context c, ActiveNodeList nl, Output dst) {
+    for (int i = 0; i < nl.getLength(); i++) { 
+      Node n = nl.item(i);
+      if (n == null) return;
+      if (n.getNodeType() == Node.ENTITY_NODE) {
 	expandEntity(c, (Entity) n, dst);
+      } else if (n.getNodeType() == Node.ENTITY_REFERENCE_NODE) {
+	expandEntityRef(c, (EntityReference) n, dst);
       } else {
 	dst.putNode(n);
       }
@@ -224,7 +226,19 @@ public class Expand {
 
   /** Expand a single entity, putting the expansion to an Output. */
   public static void expandEntity(Context c, Entity n, Output dst) {
-    String name = n.getName();
+    String name = n.getNodeName();
+    // === expandEntity should just get the node's value ===
+    NodeList value = Index.getIndexValue(c, name);
+    if (value == null) {
+      dst.putNode(n);
+    } else {
+      Copy.copyNodes(value, dst);
+    }
+  }
+
+  /** Expand an entity reference, putting the expansion to an Output. */
+  public static void expandEntityRef(Context c, EntityReference n, Output dst) {
+    String name = n.getNodeName();
     NodeList value = Index.getIndexValue(c, name);
     if (value == null) {
       dst.putNode(n);

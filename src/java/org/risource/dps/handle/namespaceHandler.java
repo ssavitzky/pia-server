@@ -1,5 +1,5 @@
 ////// namespaceHandler.java: <namespace> Handler implementation
-//	$Id: namespaceHandler.java,v 1.4 1999-03-25 00:42:47 steve Exp $
+//	$Id: namespaceHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -38,7 +35,7 @@ import org.risource.dps.util.*;
  *
  *	
  *
- * @version $Id: namespaceHandler.java,v 1.4 1999-03-25 00:42:47 steve Exp $
+ * @version $Id: namespaceHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -50,7 +47,7 @@ public class namespaceHandler extends GenericHandler {
 
   /** Action for &lt;namespace&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     unimplemented(in, cxt); // do the work
   }
 
@@ -75,13 +72,3 @@ public class namespaceHandler extends GenericHandler {
     // customize for element.
   }
 }
-/*
-class namespace_ extends namespaceHandler {
-  public void action(Input in, Context cxt, Output out,
-  		     ActiveAttrList atts, NodeList content) {
-    unimplemented (in, cxt); // do the work
-  }
-  public namespace_(ActiveElement e) { super(e); }
-  static Action handle(ActiveElement e) { return new namespace_(e); }
-}
-*/

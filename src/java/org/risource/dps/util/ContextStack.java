@@ -1,5 +1,5 @@
 ////// BasicContext.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.4 1999-03-23 23:32:10 steve Exp $
+//	$Id: ContextStack.java,v 1.5 1999-04-07 23:22:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,12 +26,8 @@ package org.risource.dps.util;
 
 import java.io.PrintStream;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Text;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,7 +38,7 @@ import org.risource.dps.process.BasicProcessor;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.4 1999-03-23 23:32:10 steve Exp $
+ * @version $Id: ContextStack.java,v 1.5 1999-04-07 23:22:14 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -142,7 +138,7 @@ public class ContextStack  implements Context {
   /** Get the value of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public NodeList getEntityValue(String name, boolean local) {
+  public ActiveNodeList getEntityValue(String name, boolean local) {
     ActiveEntity binding = getEntityBinding(name, local);
     if (binding == null) return null;
     return binding.getValueNodes(this);
@@ -150,7 +146,7 @@ public class ContextStack  implements Context {
 
   /** Set the value of an entity. 
    */
-  public void setEntityValue(String name, NodeList value, boolean local) {
+  public void setEntityValue(String name, ActiveNodeList value, boolean local) {
     ActiveEntity binding = getEntityBinding(name, local);
     if (binding != null) {
       binding.setValueNodes(this, value);

@@ -1,5 +1,5 @@
 ////// HTMLParser.java: HTML-specific Parser interface
-//	$Id: HTMLParser.java,v 1.4 1999-03-23 23:31:57 steve Exp $
+//	$Id: HTMLParser.java,v 1.5 1999-04-07 23:21:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,6 @@
 
 package org.risource.dps.parse;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.Parser;
 
 import java.util.Enumeration;
@@ -45,7 +44,7 @@ import java.io.IOException;
  *	eventually HTMLParser will use the DTD for everything. <p>
  *
  *
- * @version $Id: HTMLParser.java,v 1.4 1999-03-23 23:31:57 steve Exp $
+ * @version $Id: HTMLParser.java,v 1.5 1999-04-07 23:21:44 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
 

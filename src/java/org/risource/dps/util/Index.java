@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.3 1999-03-12 19:28:19 steve Exp $
+//	$Id: Index.java,v 1.4 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,21 +24,13 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
-import org.risource.dom.NodeEnumerator;
-
-import org.risource.dps.NodeType;
 import org.risource.dps.Context;
 import org.risource.dps.EntityTable;
 import org.risource.dps.Namespace;
 import org.risource.dps.Tagset;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
+import org.risource.dps.tree.TreeNodeList;
 
 import org.risource.ds.Table;
 import org.risource.ds.Association;
@@ -48,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.3 1999-03-12 19:28:19 steve Exp $
+ * @version $Id: Index.java,v 1.4 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -59,7 +51,7 @@ public class Index {
   ************************************************************************/
 
   /** Get a value using an index. */
-  public static NodeList getIndexValue(Context c, String index) {
+  public static ActiveNodeList getIndexValue(Context c, String index) {
     int i = index.indexOf(':');
     if (i == index.length() -1) {
       return getValue(c, index.substring(0, i), null);
@@ -70,7 +62,8 @@ public class Index {
     }
   }
 
-  public static void setIndexValue(Context c, String index, NodeList value) {
+  public static void setIndexValue(Context c, String index,
+				   ActiveNodeList value) {
     int i = index.indexOf(':');
     if (i == index.length() -1) {
       setValue(c, index.substring(0, i), null, value);
@@ -88,19 +81,19 @@ public class Index {
    * @param name  the name within the namespace.  If name is null,
    *	the entire namespace is returned.
    */
-  public static NodeList getValue(Context c, String space, String name) {
+  public static ActiveNodeList getValue(Context c, String space, String name) {
     Namespace ns = c.getNamespace(space);
 
     // If there's nothing there, return null.
     if (ns == null) return null;
 
     // If we wanted the whole space, return its list of bindings.
-    if (name == null) return new ParseNodeList(ns.getBindings());
+    if (name == null) return new TreeNodeList(ns.getBindings());
     else return ns.getValueNodes(c, name);
   }
 
   public static void setValue(Context c, String space, String name,
-			      NodeList value) {
+			      ActiveNodeList value) {
     Namespace ns = c.getNamespace(space);
     Tagset ts = c.getTopContext().getTagset();
 

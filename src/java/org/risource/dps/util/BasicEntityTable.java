@@ -1,5 +1,5 @@
 ////// BasicEntityTable.java: Node Handler Lookup Table
-//	$Id: BasicEntityTable.java,v 1.3 1999-03-12 19:28:04 steve Exp $
+//	$Id: BasicEntityTable.java,v 1.4 1999-04-07 23:22:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,7 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.active.*;
 import org.risource.dps.*;
@@ -43,14 +39,12 @@ import org.risource.ds.Table;
  *	This implementation is represented as an Element; the bindings
  *	are kept in its children.  <p>
  *
- * @version $Id: BasicEntityTable.java,v 1.3 1999-03-12 19:28:04 steve Exp $
+ * @version $Id: BasicEntityTable.java,v 1.4 1999-04-07 23:22:14 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node 
- * @see org.risource.dom.Attribute
  */
 
 public class BasicEntityTable extends BasicNamespace implements EntityTable {
@@ -62,7 +56,7 @@ public class BasicEntityTable extends BasicNamespace implements EntityTable {
   /** Return the value for a given name.  Performs recursive lookup in the
    *	context if necessary. 
    */
-  public NodeList getEntityValue(Context cxt, String name) {
+  public ActiveNodeList getEntityValue(Context cxt, String name) {
     ActiveEntity binding = getEntityBinding(name);
     return (binding != null)? binding.getValueNodes(cxt) :  null;
   }
@@ -70,7 +64,7 @@ public class BasicEntityTable extends BasicNamespace implements EntityTable {
   /** Set the value for a given name.
    */
   public void setEntityValue(Context cxt, String name,
-			     NodeList value, Tagset ts) {
+			     ActiveNodeList value, Tagset ts) {
     ActiveEntity binding = getEntityBinding(name);
     if (binding != null) {
       binding.setValueNodes(cxt, value); 
@@ -86,7 +80,7 @@ public class BasicEntityTable extends BasicNamespace implements EntityTable {
   }
 
   /** Construct a new local binding. */
-  protected void newBinding(String name, NodeList value, Tagset ts) {
+  protected void newBinding(String name, ActiveNodeList value, Tagset ts) {
     addBinding(name, ts.createActiveEntity(name, value));
   }
 

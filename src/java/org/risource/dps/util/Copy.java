@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.4 1999-03-31 23:08:40 steve Exp $
+//	$Id: Copy.java,v 1.5 1999-04-07 23:22:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,23 +24,18 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.*;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.active.*;
+
+import org.risource.dps.tree.*;
 import org.risource.dps.output.*;
 import org.risource.dps.*;
 
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.4 1999-03-31 23:08:40 steve Exp $
+ * @version $Id: Copy.java,v 1.5 1999-04-07 23:22:15 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
@@ -60,7 +55,7 @@ public class Copy {
    */
   public static final void copyNode(Node n, Input in, Output out) {
     if (n == null) n = in.getNode();
-    if (in.hasChildren() && ! n.hasChildren()) {
+    if (in.hasChildren() && ! n.hasChildNodes()) {
       // Copy recursively only if the node hasn't been fully parsed yet.
       out.startNode(n);
       copyChildren(in, out);
@@ -93,9 +88,19 @@ public class Copy {
    */
   public static void copyNodes(NodeList aNodeList, Output out) {
     if (aNodeList == null) return;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      out.putNode(node);
+    int n = aNodeList.getLength();
+    for (int i = 0; i < n ; ++i) {
+      out.putNode(aNodeList.item(i));
+    }
+  }
+
+  /** Copy the content of a NamedNodeMap to an Output.
+   */
+  public static void copyNodes(NamedNodeMap aNodeList, Output out) {
+    if (aNodeList == null) return;
+    int n = aNodeList.getLength();
+    for (int i = 0; i < n ; ++i) {
+      out.putNode(aNodeList.item(i));
     }
   }
 
@@ -103,7 +108,7 @@ public class Copy {
   ** Copying from a Node to the return value:
   ************************************************************************/
 
-  public static ActiveAttrList copyAttrs(AttributeList atts) {
+  public static ActiveAttrList copyAttrs(ActiveAttrList atts) {
     ToAttributeList dst = new ToAttributeList();
     copyNodes(atts, dst);
     return dst.getList();
@@ -114,25 +119,27 @@ public class Copy {
       return ((ActiveNode)node).shallowCopy();
     int nodeType = node.getNodeType();
     switch (nodeType) {
-    case NodeType.ELEMENT: 
-      org.risource.dom.Element e = (org.risource.dom.Element)node;
-      return new ParseTreeElement(e.getTagName(), e.getAttributes());
+    case Node.ELEMENT_NODE: 
+      return new TreeElement(node.getNodeName(), node.getAttributes());
 
-    case NodeType.TEXT:
-      org.risource.dom.Text t = (org.risource.dom.Text)node;
-      return new ParseTreeText(t.getData(), t.getIsIgnorableWhitespace());
+    case Node.TEXT_NODE:
+      if (node instanceof ActiveText) {
+	ActiveText t = (ActiveText) node;
+	return new TreeText(t.getData(), t.getIsIgnorable());
+      } else {
+	return new TreeText(node.getNodeValue());
+      }
 
-    case NodeType.COMMENT: 
-      org.risource.dom.Comment c = (org.risource.dom.Comment)node;
-      return new ParseTreeComment(c.getData());
+    case Node.COMMENT_NODE: 
+      return new TreeComment(node.getNodeValue());
 
-    case NodeType.PI:
-      org.risource.dom.PI pi = (org.risource.dom.PI)node;
-      return new ParseTreePI(pi.getName(), pi.getData());
+    case Node.PROCESSING_INSTRUCTION_NODE:
+      return new TreePI(node.getNodeName(), node.getNodeValue());
 
-    case NodeType.ATTRIBUTE: 
-      ActiveAttribute attr = (ActiveAttribute)node;
-      return new ParseTreeAttribute(attr.getName(), attr.getValueNodes());
+    case Node.ATTRIBUTE_NODE: 
+      ActiveAttr attr = (ActiveAttr)node;
+      return new TreeAttr(attr.getName(), attr.getValueNodes(null));
+      // there are missing cases and botched conversions here.
 
     default: 
       return null;		// node.shallowCopy();
@@ -154,15 +161,16 @@ public class Copy {
    * @param aNode the node to be appended.
    * @param parentNode the node to be appended to.
    * @return <code>parentNode</code>.
-   * @see org.risource.dps.NodeType */
+   */
   public static Node appendNode(Node aNode, Node parentNode) {
     // No node to append to: do nothing.
     if (parentNode == null) return null;
     // Current node is the parent: already taken care of.
     if (aNode.getParentNode() == parentNode) return parentNode;
     // A NodeList in disguise -- append its children:
-    if (aNode.getNodeType() == NodeType.NODELIST) {
-      if (aNode.hasChildren()) appendNodes(aNode.getChildren(), parentNode);
+    if (aNode.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE) {
+      if (aNode.hasChildNodes())
+	appendNodes(aNode.getChildNodes(), parentNode);
       return parentNode;
     }
     try {
@@ -171,7 +179,7 @@ public class Copy {
 	aNode = ((ActiveNode)aNode).deepCopy();
       }
       parentNode.insertBefore(aNode, null);
-    } catch (org.risource.dom.NotMyChildException e) {
+    } catch (DOMException e) {
       System.err.println("Cloning failed: ");
       e.printStackTrace(System.err);
       // === not clear what to do here...  shouldn't happen. ===
@@ -186,9 +194,9 @@ public class Copy {
    */
   public static Node appendNodes(NodeList aNodeList, Node parentNode) {
     if (aNodeList == null) return parentNode;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      appendNode(node, parentNode);
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; i++) {
+      parentNode.appendChild(aNodeList.item(i));
     }
     return parentNode;
   }
@@ -201,9 +209,9 @@ public class Copy {
   public static ActiveNode appendNodes(NodeList aNodeList,
 				       ActiveNode parentNode) {
     if (aNodeList == null) return parentNode;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      parentNode.addChild((ActiveNode)node);
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; i++) {
+      parentNode.addChild((ActiveNode)aNodeList.item(i));
     }
     return parentNode;
   }

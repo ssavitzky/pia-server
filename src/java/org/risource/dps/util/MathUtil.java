@@ -1,5 +1,5 @@
 ////// MathUtil.java: Mathematical Utilities
-//	$Id: MathUtil.java,v 1.3 1999-03-12 19:28:24 steve Exp $
+//	$Id: MathUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,15 +24,9 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
 
@@ -48,7 +42,7 @@ import java.util.Enumeration;
  *	A list is normally handled as an Enumeration, and a number as
  *	an Association between a Node and its value.
  *
- * @version $Id: MathUtil.java,v 1.3 1999-03-12 19:28:24 steve Exp $
+ * @version $Id: MathUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.ds.Association
@@ -63,7 +57,7 @@ public class MathUtil {
 
   public static Association getNumeric(ActiveAttrList atts, String name,
 				       String dflt) {
-    String v = atts.getAttributeString(name);
+    String v = atts.getAttribute(name);
     if (v == null) {
       if (dflt == null) return null;
       else v = dflt;
@@ -75,14 +69,14 @@ public class MathUtil {
   }
 
   public static int getInt(ActiveAttrList atts, String name, int dflt) {
-    String v = atts.getAttributeString(name);
+    String v = atts.getAttribute(name);
     if (v == null) return dflt;
     Association a = Association.associateNumeric(null, v);
     return a.isNumeric()? (int)a.longValue() : dflt;
   }
 
   public static long getLong(ActiveAttrList atts, String name, long dflt) {
-    String v = atts.getAttributeString(name);
+    String v = atts.getAttribute(name);
     if (v == null) return dflt;
     Association a = Association.associateNumeric(null, v);
     return a.isNumeric()? a.longValue() : dflt;
@@ -90,7 +84,7 @@ public class MathUtil {
 
   public static double getDouble(ActiveAttrList atts, String name,
 				 double dflt) {
-    String v = atts.getAttributeString(name);
+    String v = atts.getAttribute(name);
     if (v == null) return dflt;
     Association a = Association.associateNumeric(null, v);
     return a.isNumeric()? a.doubleValue() : dflt;
@@ -103,7 +97,7 @@ public class MathUtil {
   /** Return a numeric Association between a node and its numeric value. 
    *	Return null if the node contains no numeric text.
    */
-  public static Association getNumeric(Node n) {
+  public static Association getNumeric(ActiveNode n) {
     Association a = Association.associateNumeric(n, ListUtil.getFirstWord(n));
     return (a.isNumeric())? a : null;
   }
@@ -121,7 +115,7 @@ public class MathUtil {
    *	Most useful for extracting <em>all</em> numbers from a piece of a 
    *	document.
    */
-  public static Enumeration getNumbers(NodeList nl) {
+  public static Enumeration getNumbers(ActiveNodeList nl) {
     List l = new List();
     Enumeration items = ListUtil.getTextItems(nl);
     while (items.hasMoreElements()) {
@@ -135,7 +129,7 @@ public class MathUtil {
    *	whitespace, but associates non-text markup with the numeric value of
    *	their first text item.  Most useful for sorting nodes numerically.
    */
-  public static Enumeration getNumericList(NodeList nl) {
+  public static Enumeration getNumericList(ActiveNodeList nl) {
     List l = new List();
     Enumeration items = ListUtil.getListItems(nl);
     while (items.hasMoreElements()) {

@@ -628,11 +628,69 @@ See also:
        the DPS equivalent of <code>org.risource.sgml.AttrWrap</code>.
        (1998-06-16) <br>
        -- NamespaceWrap
+
+  <li> 1999-04-xx <b>Bug</b> Paths broken <br>
+       &lt;output dst='~/foo'&gt; doesn't create foo in the agent's data
+       directory, as it should.  &lt;output dst='foo'&gt; does.  On the other
+       hand, you need &lt;input src='pia:/~/Admin/foo'&gt; to read it.
+       Basically, agent-relative paths don't work right at all.
+       (1999-03-30) <br>
+
+  <li> 1999-04-06 <b>Bug</b> getAttributeString must return internal form <br>
+       One might think that <em>everything</em> should return internal form,
+       and <code>ToExternalForm</code> should do the encoding as needed.  This
+       would be wrong, though -- it would break writing XML to a stream in a
+       form that can be read back.  So <code>toString</code> is right, but
+       <code>getAttributeString</code> shouldn't use it.
+       (1999-03-30) <br>
+
+  <li> 1999-04-06 <b>Bug</b> Recursive tags <br>
+       Need <code>recursive</code> attribute to &lt;define element&gt; to
+       allow the action to contain the new tag itself.  On second thought it
+       would work if we just re-use an existing Handler instead of creating a
+       new one. 
+       (1999-01-07) <br>
+       -- factorial works, so it must have gotten fixed.  If it was ever a bug
+	  at all.
+
+  <li> 1999-03-xx <b>Bug</b> no way to get name of a node in &lt;select&gt;.<br>
+       We can select nodes <em>by</em> name, but not <em>get</em> their
+       names. 
+       (1998-10-12) <br>
+       -- &lt;name/&gt; (no name specified) does this.
+       
+  <li> 1999-04-06 <b>Impr</b> the convertToString methods are unused. <br>
+       We should either use them, or drop them.
+       (1998-10-11) <br>
+       -- dropped
+
+  <li> 1999-03-xx <b>Impr:</b> XML / interacts with unquoted attr values. <br>
+       Solutions include requiring a space or requiring non-ID values to be
+       quoted.  The latter is more correct.  Quoting strictness should be a
+       parser parameter for maximum versatility.
+       (1998-09-09) <br>
+       -- not really a problem: XML requires quoting; a space is provided on
+	  output and is conventional on input.
+
+  <li> 1999-04-08 <b>Hole:</b> Major changes needed for new DOM. <br>
+       Do this after Level 1 stabilizes.
+       (1998-08-05)<br>
+       --
+       <ul>
+	 <li> Use <code>org.w3c.dom</code> for the <em>official</em>
+	      interfaces, of course.
+	 <li> Move implementations from
+	      <code>org.risource.dps.active</code> to
+	      <code>org.risource.dps.tree</code>
+	 <li> <code>org.risource.dom</code> cleaned out, to be used for pure
+	      DOM utilities.
+       </ul>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.5 1999-03-31 02:04:29 steve Exp $</b><br>
+<b>$Id: done.html,v 1.6 1999-04-07 23:20:49 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
 ////// Action.java: Active Node action handler interface
-//	$Id: Action.java,v 1.4 1999-03-27 01:28:26 steve Exp $
+//	$Id: Action.java,v 1.5 1999-04-07 23:20:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,10 +23,7 @@
 
 
 package org.risource.dps;
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.Node;
 
 import org.risource.dps.active.*;
 
@@ -37,13 +34,13 @@ import org.risource.dps.active.*;
  *	processing (including presenting) a Node.  <p>
  *
  *
- * @version $Id: Action.java,v 1.4 1999-03-27 01:28:26 steve Exp $
+ * @version $Id: Action.java,v 1.5 1999-04-07 23:20:45 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node */
-
+ * @see org.w3c.dom.Node
+ */
 public interface Action {
 
   /************************************************************************

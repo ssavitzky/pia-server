@@ -16,24 +16,53 @@ See also:
 </ul>
 
 <ol>
-  <li> <b>Bug</b> Paths broken <br>
-       &lt;output dst='~/foo'&gt; doesn't create foo in the agent's data
-       directory, as it should.  &lt;output dst='foo'&gt; does.  On the other
-       hand, you need &lt;input src='pia:/~/Admin/foo'&gt; to read it.
-       Basically, agent-relative paths don't work right at all.
-       (1999-03-30) <br>
+  <li> <b>Impr</b> fix inheritance problems; simplify. <br>
+       ActiveEntityRef shouldn't descend from ActiveValue, since it doesn't
+       have one.  Namespace should extend, if not merge with, ActiveNodeMap.
+       util.Expand should probably go away.  ProcessException should become
+       a DPSException.
+       (1999-04-07) <br>
+
+  <li> <b>Hole</b> XML Representations of nodes. <br>
+       Tagset, Namespace, and org.risource.pia.Agent all need to be
+       representable as XML.  Use &lt;ELEMENT&gt; and &lt;ENTITY&gt; tags for
+       the content; construct the objects in the parser.  Dump the
+       <code>*.tso</code> files in favor of <code>.tsx</code>.
+       (1999-04-07) <br>
+
+  <li> <b>Hole</b> Fully-cursorial processing. <br>
+       Cursor needs to give complete enough access to the current node, that
+       you never actually need to access the node itself.  ActiveNode needs to
+       be extended with methods that return Input's instead of Node's.  Output
+       needs Document-like methods to output nodes without having to create
+       them first. 
+       (1999-04-07) <br>
+
+  <li> <b>Impr</b> Tagset inheritance by reference; copy on write. <br>
+       In some cases, Tagsets should merely reference their parents, not
+       include them.  In particular, this should be done when a non-tagset
+       document contains &lt;define&gt; tags.
+       (1999-04-07) <br>
+
+  <li> <b>Impr</b> Timestamps in tagsets <br>
+       Tagsets should have their filename and a timestamp so you can determine
+       whether to reload them.
+       (1999-04-07) <br>
+
+  <li> <b>Hole</b> unimplemented DOM components <br>
+       CDATASection is unimplemented.  DOMImplementation is unimplemented.
+       Large parts of TreeDocument are still unimplemented; in particular
+       extracting the DocumentType and document element nodes from the content
+       and putting them in their proper places.
+       (1999-04-07) <br>
+
+  <li> <b>Hole</b> SAX and DOM input and output <br>
+       FromSAX, FromDOM, ToSAX, ToDOM shims.
+       (1999-04-07) <br>
 
   <li> <b>Bug</b> &lt;include&gt;Directory broken <br>
        &lt;include src='~/'&gt; should give a directory listing of an agent's
        data directory.  It raises a null pointer exception instead.
-       (1999-03-30) <br>
-
-  <li> <b>Bug</b> getAttributeString needs to return internal form <br>
-       One might think that <em>everything</em> should return internal form,
-       and <code>ToExternalForm</code> should do the encoding as needed.  This
-       would be wrong, though -- it would break writing XML to a stream in a
-       form that can be read back.  So <code>toString</code> is right, but
-       <code>getAttributeString</code> shouldn't use it.
        (1999-03-30) <br>
 
   <li> <b>Impr</b> SGML/XML output flag <br>
@@ -61,8 +90,9 @@ See also:
   <li> <b>Bug</b> XML attribute names not case-sensitive. <br>
        (1999-02-24) <br>
 
-  <li><b>Bug</b>The value sub-entity is ignored when using the define entity system attribute.
-  For example, the value "whatever" never gets written to file.: 
+  <li><b>Bug</b> &lt;value&gt; ignored in &lt;define entity external&gt; <br>
+       The value sub-entity is ignored when using the define entity system
+       attribute.   For example, the value "whatever" never gets written to file.: 
   <pre>
   &lt;define entity=pgroup system=per-group mode=create&gt;&lt;value&gt;whatever&lt;/value&gt;&lt;/define&gt;
   &pgroup;
@@ -102,12 +132,6 @@ See also:
     code run using process works fine.  "connect entity" requires 
     "/RHServer/persist.out" when running from an agent.
     (1999-01-26)
-  <li> <b>Bug</b> Recursive tags <br>
-       Need <code>recursive</code> attribute to &lt;define element&gt; to
-       allow the action to contain the new tag itself.  On second thought it
-       would work if we just re-use an existing Handler instead of creating a
-       new one. 
-       (1999-01-07) <br>
 
   <li> <b>Hole</b> Constructing and editing elements. <br>
        We want to be able to modify the attributes and content of an existing
@@ -226,11 +250,6 @@ Results: &lt;pre&gt;cat                                                         
         </pre>
 	(1998-10-19)<br>
 
-  <li> <b>Bug</b> no way to get name of a node in &lt;select&gt;. <br>
-       We can select nodes <em>by</em> name, but not <em>get</em> their
-       names. 
-       (1998-10-12) <br>
-       
   <li> <b>Bug</b> no namespace for all installed agents. <br>
        Best done by making a specialized Entity that knows it's in a
        NamespaceWrap.  
@@ -241,10 +260,6 @@ Results: &lt;pre&gt;cat                                                         
        operations in Index should be used to give a single point of
        definition. 
        (1998-10-12) <br>
-
-  <li> <b>Impr</b> the convertToString methods are unused. <br>
-       We should either use them, or drop them.
-       (1998-10-11) <br>
 
   <li> <b>Bug:</b> NamespaceWrap doesn't return NodeList for bindings <br>
        (1998-10-11) <br>
@@ -266,12 +281,6 @@ Results: &lt;pre&gt;cat                                                         
        how to make <code>sep</code> consistent between <code>split</code> and
        <code>join</code>.
        (1998-09-15) <br>
-
-  <li> <b>Impr:</b> XML / interacts with unquoted attribute values. <br>
-       Solutions include requiring a space or requiring non-ID values to be
-       quoted.  The latter is more correct.  Quoting strictness should be a
-       parser parameter for maximum versatility.
-       (1998-09-09) <br>
 
   <li> <b>Hole:</b> Some &lt;select&gt; subs unimplemented. <br>
        xptr is the only one left.
@@ -325,18 +334,6 @@ Results: &lt;pre&gt;cat                                                         
 
   <li> <b>Hole:</b> Functional programming tools. <br>
        See <a href="http://www.python.org/doc/tut/functional.html">Python</a>
-       (1998-08-05)<br>
-
-  <li> <b>Hole:</b> Major changes needed for new DOM. <br>
-       Do this after Level 1 stabilizes.
-       <ul>
-	 <li> Use <code>org.w3c.dom</code> for the <em>official</em>
-	      interfaces, of course.
-	 <li> Move <code>Active*</code> interfaces from
-	      <code>org.risource.dps.active</code> to <code>org.risource.dom</code>
-	 <li> Move implementation classes to <code>org.risource.dom.impl</code>
-	 <li> Keep <code>org.risource.dps.active</code> for DPS-specific classes.
-       </ul>
        (1998-08-05)<br>
 
   <li> <b>Hole:</b> PI comments <br>
@@ -470,7 +467,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.6 1999-03-31 02:04:33 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.7 1999-04-07 23:20:49 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

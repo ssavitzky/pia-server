@@ -1,5 +1,5 @@
 ////// DiscardOutput
-//	$Id: DiscardOutput.java,v 1.3 1999-03-12 19:26:56 steve Exp $
+//	$Id: DiscardOutput.java,v 1.4 1999-04-07 23:21:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.output;
 
-import org.risource.dom.*;
+import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.util.Log;
 
@@ -36,7 +36,7 @@ import java.io.PrintStream;
  *	Slightly more efficient than a Proxy with no target.  The real
  *	benefit is better documentation of the programmer's intent.
  *
- * @version $Id: DiscardOutput.java,v 1.3 1999-03-12 19:26:56 steve Exp $
+ * @version $Id: DiscardOutput.java,v 1.4 1999-04-07 23:21:38 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 

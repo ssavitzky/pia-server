@@ -1,5 +1,5 @@
 ////// expandHandler.java: <expand> Handler implementation
-//	$Id: expandHandler.java,v 1.4 1999-03-25 00:42:36 steve Exp $
+//	$Id: expandHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -37,7 +34,7 @@ import org.risource.dps.output.DiscardOutput;
 /**
  * Handler for &lt;expand&gt;  <p>
  *
- * @version $Id: expandHandler.java,v 1.4 1999-03-25 00:42:36 steve Exp $
+ * @version $Id: expandHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -49,7 +46,7 @@ public class expandHandler extends GenericHandler {
 
   /** This will normally be the only thing to customize. */
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Expand.processNodes(content, aContext, out);
   }
 

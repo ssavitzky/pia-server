@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.6 1999-03-31 23:08:28 steve Exp $
+//	$Id: extractHandler.java,v 1.7 1999-04-07 23:21:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,19 +23,16 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Element;
-import org.risource.dom.Entity;
-import org.risource.dom.Text;
+
+import org.w3c.dom.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.output.ToNodeList;
+import org.risource.dps.tree.TreeEntity;
+import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeNodeList;
 
 import org.risource.ds.Association;
 import org.risource.ds.List;
@@ -49,7 +46,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.6 1999-03-31 23:08:28 steve Exp $
+ * @version $Id: extractHandler.java,v 1.7 1999-04-07 23:21:23 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -62,15 +59,15 @@ public class extractHandler extends GenericHandler {
   public void action(Input in, Context cxt, Output out) {
     String tag = in.getTagName();
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
-    String sep = (atts == null)? null : atts.getAttributeString("sep");
+    String sep = (atts == null)? null : atts.getAttribute("sep");
 
     BasicEntityTable ents = new BasicEntityTable(tag);
     ToNodeList collect = new ToNodeList();
-    NodeList currentSet = null;
+    ActiveNodeList currentSet = null;
     boolean terminateExtract = false;
 
     // === strictly speaking, this should use the tagset to create the entity.
-    ParseTreeEntity extracted = new ParseTreeEntity("list");
+    TreeEntity extracted = new TreeEntity("list");
     ents.setBinding("list", extracted);
     Processor process = cxt.subProcess(in, collect, ents);
 
@@ -80,19 +77,19 @@ public class extractHandler extends GenericHandler {
       if (terminateExtract) continue;
 
       switch (item.getNodeType()) {
-      case NodeType.COMMENT:
-      case NodeType.PI:
-      case NodeType.DECLARATION:
+      case Node.COMMENT_NODE:
+      case Node.PROCESSING_INSTRUCTION_NODE:
+      case Node.DOCUMENT_TYPE_NODE:
 	break;
 
-      case NodeType.TEXT:
-	ActiveText t = in.getActive().asText();
+      case Node.TEXT_NODE:
+	ActiveText t = (ActiveText)in.getActive();
 	if (! t.getIsWhitespace()) {
 	  Enumeration items = ListUtil.getTextItems(t.getData());
 
 	  while (items.hasMoreElements()) {
 	    currentSet = extractTextItem(items.nextElement().toString(),
-					extracted.getValueNodes());
+					extracted.getValueNodes(cxt));
 	    if (currentSet.getLength() == 0) terminateExtract = true;
 	    extracted.setValueNodes(currentSet);
 	  }
@@ -113,7 +110,7 @@ public class extractHandler extends GenericHandler {
     }
     in.toParent();
 
-    putList(out, extracted.getValueNodes(), sep);
+    putList(out, extracted.getValueNodes(cxt), sep);
   }
 
   /************************************************************************
@@ -124,12 +121,13 @@ public class extractHandler extends GenericHandler {
    *	Works by looking up the appropriate entity in the given context.
    *	Used by sub-element handlers.
    */
-  public NodeList getExtracted(Context cxt) {
+  public ActiveNodeList getExtracted(Context cxt) {
     return cxt.getEntityValue("list", true);
   }
 
   /** Handle a numeric item. */
-  public NodeList  extractNumericItem(int n, NodeList extracted) {
+  public ActiveNodeList  extractNumericItem(int n,
+					    ActiveNodeList extracted) {
     List items = new List(ListUtil.getListItems(extracted));
     ActiveNode item = null;
     if (n >= 0) {
@@ -137,77 +135,70 @@ public class extractHandler extends GenericHandler {
     } else {
       item = (ActiveNode) items.at(items.nItems() + n);
     }
-    return new ParseNodeList(item);
+    return new TreeNodeList(item);
   }
 
   /** Handle a text item (either name, type, or number). */
-  public NodeList  extractTextItem(String item, NodeList extracted) {
+  public ActiveNodeList  extractTextItem(String item,
+					 ActiveNodeList extracted) {
     Association n = MathUtil.getNumeric(item);
     if (n != null) return extractNumericItem((int)n.longValue(), extracted);
     else if (item.startsWith("#")) return extractTypeItem(item, extracted);
     else return extractNameItem(item, extracted);
   }
 
-  public void extractByType(String item, NodeList extracted, Output out) {
-    NodeEnumerator e = extracted.getEnumerator();
+  public void extractByType(String item, ActiveNodeList extracted, Output out) {
     if (item.startsWith("#")) item = item.substring(1);
     int nodeType = NodeType.getType(item);
     if (nodeType == NodeType.ALL) putList(out, extracted);
 
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) 
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode node = extracted.activeItem(i);
       if (node.getNodeType() == nodeType) out.putNode(node);
+    }
   }
 
-  public NodeList extractTypeItem(String tname, NodeList extracted) {
+  public ActiveNodeList extractTypeItem(String tname,
+					ActiveNodeList extracted) {
     ToNodeList out = new ToNodeList();
     extractByType(tname, extracted, out);
     return out.getList();
   }
 
-  public NodeList extractNameItem(String name, NodeList extracted) {
+  public ActiveNodeList extractNameItem(String name, ActiveNodeList extracted) {
     ToNodeList out = new ToNodeList();
     extractByName(name, extracted, out);
     return out.getList();
   }
 
   /** Extract items by name and put them to an Output. */
-  public void extractByName(String name, NodeList extracted, Output out) {
+  public void extractByName(String name, ActiveNodeList extracted, Output out) {
     if (extracted == null) return;
-    NodeEnumerator e = extracted.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode node = extracted.activeItem(i);
       String nn = getNodeName(node, true);
       if (nn != null && nn.equals(name)) out.putNode(node);
     }
   }
 
-  /** Return a node's name. */
+  /** Return a node's name, possibly forcing it to lowercase. */
   public String getNodeName(Node node, boolean caseSens) {
-    // === This is kludgy, but will be fixed in the new DOM
-    // === not handling node type yet!
-    String name = null;
-    if (node instanceof ParseTreeNamed) {
-      ParseTreeNamed nnode = (ParseTreeNamed)node;
-      name = nnode.getName();
-    } else if (node instanceof Element) {
-      Element elt = (Element)node;
-      name = elt.getTagName();
-    }
+    String name = node.getNodeName();
     if (name != null && !caseSens) name = name.toLowerCase();
     return name;
   }
 
   /** Return a node's ID (name or id attribute). */
   public String getNodeId(Node node, boolean caseSens) {
-    // === This is kludgy, but will be fixed in the new DOM
-    // === not handling node type yet!
     String name = null;
-    if (node instanceof ParseTreeNamed) {
-      ParseTreeNamed nnode = (ParseTreeNamed)node;
-      name = nnode.getName();
-    } else if (node instanceof ActiveElement) {
+    if (node instanceof ActiveElement) {
       ActiveElement elt = (ActiveElement)node;
-      name = elt.getAttributeString("id");
-      if (name == null) name = elt.getAttributeString("name");
+      name = elt.getAttribute("id");
+      if (name == null) name = elt.getAttribute("name");
+    } else {
+      name = node.getNodeName();
     }
     if (name != null && !caseSens) name = name.toLowerCase();
     return name;
@@ -217,15 +208,15 @@ public class extractHandler extends GenericHandler {
   public String getNodeKey(Node item, boolean caseSens, String sep) {
     String key = null;
     if (!caseSens && sep != null) sep = sep.toLowerCase();
-    if (item.getNodeType() == NodeType.ATTRIBUTE) {
-      Attribute n = (Attribute)item;
-      key = n.getName();
-    } else if (item.getNodeType() == NodeType.ENTITY) {
-      Entity n = (Entity)item;
-      key = n.getName();
-    } else if (item.getNodeType() == NodeType.TEXT) {
-      Text t = (Text)item;
-      key = (t.getIsIgnorableWhitespace())? null : t.getData();
+    if (item.getNodeType() == Node.ATTRIBUTE_NODE) {
+      key = item.getNodeName();
+    } else if (item.getNodeType() == Node.ENTITY_NODE) {
+      key = item.getNodeName();
+    } else if (item.getNodeType() == Node.ENTITY_REFERENCE_NODE) {
+      key = item.getNodeName();
+    } else if (item.getNodeType() == Node.TEXT_NODE) {
+      ActiveText t = (ActiveText)item;
+      key = (t.getIsIgnorable())? null : t.getData();
     } else {
       key = TextUtil.getTextString((ActiveNode)item);
       if (key != null) key = key.trim();
@@ -324,8 +315,8 @@ class extract_subHandler extends extractHandler {
 /** &lt;from&gt; simply sets the current set to its (expanded) content. */
 class fromHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    content = new ParseNodeList(ListUtil.getListItems(content));
+			ActiveAttrList atts, ActiveNodeList content) {
+    content = new TreeNodeList(ListUtil.getListItems(content));
     putList(out, content);
   }
   fromHandler() { super(true, false); }
@@ -333,11 +324,11 @@ class fromHandler extends extract_subHandler {
 
 class inHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
+			ActiveAttrList atts, ActiveNodeList content) {
     Enumeration items = ListUtil.getListItems(content);
     while (items.hasMoreElements()) {
       Node item = (Node) items.nextElement();
-      if (item.getNodeType() == NodeType.TEXT) {
+      if (item.getNodeType() == Node.TEXT_NODE) {
         Node binding = aContext.getEntityBinding(item.toString(), false);
 	if (binding != null) out.putNode(binding);
       } else {
@@ -354,26 +345,28 @@ class inHandler extends extract_subHandler {
  *	of each extracted node. */
 class childHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    int len = extracted.getLength();
     Enumeration terms = ListUtil.getTextItems(content);
     int termsHandled = 0;
 
     while (terms.hasMoreElements()) {
       ++termsHandled;
       String term = terms.nextElement().toString();
-      for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-	if (item.hasChildren()) {
-	  putList(out, extractTextItem(term, item.getChildren()));
+      for (int i = 0; i < len; ++i) {
+	ActiveNode item = extracted.activeItem(i);
+	if (item.hasChildNodes()) {
+	  putList(out, extractTextItem(term, item.getContent()));
 	}
       }
     }
     if (termsHandled == 0) {
       // no terms.  Return all the children.
-      for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-	if (item.hasChildren()) {
-	  putList(out, item.getChildren());
+      for (int i = 0; i < len; ++i) {
+	ActiveNode item = extracted.activeItem(i);
+	if (item.hasChildNodes()) {
+	  putList(out, item.getContent());
 	}
       }
     }
@@ -384,8 +377,8 @@ class childHandler extends extract_subHandler {
 /** &lt;nodes&gt;<em>term</em>*&lt;/&gt; extracts each node matching a term. */
 class nodesHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     Enumeration terms = ListUtil.getTextItems(content);
     int termsHandled = 0;
 
@@ -401,8 +394,8 @@ class nodesHandler extends extract_subHandler {
  */
 class nameHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     String name = content.toString();
     if (name != null) name = name.trim();
     if (name == null) {
@@ -418,19 +411,13 @@ class nameHandler extends extract_subHandler {
     if (dispatch(e, "all")) 	 	return new name_recursive();
     return this;
   }
-  protected void extractNames(NodeList extracted, Output out) {
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-      int ntype = item.getNodeType();
-      if (ntype == NodeType.ELEMENT) {
-	Element elt = (Element) item;
-	out.putNode(new ParseTreeText(elt.getTagName()));
-      } else if (ntype == NodeType.ATTRIBUTE) {
-	Attribute attr = (Attribute) item;
-	out.putNode(new ParseTreeText(attr.getName()));
-      } else if (ntype == NodeType.ENTITY) {
-	Entity ent = (Entity) item;
-	out.putNode(new ParseTreeText(ent.getName()));
+  protected void extractNames(ActiveNodeList extracted, Output out) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode node = extracted.activeItem(i);
+      String nname = node.getNodeName();
+      if (!nname.startsWith("#")) {
+	out.putNode(new TreeText(node.getNodeName()));
       }
     }
   }
@@ -441,8 +428,8 @@ class nameHandler extends extract_subHandler {
  */
 class name_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String key = content.toString();
@@ -455,32 +442,34 @@ class name_recursive extends extract_subHandler {
       extract(extracted, key, caseSens, all, out);
     }
   }
-  protected void extract(NodeList extracted, String key, 
+  protected void extract(ActiveNodeList extracted, String key, 
 			boolean caseSens, boolean all, Output out) {
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String name = getNodeName(item, caseSens);
       if (key == null || (name != null && key.equals(name))) {
 	out.putNode(item);
-      } else if (!all && item.hasChildren()) {
-	extract(item.getChildren(), key, caseSens, all, out);
+      } else if (!all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, all, out);
       }
-      if (all && item.hasChildren()) {
-	extract(item.getChildren(), key, caseSens, all, out);
+      if (all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, all, out);
       }
     }
   }
-  protected void extractByType(NodeList extracted, int ntype,
-			      boolean all, Output out) {
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+  protected void extractByType(ActiveNodeList extracted, int ntype,
+			       boolean all, Output out) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       if (ntype == NodeType.ALL || ntype == item.getNodeType()) {
 	out.putNode(item);
-      } else if (!all && item.hasChildren()) {
-	extractByType(item.getChildren(), ntype, all, out);
+      } else if (!all && item.hasChildNodes()) {
+	extractByType(item.getContent(), ntype, all, out);
       }
-      if (all && item.hasChildren()) {
-	extractByType(item.getChildren(), ntype, all, out);
+      if (all && item.hasChildNodes()) {
+	extractByType(item.getContent(), ntype, all, out);
       }
     }
   }
@@ -490,15 +479,17 @@ class name_recursive extends extract_subHandler {
 /** &lt;key&gt;<em>k</em>&lt;/&gt; extracts every node with a matching key. */
 class keyHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
-    String sep = atts.getAttributeString("sep");
+    String sep = atts.getAttribute("sep");
     String key = content.toString();
     if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String k = getNodeKey(item, caseSens, sep);
       if (key == null || key.equals(k))	out.putNode(item);
     }    
@@ -517,28 +508,29 @@ class keyHandler extends extract_subHandler {
  */
 class key_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
-    String  sep = atts.getAttributeString("sep");
+    String  sep = atts.getAttribute("sep");
     boolean all = atts.hasTrueAttribute("all");
     String  key = content.toString();
     if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     extract(extracted, key, caseSens, sep, all, out);
   }
-  protected void extract(NodeList extracted, String key, boolean caseSens,
+  protected void extract(ActiveNodeList extracted, String key, boolean caseSens,
 			String sep, boolean all, Output out) {
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String k = getNodeKey(item, caseSens, sep);
       if (key == null || (k != null && key.equals(k))) {
 	out.putNode(item);
-      } else if (!all && item.hasChildren()) {
-	extract(item.getChildren(), key, caseSens, sep, all, out);
+      } else if (!all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, sep, all, out);
       }
-      if (all && item.hasChildren()) {
-	extract(item.getChildren(), key, caseSens, sep, all, out);
+      if (all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, sep, all, out);
       }
     }
   }
@@ -548,14 +540,16 @@ class key_recursive extends extract_subHandler {
 /** &lt;id&gt;<em>k</em>&lt;/&gt; extracts every node with a matching id. */
 class idHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String id = content.toString();
     if (id != null) id = id.trim();
     if (id != null && !caseSens) id = id.toLowerCase();
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String k = getNodeId(item, caseSens);
       if (id == null || id.equals(k))	out.putNode(item);
     }    
@@ -574,8 +568,8 @@ class idHandler extends extract_subHandler {
  */
 class id_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String  id = content.toString();
@@ -583,18 +577,19 @@ class id_recursive extends extract_subHandler {
     if (id != null && !caseSens) id = id.toLowerCase();
     extract(extracted, id, caseSens, all, out);
   }
-  protected void extract(NodeList extracted, String id, boolean caseSens,
+  protected void extract(ActiveNodeList extracted, String id, boolean caseSens,
 			boolean all, Output out) {
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String k = getNodeId(item, caseSens);
       if (id == null || (k != null && id.equals(k))) {
 	out.putNode(item);
-      } else if (!all && item.hasChildren()) {
-	extract(item.getChildren(), id, caseSens, all, out);
+      } else if (!all && item.hasChildNodes()) {
+	extract(item.getContent(), id, caseSens, all, out);
       }
-      if (all && item.hasChildren()) {
-	extract(item.getChildren(), id, caseSens, all, out);
+      if (all && item.hasChildNodes()) {
+	extract(item.getContent(), id, caseSens, all, out);
       }
     }
   }
@@ -605,24 +600,25 @@ class id_recursive extends extract_subHandler {
  */
 class attrHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String name = content.toString();
     if (name != null) name = name.trim();
     
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-      if (item.getNodeType() == NodeType.ATTRIBUTE) {
-	Attribute n = (Attribute)item;
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      if (item.getNodeType() == Node.ATTRIBUTE_NODE) {
+	Attr n = (Attr)item;
 	if (name == null
 	    || (caseSens && name.equals(n.getName()))
 	    || (!caseSens && name.equalsIgnoreCase(n.getName())))
 	  out.putNode(item);
-      } else if (item.getNodeType() == NodeType.ELEMENT) {
-	Element e = (Element)item;
-	AttributeList atl = e.getAttributes();
-	Attribute a = (atl == null)? null : atl.getAttribute(name);
+      } else if (item.getNodeType() == Node.ELEMENT_NODE) {
+	ActiveElement e = (ActiveElement)item;
+	ActiveAttrList atl = e.getAttrList();
+	ActiveAttr a = (atl == null)? null : atl.getActiveAttr(name);
 	if (a != null) out.putNode(a);
       }
     }    
@@ -633,14 +629,16 @@ class attrHandler extends extract_subHandler {
 /** &lt;match&gt;<em>re</em>&lt;/&gt; extracts every node matching re. */
 class matchHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String match = content.toString();
     // === WARNING: match is not being trimmed! ===
     if (!caseSens) match = match.toLowerCase();
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       String k = getNodeKey(item, caseSens, null);
       try {
 	RegExp re = new RegExp(match);
@@ -657,8 +655,8 @@ class matchHandler extends extract_subHandler {
 /** &lt;xptr&gt;<em>xp</em>&lt;/&gt; extracts using an XPointer. */
 class xptrHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     unimplemented(in, aContext);		// === xptr
   }
@@ -668,11 +666,13 @@ class xptrHandler extends extract_subHandler {
 /** &lt;parent&gt; extracts every node's parent. */
 class parentHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     Node previous = null;
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       Node p = item.getParentNode();
       if (p != null && p != previous ) {
 	out.putNode(p);
@@ -686,11 +686,13 @@ class parentHandler extends extract_subHandler {
 /** &lt;content&gt; extracts every node's content (children). */
 class contentHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-      if (item.hasChildren()) { putList(out, item.getChildren()); }
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      if (item.hasChildNodes()) { putList(out, item.getContent()); }
     }
   }
   contentHandler() { super(true, false); syntaxCode = EMPTY; }
@@ -699,10 +701,11 @@ class contentHandler extends extract_subHandler {
 /** &lt;next&gt; extracts every node's successor. */
 class nextHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       Node n = item.getNextSibling();
       if (n != null) out.putNode(n);
     }
@@ -713,10 +716,11 @@ class nextHandler extends extract_subHandler {
 /** &lt;prev&gt; extracts every node's predecessor. */
 class prevHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       Node n = item.getPreviousSibling();
       if (n != null) out.putNode(n);
     }
@@ -727,26 +731,23 @@ class prevHandler extends extract_subHandler {
 /** &lt;eval&gt; extracts every node's value. */
 class evalHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-      ActiveNode a = (ActiveNode)item;
-      NodeList v = null;	
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      ActiveNodeList v = null;	
       switch (item.getNodeType()) {
-      case NodeType.ATTRIBUTE:
-	v = a.asAttribute().getValueNodes();
+      case Node.ATTRIBUTE_NODE:
+      case Node.ENTITY_NODE:
+      case Node.ENTITY_REFERENCE_NODE:
+	v = item.getValueNodes(aContext);
 	if (v != null) putList(out, v);
 	break;
 
-      case NodeType.ENTITY:
-	ActiveEntity ent = a.asEntity();
-	v = ent.getValueNodes(aContext);
-	if (v != null) putList(out, v);
-	break;
-
-      case NodeType.ELEMENT:
-      case NodeType.TEXT:
+      case Node.ELEMENT_NODE:
+      case Node.TEXT_NODE:
+      case Node.CDATA_SECTION_NODE:
 	out.putNode(item);
 	break;
       }
@@ -758,43 +759,43 @@ class evalHandler extends extract_subHandler {
 /** &lt;replace&gt; replace every node's value or content. */
 class replaceHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    String name = atts.getAttributeString("name");
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    String name = atts.getAttribute("name");
     boolean caseSens = atts.hasTrueAttribute("case");
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
-      ActiveNode a = (ActiveNode)item;
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       switch (item.getNodeType()) {
-      case NodeType.ATTRIBUTE:
-	Attribute att = a.asAttribute();
+      case Node.ATTRIBUTE_NODE:
 	if (name != null 
-	     && !(caseSens && name.equals(att.getName())
-		  || !caseSens && name.equalsIgnoreCase(att.getName())))
+	     && !(caseSens && name.equals(item.getNodeName())
+		  || !caseSens && name.equalsIgnoreCase(item.getNodeName())))
 	  continue;
-	att.setValueNodes(content);
+	((ActiveAttr) item).setValueNodes(aContext, content);
 	break;
 
-      case NodeType.ENTITY:
-	ActiveEntity ent = a.asEntity();
+      case Node.ENTITY_NODE:
+      case Node.ENTITY_REFERENCE_NODE:
 	if (name != null 
-	     && !(caseSens && name.equals(ent.getName())
-		  || !caseSens && name.equalsIgnoreCase(ent.getName())))
+	     && !(caseSens && name.equals(item.getNodeName())
+		  || !caseSens && name.equalsIgnoreCase(item.getNodeName())))
 	  continue;
-	ent.setValueNodes(aContext, content);
+	((ActiveEntity) item).setValueNodes(aContext, content);
 	break;
 
-      case NodeType.ELEMENT:
+      case Node.ELEMENT_NODE:
 	ActiveElement elt = (ActiveElement)item;
 	if (name != null) {
 	    elt.setAttributeValue(name, content);
 	  
 	} else {
-	  for (Node child = a.getFirstChild(); child != null; 
-	       child = a.getFirstChild()) {
-	    try { a.removeChild(child); } catch (Exception e) {}
+	  for (Node child = item.getFirstChild(); child != null; 
+	       child = item.getFirstChild()) {
+	    try { item.removeChild(child); } catch (Exception e) {}
 	  }
-	  Copy.appendNodes(content, a);
+	  Copy.appendNodes(content, item);
 	  // putList(out, extracted);
 	  // === attributes in content should become attributes of a ===
 
@@ -811,10 +812,11 @@ class replaceHandler extends extract_subHandler {
  */
 class removeHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    for (Node item = items.getFirst(); item != null; item = items.getNext()) {
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       Node parent = item.getParentNode();
       if (parent != null)
 	try { parent.removeChild(item); } catch (Exception e) {}
@@ -828,8 +830,8 @@ class removeHandler extends extract_subHandler {
  */
 class uniqueHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
-    NodeList extracted = getExtracted(aContext);
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
     List textAssoc = TextUtil.getTextList(extracted, false);
     Enumeration textAssocEnum = textAssoc.elements();
 
@@ -861,7 +863,7 @@ class uniqueHandler extends extract_subHandler {
 	    }
 	}  
     }
-    ParseNodeList selList = ListUtil.toNodeList(resultList);
+    ActiveNodeList selList = ListUtil.toNodeList(resultList);
     putList(out, selList);
     
     // putEnum(out, resultList.elements());
@@ -875,14 +877,14 @@ class uniqueHandler extends extract_subHandler {
  */
 class appendHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
+			ActiveAttrList atts, ActiveNodeList content) {
     boolean children = atts.hasTrueAttribute("children");
 
-    NodeList extracted = getExtracted(aContext);
-    NodeEnumerator items = extracted.getEnumerator();
-    Node item = null;
+    ActiveNodeList extracted = getExtracted(aContext);
     ActiveNode parent = null;
-    for (item = items.getFirst(); item != null; item = items.getNext()) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
       if (children) {
 	  parent = (ActiveNode)item;
 	  Copy.appendNodes(content, parent);	

@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.3 1999-03-12 19:28:28 steve Exp $
+//	$Id: Status.java,v 1.4 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,12 +24,13 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
+import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeAttrList;
+import org.risource.dps.tree.TreeExternal;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,7 @@ import java.net.HttpURLConnection;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.3 1999-03-12 19:28:28 steve Exp $
+ * @version $Id: Status.java,v 1.4 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -51,23 +52,23 @@ public class Status {
   ** Construct nodelist for return:
   ************************************************************************/
 
-  protected static NodeList nodes(String v) {
+  protected static ActiveNodeList nodes(String v) {
     if (v == null) return null;
-    return new ParseNodeList(new ParseTreeText(v));
+    return new TreeNodeList(new TreeText(v));
   }
 
-  protected static NodeList nodes(long v) {
-    return new ParseNodeList(new ParseTreeText("" + v));
+  protected static ActiveNodeList nodes(long v) {
+    return new TreeNodeList(new TreeText("" + v));
   }
 
-  protected static NodeList nodes(boolean v) {
+  protected static ActiveNodeList nodes(boolean v) {
     return v? nodes("true") : null;
   }
 
-  protected static NodeList nodes(String v[]) {
-    ParseNodeList nl = new ParseNodeList();
+  protected static ActiveNodeList nodes(String v[]) {
+    TreeNodeList nl = new TreeNodeList();
     for (int i = 0; i < v.length; ++i) 
-      nl.append(new ParseTreeText(v[i]));
+      nl.append(new TreeText(v[i]));
     return nl;
   }
 
@@ -78,9 +79,9 @@ public class Status {
   /** Get the value of a named status item for a file.
    *	Returns all values if the name is null.
    */
-  public static NodeList getStatusItem(File res, String name) {
+  public static ActiveNodeList getStatusItem(File res, String name) {
     if (res == null) return null;
-    if (name == null) return getStatusItems(res);
+    if (name == null) return (ActiveNodeList) getStatusItems(res);
     name = name.toLowerCase();
 
     if (name.equals("local")) return nodes(true);
@@ -114,9 +115,9 @@ public class Status {
    *	for a File.
    */
   public static ActiveAttrList getStatusItems(File res, String items[]) {
-    ParseTreeAttrs list = new ParseTreeAttrs();
+    TreeAttrList list = new TreeAttrList();
     for (int i = 0; i < items.length; ++i) {
-      NodeList v = getStatusItem(res, items[i]);
+      ActiveNodeList v = getStatusItem(res, items[i]);
       if (v != null) list.setAttributeValue(items[i], v);
     }
     return list;
@@ -133,9 +134,9 @@ public class Status {
   ************************************************************************/
 
   /** Get the value of a named status item for a URL. */
-  public static NodeList getStatusItem(URL res, String name) {
+  public static ActiveNodeList getStatusItem(URL res, String name) {
     if (res == null) return null;
-    if (name == null) return getStatusItems(res);
+    if (name == null) return (ActiveNodeList) getStatusItems(res);
     name = name.toLowerCase();
 
     if (name.equals("url")) return nodes(res.toString());
@@ -155,7 +156,7 @@ public class Status {
   }
 
   public static ActiveAttrList getStatusItems(URL res, String items[]) {
-    ParseTreeAttrs list = new ParseTreeAttrs();
+    TreeAttrList list = new TreeAttrList();
     for (int i = 0; i < items.length; ++i) 
       list.setAttributeValue(items[i], getStatusItem(res, items[i]));
     return list;
@@ -172,16 +173,16 @@ public class Status {
   ************************************************************************/
 
   /** Get the value of a named status item for an Entity. */
-  public static NodeList getStatusItem(ActiveEntity res, String name) {
+  public static ActiveNodeList getStatusItem(ActiveEntity res, String name) {
     if (res == null) return null;
-    if (name == null) return getStatusItems(res);
+    if (name == null) return (ActiveNodeList) getStatusItems(res);
     name = name.toLowerCase();
 
     if (name.equals("entity")) return nodes(true);
-    if (name.equals("name")) return nodes(res.getName());
+    if (name.equals("name")) return nodes(res.getNodeName());
 
-    ParseTreeExternal ext = (res instanceof ParseTreeExternal) 
-      ? (ParseTreeExternal) res : null;
+    TreeExternal ext = (res instanceof TreeExternal) 
+      ? (TreeExternal) res : null;
 
     if (ext != null) {
       if (name.equals("system")) return nodes(ext.getResourceName());
@@ -214,9 +215,9 @@ public class Status {
 
   public static ActiveAttrList getStatusItems(ActiveEntity res,
 					      String items[]) {
-    ParseTreeAttrs list = new ParseTreeAttrs();
+    TreeAttrList list = new TreeAttrList();
     for (int i = 0; i < items.length; ++i) {
-      NodeList v = getStatusItem(res, items[i]);
+      ActiveNodeList v = getStatusItem(res, items[i]);
       if (v != null) list.setAttributeValue(items[i], v);
     }
     return list;

@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.4 1999-03-31 23:08:35 steve Exp $
+//	$Id: BasicProcessor.java,v 1.5 1999-04-07 23:21:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,23 +23,19 @@
 
 
 package org.risource.dps.process;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
-import org.risource.dom.Entity;
-import org.risource.dom.Text;
+
+import org.w3c.dom.*;		// This needs to be revisited
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
 import org.risource.dps.output.ToNodeList;
+import org.risource.dps.tree.TreeElement;
 
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.4 1999-03-31 23:08:35 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.5 1999-04-07 23:21:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -88,6 +84,7 @@ public class BasicProcessor extends ContextStack implements Processor {
       additionalAction(handler.actionCode(input, this));
       // MUST BE equivalent to: handler.action(input, this, output);
     } else {
+      //System.err.println("No handler! " + logNode(input.getActive()));
       expandCurrentNode();
       // MUST BE equivalent to the default action for a node.
     }
@@ -126,10 +123,11 @@ public class BasicProcessor extends ContextStack implements Processor {
   public final void expandCurrentNode() {
     ActiveNode node = input.getActive();
     if (node == null) return;
+
     // No need to check for an entity; active ones use EntityHandler.
     if (input.hasActiveAttributes()) {
       ActiveElement oe = node.asElement();
-      ActiveElement e = oe.editedCopy(expandAttrs(oe.getAttributes()), null);
+      ActiveElement e = oe.editedCopy(expandAttrs(oe.getAttrList()), null);
       output.startElement(e);
       if (input.hasChildren()) { processChildren(); }
       output.endElement(e.isEmptyElement() || e.implicitEnd());
@@ -150,11 +148,11 @@ public class BasicProcessor extends ContextStack implements Processor {
     if (input.hasActiveAttributes()) {
       ActiveElement oe = node.asElement();
       ActiveElement e =
-	new ParseTreeElement(oe, expandAttrs(oe.getAttributes()));
+	new TreeElement(oe, expandAttrs(oe.getAttrList()));
       output.startElement(e);
       if (input.hasChildren()) { copyChildren(); }
       output.endElement(e.isEmptyElement() || e.implicitEnd());
-    } else if (input.hasChildren() && ! node.hasChildren()) {
+    } else if (input.hasChildren() && ! node.hasChildNodes()) {
       output.startNode(node);
       copyChildren();
       output.endNode();
@@ -169,7 +167,7 @@ public class BasicProcessor extends ContextStack implements Processor {
    */
   public final void copyCurrentNode() {
     Node n = input.getNode();
-    if (input.hasChildren() && ! n.hasChildren()) {
+    if (input.hasChildren() && ! n.hasChildNodes()) {
       // Copy recursively only if the node hasn't been fully parsed yet.
       output.startNode(n);
       copyChildren();
@@ -207,28 +205,31 @@ public class BasicProcessor extends ContextStack implements Processor {
 
   /** Expand entities in the attributes of the current Node.
    */
-  public AttributeList expandAttrs(AttributeList attrs) {
+  public ActiveAttrList expandAttrs(ActiveAttrList attrs) {
     return Expand.expandAttrs(this, attrs);
   }
 
   /** Expand entities in the value of a given attribute. */
-  public void expandAttribute(ActiveAttribute att,  ActiveElement e) {
-    e.setAttributeValue(att.getName(), expandNodes(att.getValueNodes()));
+  public void expandAttribute(ActiveAttr att,  ActiveElement e) {
+    e.setAttributeValue(att.getName(), expandNodes(att.getValueNodes(null)));
   }
 
   /** Expand nodes in a nodelist. */
-  public NodeList expandNodes(NodeList nl) {
+  public ActiveNodeList expandNodes(ActiveNodeList nl) {
     if (nl == null) return null;
     ToNodeList dst = new ToNodeList();
     expandNodes(nl, dst);
     return dst.getList();
   }
 
-  public void expandNodes(NodeList nl, Output dst) {
-    org.risource.dom.NodeEnumerator e = nl.getEnumerator();
-    for (Node n = e.getFirst(); n != null; n = e.getNext()) {
-      if (n.getNodeType() == NodeType.ENTITY) {
-	expandEntity((Entity) n, dst);
+  public void expandNodes(ActiveNodeList nl, Output dst) {
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (n.getNodeType() == Node.ENTITY_NODE) {
+	expandEntity((ActiveEntity) n, dst);
+      } else if (n.getNodeType() == Node.ENTITY_REFERENCE_NODE) {
+	expandEntityRef((EntityReference) n, dst);
       } else {
 	dst.putNode(n);
       }
@@ -236,8 +237,18 @@ public class BasicProcessor extends ContextStack implements Processor {
   }
 
   /** Expand a single entity. */
-  public void expandEntity(Entity n, Output dst) {
-    String name = n.getName();
+  public void expandEntity(ActiveEntity n, Output dst) {
+    NodeList value = n.getValueNodes(this);
+    if (value == null) {
+      dst.putNode(n);
+    } else {
+      Copy.copyNodes(value, dst);
+    }
+  }
+
+  /** Expand an entity reference. */
+  public void expandEntityRef(EntityReference n, Output dst) {
+    String name = n.getNodeName();
     NodeList value = Index.getIndexValue(this, name);
     if (value == null) {
       dst.putNode(n);

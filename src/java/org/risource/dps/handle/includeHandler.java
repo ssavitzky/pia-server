@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.5 1999-03-27 01:36:08 steve Exp $
+//	$Id: includeHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -36,14 +33,15 @@ import java.io.InputStreamReader;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
-import org.risource.dps.input.FromParseNodes;
+
+import org.risource.dps.tree.TreeComment;
 
 /**
  * Handler for &lt;include&gt;....&lt;/&gt;  <p>
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.5 1999-03-27 01:36:08 steve Exp $
+ * @version $Id: includeHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -55,11 +53,11 @@ public class includeHandler extends GenericHandler {
 
   /** Action for &lt;include&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     TopContext top  = cxt.getTopContext();
-    String     url  = atts.getAttributeString("src");
-    String  tsname  = atts.getAttributeString("tagset");
-    String entname  = atts.getAttributeString("entity");
+    String     url  = atts.getAttribute("src");
+    String  tsname  = atts.getAttribute("tagset");
+    String entname  = atts.getAttribute("entity");
     boolean quoted  = atts.hasTrueAttribute("quoted");
 
     Tagset      ts  = top.loadTagset(tsname);	// correctly handles null
@@ -73,7 +71,7 @@ public class includeHandler extends GenericHandler {
       entname = entname.trim();
       ent = cxt.getEntityBinding(entname, false);
       if (ent != null) {
-	proc = top.subDocument(ent.getValueInput(cxt), cxt, out, ts);
+	proc = top.subDocument(ent.fromValue(cxt), cxt, out, ts);
 	proc.run();
 	return;
       }
@@ -92,14 +90,14 @@ public class includeHandler extends GenericHandler {
     } catch (IOException e) {
       reportError(in, cxt, e.getMessage());
       if (content != null) Expand.processNodes(content, cxt, out);
-      else out.putNode(new ParseTreeComment(e.getMessage()));
+      else out.putNode(new TreeComment(e.getMessage()));
       return;
     }
 
     if (ts == null) {
       reportError(in, cxt, "Cannot open tagset " + tsname);
       if (content != null) Expand.processNodes(content, cxt, out);
-      else out.putNode(new ParseTreeComment("Cannot open tagset " + tsname));
+      else out.putNode(new TreeComment("Cannot open tagset " + tsname));
       return;
     }
 
@@ -107,7 +105,7 @@ public class includeHandler extends GenericHandler {
       if (content != null) Expand.processNodes(content, cxt, out);
       else {
 	reportError(in, cxt, "Cannot open " + url);
-	out.putNode(new ParseTreeComment("Cannot open " + url));
+	out.putNode(new TreeComment("Cannot open " + url));
       }
       return;
     }

@@ -1,5 +1,5 @@
 ////// logicalHandler.java: <logical> Handler implementation
-//	$Id: logicalHandler.java,v 1.4 1999-03-25 00:42:46 steve Exp $
+//	$Id: logicalHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,12 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -37,9 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;logical&gt;....&lt;/&gt;  <p>
  *
- *	
- *
- * @version $Id: logicalHandler.java,v 1.4 1999-03-25 00:42:46 steve Exp $
+ * @version $Id: logicalHandler.java,v 1.5 1999-04-07 23:21:24 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -51,10 +45,11 @@ public class logicalHandler extends GenericHandler {
 
   /** The default action is to extract the true components. */
   public void action(Input in, Context aContext, Output out) {
-    NodeList content = Expand.getContent(in, aContext);
-    NodeEnumerator enum = content.getEnumerator();
-    for (Node child = enum.getFirst(); child != null; child = enum.getNext()) {
-      NodeList value = Test.getTrueValue((ActiveNode)child, aContext);
+    ActiveNodeList content = Expand.getContent(in, aContext);
+    int len = content.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode child = content.activeItem(i);
+      ActiveNodeList value = Test.getTrueValue(child, aContext);
       if (value != null) putList(out, value);
     }
   }
@@ -86,11 +81,12 @@ public class logicalHandler extends GenericHandler {
 
 class logical_and extends logicalHandler {
   public void action(Input in, Context aContext, Output out) {
-    NodeList content = Expand.getContent(in, aContext);
-    NodeEnumerator enum = content.getEnumerator();
-    NodeList last = null;
-    for (Node child = enum.getFirst(); child != null; child = enum.getNext()) {
-      last = Test.getTrueValue((ActiveNode)child, aContext);
+    ActiveNodeList content = Expand.getContent(in, aContext);
+    ActiveNodeList last = null;
+    int len = content.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode child = content.activeItem(i);
+      last = Test.getTrueValue(child, aContext);
       if (last == null) return;
     }
     putList(out, last);
@@ -102,11 +98,12 @@ class logical_and extends logicalHandler {
 
 class logical_or extends logicalHandler {
   public void action(Input in, Context aContext, Output out) {
-    NodeList content = Expand.getContent(in, aContext);
-    NodeEnumerator enum = content.getEnumerator();
-    NodeList value = null;
-    for (Node child = enum.getFirst(); child != null; child = enum.getNext()) {
-      value = Test.getTrueValue((ActiveNode)child, aContext);
+    ActiveNodeList content = Expand.getContent(in, aContext);
+    ActiveNodeList value = null;
+    int len = content.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode child = content.activeItem(i);
+      value = Test.getTrueValue(child, aContext);
       if (value != null) { putList(out, value); return; }
     }
   }

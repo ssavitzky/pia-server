@@ -1,5 +1,5 @@
 ////// Cursor.java: Shared interface for a ``current node''
-//	$Id: Cursor.java,v 1.3 1999-03-12 19:24:48 steve Exp $
+//	$Id: Cursor.java,v 1.4 1999-04-07 23:20:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,10 +24,7 @@
 
 package org.risource.dps;
 
-import org.risource.dom.Node;
-import org.risource.dom.Attribute;
-import org.risource.dom.Element;
-
+import org.w3c.dom.Node;
 import org.risource.dps.active.*;
 
 /**
@@ -38,7 +35,7 @@ import org.risource.dps.active.*;
  *	trees) run-time type checking.  This makes the most common operations
  *	in the DPS significantly more efficient. <p>
  *
- * @version $Id: Cursor.java,v 1.3 1999-03-12 19:24:48 steve Exp $
+ * @version $Id: Cursor.java,v 1.4 1999-04-07 23:20:46 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Input
@@ -57,21 +54,6 @@ public interface Cursor {
    */
   public Node getNode();
 
-  /** Returns the current Node as an Element. <p>
-   *
-   * @return  <code>null</code> if the current Node is not an Element. 
-   */
-  public Element getElement();
-
-  /** Returns the current Node as an Attribute. <p>
-   *
-   *	This operation exists because it is very common to iterate through
-   *	the attributes of an Element being processed. <p>
-   *
-   * @return  <code>null</code> if the current Node is not an Attribute. 
-   */
-  public Attribute getAttribute();
-
   /** Returns the current Node as an ActiveNode. <p>
    *
    * @return <code>null</code> if the current Node is not Active. 
@@ -81,6 +63,12 @@ public interface Cursor {
   /************************************************************************
   ** Information:
   ************************************************************************/
+
+  /** Get the attributes of the current node. */
+  public ActiveAttrList getAttributes();
+
+  /** Get the nodename of the current node. */
+  public String getNodeName();
 
   /** Returns the action (semantic) handler, if known, for the current node. 
    */
@@ -126,10 +114,6 @@ public interface Cursor {
    */
   public Node toParent();
 
-  /** Returns the parent Element of the current attribute list or children.
-   */
-  public Element toParentElement();
- 
   /************************************************************************
   ** Nesting:
   ************************************************************************/

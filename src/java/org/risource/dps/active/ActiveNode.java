@@ -1,5 +1,5 @@
 ////// ActiveNode.java: Interface for Nodes with actions.
-//	$Id: ActiveNode.java,v 1.3 1999-03-12 19:25:19 steve Exp $
+//	$Id: ActiveNode.java,v 1.4 1999-04-07 23:20:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,32 +23,43 @@
 
 
 package org.risource.dps.active;
+import org.w3c.dom.*;
 
 import org.risource.dps.Active;
 import org.risource.dps.Action;
 import org.risource.dps.Handler;
 import org.risource.dps.Syntax;
 import org.risource.dps.Namespace;
-
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
+import org.risource.dps.Input;
+import org.risource.dps.Context;
 
 /**
- * Interface for parse tree Nodes. <p>
+ * Interface for Active Nodes.
  *
- *	By convention, an interface that extends <code>ActiveNode</code>
- *	has the name <code>Active<em>Xxxx</em></code>.   Classes that
- *	<em>implement</em> <code>ActiveNode</code> have names of the form
- *	<code>ParseTree<em>Xxxx</em></code>.  <p>
+ * <p>	By convention, an interface that extends <code>ActiveNode</code>
+ *	has the name <code>Active<em>Xxxx</em></code>. 
  *
- *	This interface contains strongly-typed convenience functions for
+ * <p>	This interface contains strongly-typed convenience functions for
  *	conversion, navigation, and construction that are made significantly
  *	more efficient than the equivalent DOM functions by the fact that
- *	they do not need to perform run-time type casting. <p>
+ *	they do not need to perform run-time type casting.
  *
- * @version $Id: ActiveNode.java,v 1.3 1999-03-12 19:25:19 steve Exp $
+ * <p>	By the use of Cursor objects, it is possible to traverse and 
+ *	manipulate trees made of ActiveNode objects without actually 
+ *	seeing a Node.  In order to accomplish this, any DOM operation that 
+ *	would normally return a NodeList has a corresponding ActiveNode 
+ *	operation that returns a Cursor.  
+ *
+ * <p>	More specifically, a method that returns a Cursor that iterates over
+ *	a set of Nodes (an Input) has a name starting with <code>from</code>,
+ *	while a method that returns a Cursor to be used for construction (an
+ *	Output) has a name starting with <code>into</code>.  A method that
+ *	returns a Cursor that maps names to values has a name starting with
+ *	<code>Map</code>
+ *
+ * @version $Id: ActiveNode.java,v 1.4 1999-04-07 23:20:58 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dom.Node
+ * @see org.w3c.dom.Node
  * @see org.risource.dps.Action
  * @see org.risource.dps.Active
  * @see org.risource.dps.Context
@@ -66,6 +77,27 @@ public interface ActiveNode extends Active, Node {
   public ActiveNode getActiveParent();
   public ActiveNode getFirstActive();
   public ActiveNode getLastActive();
+
+  /************************************************************************
+  ** Cursorial Navigation:
+  ************************************************************************/
+
+  /** Returns an Input iterating over the content (children) of the node. */
+  public Input fromContent();
+
+  /** Returns an Input iterating over the value of the node in the given
+   *	context.  In most cases the value does not depend on the context,
+   *	but it is required for correct expansion of entities. 
+   */
+  public Input fromValue(Context cxt);
+
+  /************************************************************************
+  ** Active Content:
+  ************************************************************************/
+
+  public ActiveAttrList getAttrList();
+  public ActiveNodeList getContent();
+  public ActiveNodeList getValueNodes(Context cxt);
 
   /************************************************************************
   ** Syntax:
@@ -86,21 +118,13 @@ public interface ActiveNode extends Active, Node {
    *	not an Element. */
   public ActiveElement asElement();
 
-  /** Return the node typed as an ActiveText, or <code>null</code> if it is
-   *	not a Text. */
-  public ActiveText asText();
-
   /** Return the node typed as an ActiveAttribute, or <code>null</code> if it
    *	is not an Attribute. */
-  public ActiveAttribute asAttribute();
+  public ActiveAttr asAttribute();
 
   /** Return the node typed as an ActiveEntity, or <code>null</code> if it is
    *	not an Entity. */
   public ActiveEntity asEntity();
-
-  /** Return the node typed as an ActiveDocument, or <code>null</code> if it
-   *	is not a Document. */
-  public ActiveDocument asDocument();
 
   /** Return the node or its content typed as a Namespace. */
   public Namespace asNamespace();
@@ -109,12 +133,12 @@ public interface ActiveNode extends Active, Node {
   ** Copying:
   ************************************************************************/
 
-  /** Return a shallow copy of this Token.  Attributes are copied, but 
+  /** Return a shallow copy of this Node.  Attributes are copied, but 
    *	children are not. 
    */
   public ActiveNode shallowCopy();
 
-  /** Return a deep copy of this Token.  Attributes and children are copied.
+  /** Return a deep copy of this Node.  Attributes and children are copied.
    */
   public ActiveNode deepCopy();
 

@@ -1,5 +1,5 @@
 ////// agentList.java:  Handler for <agent-home>
-//	$Id: agentList.java,v 1.4 1999-03-23 23:32:50 steve Exp $
+//	$Id: agentList.java,v 1.5 1999-04-07 23:22:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,8 +27,9 @@ package org.risource.pia.handle;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.ActiveDoc;
+import org.risource.dps.tree.TreeNodeArray;
+import org.risource.dps.tree.TreeText;
 
-import org.risource.dom.NodeList;
 import org.risource.pia.Agent;
 import org.risource.pia.Resolver;
 
@@ -40,19 +41,19 @@ import org.risource.ds.List;
 public class agentList extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;
     }
 
-    String type = atts.getAttributeString("type");
+    String type = atts.getAttribute("type");
     boolean subs = atts.hasTrueAttribute("subs");
 
     Resolver resolver = env.getResolver();
 
-    ParseNodeArray list = new ParseNodeArray();
+    TreeNodeArray list = new TreeNodeArray();
     list.setSep(" ");
 
     Enumeration names = resolver.agentNames();
@@ -61,7 +62,7 @@ public class agentList extends org.risource.dps.handle.GenericHandler {
       Agent agent = resolver.agent(name);
       if (subs && name.equals(agent.type())) continue;
       if (type == null || type.equals(agent.type()))
-	list.append(new ParseTreeText(name));
+	list.append(new TreeText(name));
     }
 
     // === should really return list of agent names as a list ===

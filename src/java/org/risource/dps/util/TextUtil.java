@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.4 1999-04-02 22:05:43 pgage Exp $
+//	$Id: TextUtil.java,v 1.5 1999-04-07 23:22:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,19 +24,15 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.Text;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.Node;
+//import org.w3c.dom.Text;
  
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
 import org.risource.dps.input.*;
+import org.risource.dps.tree.TreeEntity;
+import org.risource.dps.tree.TreeText;
 
 import org.risource.ds.Table;
 import org.risource.ds.List;
@@ -54,7 +50,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.4 1999-04-02 22:05:43 pgage Exp $
+ * @version $Id: TextUtil.java,v 1.5 1999-04-07 23:22:18 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -69,7 +65,7 @@ public class TextUtil {
   public static BasicEntityTable getCharacterEntities() { return charEnts; }
 
   static protected void dc(char c, String name) {
-    charEnts.addBinding(name, new ParseTreeEntity(name, c));
+    charEnts.addBinding(name, new TreeEntity(name, c));
   }
 
   static {
@@ -83,12 +79,15 @@ public class TextUtil {
   ************************************************************************/
 
   /** Convert a node to a string, ignoring markup.
+   *	=== Conversion to string is problematic: need internal and external
    */
   public static String getTextString(ActiveNode n) {
     // First, see if n is a text node.  If it is, just convert it to a string.
-    if (n.getNodeType() == NodeType.TEXT
-	|| n.getNodeType() == NodeType.ENTITY)
-      return n.toString();
+    if (n.getNodeType() == Node.TEXT_NODE
+	|| n.getNodeType() == Node.CDATA_SECTION_NODE
+	|| n.getNodeType() == Node.ENTITY_REFERENCE_NODE
+	|| n.getNodeType() == Node.ENTITY_NODE)
+      return n.getNodeValue();
 
     // If that doesn't work, we have to go through its entire contents and
     // filter out the text.  We do it by cascading a FilterText (a kind of
@@ -101,7 +100,7 @@ public class TextUtil {
 
   /** Extract text from a nodelist.
    */
-  public static NodeList getText(NodeList nl) {
+  public static ActiveNodeList getText(ActiveNodeList nl) {
     ToNodeList out = new ToNodeList();
     Copy.copyNodes(nl, new FilterText(out));
     return out.getList();
@@ -109,9 +108,7 @@ public class TextUtil {
 
   /** Return an Association between a node and its text content. */
   public static Association getTextAssociation(ActiveNode n, boolean caseSens) {
-
     String str = getTextString(n);
-    
     if(!caseSens) {
       str = str.toLowerCase();
     }
@@ -122,11 +119,12 @@ public class TextUtil {
    *	whitespace, but associates non-text markup with its concatenated text
    *	content.  Most useful for sorting nodes lexically.
    */
-  public static List getTextList(NodeList nl, boolean caseSens) {
+  public static List getTextList(ActiveNodeList nl, boolean caseSens) {
     List l = new List();
     Enumeration items = ListUtil.getListItems(nl);
     while (items.hasMoreElements()) {
-      Association a = getTextAssociation((ActiveNode)items.nextElement(), caseSens);
+      Association a = getTextAssociation((ActiveNode)items.nextElement(),
+					 caseSens);
       if (a != null) l.push(a);
     }
     return l;
@@ -136,7 +134,7 @@ public class TextUtil {
    *	Character entities are replaced by their equivalent characters;
    *	all other markup is <em>also</em> converted to equivalent characters. 
    */
-  public static String getCharData(NodeList nl) {
+  public static String getCharData(ActiveNodeList nl) {
     ToCharData out = new ToCharData();
     Copy.copyNodes(nl, new FilterText(out));
     return out.getString();
@@ -163,8 +161,7 @@ public class TextUtil {
   /** Trim leading and trailing whitespace.  Return an 
     * enumeration of nodes with whitespace removed.
     */
-  public static Enumeration trimListItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static Enumeration trimListItems(ActiveNodeList nl) {
     List results = new List();
     String rStr;
 
@@ -176,8 +173,10 @@ public class TextUtil {
     Node lastTextNode = null;
     
     // Get first and last text nodes in list
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if(n.getNodeType() == NodeType.TEXT) {
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if(NodeType.isText(n)) {
 	if(seenFirstTextNode == false) {
 	  firstTextNode = n;
 	  seenFirstTextNode = true;
@@ -192,9 +191,10 @@ public class TextUtil {
     if(lastTextNode == null)
       lastTextNode = firstTextNode;
 
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if(n.getNodeType() == NodeType.TEXT) {
-	Text tNode = (Text)n;
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if(NodeType.isText(n)) {
+	ActiveText tNode = (ActiveText)n;
 	if(n == firstTextNode) {
 	  String s = tNode.toString();
 	  rStr = trimLeading(s);
@@ -226,18 +226,18 @@ public class TextUtil {
     * alignment. The default is left, meaning that spaces are
     * added to the right.
     */
-  public static Enumeration padListItems(NodeList nl, boolean align, boolean left,
-					  boolean right, boolean center, int width) {
-
+  public static Enumeration padListItems(ActiveNodeList nl, boolean align,
+					 boolean left, boolean right,
+					 boolean center, int width) {
     List results = new List();
-
-    NodeEnumerator enum = nl.getEnumerator();    
     int strLen = 0;
 
     // Extract string length from each node and push node onto
     // results list.
-    for(Node n = enum.getFirst(); n != null; n= enum.getNext()) {
-      String nStr = getTextString((ActiveNode)n);
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      String nStr = getTextString(n);
       strLen += nStr.length();
       results.push(n);
     }
@@ -246,7 +246,7 @@ public class TextUtil {
       // Pad amount specified
       int padLen = (width - strLen);
       // Create a node full of spaces
-      ParseTreeText pNode = null;
+      TreeText pNode = null;
       if(right) {
 	pNode = createPadNode(padLen);
 	results.insertAt(pNode, 0);
@@ -272,13 +272,13 @@ public class TextUtil {
     return results.elements();
   }
 
-  public static final ParseTreeText createPadNode(int width) {
+  public static final TreeText createPadNode(int width) {
     
     String nodeStr = "";
     for(int i = 0; i < width; i++) {
       nodeStr += " ";
     }
-    ParseTreeText ptt = new ParseTreeText(nodeStr);
+    TreeText ptt = new TreeText(nodeStr);
     return ptt;
   }
   
@@ -308,7 +308,7 @@ public class TextUtil {
    */
 
   /** Replace character entities in a NodeList with their values. */
-  public static final String expandCharacterEntities(NodeList nl) {
+  public static final String expandCharacterEntities(ActiveNodeList nl) {
     ToString out = new ToString(charEnts);
     Copy.copyNodes(nl, out);
     return out.getString();
@@ -406,7 +406,7 @@ public class TextUtil {
    *	Markup is sent to an Output. === should produce real nodes ===
    */
   public static final void addMarkup(String s, Output out) {
-    out.putNode(new ParseTreeText(addMarkup(s)));
+    out.putNode(new TreeText(addMarkup(s)));
   }
 
 
@@ -478,13 +478,13 @@ public class TextUtil {
 
 
   /** Encode text node strings using URL encoding. */
-  public static List encodeURLListItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static List encodeURLListItems(ActiveNodeList nl) {
     List results = new List();
-    
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if(n.getNodeType() == NodeType.TEXT) {
-	Text tNode = (Text)n;
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if(NodeType.isText(n)) {
+	ActiveText tNode = (ActiveText)n;
 	String bStr = URLEncoder.encode(tNode.toString());
 	tNode.setData(bStr);
 	results.push(tNode);
@@ -498,13 +498,13 @@ public class TextUtil {
   }
 
   /** Encode text node contents in base64 */
-  public static List encodeBase64ListItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static List encodeBase64ListItems(ActiveNodeList nl) {
     List results = new List();
-    
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if(n.getNodeType() == NodeType.TEXT) {
-	Text tNode = (Text)n;
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if(NodeType.isText(n)) {
+	ActiveText tNode = (ActiveText)n;
 	String s = tNode.toString();
 	String bStr = Utilities.encodeBase64(s.getBytes());
 	tNode.setData(bStr);
@@ -521,14 +521,15 @@ public class TextUtil {
   /** Returns an List of string tokens which include text plus tokens for
     * markup characters as well as any accompanying text.
     */
-  public static List encodeEntityListItems(NodeList nl, String markupChars) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static List encodeEntityListItems(ActiveNodeList nl,
+					   String markupChars) {
     List tokenList = new List();
     List resultList = new List();
-    
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if(n.getNodeType() == NodeType.TEXT) {
-	Text tNode = (Text)n;
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (NodeType.isText(n)) {
+	ActiveText tNode = (ActiveText)n;
 	String s = tNode.toString();
 
 	// true means return delimiters as tokens
@@ -547,13 +548,12 @@ public class TextUtil {
       // Get token type
       if(markupChars.indexOf(tmpStr) == -1) {
 	// Not a markup token
-	ParseTreeText ptt = new ParseTreeText(tmpStr);
+	TreeText ptt = new TreeText(tmpStr);
 	resultList.push(ptt);
-      }
-      else {
+      } else {
 	// Markup token:  do a table lookup to get encoding
 	String tStr = (String)TextUtil.encodeEntityTab.get(tmpStr);
-	ParseTreeEntity pte = new ParseTreeEntity(tStr);
+	TreeEntity pte = new TreeEntity(tStr);
 	resultList.push(pte);
       }
     }
@@ -573,28 +573,5 @@ public class TextUtil {
     encodeEntityTab.put("&", "amp");
     encodeEntityTab.put("'", "apos");
     encodeEntityTab.put("\"", "quot");
-  }
-
-  /************************************************************************
-  ** Debugging
-  ************************************************************************/
-
-  // Print contents of a NodeList
-  static public void printNodeList(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      System.err.println(n.toString());
-    }
-  }
-
-
-  // Print contents of a List
-  static public void printList(List list) {
-    
-    System.out.println("List size: " + list.size());
-    Enumeration enum = list.elements();
-    while(enum.hasMoreElements()) {
-      System.err.println(enum.nextElement());
-    }
   }
 }

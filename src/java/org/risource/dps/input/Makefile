@@ -1,5 +1,5 @@
 ###### dps/input/Makefile:	Implementations of the Input interface
-# 	$Id: Makefile,v 1.4 1999-03-23 23:31:51 steve Exp $
+# 	$Id: Makefile,v 1.5 1999-04-07 23:21:34 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,22 +26,16 @@ TOPDIR=../../../..
 
 FILES = \
 	ActiveInput.java \
-	FromParseNodes.java \
+	FromNodeList.java \
+	FromEnumeration.java \
 	FromParseTree.java 
 
-OLDFILES = \
-	AbstractInput.java \
-	AbstractInputFrame.java \
-	ExpandToken.java \
-	Guard.java \
-	SingleToken.java \
-	Wrapper.java
 
 include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies:
 
-AbstractInput.class: ../Input.java ../util/CurrentNode.java
 ActiveInput.class: ../Input.java ../util/CurrentActive.java
 FromParseTree.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
-FromParseNodes.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
+FromNodeList.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java
+FromEnumerator.class:  ../Input.java ../util/CurrentActive.java ActiveInput.java

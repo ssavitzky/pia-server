@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	$Id: CurrentActive.java,v 1.3 1999-03-12 19:28:11 steve Exp $
+//	$Id: CurrentActive.java,v 1.4 1999-04-07 23:22:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,13 +24,14 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Element;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+
 import org.risource.dps.util.Copy;
 
 /**
@@ -48,7 +49,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version $Id: CurrentActive.java,v 1.3 1999-03-12 19:28:11 steve Exp $
+ * @version $Id: CurrentActive.java,v 1.4 1999-04-07 23:22:15 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -74,7 +75,6 @@ public class CurrentActive implements Cursor {
   /** If the current <code>node</code> is an element, this is equal to it. 
    *	Otherwise it's <code>null</code>. 
    */
-  protected ActiveElement element;
   protected String tagName;
 
   protected boolean retainTree = false;
@@ -85,67 +85,58 @@ public class CurrentActive implements Cursor {
   ************************************************************************/
 
   public final Node       getNode() 	{ return active; }
-  public final Element    getElement()	{ return element; }
+  public final ActiveAttrList getAttributes() {
+    return active.getAttrList();
+  }
+  public final String	  getNodeName() { return active.getNodeName(); }
+
   public final ActiveNode getActive() 	{ return active; }
   public final int	  getDepth() 	{ return depth; }
   public final String 	  getTagName() 	{ return tagName; }
 
-  /** === could implement this with another state variable... */
-  public Attribute getAttribute() {
-    if (active != null) return active.asAttribute();
-    else return null;
-  }
-
-  /** Set the current node.  Set <code>active</code> and <code>element</code>
-   *	if applicable. */
+  /** Set the current node.  Set <code>active</code>. */
   protected final void  setNode(Node aNode) {
     if (aNode == null) {
       action = null;
-      element = null;
       active = null;
       tagName = null;
       return;
     } else if (! (aNode instanceof ActiveNode)) {
-      throw(new NotActiveNodeException());
+      throw(new DPSException(DPSException.NOT_ACTIVE_NODE_ERR));
     }
     active = (ActiveNode)aNode;
     action = active.getAction();
-    if (aNode.getNodeType() == NodeType.ELEMENT) {
-      element = active.asElement();
-      tagName = element.getTagName();
+    if (aNode.getNodeType() == Node.ELEMENT_NODE) {
+      tagName = aNode.getNodeName();
     } else {
-      element = null;
       tagName = null;
     }
   }
 
   /** Set the current node to an element */
   protected final void setNode(ActiveElement anElement, String aTagName) {
-    element= anElement;
-    active = element;
+    active = anElement;
 
     if (active == null)
-      throw(new NotActiveNodeException("Non-null ActiveElement expected"));
+      throw(new DPSException(DPSException.NOT_ACTIVE_NODE_ERR,
+			     "ActiveElement expected"));
 
     action = active.getAction();
-    tagName = (aTagName == null)? element.getTagName() : aTagName;
+    tagName = (aTagName == null)? anElement.getTagName() : aTagName;
   }
 
   protected final void setNode(ActiveNode aNode) {
     active = aNode;
     action = active.getAction();
-    if (active.getNodeType() == NodeType.ELEMENT) {
-      element = active.asElement();
-      tagName = element.getTagName();
+    if (active.getNodeType() == Node.ELEMENT_NODE) {
+      tagName = active.getNodeName();
     } else {
-      element = null;
       tagName = null;
     }
   }
 
   protected final void setNode(ActiveNode aNode, String aTagName) {
     active = aNode;
-    element = active.asElement();
     tagName = aTagName;
   }
 
@@ -167,7 +158,7 @@ public class CurrentActive implements Cursor {
 
   /** This will have to be overridden if the tree is being built on the fly. */
   protected boolean hasChildren() {
-    return active != null &&  active.hasChildren();
+    return active != null &&  active.hasChildNodes();
   }
 
   /** This should be overridden to if more information is available. */
@@ -177,8 +168,7 @@ public class CurrentActive implements Cursor {
 
   /** This will have to be overridden if the tree is being built on the fly. */
   public boolean hasAttributes() {
-    if (element == null) return false;
-    org.risource.dom.AttributeList atts = element.getAttributes();
+    NamedNodeMap atts = active.getAttributes();
     return (atts != null) && (atts.getLength() > 0);
   }
 
@@ -189,8 +179,8 @@ public class CurrentActive implements Cursor {
 
   public String getTagName(int level) {
     Node n = getNode(level);
-    return (n == null || !(n instanceof Element))
-      ? null : ((Element)n).getTagName();
+    return (n == null || !(n.getNodeType() == Node.ELEMENT_NODE))
+      ? null : n.getNodeName();
   }
 
   public Node getNode(int level) {
@@ -233,19 +223,15 @@ public class CurrentActive implements Cursor {
     return active;
   }
 
-  public Element toParentElement() {
-    if (atTop()) return null;
-    ActiveNode p = active.getActiveParent();
-    if (p == null) return null;
-    setNode(p);
-    depth--;
-    atFirst = false;
-    return element;
-  }
-
   /************************************************************************
   ** Input Operations:
   ************************************************************************/
+
+  protected Node toFirstNode() {
+    while (!atTop()) toParent();
+    atFirst = true;
+    return active;
+  }
 
   /** Returns the first child of the current Node. 
    *	A subsequent call on <code>toNextNode</code> will return the 
@@ -360,7 +346,7 @@ public class CurrentActive implements Cursor {
       setNode(aNode);
       return;
     }
-    if (p != null || aNode.hasChildren()) {
+    if (p != null || aNode.hasChildNodes()) {
       // === The following chokes on an attribute with an unspecified value!
       // System.err.println("about to copy " + aNode.getClass().getName());
       ActiveNode n = (ActiveNode)aNode;

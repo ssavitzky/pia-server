@@ -251,8 +251,23 @@ Entity used as list for repeat; expanded in attribute:
 
 <add-markup>THIS is a _test_ *of* add="markup"</add-markup>
 
+<h2>Expansion inside defined elements</h2>
+<define element='yyy'><action>Y&bar;Y<get name='bar'/>Y</action></define>
+<set name='bar'>BAR</set>
+<define entity='baz'><value>BAZ</value></define>
+
+<define element='frob'>
+  <action>Expanding frob:
+	  entity bar: '&bar;' get bar: '<get name='bar'/>'
+	  entity baz: '&baz;' get baz: '<get name='baz'/>'
+	  attrs: "&attributes;"  content: "&content;"
+	  defined element: <yyy/>
+  </action> 
+</define>
+<frob froboz='value of froboz'>content of frob</frob>
+
 <hr />
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.4 1999-03-27 02:29:50 pgage Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.5 1999-04-07 23:21:57 steve Exp $</b><br /></then></if>
 </baz></body></html>

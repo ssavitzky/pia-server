@@ -1,5 +1,5 @@
 ////// statusHandler.java: <status> Handler implementation
-//	$Id: statusHandler.java,v 1.5 1999-03-27 01:36:10 steve Exp $
+//	$Id: statusHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.NodeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -38,7 +38,7 @@ import java.net.URL;
  *
  * <p>	Determine the status of a resource. 
  *
- * @version $Id: statusHandler.java,v 1.5 1999-03-27 01:36:10 steve Exp $
+ * @version $Id: statusHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -50,9 +50,9 @@ public class statusHandler extends GenericHandler {
 
   /** Action for &lt;status&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
-    String entityName = atts.getAttributeString("entity");
-    String srcURL     = atts.getAttributeString("src");
+  		     ActiveAttrList atts, ActiveNodeList content) {
+    String entityName = atts.getAttribute("entity");
+    String srcURL     = atts.getAttribute("src");
     if (srcURL != null) getStatusForURL(srcURL, cxt, out, atts, content);
     if (entityName != null) getStatusForEntity(entityName, cxt, out,
 					       atts, content);
@@ -95,8 +95,8 @@ public class statusHandler extends GenericHandler {
    *	resource.
    */
   void getStatusForEntity(String name, Context cxt, Output out, 
-			  ActiveAttrList atts, NodeList content) {
-    String item = atts.getAttributeString("item");
+			  ActiveAttrList atts, ActiveNodeList content) {
+    String item = atts.getAttribute("item");
     ActiveEntity entity = cxt.getEntityBinding(name, false);
     if (entity == null) {
       if (content != null) Expand.processNodes(content, cxt, out);
@@ -106,8 +106,8 @@ public class statusHandler extends GenericHandler {
 
   /** Get the status for a URL that refers to an external resource. */
   void getStatusForURL(String url, Context cxt, Output out,
-		       ActiveAttrList atts, NodeList content) {
-    String item = atts.getAttributeString("item");
+		       ActiveAttrList atts, ActiveNodeList content) {
+    String item = atts.getAttribute("item");
     TopContext top = cxt.getTopContext();
     if (top.isRemotePath(url)) {
       URL remote = top.locateRemoteResource(url, false);
@@ -129,8 +129,8 @@ public class statusHandler extends GenericHandler {
 
 class status_src extends statusHandler {
   public void action(Input in, Context cxt, Output out,
-  		     ActiveAttrList atts, NodeList content) {
-    String srcURL     = atts.getAttributeString("src");
+  		     ActiveAttrList atts, ActiveNodeList content) {
+    String srcURL     = atts.getAttribute("src");
     getStatusForURL(srcURL, cxt, out, atts, content);
   }
   public status_src(ActiveElement e) { super(e); }
@@ -139,8 +139,8 @@ class status_src extends statusHandler {
 
 class status_entity extends statusHandler {
   public void action(Input in, Context cxt, Output out,
-  		     ActiveAttrList atts, NodeList content) {
-    String entityName = atts.getAttributeString("entity");
+  		     ActiveAttrList atts, ActiveNodeList content) {
+    String entityName = atts.getAttribute("entity");
     getStatusForEntity(entityName, cxt, out, atts, content);
   }
   public status_entity(ActiveElement e) { super(e); }

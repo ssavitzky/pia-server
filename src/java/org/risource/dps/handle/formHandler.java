@@ -1,5 +1,5 @@
 ////// formHandler.java: <form> Handler implementation
-//	$Id: formHandler.java,v 1.4 1999-03-25 00:42:41 steve Exp $
+//	$Id: formHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -36,9 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;form&gt;....&lt;/&gt;  <p>
  *
- *	
- *
- * @version $Id: formHandler.java,v 1.4 1999-03-25 00:42:41 steve Exp $
+ * @version $Id: formHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -50,7 +45,7 @@ public class formHandler extends GenericHandler {
 
   /** Action for &lt;form&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
     unimplemented(in, cxt);	// === form
   }
@@ -77,13 +72,3 @@ public class formHandler extends GenericHandler {
   }
 }
 
-/*
-class form_ extends formHandler {
-  public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
-    // do the work
-  }
-  public form_(ActiveElement e) { super(e); }
-  static Action handle(ActiveElement e) { return new form_(e); }
-}
-*/

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.12 1999-03-31 23:06:38 steve Exp $
+// $Id: GenericAgent.java,v 1.13 1999-04-07 23:22:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,8 +64,7 @@ import org.risource.ds.Registered;
 import org.risource.dps.Tagset;
 import org.risource.dps.tagset.Loader;
 import org.risource.dps.process.ActiveDoc;
-
-import org.risource.dom.NodeList;
+import org.risource.dps.active.*;
 
 import org.risource.util.NullOutputStream;
 import org.risource.util.NameUtils;
@@ -356,8 +355,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
     while (e.hasMoreElements()) {
       String key = e.nextElement().toString();
       Object value = get(key);
-      if (value instanceof org.risource.dom.Node) value = "[Node]";
-      if (value instanceof org.risource.dom.NodeList) value = "[NodeList]";
+      if (value instanceof ActiveNode) value = "[Node]";
+      if (value instanceof ActiveNodeList) value = "[NodeList]";
       s += "\n      " + name() + ":" + key + "=" + value;
     }
     return s;
@@ -753,9 +752,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
    */
   public void actOn(Transaction ts, Resolver res){
     if (actOnHook == null) return;
-    else if (actOnHook instanceof NodeList) {
+    else if (actOnHook instanceof ActiveNodeList) {
       Pia.debug(this, name()+".actOnHook", "= DPS:"+actOnHook.toString());
-      runDPSHook((NodeList)actOnHook, ts, res); 
+      runDPSHook((ActiveNodeList)actOnHook, ts, res); 
     } else {
       Pia.debug(this, name()+".actOnHook", "=???"+actOnHook.toString());
     }
@@ -772,9 +771,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
    */
   public boolean handle(Transaction ts, Resolver res) {
     if (handleHook == null)  return false;
-    else if (handleHook instanceof NodeList) {
+    else if (handleHook instanceof ActiveNodeList) {
       Pia.debug(this, name()+".handleHook", "= DPS: "+handleHook.toString());
-      runDPSHook((NodeList)handleHook, ts, res); 
+      runDPSHook((ActiveNodeList)handleHook, ts, res); 
       return true;
     } else {
       Pia.debug(this, name()+".handleHook", "= ???: "+handleHook.toString());
@@ -786,10 +785,11 @@ public class GenericAgent implements Agent, Registered, Serializable {
   /**
    * Respond to a transaction with a stream of HTML generated using the DPS.
    */
-  public void runDPSHook (NodeList hook, Transaction trans, Resolver res ) {
+  public void runDPSHook (ActiveNodeList hook,
+			  Transaction trans, Resolver res ) {
     if (hook == null || hook.getLength() == 0) return;
     ActiveDoc proc = makeDPSProcessor(trans, res);
-    proc.setInput(new org.risource.dps.input.FromParseNodes(hook));
+    proc.setInput(new org.risource.dps.input.FromNodeList(hook));
     proc.setOutput(new org.risource.dps.output.DiscardOutput());
     proc.run();
   }

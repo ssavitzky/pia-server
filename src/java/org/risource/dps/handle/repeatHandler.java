@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.4 1999-03-25 00:42:52 steve Exp $
+//	$Id: repeatHandler.java,v 1.5 1999-04-07 23:21:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,17 +23,15 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
-import org.risource.dom.NodeEnumerator;
+
+import org.w3c.dom.Node;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
-import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.input.FromNodeList;
+import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeText;
 
 import org.risource.ds.Association;
 import org.risource.ds.List;
@@ -43,7 +41,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.4 1999-03-25 00:42:52 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.5 1999-04-07 23:21:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -54,12 +52,12 @@ public class repeatHandler extends GenericHandler {
   ************************************************************************/
 
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work.  
     // There were no attributes to dispatch on, so repeat the content until
     // something stops the processor.
     String tag = in.getTagName();
-    FromParseNodes src = iterationSrc(content);
+    Input  src = iterationSrc(content);
     Processor process  = iterationCxt(src, aContext, out, null, tag);
     List repeatSubs = new List();
 
@@ -87,8 +85,8 @@ public class repeatHandler extends GenericHandler {
 
   /** Perform one iteration through the content. */
   public void iterate(Processor p, ActiveNode n,
-		      ActiveEntity var, FromParseNodes src) {
-    var.setValueNodes(p, new ParseNodeList(n));
+		      ActiveEntity var, Input src) {
+    var.setValueNodes(p, new TreeNodeList(n));
     p.run();
     src.toFirstNode();
   }
@@ -96,11 +94,12 @@ public class repeatHandler extends GenericHandler {
   /** Scan the content and tell each sub-element to set itself up.
    *	The sub-elements are counted and pushed onto a list.
    */
-  public int iterationInit(NodeList content, Processor process, List subs) {
+  public int iterationInit(ActiveNodeList content,
+			   Processor process, List subs) {
     int count = 0;
-    NodeEnumerator items = content.getEnumerator();
-    for (Node n = items.getFirst(); n != null; n =  items.getNext()) {
-      ActiveNode item = (ActiveNode)n;
+    int len = content.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = content.activeItem(i);
       Action a = item.getAction();
       if (a != null && a instanceof repeatHandler) {
 	repeatHandler rh = (repeatHandler)a;
@@ -130,14 +129,14 @@ public class repeatHandler extends GenericHandler {
   /** Return the name of the iteration variable (entity) */
   String getEntityName(ActiveAttrList atts, String dflt) {
     return (atts == null)? dflt
-      : (atts.hasTrueAttribute("entity"))? atts.getAttributeString("entity")
+      : (atts.hasTrueAttribute("entity"))? atts.getAttribute("entity")
       : dflt;
   }
 
   /** Return an ActiveEntity to use as an iteration variable. */
   public ActiveEntity iterationVar(ActiveAttrList atts, Context cxt, 
 				   String dflt) {
-    String name = atts.getAttributeString("entity");
+    String name = atts.getAttribute("entity");
     Tagset ts = cxt.getTopContext().getTagset();
     if (name != null) name = name.trim();
     if (name == null) name = dflt;
@@ -145,15 +144,15 @@ public class repeatHandler extends GenericHandler {
   }
 
   /** Return a suitable Input for iterating through the content. */
-  public FromParseNodes iterationSrc(NodeList nl) {
-    return new FromParseNodes(nl);
+  public Input iterationSrc(ActiveNodeList nl) {
+    return new FromNodeList(nl);
   }
 
   /** Return a suitable context in which the iteration variables are bound. */
   public Processor iterationCxt(Input in, Context cxt, Output out,
 				ActiveEntity var, String tag) {
     BasicEntityTable ents = new BasicEntityTable(tag);
-    if (var != null) ents.setBinding(var.getName(), var);
+    if (var != null) ents.setBinding(var.getNodeName(), var);
     return cxt.subProcess(in, out, ents);
   }
 
@@ -193,14 +192,14 @@ public class repeatHandler extends GenericHandler {
 
 class repeat_numeric extends repeatHandler {
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Association start = MathUtil.getNumeric(atts, "start", "0");
     Association stop  = MathUtil.getNumeric(atts, "stop", "0");
     Association step  = MathUtil.getNumeric(atts, "step", "1");
 
-    ActiveEntity ent   = iterationVar(atts, aContext, "n");
-    FromParseNodes src = iterationSrc(content);
-    Processor process  = iterationCxt(src, aContext, out, ent, in.getTagName());
+    ActiveEntity ent  = iterationVar(atts, aContext, "n");
+    Input        src  = iterationSrc(content);
+    Processor process = iterationCxt(src, aContext, out, ent, in.getTagName());
 
     if (start.isIntegral() && stop.isIntegral() && step.isIntegral()) {
       long iiter = start.longValue();
@@ -209,10 +208,10 @@ class repeat_numeric extends repeatHandler {
 
       if (istep > 0) {
 	for ( ; iiter <= istop; iiter += istep)
-	  iterate(process, new ParseTreeText(iiter), ent, src);
+	  iterate(process, new TreeText(iiter), ent, src);
       } else {
 	for ( ; iiter >= istop; iiter += istep)
-	  iterate(process, new ParseTreeText(iiter), ent, src);
+	  iterate(process, new TreeText(iiter), ent, src);
       }
     } else {
       double fiter = start.doubleValue();
@@ -221,10 +220,10 @@ class repeat_numeric extends repeatHandler {
 
       if (fstep > 0.0) {
 	for ( ; fiter <= fstop; fiter += fstep)
-	  iterate(process, new ParseTreeText(fiter), ent, src);
+	  iterate(process, new TreeText(fiter), ent, src);
       } else {
 	for ( ; fiter >= fstop; fiter += fstep)
-	  iterate(process, new ParseTreeText(fiter), ent, src);
+	  iterate(process, new TreeText(fiter), ent, src);
       }
     }
   }
@@ -235,12 +234,12 @@ class repeat_numeric extends repeatHandler {
 
 class repeat_list extends repeatHandler {
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
-    ActiveEntity ent   = iterationVar(atts, aContext, "li");
-    FromParseNodes src = iterationSrc(content);
-    Processor process  = iterationCxt(src, aContext, out, ent, in.getTagName());
+  		     ActiveAttrList atts, ActiveNodeList content) {
+    ActiveEntity ent  = iterationVar(atts, aContext, "li");
+    Input        src  = iterationSrc(content);
+    Processor process = iterationCxt(src, aContext, out, ent, in.getTagName());
 
-    Enumeration iter = ListUtil.getListItems(atts.getAttributeValue("list"));
+    Enumeration iter  = ListUtil.getListItems(atts.getAttributeValue("list"));
     while (iter.hasMoreElements())
       iterate(process, (ActiveNode) iter.nextElement(), ent, src);
   }
@@ -320,7 +319,7 @@ class whileHandler extends repeat_subHandler {
   // No need for initialization 
 
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     if (! Test.orValues(content, aContext)) iterationStop(aContext);
   }
 }
@@ -332,7 +331,7 @@ class untilHandler extends repeat_subHandler {
   // No need for initialization 
 
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     if (Test.orValues(content, aContext)) iterationStop(aContext);
   }
 }
@@ -343,12 +342,12 @@ class foreachHandler extends repeat_subHandler {
 
   /** Set up iteration variables ENTITY, ENTITY-list, and ENTITY-index. */
   public void initialize(ActiveElement e, Processor p) {
-    String name = getEntityName(Expand.expandAttrs(p, e.getAttributes()), "li");
-    NodeList items = Expand.processChildren(e, p);
-    items = new ParseNodeList(ListUtil.getListItems(items));
+    String  name = getEntityName(Expand.expandAttrs(p, e.getAttrList()), "li");
+    ActiveNodeList items = Expand.processChildren(e, p);
+    items = new TreeNodeList(ListUtil.getListItems(items));
     p.setEntityValue(name + "-list", items, true);
     p.setEntityValue(name + "-index",
-		     new ParseNodeList(new ParseTreeText(0)), true);
+		     new TreeNodeList(new TreeText(0)), true);
     p.setEntityValue(name, null, true);
   }
 
@@ -359,7 +358,7 @@ class foreachHandler extends repeat_subHandler {
   public void action(Input in, Context cxt, Output out) {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     String name = getEntityName(atts, "li");
-    NodeList items = cxt.getEntityValue(name + "-list", true);
+    ActiveNodeList items = cxt.getEntityValue(name + "-list", true);
     String index = cxt.getEntityValue(name + "-index", true).toString();
     long n = MathUtil.getNumeric(index).longValue();
 
@@ -368,11 +367,10 @@ class foreachHandler extends repeat_subHandler {
       return;
     }
 
-    ActiveNode item = null;
-    try {item = (ActiveNode)items.item(n);} catch (Exception e) {}
-    cxt.setEntityValue(name, new ParseNodeList(item), true);
+    ActiveNode item = items.activeItem((int)n);
+    cxt.setEntityValue(name, new TreeNodeList(item), true);
     cxt.setEntityValue(name+"-index",
-		       new ParseNodeList(new ParseTreeText(n+1)), true);
+		       new TreeNodeList(new TreeText(n+1)), true);
   }
 }
 
@@ -387,16 +385,17 @@ class forHandler extends repeat_subHandler {
   }
 
   /** Gets a text parameter from either the attributes or the items. */
-  String getParameter(ActiveAttrList atts, NodeList items, 
+  String getParameter(ActiveAttrList atts, ActiveNodeList items, 
 		      String name, String dflt) {
-    String result = atts.getAttributeString(name);
+    String result = atts.getAttribute(name);
     if (result != null) return numericParam(result, dflt);
     if (items == null) return dflt;
 
-    NodeEnumerator enum = items.getEnumerator();
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if (n.getNodeType() == NodeType.ELEMENT
-	  && ((Element)n).getTagName().equalsIgnoreCase(name)) {
+    int len = items.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = items.activeItem(i);
+      if (n.getNodeType() == Node.ELEMENT_NODE
+	  && n.getNodeName().equalsIgnoreCase(name)) {
 	return numericParam(ListUtil.getFirstWord(n), dflt);
       }
     }
@@ -405,20 +404,20 @@ class forHandler extends repeat_subHandler {
 
   /** Get an iteration parameter from the current context. */
   Association getParameter(Context cxt, String name) {
-    NodeList v = cxt.getEntityValue(name, false);
+    ActiveNodeList v = cxt.getEntityValue(name, false);
     if (v == null) return null;
     return MathUtil.getNumeric(v);
   }
 
-  NodeList toValue(String s) {
-    return new ParseNodeList(new ParseTreeText(s));
+  ActiveNodeList toValue(String s) {
+    return new TreeNodeList(new TreeText(s));
   }
 
   /** Set up iteration variables ENTITY, ENTITY-list, and ENTITY-index. */
   public void initialize(ActiveElement e, Processor p) {
-    ActiveAttrList atts = Expand.expandAttrs(p, e.getAttributes());
+    ActiveAttrList atts = Expand.expandAttrs(p, e.getAttrList());
     String name = getEntityName(atts, "n");
-    NodeList items = Expand.processChildren(e, p);
+    ActiveNodeList items = Expand.processChildren(e, p);
     p.setEntityValue(name + "-step",
 		     toValue(getParameter(atts, items, "step", "1")),
 		     true);
@@ -462,8 +461,7 @@ class forHandler extends repeat_subHandler {
 	} else if (istep < 0) {
 	  if (iiter < istop) iterationStop(cxt);
 	}
-	cxt.setEntityValue(name,
-			   new ParseNodeList(new ParseTreeText(iiter)), true);
+	cxt.setEntityValue(name, new TreeNodeList(new TreeText(iiter)), true);
       } else {
 	fiter = iter.doubleValue();
 	fstop = stop.doubleValue();
@@ -474,8 +472,7 @@ class forHandler extends repeat_subHandler {
 	} else {
 	  if (fiter < fstop) iterationStop(cxt);
 	}
-	cxt.setEntityValue(name,
-			   new ParseNodeList(new ParseTreeText(fiter)), true);
+	cxt.setEntityValue(name, new TreeNodeList(new TreeText(fiter)), true);
       }
     } else if (iter.isIntegral() && stop.isIntegral() && step.isIntegral()) {
       iiter = iter.longValue();
@@ -489,8 +486,7 @@ class forHandler extends repeat_subHandler {
 	iiter -= istep;
 	if (iiter < istop) iterationStop(cxt);
       }
-      cxt.setEntityValue(name,
-			 new ParseNodeList(new ParseTreeText(iiter)), true);
+      cxt.setEntityValue(name, new TreeNodeList(new TreeText(iiter)), true);
     } else {
       fiter = iter.doubleValue();
       fstop = stop.doubleValue();
@@ -503,8 +499,7 @@ class forHandler extends repeat_subHandler {
 	fiter -= fstep;
 	if (fiter < fstop) iterationStop(cxt);
       }
-      cxt.setEntityValue(name,
-			 new ParseNodeList(new ParseTreeText(fiter)), true);
+      cxt.setEntityValue(name, new TreeNodeList(new TreeText(fiter)), true);
     }
   }
 }

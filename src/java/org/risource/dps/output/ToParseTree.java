@@ -1,5 +1,5 @@
 ////// ToParseTree.java: Token output Stream to ParseTree
-//	$Id: ToParseTree.java,v 1.3 1999-03-12 19:27:10 steve Exp $
+//	$Id: ToParseTree.java,v 1.4 1999-04-07 23:21:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,9 +27,7 @@ package org.risource.dps.output;
 import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
-
-import org.risource.dom.Node;
-import org.risource.dom.Element;
+import org.risource.dps.tree.TreeElement;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -37,7 +35,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: ToParseTree.java,v 1.3 1999-03-12 19:27:10 steve Exp $
+ * @version $Id: ToParseTree.java,v 1.4 1999-04-07 23:21:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input
@@ -70,6 +68,6 @@ public class ToParseTree extends ActiveOutput implements Output {
   }
 
   public ToParseTree(String tagName) {
-    this(new ParseTreeElement(tagName, null));
+    this(new TreeElement(tagName, (ActiveAttrList)null));
   }
 }

@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.4 1999-03-25 00:42:57 steve Exp $
+//	$Id: tagsetHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.4 1999-03-25 00:42:57 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -52,27 +49,21 @@ public class tagsetHandler extends GenericHandler {
   ** Parse-time Operations:
   ************************************************************************/
 
-  /** In this case we actually create a Tagset object. */
-  public ActiveElement createElement(String tagname, AttributeList attributes,
+  /** In this case we actually create a Tagset object.
+   *	It goes into parse tree if we're building one, so the tagname
+   *	has to match.  
+   */
+  public ActiveElement createElement(String tagname, ActiveAttrList attrs,
 				     boolean hasEmptyDelim) {
 
     // We should check at this point to see if we need a different base class.
-
-    BasicTagset ts = new BasicTagset();
-    ts.setTagName(tagname);
-    ts.setAttributes(attributes);
-    ts.setHandler(this);	// can't forget this part!
+    String name = attrs.getAttribute("name");
+    BasicTagset ts = new BasicTagset(tagname, name, attrs, null);
+    ts.setHandler(this);
 
     if (hasEmptyDelim) ts.setHasEmptyDelimiter(hasEmptyDelim);
     ts.setIsEmptyElement(hasEmptyDelim);
     ts.setAction(getActionForNode(ts));
-
-    ts.setName(ts.getAttributeString("name"));
-
-    // === It doesn't matter, because the tagset we're defining/using is
-    // === not going to be in the parse tree.  (Except that if we were going
-    // === to build a tagset local to this document, we would want it there.
-    // === Maybe in the Document node. )
 
     return ts;
 
@@ -129,12 +120,13 @@ public class tagsetHandler extends GenericHandler {
     TopContext   top = cxt.getTopContext();
     Tagset oldTagset = getParserTagset(top);
 
-    String parserTSname = n.getAttributeString("tagset");
+    String parserTSname = n.getAttribute("tagset");
     Tagset parserTagset = null;
-    String parentTSname = n.getAttributeString("parent");
+    String parentTSname = n.getAttribute("parent");
     Tagset parentTagset = null;
-    String inclusions   = n.getAttributeString("include");
+    String inclusions   = n.getAttribute("include");
     boolean recursive   = n.hasTrueAttribute("recursive");
+    String name		= n.getAttribute("name");
 
     // Check the TopProcessor.  If it's a TagsetProcessor, we're processing a
     // tagset file in the Loader (figures).  
@@ -148,10 +140,9 @@ public class tagsetHandler extends GenericHandler {
 
     // Construct a new tagset.  
     // 	  === Clone the specified PARENT tagset, if any.
-    BasicTagset newTagset = 
-      ("HTML".equals(parentTSname)) ? new HTML_ts() : new BasicTagset();
-    newTagset.setName(n.getAttributeString("name"));
-    newTagset.setAttributes(n.getAttributes());
+    BasicTagset newTagset = ("HTML".equals(parentTSname))
+      ? new HTML_ts("TAGSET", name, n.getAttrList(), null)
+      : new BasicTagset("TAGSET", name, n.getAttrList(), null);
 
     if (parentTSname != null && ! "HTML".equals(parentTSname)) {
       // === Strictly speaking we should put the parent in the context,

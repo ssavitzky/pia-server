@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.5 1999-03-27 01:36:24 steve Exp $
+//	$Id: TopProcessor.java,v 1.6 1999-04-07 23:21:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.MalformedURLException;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
-import org.risource.dom.NodeList;
+import org.risource.dps.tree.TreeNodeList;
 
 import org.risource.ds.List;
 import org.risource.ds.Tabular;
@@ -60,7 +60,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.5 1999-03-27 01:36:24 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.6 1999-04-07 23:21:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -369,14 +369,14 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /** Make an entity-table entry for a String. */
   public void define(String n, Object v) {
     if (v == null)
-      setEntityValue(n, new ParseNodeList(), false);
+      setEntityValue(n, new TreeNodeList(), false);
     else
       setEntityValue(n, Create.createNodeList(v.toString()), false);
   }
 
   /** Make an entity-table entry for a List. */
   public void define(String n, Enumeration v) {
-    setEntityValue(n, new ParseNodeList(v), false);
+    setEntityValue(n, new TreeNodeList(v), false);
   }
 
   static List dayNames = List.split("Sunday Monday Tuesday Wednesday"

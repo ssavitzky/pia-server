@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.3 1999-03-12 19:25:57 steve Exp $
+//	$Id: GenericHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,14 +23,19 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+
 import org.risource.dps.output.DiscardOutput;
+import org.risource.dps.input.FromParseTree;
+import org.risource.dps.tree.TreeAttrList;
+import org.risource.dps.tree.TreeNodeList;
+
 
 /**
  * Generic implementation for an Element Handler. <p>
@@ -41,7 +46,7 @@ import org.risource.dps.output.DiscardOutput;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.3 1999-03-12 19:25:57 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -49,11 +54,11 @@ import org.risource.dps.output.DiscardOutput;
  * @see org.risource.dps.Tagset
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node */
+ */
 
 public class GenericHandler extends BasicHandler {
 
-  protected static final ParseTreeAttrs NO_ATTRS = new ParseTreeAttrs();
+  protected static final TreeAttrList NO_ATTRS = new TreeAttrList();
 
   /************************************************************************
   ** State Used for Syntax:
@@ -153,7 +158,7 @@ public class GenericHandler extends BasicHandler {
       ActiveElement element = e.editedCopy(atts, null);
       out.startElement(element);
     }
-    ParseNodeList content = null;
+    ActiveNodeList content = null;
     boolean empty = false;
     if (!in.hasChildren()) {
       empty = true;
@@ -196,7 +201,7 @@ public class GenericHandler extends BasicHandler {
    * @param atts the (processed) attribute list.
    * @param content the (possibly-processed) content.  */
   protected void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
+			ActiveAttrList atts, ActiveNodeList content) {
     //aContext.debug("in action for " + in.getNode());
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
@@ -208,10 +213,10 @@ public class GenericHandler extends BasicHandler {
     // === Supporting pseudo-Elements requires special hackery in the
     // === ParseListIterator, with a potential nodelist at each level.
 
-    if (hasChildren()) {	
+    if (hasChildNodes()) {	
       // Children exists, so this is a defined action (macro). 
 
-      //aContext.debug("expanding <"+in.getTagName()+"> "+getChildren()+"\n");
+      // aContext.debug("expanding<"+in.getTagName()+"> "+getChildNodes()+"\n");
 
       // Create a suitable sub-context for the expansion:
       //    === not clear if entities should still be lowercase.  For now...
@@ -220,10 +225,10 @@ public class GenericHandler extends BasicHandler {
       Tagset ts = aContext.getTopContext().getTagset();
       BasicEntityTable ents = new BasicEntityTable(e.getTagName());
       ents.setEntityValue(aContext, "content", content, ts);
-      ents.setEntityValue(aContext, "element", new ParseNodeList(element), ts);
-      ents.setEntityValue(aContext, "attributes", atts, ts);
+      ents.setEntityValue(aContext, "element", new TreeNodeList(element), ts);
+      ents.setEntityValue(aContext, "attributes", (ActiveNodeList)atts, ts);
       // ... in which to expand this Actor's definition
-      Input def = new org.risource.dps.input.FromParseTree(this);
+      Input def = new FromParseTree(this);
       Processor p = aContext.subProcess(def, out, ents);
       // ... Expand the definition in the sub-context
       p.processChildren();
@@ -239,11 +244,12 @@ public class GenericHandler extends BasicHandler {
     }
   }
 
-  public NodeList getValue(Node aNode, Context aContext) {
+  public ActiveNodeList getValue(Node aNode, Context aContext) {
     return null;
   }
 
-  public NodeList getValue(String aName, Node aNode, Context aContext) {
+  public ActiveNodeList getValue(String aName, ActiveNode aNode,
+				 Context aContext) {
     return null;
   }
 

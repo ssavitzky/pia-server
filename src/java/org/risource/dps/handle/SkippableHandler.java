@@ -1,5 +1,5 @@
 ////// SkippableHandler.java: Skippable Node Handler implementation
-//	$Id: SkippableHandler.java,v 1.3 1999-03-12 19:26:03 steve Exp $
+//	$Id: SkippableHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,9 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -38,7 +37,7 @@ import org.risource.ds.Table;
  *	No processing is done for the node or its children -- they 
  *	just disappear. <p>
  *
- * @version $Id: SkippableHandler.java,v 1.3 1999-03-12 19:26:03 steve Exp $
+ * @version $Id: SkippableHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -47,7 +46,6 @@ import org.risource.ds.Table;
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
- * @see org.risource.dom.Node
  */
 
 public class SkippableHandler extends AbstractHandler {
@@ -83,7 +81,7 @@ public class SkippableHandler extends AbstractHandler {
 
   static final void skipNode(Node n, Input in, Output out) {
     if (n == null) n = in.getNode();
-    if (in.hasChildren() && ! n.hasChildren()) {
+    if (in.hasChildren() && ! n.hasChildNodes()) {
       skipChildren(in, out);
     }
   }

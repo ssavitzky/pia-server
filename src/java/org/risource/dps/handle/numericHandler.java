@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.4 1999-03-25 00:42:48 steve Exp $
+//	$Id: numericHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.ds.SortTree;
 import org.risource.ds.List;
@@ -42,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.4 1999-03-25 00:42:48 steve Exp $
+ * @version $Id: numericHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -59,7 +56,7 @@ public class numericHandler extends GenericHandler {
 
   /** Action for &lt;numeric&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
   }
 
@@ -107,7 +104,7 @@ public class numericHandler extends GenericHandler {
 
 class numeric_sum extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 0;
     long   iresult = 0;
@@ -135,7 +132,7 @@ class numeric_sum extends numericHandler {
 
 class numeric_difference extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 0;
     long   iresult = 0;
@@ -172,7 +169,7 @@ class numeric_difference extends numericHandler {
 
 class numeric_product extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 1.0;
     long   iresult = 1;
@@ -200,7 +197,7 @@ class numeric_product extends numericHandler {
 
 class numeric_quotient extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 1.0;
     long   iresult = 1;
@@ -238,7 +235,7 @@ class numeric_quotient extends numericHandler {
 
 class numeric_power extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 1.0;
     long   iresult = 1;
@@ -276,7 +273,7 @@ class numeric_power extends numericHandler {
 
 class numeric_remainder extends numericHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
     double fresult = 0;
     long   iresult = 0;
@@ -317,7 +314,7 @@ class numeric_sort extends numericHandler {
   protected boolean pairs    = false;
 
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     Enumeration args = MathUtil.getNumbers(content);
 
     SortTree sorter = new SortTree();

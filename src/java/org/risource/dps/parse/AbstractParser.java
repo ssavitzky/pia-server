@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.3 1999-03-12 19:27:13 steve Exp $
+//	$Id: AbstractParser.java,v 1.4 1999-04-07 23:21:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,20 +32,20 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.IOException;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.Node;
 
 import org.risource.dps.Tagset;
 import org.risource.dps.Parser;
 import org.risource.dps.Processor;
 import org.risource.dps.Handler;
-import org.risource.dps.NodeType;
 import org.risource.dps.EntityTable;
 
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
+
+import org.risource.dps.tree.TreeComment;
+import org.risource.dps.tree.TreeElement;
+import org.risource.dps.tree.TreeText;
 
 /**
  * An abstract implementation of the Parser interface.  
@@ -57,7 +57,7 @@ import org.risource.dps.active.*;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.3 1999-03-12 19:27:13 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.4 1999-04-07 23:21:44 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -410,7 +410,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected int checkEndTag(String tag) {
     if (stack == null) {
-      next = new ParseTreeComment("Bad end tag: " + tag);
+      next = new TreeComment("Bad end tag: " + tag);
       return -1;
     }
     String inside = stack.getTagName();
@@ -426,7 +426,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
       return 1;
     } else {
       // ... Bad nesting.  Change next to an appropriate comment.
-      next = new ParseTreeComment("Bad end tag: " + tag);
+      next = new 
+TreeComment("Bad end tag: " + tag);
       return -1;
     }
   }
@@ -465,10 +466,10 @@ public abstract class AbstractParser extends CursorStack implements Parser
   /** Creates an ActiveElement; otherwise identical to CreateElement. 
    */
   protected ActiveElement createActiveElement(String tagname,
-					      AttributeList attributes,
+					      ActiveAttrList attributes,
 					      boolean hasEmptyDelim) {
     if (tagset == null) {
-      ActiveElement e = new ParseTreeElement(tagname, attributes);
+      ActiveElement e = new TreeElement(tagname, attributes);
       if (hasEmptyDelim) e.setHasEmptyDelimiter(hasEmptyDelim);
       e.setIsEmptyElement(e.getSyntax().isEmptyElement(e));
       return e;
@@ -479,13 +480,13 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** Creates an ActiveNode of arbitrary type with (optional) data.
    */
-  protected ActiveNode createActiveNode(int nodeType, String data) {
+  protected ActiveNode createActiveNode(short nodeType, String data) {
     return createActiveNode(nodeType, null, data);
   }
 
   /** Creates an ActiveNode of arbitrary type with name and (optional) data.
    */
-  protected ActiveNode createActiveNode(int nodeType,
+  protected ActiveNode createActiveNode(short nodeType,
 					String name, String data) {
     ActiveNode n = (tagset == null)
       ? Create.createActiveNode(nodeType, name, data)
@@ -497,7 +498,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected ActiveText createActiveText(String text, boolean isIgnorable) {
     ActiveText n = (tagset == null)
-      ? new ParseTreeText(text, isIgnorable)
+      ? new TreeText(text, isIgnorable)
       : tagset.createActiveText(text, isIgnorable);
     n.setAction(n.getSyntax().getActionForNode(n));
     return n;
@@ -510,7 +511,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 					boolean isIgnorable,
 					boolean isWhitespace) {
     ActiveText n = (tagset == null)
-      ? new ParseTreeText(text, isIgnorable, isWhitespace)
+      ? new TreeText(text, isIgnorable, isWhitespace)
       : tagset.createActiveText(text, isIgnorable, isWhitespace);
     n.setAction(n.getSyntax().getActionForNode(n));
     return n;
@@ -612,7 +613,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   public Node toFirstChild() {
     pushInPlace();
-    if (node.hasChildren()) {
+    if (node.hasChildNodes()) {
       setNode(node.getFirstChild());
       return node;
     } else {
@@ -630,20 +631,26 @@ public abstract class AbstractParser extends CursorStack implements Parser
       return n;
     }
   }
-  
+
+  public Node toFirstNode() {
+    return (active==null && atFirst()) ? toNextNode()
+      :    (atFirst()) ? active : null;
+  }
+
+
   public boolean atLast() {
     return atLast;
   }
 
   /** Test whether the current node has children that have not been parsed. */
   protected boolean hasUnparsedChildren() {
-    return !node.hasChildren()
-      && element != null && !active.asElement().isEmptyElement();
+    return !node.hasChildNodes()
+      && tagName != null && !active.asElement().isEmptyElement();
   }
 
   public boolean hasChildren() {
-    return node.hasChildren()
-      || (element != null && !active.asElement().isEmptyElement());
+    return node.hasChildNodes()
+      || (tagName != null && !active.asElement().isEmptyElement());
   }
 
   public Node getTree() {

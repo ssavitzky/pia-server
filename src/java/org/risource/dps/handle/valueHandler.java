@@ -1,5 +1,5 @@
 ////// valueHandler.java: <value> Handler implementation
-//	$Id: valueHandler.java,v 1.4 1999-03-25 00:43:03 steve Exp $
+//	$Id: valueHandler.java,v 1.5 1999-04-07 23:21:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,7 +39,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: valueHandler.java,v 1.4 1999-03-25 00:43:03 steve Exp $
+ * @version $Id: valueHandler.java,v 1.5 1999-04-07 23:21:28 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -60,7 +57,7 @@ public class valueHandler extends GenericHandler {
 
   /** Action for &lt;value&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);

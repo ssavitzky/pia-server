@@ -1,5 +1,5 @@
 ////// Output.java: Document Builder
-//	$Id: Output.java,v 1.3 1999-03-12 19:24:57 steve Exp $
+//	$Id: Output.java,v 1.4 1999-04-07 23:20:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,10 +24,8 @@
 
 package org.risource.dps;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 /**
  * The interface for a consumer of Nodes. <p>
@@ -41,7 +39,7 @@ import org.risource.dom.Element;
  *	    <li> Convert a subtree into a String.
  *	</ul>
  *
- * @version $Id: Output.java,v 1.3 1999-03-12 19:24:57 steve Exp $
+ * @version $Id: Output.java,v 1.4 1999-04-07 23:20:48 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input

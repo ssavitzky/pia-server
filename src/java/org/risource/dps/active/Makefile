@@ -1,5 +1,5 @@
-###### dps/active/Makefile:	DPS active document classes
-# 	$Id: Makefile,v 1.3 1999-03-12 19:25:25 steve Exp $
+###### dps/active/Makefile:	DOM implementation classes
+# 	$Id: Makefile,v 1.4 1999-04-07 23:21:01 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,59 +27,29 @@ TOPDIR=../../../..
 INTERFACES = \
 	ActiveNode.java \
 	ActiveNodeList.java \
+	ActiveNodeMap.java \
 	ActiveAttrList.java \
-	ActiveAttribute.java \
+	ActiveValue.java \
+	ActiveAttr.java \
+	ActiveCharData.java \
 	ActiveComment.java \
-	ActiveDeclaration.java \
+	ActiveDecl.java \
 	ActiveDocument.java \
+	ActiveDocType.java \
 	ActiveElement.java \
 	ActiveEntity.java \
+	ActiveEntityRef.java \
 	ActivePI.java \
 	ActiveText.java
 
-BASE_CLASSES = \
-	ParseTreeNode.java \
-	ParseTreeNamed.java
+EXCEPTIONS = \
+	DPSException.java 
 
-NODE_CLASSES = \
-	ParseTreeAttribute.java \
-	ParseTreeComment.java \
-	ParseTreeDecl.java \
-	ParseTreeDocument.java \
-	ParseTreeElement.java \
-	ParseTreeEntity.java \
-	ParseTreeExternal.java \
-	ParseTreeGeneric.java \
-	ParseTreePI.java \
-	ParseTreeText.java
+CLASSES = \
+	NodeType.java
 
-OTHER_CLASSES = \
-	NotActiveNodeException.java \
-	ParseTreeAttrs.java \
-	ParseNodeArray.java \
-	ParseNodeTable.java \
-	ParseNodeMap.java \
-	ParseNodeList.java \
-	ParseChildList.java \
-	ParseChildEnum.java
-
-CLASSES = $(BASE_CLASSES) $(NODE_CLASSES) $(OTHER_CLASSES)
-
-FILES = $(INTERFACES) $(CLASSES)
+FILES = $(INTERFACES) $(EXCEPTIONS) $(CLASSES)
 
 include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies
-
-ParseTreeAttribute.class: ParseTreeNode.java ParseTreeNamed.java
-ParseTreeEntity.class: ParseTreeNode.java ParseTreeNamed.java
-ParseTreePI.class: ParseTreeNode.java ParseTreeNamed.java
-
-ParseTreeComment.class: ParseTreeNode.java
-ParseTreeElement.class: ParseTreeNode.java
-ParseTreeText.class: ParseTreeNode.java
-
-ParseNodeMap.class: ParseNodeArray.java
-
-ParseNodeList.class: ParseNodeArray.java
-ParseNodeArrayEnumerator.class: ParseNodeArray.java

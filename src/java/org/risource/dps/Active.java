@@ -1,5 +1,5 @@
 ////// Active.java: Interface for things with actions.
-//	$Id: Active.java,v 1.3 1999-03-12 19:24:46 steve Exp $
+//	$Id: Active.java,v 1.4 1999-04-07 23:20:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,9 +30,8 @@ package org.risource.dps;
  *	By convention, a class that implements Active, or an interface
  *	that extends it, has the name <code>Active<em>Xxxx</em></code>. <p>
  *
- * @version $Id: Active.java,v 1.3 1999-03-12 19:24:46 steve Exp $
+ * @version $Id: Active.java,v 1.4 1999-04-07 23:20:45 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dom.Node
  * @see org.risource.dps.Action
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor

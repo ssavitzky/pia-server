@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Test.java,v 1.4 1999-03-31 23:08:46 steve Exp $
+//	$Id: Test.java,v 1.5 1999-04-07 23:22:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,16 +24,11 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.Node;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.output.*;
 
 
@@ -43,7 +38,7 @@ import org.risource.dps.output.*;
  *	This class contains static methods used for computing tests
  *	(booleans) on nodes and strings.
  *
- * @version $Id: Test.java,v 1.4 1999-03-31 23:08:46 steve Exp $
+ * @version $Id: Test.java,v 1.5 1999-04-07 23:22:18 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -70,34 +65,31 @@ public class Test {
    *	a boolean.  Essentially whitespace, comments, and unbound entities
    *	are considered false; everything else is true.
    */
-  public static boolean trueValue(Node aNode) {
+  public static boolean trueValue(ActiveNode aNode) {
     if (aNode == null) return false;
     int nodeType = aNode.getNodeType();
     switch (nodeType) {
-    case NodeType.ELEMENT: 
+    case Node.ELEMENT_NODE: 
       return true;
 
-    case NodeType.ENTITY: 
-      return aNode.hasChildren();
+    case Node.ENTITY_NODE: 
+    case Node.ENTITY_REFERENCE_NODE: 
+    case Node.TEXT_NODE:
+      return ! isWhitespace(aNode.getNodeValue());
 
-    case NodeType.TEXT:
-      org.risource.dom.Text t = (org.risource.dom.Text)aNode;
-      if (t.getIsIgnorableWhitespace()) return false;
-      return ! isWhitespace(t.getData());
-
-    case NodeType.COMMENT: 
+    case Node.COMMENT_NODE: 
       return false;
 
-    case NodeType.PI:
+    case Node.PROCESSING_INSTRUCTION_NODE:
       return true;
 
-    case NodeType.ATTRIBUTE: 
-      ActiveAttribute attr = (ActiveAttribute)aNode;
+    case Node.ATTRIBUTE_NODE: 
+      ActiveAttr attr = (ActiveAttr)aNode;
       if (! attr.getSpecified()) return true;
-      return orValues(attr.getValueNodes());
+      return orValues(attr.getValueNodes(null));
 
-    case NodeType.NODELIST: 
-      return orValues(aNode.getChildren());
+    case Node.DOCUMENT_FRAGMENT_NODE: 
+      return orValues(aNode.getContent());
 
     default: 
       return true;
@@ -107,22 +99,24 @@ public class Test {
   /** Determine whether a Node has a true value in a given context. 
    *	If it does, return that value, otherwise return <code>null</code>
    */
-  public static NodeList getTrueValue(ActiveNode aNode, Context aContext) {
+  public static ActiveNodeList getTrueValue(ActiveNode aNode,
+					    Context aContext) {
     if (aNode == null) return null;
-    ParseNodeList v = new ParseNodeList(aNode);
+    ActiveNodeList v = new TreeNodeList(aNode);
 
     int nodeType = aNode.getNodeType();
     switch (nodeType) {
-    case NodeType.TEXT:
+    case Node.TEXT_NODE:
       return trueValue(aNode)? v : null;  
 
-    case NodeType.COMMENT: 
+    case Node.COMMENT_NODE: 
       return null;
 
-    case NodeType.ATTRIBUTE: 
-      ActiveAttribute attr = (ActiveAttribute)aNode;
+    case Node.ATTRIBUTE_NODE: 
+      ActiveAttr attr = (ActiveAttr)aNode;
       if (! attr.getSpecified()) return v;
-      return orValues(attr.getValueNodes())? attr.getValueNodes() : null;
+      return orValues(attr.getValueNodes(null))
+	? attr.getValueNodes(null) : null;
     }
 
     v = Expand.processNodes(v, aContext);
@@ -139,22 +133,24 @@ public class Test {
    *	An empty list is considered <em>true</em>, because all of
    *	its elements are true.
    */
-  public static boolean andValues(NodeList aNodeList) {
+  public static boolean andValues(ActiveNodeList aNodeList) {
     if (aNodeList == null) return true;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      if (! trueValue(node)) return false;
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; ++i) {
+      /** === Ignore whitespace === */
+      if (! trueValue(aNodeList.activeItem(i))) return false;
     }
     return true;
   }
 
   /** Determine whether <em>all</em> the items in a nodeList are true in a
    *	given context.  */
-  public static boolean andValues(NodeList aNodeList, Context aContext) {
+  public static boolean andValues(ActiveNodeList aNodeList, Context aContext) {
     if (aNodeList == null) return true;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      if (! trueValue((ActiveNode)node, aContext)) return false;
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; ++i) {
+      /** === Ignore whitespace === */
+      if (! trueValue(aNodeList.activeItem(i), aContext)) return false;
     }
     return true;
   }
@@ -163,11 +159,11 @@ public class Test {
    *	An empty list is considered <em>false</em> because it contains
    *	no true elements.
    */
-  public static boolean orValues(NodeList aNodeList) {
+  public static boolean orValues(ActiveNodeList aNodeList) {
     if (aNodeList == null) return false;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      if (trueValue(node)) return true;
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; ++i) {
+      if (trueValue(aNodeList.activeItem(i))) return true;
     }
     return false;
   }
@@ -175,14 +171,16 @@ public class Test {
   /** Determine whether <em>any</em> of the items in a nodeList are true
    *	in a given context.
    */
-  public static boolean orValues(NodeList aNodeList, Context aContext) {
+  public static boolean orValues(ActiveNodeList aNodeList, Context aContext) {
     if (aNodeList == null) return false;
-    NodeEnumerator e = aNodeList.getEnumerator();
-    for (Node node = e.getFirst(); node != null; node = e.getNext()) {
-      if (trueValue((ActiveNode)node, aContext)) return true;
+    int len = aNodeList.getLength();
+    for (int i = 0; i < len; ++i) {
+      if (trueValue((ActiveNode)aNodeList.item(i), aContext)) return true;
     }
     return false;
   }
 
-
 }
+
+
+

@@ -1,5 +1,5 @@
 ////// Namespace.java: Node Handler Lookup Table interface
-//	$Id: Namespace.java,v 1.3 1999-03-12 19:24:56 steve Exp $
+//	$Id: Namespace.java,v 1.4 1999-04-07 23:20:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,38 +23,28 @@
 
 package org.risource.dps;
 
-import org.risource.dps.active.ActiveNode;
-
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.risource.dps.active.*;
 
 import java.util.Enumeration;
 
 /**
  * The interface for a Namespace -- a lookup table for named nodes.
  *
- *	Note that a Namespace might be either a Node (e.g. BasicEntityTable)
- *	or a NodeList (e.g. AttributeList), or something else entirely.  As
- *	long as it maps names to values, we don't care.  Each value is
- *	contained in the value and/or children of some Node, called its
- *	<em>binding</em>.
+ * <p>	Note that a Namespace might be either a Node (e.g. BasicEntityTable)
+ *	or a NamedNodeMap, or something else entirely.  As long as it maps
+ *	names to values, we don't care.  Each value is contained in the value
+ *	and/or children of some Node, called its <em>binding</em>.
  *
- *	A Namespace is normally accessed through a name that ends in a 
+ * <p>	A Namespace is normally accessed through a name that ends in a 
  *	colon character.  It is not required to ``know'' its own name,
  *	however; it may simply be the value of that name in another 
  *	Namespace, or even <em>contained in</em> some name's value.
  *
- * @version $Id: Namespace.java,v 1.3 1999-03-12 19:24:56 steve Exp $
+ * @version $Id: Namespace.java,v 1.4 1999-04-07 23:20:47 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Input 
- * @see org.risource.dom.Node 
- * @see org.risource.dom.Attribute
- */
+ * @see org.risource.dps.Input */
 
 public interface Namespace {
 
@@ -78,10 +68,10 @@ public interface Namespace {
   public ActiveNode setBinding(String name, ActiveNode binding);
 
   /** Look up a name and get a value. */
-  public NodeList getValueNodes(Context cxt, String name);
+  public ActiveNodeList getValueNodes(Context cxt, String name);
 
   /** Set a value. */
-  public void setValueNodes(Context cxt, String name, NodeList value);
+  public void setValueNodes(Context cxt, String name, ActiveNodeList value);
 
   /************************************************************************
   ** Information Operations:
@@ -92,7 +82,7 @@ public interface Namespace {
 
   /** Returns the bindings defined in this table, in the same order as the 
    *	names returned by <code>getNames</code>. */
-  public NodeEnumerator getBindings();
+  public Input getBindings();
 
   /** Returns an Enumeration of the names defined in this table, in the same 
    *	order as the bindings returned by <code>getBindings</code>. 

@@ -1,5 +1,5 @@
 ////// Log.java: log utilities
-//	$Id: Log.java,v 1.3 1999-03-12 19:28:22 steve Exp $
+//	$Id: Log.java,v 1.4 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,12 +26,7 @@ package org.risource.dps.util;
 
 import java.io.PrintStream;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Text;
+import org.w3c.dom.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,7 +37,7 @@ import org.risource.dps.active.*;
  *	This class contains static methods used for maintaining and 
  *	formatting a message log.
  *
- * @version $Id: Log.java,v 1.3 1999-03-12 19:28:22 steve Exp $
+ * @version $Id: Log.java,v 1.4 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Context
@@ -50,16 +45,16 @@ import org.risource.dps.active.*;
 public class Log {
   public static String node(Node aNode) {
     switch (aNode.getNodeType()) {
-    case org.risource.dom.NodeType.ELEMENT:
+    case Node.ELEMENT_NODE:
       Element e = (Element)aNode;
-      AttributeList atts = e.getAttributes();
-      return "<" + e.getTagName()
+      NamedNodeMap atts = e.getAttributes();
+      return "<" + e.getNodeName()
 	+ ((atts != null && atts.getLength() > 0)? " " + atts.toString() : "")
-	+ ">" + (e.hasChildren()? "..." : "");
+	+ ">" + (e.hasChildNodes()? "..." : "");
 
-    case org.risource.dom.NodeType.TEXT: 
-      Text t = (Text)aNode;
-      return t.getIsIgnorableWhitespace()
+    case Node.TEXT_NODE: 
+      ActiveText t = (ActiveText)aNode;
+      return t.getIsIgnorable()
 	? "ignorable" : Test.isWhitespace(t.getData()) ? "whitespace"
 	: ("text: '" + string(t.getData()) + "'");
 

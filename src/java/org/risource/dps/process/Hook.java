@@ -1,5 +1,5 @@
 ////// HookProcessor.java: Top Processor for processing Agent hooks
-//	$Id: Hook.java,v 1.3 1999-03-12 19:27:23 steve Exp $
+//	$Id: Hook.java,v 1.4 1999-04-07 23:21:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,6 @@ import java.net.URL;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
-import org.risource.dom.NodeList;
 import org.risource.ds.List;
 
 import org.risource.pia.Pia;
@@ -46,7 +45,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing actOn hooks in PIA agents.
  *
- * @version $Id: Hook.java,v 1.3 1999-03-12 19:27:23 steve Exp $
+ * @version $Id: Hook.java,v 1.4 1999-04-07 23:21:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia

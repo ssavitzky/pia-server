@@ -1,5 +1,5 @@
 ////// ListUtil.java: List-Processing Utilities
-//	$Id: ListUtil.java,v 1.3 1999-03-12 19:28:20 steve Exp $
+//	$Id: ListUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,14 +24,14 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Text;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
+import org.w3c.dom.Node;
+import org.w3c.dom.Text;
+import org.w3c.dom.NodeList;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
+import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeNodeList;
 
 import org.risource.ds.Table;
 import org.risource.ds.List;
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	In most cases, a list result is returned as an Enumeration.
  *	This avoids constructing a NodeList when it's not needed.
  *
- * @version $Id: ListUtil.java,v 1.3 1999-03-12 19:28:20 steve Exp $
+ * @version $Id: ListUtil.java,v 1.4 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see java.util.Enumeration
@@ -65,7 +65,7 @@ public class ListUtil {
     Enumeration e = l.elements();
     List r = new List();
     while (e.hasMoreElements())
-      r.push(new ParseTreeText(e.nextElement().toString()));
+      r.push(new TreeText(e.nextElement().toString()));
     return r.elements();
   }
 
@@ -73,7 +73,7 @@ public class ListUtil {
   /** Splits a string at whitespace and replaces spaces with
    *  separators.  Returns a node containing the new string.
    */
-  public static Node joinTextItems(String s, String sep) {
+  public static ActiveText joinTextItems(String s, String sep) {
     List l = List.split(s);
     Enumeration e = l.elements();
     List r = new List();
@@ -86,7 +86,7 @@ public class ListUtil {
       resultStr += e.nextElement().toString();
       count++;
     }
-    return new ParseTreeText(resultStr);
+    return new TreeText(resultStr);
   }
 
 
@@ -95,14 +95,15 @@ public class ListUtil {
    *	Obtains each whitespace- or markup-separated word in the list
    *	as a separate Text object.
    */
-  public static Enumeration getTextItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static Enumeration getTextItems(ActiveNodeList nl) {
+    int len = nl.getLength();
     List results = new List();
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if (n.hasChildren()) {
-	results.append(getTextItems(n.getChildren()));
-      } else if (n.getNodeType() == NodeType.TEXT) {
-	Text t = (Text)n;
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (n.hasChildNodes()) {
+	results.append(getTextItems(n.getContent()));
+      } else if (n.getNodeType() == Node.TEXT_NODE) {
+	ActiveText t = (ActiveText)n;
 	String s = t.toString();
 	if (s == null || s.equals("") || Test.isWhitespace(s)) continue;
 	if (s.indexOf(" ") >= 0 || s.indexOf('\t') >= 0) {
@@ -120,12 +121,12 @@ public class ListUtil {
 
   /** Return the first ``word'' (blank- or markup-separated non-blank text) in
    *	a Node or its content. */
-  public static String getFirstWord(Node n) {
-    if (n.hasChildren()) {
-      Enumeration e = getTextItems(n.getChildren());
+  public static String getFirstWord(ActiveNode n) {
+    if (n.hasChildNodes()) {
+      Enumeration e = getTextItems(n.getContent());
       return e.hasMoreElements()? e.nextElement().toString() : null;
-    } else if (n.getNodeType() == NodeType.TEXT) {
-      Text t = (Text)n;
+    } else if (n.getNodeType() == Node.TEXT_NODE) {
+      ActiveText t = (ActiveText)n;
       String s = t.toString();
       if (s == null || s.equals("") || Test.isWhitespace(s)) return null;
       if (s.indexOf(" ") >= 0 || s.indexOf('\t') >= 0) {
@@ -142,14 +143,15 @@ public class ListUtil {
 
   /** Return an enumeration of Strings.  Recursively descends into
    *	nodes with children, and splits text nodes containing whitespace. */
-  public static Enumeration getStringItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static Enumeration getStringItems(ActiveNodeList nl) {
+    int len = nl.getLength();
     List results = new List();
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if (n.hasChildren()) {
-	results.append(getTextItems(n.getChildren()));
-      } else if (n.getNodeType() == NodeType.TEXT) {
-	Text t = (Text)n;
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (n.hasChildNodes()) {
+	results.append(getTextItems(n.getContent()));
+      } else if (n.getNodeType() == Node.TEXT_NODE) {
+	ActiveText t = (ActiveText)n;
 	String s = t.toString();
 	if (s == null || s.equals("") || Test.isWhitespace(s)) continue;
 	if (s.indexOf(" ") >= 0 || s.indexOf('\t') >= 0) {
@@ -168,12 +170,13 @@ public class ListUtil {
    * <p> This is probably the most useful utility for splitting up the
    *	 content of a node prior to sorting it. 
    */
-  public static Enumeration getListItems(NodeList nl) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static Enumeration getListItems(ActiveNodeList nl) {
+    int len = nl.getLength();
     List results = new List();
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if (n.getNodeType() == NodeType.TEXT) {
-	Text t = (Text)n;
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (n.getNodeType() == Node.TEXT_NODE) {
+	ActiveText t = (ActiveText)n;
 	String s = t.toString();
 	if (s == null || s.equals("") || Test.isWhitespace(s)) continue;
 	if (s.indexOf(" ") >= 0 || s.indexOf('\t') >= 0) {
@@ -199,15 +202,16 @@ public class ListUtil {
    *    formerly separate string; e.g. accum_text1 has string: text1,text2
    *    where a comma is the separator.
    */
-  public static Enumeration joinListItems(NodeList nl, String sep) {
-    NodeEnumerator enum = nl.getEnumerator();
+  public static Enumeration joinListItems(ActiveNodeList nl, String sep) {
     List results = new List();
     String accumStr = null;
     int adjacent = 0;
 
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      if (n.getNodeType() == NodeType.TEXT) {
-	Text t = (Text)n;
+    int len = nl.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode n = nl.activeItem(i);
+      if (n.getNodeType() == Node.TEXT_NODE) {
+	ActiveText t = (ActiveText)n;
 	String s = t.toString();
 	if (s == null || s.equals("") || Test.isWhitespace(s)) continue;
 	if (s.indexOf(" ") >= 0 || s.indexOf('\t') >= 0) {
@@ -232,8 +236,8 @@ public class ListUtil {
   ************************************************************************/
 
   /** Convert a List (which is easy to manipulate) to a NodeList. */
-  public static ParseNodeList toNodeList(List l) {
-    return new ParseNodeList(l.elements());
+  public static ActiveNodeList toNodeList(List l) {
+    return new TreeNodeList(l.elements());
   }
 
 }

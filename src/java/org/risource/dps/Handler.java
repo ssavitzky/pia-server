@@ -1,5 +1,5 @@
 ////// Handler.java: Node Handler interface
-//	$Id: Handler.java,v 1.3 1999-03-12 19:24:53 steve Exp $
+//	$Id: Handler.java,v 1.4 1999-04-07 23:20:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,8 +23,6 @@
 
 
 package org.risource.dps;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
 
 /**
  * The interface for a Node's Handler. 
@@ -39,13 +37,11 @@ import org.risource.dom.NodeList;
  *	required during processing.  Their combination in Handler reflects
  *	the fact that the two are almost always tied together.
  *
- * @version $Id: Handler.java,v 1.3 1999-03-12 19:24:53 steve Exp $
+ * @version $Id: Handler.java,v 1.4 1999-04-07 23:20:46 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Token
- * @see org.risource.dps.Input 
- * @see org.risource.dom.Node */
+ */
 
 public interface Handler extends Action, Syntax {
 

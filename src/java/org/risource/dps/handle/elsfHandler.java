@@ -1,5 +1,5 @@
 ////// elsfHandler.java: Node Handler generic implementation
-//	$Id: elsfHandler.java,v 1.3 1999-03-12 19:26:12 steve Exp $
+//	$Id: elsfHandler.java,v 1.4 1999-04-07 23:21:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,12 +23,6 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,14 +36,13 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: elsfHandler.java,v 1.3 1999-03-12 19:26:12 steve Exp $
+ * @version $Id: elsfHandler.java,v 1.4 1999-04-07 23:21:22 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node
  */
 
 public class elsfHandler extends GenericHandler {
@@ -63,7 +56,7 @@ public class elsfHandler extends GenericHandler {
   }
 
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
 

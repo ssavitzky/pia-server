@@ -1,5 +1,5 @@
 ////// protectHandler.java: <protect> Handler implementation
-//	$Id: protectHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
+//	$Id: protectHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -36,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;protect&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: protectHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
+ * @version $Id: protectHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -48,7 +45,7 @@ public class protectHandler extends GenericHandler {
 
   /** Just return the content. */
   public void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
+			ActiveAttrList atts, ActiveNodeList content) {
     putList(out, content);
   }
 
@@ -92,7 +89,7 @@ class protect_markup extends protectHandler {
    *	that Text, when output, replaces markup characters with entities. 
    */
   public void action(Input in, Context aContext, Output out, 
-			ActiveAttrList atts, NodeList content) {
+			ActiveAttrList atts, ActiveNodeList content) {
     putText(out, aContext, content.toString());
   }
   /** The constructor is also tricky: it relies on the fact that the 

@@ -1,5 +1,5 @@
 ////// agentHome.java:  Handler for <agent-home>
-//	$Id: agentHome.java,v 1.4 1999-03-23 23:32:44 steve Exp $
+//	$Id: agentHome.java,v 1.5 1999-04-07 23:22:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,8 +27,9 @@ package org.risource.pia.agent;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.ActiveDoc;
+import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeElement;
 
-import org.risource.dom.NodeList;
 import org.risource.pia.Agent;
 import org.risource.ds.List;
 
@@ -37,22 +38,22 @@ import org.risource.ds.List;
 public class agentHome extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;
     }
 
-    String name = env.getAgentName(atts.getAttributeString("agent"));
+    String name = env.getAgentName(atts.getAttribute("agent"));
     String type = env.getAgentType(name);
     boolean link = atts.hasTrueAttribute("link");
 
     String home = (type.equals(name))? name : type + "/" + name;
     if (link) {
-      ActiveElement t = new ParseTreeElement("a");
-      t.setAttributeValue("href", "/" + home + "/home");
-      t.addChild(new ParseTreeText(home));
+      ActiveElement t = new TreeElement("a", null, null, null);
+      t.setAttribute("href", "/" + home + "/home");
+      t.addChild(new TreeText(home));
       out.putNode(t);
     } else {
       putText(out, aContext, home);

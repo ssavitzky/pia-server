@@ -1,5 +1,5 @@
 ////// debugHandler.java: <debug> Handler implementation
-//	$Id: debugHandler.java,v 1.4 1999-03-24 01:58:58 pgage Exp $
+//	$Id: debugHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,16 +24,7 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Comment;
-import org.risource.dom.Text;
-import org.risource.dom.Attribute;
-import org.risource.dom.Declaration;
-import org.risource.dom.PI;
-import org.risource.dom.Entity;
-import org.risource.dom.Element;
+import org.w3c.dom.*;
 
 import org.risource.ds.List;
 
@@ -41,7 +32,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.output.*;
-import org.risource.dps.NodeType;
+import org.risource.dps.tree.TreeElement;
+import org.risource.dps.tree.TreeText;
 
 import java.util.Enumeration;
 import java.lang.String;
@@ -54,7 +46,7 @@ import java.lang.StringBuffer;
  * debug begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: debugHandler.java,v 1.4 1999-03-24 01:58:58 pgage Exp $
+ * @version $Id: debugHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -70,19 +62,17 @@ public class debugHandler extends GenericHandler {
     * prints the content NodeList as a tree.
    */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
 
     // Actually do the work. 
     OutputTrace trOut = new OutputTrace(out);
     
-    NodeEnumerator enum = content.getEnumerator();
     // Create a "pre" element as a parent node to
     // preserve indented formatting
-    ActiveNode preNode = new ParseTreeElement("pre");
-    for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-
+    ActiveNode preNode = new TreeElement("pre");
+    for (int i = 0; i < content.getLength(); ++i) {
       // Print the node tree
-      printTree(n, 0, preNode);
+      printTree(content.activeItem(i), 0, preNode);
     }
     // Output the pre node
     out.putNode(preNode);
@@ -99,7 +89,7 @@ public class debugHandler extends GenericHandler {
    *  @param parent:  the <pre> element parent node that preserves tree
    *         formatting.
     */
-  protected void printTree(Node node, int indentNum, ActiveNode parent) {
+  protected void printTree(ActiveNode node, int indentNum, ActiveNode parent) {
     // System.out.println("printTree Node: " + node.toString());
     if(node == null)
       return;
@@ -108,34 +98,37 @@ public class debugHandler extends GenericHandler {
     String nContent = null;
 
     switch(node.getNodeType()) {
-    case NodeType.COMMENT:
-      nContent = ((Comment)node).getData();
+    case Node.COMMENT_NODE:
+      nContent = node.getNodeValue();
       break;
-    case NodeType.TEXT:
-      Text tn = ((Text)node);
-      if(Test.isWhitespace(tn.getData()))
+    case Node.TEXT_NODE:
+    case Node.CDATA_SECTION_NODE:
+      if(Test.isWhitespace(node.getNodeValue()))
 	nContent = "<whitespace>";
       else
-	nContent = tn.getData();
+	nContent = node.getNodeValue();
       break;
-    case NodeType.DECLARATION:
-      nContent = ((Declaration)node).getName();
+      //case NodeType.DECLARATION:
+      //nContent = ((Declaration)node).getName();
+      //break;
+    case Node.PROCESSING_INSTRUCTION_NODE:
+      nContent = node.getNodeName();
       break;
-    case NodeType.PI:
-      nContent = ((PI)node).getName();
+    case Node.ENTITY_NODE:
+      nContent = node.getNodeName();
       break;
-    case NodeType.ENTITY:
-      nContent = ((Entity)node).getName();
+    case Node.ENTITY_REFERENCE_NODE:
+      nContent = node.getNodeName();
       break;
-    case NodeType.ELEMENT:
-      nContent = "<" + ((Element)node).getTagName() + ">";
+    case Node.ELEMENT_NODE:
+      nContent = "<" + node.getNodeName() + ">";
       break;
-    case NodeType.ATTRIBUTE:
-      nContent = ((Attribute)node).getName();
+    case Node.ATTRIBUTE_NODE:
+      nContent = node.getNodeName();
       break;
-    case NodeType.ENDTAG:
-      nContent = ((Attribute)node).getName();
-      break;
+      //case NodeType.ENDTAG:
+      // nContent = ((Attribute)node).getName();
+      // break;
     default:
 	// DOCUMENT falls here
 	// System.out.println("default: " + node.toString());
@@ -147,18 +140,15 @@ public class debugHandler extends GenericHandler {
 
     String indStr = indentString(printStr, indentNum);
     // System.out.println(indStr);
-    ActiveNode newNode = new ParseTreeText(indStr);
+    ActiveNode newNode = new TreeText(indStr);
     
     // Add each node as a child of the parent <pre> element
     parent.addChild(newNode);
     int newIndent = indentNum + 3;
-    NodeList nl = node.getChildren();
-    if(nl == null)
-      return;
-    NodeEnumerator childEnum = nl.getEnumerator();
-    for (Node n = childEnum.getFirst(); n != null; n = childEnum.getNext()) {
-      printTree(n, newIndent, parent);
-    }
+    ActiveNodeList nl = node.getContent();
+    if(nl == null) return;
+    for (int i = 0; i < nl.getLength(); i++)
+      printTree(nl.activeItem(i), newIndent, parent);
   }
 
   /** Return an indented string */

@@ -1,5 +1,5 @@
 ////// FromParseTree.java: Input from ParseTree
-//	$Id: FromParseTree.java,v 1.3 1999-03-12 19:26:50 steve Exp $
+//	$Id: FromParseTree.java,v 1.4 1999-04-07 23:21:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,16 +28,10 @@ import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
-
 /**
  * Input from a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: FromParseTree.java,v 1.3 1999-03-12 19:26:50 steve Exp $
+ * @version $Id: FromParseTree.java,v 1.4 1999-04-07 23:21:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Fromken
  * @see org.risource.dps.Input
@@ -59,6 +53,16 @@ public class FromParseTree extends ActiveInput implements Input {
   public ActiveNode getRoot() { return root; }
   public void setRoot(ActiveNode newRoot) { root = newRoot; setNode(newRoot); }
 
+  public org.w3c.dom.Node toFirstNode() {
+    while (!atTop()) toParent();
+    if (active != root) {
+      setNode(root.getFirstChild());
+    }
+    atFirst = true;
+    return active;
+  }
+
+
   /************************************************************************
   ** Construction:
   ************************************************************************/
@@ -69,7 +73,13 @@ public class FromParseTree extends ActiveInput implements Input {
     setRoot(newRoot);
   }
 
-  public FromParseTree(String tagName) {
-    this(new ParseTreeElement(tagName, null));
+  /** Obtain input from the children of a node.  
+   *	If we know that the children exist, this is more efficient
+   *	than using a FromNodeList.
+   */
+  public FromParseTree(ActiveNode parent, boolean fromChildren) {
+    setRoot(parent);
+    toFirstChild();
+    depth = 0;
   }
 }

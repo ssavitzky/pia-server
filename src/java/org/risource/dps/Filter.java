@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.4 1999-03-23 23:31:37 steve Exp $
+//	$Id: Filter.java,v 1.5 1999-04-07 23:20:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,6 +47,7 @@ import org.risource.dps.tagset.TagsetProcessor;
 import org.risource.dps.output.*;
 import org.risource.dps.active.*;
 import org.risource.dps.handle.GenericHandler;
+import org.risource.dps.tree.TreeElement;
 
 /**
  * Filter an input stream or file with the DPS.
@@ -165,7 +166,7 @@ public class Filter {
       java.util.Enumeration names = ii.getEntities().getNames();
       while (names.hasMoreElements()) {
 	String name = names.nextElement().toString();
-	org.risource.dom.NodeList v = ii.getEntityValue(name, false);
+	ActiveNodeList v = ii.getEntityValue(name, false);
 	System.err.println(" " + name + "=" + v);
       }
       System.err.print("\n");
@@ -178,7 +179,7 @@ public class Filter {
     } else if (parsing) {
       outputTree = new org.risource.dps.output.ToParseTree();
       // === root should be an ActiveDocument ===
-      outputTree.setRoot(new org.risource.dps.active.ParseTreeElement("Document", null));
+      outputTree.setRoot(new TreeElement("Document", (ActiveAttrList)null));
       output = outputTree;
     } else {
       output = new ToWriter(out);

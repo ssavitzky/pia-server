@@ -1,5 +1,5 @@
 ////// ToNodeList.java: Token output Stream to node list
-//	$Id: ToNodeList.java,v 1.3 1999-03-12 19:27:09 steve Exp $
+//	$Id: ToNodeList.java,v 1.4 1999-04-07 23:21:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,11 +27,10 @@ package org.risource.dps.output;
 import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.TreeNodeList;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -39,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to an (active) NodeList.<p>
  *
- * @version $Id: ToNodeList.java,v 1.3 1999-03-12 19:27:09 steve Exp $
+ * @version $Id: ToNodeList.java,v 1.4 1999-04-07 23:21:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input
@@ -52,14 +51,14 @@ public class ToNodeList extends ActiveOutput implements Output {
   ** State:
   ************************************************************************/
 
-  protected ParseNodeList list = new ParseNodeList();
+  protected TreeNodeList list = new TreeNodeList();
 
   /************************************************************************
   ** Methods:
   ************************************************************************/
 
-  public ParseNodeList getList() { return list; }
-  public void clearList() { list = new ParseNodeList(); }
+  public ActiveNodeList getList() { return list; }
+  public void clearList() { list = new TreeNodeList(); }
 
   public void putNode(Node aNode) {
     if (depth == 0) {
@@ -76,7 +75,7 @@ public class ToNodeList extends ActiveOutput implements Output {
       setNode(aNode);
       return;
     }
-    if (p != null || aNode.hasChildren()) {
+    if (p != null || aNode.hasChildNodes()) {
       aNode = Copy.copyNodeAsActive(aNode);
     }
     appendNode(aNode, active);
@@ -90,14 +89,6 @@ public class ToNodeList extends ActiveOutput implements Output {
     depth--;
     atFirst = false;
     return active;
-  }
-
-  public Element toParentElement() {
-    if (depth != 1) return super.toParentElement();
-    setNode((Node)null);
-    depth--;
-    atFirst = false;
-    return element;
   }
 
   protected void appendNode(Node aNode, Node aParent) {

@@ -1,5 +1,5 @@
 ////// EntityHandler.java: Entity Node Handler implementation
-//	$Id: EntityHandler.java,v 1.4 1999-03-27 01:36:03 steve Exp $
+//	$Id: EntityHandler.java,v 1.5 1999-04-07 23:21:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,9 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -39,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityHandler.java,v 1.4 1999-03-27 01:36:03 steve Exp $
+ * @version $Id: EntityHandler.java,v 1.5 1999-04-07 23:21:19 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -48,7 +47,6 @@ import org.risource.ds.Table;
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
- * @see org.risource.dom.Node
  */
 
 public class EntityHandler extends AbstractHandler {
@@ -112,8 +110,8 @@ public class EntityHandler extends AbstractHandler {
       out.putNode(n);
       return;
     }
-    String name = n.getName();
-    NodeList value;
+    String name = n.getNodeName();
+    ActiveNodeList value;
     if (simple) {
       value = (namepart != null)
 	? aContext.getEntityValue(namepart, false)
@@ -150,7 +148,7 @@ public class EntityHandler extends AbstractHandler {
    */
   public Action getActionForNode(ActiveNode n) {
     ActiveEntity ent = n.asEntity();
-    String name = ent.getName();
+    String name = ent.getNodeName();
     // === An indexed name really wants a new handler with namepart and space
     // === fields defined, but the action method is clever enough to check.
     return (name.indexOf(':') >= 0)? INDEXED : ACTIVE;

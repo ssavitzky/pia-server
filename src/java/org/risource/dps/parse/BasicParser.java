@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.4 1999-03-27 01:36:19 steve Exp $
+//	$Id: BasicParser.java,v 1.5 1999-04-07 23:21:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,14 +24,17 @@
 
 package org.risource.dps.parse;
 
-import org.risource.dom.NodeList;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.Node;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.Parser;
 import org.risource.dps.Syntax;
 import org.risource.dps.active.*;
 import org.risource.dps.util.Copy;
+
+import org.risource.dps.tree.TreeAttrList;
+import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeComment;
+
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -51,7 +54,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.4 1999-03-27 01:36:19 steve Exp $
+ * @version $Id: BasicParser.java,v 1.5 1999-04-07 23:21:44 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -99,10 +102,11 @@ public class BasicParser extends AbstractParser {
    *	Clear endString and ignoreEntities when the end string is seen.
    *	If ignoreEntities is false, entities will be recognized.
    */
-  protected ParseNodeList getLiteral(String endString, boolean ignoreEntities) {
+  protected TreeNodeList getLiteral(String endString,
+				    boolean ignoreEntities) {
 
     buf = new StringBuffer();
-    ParseNodeList list = new ParseNodeList();
+    TreeNodeList list = new TreeNodeList();
     
     try {
       for ( ; ; ) {
@@ -135,9 +139,9 @@ public class BasicParser extends AbstractParser {
    *	
    *	@return the value; <code>null</code> if no "=" is present.
    */
-  protected ParseNodeList getValue() throws IOException {
+  protected TreeNodeList getValue() throws IOException {
     if (last != '=') return null;
-    ParseNodeList list = new ParseNodeList();
+    TreeNodeList list = new TreeNodeList();
 
     last = in.read();
     if (last == '\'' || last == '"') {
@@ -211,7 +215,7 @@ public class BasicParser extends AbstractParser {
 
       // === have to create the element at the end.
       // === may want to get the handler at this point.
-      ActiveAttrList attrs = new ParseTreeAttrs();
+      ActiveAttrList attrs = new TreeAttrList();
       String tag = ident;
 
       boolean hasEmptyDelim = false;
@@ -227,11 +231,11 @@ public class BasicParser extends AbstractParser {
 	  a = ident.toLowerCase(); // shouldn't lowercase attr names! ===
 	  buf.append(ident);
 	  //debug(" "+a);
-	  ParseNodeList value = getValue();
+	  ActiveNodeList value = getValue();
 	  if (value == null) {
 	    // By longstanding SGML tradition (and XML _requirement_)
 	    //   a boolean attribute has its name as a value. 
-	    value = new ParseNodeList(createActiveText(a, false));
+	    value = new TreeNodeList(createActiveText(a, false));
 	  }
 	  attrs.setAttributeValue(a, value);
 	} else if (last == '/') {
@@ -250,7 +254,7 @@ public class BasicParser extends AbstractParser {
       // Check for content entity and element handling 
       Syntax syn = next.getSyntax();
       if (!syn.parseElementsInContent()) {
-	ParseNodeList content = getLiteral(next.endString(),
+	TreeNodeList content = getLiteral(next.endString(),
 					   !syn.parseEntitiesInContent());
 	Copy.appendNodes(content, next);
       }
@@ -277,14 +281,19 @@ public class BasicParser extends AbstractParser {
 	// it must be a comment
 	if (last != '>') eatUntil("-->", false);
 	if (last == '>') last = 0;
-	next = createActiveNode(NodeType.COMMENT, buf.toString());
+	next = createActiveNode(Node.COMMENT_NODE, buf.toString());
       } else {
 	// it's an SGML declaration: <!...>
 	// == Comments or occurrences of '>' inside will fail.
 	eatUntil('>', false);
 	if (last == '>') last = 0;
+	if (ident.equalsIgnoreCase("doctype")) {
 	// === bogus -- really a declaration, and must be further analyzed. //
-	next = createActiveNode(NodeType.DECLARATION, ident, buf.toString());
+	  next = createActiveNode(Node.DOCUMENT_TYPE_NODE,
+				  ident, buf.toString());
+	} else {
+	  next = createActiveNode(NodeType.DECLARATION, ident, buf.toString());
+	}
       }
       buf = tmp;
       buf.setLength(buf.length()-1); // remove the extraneous '<'
@@ -296,7 +305,8 @@ public class BasicParser extends AbstractParser {
       eatIdent();
       eatUntil('>', false);
       if (last == '>') last = 0;
-      next = createActiveNode(NodeType.PI, ident, buf.toString());
+      next = createActiveNode(Node.PROCESSING_INSTRUCTION_NODE, ident,
+			      buf.toString());
       buf = tmp;
       buf.setLength(buf.length()-1); // remove the extraneous '<'
     } else if (last == '>') {	// <>		empty start tag

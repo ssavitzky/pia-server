@@ -1,5 +1,5 @@
 ////// ToAttributeList.java: Token output Stream to attribute list
-//	$Id: ToAttributeList.java,v 1.3 1999-03-12 19:27:04 steve Exp $
+//	$Id: ToAttributeList.java,v 1.4 1999-04-07 23:21:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,20 +24,18 @@
 
 package org.risource.dps.output;
 
+import org.w3c.dom.*;
+
 import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.TreeAttrList;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
 
 /**
  * Output to an AttributeList.<p>
  *
- * @version $Id: ToAttributeList.java,v 1.3 1999-03-12 19:27:04 steve Exp $
+ * @version $Id: ToAttributeList.java,v 1.4 1999-04-07 23:21:39 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input
@@ -50,7 +48,7 @@ public class ToAttributeList extends ActiveOutput implements Output {
   ** State:
   ************************************************************************/
 
-  protected ActiveAttrList list = new ParseTreeAttrs();
+  protected ActiveAttrList list = new TreeAttrList();
 
   /************************************************************************
   ** Methods:
@@ -59,9 +57,8 @@ public class ToAttributeList extends ActiveOutput implements Output {
   public ActiveAttrList getList() { return list; }
 
   public void putNode(Node aNode) {
-    if (aNode.getNodeType() == NodeType.ATTRIBUTE && depth == 0) {
-      Attribute attr = (Attribute)aNode;
-      list.setAttribute(attr.getName(), attr);
+    if (aNode.getNodeType() == Node.ATTRIBUTE_NODE && depth == 0) {
+      list.setNamedItem(aNode);
     } else {
       super.putNode(aNode);
     }
@@ -80,7 +77,7 @@ public class ToAttributeList extends ActiveOutput implements Output {
       setNode(aNode);
       return;
     }
-    if (p != null || aNode.hasChildren()) {
+    if (p != null || aNode.hasChildNodes()) {
       aNode = Copy.copyNodeAsActive(aNode);
     }
     appendNode(aNode, active);
@@ -95,15 +92,6 @@ public class ToAttributeList extends ActiveOutput implements Output {
     atFirst = false;
     return active;
   }
-
-  public Element toParentElement() {
-    if (depth != 1) return super.toParentElement();
-    setNode((Node)null);
-    depth--;
-    atFirst = false;
-    return element;
-  }
-
 
   /************************************************************************
   ** Construction:

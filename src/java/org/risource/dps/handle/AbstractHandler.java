@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.5 1999-03-27 01:36:00 steve Exp $
+//	$Id: AbstractHandler.java,v 1.6 1999-04-07 23:21:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,14 +23,15 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.Node;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+
+import org.risource.dps.tree.TreeGeneric;
+import org.risource.dps.tree.TreeElement;
+import org.risource.dps.tree.TreeText;
 
 import java.util.Enumeration;
 
@@ -43,18 +44,16 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.5 1999-03-27 01:36:00 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.6 1999-04-07 23:21:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
  * @see org.risource.dps.Tagset
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node
  */
 
-public abstract class AbstractHandler extends ParseTreeGeneric
-implements Handler {
+public abstract class AbstractHandler extends TreeGeneric implements Handler {
 
   /************************************************************************
   ** Semantic Operations:
@@ -65,7 +64,7 @@ implements Handler {
    */
   public int actionCode(Input in, Processor p) {
     return (in.hasActiveChildren() || in.hasActiveAttributes()
-	    || in.getNode().getNodeType() == NodeType.ENTITY)
+	    || in.getNode().getNodeType() == Node.ENTITY_REFERENCE_NODE)
       ? Action.EXPAND_NODE: Action.COPY_NODE;
   }
 
@@ -74,7 +73,7 @@ implements Handler {
   public void action(Input in, Context aContext, Output out) {
     Node n = in.getNode();
     if ((in.hasActiveChildren() || in.hasActiveAttributes()
-	 || n.getNodeType() == NodeType.ENTITY)) {
+	 || n.getNodeType() == Node.ENTITY_REFERENCE_NODE)) {
       aContext.subProcess(in, out).expandCurrentNode();
     } else {
       Copy.copyNode(n, in, out);
@@ -139,7 +138,7 @@ implements Handler {
    * @param data optional string data
    * @return a new ActiveNode having <code>this</code> as its Syntax. 
    */
-  public ActiveNode createNode(int nodeType, String name, String data) {
+  public ActiveNode createNode(short nodeType, String name, String data) {
     ActiveNode n = Create.createActiveNode(nodeType, name, data);
     n.setHandler(this);
     n.setAction(getActionForNode(n));
@@ -157,7 +156,8 @@ implements Handler {
    * @param value optional value
    * @return a new ActiveNode having <code>this</code> as its Syntax. 
    */
-  public ActiveNode createNode(int nodeType, String name, NodeList value) {
+  public ActiveNode createNode(short nodeType, String name,
+			       ActiveNodeList value) {
     ActiveNode n = Create.createActiveNode(nodeType, name, value);
     n.setHandler(this);
     n.setAction(getActionForNode(n));
@@ -175,9 +175,9 @@ implements Handler {
    * @param hasEmptyDelim the XML empty-node delimiter is present.
    * @return a new ActiveElement having <code>this</code> as its Syntax. 
    */
-  public ActiveElement createElement(String tagname, AttributeList attributes,
+  public ActiveElement createElement(String tagname, ActiveAttrList attributes,
 				     boolean hasEmptyDelim) {
-    ActiveElement e = new ParseTreeElement(tagname, attributes, this);
+    ActiveElement e = new TreeElement(tagname, attributes, this);
     if (hasEmptyDelim) e.setHasEmptyDelimiter(hasEmptyDelim);
     e.setIsEmptyElement(hasEmptyDelim || e.getSyntax().isEmptyElement(e));
     e.setAction(getActionForNode(e));
@@ -210,7 +210,7 @@ implements Handler {
    *	of its tagname. 
    */
   public boolean dispatch(ActiveElement e, String name, String attr) {
-    String v = e.getAttributeString(attr);
+    String v = e.getAttribute(attr);
     if (v != null) v = v.trim();
     // not clear whether to ignore case.  XML doesn't, so let's not.
     return (v != null && name.equals(v))
@@ -259,22 +259,22 @@ implements Handler {
   ** Convenience Functions:
   ************************************************************************/
 
-  /** Convenience function: return a NodeList. */
-  protected void putList(Output out, NodeList nl) {
+  /** Convenience function: return an ActiveNodeList. */
+  protected void putList(Output out, ActiveNodeList nl) {
     if (nl != null) Copy.copyNodes(nl, out);
   }
 
   /** Convenience function: return a NodeList with optional separator. */
-  protected void putList(Output out, NodeList nl, String sep) {
+  protected void putList(Output out, ActiveNodeList nl, String sep) {
     if (nl == null) return;
     if (sep == null || "".equals(sep)) {
       Copy.copyNodes(nl, out);
     } else {
-      long len = nl.getLength();
-      for (long i = 0; i < len; i++) {
+      int len = nl.getLength();
+      for (int i = 0; i < len; i++) {
 	try { out.putNode(nl.item(i)); } catch (Exception e) {}
 	if (i < (len-1)) {
-	  out.putNode(new ParseTreeText(sep));
+	  out.putNode(new TreeText(sep));
 	}
       }
     }

@@ -1,5 +1,5 @@
 ////// EntityTable.java: Entity Lookup Table interface
-//	$Id: EntityTable.java,v 1.3 1999-03-12 19:24:49 steve Exp $
+//	$Id: EntityTable.java,v 1.4 1999-04-07 23:20:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,12 +24,7 @@
 package org.risource.dps;
 
 import org.risource.dps.active.ActiveEntity;
-
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.risource.dps.active.ActiveNodeList;
 
 import java.util.Enumeration;
 
@@ -38,10 +33,9 @@ import java.util.Enumeration;
  *
  *	Entities are named values that can be substituted into a document.
  *
- * @version $Id: EntityTable.java,v 1.3 1999-03-12 19:24:49 steve Exp $
+ * @version $Id: EntityTable.java,v 1.4 1999-04-07 23:20:46 steve Exp $
  * @author steve@rsv.ricoh.com
  *
- * @see org.risource.dom.Entity
  * @see org.risource.dps.active.ActiveEntity
  * @see org.risource.dps.util.BasicEntityTable
  */
@@ -55,7 +49,7 @@ public interface EntityTable extends Namespace {
   /** Look up a name and return the corresponding Entity. */
   public ActiveEntity getEntityBinding(String name);
 
-  public NodeList getEntityValue(Context cxt, String name);
+  public ActiveNodeList getEntityValue(Context cxt, String name);
 
   /************************************************************************
   ** Documentation Operations:

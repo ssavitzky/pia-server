@@ -1,5 +1,5 @@
 ////// Forms.java:  Form utilities
-//	$Id: Forms.java,v 1.3 1999-03-12 19:28:17 steve Exp $
+//	$Id: Forms.java,v 1.4 1999-04-07 23:22:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,9 +24,7 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
+import org.w3c.dom.NodeList;
  
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -69,7 +67,7 @@ public class Forms  {
     Table t = new Table();
     for (int i = 0; i < timeAttrs.length; ++i)
       if (itt.hasTrueAttribute(timeAttrs[i]))
-	{ t.put(timeAttrs[i], itt.getAttributeString(timeAttrs[i])); }
+	{ t.put(timeAttrs[i], itt.getAttribute(timeAttrs[i])); }
     return t;
   }
 
@@ -81,29 +79,29 @@ public class Forms  {
 
     if ("input".equalsIgnoreCase(it.getTagName())) {
       // generate query string for input
-      query = it.getAttributeString("name");
+      query = it.getAttribute("name");
       if (query == null || "".equals(query)) return "";
       query += "=";
-      query += java.net.URLEncoder.encode(it.getAttributeString("value"));
+      query += java.net.URLEncoder.encode(it.getAttribute("value"));
       query += "&";		// in case there's a next one.
     } else if ("select".equalsIgnoreCase(it.getTagName())) {
-      query = it.getAttributeString("name");
+      query = it.getAttribute("name");
       if (query == null || "".equals(query)) return "";
-      String selected = getSelected(it.getChildren());
+      String selected = getSelected(it.getContent());
       if (selected == null) return "";
       query += "=";
-      query += java.net.URLEncoder.encode(getSelected(it.getChildren()));
+      query += java.net.URLEncoder.encode(getSelected(it.getContent()));
       query += "&";		// in case there's a next one.
     } else if ("textarea".equalsIgnoreCase(it.getTagName())) {
-      query = it.getAttributeString("name");
+      query = it.getAttribute("name");
       if (query == null || "".equals(query)) return "";
       query += "=";
       query += java.net.URLEncoder.encode(it.contentString());
       query += "&";		// in case there's a next one.
-    } else if (it.hasChildren()) {
-      NodeList content = it.getChildren();
-      NodeEnumerator nodes = content.getEnumerator();
-      for (Node n = nodes.getFirst(); n != null; n = nodes.getNext()) {
+    } else if (it.hasChildNodes()) {
+      ActiveNodeList content = it.getContent();
+      for (int i = 0; i < content.getLength(); ++i) {
+	ActiveNode n = content.activeItem(i);
 	if (n instanceof ActiveElement) {
 	  query += formToQuery((ActiveElement)n);
 	  query += "&";
@@ -115,15 +113,15 @@ public class Forms  {
   }
 
   /** Return the value of the selected value, if any. */
-  public static String getSelected(NodeList items) {
+  public static String getSelected(ActiveNodeList items) {
     if (items == null) return null;
-    NodeEnumerator nodes = items.getEnumerator();
-    for (Node n = nodes.getFirst(); n != null; n = nodes.getNext()) {
+    for (int i = 0; i < items.getLength(); ++i) {
+      ActiveNode n = items.activeItem(i);
       if (n instanceof ActiveElement) {
 	ActiveElement e = (ActiveElement)n;
 	if (e.getTagName().equalsIgnoreCase("option")
 	    && e.hasTrueAttribute("selected"))
-	  return e.hasChildren()? e.getChildren().toString() : "";
+	  return e.hasChildNodes()? e.getChildNodes().toString() : "";
       }
     }
     return null;
@@ -167,7 +165,7 @@ public class Forms  {
     if ("input".equalsIgnoreCase(it.getTagName())) {
 
       // Check what kind of input this is
-      String inputType = it.getAttributeString("type");
+      String inputType = it.getAttribute("type");
 	
       // If the input type is not specified the default
       // assumption is that it is text
@@ -177,7 +175,7 @@ public class Forms  {
 
 	
       // Get the name, value fields
-      String name = it.getAttributeString("name");
+      String name = it.getAttribute("name");
 
       // Do not consider unnamed input tags
       if (name == null || "".equals(name)) {
@@ -186,7 +184,7 @@ public class Forms  {
 	return partsByte;
       }
 
-      String value = it.getAttributeString("value");
+      String value = it.getAttribute("value");
 	
       // The only type which needs to be treated
       // differently is "file"
@@ -311,10 +309,10 @@ public class Forms  {
 	}	    
 	partsString.close();
       }
-    } else if (it.hasChildren()) {
-      NodeList content = it.getChildren();
-      NodeEnumerator nodes = content.getEnumerator();
-      for (Node n = nodes.getFirst(); n != null; n = nodes.getNext()) {
+    } else if (it.hasChildNodes()) {
+      ActiveNodeList content = it.getContent();
+      for (int i = 0; i < content.getLength(); ++i) {
+	ActiveNode n = content.activeItem(i);
 	if (n instanceof ActiveElement) 
 	  partsByte = accumulateFormToMultipart((ActiveElement)n, partsByte);
       }

@@ -1,5 +1,5 @@
 ////// agentSave.java:  Handler for <agent-save>
-//	$Id: agentSave.java,v 1.4 1999-03-23 23:32:47 steve Exp $
+//	$Id: agentSave.java,v 1.5 1999-04-07 23:22:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,8 +28,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.process.ActiveDoc;
+import org.risource.dps.tree.TreeText;
 
-import org.risource.dom.NodeList;
 import org.risource.pia.Agent;
 import org.risource.ds.List;
 
@@ -42,7 +42,7 @@ import java.io.FileInputStream;
 public class agentSave extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
@@ -52,9 +52,9 @@ public class agentSave extends org.risource.dps.handle.GenericHandler {
     List list = new List(ListUtil.getListItems(atts.getAttributeValue("list")));
 
     if (list.nItems() == 0) {
-      String name = atts.getAttributeString("agent");
+      String name = atts.getAttribute("agent");
       if (name == null) name = env.getAgentName();
-      if (name != null) list.push(new ParseTreeText(name));
+      if (name != null) list.push(new TreeText(name));
     }
 
     List agents = new List();
@@ -71,7 +71,7 @@ public class agentSave extends org.risource.dps.handle.GenericHandler {
       return;
     }
 
-    String fn = atts.getAttributeString("file");
+    String fn = atts.getAttribute("file");
     if (fn == null) {
       reportError(in, aContext, "Must have non-null file attribute.");
       return;

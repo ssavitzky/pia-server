@@ -1,5 +1,5 @@
 ////// ActiveNodeList.java: ActiveNode List interface
-//	$Id: ActiveNodeList.java,v 1.3 1999-03-12 19:25:21 steve Exp $
+//	$Id: ActiveNodeList.java,v 1.4 1999-04-07 23:20:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,9 +23,7 @@
 
 
 package org.risource.dps.active;
-
-import org.risource.dps.active.ActiveNode;
-import org.risource.dps.active.ActiveNodeList;
+import org.w3c.dom.*;
 
 /**
  * A list or sequence of ActiveNode objects.  
@@ -34,15 +32,13 @@ import org.risource.dps.active.ActiveNodeList;
  *	Collection or org.risource.ds.List.  The contents are not necessarily 
  *	from the same level in the parse tree, though this is usual.
  *
- * @version $Id: ActiveNodeList.java,v 1.3 1999-03-12 19:25:21 steve Exp $
+ * @version $Id: ActiveNodeList.java,v 1.4 1999-04-07 23:20:58 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.ActiveNode
- * @see org.risource.dom.NodeList
- * @see java.util.Collection
  * @see org.risource.ds.List
  */
 
-public interface ActiveNodeList  {
+public interface ActiveNodeList extends NodeList {
 
   /**
    * Returns the indexth item in the collection, as a ActiveNode.
@@ -52,14 +48,10 @@ public interface ActiveNodeList  {
    * @return a ActiveNode at index position.
    * @param index Position to get node.
    */
-  public ActiveNode activeNodeAt(long index);
+  public ActiveNode activeItem(int index);
 
   /** Append a new ActiveNode.
    */
   public void append(ActiveNode newChild);
 
-  /** 
-   * @return length
-   */
-  public long getLength();
 }

@@ -1,5 +1,5 @@
 ////// setHandler.java: <set> Handler implementation
-//	$Id: setHandler.java,v 1.5 1999-03-27 01:36:09 steve Exp $
+//	$Id: setHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,15 +23,13 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.tree.TreeNodeList;
 
 /**
  * Handler for &lt;set&gt;  <p>
@@ -39,7 +37,7 @@ import org.risource.dps.util.*;
  * <p>	This is an approximation to the legacy &gt;set&gt;; it lacks many
  *	of the old extraction modifiers, which have moved to &lt;extract&gt;.
  *
- * @version $Id: setHandler.java,v 1.5 1999-03-27 01:36:09 steve Exp $
+ * @version $Id: setHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -51,15 +49,15 @@ public class setHandler extends GenericHandler {
 
   /** This will normally be the only thing to customize. */
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
-    String name = atts.getAttributeString("name");
+    String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "Setting null name to "+content, 0, true);
       return;
     }
-    if (content == null) content = new ParseNodeList();
+    if (content == null) content = new TreeNodeList();
     Index.setIndexValue(aContext, name, content);
   }
 

@@ -1,5 +1,5 @@
 ////// Input.java: Depth-first enumerator for parse trees
-//	$Id: Input.java,v 1.3 1999-03-12 19:24:54 steve Exp $
+//	$Id: Input.java,v 1.4 1999-04-07 23:20:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,9 +24,7 @@
 
 package org.risource.dps;
 
-import org.risource.dom.Node;
-import org.risource.dom.Attribute;
-import org.risource.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * The interface for depth-first enumeration of a document or parse tree.
@@ -55,13 +53,11 @@ import org.risource.dom.Element;
  *	have to ``look ahead'' to ensure that <code>hasMoreElements</code>
  *	can return an accurate result. <p>
  *
- * @version $Id: Input.java,v 1.3 1999-03-12 19:24:54 steve Exp $
+ * @version $Id: Input.java,v 1.4 1999-04-07 23:20:47 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
- * @see org.risource.dps.Token
  * @see org.risource.dps.Processor
- * @see java.util.Enumeration
- * @see java.util.NoSuchElementException */
+ * @see java.util.Enumeration */
 
 public interface Input extends Cursor {
 
@@ -69,9 +65,17 @@ public interface Input extends Cursor {
   ** Navigation Operations:
   ************************************************************************/
 
+  /** Returns to the node from this source and makes it current.  
+   *	May ascend levels if necessary. <p>
+   *
+   * @return  <code>null</code> if no nodes were ever
+   *	available from this source, or if the source cannot be reset. 
+   */
+  public Node toFirstNode();
+
+
   /** Returns the next node from this source and makes it current.  
-   *	May descend or ascend levels.  This can be detected by tracking
-   *	the depth with <code>getDepth()</code>. <p>
+   *	 <p>
    *
    * @return  <code>null</code> if and only if no more nodes are
    *	available from this source. 
@@ -93,10 +97,6 @@ public interface Input extends Cursor {
    */
   public Node toParent();
 
-  /** Returns the parent Element of the current attribute list.
-   */
-  public Element toParentElement();
- 
   /** Returns the first child of the current Node. 
    *	A subsequent call on <code>toNextNode</code> will return the 
    *	second child, if any.

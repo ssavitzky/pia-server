@@ -1,5 +1,5 @@
 ////// processHandler.java: <process> Handler implementation
-//	$Id: processHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
+//	$Id: processHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -36,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;process&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: processHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
+ * @version $Id: processHandler.java,v 1.5 1999-04-07 23:21:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -48,7 +45,7 @@ public class processHandler extends GenericHandler {
 
   /** This will normally be the only thing to customize. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
     unimplemented(in, cxt);	// process
   }

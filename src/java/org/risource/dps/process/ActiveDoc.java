@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.9 1999-03-31 23:08:33 steve Exp $
+//	$Id: ActiveDoc.java,v 1.10 1999-04-07 23:21:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import java.net.URL;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
-import org.risource.dom.NodeList;
-import org.risource.dps.active.ParseNodeList;
+import org.w3c.dom.NodeList;
+import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.handle.Loader;
 
 import org.risource.ds.List;
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.9 1999-03-31 23:08:33 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.10 1999-04-07 23:21:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia

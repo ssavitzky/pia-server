@@ -1,5 +1,5 @@
 ////// FilterText: text-only filter for an Output
-//	$Id: FilterText.java,v 1.3 1999-03-12 19:27:00 steve Exp $
+//	$Id: FilterText.java,v 1.4 1999-04-07 23:21:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,16 +24,15 @@
 
 package org.risource.dps.output;
 
-import org.risource.dom.*;
+import org.w3c.dom.*;
 import org.risource.dps.*;
-import org.risource.dps.NodeType;
 
 import java.io.PrintStream;
 
 /**
  * An Output filter that passes only Text (and Entity) nodes <p>
  *
- * @version $Id: FilterText.java,v 1.3 1999-03-12 19:27:00 steve Exp $
+ * @version $Id: FilterText.java,v 1.4 1999-04-07 23:21:38 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -44,10 +43,11 @@ public class FilterText extends Proxy {
   ************************************************************************/
 
   public void putNode(Node aNode) { 
-    if (target != null && (aNode.getNodeType() == NodeType.TEXT
-			   || aNode.getNodeType() == NodeType.ENTITY))
+    if (target != null && (aNode.getNodeType() == Node.TEXT_NODE
+			   || aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE
+			   || aNode.getNodeType() == Node.ENTITY_NODE))
       target.putNode(aNode);
-    else if (aNode.hasChildren()) {
+    else if (aNode.hasChildNodes()) {
       startNode(aNode);
       for (Node n = aNode.getFirstChild(); n != null; n = n.getNextSibling())
 	putNode(n);

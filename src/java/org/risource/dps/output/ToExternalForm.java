@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.4 1999-03-27 01:36:15 steve Exp $
+//	$Id: ToExternalForm.java,v 1.5 1999-04-07 23:21:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.output;
 
-import org.risource.dom.*;
+import org.w3c.dom.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -52,7 +52,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.4 1999-03-27 01:36:15 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.5 1999-04-07 23:21:39 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -86,12 +86,13 @@ public abstract class ToExternalForm extends CursorStack implements Output {
 
   /** Write a node out as the content of a literal. */
   protected void writeLiteralData(Node aNode) {
-    if (aNode.getNodeType() == org.risource.dps.NodeType.TEXT) {
-      write(((Text)aNode).getData());
-    } else if (aNode.getNodeType() == org.risource.dps.NodeType.ENTITY) {
+    if (aNode.getNodeType() == Node.TEXT_NODE ||
+	aNode.getNodeType() == Node.CDATA_SECTION_NODE) {
+      write(aNode.getNodeValue());
+    } else if (aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE) {
       // Convert character entities back to characters.
       Entity e = (Entity)aNode;
-      NodeList value = defaultEntityTable.getEntityValue(null, e.getName());
+      NodeList value = defaultEntityTable.getEntityValue(null, e.getNodeName());
       // === new DOM: check entity's value first. 
       if (value != null) write(value.toString());
       else write(aNode.toString());
@@ -111,10 +112,10 @@ public abstract class ToExternalForm extends CursorStack implements Output {
   public void putNode(Node aNode) { 
     // === should probably use syntax if defined.
     if (inLiteralContent()) writeLiteralData(aNode);
-    else if (aNode.hasChildren() && aNode instanceof ActiveNode
+    else if (aNode.hasChildNodes() && aNode instanceof ActiveNode
 	     && hasLiteralContent((ActiveNode)aNode)) {
       startNode(aNode);
-      Copy.copyNodes(aNode.getChildren(), this);
+      Copy.copyNodes(aNode.getChildNodes(), this);
       endNode();
     } else {
       if (flagEmptyElements && aNode instanceof ActiveElement

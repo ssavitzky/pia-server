@@ -1,5 +1,5 @@
 ////// IgnorableHandler.java: Ignorable Node Handler implementation
-//	$Id: IgnorableHandler.java,v 1.3 1999-03-12 19:25:59 steve Exp $
+//	$Id: IgnorableHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,9 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -38,7 +37,7 @@ import org.risource.ds.Table;
  *	<p> The children, if any, are processed, but nothing is done with
  *	    the node itself.  
  *
- * @version $Id: IgnorableHandler.java,v 1.3 1999-03-12 19:25:59 steve Exp $
+ * @version $Id: IgnorableHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -47,7 +46,6 @@ import org.risource.ds.Table;
  * @see org.risource.dps.BasicTagset
  * @see org.risource.dps.Input 
  * @see org.risource.dps.Output
- * @see org.risource.dom.Node
  */
 
 public class IgnorableHandler extends AbstractHandler {

@@ -1,5 +1,5 @@
 ////// EntityWrap.java -- implementation of ActiveEntity
-//	$Id: EntityWrap.java,v 1.4 1999-03-31 23:08:42 steve Exp $
+//	$Id: EntityWrap.java,v 1.5 1999-04-07 23:22:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,12 +24,11 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.NodeList;
 
-import org.risource.dps.active.*;
 import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.util.Copy;
 
 import org.risource.ds.Tabular;
@@ -38,12 +37,11 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that wraps an arbitrary 
  *	object.  This is intended for use in NamespaceWrap.
  *
- * @version $Id: EntityWrap.java,v 1.4 1999-03-31 23:08:42 steve Exp $
+ * @version $Id: EntityWrap.java,v 1.5 1999-04-07 23:22:16 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
  */
-public class EntityWrap extends ParseTreeEntity {
+public class EntityWrap extends TreeEntity {
 
   /************************************************************************
   ** The wrapped Object:
@@ -58,17 +56,17 @@ public class EntityWrap extends ParseTreeEntity {
   /** Set the wrapped object.  Wrap it, if possible. */
   public void setWrappedObject(Object o) {
     wrappedObject = o;
-    if (o instanceof NodeList) {
-      value = (NodeList)o;
+    if (o instanceof ActiveNodeList) {
+      nodeValue = (ActiveNodeList)o;
       names = (o instanceof Namespace)? (Namespace) o : null;
     } else if (o instanceof ActiveNode) {
-      value = new ParseNodeList((ActiveNode)o);
+      nodeValue = new TreeNodeList((ActiveNode)o);
       names = (o instanceof Namespace)? (Namespace) o : null;
     } else if (o instanceof Tabular) {
       names = new NamespaceWrap(getName(), (Tabular)o);
-      value = null;
+      nodeValue = null;
     } else {
-      value = null;
+      nodeValue = null;
     }
   }
 
@@ -77,15 +75,12 @@ public class EntityWrap extends ParseTreeEntity {
   ************************************************************************/
 
   /** Get the node's value. 
-   *
-   *	Eventually we may want a way to distinguish values stored in
-   *	the children from values stored in a separate nodelist.
    */
-  public NodeList getValueNodes() {
-    if (value != null || wrappedObject == null) return value;
+  public ActiveNodeList getValueNodes(Context cxt) {
+    if (nodeValue != null || wrappedObject == null) return nodeValue;
     // Have to wrap the object. 
-    if (names != null) return new ParseNodeList(names.getBindings());
-    return new ParseNodeList(new ParseTreeText(wrappedObject.toString()));
+    if (names != null) return new TreeNodeList(names.getBindings());
+    return new TreeNodeList(new TreeText(wrappedObject.toString()));
   }
 
   /** Set the node's value.  If the value is <code>null</code>, 
@@ -94,7 +89,7 @@ public class EntityWrap extends ParseTreeEntity {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValueNodes(NodeList newValue) {
+  public void setValueNodes(ActiveNodeList newValue) {
     wrappedObject = newValue;
     super.setValueNodes(newValue);
   }

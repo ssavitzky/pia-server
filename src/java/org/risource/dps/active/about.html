@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>About the PIA's DOM</title>
+<link rev="made" href="mailto:steve@rsv.ricoh.com">
+</head><body>
+<h1>About the PIA's DOM</h1>
+
+<h2>This is <em>NOT</em> the W3C's DOM!</h2>
+
+<p> The requirements of the PIA's document processing system (DPS) are quite
+    different from those of the W3C's DOM, which is basically a formalization
+    of the ECMAscript document API.
+
+<p> The DPS uses a set of interfaces that are almost completely orthogonal to
+    those of the DOM.  While the DOM's interfaces model a document as a
+    (doubly-linked) tree of Node objects, the DPS interfaces define a family of
+    <em>cursors</em> that allow the processor to <em>traverse</em> a tree.
+    The advantage of the cursorial approach over the arboreal is that the tree
+    being traversed need not all be in memory at once.
+
+<p> In spite of the cursorial interface's advantages, it <em>is</em> sometimes
+    necessary to construct an actual parse tree.  The DOM, though perhaps not
+    the best interface for this kind of thing, works well enough.  The <a
+    href="tree/">tree</a> subdirectory contains a complete implementation of
+    the DOM which also implements the ``Active'' interface required for the
+    DPS, and the navigational methods required for an efficient implementation
+    of cursors.
+
+<p> This package, <code>org.risource.dps.active</code>, defines the interfaces
+    that make up the hybrid model of which the
+    <code>org.risource.dps.tree</code> package is an implementation.
+
+<h2>Evolution</h2>
+
+<p> This directory originally contained a complete collection of interfaces
+    and implementation classes for an earlier version of the DOM.  
+
+<hr>
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
+<i>$Id: about.html,v 1.1 1999-04-07 23:21:13 steve Exp $</i><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

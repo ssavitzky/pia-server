@@ -1,5 +1,5 @@
 ////// headersHandler.java: <headers> Handler implementation
-//	$Id: headersHandler.java,v 1.4 1999-03-25 00:42:43 steve Exp $
+//	$Id: headersHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.NodeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -35,7 +35,7 @@ import org.risource.dps.util.*;
  *
  * <p>	
  *
- * @version $Id: headersHandler.java,v 1.4 1999-03-25 00:42:43 steve Exp $
+ * @version $Id: headersHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -47,7 +47,7 @@ public class headersHandler extends GenericHandler {
 
   /** Action for &lt;headers&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
   }
 

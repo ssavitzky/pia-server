@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.5 1999-03-25 00:42:58 steve Exp $
+//	$Id: testHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,6 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
 
 import org.risource.ds.Association;
 import org.risource.ds.List;
@@ -35,6 +30,7 @@ import org.risource.ds.List;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.tree.TreeText;
 
 import JP.ac.osaka_u.ender.util.regex.RegExp;
 import JP.ac.osaka_u.ender.util.regex.MatchInfo;
@@ -44,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.5 1999-03-25 00:42:58 steve Exp $
+ * @version $Id: testHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -65,9 +61,9 @@ public class testHandler extends GenericHandler {
    *	attributes may have contained entities.
    */
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Default is simply to test for "truth"
-    returnBoolean(Test.orValues(content, aContext), out, atts);
+    returnBoolean(Test.orValues(content, aContext), aContext, out, atts);
   }
 
   /** This does the parse-time dispatching. */
@@ -95,15 +91,15 @@ public class testHandler extends GenericHandler {
    *	Handler if necessary; this would require more data but would
    *	definitely run faster.  We may want to consider this later.
    */
-  public static void returnBoolean(boolean value,
-				   Output out, ActiveAttrList atts) {
+  public void returnBoolean(boolean value, Context cxt, Output out,
+			    ActiveAttrList atts) {
     if (atts == NO_ATTRS) {
-      if (value) { out.putNode(new ParseTreeText("1")); }
+      if (value) { putText(out, cxt, "1"); }
       return;
     }
-    NodeList rv;
+    ActiveNodeList rv;
     if (atts.hasTrueAttribute("not")) value = !value;
-    if (value) { out.putNode(new ParseTreeText("1")); }
+    if (value) { putText(out, cxt, "1"); }
     // nothing to do if there's no false return value.
   }
 
@@ -118,7 +114,7 @@ public class testHandler extends GenericHandler {
   public void returnBoolean(boolean value, Context c, Output out) {
     //c.debug("<test> returning " + value + " " + getClass().getName() + "\n");
     if (inverted) value = !value;
-    if (value) { out.putNode(new ParseTreeText("1")); }
+    if (value) { putText(out, c, "1"); }
     // nothing to do if there's no false return value.
   }
 
@@ -247,7 +243,7 @@ class test_sorted extends testHandler {
   boolean result = false;
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
 
     boolean result = true;
 
@@ -283,7 +279,7 @@ class test_match extends testHandler {
       ? Expand.getProcessedTextString(in, aContext)
       : Expand.getProcessedContentString(in, aContext);
 
-    String match = atts.getAttributeString("match");
+    String match = atts.getAttribute("match");
     if (match == null) match = "";
     boolean result = false;
     if (exactMatch) {
@@ -315,7 +311,7 @@ class test_match extends testHandler {
 
 class test_null extends testHandler {
   public void action(Input in, Context aContext, Output out) {
-    ParseNodeList content = textContent
+    ActiveNodeList content = textContent
       ? Expand.getProcessedText(in, aContext)
       : Expand.getProcessedContent(in, aContext);
 

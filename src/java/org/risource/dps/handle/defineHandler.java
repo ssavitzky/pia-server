@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.6 1999-03-31 23:08:26 steve Exp $
+//	$Id: defineHandler.java,v 1.7 1999-04-07 23:21:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,24 +23,23 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.tagset.TagsetProcessor;
 import org.risource.dps.handle.Loader;
+import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeExternal;
+
+import org.w3c.dom.Node;
 
 import java.util.Enumeration;
 
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.6 1999-03-31 23:08:26 steve Exp $
+ * @version $Id: defineHandler.java,v 1.7 1999-04-07 23:21:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -61,7 +60,7 @@ public class defineHandler extends GenericHandler {
 
   /** This will normally be the only thing to customize. */
   public void action(Input in, Context aContext, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work.  In this case a naked define is an error.
     reportError(in, aContext, "Nothing being defined");
   }
@@ -80,9 +79,9 @@ public class defineHandler extends GenericHandler {
   ** Content and attribute handling:
   ************************************************************************/
 
-  protected ActiveElement getAction(NodeList content) {
+  protected ActiveElement getAction(ActiveNodeList content) {
     ActiveNode n;
-    for (long i = 0; i < content.getLength(); ++i) {
+    for (int i = 0; i < content.getLength(); ++i) {
       try {
 	n = (ActiveNode) content.item(i);
       } catch (Exception e) { continue; }
@@ -91,9 +90,9 @@ public class defineHandler extends GenericHandler {
     return null;
   }
 
-  protected ActiveElement getValue(NodeList content) {
+  protected ActiveElement getValue(ActiveNodeList content) {
     ActiveNode n;
-    for (long i = 0; i < content.getLength(); ++i) {
+    for (int i = 0; i < content.getLength(); ++i) {
       try {
 	n = (ActiveNode) content.item(i);
       } catch (Exception e) { continue; }
@@ -107,7 +106,7 @@ public class defineHandler extends GenericHandler {
    *	that an attribute can be minimized if it's equal to its own name.
    */
   protected String getHandlerClassName(ActiveAttrList atts, String dflt) {
-    Attribute handler = atts.getAttribute("handler");
+    ActiveAttr handler = atts.getActiveAttr("handler");
     return (handler == null)     ? null
       : (! handler.getSpecified()) ? dflt
       : "handler".equals(handler.getValue()) ? dflt
@@ -142,13 +141,13 @@ class define_element extends defineHandler {
 
   /** The actual action routine. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Analyze the attributes: === could do this in one scan.
-    String tagname = atts.getAttributeString(attrName);
+    String tagname = atts.getAttribute(attrName);
     String handlerClass = getHandlerClassName(atts, tagname);
     Tagset ts = cxt.getTopContext().getTagset();
-    String parents = atts.getAttributeString("parent");
-    String notIn   = atts.getAttributeString("implicitly-ends");
+    String parents = atts.getAttribute("parent");
+    String notIn   = atts.getAttribute("implicitly-ends");
 
     // Determine the syntax:
     int syntax = 
@@ -158,7 +157,7 @@ class define_element extends defineHandler {
 
     // Get the action, if any.
     ActiveElement action = getAction(content);
-    NodeList newContent  = (action == null)? null : action.getChildren();
+    ActiveNodeList newContent  = (action == null)? null : action.getContent();
     // Get the value, if any.
     ActiveElement value = getValue(content);
     if (value != null) unimplemented(in, cxt, "element with value");
@@ -168,7 +167,7 @@ class define_element extends defineHandler {
       // No action, no handler: it's an ordinary non-active Element
       ts.defTag(tagname, notIn, parents, syntax, null, null);
     } else if (handlerClass == null) {
-      if (newContent == null) newContent = new ParseNodeList();
+      if (newContent == null) newContent = new TreeNodeList();
       h = (GenericHandler)
 	ts.defTag(tagname, notIn, parents, syntax, null, newContent);
     } else  {
@@ -216,7 +215,7 @@ class define_element extends defineHandler {
       ts.setHandlerForTag(tagname, h);
     }
     if (h != null && action != null) {
-      String mode = action.getAttributeString("mode");
+      String mode = action.getAttribute("mode");
       if (mode == null ||
 	  mode.equalsIgnoreCase("element") ||
 	  mode.equalsIgnoreCase("replace-element")) {
@@ -249,32 +248,32 @@ class define_element extends defineHandler {
 /** Define an entity.  Corresponds to &lt!ENTITY ...&gt; */
 class define_entity extends defineHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     TopContext  top  = cxt.getTopContext();
     Tagset	ts   = top.getTagset();
-    String      name = atts.getAttributeString(attrName);
+    String      name = atts.getAttribute(attrName);
 
     // General attributes.  === currently unimplemented ===
     boolean parameter= atts.hasTrueAttribute("parameter");
     boolean   retain = atts.hasTrueAttribute("retain");
 
     // Attributes for external entities.
-    String   sysName = atts.getAttributeString("system");
-    String   pubName = atts.getAttributeString("public");
-    String	mode = atts.getAttributeString("mode");
-    String writeMode = atts.getAttributeString("write-mode");
-    String    method = atts.getAttributeString("method");
+    String   sysName = atts.getAttribute("system");
+    String   pubName = atts.getAttribute("public");
+    String	mode = atts.getAttribute("mode");
+    String writeMode = atts.getAttribute("write-mode");
+    String    method = atts.getAttribute("method");
 
-    NodeList newContent = null;
+    ActiveNodeList newContent = null;
     // Get the action, if any.
     ActiveElement action = getAction(content);
-    newContent  = (action == null)? null : action.getChildren();
+    newContent  = (action == null)? null : action.getContent();
     // Get the value, if any.  
     //	Ensure that it's non-null if the <value> node is present.
     ActiveElement value = getValue(content);
     if (value != null) {
-      newContent = value.getChildren();
-      if (newContent == null) newContent = new ParseNodeList();
+      newContent = value.getContent();
+      if (newContent == null) newContent = new TreeNodeList();
     }
 
     if (action != null && value != null)
@@ -288,16 +287,16 @@ class define_entity extends defineHandler {
     ActiveEntity ent = null;
     if (sysName != null) {
       // External 
-      ParseTreeExternal ext = new ParseTreeExternal(name, sysName, null);
+      TreeExternal ext = new TreeExternal(name, sysName, null);
 
       ext.setMode(mode);
       ext.setMethod(method);
 
-      Handler h = ts.getHandlerForType(NodeType.ENTITY);
+      Handler h = ts.getHandlerForType(Node.ENTITY_NODE);
       ext.setHandler(h);
       ext.setAction(h.getActionForNode(ext));
       if (newContent != null)
-	ext.setRequestContent(new ParseNodeList(newContent));
+	ext.setRequestContent(new TreeNodeList(newContent));
       ent = ext;
     } else {
       ent = ts.createActiveEntity(name, newContent);
@@ -327,7 +326,7 @@ class define_entity extends defineHandler {
 
 class define_attribute extends defineHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // not really unimplemented(in, cxt); -- more like not needed yet
     // === eventually define_attribute sets up a dispatch table.
     
@@ -339,7 +338,7 @@ class define_attribute extends defineHandler {
 
 class define_word extends defineHandler {
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     unimplemented(in, cxt);	// define word -- maybe not needed yet.
   }
   define_word(String aname) { super(aname); }

@@ -1,5 +1,5 @@
 ////// actionHandler.java: <action> Handler implementation
-//	$Id: actionHandler.java,v 1.3 1999-03-12 19:26:07 steve Exp $
+//	$Id: actionHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,8 @@
 
 
 package org.risource.dps.handle;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
@@ -42,7 +39,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: actionHandler.java,v 1.3 1999-03-12 19:26:07 steve Exp $
+ * @version $Id: actionHandler.java,v 1.4 1999-04-07 23:21:21 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -57,7 +54,7 @@ public class actionHandler extends GenericHandler {
   }
 
   public void action(Input in, Context aContext, Output out,
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
     // === should be able to skip expanding the attrs altogether for <action>

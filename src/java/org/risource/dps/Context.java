@@ -1,5 +1,5 @@
 ////// Context.java: Document processing context interface
-//	$Id: Context.java,v 1.3 1999-03-12 19:24:47 steve Exp $
+//	$Id: Context.java,v 1.4 1999-04-07 23:20:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,11 +23,9 @@
 
 
 package org.risource.dps;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.Element;
 
 import org.risource.dps.active.ActiveEntity;
+import org.risource.dps.active.ActiveNodeList;
 
 import java.io.PrintStream;
 
@@ -69,7 +67,7 @@ import java.io.PrintStream;
  *		 represents a ``continuation.''
  *	</ul>
  *
- * @version $Id: Context.java,v 1.3 1999-03-12 19:24:47 steve Exp $
+ * @version $Id: Context.java,v 1.4 1999-04-07 23:20:46 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Handler
@@ -117,11 +115,11 @@ public interface Context {
   /** Get the value of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public NodeList getEntityValue(String name, boolean local);
+  public ActiveNodeList getEntityValue(String name, boolean local);
 
   /** Set the value of an entity. 
    */
-  public void setEntityValue(String name, NodeList value, boolean local);
+  public void setEntityValue(String name, ActiveNodeList value, boolean local);
 
   /** Get the namespace containing an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.

@@ -1,5 +1,5 @@
 ////// transControl.java:  Handler for <trans-control>
-//	$Id: transControl.java,v 1.4 1999-03-23 23:32:53 steve Exp $
+//	$Id: transControl.java,v 1.5 1999-04-07 23:22:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,6 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.ActiveDoc;
 
-import org.risource.dom.NodeList;
 import org.risource.pia.Agent;
 import org.risource.pia.Resolver;
 
@@ -40,7 +39,7 @@ import org.risource.ds.List;
 public class transControl extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");

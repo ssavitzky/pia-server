@@ -1,5 +1,5 @@
 ////// TypicalHandler.java: <typical> Handler implementation
-//	$Id: TypicalHandler.java,v 1.4 1999-03-25 00:42:33 steve Exp $
+//	$Id: TypicalHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,8 +24,6 @@
 
 package org.risource.dps.handle;
 
-import org.risource.dom.NodeList;
-
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
@@ -35,7 +33,7 @@ import org.risource.dps.util.*;
  *
  * <p>	
  *
- * @version $Id: TypicalHandler.java,v 1.4 1999-03-25 00:42:33 steve Exp $
+ * @version $Id: TypicalHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -47,7 +45,7 @@ public class TypicalHandler extends GenericHandler {
 
   /** Action for &lt;Typical&gt; node. */
   public void action(Input in, Context cxt, Output out, 
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
   }
 
@@ -82,7 +80,7 @@ public class TypicalHandler extends GenericHandler {
 
 class Typical_ extends TypicalHandler {
   public void action(Input in, Context cxt, Output out,
-  		     ActiveAttrList atts, NodeList content) {
+  		     ActiveAttrList atts, ActiveNodeList content) {
     unimplemented (in, cxt); // do the work
   }
   public Typical_(ActiveElement e) { super(e); }

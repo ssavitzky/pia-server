@@ -1,5 +1,5 @@
 ////// Create.java: Utilities for Creating nodes.
-//	$Id: Create.java,v 1.3 1999-03-12 19:28:10 steve Exp $
+//	$Id: Create.java,v 1.4 1999-04-07 23:22:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,16 +24,12 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.Element;
-import org.risource.dom.NodeList;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
-import org.risource.dom.Entity;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.risource.dps.NodeType;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
+import org.risource.dps.tree.*;
 
 import org.risource.ds.Table;
 
@@ -42,7 +38,7 @@ import java.util.Enumeration;
 /**
  * Node Creation utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Create.java,v 1.3 1999-03-12 19:28:10 steve Exp $
+ * @version $Id: Create.java,v 1.4 1999-04-07 23:22:15 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -54,32 +50,32 @@ public class Create {
   ************************************************************************/
 
   /** Create a singleton NodeList containing a given node. */
-  public static NodeList createNodeList(Node aNode) {
-    return new ParseNodeArray(aNode);
+  public static ActiveNodeList createNodeList(Node aNode) {
+    return new TreeNodeArray(aNode);
   }
 
   /** Create a singleton NodeList containing a given String. */
-  public static NodeList createNodeList(String aString) {
-    return new ParseNodeArray(new ParseTreeText(aString));
+  public static ActiveNodeList createNodeList(String aString) {
+    return new TreeNodeArray(new TreeText(aString));
   }
 
   /** Create a NodeList by splitting a string on whitespace. */
-  public static NodeList split(String aString) {
+  public static ActiveNodeList split(String aString) {
     return createNodeList(new java.util.StringTokenizer(aString), " ");
   }
 
   /** Create a NodeList from an enumeration of elements, with an optional 
    *	separator.  The separator is made ignorable if it is whitespace.
    */
-  public static NodeList createNodeList(Enumeration enum, String sep) {
+  public static ActiveNodeList createNodeList(Enumeration enum, String sep) {
     boolean iws = (sep != null) && Test.isWhitespace(sep);
-    ParseNodeArray nl = new ParseNodeArray();
+    TreeNodeArray nl = new TreeNodeArray();
     while (enum.hasMoreElements()) {
       Object o = enum.nextElement();
       if (o instanceof Node) { nl.append((Node)o); }
-      else { nl.append(new ParseTreeText(o.toString())); }
+      else { nl.append(new TreeText(o.toString())); }
       if (sep != null && enum.hasMoreElements()) {
-	nl.append(new ParseTreeText(sep, iws));
+	nl.append(new TreeText(sep, iws));
       }
     }
     return nl;
@@ -90,46 +86,54 @@ public class Create {
   ************************************************************************/
 
   /** Create an arbitrary ActiveNode with optional name and data. */
-  public static ActiveNode createActiveNode(int nodeType,
+  public static ActiveNode createActiveNode(short nodeType,
 					    String name, String data) {
     switch (nodeType) {
-    case NodeType.COMMENT:
-      return new ParseTreeComment(data);
-    case NodeType.PI:
-      return new ParseTreePI(name, data);
-    case NodeType.ATTRIBUTE:
-      return new ParseTreeAttribute(name, (NodeList)null);
-    case NodeType.ENTITY:
-      return new ParseTreeEntity(name, (NodeList)null);
-    case NodeType.ELEMENT:
-      return new ParseTreeElement(name, null);
-    case NodeType.DECLARATION:
-      return new ParseTreeDecl(name, null, data);
+    case Node.COMMENT_NODE:
+      return new TreeComment(data);
+    case Node.PROCESSING_INSTRUCTION_NODE:
+      return new TreePI(name, data);
+    case Node.ATTRIBUTE_NODE:
+      return new TreeAttr(name, (ActiveNodeList)null);
+    case Node.ENTITY_NODE:
+      return new TreeEntity(name, (ActiveNodeList)null);
+    case Node.ENTITY_REFERENCE_NODE:
+      return new TreeEntityRef(name);
+    case Node.ELEMENT_NODE:
+      return new TreeElement(name);
+    case Node.DOCUMENT_TYPE_NODE:
+      return new TreeDocType(name, data);
+      //    case Node.DECLARATION:
+      //return new TreeDecl(name, null, null);
     default:
-      return new ParseTreeComment("Undefined type " + nodeType
-				  + " name=" + name + " data=" + data);
+      return new TreeComment("Undefined type " + nodeType
+			     + " name=" + name + " data=" + data);
       //return null;
     }
   }
 
   /** Create an arbitrary ActiveNode with optional name and data. */
-  public static ActiveNode createActiveNode(int nodeType,
-					    String name, NodeList value) {
+  public static ActiveNode createActiveNode(short nodeType, String name,
+					    ActiveNodeList value) {
     switch (nodeType) {
-    case NodeType.COMMENT:
-      return new ParseTreeComment("");
-    case NodeType.PI:
-      return new ParseTreePI(name, "");
-    case NodeType.ATTRIBUTE:
-      return new ParseTreeAttribute(name, value);
-    case NodeType.ENTITY:
-      return new ParseTreeEntity(name, value);
-    case NodeType.ELEMENT:
-      return new ParseTreeElement(name, null);
-    case NodeType.DECLARATION:
-      return new ParseTreeDecl(name, null, null);
+    case Node.COMMENT_NODE:
+      return new TreeComment("");
+    case Node.PROCESSING_INSTRUCTION_NODE:
+      return new TreePI(name, "");
+    case Node.ATTRIBUTE_NODE:
+      return new TreeAttr(name, value);
+    case Node.ENTITY_NODE:
+      return new TreeEntity(name, value);
+    case Node.ENTITY_REFERENCE_NODE:
+      return new TreeEntityRef(name);
+    case Node.ELEMENT_NODE:
+      return new TreeElement(name);
+    case Node.DOCUMENT_TYPE_NODE:
+      return new TreeDocType(name, null); // really an error.
+      //    case Node.DECLARATION:
+      //return new TreeDecl(name, null, null);
     default:
-      return new ParseTreeComment("Undefined type " + nodeType
+      return new TreeComment("Undefined type " + nodeType
 				  + " name=" + name + " value=" + value);
       //return null;
     }

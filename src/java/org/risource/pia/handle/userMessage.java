@@ -1,5 +1,5 @@
 ////// userMessage.java:  Handler for <user-message>
-//	$Id: userMessage.java,v 1.3 1999-03-12 19:30:07 steve Exp $
+//	$Id: userMessage.java,v 1.4 1999-04-07 23:22:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,9 +26,7 @@ package org.risource.pia.handle;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
-import org.risource.dps.process.ActiveDoc;
 
-import org.risource.dom.NodeList;
 import org.risource.pia.Agent;
 import org.risource.pia.Resolver;
 
@@ -40,7 +38,7 @@ import org.risource.ds.List;
 public class userMessage extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     aContext.message(0, content.toString(), 0, true);
   }
 }

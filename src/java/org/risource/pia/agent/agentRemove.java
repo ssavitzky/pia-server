@@ -1,5 +1,5 @@
 ////// agentInstall.java:  Handler for <agent-install>
-//	$Id: agentRemove.java,v 1.4 1999-03-23 23:32:46 steve Exp $
+//	$Id: agentRemove.java,v 1.5 1999-04-07 23:22:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,22 +27,21 @@ package org.risource.pia.agent;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.process.ActiveDoc;
-import org.risource.dom.NodeList;
 
 /** Handler class for &lt;agent-install&gt tag 
  */
 public class agentRemove extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
-		     ActiveAttrList atts, NodeList content) {
+		     ActiveAttrList atts, ActiveNodeList content) {
     ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;
     }
 
-    String name = atts.getAttributeString("agent");
-    if (name == null || name.equals("")) name = atts.getAttributeString("name");
+    String name = atts.getAttribute("agent");
+    if (name == null || name.equals("")) name = atts.getAttribute("name");
     if (name == null) {
       reportError(in, aContext, "no agent name given");
       return;

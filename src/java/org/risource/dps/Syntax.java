@@ -1,5 +1,5 @@
 ////// Syntax.java: Node Syntax Handler interface
-//	$Id: Syntax.java,v 1.3 1999-03-12 19:25:01 steve Exp $
+//	$Id: Syntax.java,v 1.4 1999-04-07 23:20:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,9 +23,8 @@
 
 
 package org.risource.dps;
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.active.*;
 
@@ -40,13 +39,13 @@ import org.risource.dps.active.*;
  *	(non-verifying) parser to be built without exposing the gory details
  *	of SGML to the casual programmer. <p>
  *
- * @version $Id: Syntax.java,v 1.3 1999-03-12 19:25:01 steve Exp $
+ * @version $Id: Syntax.java,v 1.4 1999-04-07 23:20:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node */
+ */
 
 public interface Syntax {
 
@@ -98,7 +97,7 @@ public interface Syntax {
    * @param data optional data
    * @return a new ActiveNode having <code>this</code> as its Syntax. 
    */
-  public ActiveNode createNode(int nodeType, String name, String data);
+  public ActiveNode createNode(short nodeType, String name, String data);
 
   /** Called to construct a node for the given handler. 
    *
@@ -111,7 +110,8 @@ public interface Syntax {
    * @param value optional value
    * @return a new ActiveNode having <code>this</code> as its Syntax. 
    */
-  public ActiveNode createNode(int nodeType, String name, NodeList value);
+  public ActiveNode createNode(short nodeType, String name,
+			       ActiveNodeList value);
 
   /** Called to construct an element for the given handler. 
    *
@@ -124,7 +124,7 @@ public interface Syntax {
    * @param hasEmptyDelim an XML `empty' delimiter (closing `/') is present.
    * @return a new ActiveElement having <code>this</code> as its Syntax. 
    */
-  public ActiveElement createElement(String tagname, AttributeList attributes,
+  public ActiveElement createElement(String tagname, ActiveAttrList attributes,
 				     boolean hasEmptyDelim);
 
   /** Called to determine the correct Action handler for a Node. 
@@ -145,7 +145,7 @@ public interface Syntax {
    * @return the correct Handler for the Token.  
    * @see org.risource.dps.Tagset
    */
-  public Action getActionForNode(org.risource.dps.active.ActiveNode n);
+  public Action getActionForNode(ActiveNode n);
 
 
   /** If <code>true</code>, Element tags are recognized in content.  If 

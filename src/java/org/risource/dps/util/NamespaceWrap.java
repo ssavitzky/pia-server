@@ -1,5 +1,5 @@
 ////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	$Id: NamespaceWrap.java,v 1.5 1999-03-31 23:08:45 steve Exp $
+//	$Id: NamespaceWrap.java,v 1.6 1999-04-07 23:22:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,15 +23,13 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.*;
 import org.risource.dps.Namespace;
+import org.risource.dps.input.FromNodeList;
 
 import java.util.Enumeration;
 
@@ -48,14 +46,14 @@ import org.risource.ds.Tabular;
  * ===	The implementation is crude, and will probably want to be revisited. ===
  * ===	We may want to insist that NamespaceWrap implement Entity.
  *
- * @version $Id: NamespaceWrap.java,v 1.5 1999-03-31 23:08:45 steve Exp $
+ * @version $Id: NamespaceWrap.java,v 1.6 1999-04-07 23:22:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
  * @see org.risource.ds.Tabular
  */
 
-public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
+public class NamespaceWrap extends TreeGeneric implements Namespace {
 
   /************************************************************************
   ** Data:
@@ -77,18 +75,19 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
     if (o == null) return null;
     if (o instanceof ActiveNode) return (ActiveNode)o;
     if (o instanceof Tabular) return new NamespaceWrap(name, (Tabular)o);
-    if (o instanceof NodeList) return new ParseTreeEntity(name, (NodeList)o);
+    if (o instanceof ActiveNodeList)
+      return new TreeEntity(name, (ActiveNodeList)o);
 
     // Have to make a wrapper. === should be EntityWrap
-    ActiveNode n = new ParseTreeText(o.toString());
-    return new ParseTreeEntity(name, new ParseNodeList(n));
+    ActiveNode n = new TreeText(o.toString());
+    return new TreeEntity(name, new TreeNodeList(n));
   }
 
   /** Unwrap a binding as an Object. */
   public Object unwrap(ActiveNode binding) {
     if (binding == null) return null;
-    if (binding instanceof ParseTreeEntity) 
-      return ((ParseTreeEntity)binding).getValueNodes();
+    if (binding instanceof TreeEntity) 
+      return ((TreeEntity)binding).getValueNodes(null);
     return binding;
   }
 
@@ -98,18 +97,12 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
     return wrap(itemsByName.get(name));
   }
 
-  public NodeList getValueNodes(Context cxt, String name) {
+  public ActiveNodeList getValueNodes(Context cxt, String name) {
     ActiveNode binding = getBinding(name);
     if (binding == null) {
       return null;
-    } else if (binding.asEntity() != null) {
-      return binding.asEntity().getValueNodes(cxt);
-    } else if (binding instanceof ParseTreeNamed) {
-      return ((ParseTreeNamed)binding).getValueNodes();
-    } else if (binding.hasChildren()) {
-      return binding.getChildren();
     } else {
-      return new ParseNodeList(binding);
+      return binding.getValueNodes(cxt);
     }
   }
 
@@ -145,7 +138,7 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
     return old;
   }
 
-  public void setValueNodes(Context cxt, String name, NodeList value) {
+  public void setValueNodes(Context cxt, String name, ActiveNodeList value) {
     Tagset ts = cxt.getTopContext().getTagset();
     ActiveNode binding = getBinding(name);
     if (binding == null) {
@@ -169,17 +162,17 @@ public class NamespaceWrap extends ParseTreeGeneric implements Namespace {
   ** Information Operations:
   ************************************************************************/
 
-    /** Returns the bindings defined in this table.
-     */
-    public NodeEnumerator getBindings() {
-	// === should implement this with a NodeEnumerator that wraps each value.
-	Enumeration enum = getNames();
-	ParseNodeArray list = new ParseNodeArray();
-	while(enum.hasMoreElements()) {
-	    list.append(wrap(getBinding((String)enum.nextElement())));
-	}
-	return list.getEnumerator();
+  /** Returns the bindings defined in this table.
+   */
+  public Input getBindings() {
+    // === should implement this with a NodeEnumerator that wraps each value.
+    Enumeration enum = getNames();
+    TreeNodeArray list = new TreeNodeArray();
+    while(enum.hasMoreElements()) {
+      list.append(wrap(getBinding((String)enum.nextElement())));
     }
+    return new FromNodeList(list);
+  }
 
   /** Returns an Enumeration of the entity names defined in this table. 
    */

@@ -1,5 +1,5 @@
 ////// Proxy: filtering proxy for an Output
-//	$Id: Proxy.java,v 1.3 1999-03-12 19:27:03 steve Exp $
+//	$Id: Proxy.java,v 1.4 1999-04-07 23:21:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps.output;
 
-import org.risource.dom.*;
+import org.w3c.dom.*;
 import org.risource.dps.*;
 import org.risource.dps.util.Log;
 
@@ -37,7 +37,7 @@ import java.io.PrintStream;
  *	A Proxy can be used with no target to simply discard output.
  *	This is reasonably efficient.
  *
- * @version $Id: Proxy.java,v 1.3 1999-03-12 19:27:03 steve Exp $
+ * @version $Id: Proxy.java,v 1.4 1999-04-07 23:21:38 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 

@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.4 1999-03-31 23:08:39 steve Exp $
+//	$Id: BasicNamespace.java,v 1.5 1999-04-07 23:22:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,14 +23,12 @@
 
 package org.risource.dps.util;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
-import org.risource.dom.NodeEnumerator;
-import org.risource.dom.Attribute;
-import org.risource.dom.AttributeList;
+import org.w3c.dom.NodeList;
 
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.*;
+import org.risource.dps.input.FromEnumeration;
 
 import java.util.Enumeration;
 
@@ -45,17 +43,15 @@ import org.risource.ds.Table;
  *
  * ===	The implementation is crude, and will probably want to be revisited. ===
  *
- * @version $Id: BasicNamespace.java,v 1.4 1999-03-31 23:08:39 steve Exp $
+ * @version $Id: BasicNamespace.java,v 1.5 1999-04-07 23:22:14 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Token
  * @see org.risource.dps.Input 
- * @see org.risource.dom.Node 
- * @see org.risource.dom.Attribute
  */
 
-public class BasicNamespace extends ParseTreeGeneric implements Namespace {
+public class BasicNamespace extends TreeGeneric implements Namespace {
 
   /************************************************************************
   ** Data:
@@ -119,18 +115,13 @@ public class BasicNamespace extends ParseTreeGeneric implements Namespace {
     if (binding.asNamespace() != null) namespaceItems ++;
   }
 
-  public NodeList getValueNodes(Context c, String name) {
+  public ActiveNodeList getValueNodes(Context c, String name) {
     ActiveNode b = getBinding(name);
     if (b == null) return null;
-    else if (b.asEntity() != null) return b.asEntity().getValueNodes(c);
-    else if (b.asAttribute() != null) return b.asAttribute().getValueNodes();
-    else if (b instanceof ParseTreeNamed) {
-      return ((ParseTreeNamed)b).getValueNodes();
-    } else if (b.hasChildren()) return b.getChildren();
-    else return new ParseNodeList(b);
+    else return b.getValueNodes(c);
   }
 
-  public void setValueNodes(Context c, String name, NodeList value) {
+  public void setValueNodes(Context c, String name, ActiveNodeList value) {
     ActiveNode b = getBinding(name);
     if (b == null) {
       Tagset ts = c.getTopContext().getTagset();
@@ -138,7 +129,7 @@ public class BasicNamespace extends ParseTreeGeneric implements Namespace {
     } else if (b.asEntity() != null) {
       b.asEntity().setValueNodes(c, value);
     } else if (b.asAttribute() != null) {
-      b.asAttribute().setValueNodes(value);
+      b.asAttribute().setValueNodes(c, value);
     } else {
       // === problem -- namespace can't set value (DOM update needed)
     }
@@ -149,14 +140,14 @@ public class BasicNamespace extends ParseTreeGeneric implements Namespace {
   ************************************************************************/
 
   /** Returns the bindings defined in this table. */
-  public NodeEnumerator getBindings() {
-    return (hasChildren())? getChildren().getEnumerator() : null;
+  public Input getBindings() {
+    return new FromEnumeration(itemsByName.elements());
   }
 
   /** Returns an Enumeration of the entity names defined in this table. 
    */
   public Enumeration getNames() { 
-    return itemNames.elements();
+    return itemsByName.keys();
   }
 
   /** Returns <code>true</code> if names are case-sensitive. */

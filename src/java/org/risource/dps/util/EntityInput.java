@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.4 1999-03-31 23:08:41 steve Exp $
+//	$Id: EntityInput.java,v 1.5 1999-04-07 23:22:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,15 +26,16 @@ package org.risource.dps.util;
 
 import java.io.*;
 
-import org.risource.dom.Node;
-import org.risource.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.risource.dom.Entity;
+import org.w3c.dom.Entity;
 
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.*;
 import org.risource.dps.util.Copy;
-import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.input.FromNodeList;
 import org.risource.dps.output.ToNodeList;
 
 import org.risource.ds.Tabular;
@@ -45,12 +46,11 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.4 1999-03-31 23:08:41 steve Exp $
+ * @version $Id: EntityInput.java,v 1.5 1999-04-07 23:22:15 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
  */
-public class EntityInput extends ParseTreeEntity {
+public class EntityInput extends TreeEntity {
 
   /************************************************************************
   ** The wrapped Object:
@@ -73,8 +73,8 @@ public class EntityInput extends ParseTreeEntity {
 
   /** Get the node's value as an Input. 
    */
-  public Input getValueInput(Context cxt) { 
-    if (value != null) return new FromParseNodes(getValueNodes());
+  public Input fromValue(Context cxt) { 
+    if (nodeValue != null) return new FromNodeList(getValueNodes(cxt));
     return getWrappedInput();
   }
 
@@ -82,14 +82,14 @@ public class EntityInput extends ParseTreeEntity {
    *
    * <p> There will be problems if this is called while reading the value.
    */
-  public NodeList getValueNodes() {
-    if (value != null || wrappedInput == null) return value;
+  public ActiveNodeList getValueNodes(Context cxt) {
+    if (nodeValue != null || wrappedInput == null) return nodeValue;
     ToNodeList out = new ToNodeList();
-    Input in = getValueInput();
+    Input in = fromValue(cxt);
     Copy.copyNodes(in, out);
-    value = out.getList();
+    nodeValue = out.getList();
     wrappedInput = null;
-    return value;
+    return nodeValue;
   }
 
   /** Set the node's value.  If the value is <code>null</code>, 
@@ -98,8 +98,8 @@ public class EntityInput extends ParseTreeEntity {
    *
    * === WARNING! This will change substantially when the DOM is updated!
    */
-  public void setValueNodes(NodeList newValue) {
-    super.setValueNodes(newValue);
+  public void setValueNodes(Context cxt, ActiveNodeList newValue) {
+    super.setValueNodes(cxt, newValue);
     wrappedInput = null;
   }
 
@@ -115,7 +115,7 @@ public class EntityInput extends ParseTreeEntity {
   /** Note that this has to do a shallow copy */
   public EntityInput(EntityInput e, boolean copyChildren) {
     super(e, copyChildren);
-    setValueNodes(e.getValueNodes());
+    setValueNodes(e.getValueNodes(null));
   }
 
   /** Construct a node with given name. */
