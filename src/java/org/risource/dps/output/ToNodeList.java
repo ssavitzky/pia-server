@@ -1,5 +1,5 @@
 ////// ToNodeList.java:  Output to node list
-//	$Id: ToNodeList.java,v 1.6 1999-06-04 22:40:14 steve Exp $
+//	$Id: ToNodeList.java,v 1.7 1999-06-17 01:02:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to an (active) NodeList.<p>
  *
- * @version $Id: ToNodeList.java,v 1.6 1999-06-04 22:40:14 steve Exp $
+ * @version $Id: ToNodeList.java,v 1.7 1999-06-17 01:02:59 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.NodeList
  */
@@ -60,6 +60,7 @@ public class ToNodeList extends ActiveOutput implements Output {
   public void putNode(Node aNode) {
     if (depth == 0) {
       list.append(aNode);
+      active = null; atFirst = false;
     } else {
       super.putNode(aNode);
     }
@@ -67,17 +68,16 @@ public class ToNodeList extends ActiveOutput implements Output {
 
   public void startNode(Node aNode) {
     Node p = aNode.getParentNode();
-    if (active == p && active != null) {	// already a child.  descend.
-      if (p != null) descend();
-      setNode(aNode);
-      return;
-    }
     if (p != null || aNode.hasChildNodes()) {
-      aNode = Copy.copyNodeAsActive(aNode);
+      aNode = shallowCopy(aNode);
     }
     appendNode(aNode, active);
     descend();
     setNode(aNode);
+  }
+
+  public void startElement(org.w3c.dom.Element anElement) {
+    startNode(shallowCopy(anElement));
   }
 
   public Node toParent() {

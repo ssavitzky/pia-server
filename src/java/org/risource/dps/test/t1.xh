@@ -1,0 +1,5 @@
+<repeat list="a b c">x &li;</repeat><!-- not expanded!? -->
+<define element=i><action>-&content;-</action></define>
+<b><i><repeat  list="a b c">x &li;</repeat></i></b><!-- good -->
+<i><b><repeat list="a b c"> x &li;</repeat></b></i><!-- bad -->
+<!-- see ../done.html for  1999-06-16 -->

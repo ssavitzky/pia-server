@@ -16,6 +16,33 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> Bad end tag comment sometimes eaten. <br>
+       Actually, if it's not quoted it seems to be replaced by a copy of the
+       previous token. 
+       (1999-06-16) <br>
+       -- May have to do with a missing hasChildren test.
+
+  <li> <b>Impr</b> Output.startNode parameter change <br>
+       Should take tagname and attribute list, not element node. 
+       (1999-06-16) <br>
+
+  <li> <b>Impr</b> Parser error verbosity level <br>
+       The verbosity level of parser messages should be a tagset
+       parameter: for XML they should be warnings or perhaps errors; for HTML
+       most if not all should be verbose.  Similarly treatment of ommitted end
+       tags and empty tags should be a parameter related to the output's DTD.
+       (1999-06-16) <br>
+
+  <li> <b>Bug</b> Null pointer error in Utilities.urlDecode <br>
+       org.risource.util.Utilities.urlDecode(Utilities.java:729) called from
+       text_decode.action(textHandler.java:476) on request 
+       for http://blackroot.crc.ricoh.com:8888/Demo/demo_text.xh
+       (1999-06-14 Pfafman) <br>
+       
+  <li> <b>Impr</b> Namespace attr for get, set, bind. <br>
+       Note that this would allow sidestepping of XML namespace issues.
+       (1999-06-11) <br>
+
   <li> <b>Bug</b> Parser needs error messages. <br>
        Since its a ProcessorInput it can find the Processor's
        <code>message</code> method.
@@ -548,7 +575,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.19 1999-06-11 23:32:05 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.20 1999-06-17 01:02:48 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

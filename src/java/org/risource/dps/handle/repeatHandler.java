@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.7 1999-04-23 00:21:51 steve Exp $
+//	$Id: repeatHandler.java,v 1.8 1999-06-17 01:02:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.7 1999-04-23 00:21:51 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.8 1999-06-17 01:02:52 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -57,13 +57,16 @@ public class repeatHandler extends GenericHandler {
     // Actually do the work.  
     // There were no attributes to dispatch on, so repeat the content until
     // something stops the processor.
+    content = new TreeNodeList(content);
     String tag = in.getTagName();
-    Input  src = iterationSrc(content);
+    FromNodeList src = iterationSrc(content);
     Processor process  = iterationCxt(src, aContext, out, null, tag);
     List repeatSubs = new List();
 
     if (iterationInit(content, process, repeatSubs) > 0) {
-      while (process.run()) src.toFirstNode();
+      while (process.run()) {
+	  src.toFirstNode();
+      }
       iterationFinish(process, repeatSubs);
     }
   }
@@ -145,8 +148,8 @@ public class repeatHandler extends GenericHandler {
   }
 
   /** Return a suitable Input for iterating through the content. */
-  public Input iterationSrc(ActiveNodeList nl) {
-    return new FromNodeList(nl);
+  public FromNodeList iterationSrc(ActiveNodeList nl) {
+    return new FromNodeList(new TreeNodeList(nl));
   }
 
   /** Return a suitable context in which the iteration variables are bound. */

@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	$Id: CurrentActive.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+//	$Id: CurrentActive.java,v 1.5 1999-06-17 01:03:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version $Id: CurrentActive.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+ * @version $Id: CurrentActive.java,v 1.5 1999-06-17 01:03:21 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -138,6 +138,7 @@ public class CurrentActive implements Cursor {
   protected final void setNode(ActiveNode aNode, String aTagName) {
     active = aNode;
     tagName = aTagName;
+    action = active.getAction();
   }
 
 
@@ -317,18 +318,16 @@ public class CurrentActive implements Cursor {
    */
   protected void putNode(Node aNode) {
     Node p = aNode.getParentNode();
-    if (active == p) {
-      if (p != null) return;	// already a child.  Nothing to do.
-      else setNode(aNode);	// no current node: make it current
-    } else if (p != null) {	// someone else's child: deep copy.
+    if (p != null) {	// someone else's child: deep copy.
+      if (p == active) System.err.println(Log.node(aNode)+ " in " + p);
       ActiveNode n = (ActiveNode)aNode;
       appendNode(n.deepCopy(), active);
       /* === this will fail for attributes and entities with values:
       startNode(aNode);
-      for (Node n = aNode.getFirstActive();
-	   n != null;
-	   n = aNode.getNextActive()) 
-	putNode(n);
+      for (ActiveNode m = n.getFirstActive();
+	   m != null;
+	   m = m.getNextActive()) 
+	putNode(m);
       endNode();
       */
     } else {
@@ -341,17 +340,10 @@ public class CurrentActive implements Cursor {
    */
   protected void startNode(Node aNode) {
     Node p = aNode.getParentNode();
-    if (active == p) {	// already a child.  descend.
-      if (p != null) descend();
-      setNode(aNode);
-      return;
-    }
     if (p != null || aNode.hasChildNodes()) {
       // === The following chokes on an attribute with an unspecified value!
       // System.err.println("about to copy " + aNode.getClass().getName());
-      ActiveNode n = (ActiveNode)aNode;
-      aNode = n.shallowCopy();
-      //aNode = Copy.copyNodeAsActive(aNode);
+      aNode = shallowCopy(aNode);
     }
     appendNode(aNode, active);
     descend();
@@ -372,10 +364,10 @@ public class CurrentActive implements Cursor {
    *	<code>endNode</code>. 
    */
   protected void startElement(Element anElement) {
-    ActiveNode e = ((ActiveElement)anElement).shallowCopy();
+    Node e = shallowCopy(anElement);
     appendNode(e, active);
     descend();
-    setNode(e, null);
+    setNode(e);
   }
 
   /** Ends the current Element.  The end tag may be optional.  

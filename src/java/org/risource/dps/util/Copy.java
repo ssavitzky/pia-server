@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.6 1999-06-04 22:40:50 steve Exp $
+//	$Id: Copy.java,v 1.7 1999-06-17 01:03:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.*;
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.6 1999-06-04 22:40:50 steve Exp $
+ * @version $Id: Copy.java,v 1.7 1999-06-17 01:03:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
@@ -70,7 +70,9 @@ public class Copy {
    * === of depth.  Note that we're using the Input's stack for state.
    */
   public static final void copyChildren(Input in, Output out) {
-    for (Node n = in.toFirstChild(); n != null; n = in.toNextSibling()) {
+    Node n = in.toFirstChild();
+    if (n == null) return;
+    for (; n != null; n = in.toNextSibling()) {
       copyNode(n, in, out);
     }
     in.toParent();

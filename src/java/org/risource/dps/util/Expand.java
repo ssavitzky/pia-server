@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.6 1999-05-06 20:41:27 steve Exp $
+//	$Id: Expand.java,v 1.7 1999-06-17 01:03:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,17 +40,16 @@ import org.risource.dps.tree.TreeAttr;
 /**
  * Node-expansion utilities (static methods) for the Document Processor. 
  *
- * <p>	These utilities are primarily used in handlers for obtaining processed
- *	content, expanding entities, and so on.  They essentially duplicate
- *	the functionality available in a Processor without requiring an actual
- *	Processor to be instantiated.
+ * <p> These utilities are primarily used in handlers for obtaining processed
+ *	content, expanding entities, and so on.  For the most part they are
+ *	convenience functions that wrap a Processor and its input, output, or 
+ *	possibly both.
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.6 1999-05-06 20:41:27 steve Exp $
- * @author steve@rsv.ricoh.com 
- */
+ * @version $Id: Expand.java,v 1.7 1999-06-17 01:03:23 steve Exp $
+ * @author steve@rsv.ricoh.com */
 
 public class Expand {
 

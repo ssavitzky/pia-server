@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.6 1999-05-07 23:34:07 steve Exp $
+//	$Id: AbstractParser.java,v 1.7 1999-06-17 01:03:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.6 1999-05-07 23:34:07 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.7 1999-06-17 01:03:01 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -425,7 +425,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected int checkEndTag(String tag) {
     if (stack == null) {
-      next = new TreeComment("Bad end tag: " + tag);
+      next = createActiveNode(Node.COMMENT_NODE, "Bad end tag: " + tag);
       return -1;
     }
     String inside = stack.getTagName();
@@ -441,8 +441,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
       return 1;
     } else {
       // ... Bad nesting.  Change next to an appropriate comment.
-      next = new 
-TreeComment("Bad end tag: " + tag);
+      next = createActiveNode(Node.COMMENT_NODE, "Bad end tag: /" + tag);
       return -1;
     }
   }
@@ -590,6 +589,7 @@ TreeComment("Bad end tag: " + tag);
 	n = next;
 	next = null;
 	nextEnd = null;
+	atLast = false;
 	return n;
       }
       // If the end tag terminates THIS level, we're done with it.
@@ -602,38 +602,36 @@ TreeComment("Bad end tag: " + tag);
     }
   }
 
-  /** toNextSibling has to check for the possibility that we already
-   *	have the node in question; this happens when we're in an attribute 
-   *	list.  It might also happen if we somehow manage to parse several
-   *	nodes at once. 
+  /** toNextSibling does not test for real siblings; we <em>must</em>
+   *	be making a single left-to-right traversal of the file being parsed.
+   *
+   *<p> We used to check for the presence of an actual sibling.
+   *	This messes up severely if the node is already in some tree! 
+   *    The original justification was to allow for multiple nodes to be
+   *	generated from one token.  This had better not happen; if it does
+   *	we will have to add some kind of pushback mechanism to nextToken.
    */
   public Node toNextSibling() {
-    // If the current node has a next sibling, just go there.
-    Node nn = getNode().getNextSibling();
-    if (nn != null) {		// There's a sibling already.  Go there.
-      setNode(nn);
-      return nn;
-    } else {			// No sibling in the tree: get one
-      // Check for, and consume, any unparsed children.
-      if (hasUnparsedChildren() && !sawChildren) {
-	Node c = toFirstChild();
-	if (c != null) {
-	  for (; c != null; c = toNextSibling()) {}
-	  toParent();
-	}
+    // Check for, and consume, any unparsed children.
+    if (hasUnparsedChildren() && !sawChildren) {
+      Node c = toFirstChild();
+      if (c != null) {
+	for (; c != null; c = toNextSibling()) {}
+	toParent();
       }
-      return advanceParser();
     }
+    return advanceParser();
   }
 
   public Node toFirstChild() {
     pushInPlace();
-    if (node.hasChildNodes()) {
+    if (false && node.hasChildNodes()) { // === this is almost certainly bad
       setNode(node.getFirstChild());
       return node;
-    } else {
-      return advanceParser();
-    }
+    } 
+    Node n = advanceParser();
+    if (n == null) { popInPlace(); }
+    return n;
   }
 
   public Node toNextNode() {

@@ -221,6 +221,14 @@ insert: <set name=ul><ul></ul></set>
    <extract><from>&ul;</from> ul <content /></extract>
 	&ul;
 
+   <extract><from>&ul;</from><child>0</child></extract>
+   <extract><from>&ul;</from><child>1</child></extract>
+   <extract><from>&ul;</from><child>-1</child></extract>
+   <extract><from>&ul;</from><child>#all</child></extract>
+   <extract><from>&ul;</from>
+	    <append children='children'><li>last</li></append></extract>
+   <extract><from>&ul;</from> ul <content /></extract>
+	
 <h3>Recursive extract</h3>
 
 <set name='foo'>
@@ -280,5 +288,5 @@ Entity used as list for repeat; expanded in attribute:
 <hr />
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.6 1999-04-13 00:55:32 steve Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.7 1999-06-17 01:03:15 steve Exp $</b><br /></then></if>
 </baz></body></html>

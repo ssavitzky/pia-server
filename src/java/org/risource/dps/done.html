@@ -839,11 +839,46 @@ If 4th node is there, returns "four".
        (1999-06-11) <br>
        -- Value tag was defined as quoted.  Duh.
 
+  <li> 1999-06-15 <b>Bug</b> repeat loses text in PIA, not in Filter <br>
+       Repeating <code> test &amp;li;</code> yields
+       <code> test abc</code> in the PIA, but
+       <code> test a test b test c</code> from <code>process</code>!
+       (1999-06-15) <br>
+       -- It loses all text and empty elements from the top level.  Weird.
+          It actually depends on how many elements the repeat is nested
+          inside, and the output goes from a ToWriter to a ToNodeList.
+          The solution was to make the default entity handler a BasicHandler!
+
+  <li> 1999-06-16 <b>Bug</b> Active tags not processed at BOF <br>
+       If the very first node in a file is active, it is just copied.  If it's
+       inside a passive element it gets expanded.  
+       (1999-06-15) <br>
+       -- BasicProcessor.processNode calls getAction without calling getNode.
+	  But getAction depended on setNode to initialize <code>action</code>.
+          The solution is to call getNode at the start of run().
+
+  <li> 1999-06-16 <b>Bug</b> Mysterious lossage involving GenericHandler <br>
+       Nesting a repeat inside any passive element inside an element whose
+       handler is GenericHandler (even with a definition!) causes empty
+       content to be output only on the first iteration.
+       (1999-06-15) <br>
+       -- The problem is CurrentActive.putNode of a node that is already a
+	  child of the current node.  There was ``excess cleverness'' to
+	  prevent a child from being added more than once. 
+
+  <li> <b>Bug</b> Unmatched end tag causes havoc in nodelists. <br>
+       The previous node is repeatedly inserted, probably because the end tag
+       isn't getting gobbled.  Happens on copy, not process; the bad end tag
+       comment is repeated when quoted.  Another depth=2 effect.
+       (1999-06-16) <br>
+       -- The problem was the test for an already-present sibling in
+	  AbstractParser.toNextSibling.
+       
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.17 1999-06-11 23:32:01 steve Exp $</b><br>
+<b>$Id: done.html,v 1.18 1999-06-17 01:02:44 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

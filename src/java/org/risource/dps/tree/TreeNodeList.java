@@ -1,5 +1,5 @@
 ////// TreeNodeList.java: ActiveNodeList implementation
-//	$Id: TreeNodeList.java,v 1.1 1999-04-07 23:22:09 steve Exp $
+//	$Id: TreeNodeList.java,v 1.2 1999-06-17 01:03:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.Input;
  *
  *	The contents need not be children of the same Node.
  *
- * @version $Id: TreeNodeList.java,v 1.1 1999-04-07 23:22:09 steve Exp $
+ * @version $Id: TreeNodeList.java,v 1.2 1999-06-17 01:03:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 public class TreeNodeList extends TreeNodeArray {
@@ -51,10 +51,6 @@ public class TreeNodeList extends TreeNodeArray {
   public ActiveNode activeItem(int index) { 
     return (ActiveNode)item(index);
   }
-
-  /** Append a new ActiveNode.
-   */
-  public void append(ActiveNode newChild) { append((Node)newChild); }
 
   public TreeNodeList() {}
 

@@ -1,5 +1,5 @@
 ////// FromNodeList.java: Input from NodeList
-//	$Id: FromNodeList.java,v 1.1 1999-04-07 23:21:32 steve Exp $
+//	$Id: FromNodeList.java,v 1.2 1999-06-17 01:02:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,14 +38,14 @@ import java.util.NoSuchElementException;
 /**
  * Input from a NodeList containing Active nodes.<p>
  *
- * @version $Id: FromNodeList.java,v 1.1 1999-04-07 23:21:32 steve Exp $
+ * @version $Id: FromNodeList.java,v 1.2 1999-06-17 01:02:56 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */
 
 public class FromNodeList extends ActiveInput implements Input {
-
+    
   /************************************************************************
   ** State:
   ************************************************************************/
@@ -73,6 +73,11 @@ public class FromNodeList extends ActiveInput implements Input {
     index = 0;
     setNode(list.item(index));
     return active;
+  }
+
+  public void setList(NodeList nl) {
+    list = nl;
+    toFirstNode();
   }
 
   /************************************************************************
