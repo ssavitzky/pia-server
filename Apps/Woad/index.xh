@@ -3,7 +3,7 @@
   <title>WOAD -- Web-Organized Application Development</title>
 </head><body bgcolor="#99ccff">
 
-<set name="ltitle"><font face="Helvetica, sans-serif">WOAD</font>:</set>
+<set name="ltitle"><ss>WOAD</ss>:</set>
 <header ltitle="&ltitle;">
   <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 			    <then>Control page</then>
@@ -23,13 +23,13 @@
     <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
         <td valign="top">
 	    <a href="quick">Quick start</a> ||
-	    <a href="about">about WOAD</a>  ||
+	    <a href="about">about <ss>WOAD</ss></a>  ||
 	    <a href="help">Help</a>	    
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
     <tr> <th> </th>
-        <td valign="top"> <font face="Helvetica, sans-serif">WOAD</font>
+        <td valign="top"> <ss>WOAD</ss>
 	    (Web-Organized Application Development) provides a web-based view
 	    of an application's documents, configuration files, and source
 	    code.  In addition, it provides for web-based editing and
@@ -41,22 +41,25 @@
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
+ <if><!-- === unimplemented === -->
+   <then>
     <tr><th valign="top" align="right" width="170"> 
 	    <font face="Helvetica, sans-serif">
                   <a href="warrior">Woad</a></font>&nbsp;
         </th>
         <td valign="top">
-	    <font face="Helvetica, sans-serif">
-                  <a href="warrior"><b>Warrior</b></a>
-            </font> -- use WOAD on your desktop machine as a personal
-		    web-based assistant for application development. 
+	    <ss><a href="warrior"><b>Warrior</b></a></ss>
+            -- use <ss>WOAD</ss> on your desktop machine as a personal
+	       web-based assistant for application development.  
         </td>
     </tr>
+   </then>
+ </if>
     <tr><th align="right">Demos:&nbsp;</th><td></td></tr>
     <tr><th valign="top" align="right" width="170"> &nbsp;</th>
         <td valign="top">
-	    <a href="tree"><b>ThisPIA</b></a> -- use WOAD to browse
-	    the PIA source tree. 
+	    <a href="/.Tree"><b>This PIA</b></a> -- use <ss>WOAD</ss> to
+	    browse the PIA source tree.  
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
@@ -64,8 +67,8 @@
 </td></tr></table>
 <hr />
 
-<include src="ww-trees.inc" />
+<include src="app-info.inc" />
 
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.1 2000-06-02 23:48:33 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.2 2000-06-08 23:55:42 steve Exp $" />
 </p></body></html>

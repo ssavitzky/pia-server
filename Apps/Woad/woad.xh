@@ -50,53 +50,7 @@
 </td></tr></table>
 <hr />
 
-<h2><font face="Helvetica, sans-serif">WOAD</font> Application Information</h2>
-
-<blockquote>
-<table bgcolor="ffffff" cellpadding="2">
-  <tr>
-    <th bgcolor="silver"> parameter </th>
-    <th bgcolor="silver"> value </th>
-    <th bgcolor="silver"> command-line option </th>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> Target server </th>
-    <td> <get name="SITE:targetServer">&nbsp;</get>
-    </td>
-    <td> <code>target=<em><get name="SITE:targetServer">[host:port]</get></em>
-	 </code> 
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> Target Prefix </th>
-    <td>  <get name="SITE:targetPrefix">&nbsp;</get>
-    </td>
-    <td> <code>prefix=<em><get name="SITE:targetPrefix">/path</get></em>
-	 </code>
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> sourceOffset </th>
-    <td>  <get name="SITE:sourceOffset">&nbsp;</get>
-    </td>
-    <td> <code>offset=<em><get name="SITE:sourceOffset">/path</get></em>
-	 </code>
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> Application root </th>
-    <td> &SITE:virtual;
-    </td>
-    <td> <code>-vroot <em>&SITE:virtual;</em></code> </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> Annotation root </th>
-    <td>  &SITE:file;
-    </td>
-    <td> <code>-root <em>&SITE:file;</em></code> </td>
-  </tr>
-</table>
-</blockquote>
+<include src="app-info.inc"> no application information </include>
 <p>
-<short-footer cvsid="$Id: woad.xh,v 1.3 2000-06-08 23:14:40 steve Exp $" />
+<short-footer cvsid="$Id: woad.xh,v 1.4 2000-06-08 23:55:43 steve Exp $" />
 </p></body></html>
