@@ -1,14 +1,26 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.2 1999-09-24 00:23:13 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.3 1999-09-24 22:06:44 steve Exp $ -->
 
-<Container>
-  <!-- Include the standard extension map. -->
+<Container> <!-- Get all attributes from the environment. -->
+
+<!-- Include the standard extension map. -->
   <include src="Config/Site/extensions.xci"/>
+
+<!-- Links to root resources. -->
 
   <!-- virtual container (link) for the icons. -->
   <Container	name="Icon"	virtual="Agents/ROOT/Icon" />
 
-  <!-- Links to other root resources. -->
+  <!-- robots.txt keeps the spiders out -->
   <Resource	name="robots.txt"	virtual="Agents/ROOT/robots.txt" />
+
+  <!-- Making this a resource means it will be reloaded when changed. -->
+  <Resource	name="pia-xhtml.ts"
+		virtual="src/java/org/risource/dps/tagset/pia-xhtml.ts" />
+
+  <doc> This is the standard default configuration that you get if no
+	configuration file or root directory is specified on the pia command
+	line.  The real root will be $USR_DIR, if it exists. 
+  </doc>
 
 </Container>
