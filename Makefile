@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.23 1999-06-02 21:49:05 steve Exp $
+#	$Id: Makefile,v 1.24 1999-06-04 20:32:44 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,8 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s):
+ # Contributor(s): steve@rsv.ricoh.com, pgage@rsv.ricoh.com,
+ #		   wolff@rsv.ricoh.com
  #
 ############################################################################## 
 
@@ -27,14 +28,12 @@ MYPATH=
 
 SUBDIRS= src bin lib Doc
 
+### Standard includes.  Targets "all", "doc", "clean", etc.
+
 include $(MF_DIR)/file.make
 include $(MF_DIR)/subdir.make
 
-### The following is unique to the top level ###
-###
-###   Make targets:
-###	update-version		patch files that depend on version number
-###	cvs_rtag		tag repository with version number
+### The following is unique to the top level ###############################
 
 ### Version information:
 
@@ -42,7 +41,10 @@ VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
 MINOR       = 5
-SUFFIX      = 
+SUFFIX      = a
+
+VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
+VERSION    = $(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
 
 ### Release directories and file names: 
 
@@ -51,23 +53,42 @@ DEST_DIR    = /pia1/pia
 TAR_NAME    = pia_src$(VERSION)
 CREATE_CVS_TAG = 1
 
+### Remote host and directories: 
+
+RMT_HOST = www.risource.org
+WEB_RMT  = /home/web/risource-htdocs/PIA 
+FTP_RMT  = /home/ftp/PIA 
+CVS_RMT  = /home/cvsroot
+
 ### How to make a source release:
 ###
 #   1. Set make macros RELEASE, MAJOR, MINOR, and SUFFIX as appropriate.
 #   2. If the version number has changed, commit the Makefile NOW.
 #	Building includes a "cvs checkout"
-#   2. "make prep_checkout" : this updates _and_commits_ Version.java.
-#   3. DO THIS MANUALLY:  
+#   2. "make prep-checkout" : this updates _and_commits_ Version.java.
+#   3. "make rsync-cvs" (if running under ssh-agent) or DO THIS MANUALLY:  
 #	cd /pia1/CvsRoot ; rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
-#   4. "make src.tar"
+#   4. "make src-release"
+#	If part of this fails, it breaks down into these substeps:
+#	make do_checkout build_release tar_file copy_src_dir
+#   5. upload tar file: "make upload" works if running under ssh-agent. 
+
+### src-release:
+###   1. do_checkout	A complete "cvs checkout" from the PUBLIC SERVER.
+###   2. build_release 	The resulting directory is built
+###   3. tar_file	The entire directory is tarred up.
+###   4. copy_src_dir	The directory is copied under /pia1/pia
+
+src-release:: do_checkout build_release tar_file copy_src_dir
+	echo 'Build complete.  Your next step is "make upload"'
 
 ### Commands:
+
+RSYNC = rsync -a --numeric-ids --delete -v
 
 ### Operations involving version number:
 ###
 ###	update-version		updates files that depend on the version #
-VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
-VERSION    = $(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
 
 RISOURCE=src/java/org/risource
 RELNOTES=Doc/Release
@@ -103,14 +124,13 @@ cvs_tag::
 cvs_rtag::
 	cvs rtag $(VERSION_ID) PIA
 
-export::
+cvs_export::
 	cvs export -r $(VERSION_ID)
 
+### Release Components
 
-### Release preparation
-
-prep_src_rel::
-	make clean ; make all version_id doc
+build_release::
+	cd $(REL_DIR)/PIA; $(MAKE) clean ; $(MAKE) all version_id doc
 
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
@@ -120,30 +140,36 @@ prep_checkout::
 	$(MAKE) prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then $(MAKE) cvs_rtag; fi
 
-### Make a tar file.  >>> REQUIRES GNU tar <<<
-###
-###	A complete "cvs checkout" is done from the PUBLIC SERVER.
-###	Then the entire directory is tarred up.
-###
-#   Notes by steve@rsv.ricoh.com 1999-06-02
-#	1. removed "make cvs_rtag" because prep_checkout does it.
-#	   This means that we can leave CREATE_CVS_TAG = 1
-#	2. create tarfile directly in $(DST_DIR) instead of moving it; 
-#	   moving will be very expensive if $(HOME) and $(DST_DIR) are in 
-#	   different filesystems. 
-src.tar:	
-	tar --version || (echo "You don't have GNU tar"; false)
+do_checkout::
 	cd $(REL_DIR) ; \
 	  cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA
-	cd $(REL_DIR)/PIA ;  make prep_src_rel
-	cd $(REL_DIR) ; tar czf $(DEST_DIR)/$(TAR_NAME).tgz PIA
-	cd $(DEST_DIR) ;  rm pia_src.tgz ; ln -s $(TAR_NAME).tgz pia_src.tgz
-	cd $(DEST_DIR) ; mkdir src_release$(VERSION) ; cp -r $(REL_DIR)/PIA src_release$(VERSION)
+
+copy_src_dir::
+	-mkdir $(DEST_DIR)src_release$(VERSION)
+	$(RSYNC) $(REL_DIR)/PIA $(DEST_DIR)/src_release$(VERSION)
+# 	No trailing slash on src means delete everything but PIA in dest.
+
+# Make a tar file.  >>> REQUIRES GNU tar <<<
+tar_file::
+	tar --version || (echo "You don't have GNU tar"; false)
+	cd $(REL_DIR)  ; tar czf $(DEST_DIR)/$(TAR_NAME).tgz PIA
+	cd $(DEST_DIR) ; rm -f pia_src.tgz ; ln -s $(TAR_NAME).tgz pia_src.tgz
 
 
+### Uploading:
+### 	These make targets require you to be running "ssh-agent"
+###	Otherwise you must issue the commands manually
 
-# test making parts of a release
-test:	
+rsync-cvs::
+	$(RSYNC) -e ssh /pia1/CvsRoot/PIA/ $(RMT_HOST):$(CVS_RMT)/PIA
+# 	Trailing slash on src means other CVS modules on remote are allowed.
+#	Without the trailing slash on src and /PIA on dst, anything else
+#	in the destination directory would be deleted by rsync.
+
+upload::
+	scp $(DEST_DIR)/$(TAR_NAME).tgz $(RMT_HOST):$(FTP_RMT)
+	ssh $(RMT_HOST) rm -f $(FTP_RMT)/pia_src.tgz
+	ssh $(RMT_HOST) cd $(FTP_RMT) \; ln -s $(TAR_NAME).tgz pia_src.tgz
 
 ###
 ### Old stuff.
