@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.7 1999-04-23 00:21:22 steve Exp $
+# 	$Id: Makefile,v 1.8 1999-05-07 23:33:28 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,6 @@ FILES = \
 	Context.java \
 	Cursor.java \
 	EntityTable.java \
-	Filter.java \
 	Handler.java \
 	Input.java \
 	Namespace.java \
@@ -58,8 +57,23 @@ FILES = \
 #	ParseStack -> BasicContext
 #	Filter -> Process
 
-include $(TOPDIR)/makefiles/package.make
 include $(TOPDIR)/makefiles/file.make
+include $(TOPDIR)/makefiles/package.make
+
+# Make the application, Filter.class, last. 
+#	This means that we can make the interfaces first. 
+all:: Filter.class
+
+# Make the ``stripped'' version of the basic tagset, for a 2x speedup.
+#	It's probably not worthwhile to strip any of the others;
+#	even stripping pia-xhtml saves only about .5 second.
+all::	tagset/basic.tss 
+
+tagset/basic.tss: tagset/basic.ts tagset/tsstrip.ts
+	cd tagset; $(MAKE) basic.tss
+
+tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
+	cd tagset; $(MAKE) pia-xhtml.tss
 
 ### Dependencies:
 ###	Compiling a class will automatically build the classes it
@@ -67,3 +81,4 @@ include $(TOPDIR)/makefiles/file.make
 ###	seems to cope with it and not build anything twice.
 
 Handler.class: Syntax.java Action.java
+
