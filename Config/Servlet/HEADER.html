@@ -1,0 +1,77 @@
+<h1>PIA/Config/Servlet</h1>
+
+<a href="../">[..]</a>
+<a href="#files">[files]</a><p>
+
+<p> This directory contains configuration files for use with the PIA's Java
+    Servlet implementation.
+</p>
+
+<p> <strong>All of these files contain absolute paths, and may need to be
+    edited before being used!</strong> They are currently set up assuming that
+    the Apache web server is installed under <code>/usr/local/apache</code>.
+    Specifically:
+</p>
+
+<pre>
+/usr/local/apache/
+		  bin/		<em>httpd binary</em>
+		  conf/		<em>configuration files</em>
+		       jserv/	<em>... JServ configuration files</em>
+		  htdocs/	<em>server document root</em>
+		  libexec/	<em>JServ .jar files</em>
+		  PIA/		<em>PIA home (usually a symlink)</em>
+		  .pia/		<em>PIA root (usually a symlink)</em>
+
+/usr/local/jdk1.2.2/		<em>Java development kit</em>
+/usr/local/JSDK2.0/		<em>Java servlet development kit</em>
+</pre>
+
+<h2>Annotated Contents</h2>
+
+<h3><a name="apache">Apache Configuration Files</a></h3>
+<dl>
+  <dt> <a href="httpd.conf">httpd.conf</a>
+  </dt>
+  <dd> A sample Apache <code>httpd.conf</code> file that sets things up for
+       Apache-JServ.  Actually, the only thing you really need is the line:
+       <pre>Include /usr/local/apache/conf/jserv/jserv.conf</pre>
+   </dd>
+  <dt> <a href="jserv/">jserv/</a>
+  </dt>
+  <dd> Configuration files for Apache-JServ.  If Apache is installed in
+       <code>/usr/local/apache</code> and the <code>PIA/</code> subdirectory
+       is a symbolic link to a PIA install tree, you can simply do the
+       following:
+       <pre>
+       cd /usr/local/apache/conf
+       ln -s ../PIA/Config/Servlet/jserv .
+       </pre>
+       and there's a <em>remote</em> chance that it might all work well enough
+       for a test.   If you actually want to build an application around the
+       PIA servlet, you will <em>at the very least</em> have to edit
+       <code>jserv/zone.properties.pia</code> to tell it where to find the PIA
+       site configuration file.
+  </dd>
+</dl>
+
+<h3><a name="apache">Apache JServ Configuration Files</a></h3>
+<dl>
+  <dt> <a href="jserv/jserv.conf">jserv/jserv.conf</a>
+  </dt>
+  <dd> Server configuration file
+  </dd>
+  <dt> <a href="jserv/jserv.conf">jserv/jserv.properties</a>
+  </dt>
+  <dd> Top-level properties file
+  </dd>
+  <dt> <a href="jserv/zone.properties.pia">jserv/zone.properties.pia</a>
+  </dt>
+  <dd> Properties for the root zone.
+  </dd>
+</dl>
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.1 2000-04-15 00:36:46 steve Exp $</b>
+<a name="files"><hr></a>
