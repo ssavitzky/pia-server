@@ -45,7 +45,7 @@ fi
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 
-exec $PIA_BIN_DIR/pia_wrapper $D crc.pia.Pia $V $*
+exec $PIA_BIN_DIR/pia_wrapper $D org.risource.pia.Pia $V $*
 
 
 
