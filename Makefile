@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.25 1999-06-07 18:33:25 steve Exp $
+#	$Id: Makefile,v 1.26 1999-06-07 18:36:31 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -137,7 +137,7 @@ build_release::
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
 
-prep_checkout::
+prep-checkout::
 	$(MAKE) update-version
 	$(MAKE) prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then $(MAKE) cvs_rtag; fi
