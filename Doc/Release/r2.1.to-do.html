@@ -60,15 +60,15 @@ See also:
        For example, declarations and processing instructions need both a name
        and a type.  nodeBuilder currently doesn't handle them.
 
-  <li> <b>Bug</b> Can't make arbitrary decl's with nodeBuilder. <br>
-       basically need to fix constructor for TreeDecl.
-       
   <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
        with, e.g., a &lt;DOCTYPE&gt; element / documentBuilder handler. 
 
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
        Need access to files relative to root, vroot, and home. 
 
+  <li> <b>Hole</b> Ability to re-read config files. <br>
+       Mainly needs the ability to uninstall agents.  Pretty easy if we keep a
+       list in the Subsite and uninstall them by object ID.
        <p>
 
   <li> <b>Bug</b> Entity and Attr must keep value in children <br>
@@ -146,6 +146,10 @@ See also:
   <li> <b>Impr</b> clean way of putting node lists on outputs. <br>
        It would be convenient if there was a simple way to put a list onto an
        Output.  Probably a method on ActiveNodeList would be best.
+
+  <li> <b>Hole</b> Can't make (nodeBuilder) or parse arbitrary decl's. <br>
+       basically need to fix constructor for TreeDecl.
+       
 </ol>
 
 <h2><a name="doc">Documentation</a></h2>
@@ -214,5 +218,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.10 1999-11-09 01:21:28 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.11 1999-11-11 18:34:01 steve Exp $</b><br>
 </body></html>
