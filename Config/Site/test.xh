@@ -9,19 +9,19 @@
 <a href="#Explanations">Explanations</a><br>
 
 location: <a href="&locPath;">&locPath;</a>
-[<a href="&locPath;/.">listing</a>]
+[<a href="&locPath;/-">listing</a>]
 
 <h2>Entities</h2>
 <ul>
-<repeat><foreach><get name="DOC:"/></foreach>
+<repeat><foreach><get name="VAR:"/></foreach>
   <if><get name="FORM:">
       <then>
       <li> &li; = <pretty hide-below-tag="action" yellow-tag="Properties">
-	       <protect result markup><get name="DOC:&li;"/>
+	       <protect result markup><get name="VAR:&li;"/>
 	   </protect></pretty></li>
       </then>
       <else>
-      <li> &li; = <protect result markup><get name="DOC:&li;"/>
+      <li> &li; = <protect result markup><get name="VAR:&li;"/>
 	   </protect></li>
       </else>
   </if>
@@ -51,5 +51,5 @@ location: <a href="&locPath;">&locPath;</a>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.4 1999-10-14 21:44:28 steve Exp $</b><br>
+<b>$Id: test.xh,v 1.5 1999-10-18 15:41:53 steve Exp $</b><br>
 </body></html>

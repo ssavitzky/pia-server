@@ -16,13 +16,6 @@ See also:
 </ul>
 
 <ol>
-  <li> <b>Impr</b> Rename PROPS -&gt; DOC; DOC -&gt;? <br>
-       Really want DOC to refer to the properties of the document, just like
-       LOC refers to its location.  Use THIS or PROC for the processing-time
-       entities.  Find with <code>grep-find</code> for
-       <code>'[^A-Z]DOC[^A-Z_]'</code> 
-       (1999-10-14) <br>
-
   <li> <b>Bug</b> parent tagsets not loaded by site. <br>
        Not finding a parent tagset in a parent subsite.  Even "../tagset"
        fails.  Probably Loader or tagsetHandler is sidestepping the site
@@ -159,17 +152,6 @@ See also:
        Since its a ProcessorInput it can find the Processor's
        <code>message</code> method.
        (1999-06-11) <br>
-
-  <li> <b>Impr</b> Improved error/message handling<br>
-       Create &amp;DOC:errors; entity in process.TopProcessor; Context.message 
-       (implemented in util.ContextStack) should copy messages
-       into it.  There should also be an entity 
-       that says which verbosity level to cut off at -- call it
-       &amp;verbosity; and default it to -1.  You'll need
-       active.ActiveNodeList.append(), tree.TreeText.new(String), and
-       Context.getBinding(String name).
-       (1999-06-09) <br>
-       -- In progress (Bill)
 
   <li> <b>Bug</b> &lt;text encode&gt; badly broken <br>
        Should be &lt;text encode=entity&gt; not &lt;encode entity&gt;.
@@ -666,5 +648,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.34 1999-10-15 17:18:32 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.35 1999-10-18 15:42:50 steve Exp $</b><br>
 </body></html>

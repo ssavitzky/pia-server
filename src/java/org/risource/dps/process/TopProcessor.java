@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.16 1999-10-14 21:45:50 steve Exp $
+//	$Id: TopProcessor.java,v 1.17 1999-10-18 15:41:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.16 1999-10-14 21:45:50 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.17 1999-10-18 15:41:59 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -498,10 +498,10 @@ public class TopProcessor extends BasicProcessor implements TopContext
   }
 
   public void initializeEntities() {
-    entities = new BasicNamespace("DOC"); // top level is called "DOC"
+    entities = new BasicNamespace("VAR"); // top level is called "VAR"
 
     define("LOC", getLocConfig());
-    define("PROPS", getDocConfig());
+    define("DOC", getDocConfig());
     define("SITE", getRootConfig());
 
     if (getDocument() != null) {

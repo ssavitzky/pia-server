@@ -938,6 +938,17 @@ If 4th node is there, returns "four".
        -- TreeFragment didn't have toString methods.  Improved error reporting
 	  in TreeNode.
 
+  <li> <b>Impr</b> Improved error/message handling<br>
+       Create &amp;DOC:errors; entity in process.TopProcessor; Context.message 
+       (implemented in util.ContextStack) should copy messages
+       into it.  There should also be an entity 
+       that says which verbosity level to cut off at -- call it
+       &amp;verbosity; and default it to -1.  You'll need
+       active.ActiveNodeList.append(), tree.TreeText.new(String), and
+       Context.getBinding(String name).
+       (1999-06-09) <br>
+       -- In progress (Bill)
+
   <li> 1999-08-18 <b>Impr</b> tagsetHandler should use context to load tagsets <br>
        It currently uses dps.tagset.Loader, which precludes using
        context-specific lookup.
@@ -976,9 +987,16 @@ If 4th node is there, returns "four".
        -- It was indeed deeper.  BasicHandler doesn't handle QUOTED content
 	  correctly. 
 
+  <li>1999-10-18 <b>Impr</b> Rename PROPS -&gt; DOC; DOC -&gt;VAR <br>
+       Really want DOC to refer to the properties of the document, just like
+       LOC refers to its location.  Use THIS or PROC for the processing-time
+       entities?  Find with <code>grep-find</code> for
+       <code>'[^A-Z]DOC[^A-Z_]'</code> 
+       (1999-10-14) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.28 1999-10-14 21:49:06 steve Exp $</b><br>
+<b>$Id: done.html,v 1.29 1999-10-18 15:42:50 steve Exp $</b><br>
 </body></html>
