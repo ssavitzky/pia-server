@@ -18,15 +18,7 @@
 	<set name="myYear" >&year;</set>
 	<set name="myMonth" ><numstrip>&month;</numstrip></set>
 	<set name="myDay" ><numstrip>&day;</numstrip></set>
-        <if>
-           <?-- check if form called this page  --?>
-           <test><logical or='or'> 
-	       <get name="FORM:Add" /> 
-	       <get name="FORM:Edit" />
-	       <get name="FORM:ReplaceEvent" />
-	       <get name="FORM:SaveNewEvent" />
-	       <get name="FORM:DeleteEvent" />
-	   </logical></test>
+        <if><get name="FORM:newMonth" />
 	   <then>
               <?-- get date submitted by form --?>
 	      <set name="myYear"  >&FORM:newYear;</set>
