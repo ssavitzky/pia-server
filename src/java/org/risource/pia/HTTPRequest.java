@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.4 1999-03-24 21:23:20 pgage Exp $
+// $Id: HTTPRequest.java,v 1.5 1999-03-24 22:06:53 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -827,67 +827,5 @@ public class  HTTPRequest extends Transaction {
       notifyThreadPool();
   }
 
-  /**
-   * Take machine as source of input -- this is a debugging constructor
-   * @param from source of input for header and content
-   */
-  public HTTPRequest(Machine from){
-    super();
-
-    Pia.debug(this, "Constructor-- [ machine from ] -- on duty...");
-
-    // we probably only need one instance of these objects
-    fromMachine( from );
-    toMachine( null );// done by default anyway
-  }
-
-  /**
-   * A request transaction with default blank header and a define content -- debugging version.
-   * @param from originator of request -- later data will be sent to this machine.
-   * @param ct a define content.
-   */
-
-  public HTTPRequest( Machine from, Content ct){
-    super();
-
-    Pia.debug(this, "Constructor-- [ machine from, content ct ] on duty...");
-
-    contentObj = ct;
-    headersObj = new Headers(); // blank header  
-
-    if( contentObj != null )
-      contentObj.setHeaders( headersObj );
-
-    fromMachine( from );
-    toMachine( null );
-  }
-
-  /**
-   * A request transaction with define header and content -- debugging version.
-   * @param from originator of request -- later data will be sent to this machine.
-   * @param ct a define content.
-   * @param hd a define header.
-   */ 
-  public HTTPRequest( Machine from, Content ct, Headers hd ){
-    super();
-
-    Pia.debug(this, "Constructor-- [ machine from, content ct, headers hd ] -- on duty...");
-
-    contentObj = ct;
-    headersObj = hd; 
-
-    if( contentObj != null )
-      contentObj.setHeaders( headersObj );
-
-    fromMachine( from );
-    toMachine( null );
-  }
 }
-
-
-
-
-
-
-
 

@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.4 1999-03-24 21:23:21 pgage Exp $
+// $Id: HTTPResponse.java,v 1.5 1999-03-24 22:06:55 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -512,94 +512,9 @@ public class  HTTPResponse extends Transaction {
 
   }
 
-
-  /************************************************************************
-  ** Debugging:
-  ************************************************************************/
-
   public void run(){
       super.run();
   }
-
-  /**
-   * Header and content is created from the fromMachine -- for debugging only.
-   * @param from where request is originated
-   * @param to where response is sent to
-   */
-  public HTTPResponse( Machine from, Machine to ){
-    super();
-
-    Pia.debug(this, "Constructor-- [ machine from, machine to ] on duty...");
-    
-    fromMachine( from );
-    toMachine(  to );
-  }
-
-
-  /**
-   * Use to create error response -- a blank header is created -- for debugging only.
-   * @param from where request is originated
-   * @param to where to send response
-   * @param ct a define content
-   * @param doStart if false thread does not start -- allows user to set header information.
-   */
-  public HTTPResponse( Machine from, Machine to, Content ct, boolean doStart ){
-    super();
-
-    Pia.debug(this, "Constructor-- [ machine from, machine to, content ct ] on duty...");
-
-    contentObj = ct;
-    headersObj = new Headers(); //  blank header
-
-    if( contentObj != null )
-      contentObj.setHeaders( headersObj );
-
-    fromMachine( from );
-    toMachine(  to );
-    
-  }
-
-  /**
-   * Content is known and a blank header is created -- for debugging only.
-   * @param t request transaction
-   * @param ct a define content
-   */
-  public HTTPResponse(  Transaction t, Content ct ){
-    super();
-
-    Pia.debug(this, "Constructor-- [ transaction t, content ct ] on duty...");
-
-    contentObj = ct;
-    headersObj = new Headers(); //  blank header
-
-    if( contentObj != null )
-      contentObj.setHeaders( headersObj );
-  
-    requestTran = t;
-    fromMachine( t.toMachine() );
-    toMachine( t.fromMachine() );
-  }
-  
-  /**
-   * A response to a request transaction -- a blank header is created -- for debugging only.
-   * @param t request transaction
-   * @param doStart if false thread does not start automatically
-   */
-  public HTTPResponse(  Transaction t, boolean doStart ){
-    super();
-
-    Pia.debug(this, "Constructor-- [ transaction t, boolean startThread ] on duty...");
-
-    contentObj = null;
-    headersObj = new Headers(); //  blank header
-
-    requestTran = t;
-    fromMachine( t.toMachine() );
-    toMachine( t.fromMachine() );
-
-  }
-  
-  
 }
 
 
