@@ -9,8 +9,7 @@
     if'' <em>somebody</em> could do.
 
 
-<h2>Agents and Tagsets in XML</h2>
-<!-- this really belongs elsewhere; it's here for ease of CVS transfer -->
+<h2><a href="XML-rep">Agents and Tagsets in XML</a></h2>
 
 <p> Agents really want to be elements, with sub-elements for hooks and
     criteria.  (They should really be a subclass of Tagset, so that
@@ -23,14 +22,15 @@
     loading it.  This implies a shift from the imperative (&lt;define&gt;,
     &lt;set&gt;) to the declarative (&lt;element&gt;, &lt;entity&gt;).
 
-<p> In order to pull this off, handlers should have the ability to specify the
-    class of the element being constructed (which I think they can do now,
-    come to think of it, but we don't use it).  This needs to happen in the
-    <em>parser</em>, so that one can just suck an object in and use it.  The
-    handler already knows, of course, whether to wait until the whole element
-    is present, but we do need to add the parser hooks required to actually
-    build the element even if we're streaming.  The class name wants to be
-    in a field in the handler.
+<p> In order to pull this off, handlers need the ability to specify the
+    class of the element being constructed.  <strong>But they already have
+    this!</strong>  The relevant method is <code>Syntax.createElement</code>.
+
+<p> Elements are created <em>by the parser</em>, so that one can just suck an
+    object in and use it.  The handler already knows, of course, whether to
+    wait until the whole element is present, but we do need to add the parser
+    hooks required to actually build the element even if we're streaming.  The
+    class name wants to be in a field in the handler.
 
 <p> There are some subtleties involved: even if one is processing on the fly,
     the object gets built ``offline'' as a parse tree, then passed as a whole.
@@ -38,7 +38,8 @@
     document is processed.  It requires a distinction between declarations and
     actions, though.  All the construction is done at parse time using the
     addChild operation in the node under construction.  All the parser needs
-    is a flag to say whether to build or pass. 
+    is a flag to say whether to build or pass.  It also needs to call the
+    new object's initializer when the end tag is seen.
 
 <p> Clearly, if we want to use conditionals, repeats, or other computation to
     construct the object at run-time, we need to use actions instead.  The
@@ -52,7 +53,8 @@
     speed, there's reflection as well: an XML schema document would be trivial
     to analyze and transform.  Clearly it's trivial for a tagset (in our
     current scheme) to output a purely declarative schema, so a transition
-    would be simple.
+    would be simple.  But this isn't really necessary: just construct the
+    object as usual, and convert it to a string!
 
 <p> Once we get to this point, a lot of things can be simplified:
 
@@ -80,10 +82,13 @@
     unifies actions (with their various ways of handling content) and
     transactions, entities with machines, and so on.
 
+<p> We may continue to need ways of initializing agents (especially)
+    using initialize.xh, at least as a bootstrapping mechanism.  So the
+    installer needs to check.
 
 
 <hr><!-- ========================================================== -->
-<h2>Document Representation</h2>
+<h2><a href="DOM">Document Representation</a></h2>
 
 <p> Possible name: GLOM (Generic Lightweight Object Model).  Other
     possibilities include Dlite, DOC (Document Object Cursors), ...
@@ -251,8 +256,8 @@
 
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: projects.html,v 1.5 1999-03-28 23:26:34 steve Exp $</b><br>
+<b>Copyright &copy; 1999 Stephen R. Savitzky</b><br>
+<b>$Id: projects.html,v 1.6 1999-03-30 02:14:54 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
