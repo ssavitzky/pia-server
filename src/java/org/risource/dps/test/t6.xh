@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>t6.xh</title>
 <link rev='made' href='mailto:steve@rsv.ricoh.com' />
@@ -288,5 +288,5 @@ Entity used as list for repeat; expanded in attribute:
 <hr />
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.7 1999-06-17 01:03:15 steve Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.8 1999-11-24 22:43:03 steve Exp $</b><br /></then></if>
 </baz></body></html>
