@@ -26,6 +26,7 @@
     <td>
 	||&nbsp;<a href="/Doc/doclist.html">Index</a> 
 	||&nbsp;<a href="/Doc/intro.html">Introduction</a> 
+	||&nbsp;<a href="/Doc/contributors.html">Contributors</a> 
         ||&nbsp;<a href="/Doc/Notes/">/Notes/</a> 
 	||&nbsp;<a href="/Doc/">/directory/</a>
     </td>
@@ -43,4 +44,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.13 1999-09-30 23:51:09 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.14 1999-11-24 22:41:13 steve Exp $"/>
