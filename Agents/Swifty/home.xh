@@ -12,18 +12,11 @@
 <!-- ===================================================================  -->
 <header>Home Page</header>
 
-<form action='/Swifty/edit_page' method='POST'>
+
+<h1><font color='#FF0000'> Home Page for PrettyStuff </font></h1>
 
 <!--  ===================================================================  -->
-<!--  Put in a default name in the heading.  AGENT:fname is an entity that
-<!-- is defined in the agent namespace; it is set to the variable entered by
-<!-- the user.
-<!-- ===================================================================  -->
-
-<h1><font color='#FF0000'> Home Page for &AGENT:fname; </font></h1>
-
-<!--  ===================================================================  -->
-<!--  Use a table to layout an image column and a links column
+<!--  Use a table to layout an image column and a description column
 <!-- ===================================================================  -->
 
 <TABLE border='0' cellspacing='5' cellpadding='2' cols='2' width='66%'>
@@ -37,52 +30,21 @@
 <TR>
 <TD><IMG src='images/sm_snow.gif' height='310' width='203' alt='Display an Image' /></TD>
 
-<!--  ===================================================================  -->
-<!--  Display links, if there are any.  AGENT:links is an entity that is
-<!-- set to the list of URLs selected by the user.
-<!-- ===================================================================  -->
-<TD>
-	&AGENT:links;
-</TD>
+<TD> See how the <code>&lt;header&gt;</code> and <code>&lt;footer &gt;</code>
+     tags expand to contain not only images but links to useful locations as
+     well. 
 </TR>
-
-<TR>
-<!--  Add column headers  -->
-<TD> </TD>
-<TD><b><u><font size='+2'>Yahoo News</font></u></b></TD>
-</TR>
-
-<TR>
-<TD> <!--   Blank cell  -->
-
-<!--  ===================================================================  -->
-<!--  Display results of connection to Yahoo.  AGENT:ynews is an entity
-<!-- that is set to the result returned from a connection to the Yahoo
-<!-- home page.
-<!-- ===================================================================  -->
-<TD>
-	&AGENT:ynews;
-</TD>
-</TD></TR>
 
 </TABLE>
 <p>
 <hr />
-</p><p>
-<!--  ===================================================================  -->
-<!--  Add an edit button
-<!-- ===================================================================  -->
 
-<input type='submit' value='Edit' /> 
-</p></form>
+
 <!--  ===================================================================  -->
 <!--  footer is an element, like header, that is a member of the
 <!-- pia-xhtml tagset. It provides the navigation bar at the bottom of 
 <!-- the page, along with a copyright notice.
 <!-- ===================================================================  -->
-<footer cvsid='$Id: home.xh,v 1.6 1999-10-04 17:07:53 steve Exp $'></footer>
-<p>
-<code><A href='file:&PIA:dir;/Agents/Swifty/home.txt' target='_blank'>View source code</A></code>
-
-</p></body>
+<footer cvsid='$Id: home.xh,v 1.7 1999-10-13 20:27:43 bill Exp $'></footer>
+</body>
 </html>

@@ -1,28 +1,42 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html> <head> 
-<title>Hello World Demo</title>
+<title>Sample File-handling Demo</title>
 </head>
-<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<body bgcolor='#ffffff' >
 
-<header> Hello World</header>
 
-<h2> I am the &agentName; agent </h2> 
+<h2> I am a sample file-handler</h2> 
 
-<if><get name='FORM:data' /><then> 
-	You have entered the greeting:
-	<p>
-	 <font size='+5' color='#FF0000'><get name='FORM:data' /> </font>
-	</p><p>
-</p></then><else> 
-	<form action='&urlPath;' method='post'> 
-	My mission impossible is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
-	My owner, &user.name;, may decide.
-	<p>
-	<input type='submit' value='Enter' /> 
-	A Greeting: <input name='data' /> 
-</p></form> 
+<set name="dirname">&user.name;</set>
 
-</else> 
-</if> 
-<footer />
+<set name="filename">&dayname;</set>
+
+This page writes a directory called &dirname; [now] <br />
+
+<output dst="&dirname;" directory="yes" /> <hr />
+
+and writes into it a file called &filename; [now]. <br/>
+
+<output dst="&dirname;/&filename;" > This file was written on &dayname;
+&monthname; &day; &year;.  Enjoy! </output>
+
+<hr />
+
+Then it reads that file [now]. <br />
+
+<include src="&dirname;/&filename;" />
+
+<hr />
+
+Finally, just for kicks, it tries reading a non-existent file, to show two
+ways the include tag can  deal with such situations. <br />
+
+<include src="dirname/no-such-file" />  
+<show-errors />
+ 
+User-supplied error message: <br/>
+<include src="dirname/no-such-file" ><i>Oops, file not there.</i></include>
+
+
+
 </body></html> 
