@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.4 1999-03-23 23:32:12 steve Exp $
+// $Id: Agent.java,v 1.5 1999-03-24 20:47:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -89,6 +89,10 @@ public interface Agent extends Tabular {
    * Return the Agent's ``type'': the pathname of an agent from which 
    *	files are inherited.
    *
+   * <p> If the agent inherits only from the root, the type will be equal
+   *	 to the agent's name.  Otherwise it will be a valid path, starting
+   *	 with "/".
+   *
    * @return type of agent
    */
   public String type();
@@ -106,7 +110,9 @@ public interface Agent extends Tabular {
 
   /**
    * Return the agent's ``mount point'' in the PIA's URL hierarchy. 
-   *	If never set, this will be "/".
+   * <p>
+   *	The path will always begin and end with "/", so that the Agent's
+   *	URL will always be <code>path() + name()</code>.
    *
    * @return agent's mount point in URL hierarchy.
    */
