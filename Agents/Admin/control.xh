@@ -11,22 +11,24 @@
 	<a href="#options">options</a> )
 <hr />
 <p> This page lets you directly control the PIA.  Any forms submitted from
-    this page take effect <em>immediately.</em>  Some of these parameters can
-    be saved as defaults, to be set whenever the PIA is started.  This is done
-    on the ``<a href="config"><code>Configure</code></a>'' page.
+    this page take effect <em>immediately.</em> Some of these parameters can
+    be saved as PIA defaults, to be set whenever the PIA is started.  This is
+    done on the ``<a href="config"><code>Configure</code></a>'' page.  Others
+    are <em>options</em> of the &AGENT:name; agent; a complete list can be
+    found on the <a href="options">options</a> page.
 </p>
 
 <h3>Contents:</h3>
 <ul>
   <li> <a href="#actions">Immediate actions</a>
   <li> <a href="#properties">PIA Properties</a>
-  <li> <a href="#options">Admin Agent options</a>
+  <li> <a href="#options">&AGENT:name; Agent options</a>
 </ul>
 
 <hr />
 
-<!-- Processing for locks has to be done here because it suppresses -->
-<!-- some of the forms below.  lockExit, in particular.             -->
+<!-- Processing for locks has to be done here because it suppresses   -->
+<!-- some of the forms below.  lockExit and doNotSave, in particular. -->
 <if><get name="FORM:locks" />
     <then>
 	  <agentLock name="lockExit" />
@@ -39,7 +41,7 @@
 
 <h2><a name="actions">Immediate Actions</a></h2>
 
-<p> Forms in this section lets you take immediate actions to control the
+<p> Forms in this section let you take immediate actions to control the
     running of the PIA.
 </p>
 
@@ -94,7 +96,7 @@
 </table>  
 </form>
 </else>
-</if>
+</if><!-- doNotSave -->
 
 <if>&AGENT:lockExit;
 <else>
@@ -113,7 +115,7 @@
 	    </submit-forms>
       </then>
       <else-if>&FORM:exit;
-      <then><set name="doit">Confirm:</set>
+      <then><set name="doit">CONFIRM:</set>
 	    <set name="bg">red</set>
 	    <set name="msg">Really exit the PIA server?</set>
 	    <set name="exit">exitConfirmed</set>
@@ -122,7 +124,7 @@
       <then><user-message>Confirmed: shutting down PIA at &time;</user-message>
 	    <pia-exit>Admin agent shutting down the PIA at &time;</pia-exit>
       </then></else-if>
-      <else><set name="doit">Exit</set>
+      <else><set name="doit">Exit!</set>
 	    <set name="bg">silver</set>
 	    <set name="msg"> (shut down) the PIA server.</set>
 	    <set name="exit">exit</set></else>
@@ -198,16 +200,12 @@
 <hr />
 <h2><a name="options">Admin Agent Options</a></h2>
 
-<p> Forms in this section let you set various options of the Admin agent.
+<p> Forms in this section let you set various options of the Admin agent.  A
+    more complete list can be found on the <a href="options">options</a> page,
+    but this page lists the more common ones in a more convenient format.
 </p>
 
 <h3>Ordinary Options</h3>
-
-<p> Most of the options in this section control the appearance of the
-    &AGENT:name; agent's forms and pages.  Those that are common to all agents
-    can also be found on the <a href="options">options</a> page, which
-    includes a much more complete list.
-</p>
 
 <form action="control#options" method='POST'>
   <if>&FORM:options;
@@ -338,5 +336,5 @@
       element into the agent's state.
 </verbosePage>
 
-<footer cvsid='$Id: control.xh,v 1.2 1999-05-18 20:12:53 steve Exp $' />
+<footer cvsid='$Id: control.xh,v 1.3 1999-05-20 20:29:07 steve Exp $' />
 </body></html>
