@@ -1,5 +1,5 @@
 ////// MathUtil.java: Mathematical Utilities
-//	$Id: MathUtil.java,v 1.5 1999-11-15 18:56:47 steve Exp $
+//	$Id: MathUtil.java,v 1.6 2000-02-25 22:34:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
  *	A list is normally handled as an Enumeration, and a number as
  *	an Association between a Node and its value.
  *
- * @version $Id: MathUtil.java,v 1.5 1999-11-15 18:56:47 steve Exp $
+ * @version $Id: MathUtil.java,v 1.6 2000-02-25 22:34:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.ds.Association
@@ -118,7 +118,7 @@ public class MathUtil {
   public static Enumeration getNumbers(ActiveNodeList nl) {
     List l = new List();
     Enumeration items = ListUtil.getTextItems(nl);
-    while (items.hasMoreElements()) {
+    while (items != null && items.hasMoreElements()) {
       Association a = getNumeric((Node)items.nextElement());
       if (a != null) l.push(a);
     }
@@ -129,14 +129,20 @@ public class MathUtil {
    *	whitespace, but associates non-text markup with the numeric value of
    *	their first text item.  Most useful for sorting nodes numerically.
    */
-  public static Enumeration getNumericList(ActiveNodeList nl) {
+  public static List getNumericList(ActiveNodeList nl) {
     List l = new List();
     Enumeration items = ListUtil.getListItems(nl);
-    while (items.hasMoreElements()) {
+    while (items != null && items.hasMoreElements()) {
       Association a = getNumeric((Node)items.nextElement());
       if (a != null) l.push(a);
     }
-    return l.elements();
+    return l;
+  }
+
+  /** Return an enumeration of numeric Associations.  
+   */
+  public static Enumeration getNumericItems(ActiveNodeList nl) {
+    return getNumericList(nl).elements();
   }
 
   
