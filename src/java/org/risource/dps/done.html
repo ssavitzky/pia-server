@@ -1053,9 +1053,12 @@ If 4th node is there, returns "four".
        -- Several problems, including incorrect string conversion in
 	  AbstractNamespace. 
 
+  <li> 1999-11-09 <b>Bug</b> Attributes still converting entities <br>
+       -- turned out that ActiveAttrList.getAttribute wasn't using
+	  Attribute.getNodeValue, as it should have been.
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.36 1999-11-09 01:21:32 steve Exp $</b><br>
+<b>$Id: done.html,v 1.37 1999-11-09 21:43:25 steve Exp $</b><br>
 </body></html>
