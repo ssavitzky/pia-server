@@ -26,20 +26,24 @@
   <body><!--  bgcolor="white" gives insufficient contrast on some screens -->
 
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr><th align=left colspan=8><font size="+2">
+    <tr><th align=left colspan=2><font size="+2">
 	    Calendar for &myYear; </font>
 	</th>
-    <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
-    <tr><th align=left colspan=8>&nbsp;
+    <tr height=6>
+        <td colspan=3><img src="/Icon/rule.gif" height=6 width=469></td>
+    </tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+    <tr><th align=left>&nbsp;
 	</th>
-        <td align="right" colspan=4>
+        <td align="right">
        <a href="home">Today</a> is 
           <weekday>&todaypack;</weekday>,
        <a href="month"><weekday monthname="yes">&todaypack;</weekday>
            &day;, &year; </a>
         </td>
     </tr>
-    <tr><td colspan=12>&nbsp;</td></tr>
+    <tr><td colspan=2>&nbsp;</td></tr>
   </table>
 
   <?-- bar of links to nearby years --?>
@@ -143,6 +147,6 @@
     </repeat>
     <show-errors />
 
-    <short-footer cvsid="$Id: year.xh,v 1.1 1999-10-12 00:23:19 steve Exp $"/>
+    <short-footer cvsid="$Id: year.xh,v 1.2 1999-10-12 00:51:57 steve Exp $"/>
   </body>
 </html>
