@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.8 2000-08-26 00:38:34 steve Exp $
+#	$Id: woad-index.pl,v 1.9 2000-08-30 19:56:19 steve Exp $
 # Create WOAD index files.
 #
 
@@ -304,6 +304,7 @@ sub indexFile {
     if ($f eq "." || $f eq "..") { return 0; }
     if ($f =~ /^\./) { return 0; } # don't index any dot files (questionable)
     if ($f =~ /\~$/) { return 0; } # don't index any backup files
+    if ($f =~ /^\#.*\#$/) { return 0; }	# don't index #...# files
 
     my $indexme = 0;
     my $type = '';		# type category
@@ -536,6 +537,10 @@ sub indexCodeFile {
 	    indexDef($1, 'class', $path, $line, "$1", $_);
 	} elsif (/\s+class\s+($id)/) {  # C++/Java/Python class decl
 	    indexDef($1, 'class', $path, $line, "$1", $_);
+	} elsif (/^\s*interface\s+($id)/) { # Java interface decl.
+	    indexDef($1, 'class', $path, $line, "$1", $_);
+	} elsif (/\s+interface\s+($id)/) {  # Java interface decl
+	    indexDef($1, 'class', $path, $line, "$1", $_);
 	} elsif (/$id\s*\(/) {	# possible C/C++/Java function decl.
 	    # may not eliminate uninitialized function-valued variables
 	    my $def = $1;
@@ -573,15 +578,15 @@ sub indexCodeFile {
 sub indexDef {
     my ($word, $context, $path, $line, $name, $def) = (@_);
     $def = stringify($def);
-    $ident= wordify($word);
-    $word = compactify($word);
+    $ident= stringify(wordify($word));
+    $word = stringify(compactify($word));
 
     # We have to distinguish the original word from the wordified XML id,
     # but only waste the space (word=, id=) if they're different.
 
-    my $entry = "<Def word='$word' path='$path' line='$line' "
-	      . (($ident eq $word)? '' : "id='$ident' ")
-	      . "name='$name'>$def</Def>\n\n";
+    my $entry = "<Def word=\"$word\" path=\"$path\" line=\"$line\" "
+	      . (($ident eq $word)? '' : "id=\"$ident\" ")
+	      . "name=\"$name\">$def</Def>\n\n";
     $defs{$context} .= $entry;
     # === Append to $context/$word/defs.wi as well ===
     # === it's possible, even likely, that a database _would_ be better ===
@@ -593,8 +598,8 @@ sub indexDef {
 sub indexDoc {
     my ($word, $context, $path, $line, $name, $def) = (@_);
     $def = stringify($def);
-    $docs{$context} .= "<Doc word='$word' path='$path' line='$line' "
-	             . "name='$name'>$def</Def>\n\n";
+    $docs{$context} .= "<Doc word=\"$word\" path=\"$path\" line=\"$line\" "
+	             . "name=\"$name\">$def</Def>\n\n";
 }
 
 ### indexUse(word, context, file, lineNr, name)
@@ -603,8 +608,8 @@ sub indexDoc {
 #
 sub indexUse {
     my ($word, $context, $path, $line, $name) = (@_);
-    $uses{$context} .= "<Ref word='$word' path='$path' line='$line' "
-	             . "name='$name' />\n\n";
+    $uses{$context} .= "<Ref word=\"$word\" path=\"$path\" line=\"$line\" "
+	             . "name=\"$name\" />\n\n";
     
 }
 
@@ -637,7 +642,7 @@ sub globalIndices {
 	}
 	$c = '';
 	for ($i = 0; $i < @entries; ++$i) {
-	    $entries[$i] =~ /word\=\'(.)/; 
+	    $entries[$i] =~ /word\=\"(.)/; 
 	    $c = uc($1);
 	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
 
@@ -736,11 +741,11 @@ sub stringify {
     $s =~ s/\&/\&amp\;/gs;
     $s =~ s/\</\&lt\;/gs;
     $s =~ s/\>/\&gt\;/gs;
-
+    $s =~ s/\"/\&quot\;/gs;
     return($s);
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.8 2000-08-26 00:38:34 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.9 2000-08-30 19:56:19 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 
