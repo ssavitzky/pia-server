@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>WOAD API's</title>
+</head><body bgcolor="#99ccff">
+<h1>WOAD API's</h1>
+
+<h3>Abstract:</h3>
+
+<blockquote>
+<p> This document describes the structures and interfaces of the WOAD system
+    at the level required for extending and customizing it.  The intended
+    audience is web-page and software developers -- its purpose is both to
+    help you integrate WOAD into an existing suite of applications, and to
+    help you make existing applications and documentation (such as
+    cross-indexers, pretty-printers, and web-accessible reference material)
+    useful in the WOAD environment.
+</p>
+<p> The structures and interfaces described here correspond loosely to the
+    data structures and application programming interfaces of a conventional
+    programming system. <em>However,</em> WOAD is a <em>web</em> application,
+    not a software development kit or class library -- the structures and
+    interfaces described are for the most part such things as directory
+    structures, file formats, XML schemata, and URL structuring conventions.
+</p>
+</blockquote>
+
+<h3>Contents</h3>
+<toc />
+
+
+<h2>The WOAD Tree</h2>
+
+<h3>The <code>.notes</code> subtree</h3>
+
+<p> The ``subtree'' that contains Woad's page (URL) annotations has by far the
+    simplest structure:  every URL on the server corresponds to a
+    <em>directory</em> in the <code>.notes</code> subtree that contains the
+    annotations for that URL.  Note that this is true even if the URL
+    corresponds to an ordinary file with an extension:  the annotation for
+    <code>/.../foo.html</code> will be contained in a <em>directory</em>
+    called <code>/.notes/.../foo.html/</code>.
+</p>
+
+<p> There's only one additional ``catch'' -- most Woad servers don't use the
+    prefix <code>/.notes</code> and instead make the root of the annotation
+    tree the root of the Woad web server.  This makes for a particularly
+    trivial mapping between target URL's and Woad annotation URL's: just
+    change the server name.  If the Woad and target servers are on the same
+    machine, it's even easier: just change the port number.
+</p>
+
+<p> There are two exceptions to this.  The first is for applications where
+    the Woad annotations are <em>on the same server as the target.</em> (This
+    is true of the PIA, for example.)  The second is for Woad trees that don't
+    correspond to a web application at all -- for example, you might be using
+    Woad as a directory-tree browser with annotations.
+</p>
+
+<h3>The <code>.source</code> subtree</h3>
+
+<p> Things are slightly more complex in the <code>.source</code> subtree,
+    because it effectively ``overlays'' the actual source directory tree -- a
+    URL of <code>.source/.../foo.html</code> is supposed to retrieve the
+    source listing of <code>foo.html</code>, and this is done by actually
+    <em>retrieving</em> <code>foo.html</code> and marking it up on the fly.
+</p>
+
+<p> Underneath it all there are two parallel directory trees: one under the
+    Woad server's document root (typically <code>~/.woad</code> for a personal
+    Woad server running on Unix), making the source annotation directory
+    <code>~/.woad/.source</code>, and one under the <em>source</em> root,
+    passed to the Woad server on the command line with the
+    <code>sources=<em>path</em></code> option.  Whenever a URL starting with
+    <code>/.source</code> is requested, the Woad server looks in <em>both</em>
+    places: first under its own root, then under the source root.
+</p>
+
+<p> Hence, annotations for <code>foo.html</code> have to be contained in a
+    special <code>.notes</code> subdirectory of the annotation directory that
+    corresponds to <code>foo.html</code>'s <em>parent directory</em>.  This
+    could also have been done for directories (putting the annotations for
+    the source directory <code>.../bar/</code> under the annotation directory
+    <code>.../bar/.notes/</code>), but it wasn't.
+</p>
+
+<p> One advantage of this seemingly clumsy arrangement is that the necessary
+    index files, and even Woad annotations, can be prepackaged and shipped
+    with the source files of a Woad-aware web application.  The biggest
+    advantage, though, is that it lets the Woad server format HTML and XML
+    source files by simply redefining the tags, in effect applying a (rather
+    drastic) stylesheet-like transformation to them.
+</p>
+
+<p> It gets better:  Woad handles <em>other</em> languages, for example Perl
+    and C, by parsing them into the same internal representation used by the
+    XML and HTML parsers and then applying essentially the same set of style
+    transformations.
+</p>
+
+<p> Finally, some Woad administrators may choose to eliminate the distinction
+    between source tree and source <em>annotation</em> tree, and keep the
+    annotations directly in the sources all the time.  This is <em>not
+    recommended</em> when there are multiple developers and each developer has
+    their own complete working copy of the source code (under a version
+    control system like CVS) -- in this case it's better to share the
+    annotations but keep the code separate.  It <em>does</em> work when
+    everyone is working in the same source tree, and a version control system
+    like RCS is used to lock the files being edited. 
+</p>
+
+<p> Eventually we hope to support multiple developers by allowing both private
+    (individual) and public (shared) notes, but implementing this will require
+    significant extensions to the PIA's site-structure package.
+</p>
+
+
+<h3>The <code>.word</code> subtree</h3>
+
+<!-- === this represents a significant change: not yet implemented === -->
+
+<p> The <code>.word</code> subtree is comparatively ``flat,'' having only two
+    directory levels underneath it.
+</p>
+
+<p> The first level contains directories corresponding to ``contexts;'' the
+    second level contains directories corresponding to words and phrases
+    <em>in</em> those contexts.  ``Miscellaneous'' words having no specific
+    context have directories at the same level as the context directories: in
+    this way every word potentially names a context, and every context's name
+    is necessarily a word.  The first and second levels can also contain
+    <em>index files</em> that map words into URL's.  All Woad-maintained
+    annotations for words are contained in directories -- the index files are
+    only used to refer to documents outside the Woad tree.
+</p>
+
+<p> The complete set of Woad annotations for <em>word</em> can thus be found
+    by looking for ``<code>.word/<em>word</em>/</code>'' and
+    ``<code>.word/*/<em>word</em>/</code>''.  The remaining (non-Woad)
+    information could theoretically be found by looking for <em>word</em> in
+    the index files ``<code>.word/*/*.wi</code>''. 
+</p>
+
+<p> This, however, would be unbearably tedious, so instead we use one of the
+    following alternatives (exactly <em>which</em> alternative is used is up
+    to the Woad server administrator -- in other words, <em>you</em>): 
+</p>
+
+<ul>
+  <li> A database
+  </li>
+  <li> A CGI script
+  </li>
+  <li> A separate web server (typically implemented <em>on top of</em> a
+       database). 
+  </li>
+  <li> The <em>inverted</em> index ``<code>.word/<em>word</em>.wi</code>''.
+       This last is by far the simplest to implement. 
+  </li>
+</ul>
+
+
+<h3>The <code>.Woad</code> subtree</h3>
+
+<p> The <code>.Woad</code> subtree of the Woad tree is mapped in from its
+    ``home'' location in the PIA install tree:  <code>PIA/Apps/Woad</code>.
+    The top level contains the following sorts of files:
+</p>
+
+<ul>
+  <li> <code>.ts&nbsp;&nbsp;</code> <b>Tagsets</b> -- These files are part of
+       the <a href="http://RiSource.org/PIA/">PIA</a>'s executable web-page
+       framework: they specify the <em>actions</em> (expansions) associated
+       with tags in active pages.
+  </li>
+  <li> <code>.xh&nbsp;&nbsp;</code> <b>Active Web Pages</b> -- These are the
+       pages that provide the help and ``home'' pages for Woad.  These pages
+       are in ``XHTML'' and contain Woad- and PIA-specific tags; they can only
+       be viewed correctly inside a running Woad server.
+  </li>
+  <li> <code>.html</code> <b>HTML Documents</b> -- for example, this file.
+       The main difference between the HTML pages and the <em>active</em>
+       pages is that the HTML pages are <em>pure</em> HTML, and can be read
+       ``stand-alone'' by pointing a web browser directly at the corresponding
+       file.  This makes them useable <em>before</em> installing Woad or in
+       situations where Woad is, for one reason or another, not working and
+       you need to figure out why.
+  </li>
+  <li> <code>.xcf&nbsp;</code> <b>XML Configuration Files</b> -- 
+  </li>
+  <li> <code>.inc</code>, <code>.xci</code> <b>XML Include Files</b> -- These
+       are meant to be included (automatically inserted using the
+       &lt;include&gt; tag) in other XML files, and do not stand alone.  They
+       are useful when a block of code needs to be used on several different
+       web pages.  For example, <code>app-info.inc</code> implements the table
+       of current command-line parameters and Woad-tree subtrees.  Another
+       common use for include files is to isolate a block of code or text
+       that's more likely to be customized than its enclosing document.
+  </li>
+</ul>
+
+<p> It also contains the following subdirectories:
+</p>
+
+<ul>
+  <li> <code>Tools</code> -- This subdirectory contains the <em>active</em>
+       web pages that <em>do things</em>, including the form for creating new
+       notes and the active pages that list directories in
+  </li>
+  <li> <code>Words</code> -- This subdirectory is re-mapped as the virtual
+       root of the <em>.word</em> subtree.  This allows word index files, for
+       example, to be preconstructed and shipped as part of the Woad
+       distribution. 
+  </li>
+</ul>
+
+<p> Note that, as usual, putting a file of your own somewhere under
+    <code><em>real-root</em>/.Woad</code> will override the original in
+    <code>PIA/Apps/Woad</code> -- this means that you can easily customize
+    your copy of the forms, tagsets, and so on that <ss>Woad</ss> is using.
+</p>
+
+
+<hr />
+<h2>WOAD Web Pages and their Tagsets</h2>
+
+
+<hr />
+<h2>Index Files and Databases</h2>
+
+<p> An index file, with an extension of ``<code>.wi</code>'', is a simple list
+    of XML elements.  <em>There is no enclosing element, no XML declaration,
+    and no document type</em> -- hence an index file is a <em>parsed
+    entity</em> and not an XML document!  This convention greatly simplifies
+    on-the-fly construction of index files, since they can be appended to at
+    any time.
+</p>
+
+<hr />
+<h2>Annotation and Documentation Files</h2>
+
+
+<hr />
+<h2>Listers, Parsers and Formatters</h2>
+
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: api.html,v 1.1 2000-07-21 00:37:33 steve Exp $</b><br>
+</body></html>
