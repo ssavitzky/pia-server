@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.9 1999-06-25 00:41:19 steve Exp $
+//	$Id: GenericHandler.java,v 1.10 1999-07-14 20:20:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.9 1999-06-25 00:41:19 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.10 1999-07-14 20:20:11 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -154,7 +154,7 @@ public class GenericHandler extends BasicHandler {
     if (passTag) {
       ActiveElement e = in.getActive().asElement();
       ActiveElement element = e.editedCopy(atts, null);
-      out.startElement(element);
+      out.startNode(element);
     }
     ActiveNodeList content = null;
     boolean empty = false;
@@ -235,7 +235,7 @@ public class GenericHandler extends BasicHandler {
       out.putNode(element);
     } else {
       // Content: output an expanded copy of the original element.
-      out.startElement(element);
+      out.startNode(element);
       Copy.copyNodes(content, out);
       out.endElement(e.isEmptyElement() || e.implicitEnd());
     }

@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Namespace.<p>
  *
- * @version $Id: ToNamespace.java,v 1.3 1999-06-25 00:42:01 steve Exp $
+ * @version $Id: ToNamespace.java,v 1.4 1999-07-14 20:20:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  */
@@ -109,7 +109,7 @@ public class ToNamespace extends ActiveOutput implements Output {
       return;
     }
     if (p != null || aNode.hasChildNodes()) {
-      aNode = Copy.copyNodeAsActive(aNode);
+      aNode = Copy.copyNodeAsActive(aNode, tagset);
     }
     if (depth > 0) appendNode(aNode, active);
     descend();
@@ -155,11 +155,12 @@ public class ToNamespace extends ActiveOutput implements Output {
   /************************************************************************
   ** Construction:
   ************************************************************************/
-  public ToNamespace() {
-    this(new BasicNamespace());
+  public ToNamespace(Tagset ts) {
+    this(new BasicNamespace(), ts);
   }
 
-  public ToNamespace(Namespace ns) {
+  public ToNamespace(Namespace ns, Tagset ts) {
+    super(ts);
     namespace = ns;
   }
 

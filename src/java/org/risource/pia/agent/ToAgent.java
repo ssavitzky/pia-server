@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * <p>	This class is used to construct an Agent, and in particular a
  *	GenericAgent.
  *
- * @version $Id: ToAgent.java,v 1.2 1999-06-04 22:40:53 steve Exp $
+ * @version $Id: ToAgent.java,v 1.3 1999-07-14 20:21:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.pia.Agent
  * @see org.risource.pia.GenericAgent
@@ -65,12 +65,12 @@ public class ToAgent extends ToNamespace {
   /************************************************************************
   ** Construction:
   ************************************************************************/
-  public ToAgent() {
-    this(new GenericAgent());
+  public ToAgent(Tagset ts) {
+    this(new GenericAgent(), ts);
   }
 
-  public ToAgent(Agent a) {
-    super(a);
+  public ToAgent(Agent a, Tagset ts) {
+    super(a, ts);
     agent = a;
   }
 

@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.8 1999-05-07 23:32:58 steve Exp $
+//	$Id: Filter.java,v 1.9 1999-07-14 20:19:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -184,7 +184,7 @@ public class Filter {
     if (loadTagset) {
       output = new org.risource.dps.output.DiscardOutput();
     } else if (parsing) {
-      outputTree = new org.risource.dps.output.ToParseTree();
+      outputTree = new org.risource.dps.output.ToParseTree(ts);
       // === root should be an ActiveDocument ===
       outputTree.setRoot(new TreeElement("Document", (ActiveAttrList)null));
       output = outputTree;

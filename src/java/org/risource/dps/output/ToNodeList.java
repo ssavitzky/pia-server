@@ -1,5 +1,5 @@
 ////// ToNodeList.java:  Output to node list
-//	$Id: ToNodeList.java,v 1.8 1999-06-25 00:42:02 steve Exp $
+//	$Id: ToNodeList.java,v 1.9 1999-07-14 20:20:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,7 @@ import org.risource.dps.tree.TreeNodeList;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.NamedNodeMap;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -38,7 +39,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to an (active) NodeList.<p>
  *
- * @version $Id: ToNodeList.java,v 1.8 1999-06-25 00:42:02 steve Exp $
+ * @version $Id: ToNodeList.java,v 1.9 1999-07-14 20:20:47 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.NodeList
  */
@@ -76,11 +77,29 @@ public class ToNodeList extends ActiveOutput implements Output {
     setNode(aNode);
   }
 
-  public void startElement(org.w3c.dom.Element anElement) {
-    startNode(shallowCopy(anElement));
+  public void startElement(String tagname, NamedNodeMap attrs) {
+    startNode(tagset.createActiveElement(tagname,
+					 tagset.createActiveAttrs(attrs),
+					 false));
   }
 
-  public boolean toParent() {
+  public void putNewNode(short nodeType, String nodeName, String value) {
+    putNode(tagset.createActiveNode(nodeType, nodeName, value));
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    startNode(tagset.createActiveNode(nodeType, nodeName, (String)null));
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+    putNode(tagset.createActiveNode(nodeType, nodeName, 
+				    new String(buffer, start, length)));
+  }
+
+  /************************************************************************
+  ** Utilities:
+  ************************************************************************/
+
+  protected boolean toParent() {
     if (depth == 0) return false;
     if (depth != 1) return super.toParent();
     setNode((Node)null);
@@ -97,7 +116,16 @@ public class ToNodeList extends ActiveOutput implements Output {
   /************************************************************************
   ** Construction:
   ************************************************************************/
-  public ToNodeList() {
+
+  /** Construct a ToNodeList. 
+   *
+   * @param ts the Tagset to use when constructing nodes.  May be null if the 
+   *		caller can guarantee that the <code>startNewNode</code>, etc. 
+   *		methods will never be called.  This is usually the case when
+   *		copying or otherwise processing an existing list. 
+   */
+  public ToNodeList(Tagset ts) {
+    super(ts);
   }
 
 }

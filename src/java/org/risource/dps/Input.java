@@ -1,5 +1,5 @@
 ////// Input.java: Depth-first enumerator for parse trees
-//	$Id: Input.java,v 1.5 1999-06-25 00:40:54 steve Exp $
+//	$Id: Input.java,v 1.6 1999-07-14 20:19:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,15 +45,11 @@ import org.w3c.dom.Node;
  *	In addition, an Input has a ``current'' node (which the TreeIterator
  *	explicitly does <em>not</em>), which can be queried and converted. <p>
  *
- *	With the use of <code>retainTree</code>, an Input parsing a document
- *	on the fly can also be forced to generate a complete Document (parse
- *	tree) as a side effect. <p>
- *
  *	Note that an Input which is being used as an Enumeration may
  *	have to ``look ahead'' to ensure that <code>hasMoreElements</code>
  *	can return an accurate result. <p>
  *
- * @version $Id: Input.java,v 1.5 1999-06-25 00:40:54 steve Exp $
+ * @version $Id: Input.java,v 1.6 1999-07-14 20:19:53 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Processor
@@ -173,16 +169,5 @@ public interface Input extends Cursor {
   /** Returns the action handler, if known, for the current node. 
    */
   public Action getAction();
-
-  /** Ensures that all descendents of the current node will be appended to
-   *	it as they are traversed.  
-   */
-  public void retainTree();
-  
-  /** Ensures that all descendents of the current node have been seen
-   *	and appended to it.  May be expensive.  
-   */
-  public Node getTree();
-
 
 }

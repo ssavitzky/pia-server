@@ -907,9 +907,34 @@ If 4th node is there, returns "four".
        (1999-07-09) [Reported by Bill] <br>
        -- was dispatching on both attributes.  
 
+  <li> 1999-07-14 <b>Impr:</b> Interface to push-mode parsers <br>
+       Most parsers operate in push mode -- they read their input and call a
+       semantic handler for each ``event''.  This requires running the
+       Processor in a separate thread.
+       (1998-08-13)<br>
+       -- actually, we just define a new Output called "ToProcessor"
+
+  <li> 1999-07-14 <b>Hole</b> Event-driven Processor; SAX output. <br>
+       Processor needs to be an Output, and Output in turn needs to be a
+       SAXApplication as well as a tree builder.  Processor needs to call
+       element handler's <code>startAction</code> and <code>endAction</code>;
+       on active nodes the former starts building a tree (perhaps by pushing
+       something onto the Output), and the latter interprets the
+       tree.  Trivial.  Need a flag of some sort that says the Processor is in
+       tree-building mode; event-driven mode is indicated by the lack of an
+       Input.  The flag essentially <em>has</em> to be a depth.  What we push
+       on the output might be another Processor, or we might do it with a
+       <code>pushInPlace</code>. 
+       (1999-06-30) <br>
+       -- actually, we just define a new Output called "ToProcessor"
+
+  <li> 1999-07-14 <b>Impr</b> Output.startElement parameter change <br>
+       Should take tagname and attribute list, not element node. 
+       (1999-06-16) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.21 1999-07-09 22:55:30 steve Exp $</b><br>
+<b>$Id: done.html,v 1.22 1999-07-14 20:19:58 steve Exp $</b><br>
 </body></html>

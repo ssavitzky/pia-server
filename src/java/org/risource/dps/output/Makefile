@@ -1,5 +1,5 @@
 ###### dps/input/Makefile:	Implementations of Output interface
-# 	$Id: Makefile,v 1.5 1999-04-30 23:37:13 steve Exp $
+# 	$Id: Makefile,v 1.6 1999-07-14 20:20:39 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,8 @@ TO_PROXY = \
 	FilterMarkup.java \
 	FilterText.java \
 	OutputTrace.java \
-	Proxy.java
+	Proxy.java \
+	ToProcessor.java
 
 FILES = $(TO_NODES) $(TO_TEXT) $(TO_PROXY)
 
@@ -82,3 +83,4 @@ DiscardOutput.class: ../Output.java
 Proxy.class: ../Output.java
 FilterText.class: ../Output.java Proxy.java
 OutputTrace.class: ../Output.java Proxy.java
+ToProcessor.class: ../Output.java Proxy.java

@@ -1,5 +1,5 @@
 ////// Copy.java: Utilities for Copying nodes.
-//	$Id: Copy.java,v 1.8 1999-06-25 00:42:15 steve Exp $
+//	$Id: Copy.java,v 1.9 1999-07-14 20:21:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.*;
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Copy.java,v 1.8 1999-06-25 00:42:15 steve Exp $
+ * @version $Id: Copy.java,v 1.9 1999-07-14 20:21:19 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.util.Expand
@@ -106,40 +106,51 @@ public class Copy {
   ************************************************************************/
 
   public static ActiveAttrList copyAttrs(ActiveAttrList atts) {
-    ToAttributeList dst = new ToAttributeList();
+    ToAttributeList dst = new ToAttributeList(null); // === possibly bogus
     copyNodes(atts, dst);
     return dst.getList();
   }
 
-  public static ActiveNode copyNodeAsActive(Node node) {
-    if (node instanceof ActiveNode) 
-      return ((ActiveNode)node).shallowCopy();
-    int nodeType = node.getNodeType();
+  public static ActiveNode copyNodeAsActive(Node node, Tagset ts) {
+    short nodeType = node.getNodeType();
     switch (nodeType) {
     case Node.ELEMENT_NODE: 
-      return new TreeElement(node.getNodeName(), node.getAttributes());
-
+      if (node instanceof ActiveElement) {
+	ActiveElement e = (ActiveElement)node;
+	return ts.createActiveElement(e.getTagName(), e.getAttrList(),
+				      e.hasEmptyDelimiter());
+      } else {
+	ActiveAttrList atts = ts.createActiveAttrs(node.getAttributes());
+	return ts.createActiveElement(node.getNodeName(), atts, false);
+      }
     case Node.TEXT_NODE:
       if (node instanceof ActiveText) {
 	ActiveText t = (ActiveText) node;
-	return new TreeText(t.getData(), t.getIsIgnorable());
+	return ts.createActiveText(t.getData(), t.getIsIgnorable());
       } else {
-	return new TreeText(node.getNodeValue());
+	return ts.createActiveText(node.getNodeValue(), false);
       }
 
-    case Node.COMMENT_NODE: 
-      return new TreeComment(node.getNodeValue());
-
-    case Node.PROCESSING_INSTRUCTION_NODE:
-      return new TreePI(node.getNodeName(), node.getNodeValue());
-
-    case Node.ATTRIBUTE_NODE: 
-      ActiveAttr attr = (ActiveAttr)node;
-      return new TreeAttr(attr.getName(), attr.getValueNodes(null));
-      // there are missing cases and botched conversions here.
+    case Node.ENTITY_NODE:
+      if (node instanceof ActiveEntity) {
+	ActiveEntity ent = (ActiveEntity)node;
+	return ts.createActiveEntity(ent.getNodeName(), ent.getValueNodes());
+      } else {
+	return ts.createActiveNode(nodeType, node.getNodeName(),
+				   node.getNodeValue());
+      }
+    case Node.ATTRIBUTE_NODE:
+      if (node instanceof ActiveAttr) {
+	ActiveAttr att = (ActiveAttr)node;
+	return ts.createActiveEntity(att.getNodeName(), att.getValueNodes());
+      } else {
+	return ts.createActiveNode(nodeType, node.getNodeName(),
+				   node.getNodeValue());
+      }
 
     default: 
-      return null;		// node.shallowCopy();
+      return ts.createActiveNode(nodeType, node.getNodeName(),
+				 node.getNodeValue());
     }
   }
 

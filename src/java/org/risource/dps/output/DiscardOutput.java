@@ -1,5 +1,5 @@
 ////// DiscardOutput
-//	$Id: DiscardOutput.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+//	$Id: DiscardOutput.java,v 1.5 1999-07-14 20:20:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import java.io.PrintStream;
  *	Slightly more efficient than a Proxy with no target.  The real
  *	benefit is better documentation of the programmer's intent.
  *
- * @version $Id: DiscardOutput.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+ * @version $Id: DiscardOutput.java,v 1.5 1999-07-14 20:20:36 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -61,12 +61,21 @@ public class DiscardOutput implements Output {
     depth --;
     return depth >= 0;;
   }
-  public void startElement(Element anElement) {
+  public void startElement(String tagname, NamedNodeMap attrs) {
     depth++;
   }
   public boolean endElement(boolean optional) {
     depth --;
     return depth >= 0;
+  }
+
+  public void putNewNode(short nodeType, String nodeName, String value) {
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    depth++;
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
   }
 
   /************************************************************************

@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.7 1999-07-08 21:38:49 bill Exp $
+//	$Id: BasicParser.java,v 1.8 1999-07-14 20:20:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.7 1999-07-08 21:38:49 bill Exp $
+ * @version $Id: BasicParser.java,v 1.8 1999-07-14 20:20:56 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -95,7 +95,7 @@ public class BasicParser extends AbstractParser {
       return false;
     }
 
-    next = tagset.createActiveEntityRef(ident);
+    next = createActiveNode(Node.ENTITY_REFERENCE_NODE, ident, null);
     //if (last == entityEnd) next.setHasClosingDelimiter(true);
     if (last == entityEnd) last = 0;
     return true;

@@ -1,5 +1,5 @@
 ////// OutputTrace: debugging shim for an Output
-//	$Id: OutputTrace.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+//	$Id: OutputTrace.java,v 1.5 1999-07-14 20:20:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,7 @@ import java.io.PrintStream;
  * A debugging shim for Outputs.  All operations are proxied to a
  *	``real'' target Output, and also logged to a PrintStream. <p>
  *
- * @version $Id: OutputTrace.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+ * @version $Id: OutputTrace.java,v 1.5 1999-07-14 20:20:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -81,15 +81,31 @@ public class OutputTrace extends Proxy {
     trace("end " + NL, depth);
     return (target != null)? target.endNode() : depth >= 0;;
   }
-  public void startElement(Element anElement) {
-    trace("start " + logNode(anElement) + NL, depth);
+  public void startElement(String tagname, NamedNodeMap attrs) {
+    trace("start <" + tagname + ">" + NL, depth);
     depth++;
-    if (target != null) target.startElement(anElement);
+    if (target != null) target.startElement(tagname, attrs);
   }
   public boolean endElement(boolean optional) {
     depth --;
     trace("end(" + (optional? "true" : "false") +")" + NL, depth);
     return (target != null)? target.endElement(optional) : depth >= 0;
+  }
+
+  public void putNewNode(short nodeType, String nodeName, String value) {
+    trace("put #" + nodeType + NL, depth);
+    if (target != null) target.putNewNode(nodeType, nodeName, value);
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    trace("put #" + nodeType + NL, depth);
+    depth++;
+    if (target != null) target.startNewNode(nodeType, nodeName);
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+    trace("put #" + nodeType + NL, depth);
+    if (target != null)
+      target.putCharData(nodeType, nodeName, buffer, start, length);
   }
 
   /************************************************************************

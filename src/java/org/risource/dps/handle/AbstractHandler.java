@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.8 1999-06-25 00:41:10 steve Exp $
+//	$Id: AbstractHandler.java,v 1.9 1999-07-14 20:20:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.8 1999-06-25 00:41:10 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.9 1999-07-14 20:20:10 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -306,7 +306,7 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
    */
   protected ActiveText newText(Context cxt, String data) {
     Tagset ts = cxt.getTopContext().getTagset();
-    return ts.createActiveText(data);
+    return ts.createActiveText(data, false);
   }
 
   /************************************************************************

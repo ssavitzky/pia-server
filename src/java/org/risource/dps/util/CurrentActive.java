@@ -1,5 +1,5 @@
 ////// CurrentActive.java: current node in a parse tree
-//	$Id: CurrentActive.java,v 1.6 1999-06-25 00:42:17 steve Exp $
+//	$Id: CurrentActive.java,v 1.7 1999-07-14 20:21:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.TreeAttrList;
 
 import org.risource.dps.util.Copy;
 
@@ -49,7 +50,7 @@ import org.risource.dps.util.Copy;
  *	Output, TreeIterator, and so on) efficiently, provided they operate
  *	on complete trees.
  *
- * @version $Id: CurrentActive.java,v 1.6 1999-06-25 00:42:17 steve Exp $
+ * @version $Id: CurrentActive.java,v 1.7 1999-07-14 20:21:20 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -79,6 +80,9 @@ public class CurrentActive implements Cursor {
 
   protected boolean retainTree = false;
   protected boolean atFirst = false;
+
+  protected Tagset tagset = null;
+
 
   /************************************************************************
   ** State Accessors:
@@ -279,11 +283,6 @@ public class CurrentActive implements Cursor {
    */
   public void retainTree() { retainTree = true; }
   
-  /** Ensures that all descendents of the current node have been seen
-   *	and appended to it.  May be expensive.  
-   */
-  protected Node getTree() { return active; }
-
 
   /************************************************************************
   ** Output Operations:
@@ -342,17 +341,16 @@ public class CurrentActive implements Cursor {
     return toParent();
   }
 
-  /** Adds <code>anElement</code> to the document under construction,
-   *	and makes it the current node.  The attribute list is not
-   *	copied; instead, putAttribute, etc. are used.  An element
+
+  /** Adds a new <code>Element</code> to the document under construction,
+   *	and makes it the current node.  An element
    *	may be ended with either <code>endElement</code> or
    *	<code>endNode</code>. 
    */
-  protected void startElement(Element anElement) {
-    Node e = shallowCopy(anElement);
-    appendNode(e, active);
-    descend();
-    setNode(e);
+  public void startElement(String tagname, NamedNodeMap attrs) {
+    ActiveAttrList alist = new TreeAttrList(attrs);
+    ActiveElement e = tagset.createActiveElement(tagname, alist, false);
+    startNode(e);
   }
 
   /** Ends the current Element.  The end tag may be optional.  
@@ -362,6 +360,22 @@ public class CurrentActive implements Cursor {
     // === set optional end-tag flag if the element has one. ===
     return toParent();
   }
+
+  public void putNewNode(short nodeType, String nodeName, String value) {
+     putNode(tagset.createActiveNode(nodeType, nodeName, value));
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+     startNode(tagset.createActiveNode(nodeType, nodeName, (String)null));
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+     putNode(tagset.createActiveNode(nodeType, nodeName,
+				     new String(buffer, start, length)));
+  }
+
+  /************************************************************************
+  ** Utilities:
+  ************************************************************************/
 
   /** Perform any necessary actions before descending a level. 
    *	Normally this just increments <code>depth</code>
@@ -378,6 +392,14 @@ public class CurrentActive implements Cursor {
 
   protected void appendNode(Node aNode, Node aParent) {
     Copy.appendNode(aNode, aParent);
+  }
+
+  /************************************************************************
+  ** Constructors:
+  ************************************************************************/
+
+  public CurrentActive(Tagset ts) {
+    tagset = ts;
   }
 
 }

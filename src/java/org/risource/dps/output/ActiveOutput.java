@@ -1,5 +1,5 @@
 ////// ActiveOutput.java:  abstract base class for Output implementations.
-//	$Id: ActiveOutput.java,v 1.5 1999-06-04 22:40:07 steve Exp $
+//	$Id: ActiveOutput.java,v 1.6 1999-07-14 20:20:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,7 +32,7 @@ import org.w3c.dom.*;
  * An abstract base class for implementations of the Output interface
  *	that operate exclusively on ActiveNode's.<p>
  *
- * @version $Id: ActiveOutput.java,v 1.5 1999-06-04 22:40:07 steve Exp $
+ * @version $Id: ActiveOutput.java,v 1.6 1999-07-14 20:20:35 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input
@@ -44,8 +44,22 @@ public abstract class ActiveOutput extends CurrentActive implements Output {
   public void putNode(Node aNode) { super.putNode(aNode); }
   public void startNode(Node aNode) { super.startNode(aNode); }
   public boolean endNode() { return super.endNode(); }
-  public void startElement(Element anElement) { super.startElement(anElement); }
+  public void startElement(String tagname, NamedNodeMap attrs) {
+    super.startElement(tagname, attrs);
+  }
   public boolean endElement(boolean optional) {
     return super.endElement(optional);
   }
+  public void putNewNode(short nodeType, String nodeName, String value) {
+    super.putNewNode(nodeType, nodeName, value);
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    super.startNewNode(nodeType, nodeName);
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+    super.putCharData(nodeType, nodeName, buffer, start, length);
+  }
+
+  public ActiveOutput(Tagset ts) { super(ts); }
 }

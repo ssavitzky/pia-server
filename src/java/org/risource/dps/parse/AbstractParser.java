@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.9 1999-07-08 21:38:47 bill Exp $
+//	$Id: AbstractParser.java,v 1.10 1999-07-14 20:20:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.9 1999-07-08 21:38:47 bill Exp $
+ * @version $Id: AbstractParser.java,v 1.10 1999-07-14 20:20:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -526,19 +526,6 @@ public abstract class AbstractParser extends CursorStack implements Parser
     return n;
   }
 
-  /** Creates an ActiveText node.  Includes the <code>isWhitespace</code>
-   *	flag, which would otherwise have to be tested for.
-   */
-  protected ActiveText createActiveText(String text,
-					boolean isIgnorable,
-					boolean isWhitespace) {
-    ActiveText n = (tagset == null)
-      ? new TreeText(text, isIgnorable, isWhitespace)
-      : tagset.createActiveText(text, isIgnorable, isWhitespace);
-    n.setAction(n.getSyntax().getActionForNode(n));
-    return n;
-  }
-
   /************************************************************************
   ** Construction:
   ************************************************************************/
@@ -658,10 +645,6 @@ public abstract class AbstractParser extends CursorStack implements Parser
   public boolean hasChildren() {
     return node.hasChildNodes()
       || (tagName != null && !active.asElement().isEmptyElement());
-  }
-
-  public Node getTree() {
-    return retainTree? getNode() : null;
   }
 
   public void retainTree() {

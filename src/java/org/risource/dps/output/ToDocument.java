@@ -1,5 +1,5 @@
 ////// ToDocument.java:  Output to Document
-//	$Id: ToDocument.java,v 1.5 1999-06-04 22:40:11 steve Exp $
+//	$Id: ToDocument.java,v 1.6 1999-07-14 20:20:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
  * Output to a Document, using the target document's tagset.<p>
  *	=== At the moment this is completely unimplemented!
  *
- * @version $Id: ToDocument.java,v 1.5 1999-06-04 22:40:11 steve Exp $
+ * @version $Id: ToDocument.java,v 1.6 1999-07-14 20:20:43 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -58,6 +58,7 @@ public class ToDocument extends ActiveOutput {
 
   /** Output tokens to a given Document. */
   public ToDocument(Document doc) {
+    super(null);		// === bogus ===
     root = doc;
   }
 

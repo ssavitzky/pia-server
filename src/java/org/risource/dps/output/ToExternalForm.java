@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.6 1999-04-17 01:19:20 steve Exp $
+//	$Id: ToExternalForm.java,v 1.7 1999-07-14 20:20:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ import org.w3c.dom.*;
 
 import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.tree.*;
 import org.risource.dps.util.*;
 
 import java.util.NoSuchElementException;
@@ -52,7 +53,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.6 1999-04-17 01:19:20 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.7 1999-07-14 20:20:44 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -146,8 +147,8 @@ public abstract class ToExternalForm extends CursorStack implements Output {
     return popInPlace();
   }
 
-  public void startElement(Element anElement) {
-    startNode(anElement);
+  public void startElement(String tagname, NamedNodeMap attrs) {
+    startNode(new TreeElement(tagname, new TreeAttrList(attrs))); // === grossly inefficient
   }
 
   public boolean endElement(boolean optional) {
@@ -156,6 +157,17 @@ public abstract class ToExternalForm extends CursorStack implements Output {
     } else {
       return endNode();
     }
+  }
+
+  public void putNewNode(short nodeType, String nodeName, String value) {
+    putNode(Create.createActiveNode(nodeType, nodeName, value)); // === grossly inefficient
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    startNode(Create.createActiveNode(nodeType, nodeName, (String)null)); // === grossly inefficient
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+    putNewNode(nodeType, nodeName, new String(buffer, start, length)); // === grossly inefficient
   }
 
   /************************************************************************

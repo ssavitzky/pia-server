@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.15 1999-06-25 00:41:32 steve Exp $
+//	$Id: extractHandler.java,v 1.16 1999-07-14 20:20:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.15 1999-06-25 00:41:32 steve Exp $
+ * @version $Id: extractHandler.java,v 1.16 1999-07-14 20:20:19 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -63,7 +63,7 @@ public class extractHandler extends GenericHandler {
     String sep = (atts == null)? null : atts.getAttribute("sep");
 
     BasicEntityTable ents = new BasicEntityTable(tag);
-    ToNodeList collect = new ToNodeList();
+    ToNodeList collect = new ToNodeList(cxt.getTopContext().getTagset());
     ActiveNodeList currentSet = null;
     boolean terminateExtract = false;
 
@@ -163,13 +163,13 @@ public class extractHandler extends GenericHandler {
 
   public ActiveNodeList extractTypeItem(String tname,
 					ActiveNodeList extracted) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     extractByType(tname, extracted, out);
     return out.getList();
   }
 
   public ActiveNodeList extractNameItem(String name, ActiveNodeList extracted) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     extractByName(name, extracted, out);
     return out.getList();
   }

@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.8 1999-06-04 22:39:28 steve Exp $
+//	$Id: Tagset.java,v 1.9 1999-07-14 20:19:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,6 +27,7 @@ package org.risource.dps;
 import java.util.Enumeration;
 
 import org.risource.dps.active.*;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  * The interface for a Tagset -- a lookup table for syntax. <p>
@@ -51,7 +52,7 @@ import org.risource.dps.active.*;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.8 1999-06-04 22:39:28 steve Exp $
+ * @version $Id: Tagset.java,v 1.9 1999-07-14 20:19:55 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -162,30 +163,24 @@ public interface Tagset  {
    */
   public Parser createParser();
 
-  /** Creates an ActiveElement; otherwise identical to CreateElement. 
-   *	<p>
-   *
-   *	This method is called at parse time to create a node in the parse
-   *	tree under construction.  Normally it simply returns an instance
-   *	of <code>ParseTreeElement</code>, but may return an instance of 
-   *	a subclass instead. <p>
-   *
+  /** Creates an ActiveAttrList from a NamedNodeMap. */
+  public ActiveAttrList createActiveAttrs(NamedNodeMap attrs);
+
+  /** Creates an ActiveElement suitable for use in any document described
+   *	by this Tagset.
    */
   public ActiveElement createActiveElement(String tagname,
 					   ActiveAttrList attributes,
 					   boolean hasEmptyDelim);
 
-  /** Creates an ActiveNode of arbitrary type with (optional) data.
-   */
-  public ActiveNode createActiveNode(short nodeType, String data);
-
   /** Creates an ActiveNode of arbitrary type with name and (optional) data.
    */
   public ActiveNode createActiveNode(short nodeType, String name, String data);
 
-  /** Creates an ActivePI node with name and data.
+  /** Creates an ActiveNode of arbitrary type with name and content.
    */
-  public ActivePI createActivePI(String name, String data);
+  public ActiveNode createActiveNode(short nodeType, String name,
+				     ActiveNodeList data);
 
   /** Creates an ActiveAttribute node with name and value.
    */
@@ -195,29 +190,9 @@ public interface Tagset  {
    */
   public ActiveEntity createActiveEntity(String name, ActiveNodeList value);
 
-  /** Creates an ActiveEntityRef node with name -- an entity <em>reference</em>
-   *	has, of course, no value.
-   */
-  public ActiveEntityRef createActiveEntityRef(String name);
-
-  /** Creates an ActiveComment node.
-   */
-  public ActiveComment createActiveComment(String data);
-
-  /** Creates an ActiveText node. 
-   */
-  public ActiveText createActiveText(String text);
-
   /** Creates an ActiveText node.  Otherwise identical to createText.
    */
   public ActiveText createActiveText(String text, boolean isIgnorable);
-
-  /** Creates an ActiveText node.  Includes the <code>isWhitespace</code>
-   *	flag, which would otherwise have to be tested for.
-   */
-  public ActiveText createActiveText(String text, boolean isIgnorable,
-				     boolean isWhitespace);
-
 
   /************************************************************************
   ** Syntactic Information:

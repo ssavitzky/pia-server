@@ -16,6 +16,22 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Need action code PROCESS_NODE <br>
+       This would indicate an active node with start and end actions that can
+       be invoked without having to retain the node's content.  Need
+       processStart and processEnd ops on Processor.
+       (199-07-14) <br>
+
+  <li> <b>Bug</b> recursive <code>define entity</code> broken <br>
+       Defining an entity in terms of other entities doesn't work in a tagset,
+       even if it's recursive.
+       (199-07-14) <br>
+
+  <li> <b>Bug</b> &lt;text encode&gt; broken on markup <br>
+       It's removing all markup; for sanity, should convert to external form.
+       May also not be expanding content.
+       (1999-07-12) [Bill] <br>
+
   <li> <b>Impr</b> parser should report implied end tags in XML mode <br>
        (1999-07-09) <br>
 
@@ -32,19 +48,6 @@ See also:
        made case-insensitive. 
        (1999-07-02) [Suggested by Bill] <br>
 
-  <li> <b>Hole</b> Event-driven Processor; SAX output. <br>
-       Processor needs to be an Output, and Output in turn needs to be a
-       SAXApplication as well as a tree builder.  Processor needs to call
-       element handler's <code>startAction</code> and <code>endAction</code>;
-       on active nodes the former starts building a tree (perhaps by pushing
-       something onto the Output), and the latter interprets the
-       tree.  Trivial.  Need a flag of some sort that says the Processor is in
-       tree-building mode; event-driven mode is indicated by the lack of an
-       Input.  The flag essentially <em>has</em> to be a depth.  What we push
-       on the output might be another Processor, or we might do it with a
-       <code>pushInPlace</code>. 
-       (1999-06-30) <br>
-
   <li> <b>Hole</b> Need split and join attributes on text, etc. <br>
        Anything that processes lists should have "split" and "join"
        attributes, replacing the old "sep".
@@ -58,10 +61,6 @@ See also:
        previous token. 
        (1999-06-16) <br>
        -- May have to do with a missing hasChildren test.
-
-  <li> <b>Impr</b> Output.startNode parameter change <br>
-       Should take tagname and attribute list, not element node. 
-       (1999-06-16) <br>
 
   <li> <b>Impr</b> Parser error verbosity level <br>
        The verbosity level of parser messages should be a tagset
@@ -449,12 +448,6 @@ Results: &lt;pre&gt;cat                                                         
        Dispatch table for attrs with handlers.  Lazy evaluation(?) 
        (1998-08-13)
 
-  <li> <b>Impr:</b> Interface to push-mode parsers <br>
-       Most parsers operate in push mode -- they read their input and call a
-       semantic handler for each ``event''.  This requires running the
-       Processor in a separate thread.
-       (1998-08-13)<br>
-
   <li> <b>Hole:</b> Text Substitution<p>
        Needs to be done using either &lt;select&gt; or its own &lt;subst&gt;
        element with appropriate sub-elements.
@@ -602,5 +595,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.24 1999-07-09 22:55:34 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.25 1999-07-14 20:20:04 steve Exp $</b><br>
 </body></html>

@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.9 1999-07-08 21:38:40 bill Exp $
+//	$Id: includeHandler.java,v 1.10 1999-07-14 20:20:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,6 +24,7 @@
 
 package org.risource.dps.handle;
 
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
@@ -41,7 +42,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.9 1999-07-08 21:38:40 bill Exp $
+ * @version $Id: includeHandler.java,v 1.10 1999-07-14 20:20:23 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -121,7 +122,7 @@ public class includeHandler extends GenericHandler {
     // If we're caching in an entity, tell the parser to save the tree in it.
 
     if (entname != null) {
-      ent = ts.createActiveEntity(entname, null);
+      ent = ts.createActiveNode(Node.ENTITY_NODE, entname, (String)null);
       p.setDocument(ent);
     }
 

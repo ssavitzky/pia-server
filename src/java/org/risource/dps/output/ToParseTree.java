@@ -1,5 +1,5 @@
 ////// ToParseTree.java:  Output to ParseTree
-//	$Id: ToParseTree.java,v 1.5 1999-06-04 22:40:15 steve Exp $
+//	$Id: ToParseTree.java,v 1.6 1999-07-14 20:20:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,13 +29,15 @@ import org.risource.dps.util.*;
 import org.risource.dps.active.*;
 import org.risource.dps.tree.TreeElement;
 
+import org.w3c.dom.Node;
+
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
 /**
  * Output to a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: ToParseTree.java,v 1.5 1999-06-04 22:40:15 steve Exp $
+ * @version $Id: ToParseTree.java,v 1.6 1999-07-14 20:20:48 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
@@ -56,17 +58,26 @@ public class ToParseTree extends ActiveOutput implements Output {
   public ActiveNode getRoot() { return root; }
   public void setRoot(ActiveNode newRoot) { root = newRoot; setNode(newRoot); }
 
+  public void putNode(Node aNode) {
+    super.putNode(aNode);
+    if (root == null) root = active;
+  }
+
+  public void startNode(Node aNode) {
+    super.startNode(aNode);
+    if (root == null) root = active;
+  }
+
   /************************************************************************
   ** Construction:
   ************************************************************************/
-  public ToParseTree() {
+  public ToParseTree(Tagset ts) {
+    super(ts);
   }
 
-  public ToParseTree(ActiveNode newRoot) {
+  public ToParseTree(ActiveNode newRoot, Tagset ts) {
+    this(ts);
     setRoot(newRoot);
   }
 
-  public ToParseTree(String tagName) {
-    this(new TreeElement(tagName, (ActiveAttrList)null));
-  }
 }

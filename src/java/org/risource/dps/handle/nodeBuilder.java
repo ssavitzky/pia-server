@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.2 1999-06-26 00:43:56 steve Exp $
+//	$Id: nodeBuilder.java,v 1.3 1999-07-14 20:20:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.2 1999-06-26 00:43:56 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.3 1999-07-14 20:20:25 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -60,10 +60,10 @@ public class nodeBuilder extends GenericHandler {
       reportError(in, cxt, "No 'name' attribute");
       return;
     }
-    ToNodeList content = new ToNodeList();
+    ToNodeList content = new ToNodeList(cxt.getTopContext().getTagset());
 
     TreeAttrList ns = new TreeAttrList();
-    ToNamespace loader = new ToNamespace(ns);
+    ToNamespace loader = new ToNamespace(ns, cxt.getTopContext().getTagset());
     loader.setContext(cxt);
     loader.setBypass(content);
     Processor p = cxt.subProcess(in, loader, ns);

@@ -1,5 +1,5 @@
 ////// TreeEntity.java -- implementation of ActiveEntity
-//	$Id: TreeEntity.java,v 1.4 1999-06-04 22:40:40 steve Exp $
+//	$Id: TreeEntity.java,v 1.5 1999-07-14 20:21:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntity.java,v 1.4 1999-06-04 22:40:40 steve Exp $
+ * @version $Id: TreeEntity.java,v 1.5 1999-07-14 20:21:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -80,7 +80,7 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
 
   public Output getValueOutput(Context cxt) {
     // === changes when value becomes children ===
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(cxt.getTopContext().getTagset());
     setValueNodes(out.getList());
     return out;
   }

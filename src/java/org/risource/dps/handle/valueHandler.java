@@ -1,5 +1,5 @@
 ////// valueHandler.java: <value> Handler implementation
-//	$Id: valueHandler.java,v 1.5 1999-04-07 23:21:28 steve Exp $
+//	$Id: valueHandler.java,v 1.6 1999-07-14 20:20:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: valueHandler.java,v 1.5 1999-04-07 23:21:28 steve Exp $
+ * @version $Id: valueHandler.java,v 1.6 1999-07-14 20:20:30 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -62,7 +62,7 @@ public class valueHandler extends GenericHandler {
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
     // === should be able to skip expanding the attrs altogether for <value>
-    out.startElement(element);
+    out.startNode(element);
     Copy.copyNodes(content, out);
     out.endElement(e.isEmptyElement() || e.implicitEnd());
   }

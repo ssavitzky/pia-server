@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.7 1999-06-17 01:03:23 steve Exp $
+//	$Id: Expand.java,v 1.8 1999-07-14 20:21:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import org.risource.dps.tree.TreeAttr;
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.7 1999-06-17 01:03:23 steve Exp $
+ * @version $Id: Expand.java,v 1.8 1999-07-14 20:21:24 steve Exp $
  * @author steve@rsv.ricoh.com */
 
 public class Expand {
@@ -59,7 +59,7 @@ public class Expand {
 
   /** Get the processed content of the current node. */
   public static ActiveNodeList getProcessedContent(Input in, Context c) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     c.subProcess(in, out).processChildren();
     return out.getList();
   }
@@ -73,7 +73,7 @@ public class Expand {
 
   /** Get the unprocessed content of the current node. */
   public static ActiveNodeList getContent(Input in, Context c) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     Copy.copyChildren(in, out);
     return out.getList();
   }
@@ -87,7 +87,7 @@ public class Expand {
 
   /** Extract text from the processed content of the current node. */
   public static ActiveNodeList getProcessedText(Input in, Context c) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     c.subProcess(in, new FilterText(out)).processChildren();
     return out.getList();
   }
@@ -102,7 +102,7 @@ public class Expand {
 
   /** Extract text from the unprocessed content of the current node. */
   public static ActiveNodeList getText(Input in, Context c) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     Copy.copyChildren(in, new FilterText(out));
     return out.getList();
   }
@@ -122,7 +122,7 @@ public class Expand {
   /** Process a node list and return the result. */
   public static ActiveNodeList processNodes(NodeList nl, Context c) {
     Input in = new FromNodeList(nl);
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     if (nl != null) c.subProcess(in, out).run();
     return out.getList();
   }
@@ -137,7 +137,7 @@ public class Expand {
   /** Process the children of a Node and return the result. */
   public static ActiveNodeList processChildren(ActiveNode aNode, Context c) {
     Input in = new FromParseTree(aNode);
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     c.subProcess(in, out).processChildren();
     return out.getList();
   }
@@ -145,7 +145,7 @@ public class Expand {
   /** Process a Node and return the result. */
   public static ActiveNodeList processNode(ActiveNode aNode, Context c) {
     Input in = new FromParseTree(aNode);
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     c.subProcess(in, out).processNode();
     return out.getList();
   }
@@ -180,14 +180,14 @@ public class Expand {
 
   /** Expand entities in an ActiveAttrList, getting values from a Context. */
   public static ActiveAttrList expandAttrs(Context c, ActiveAttrList atts) {
-    ToAttributeList dst = new ToAttributeList();
+    ToAttributeList dst = new ToAttributeList(null);
     expandAttrs(c, atts, dst);
     return dst.getList();
   }
 
   /** Copy an attribute list without expansion. */
   public static ActiveAttrList copyAttrs(ActiveAttrList atts) {
-    ToAttributeList dst = new ToAttributeList();
+    ToAttributeList dst = new ToAttributeList(null);
     Copy.copyNodes(atts, dst);
     return dst.getList();
   }
@@ -211,7 +211,7 @@ public class Expand {
   /** Expand entities in a NodeList. */
   public static ActiveNodeList expandNodes(Context c, ActiveNodeList nl) {
     if (nl == null) return null;
-    ToNodeList dst = new ToNodeList();
+    ToNodeList dst = new ToNodeList(null);
     expandNodes(c, nl, dst);
     return dst.getList();
   }

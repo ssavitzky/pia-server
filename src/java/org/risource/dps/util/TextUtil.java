@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.9 1999-07-13 20:27:08 bill Exp $
+//	$Id: TextUtil.java,v 1.10 1999-07-14 20:21:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.9 1999-07-13 20:27:08 bill Exp $
+ * @version $Id: TextUtil.java,v 1.10 1999-07-14 20:21:25 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -102,7 +102,7 @@ public class TextUtil {
   /** Extract text from a nodelist.
    */
   public static ActiveNodeList getText(ActiveNodeList nl) {
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null);
     Copy.copyNodes(nl, new FilterText(out));
     return out.getList();
   }

@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.9 1999-06-25 00:41:41 steve Exp $
+//	$Id: repeatHandler.java,v 1.10 1999-07-14 20:20:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.9 1999-06-25 00:41:41 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.10 1999-07-14 20:20:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -144,7 +144,8 @@ public class repeatHandler extends GenericHandler {
     Tagset ts = cxt.getTopContext().getTagset();
     if (name != null) name = name.trim();
     if (name == null) name = dflt;
-    return ts.createActiveEntity(name, null);
+    return (ActiveEntity)ts.createActiveNode(Node.ENTITY_NODE, name,
+					     (String)null);
   }
 
   /** Return a suitable Input for iterating through the content. */

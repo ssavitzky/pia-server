@@ -1,5 +1,5 @@
 ////// Output.java: Document Builder
-//	$Id: Output.java,v 1.5 1999-06-04 22:39:24 steve Exp $
+//	$Id: Output.java,v 1.6 1999-07-14 20:19:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,7 @@ package org.risource.dps;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  * The interface for a consumer of Nodes. <p>
@@ -39,7 +40,7 @@ import org.w3c.dom.Element;
  *	    <li> Convert a subtree into a String.
  *	</ul>
  *
- * @version $Id: Output.java,v 1.5 1999-06-04 22:39:24 steve Exp $
+ * @version $Id: Output.java,v 1.6 1999-07-14 20:19:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input
@@ -65,15 +66,52 @@ public interface Output {
    */
   public boolean endNode();
 
-  /** Adds <code>anElement</code> to the document under construction, and
-   *	makes it the current node.  An element may be ended with either
+  /** Adds an Element to the document under construction, and makes it the
+   *	current node.  An element may be ended with either
    *	<code>endElement</code> or <code>endNode</code>.
    */
-  public void startElement(Element anElement);
+  public void startElement(String tagname, NamedNodeMap attrs);
 
   /** Ends the current Element.  The end tag may be optional.  
    *	<code>endElement(true)</code> may be used to end an empty element. 
    */
   public boolean endElement(boolean optional);
+
+  /** Adds a new node with the given type, name, and value to the document 
+   *	under construction.
+   *
+   * @param nodeType the node type as defined in 
+   *	<code>org.w3c.Node</code> or <code>org.risource.active.NodeType</code>
+   * @param nodeName the node's name.  As a special kludge, a text node with a 
+   *	non-null <code>nodeName</code> is marked as ignorable. 
+   * @param value the ``value'' of the node. 
+   */
+  public void putNewNode(short nodeType, String nodeName, String value);
+
+  /** Adds a new node with the given type and name to the document 
+   *	under construction, and makes it the current node.
+   */
+  public void startNewNode(short nodeType, String nodeName);
+
+  /** Adds a new node with the given name, type, and character data to 
+   *	the document under construction.  
+   *
+   *<p> This operation is equivalent to <a href="#putNewNode"
+   *	><code>putNewNode</code></a> except for the way the value is passed. 
+   *	In some cases a buffer may be more efficient. 
+   *
+   * @param nodeType the node type as defined in 
+   *	<code>org.w3c.Node</code> or <code>org.risource.active.NodeType</code>
+   *	Despite the name, the node type is <em>not</em> restricted to
+   *	indicating a subclass of <code>CharacterData</code>
+   * @param nodeName the node's name.  As a special kludge, a text node with a 
+   *	non-null <code>nodeName</code> is marked as ignorable. 
+   * @param buffer the buffer containing the ``value'' of the node. 
+   * @param start the index in <code>buffer</code> of the first character 
+   *	of the value.
+   * @param length the length in characters of the value. 
+   */
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length);
 
 }

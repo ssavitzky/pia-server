@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.6 1999-06-04 22:40:51 steve Exp $
+//	$Id: EntityInput.java,v 1.7 1999-07-14 20:21:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.6 1999-06-04 22:40:51 steve Exp $
+ * @version $Id: EntityInput.java,v 1.7 1999-07-14 20:21:22 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -84,7 +84,7 @@ public class EntityInput extends TreeEntity {
    */
   public ActiveNodeList getValueNodes(Context cxt) {
     if (nodeValue != null || wrappedInput == null) return nodeValue;
-    ToNodeList out = new ToNodeList();
+    ToNodeList out = new ToNodeList(null); // === possibly bogus
     Input in = fromValue(cxt);
     Copy.copyNodes(in, out);
     nodeValue = out.getList();

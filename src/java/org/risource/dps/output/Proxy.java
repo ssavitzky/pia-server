@@ -1,5 +1,5 @@
 ////// Proxy: filtering proxy for an Output
-//	$Id: Proxy.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+//	$Id: Proxy.java,v 1.5 1999-07-14 20:20:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import java.io.PrintStream;
  *	A Proxy can be used with no target to simply discard output.
  *	This is reasonably efficient.
  *
- * @version $Id: Proxy.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+ * @version $Id: Proxy.java,v 1.5 1999-07-14 20:20:41 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -68,13 +68,26 @@ public class Proxy implements Output {
     depth --;
     return (target != null)? target.endNode() : depth >= 0;;
   }
-  public void startElement(Element anElement) {
+  public void startElement(String tagname, NamedNodeMap attrs) {
     depth++;
-    if (target != null) target.startElement(anElement);
+    if (target != null) target.startElement(tagname, attrs);
   }
   public boolean endElement(boolean optional) {
     depth --;
     return (target != null)? target.endElement(optional) : depth >= 0;
+  }
+
+  public void putNewNode(short nodeType, String nodeName, String value) {
+    if (target != null) target.putNewNode(nodeType, nodeName, value);
+  }
+  public void startNewNode(short nodeType, String nodeName) {
+    depth++;
+    if (target != null) target.startNewNode(nodeType, nodeName);
+  }
+  public void putCharData(short nodeType, String nodeName,
+			  char[] buffer, int start, int length) {
+    if (target != null)
+      target.putCharData(nodeType, nodeName, buffer, start, length);
   }
 
   /************************************************************************

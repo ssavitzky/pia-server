@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.10 1999-06-25 00:42:11 steve Exp $
+//	$Id: BasicProcessor.java,v 1.11 1999-07-14 20:21:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.tree.TreeElement;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.10 1999-06-25 00:42:11 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.11 1999-07-14 20:21:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -128,7 +128,7 @@ public class BasicProcessor extends ContextStack implements Processor {
     if (input.hasActiveAttributes()) {
       ActiveElement oe = node.asElement();
       ActiveElement e = oe.editedCopy(expandAttrs(oe.getAttrList()), null);
-      output.startElement(e);
+      output.startNode(e);
       if (input.hasChildren()) { processChildren(); }
       output.endElement(e.isEmptyElement() || e.implicitEnd());
     } else if (input.hasChildren()) {
@@ -149,7 +149,7 @@ public class BasicProcessor extends ContextStack implements Processor {
       ActiveElement oe = node.asElement();
       ActiveElement e =
 	new TreeElement(oe, expandAttrs(oe.getAttrList()));
-      output.startElement(e);
+      output.startNode(e);
       if (input.hasChildren()) { copyChildren(); }
       output.endElement(e.isEmptyElement() || e.implicitEnd());
     } else if (input.hasChildren() && ! node.hasChildNodes()) {
@@ -218,7 +218,7 @@ public class BasicProcessor extends ContextStack implements Processor {
   /** Expand nodes in a nodelist. */
   public ActiveNodeList expandNodes(ActiveNodeList nl) {
     if (nl == null) return null;
-    ToNodeList dst = new ToNodeList();
+    ToNodeList dst = new ToNodeList(getTopContext().getTagset());
     expandNodes(nl, dst);
     return dst.getList();
   }

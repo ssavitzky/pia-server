@@ -1,5 +1,5 @@
 ////// actionHandler.java: <action> Handler implementation
-//	$Id: actionHandler.java,v 1.5 1999-06-25 00:41:27 steve Exp $
+//	$Id: actionHandler.java,v 1.6 1999-07-14 20:20:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: actionHandler.java,v 1.5 1999-06-25 00:41:27 steve Exp $
+ * @version $Id: actionHandler.java,v 1.6 1999-07-14 20:20:13 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -58,7 +58,7 @@ public class actionHandler extends GenericHandler {
     ActiveElement e = in.getActive().asElement();
     ActiveElement element = e.editedCopy(atts, null);
     // === should be able to skip expanding the attrs altogether for <action>
-    out.startElement(element);
+    out.startNode(element);
     Copy.copyNodes(content, out);
     out.endElement(e.isEmptyElement() || e.implicitEnd());
   }

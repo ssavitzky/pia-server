@@ -43,6 +43,17 @@
 
 </dl>
 
+<h3>Top Priorities</h3>
+
+<ol>
+  <li> (!) Event-driven interface to Processor -- using the DPS  as a SAX
+       application falls out rather directly from this.  It also leads to...
+  <li> C-DPS -- using the DPS as an Apache module falls out from this.
+  <li> SAX and DOM interfaces -- The only thing that's not trivial today is
+       taking <em>input</em> from a SAX parser; that requires an event-driven
+       interface to Processor. 
+</ol>
+
 <h3>Language</h3>
 <dl>
   <dt> (!) Make it unnecessary to use entities as local variables
@@ -82,7 +93,7 @@
        Processor, which have accumulated a certain amount of cruft).  It might
        be desirable to move some of the interfaces used internally
        (e.g. Action) down into subdirectories.
-  <dt> (2) Standard interfaces
+  <dt> (3) Standard interfaces
   <dd> ToSAX, FromDOM, ToDOM.  Add SAXProxy wrapper for Processor.  We will
        use the packages <code>org.risource.sax</code> and
        <code>org.risource.dom</code> (which already exists) for these, in
@@ -94,10 +105,11 @@
        creating Node instances in most cases.  <code>getNode(level)</code> is
        only used to implement <code>retainTree</code> in BasicParser, and
        there are other ways to do it.
-  <dt> (3) Processor cleanup / event interface
+  <dt> (!) Processor cleanup / event interface
   <dd> The idea is not only to simplify Processor, but to add an event-driven
        interface to it, the better to handle SAX parsers and similar
-       push-driven interfaces.
+       push-driven interfaces.  The technique used is a specialized Output
+       implementation called <code>ToProcessor</code>.
   <dt> Event-driven Action interface
   <dd> Add operations to the Action interface to improve efficiency when the
        Processor is being driven from an event interface like SAX.
@@ -114,7 +126,7 @@
   <dd> Implement a PIA module, probably using <code>mod_java</code> as a
        base.  This would be a ``quick-and-dirty'' implementation just to see
        how the PIA fits into the Apache environment.
-  <dt> C-DPS
+  <dt> (2) C-DPS
   <dd> Implement a C++ port of the DPS, possibly using Jade as the base.  This
        would be easiest to do after giving Processor an event interface.
   <dt> Apache/C-DPS integration.
@@ -124,7 +136,7 @@
 
 <h3>Other</h3>
 <dl>
-  <dt> (1) PIA command line
+  <dt> PIA command line
   <dd> The PIA's command-line processing needs to be simplified; it's
        currently a kludge.  It should be possible to load agents from the
        command line.
@@ -147,13 +159,34 @@
     proceeding in these stages:
 
 <ol>
+  <li> Extend Output so that it can take a Cursor instead of a Node, or even
+       node components (node name, node type, attribute list, value string,
+       and content).  It would be possible for a SAX parser or other
+       event-driven parser to drive an Output almost directly at this point;
+       an adapter would be needed to handle the differences in method names
+       and parameter types.
+  <li> Add an event-driven interface to Processor -- essentially, make a new
+       kind of Output that <em>drives</em> a TopProcessor, rather than being
+       driven <em>by</em> it.  Equivalently, one could simply have
+       TopContext <em>extend</em> Output.
+
+       <p>In either case, this would require constructing subtrees for
+       some (perhaps not all) active nodes.  An alternative, event-oriented
+       <code>action</code> method would probably be needed in the
+       <code>Action</code> interface, or (more likely) a pair of them.  In the
+       default case these would simply pass the event (in the form of a
+       cursor) to the Output.  For <em>active</em> nodes, these would
+       construct a subtree and call the original 3-argument
+       <code>action</code> routine when the end tag is seen, but eventually
+       many handlers would be rewritten for better performance.
+  <li> It would be possible at this point to switch Parser from being an Input
+       to being something that merely drives an Output.  
   <li> The Input and Output implementations <code>FromDocument</code>,
        <code>ToDocument</code>, <code>ToSAX</code>.
        (Document, of course, refers to the corresponding DOM class).
        <code>ToDocument</code> already exists as a stub.  <code>FromSAX</code>
-       would require the use of two threads and a queue; it's not particularly
-       useful because the SAX interface doesn't pass entities to the
-       application.  
+       would require the use of two threads and a queue, so  instead we
+       implement DocumentProcessor, the DPS equivalent of SAX DocumentHandler.  
   <li> Extend Tagset to implement DocumentType (it's almost there now).  This
        would probably be sufficient to allow our own DOM to be used in some
        other applications.  (Not all -- in particular,
@@ -168,22 +201,6 @@
        than 50 calls on <code>getNode</code> and <code>getActive</code>.  More
        work needs to be done in order to replace all (most?) uses of NodeList
        with cursors as well.
-  <li> Extend Output so that it can take a Cursor instead of a Node, or even
-       node components (node name, node type, attribute list, value string,
-       and content).  It would be possible for a SAX parser or other
-       event-driven parser to drive an Output directly at this point.
-  <li> Add an event-driven interface to Processor -- essentially, make
-       Processor into an Output.  This would
-       require constructing subtrees for some (perhaps not all) active nodes.
-       An alternative, event-oriented <code>action</code> method would
-       probably be needed in the <code>Action</code> interface, or (more
-       likely) a pair of them.  In the default case these would simply pass
-       the event (in the form of a cursor) to the Output.  For <em>active</em>
-       nodes, these would construct a subtree and call the original 3-argument
-       <code>action</code> routine when the end tag is seen, but eventually
-       many handlers would be rewritten for better performance.
-  <li> It would be possible at this point to switch Parser from being an Input
-       to being something that merely drives an Output.  
 </ol>
 
 <p> Note that if Output extends SAX, and Processor extends Output, it becomes
@@ -380,7 +397,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.10 1999-06-29 00:53:40 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.11 1999-07-14 20:19:46 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
