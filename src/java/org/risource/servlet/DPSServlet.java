@@ -1,5 +1,5 @@
 ////// DPSServlet.java: PIA DPS Servlet implementation
-//	$Id: DPSServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+//	$Id: DPSServlet.java,v 1.3 2000-04-12 00:47:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,8 @@ import org.risource.dps.tagset.Loader;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileReader;
+import java.io.PrintStream;
+import java.io.FileOutputStream;
 
 import java.util.Enumeration;
 import javax.servlet.*;
@@ -45,7 +47,7 @@ import javax.servlet.http.*;
  *	is used -- everything is obtained from its ServletContext and
  *	ServletConfig.
  *
- * @version $Id: DPSServlet.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+ * @version $Id: DPSServlet.java,v 1.3 2000-04-12 00:47:06 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.PIAServlet
  * @see org.risource.dps
@@ -71,6 +73,12 @@ public class DPSServlet
     * to the servlet.
     */
   protected ServletConfig config;
+
+  /** The Site representing this server. */
+  protected Site site;
+
+  protected String logFileName = null;
+  protected PrintStream logStream = null;
 
   /** Constructor.
     *
@@ -103,16 +111,31 @@ public class DPSServlet
     *
     * <p> === totally bogus at present: needs to get tagset and mimetype maps.
     */
-  public void init() throws ServletException
+  public void init(ServletConfig conf) throws ServletException
   {
+    super.init(conf);
     config = getServletConfig();
     context = config.getServletContext();
 
+    // Start by opening the log file, if there is one.
+    String logfile = config.getInitParameter("logfile");
+    if (logfile != null) {
+      try {
+	logFileName = logfile;
+	logStream   = new PrintStream(new FileOutputStream(logFileName));
+	Loader.setLog(logStream);
+	Site.setReporting(logStream);
+	Loader.setVerbosity(1);
+	Site.setVerbosity(1);
+      } catch (IOException e) {
+	logFileName = null;
+	logStream = null;
+	log(e.toString() + " attempting to open log file " + logFileName);
+      }
+    }
     //get home, etc. out of config 
 
     String home = config.getInitParameter("home");
-    String root = config.getInitParameter("root");
-    String configfile = config.getInitParameter("configfile");
 
     // tell the tagset loader where .../lib is
     if (home != null) {
