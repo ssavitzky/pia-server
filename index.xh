@@ -141,10 +141,9 @@
     <td align="right" valign="center">
         <A href="http://sourceforge.net"> <IMG align="right"
            src="http://sourceforge.net/sflogo.php?group_id=23532"
-           width="88" height="31" border="0" alt="SourceForge
-           Logo"></A>
+           width="88" height="31" border="0" alt="SourceForge Logo" /></A>
     </td>
   </tr>
 </table>
-<short-footer cvsid="$Id: index.xh,v 1.25 2001-04-03 18:41:27 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.26 2001-04-04 00:22:34 steve Exp $" />
 </body></html>
