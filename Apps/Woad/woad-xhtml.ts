@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.25 2000-09-26 23:11:12 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.26 2000-10-02 23:13:02 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -646,10 +646,10 @@ Note that we only need these inside the PIA.
 
 <define element="listNoteFiles">
   <doc> This element sets the variables <code>files</code>,
-	<code>indexFiles</code>, and <code>noteFiles</code>.  The content is
-	the path to the directory containing the notes.  It sets the variable
-	<code>notePath</code> to the note directory's path, and forces it to
-	end with a slash.
+	<code>indexFiles</code>, <code>indexDirs</code>, and
+	<code>noteFiles</code>.  The content is the path to the directory
+	containing the notes.  It sets the variable <code>notePath</code> to
+	the note directory's path, and forces it to end with a slash.
   </doc>
   <action>
     <set name="VAR:notePath">
@@ -664,6 +664,10 @@ Note that we only need these inside the PIA.
 
     <set name="VAR:indexFiles">
       <extract><from>&files;</from><match>\.wi$</match></extract>
+    </set>
+
+    <set name="VAR:indexDirs">
+      <extract><from>&files;</from><match>^-.-$</match></extract>
     </set>
 
     <set name="VAR:noteFiles">
@@ -761,9 +765,15 @@ Note that we only need these inside the PIA.
 	 <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
 	 help </th> 
     </tr> <let name="index"></let><let name="subs"></let>
+    <if> &indexDirs;
+         <then> <doc> we have sub-index directories.  Put them out first.
+    		</doc>
+    		<indexTableRow f="">&indexDirs;</indexTableRow>
+         </then>
+    </if>
     <repeat>
       <foreach entity="f">&indexFiles;</foreach>
-      <if> <test match="-\.">&f;</test>
+      <if> <test match="-.-">&f;</test>
     	   <then><doc> we have a sub-index file.  Add it to subs.  Note the
 	               use of <code>set</code> here -- we're inside a
 	               <code>repeat</code>, which has its own context.
@@ -1303,6 +1313,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.25 2000-09-26 23:11:12 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.26 2000-10-02 23:13:02 steve Exp $ -->
 </tagset>
 

@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.7 2000-09-25 23:22:03 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.8 2000-10-02 23:13:01 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -153,7 +153,7 @@
       <let name="path"><get name="attributes:path"/></let>
       <let name="line"><get name="attributes:line"/></let>
     </hide>
-    <tr> <td rowspan="2" valign="top"> <a href="&id;">&word;</a>
+    <tr> <td valign="top"> <a href="&id;">&word;</a>
 <!-- === wrong: word needs to link to .words/&context;/&word; if outside
      === the context directory -->
 	 </td>
@@ -164,7 +164,53 @@
 	      </if>
 	 </td>
     </tr>
-    <tr> <td> &nbsp;&nbsp;&nbsp; <get name="content" />
+    <tr> <td> &cxt; (defined)
+	 </td>
+         <td> &nbsp;&nbsp;&nbsp; <get name="content" />
+	 </td>
+    </tr>
+  </action>
+</define>
+
+
+<define element="Ref">
+  <doc> Word use (reference)
+  </doc>
+  <action><hide>
+      <let name="cxt"><get name="attributes:context"/></let>
+      <let name="word"><get name="attributes:word"/></let>
+      <let name="id"><get name="attributes:id"><get name="word"/></get></let>
+      <let name="path"><get name="attributes:path"/></let>
+      <let name="line"><get name="attributes:line"/></let>
+    </hide>
+    <tr> <td valign="top"> <a href="&id;">&word;</a>
+<!-- === wrong: word needs to link to .words/&context;/&word; if outside
+     === the context directory -->
+	 </td>
+	 <td> <a href="&sourcePrefix;&path;">&path;</a>
+	      <if> &line;
+	           <then> <a href="&sourcePrefix;&path;#&line;">(&line;)</a>
+	           </then>
+	      </if>
+	 </td>
+    </tr>
+    <tr> <td> &cxt; (used)
+	 </td>
+         <td> &nbsp;&nbsp;&nbsp; <get name="content" />
+	 </td>
+    </tr>
+  </action>
+</define>
+
+
+<define element="xref">
+  <doc> entry in top-level xrefs.wi file.  Content is a link to
+	<code>.words/xref/-*-/&word;.wi </code> 
+  </doc>
+  <action>
+    <tr> <td valign="top"> &attributes:name;
+	 </td>
+	 <td> <a href="&content;">&content;</a>
 	 </td>
     </tr>
   </action>

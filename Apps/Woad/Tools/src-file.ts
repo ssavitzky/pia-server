@@ -21,7 +21,7 @@
 	xrefs="SITE:xref"
 	include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-file.ts,v 1.3 2000-09-30 00:09:03 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.4 2000-10-02 23:13:05 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
@@ -89,7 +89,10 @@
   <action><hide><set name="VAR:line">
 		     <numeric op="sum" pad="6">1 <get name="VAR:line" />
 	             </numeric></set>
-	  </hide><font color="#666699"><get name="VAR:line" /></font>  <hide>
+		<let name="ln">
+		     <numeric op="sum"><get name="VAR:line" />
+	             </numeric></let>	  
+	  </hide><font color="#666699"><a name="&ln;">&VAR:line;</a></font>  <hide>
   </hide></action>
 </define>
 

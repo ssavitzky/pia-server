@@ -137,7 +137,7 @@
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
 <table bgcolor="white">
   <!-- First list the indices -->
-  <if>&indexFiles;
+  <if>&indexFiles;&indexDirs;
       <then><indexTableRows>&indexFiles;</indexTableRows></then>
   </if>
 
@@ -279,5 +279,5 @@
 </table>
 
 
-<short-footer cvs-id="$Id: word-listing.xh,v 1.7 2000-08-26 00:38:24 steve Exp $" />
+<short-footer cvs-id="$Id: word-listing.xh,v 1.8 2000-10-02 23:13:06 steve Exp $" />
 </body></html>

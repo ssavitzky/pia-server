@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.12 2000-09-30 00:09:08 steve Exp $
+#	$Id: woad-index.pl,v 1.13 2000-10-02 23:13:08 steve Exp $
 # Create WOAD index files.
 #
 
@@ -11,7 +11,8 @@ sub usage {
     print "	-l		local (no recursion)\n";
     print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "	-v		Print version string and exit\n";
-    print "	-q		Quiet\n;";
+    print "	-q		Quiet\n";
+    print "	-x		also produce cross-reference\n";
     print "  parameters: \n";
     print "	source=<dir>	source root\n";
     print "	root=<dir>	annotation root (same as -root <dir>)\n";
@@ -27,6 +28,9 @@ $offset 	= "";
 $root 		= "$ENV{HOME}/.woad";
 $recursive 	= 1 ;
 $project	= "";
+
+$doXref		= 0;
+$quiet		= 0;
 
 $sourcePrefix	= ".source";
 $sourceSuffix	= ".notes";
@@ -216,17 +220,21 @@ if (@ARGV == 0) { usage(); exit; }
 for ($i = 0; $i < @ARGV; ++$i) {
     $arg = $ARGV[$i];
 
-    if ($arg eq "-l") {			# Handle options:
+    if ($arg eq "-l") {			# Handle "-*" options:
 	$recursive = 0;
     } elsif ($arg eq '-v') {
 	print version() . "\n";  
 	exit(0);
     } elsif ($arg eq '-root') {
 	$root = $ARGV[++$i];
-    } elsif ($arg =~ /^-/) {
+    } elsif ($arg eq '-x') {
+	$xref = 1;
+    } elsif ($arg eq '-q') {
+	$quiet += 1;
+    } elsif ($arg =~ /^-/) {		 # unrecognized switch
 	usage();
 	exit(1);
-    } elsif ($arg =~ /^source\=(\S+)/) { # Handle parameters
+    } elsif ($arg =~ /^source\=(\S+)/) { # Handle "n=v" parameters
 	$source = $1;
     } elsif ($arg =~ /^prefix\=(\S*)/) { # \S* because prefix might be null
 	$sourcePrefix = $1;
@@ -258,8 +266,8 @@ $rec = $recursive? "/..." : "";
 
 $roots[0] = getRealDirPath($source);
 
-print STDERR "indexing $source$rec -> $root$project \n";
-print STDERR "    abs: " . $roots[0] . "\n";
+print STDERR "indexing $source$rec -> $root$project \n" unless ($quiet);
+print STDERR "    abs: " . $roots[0] . "\n" unless ($quiet);
 
 ###### Do the Work ######################################################
 
@@ -277,16 +285,25 @@ globalIndices();
 
 ## Increment $pass and re-index the sources looking for references
 # === do we need to clobber @roots here?
-$pass ++;
-indexDir($source, "/");
-makeCrossReference();
+if ($xref) {
+    @roots = ();
+    $roots[0] = getRealDirPath($source);
+
+    $pass ++;
+    indexDir($source, "/");
+    makeCrossReference();
+}
 
 ## Finally, output the statistics.
+if ($quiet > 1) { exit(0); }	# if not being very quiet, of course.
+
+$nPruned = $nsourceFiles - $nNotPruned;
 print STDERR "roots: @roots \n";
-print STDERR "#sourceFiles: $nSourceFiles, "
-	.    "($nSourceDirs dirs, $nNotPruned indexed), "
-	.    "#notes: $nNoteFiles, " 
-    	.    "#defs: $nDefs, #words $nWords\n";
+print STDERR "files: $nSourceFiles, "
+	.    "($nSourceDirs dirs, $nPruned pruned), "
+	.    "notes: $nNoteFiles, " 
+    	.    "defs: $nDefs\n";
+print STDERR "xrefs: $nWords\n" if ($xref);
 
 exit(0);
 
@@ -316,11 +333,11 @@ sub indexDir {
 
     # === eventually compare dates on directory and dirIndex.wi
     if (!$pass) { 
-	print STDERR "indexing $d -> $xd\n";
+	print STDERR "indexing $d -> $xd\n" unless ($quiet);
 	open (DIRINDEX, ">$xd/dirIndex.wi")
 	    || die "cannot create $xd/dirIndex.wi";
     } else {
-	print STDERR "reindexing $d -- ";
+	print STDERR "reindexing $d -- " unless ($quiet);
     }
 
     my $n = 0; my $s = 0;
@@ -335,7 +352,7 @@ sub indexDir {
     if (!$pass) {
 	close (DIRINDEX);
     } else {
-	print STDERR " $n files, $s dirs\n";
+	print STDERR " $n files, $s dirs\n" unless ($quiet);
     }
 
     # now do the subdirectories
@@ -471,7 +488,7 @@ sub indexFile {
     }
 
     ### At this point we're done if we're not re-indexing ###
-    return $indexme unless ($pass);
+    return $indexme if ($pass);
 
     # add type and type description to entry
     $entry{"type"} = $type;
@@ -714,7 +731,7 @@ sub indexWoadDir {
     my @subdirs = ();
 
     # === eventually compare dates on directory and dirIndex.wi
-    print STDERR "indexing notes in $d \n";
+    print STDERR "indexing notes in $d \n" unless ($quiet);
 
     for (my $i= 0; $i < @files; ++$i) {
 	my $f = $files[$i];
@@ -780,7 +797,7 @@ sub indexWoadNote {
     $ent .= "> $summary </Wfile>\n";
 
     $notesByTime{"m$mtime"} .= $ent;
-    print STDERR $ent;
+    # [debug] print STDERR $ent;
 
     return 0;
 }
@@ -868,7 +885,7 @@ sub globalIndices {
     for (@keys = sort(keys(%defs)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
-	print STDERR "defs for $context -> $dir/defs.wi\n";
+	print STDERR "defs for $context -> $dir/defs.wi\n" unless ($quiet);
 	mkdir ($dir, 0777);
 	open (INDEX, ">$dir/defs.wi");
 	@entries = sort(split /\n\n/, $defs{$context});
@@ -896,7 +913,7 @@ sub globalIndices {
     for (@keys = sort(keys(%docs)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
-	print STDERR "docs for $context -> $dir/docs.wi\n";
+	print STDERR "docs for $context -> $dir/docs.wi\n" unless ($quiet);
 	mkdir ($dir, 0777);
 	open (INDEX, ">$dir/docs.wi");
 	print INDEX $docs{$context};
@@ -927,9 +944,13 @@ sub makeCrossReference {
     for (@keys = sort(keys(%uses)), $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
 	$dir = "$root$project$words/$context";
-	print STDERR "uses for $context -> $dir/uses.wi\n";
+	print STDERR "uses for $context -> $dir/uses.wi\n" unless ($quiet);
 	mkdir ($dir, 0777);
-	# Don't even bother making a uses.wi -- it will normally be too big.
+	# Don't even bother filling out uses.wi -- it will normally be too big.
+	# Instead, make a dummy as a header.
+	open (INDEX, ">>$dir/uses.wi");
+	print INDEX "See breakout files uses-*-.wi\n";
+	close (INDEX);
 	@entries = sort(split /\n\n/, $uses{$context});
 	for ($i = 0; $i < 27; ++$i) {
 	    $c = substr('0ABCDEFGHIJKLMNOPQRSTUVWXYZ', $i, 1);
@@ -954,7 +975,7 @@ sub makeCrossReference {
     $context = "xref";
     $dir = "$root$project$words/$context";
     mkdir ($dir, 0775);
-    print STDERR "xrefs -> $root$project/xrefs.wi\n";
+    print STDERR "xrefs -> $root$project/xrefs.wi\n" unless ($quiet);
     open (XREFS, ">$root$project/xrefs.wi");
     $d = '';
     my $n = 0;
@@ -970,7 +991,7 @@ sub makeCrossReference {
 
 	if ($c ne $d) {		# If we're starting a new letter,
 	    mkdir ("$dir/-$c-", 0775); # ... make a directory.
-	    if ($d ne '') { print STDERR " $d($n)"; }
+	    if ($d ne '') { print STDERR " $d($n)" unless ($quiet); }
 	    $n = 0;
 	    $d = $c;
 	}
@@ -989,7 +1010,7 @@ sub makeCrossReference {
 	close (INDEX);
     }
     close (XREFS);
-    print STDERR "\n";
+    print STDERR "\n" unless ($quiet);
 
     # Here we do the chronological notes index
     open (INDEX, ">$root$project/AllNotesByTime.wi");
@@ -1073,6 +1094,6 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.12 2000-09-30 00:09:08 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.13 2000-10-02 23:13:08 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 
