@@ -21,14 +21,11 @@
 
 <hr />
 <h3><a name='agents'>Standard Agents</a></h3>
-<dl> 
-  <dt> <a name='View'>View agent</a></dt>
-       <if><agent-running name='View'></agent-running>
-           <then><em>installed</em></then><else>
-  <dd> <form action='/&AGENT:name;/load-agent' method='POST'>
-       <input type='submit' value=Load' />
-       src: <input name='src' size="30" value='./View/AGENT.xml' />
-       </form></dd></else></if>
+<dl><!-- === this stuff is syntacally incorrect.  Strictly speaking, the  -->
+    <!-- === "installed" should be _inside_ the dt element in a separate  -->
+    <!-- === if, and the dd should be in its own if.  As it is, the       -->
+    <!-- === "installed" appears outside the dt; chimera shows it on a    -->
+    <!-- === separate line, which is more correct than Netscape.          -->
   <dt> <a name='Proxie'>Proxie agent</a></dt>
        <if><agent-running name='Proxie'/>
            <then><em>installed</em></then><else>
@@ -38,7 +35,7 @@
        </form></dd></else></if>
   <dt> <em>Proxie Sub-agents</em> </dt>
   <dd> <dl>
-	 </dt><dt> <a name='History'>History agent</a>
+	 <dt> <a name='History'>History agent</a></dt>
 	      <if><agent-running name='History' />
 	          <then><em>installed</em></then><else>
 	 <dd> <form action='/Admin/load-agent' method='POST'>
@@ -46,7 +43,7 @@
 	      src: <input name='src' size="30"
 	      	          value='./Proxie/History/AGENT.xml' />
 	      </form></dd></else></if>
-	 </dt><dt> <a name='Toolbar'>Toolbar agent</a>
+	 <dt> <a name='Toolbar'>Toolbar agent</a></dt>
 	      <if><agent-running name='Toolbar' />
 	          <then><em>installed</em></then><else>
 	 <dd> <form action='/&AGENT:name;/load-agent' method='POST'>
@@ -54,9 +51,9 @@
 	      src: <input name='src' size="30" 
 	      	          value='./Proxie/Toolbar/AGENT.xml' />
 	      </form></dd></else></if>
-	 </dt><dt> <em>Toolbar sub-agents:</em></dt>
+	 <dt> <em>Toolbar sub-agents:</em></dt>
 	 <dd> <dl>
-		<dt> <a name='remoteTools'>remoteTools agent</a>
+		<dt> <a name='remoteTools'>remoteTools agent</a></dt>
 		     <if><agent-running name='remoteTools'>
 		     </agent-running><then><em>installed</em></then>
 		     <else>
@@ -65,7 +62,7 @@
 		     src: <input name='src' size="30" 
 	      	         	 value='./Proxie/remoteTools/AGENT.xml' />
 		     </form></dd></else></if>
-		</dt><dt> <a name='fileTools'>fileTools agent</a>
+		<dt> <a name='fileTools'>fileTools agent</a></dt>
 		     <if><agent-running name='fileTools'>
 		     </agent-running><then><em>installed</em></then><else>
 		<dd> <form action='/&AGENT:name;/create-agent' method='POST'>
@@ -73,8 +70,8 @@
 		     src: <input name='src' size="30" 
 	      	         	 value='./Proxie/fileTools/AGENT.xml' />
 		     </form></dd></else></if>
-	      </dt></dl>
-	 </dd><dt> <a name='Cache'>Cache agent</a> (keeps a copy of every external
+	      </dl></dd>
+	 <dt> <a name='Cache'>Cache agent</a> (keeps a copy of every external
 	      doc...) 
 	      <if><agent-running name='Cache'>
 	      </agent-running><then><em>installed</em></then><else>
@@ -85,18 +82,26 @@
 	      (could add more options here, like update frequency: always, never,
 	      once,...) 
 	      </form> </dd></else></if>
-       </dt></dl>
+       </dl>
 
-  </dt><dt> <a name='Demo'>Demo</a>
-       Active Document Demonstration and Test agent
+  <dt> <a name='Demo'>Demo</a>
+       (Active Document Demonstration and Test agent)</dt>
        <if><agent-running name='Demo'></agent-running><then><em>installed</em></then><else>
   <dd> <FORM action='/&AGENT:name;/create-agent' method='POST'>
-       <input type='submit' value="Create" />
-       name: <input name='agent' value='Demo' />
+       <input type='submit' value='Load' />
+       src: <input name='src' size="30" value='./Demo/AGENT.xml' />
        </FORM></dd></else></if>
 
-  </dt><dt> <a name='Swifty'>Swifty</a>
-       (from tutorial: illustrates how to create an agent)
+  <dt> <a name='View'>View agent</a></dt>
+       <if><agent-running name='View'></agent-running>
+           <then><em>installed</em></then><else>
+  <dd> <form action='/&AGENT:name;/load-agent' method='POST'>
+       <input type='submit' value='Load' />
+       src: <input name='src' size="30" value='./View/AGENT.xml' />
+       </form></dd></else></if>
+
+  <dt> <a name='Swifty'>Swifty</a>
+       (from tutorial: illustrates how to create an agent)</dt>
        <if><agent-running name='Swifty' />
            <then><em>installed</em></then><else>
   <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
@@ -104,11 +109,15 @@
        name:<input name='agent' value='Swifty' /><br />
        </form> </dd></else></if>
 
-</dt></dl>
+</dl>
 
 <hr />
 <h3><a name='DOFS'>Document-Oriented File Systems</a></h3>
-Provides basic file browsing capabilities.
+
+<p> DOFS agents provide basic file browsing capabilities; their function is to
+    serve local files.  They are usually created, using the form below, rather
+    than being loaded from XML files. 
+
 <dl>
   <dt> <a name='dofs'>the DOFS agent</a>
   </dt><dd> <if><agent-running name='DOFS'>
@@ -240,5 +249,5 @@ Provides basic file browsing capabilities.
     into your own <code> START-UP.html </code> file.  When you design a new
     agent, you can add a default install form to this page.</p> 
 
-<footer cvsid='$Id: installers.xh,v 1.10 1999-05-18 20:12:55 steve Exp $' />
+<footer cvsid='$Id: installers.xh,v 1.11 1999-05-28 21:40:33 steve Exp $' />
 </body></html>
