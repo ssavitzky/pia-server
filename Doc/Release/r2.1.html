@@ -8,36 +8,106 @@
 <p> <strong>Release 2.1 is not out yet.</strong>  This document is a
     place-holder.  For the list of things that still have to be done between
     r2.0 and r2.1, see <a href="r2.1.to-do.html">r2.1.to-do.html</a>.
+</p>
 
-<p> Release 2.1 is the first <strong>stable</strong> release of the PIA.
-
-<p> We suggest that people who wish to use the PIA to develop applications but
-    are not interested in being on the cutting edge wait for 2.1, but we
-    believe that there are unlikely to be any <em>major</em> changes between
-    the current release (2.0.7) and Release 2.1.
+<p> Release 2.1.1 is the first <strong>stable</strong> release of the PIA.  We
+    intend to keep incompatible changes to the tag language and configuration
+    files to a minimum after this point, so as to provide a stable base on
+    which to build applications.  We <em>do</em> expect to add <em>new</em>
+    language features and new applications -- these include, in the former
+    category, support for XML Namespaces, and in the latter, a complete
+    small-office form-handling package.
+</p>
 
 <p> Subscribe to <a href="mailto:PIA-announce-request@risource.org">
     PIA-announce@RiSource.org</a> to be notified of new releases.  Copies of
     the PIA can be obtained from our web site, <a
     href="http://www.RiSource.org/"> http//www.RiSource.org/PIA</a>.
+</p>
 
 
 <h2><a name="announce">Release Announcements</a></h2>
-<h3>Release 2.1.0</h3>
+<h3>Release 2.1.1</h3>
 
 <p> <em>Watch this space</em>
+
+<p> Release 2.1.1 is the first <strong>stable</strong> release of the PIA
+    (Platform for Information Applications).  Several non-trivial applications
+    have been implemented using the PIA, and at Release 2.1 it is considered
+    ``ready for prime time''. 
+</p>
+
+<p> From this point, we expect that any changes made to the PIA, and
+    especially to the tag language, will take the form of incremental
+    improvements:  we intend for 2.1.1 to provide a stable base for
+    applications.  We expect that any changes in the tag language after this
+    point will be made in such a way as not to affect existing applications. 
+</p>
+
+<p> It <em>is</em> possible that noticable changes may be made in the tree
+    structure of the documentation and sample applications.  Given the PIA's
+    flexible site-structuring mechanism, any such changes should be easy to
+    work around. 
+</p>
+
+
+<h4>Issues</h4>
+
+<p> There are a few ``issues'' with 2.1.1, mainly functionality which we hoped
+    would be present.  
+</p>
+
+<ol>
+  <li> <strong>No support for XML namespaces.</strong> This is currently the
+       biggest hole in the PIA.  We expect to add namespace support in the
+       near future, but will continue to support XML without namespaces
+       because many other XML applications (not just the PIA!)  still do not
+       support them, either.  This includes the DOM 1.0 and SAX 1.0 API's,
+       which can be expected to remain in widespread use for some time.
+  </li>
+  <li> <strong>No support for servlets and SAX.</strong>
+  </li>
+  <li> <strong>No support for DTD's.</strong>  Our parser still does not
+       properly handle the internal subset of the DTD.
+  </li>
+</ol>
+
+<h4>Changes since 2.0.8</h4>
+
+<ol>
+  <li> Language cleanup:
+       <ul>
+	 <li> <code>op="<em>operation</em>"</code> attributes for all tags
+	      (e.g. &lt;test&gt;, &lt;numeric&gt;, &lt;logical&gt;) that
+	      implement multiple operations.  The old operation-name
+	      attributes are still available for use in documents parsed using
+	      a legacy, HTML parser.
+       </ul>
+  </li>
+  <li> Improvements to <code>tsdoc</code> tagset.  
+       <ul>
+	 <li> Tagset documentation can now be served on the fly from a
+	      <code>.ts</code> file.
+	 <li> Automatically generated TOC and tag index.
+	 <li> Improved cosmetics (color, formatting).
+       </ul>
+  </li>
+</ol>
 
 
 <h2><a name="previous">Previous Release</a></h2>
 
 <p> <a href="r2.0.html">Release 2.0</a> was the previous release series.
+</p>
 
-<p> Release 2.0.9 is intended to be essentially the ``beta'' version of 2.1 --
+<p> Release 2.0.9 was, essentially, the ``beta'' version of 2.1 --
     it is unlikely that anything other than bug fixes will have been done in
     the interim.  If you have been using earlier versions of the PIA, you
-    should at least look at the changes introduced since 2.0.6. 
+    should at least look at the changes introduced since 2.0.6; 2.0.7 and to a
+    lesser extent 2.0.8 introduced significant changes. 
+</p>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.html,v 1.1 1999-10-27 22:06:31 steve Exp $</b><br>
+<b>$Id: r2.1.html,v 1.2 2000-02-26 00:15:45 steve Exp $</b><br>
 </body></html>

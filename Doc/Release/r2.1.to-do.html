@@ -14,8 +14,9 @@
     items labeled <b>Hole</b> may also be optional.
 
 <p> See the various source-code <code>to-do</code> and <code>done</code> files
-    for details.  At each release, completed items are deleted from this
-    file; they can be found in the appropriate <code>done</code> file.
+    for details.  At each point release (e.g. 2.0.8), completed items are
+    deleted from this file; they can be found in the appropriate
+    <code>done</code> file.
 </em></blockquote>
 
 <p> Items are grouped as follows:
@@ -29,28 +30,24 @@
 See also:
 <ul>
   <li> <a href="#Keywords">Keywords</a>
-  <li> <a href="#end">Oldest Entry</a> (at end.)
 </ul>
 
 <h2><a name="code">Code</a></h2>
 
 <ol>
-  <li> <b>Bug</b> Correct handling for attribute case <br>
-       Need to case-fold attributes correctly for the tagset.  Mixed-case
-       attributes need to work.
+  <li> 2000-02-23 <b>Bug</b> Handle mixed-case attributes <br>
+        Mixed-case attributes need to work.  
 
-  <li> <b>Bug</b> Correct handling for character entities. <br>
-       Currently they're not defined, which causes several kinds of havoc.
-       If we define them, need "retain" in many cases (e.g. &amp;nbsp;).
-
-  <li> <b>Bug</b> shouldn't split on whitespace sometimes <br>
-       e.g. in &lt;from&gt;, and &lt;foreach&gt;.  Requires a reliable
-       &lt;text split&gt; operation.
-
-  <li> <b>Bug</b> subst bug <br>
+  <li> 2000-02-22 <b>Bug</b> subst bug <br>
        seems to substitute for one char to the left of the match.  This
        is either a bug in the library or a result of an old workaround (adding
        null to end of string) that may no longer be necessary.
+
+  <li> 2000-02-25 <b>Hole</b> Entity and Attr should keep value in children <br>
+       This would fix many problems with entities, extract, etc. -- it will
+       also break some things.  It's needed for cached entities.  Entities, at
+       least, should also know their tagset.  It also brings us back into DOM
+       compliance, for what (little) that's worth.
 
   <li> <b>Bug</b> POST breaks when proxied through Apache. <br>
        Just spins its wheels.  Should time out.
@@ -59,6 +56,38 @@ See also:
        <p>
        <p>
 
+  <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
+       and file-only and http-only versions of &lt;include&gt; etc.; use
+       ``suspect'' to turn off loading of <code>.xcf</code> and
+       <code>.ts</code> files in subsites -- go up to non-suspect subsite.
+
+  <li> <b>Hole</b> Servlet support <br>
+       We need two servlets: PIAServlet, which includes the Subsite mapping
+       stuff, and DPSServlet, which only does processing.
+       
+  <li> <b>Hole</b> URL-manipulation tag <br>
+       something like &lt;date&gt; but for URL's.
+
+  <li> <b>Hole</b> Language cleanup <br>
+       <ul>
+	 <li> <code>op="<em>operation</em>"</code> attrs (2000-02-17)
+	 <li> other attribute cleanup. <br />
+	        &lt;define syntax=...&gt; (2000-02-23)<br />
+	        default <code>case="sensitive"</code>. (2000-02-25)
+	 <li> &lt;text split="<em>sep</em>" join="<em>sep</em>"&gt;
+	      (could actually leave <code>sep</code> instead of join)
+	 <li> Parametrize ``<code>&amp;</code>'' and ``<code>:</code>'' in
+	      tagset attributes.
+       </ul>
+       <p>
+
+  <li> <em>=== somewhere around here is the cutoff for 2.1 === </em><!-- === -->
+
+       <p>
+
+  <li> <b>Hole</b> SAX / DOM support<br>
+       With DOM we get Cocoon as well.
+
   <li> <b>Hole</b> XML namespace support <br>
 
   <li> <b>Hole</b> Ability to re-read config files. <br>
@@ -66,19 +95,8 @@ See also:
        list in the Subsite and uninstall them by object ID.  Requires
        <code>{un}registerAgent</code> in Site.
 
-  <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
-
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
        Need access to files relative to root, vroot, and home. 
-
-  <li> <b>Hole</b> URL-manipulation tag <br>
-       something like &lt;date&gt; but for URL's.
-       
-  <li> <b>Impr</b> Entity and Attr should keep value in children <br>
-       This would fix many problems with entities, extract, etc. -- it will
-       also break some things.  It's needed for cached entities.  Entities, at
-       least, should also know their tagset.  It also brings us back into DOM
-       compliance, for what (little) that's worth.
 
   <li> <b>Hole</b> State maintenance <br>
        When a subsite's properties are changed, the changes have to be written
@@ -103,6 +121,18 @@ See also:
        they go out of context (scope), i.e. when a TopProcessor exits.
 
        <p>
+
+  <li> <b>Impr</b> Get attribute-list case sens. from tagset <br>
+       Need to case-fold attributes correctly for the tagset.
+
+  <li> <b>Impr</b> Correct handling for character entities. <br>
+       Currently they're not defined, which causes several kinds of havoc.
+       If we define them, need "retain" in many cases (e.g. &amp;nbsp;).
+
+  <li> <b>Impr</b> shouldn't split on whitespace sometimes <br>
+       e.g. in &lt;from&gt;, and &lt;foreach&gt;.  Requires a reliable
+       &lt;text split&gt; operation. [Downgraded to Impr from Bug because it's
+       performing to spec, but the spec's just not good.]
 
   <li> <b>Impr</b> Copying Documents <br>
        Want both ability to tee-off and save a proxied document, and a
@@ -158,6 +188,9 @@ See also:
 <h2><a name="doc">Documentation</a></h2>
 
 <ol>
+  <li> <b>Bug</b> Samples needs HEADER.html<br>
+       So do some other directories, probably, but that's an obvious one.
+       
   <li> <b>Impr</b> Separate tutorials and references <br>
        Possibly bring back the old ``Manuals'' directory, or perhaps just move
        each reference into its own subdirectory (which is true of tagset and
@@ -214,5 +247,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.17 2000-01-04 17:15:06 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.18 2000-02-26 00:15:45 steve Exp $</b><br>
 </body></html>

@@ -20,6 +20,80 @@
 
 
 <h2><a name="announce">Release Announcements</a></h2>
+<h3>Release 2.0.9</h3>
+
+<h4>Major Issues</h4>
+
+<p> As a consequence of the changes listed below, there are some compatibility
+    issues in this release:
+
+<ol>
+  <li> The default for string matching and attribute lookup is to be
+       case-<em>sensitive</em>.  Tags that do string matching must be passed a
+       <em>false</em> <code>case</code> attribute in order to be
+       case-insensitive. 
+  </li>
+  <li> We are compiling with JDK 1.2.2 these days, so the documentation
+       in <code><a href="../API/javadoc/">/Doc/API/javadoc</a></code> has a
+       different organization.
+  </li>
+</ol>
+
+<p> It is expected that no further user-visible changes will be made between
+    now and Release 2.1, which is expected by March 1.  A few items may,
+    however, be <em>added</em>, time permitting.
+</p>
+
+<h4>Changes since 2.0.8</h4>
+
+<ol>
+  <li> The default for string matching and attribute lookup is to be
+       case-<em>sensitive</em>.  Tags that do string matching must be passed a
+       <em>false</em> <code>case</code> attribute in order to be
+       case-insensitive.  Suitable false values are: <code>""</code>,
+       <code>"0"</code>, <code>"no"</code>, <code>"false"</code>, and
+       <code>"insensitive"</code>.  Actually, any value starting with
+       <code>"i"</code> will work.
+  </li>
+  <li> At this point, all tags that take an attribute that defines the
+       operation to be performed (e.g. <code>&lt;numeric add="add"&gt;</code>
+       now take an <code>op="<em>operation</em>"</code> attribute as a
+       preferred alternative.  It is considered unlikely that the old form
+       will go away, however, because it's a better fit for embedding in
+       legacy HTML files.  We debated calling the operation attribute of
+       &lt;test&gt; ``<code>test</code>'', but in the end decided on
+       <code>op</code> for consistency.
+  </li>
+  <li> Similar ``multiple-choice'' attributes have been provided for other
+       functions, all with an eye toward making XML code more readable.
+       Examples include <code>syntax</code> in &lt;define&gt;. 
+  </li>
+  <li> The <code>tsdoc.ts</code> and <code>slides.ts</code> tagsets have been
+       defined as providing the default processing for files with
+       <code>.ts</code> and <code>.slides</code> extensions, respectively.
+       This means that tagset documentation can be viewed directly, and slide
+       previewing becomes simpler.
+  </li>
+  <li> The <code>slides.ts</code> tagset has been debugged and updated.  When
+       viewing slides through the PIA it is possible to pass a query string
+       with <code>slide=<em>starting-slide</em></code> and
+       <code>n=<em>number-of-slides</em></code>.  Links are handled correctly,
+       and processing is surprisingly fast.
+  </li>
+  <li> Values of attributes and entities are now stored in the child nodes, as
+       required by the current version of the DOM.
+  </li>
+  <li> The Emacs extensions, in
+       <a href="../../Contrib/rsv.ricoh.com/html-helper-mode/"
+       >/Contrib/rsv.ricoh.com/html-helper-mode/</a>, have been updated from
+       the latest available version, and hacked for XHTML syntax.   Support
+       for tables and PIA tags has also been added.
+  </li>
+  <li> The <code>Ticker</code> sample application has been moved from
+       <code>/Agents</code> to <code>/Samples</code>.
+  </li>
+</ol>
+
 <h3>Release 2.0.8</h3>
 
 <p> As promised, this release includes a list of things that ought to be fixed
@@ -581,5 +655,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.0.html,v 1.35 2000-01-04 17:15:53 steve Exp $</b><br>
+<b>$Id: r2.0.html,v 1.36 2000-02-26 00:15:45 steve Exp $</b><br>
 </body></html>
