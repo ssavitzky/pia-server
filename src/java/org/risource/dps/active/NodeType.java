@@ -1,5 +1,5 @@
 ////// NodeType.java: Document Processor basic implementation
-//	$Id: NodeType.java,v 1.4 1999-06-25 00:16:09 steve Exp $
+//	$Id: NodeType.java,v 1.5 1999-07-14 20:12:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
  * <p> This type also performs type-related tests on nodes, partially
  *	compensating for the lack of inheritance in the DOM types.
  *
- * @version $Id: NodeType.java,v 1.4 1999-06-25 00:16:09 steve Exp $
+ * @version $Id: NodeType.java,v 1.5 1999-07-14 20:12:32 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.w3c.dom.Node
@@ -117,7 +117,16 @@ public class NodeType {
    *	 they are not considered text in the DPS.
    */
   public static final boolean isText(Node n) {
-    switch (n.getNodeType()) {
+    return isTextType(n.getNodeType());
+  }
+
+  /** Test for the node containing text.  
+   *	
+   * <p> Note that although DOM comment nodes inherit from CharacterData, 
+   *	 they are not considered text in the DPS.
+   */
+  public static final boolean isTextType(short n) {
+    switch (n) {
     case Node.TEXT_NODE:
     case Node.CDATA_SECTION_NODE:
     case STRING:
