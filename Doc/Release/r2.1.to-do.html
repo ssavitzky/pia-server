@@ -5,13 +5,10 @@
 <h1>R2.1: To-Do List</h1>
 
 <blockquote><em>
-<p> This file contains pending tasks for the transition from the Release 2.0
-    series to the stable Release 2.1 series.  <strong>Other PIA developers are
-    encouraged to add their own favorites.</strong>
-
-<p> Items labeled <b>Impr</b> or <b>Wish</b> are lower priority and may not be
-    fixed by 2.1.0, but are considered important enough to mention.  Some
-    items labeled <b>Hole</b> may also be optional.
+<p> This file originally contained pending tasks for the transition from the
+    Release 2.0 series to the stable Release 2.1 series.  Now that the
+    transition has been accomplished, this file reverts to a
+    roughly-prioritized list of tasks for future releases in the 2.1 series.
 
 <p> See the various source-code <code>to-do</code> and <code>done</code> files
     for details.  At each point release (e.g. 2.0.8), completed items are
@@ -35,20 +32,6 @@ See also:
 <h2><a name="code">Code</a></h2>
 
 <ol>
-  <li> 2000-02-23 <b>Bug</b> Handle mixed-case attributes <br>
-        Mixed-case attributes need to work.  
-
-  <li> 2000-02-22 <b>Bug</b> subst bug <br>
-       seems to substitute for one char to the left of the match.  This
-       is either a bug in the library or a result of an old workaround (adding
-       null to end of string) that may no longer be necessary.
-
-  <li> 2000-02-25 <b>Hole</b> Entity and Attr should keep value in children <br>
-       This would fix many problems with entities, extract, etc. -- it will
-       also break some things.  It's needed for cached entities.  Entities, at
-       least, should also know their tagset.  It also brings us back into DOM
-       compliance, for what (little) that's worth.
-
   <li> <b>Bug</b> POST breaks when proxied through Apache. <br>
        Just spins its wheels.  Should time out.
        (1999-12-09) <br>
@@ -63,17 +46,15 @@ See also:
 
   <li> <b>Hole</b> Servlet support <br>
        We need two servlets: PIAServlet, which includes the Subsite mapping
-       stuff, and DPSServlet, which only does processing.
+       stuff, and DPSServlet, which only does processing.  Also look into the 
+       protocol that Apache uses to talk to jserv. 
        
   <li> <b>Hole</b> URL-manipulation tag <br>
        something like &lt;date&gt; but for URL's.
 
   <li> <b>Hole</b> Language cleanup <br>
        <ul>
-	 <li> <code>op="<em>operation</em>"</code> attrs (2000-02-17)
-	 <li> other attribute cleanup. <br />
-	        &lt;define syntax=...&gt; (2000-02-23)<br />
-	        default <code>case="sensitive"</code>. (2000-02-25)
+	 <li> assorted attribute cleanup. <br />
 	 <li> &lt;text split="<em>sep</em>" join="<em>sep</em>"&gt;
 	      (could actually leave <code>sep</code> instead of join)
 	 <li> Parametrize ``<code>&amp;</code>'' and ``<code>:</code>'' in
@@ -81,12 +62,12 @@ See also:
        </ul>
        <p>
 
-  <li> <em>=== somewhere around here is the cutoff for 2.1 === </em><!-- === -->
-
        <p>
 
   <li> <b>Hole</b> SAX / DOM support<br>
-       With DOM we get Cocoon as well.
+       With DOM we get Cocoon 1; with SAX we get Cocoon 2.
+
+  <li> <b>Hole</b> Pluggable parsers.<br>
 
   <li> <b>Hole</b> XML namespace support <br>
 
@@ -96,7 +77,13 @@ See also:
        <code>{un}registerAgent</code> in Site.
 
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
-       Need access to files relative to root, vroot, and home. 
+       Need access to files relative to root, vroot, and home.  Need
+       per-subsite restrictions on prefixes; i.e. not <code>file:</code> or
+       <code>href:</code>.
+
+  <li> <b>Hole</b> blank lines in .xh content <br>
+       Need to hold off sending header until first <em>non-blank</em> output.
+       Also should suppress blank lines.
 
   <li> <b>Hole</b> State maintenance <br>
        When a subsite's properties are changed, the changes have to be written
@@ -247,5 +234,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.18 2000-02-26 00:15:45 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.19 2000-03-14 17:16:54 steve Exp $</b><br>
 </body></html>
