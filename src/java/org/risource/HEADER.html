@@ -9,19 +9,25 @@ This directory contains the Java reference implementation of the PIA.<p>
 
 <dl>
   <dt> <a href="content/">content/</a>
-  <dd> Representations for message content
+  <dd> Representations for message content.
   <dt> <a href="dom/">dom/</a>
-  <dd> An implementation of the W3C's Document Object Model
+  <dd> Utilities that manipulate the W3C's <a href="../w3c/dom/">Document
+       Object Model</a>.  An implementation of the DOM, with local extensions,
+       is in <a href="dps/tree/">dps/tree/</a>.  The extended interfaces are
+       in <a href="dps/active/">dps/active/</a>.
   <dt> <a href="dps/">dps/</a>
-  <dd> Document Processing System 
+  <dd> Document Processing System.  This is the PIA's mechanism for expanding
+       ``active content'' represented in XML.
   <dt> <a href="ds/">ds/</a>
   <dd> Data Structures
   <dt> <a href="pia/">pia/</a>
-  <dd> The PIA proxy server itself
+  <dd> The PIA proxy server itself, including the Agent interface and its
+       implementations. 
   <dt> <a href="test/">test/</a>
-  <dd> Test cases and drivers (<strong>obsolete</strong>)
+  <dd> Test cases and drivers (mostly <strong>obsolete</strong>)
   <dt> <a href="tf/">tf/</a>
-  <dd> Classes that computer Transaction Features
+  <dd> Classes that compute Transaction Features.  These are lazily-evaluated
+       values matched by the PIA against each agent's selection criteria.
   <dt> <a href="util/">util/</a>
   <dd> Utilities
 </dl>
@@ -34,5 +40,5 @@ two more levels below this directory (e.g. <code>dps/handle</code>).
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.6 1999-03-23 23:31:32 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.7 1999-04-20 16:35:04 steve Exp $</b>
 <a name="files"><hr></a>

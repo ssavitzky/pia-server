@@ -11,29 +11,10 @@
   <dt> <b>Note:</b>
   <dd> This is the root of the Java package tree; it is <em>not</em> the
        <code>java</code> package.  Your <code>$CLASSPATH</code> should contain
-       this directory, or alternatively you should execute
-       the <code>java</code> command <em>in</em> this directory.
+       this directory, or alternatively you should execute your
+       <code>java</code> and <code>javac</code> commands <em>in</em> this
+       directory.  (This is, effectively, what the <code>Makefile</code>s do.)
 </dl>
-
-<p> On a Unix machine, a simple
-<pre>
-  make all
-</pre>
-    in this directory will build all of the <code>.class</code> files.  Each
-    subdirectory contains a <code>Makefile</code> that includes one or more
-    templates from the <code><a href="makefiles/">makefiles/</a></code>
-    subdirectory of this directory.
-
-<p> The Makefiles are known to work on Linux with GNU make and Solaris with
-    SUN's make.  It is <em>extremely unlikely</em> that they will work on any
-    variety of Windows; they rely on having a working Bourne-like shell,
-    ``<code>/</code>'' as a filename separator, and a <code>cd</code> command
-    that is not sticky between commands issued in sub-shells.
-
-<p> The simplest thing to do on Windows would be to recursively enumerate
-    all <code>.java</code> files under this directory, and turn the list into
-    a suitable batch file.  The <em>best</em> thing would be to compute the
-    complete dependency graph, and compile the roots.
 
 
 <h2>Annotated Contents</h2>
@@ -64,6 +45,8 @@
 <h3>Log Files</h3>
 
 <dl>
+  <dt> <a href="all_files.log">all_files.log</a>
+  <dd> Sorted list of all Java source files in the tree. 
   <dt> <a href="doc.log">doc.log</a>
   <dd> Log from doing ``<code>make doc</code>''.  Useful for tracking down
        problems with Javadoc comments.
@@ -87,16 +70,53 @@ All log files can be regenerated with the command
   make logs
 </pre>
 
+<h2>Building the PIA</h2>
+
+<p> On a Unix machine, a simple
+<pre>
+  make all
+</pre>
+    in this directory will build all of the <code>.class</code> files.  Each
+    subdirectory contains a <code>Makefile</code> that includes one or more
+    templates from the <code><a href="makefiles/">makefiles/</a></code>
+    subdirectory of this directory.
+
+<p> The Makefiles are known to work on Linux with GNU make and Solaris with
+    SUN's make.  It is <em>extremely unlikely</em> that they will work on any
+    variety of Windows; they rely on having working Bourne-shell control
+    structures, ``<code>/</code>'' as a filename separator, and a
+    <code>cd</code> command that is not sticky between commands issued in
+    sub-shells.
+
+<p> The simplest thing to do on Windows would be to recursively enumerate
+    all <code>.java</code> files under this directory, and turn the list into
+    a suitable batch file.  The <em>best</em> thing would be to compute the
+    complete dependency graph and compile the roots.
+
+
 <h2>Naming Conventions</h2>
 
 <p>Every effort has been made to reduce directory depth in order to accomodate
 Microsoft and ISO9660 restrictions.  In particular, the hierarchy extends only
-three more levels below this directory (e.g. <code>crc/dps/handle</code>).
-There is room for one more, so that when/if we achieve `<code>.org</code>'
-status we can add that level to the hierarchy.
+four more levels below this directory
+(e.g. <code>org/risource/dps/handle</code>) in cases where package names are
+under our control.  In the case of imports, we take what we can get and hope
+that your operating system can cope.
+
+<p>Moreover, every effort has been made to avoid pairs of files that cannot be
+distinguished by case-insensitive filesystems.  Note, however, that if
+the operating system <em>changes</em> the case in file names when a program
+reads a directory, there is still an opportunity for problems (including, but
+not limited to, broken links) to occur.
+
+<p>Note that we do <em>not</em> guarantee that class names will be unique when
+squashed down to DOS ``8.3'' format.  If your Java development system cannot
+cope with this, you're out of luck.  We <em>do</em> recommend that class names
+be kept to 15 characters or less, but that's just to prevent unwanted line
+wraps and keep multi-column listings under control. 
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 1999-03-23 20:37:44 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.5 1999-04-20 16:34:58 steve Exp $</b>
 <a name="files"><hr></a>
 

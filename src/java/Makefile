@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.9 1999-04-14 19:09:55 steve Exp $
+#	$Id: Makefile,v 1.10 1999-04-20 16:35:00 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -136,6 +136,8 @@ jigsaw_s.jar: jigsaw_class.toc
 doc:: alldoc
 	@echo Java documentation complete
 
+doc:: all_source.log
+
 ### "make logs" does "make clean", "make all", and "make doc".
 ###	Each operation is logged and timed.  
 
@@ -174,6 +176,10 @@ all_holes.log::
 ###	Suitable for use with "xdu all_lines.log"
 all_lines.log::
 	find ${*-.} -type f -name '*.java' -exec wc -l {} \; > all_lines.log
+
+### Recursive Java source-file enumeration.  
+all_source.log::
+	find ${*-.} -type f -name '*.java' -print | sort > all_files.log
 
 ### JavaDoc documentation -- non-recursive.
 ###	We do this because javadoc doesn't append to existing index files,
