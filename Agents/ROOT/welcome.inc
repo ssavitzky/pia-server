@@ -2,7 +2,7 @@
 <h3>Welcome to the PIA</h3>
 
 <dl>
-  <dt> <b>ALERT!</b>
+  <dt> <b>ALERT!</b> </dt>
   <dd> Many things have changed recently!  If you've been using the PIA for a
        while it is <em>strongly</em> suggested that you look at the following
        documents: 
@@ -11,6 +11,7 @@
        Package</a>,
        <a href="/src/java/org/risource/pia/about">About the PIA</a>,
        and <a href="/Doc/Notes/steve/naming">Steve's notes</a>.
+       </dd>
 </dl>
 
 <p> This is the home page of your personal PIA.  It is running as a process
@@ -35,5 +36,5 @@
     Eventually we will have a working demonstration PIA server at <a
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
     may not be running yet.
-<p>
-<!-- $Id: welcome.inc,v 1.9 1999-09-24 23:03:12 steve Exp $ -->
+</p>
+<!-- $Id: welcome.inc,v 1.10 1999-09-24 23:07:06 steve Exp $ -->
