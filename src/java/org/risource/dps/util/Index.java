@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.7 1999-04-30 23:37:49 steve Exp $
+//	$Id: Index.java,v 1.8 1999-10-14 23:55:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.7 1999-04-30 23:37:49 steve Exp $
+ * @version $Id: Index.java,v 1.8 1999-10-14 23:55:59 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -85,6 +85,10 @@ public class Index {
    */
   public static ActiveNodeList getValue(Context c, String space, String name) {
     Namespace ns = c.getNamespace(space);
+    if (ns == null) {
+      c.message(1, "Namespace " + space + " not found.", 0, true);
+      return null;
+    }
     return getValue(c, ns, name);
   }
 
@@ -107,8 +111,17 @@ public class Index {
     String space = name.substring(0, i);
     name = (i == name.length() - 1) ? null : name.substring(i+1);
     ActiveNode n = ns.getBinding(space);
-    if (n == null) return null;
+    if (n == null) {
+      c.message(2, "Namespace " + space + " not found in "
+		+ ns.getName(), 0, true);
+      return null;
+    }
     ns = n.asNamespace();
+    if (ns == null) {
+      c.message(-2, "Binding of " + space + " not a namespace in "
+		+ ns.getName(), 0, true);
+      return null;
+    }
     return (ns == null) ? null : getValue(c, ns, name);
   }
 
@@ -120,7 +133,7 @@ public class Index {
       //System.err.println("Setting " + name + " in '" + ns.getName() + ":'");
       ns.setValueNodes(c, name, value);
     } else {
-      System.err.println("No namespace found for '" + space + ":'");
+      c.message(1, "No namespace found for '" + space + ":'", 0, true);
       // If there's nothing there, make a namespace and populate it.
       BasicEntityTable ents = new BasicEntityTable(space);
       Tagset ts = c.getTopContext().getTagset();
