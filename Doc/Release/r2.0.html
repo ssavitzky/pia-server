@@ -13,7 +13,7 @@
 <p> We suggest that people who wish to use the PIA to develop applications but
     are not interested in being on the cutting edge wait for 2.1, but we
     believe that there are unlikely to be any <em>major</em> changes between
-    the current release (2.0.7) and Release 2.1.
+    the current release (2.0.8) and Release 2.1.
 
 <p> Subscribe to <a href="mailto:PIA-announce-request@risource.org">
     PIA-announce@RiSource.org</a> to be notified of new releases.
@@ -34,13 +34,16 @@
     issues in this release:
 
 <ol>
-  <li> Most importantly, all references to the tagset "pia-xhtml"
-       <em>must</em> be changed to refer to <code>"/Tagsets/pia-xhtml"</code>
-       -- otherwise either the tagset won't be found.
+  <li> Most importantly, all references to the tagset <code>pia-xhtml</code>
+       <em>must</em> be changed to refer to <code>/Tagsets/pia-xhtml</code>
+       -- otherwise the tagset won't be found.  If you have a tagset called
+       <code>pia-xhtml</code> in your PIA user directory (<code>.pia</code> on
+       Linux) that extends the system one, you will get an "out of memory"
+       exception if you don't update its <code>parent</code> attribute.
 
   <li> If you're not using one of the wrapper scripts
-       (<code>PIA/bin/pia</code> or <code>PIA/bin/pia.bat</code>) you probably
-       need to use the <code>-home</code> option to pass the PIA's home
+       (<code>PIA/bin/pia</code> or <code>PIA/bin/pia.bat</code>) you 
+       should use the <code>-home</code> option to pass the PIA's home
        directory on the command line.  You may also need to put
        <code>PIA/lib</code> into your <code>CLASSPATH</code>.
 </ol>
@@ -70,7 +73,9 @@
   <li> A new agent/application has been added: <a
        href="/Agents/Proxie/buster/">/Agents/Proxie/buster/</a>.  This handy
        application ``busts'' selected HTTP requests by redirecting them to
-       someplace innocuous.  It is shipped <em>disabled</em> by default.
+       someplace innocuous.  It is shipped <em>disabled</em> by default,
+       because it can also do odd things on pages that use Javascript to
+       process information from their advertisers.
 </ol>
 
 <h3>Release 2.0.7 (Storm Warnings!)</h3>
@@ -576,5 +581,5 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.0.html,v 1.34 1999-12-17 22:47:05 steve Exp $</b><br>
+<b>$Id: r2.0.html,v 1.35 2000-01-04 17:15:53 steve Exp $</b><br>
 </body></html>
