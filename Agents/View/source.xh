@@ -23,11 +23,12 @@
     </if>
     <hr/>
     <if>&FORM:pretty;
-        <then><pretty><include src='&URL;' tagset='pia-xhtml' quoted='quoted' />
+        <then><pretty><include src='&URL;' tagset='/Tagsets/pia-xhtml'
+		quoted='quoted' />
               </pretty>
 	</then>
 	<else><pre><protect result='result' markup='markup'>
-<include src='&URL;' tagset='pia-xhtml' quoted='quoted' /> </protect>
+<include src='&URL;' tagset='/Tagsets/pia-xhtml' quoted='quoted' /> </protect>
 	     </pre>
 	</else>
     </if>
@@ -79,7 +80,7 @@
        not defined in this tagset.</dd>
 </dl>
 
-<footer cvsid='$Id: source.xh,v 1.9 1999-10-25 20:16:27 steve Exp $' />
+<footer cvsid='$Id: source.xh,v 1.10 1999-12-14 18:52:55 steve Exp $' />
 </body></html>
 </else>
 </if>

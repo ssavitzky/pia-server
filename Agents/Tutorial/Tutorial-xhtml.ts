@@ -19,8 +19,8 @@
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.8 1999-12-10 01:31:46 bill Exp $</cvs-id>
+<tagset name="Tutorial-agent" parent="xhtml" recursive="yes">
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.9 1999-12-14 18:52:52 steve Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>

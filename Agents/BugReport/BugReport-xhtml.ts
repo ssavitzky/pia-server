@@ -1,5 +1,5 @@
 <!doctype  tagset system "tagset.dtd">
-<tagset name='BugReport-xhtml' parent='pia-xhtml' recursive='recursive'>
+<tagset name='BugReport-xhtml' parent='/Tagsets/pia-xhtml' recursive='recursive'>
 
 <define element='bug'>
 <doc>Top-level element for describing a bug.  The actions for this tag

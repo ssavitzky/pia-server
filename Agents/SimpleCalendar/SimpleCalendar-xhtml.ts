@@ -18,8 +18,8 @@
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.12 1999-12-03 19:47:46 steve Exp $</cvs-id>
+<tagset name="SimpleCalendar-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.13 1999-12-14 18:52:48 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing

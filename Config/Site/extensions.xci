@@ -1,11 +1,15 @@
-<!-- $Id: extensions.xci,v 1.3 1999-10-04 17:29:39 steve Exp $ -->
+<!-- $Id: extensions.xci,v 1.4 1999-12-14 18:52:59 steve Exp $ -->
 
   <Ext name="html"	type="text/html"				/>
   <Ext name="htm"	type="text/html"				/>
+  <Ext name="xml"	type="application/xml"				/>
 
   <Ext name="txt"	type="text/plain"				/>
 
-  <Ext name="xh" 	type="text/html"	tagset="pia-xhtml"	/>
+  <Ext name="xh" 	type="text/html"	tagset="/Tagsets/pia-xhtml"	/>
+
+  <Ext name="eh" 	type="text/html"	tagset="ehtml"	/>
+  <Ext name="xx" 	type="application/xml"	tagset="xxml"	/>
 
   <Ext name="png"	type="image/png"				/>
   <Ext name="jpeg"	type="image/jpeg"				/>

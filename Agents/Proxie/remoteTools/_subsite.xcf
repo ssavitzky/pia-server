@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.8 1999-12-06 20:21:08 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.9 1999-12-14 18:52:45 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -11,7 +11,7 @@
     <initialize><user-message>    remoteTools agent initialized</user-message>
     </initialize>
     <action>
-      <if><get name="AGENT:hidden"><else>
+      <if><get name="AGENT:hidden"/><else>
 <trans-control><!-- from remoteTools agent: -->
 <table border="0" cellpadding="0" cellspacing="0" bgcolor=white><tr><td>
 <a href='&PIA:url;/' target='_top'

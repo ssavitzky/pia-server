@@ -17,8 +17,8 @@
 <!-- Contributor(s):  steve@rsv.ricoh.com                                   -->
 <!-- ---------------------------------------------------------------------- -->
 
-<tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.20 1999-11-05 01:11:59 steve Exp $</cvs-id>
+<tagset name="Admin-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
+<cvs-id>$Id: Admin-xhtml.ts,v 1.21 1999-12-14 18:52:39 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -46,8 +46,7 @@
   </doc>
 </define>
 
-<define element=agent-install handler=org.risource.pia.agent.agentInstall>
-</define>
+<!-- agent-install obsolete -->
 
 <define element=agent-remove empty handler=org.risource.pia.agent.agentRemove>
    <define attribute=agent required>
@@ -207,33 +206,7 @@
    </define>
 </define>
 
-<define element="agent-restore" empty
-	handler="org.risource.pia.agent.agentRestore">
-   <define attribute=file required>
-      <doc> specifies the name of the file to be restored from.
-      </doc>
-   </define>
-</define>
-
-<define element="agent-save" empty handler="org.risource.pia.agent.agentSave">
-   <define attribute=file required>
-      <doc> specifies the name of the file to be saved into.
-      </doc>
-   </define>
-   <define attribute=agent optional>
-      <doc> specifies the name of the agent to be saved.  Defaults to the
-	    name of the current agent.
-      </doc>
-   </define>
-   <define attribute=list optional>
-      <doc> specifies a list of  names of agents to be saved.
-      </doc>
-   </define>
-   <define attribute=append optional>
-      <doc> specifies that the agent is to be appended to an existing file.
-      </doc>
-   </define>
-</define>
+<!-- agent-save, agent-restore obsolete -->
 
 <h2>Page Components</h2>
 
@@ -390,6 +363,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.20 1999-11-05 01:11:59 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.21 1999-12-14 18:52:39 steve Exp $</b><br />
 </tagset>
 
