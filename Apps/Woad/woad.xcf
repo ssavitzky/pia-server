@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.6 2000-06-14 17:07:17 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.7 2000-06-15 01:22:46 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -18,7 +18,7 @@
   <sourceOffset><get name="PIA:offset"/></sourceOffset>
 
   <HomeDocumentName>woad-index.wh</HomeDocumentName>
-  <IndexDocumentPath>/.Woad/Tools/woad-listing.xh</IndexDocumentPath>
+  <IndexDocumentPath>/.Woad/Tools/src-listing.xh</IndexDocumentPath>
   <ConfigFileName>_woad.xcf</ConfigFileName>
 
   <Container name=".Woad" virtual="pia:/Apps/Woad">
