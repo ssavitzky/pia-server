@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.8 2000-10-19 00:03:20 steve Exp $
+//	$Id: TextParser.java,v 1.9 2000-10-20 23:54:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,6 +54,9 @@ import java.io.IOException;
  * <p>	TextParser is designed to add ``virtual markup'' to text files; this 
  *	includes both English text and text containing markup.  It is able
  *	to recognize ``code'' of various kinds embedded in the text or markup.
+ *	The idea is not so much to recognize the actual syntax of the text
+ *	and its markup, but to identify, with <em>reasonable</em> accuracy,
+ *	the different syntactic elements without changing the actual text.
  *
  * <p>	Code parsing is controlled by attributes of the tagset.  If they 
  *	are not specified, reasonable defaults are used that correspond
@@ -61,15 +64,15 @@ import java.io.IOException;
  *
  * <p>	TextParser is similar to CodeParser except that it does a better
  *	job of recognizing and handling markup, and is able to recognize
- *	a variety of ways of embedding code in markup.
+ *	a number of different ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.8 2000-10-19 00:03:20 steve Exp $
+ * @version $Id: TextParser.java,v 1.9 2000-10-20 23:54:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
  */
 
-public class TextParser extends AbstractParser {
+public class TextParser extends ShallowParser {
 
   /************************************************************************
   ** State Constants:
@@ -128,7 +131,7 @@ public class TextParser extends AbstractParser {
 
   protected void markup(String end, String tag) {
     markupEnd = end;
-    
+    markupEndChar = s.charAt(0);
   }
 
 
@@ -142,11 +145,9 @@ public class TextParser extends AbstractParser {
   /** table of English stop-words (i.e. words not to index in text) */
   protected Table stopwords = new Table();
 
-  /** Table mapping the (one-character) strings that <em>start</em> strings
-   *	into one or two character strings consisting of the end character
+  /** Array mapping the (one-character) strings that <em>start</em> strings
+   *	into one- or two-character strings consisting of the end character
    *	and the escape character for that starting delimiter.
-   *
-   * === we'd gain speed if stringDelims was a String array. ===
    */
   protected String stringDelims[] = new String[256];
   protected final String stringDelim(int c) {
@@ -164,96 +165,9 @@ public class TextParser extends AbstractParser {
   /** The string that ends a comment that started with "cbegin". */
   protected String cend    = null;
 
-  /** Name of cross-reference namespace */
-  protected String xrefsName = null;
-
-  /** cached reference to cross-reference namespace */
-  protected Namespace xrefs = null;
-  protected PropertiesWrap pxrefs = null;
-
-  /** Prefix for cross-references */
-  protected String xprefix = null;
-
-  protected TopContext top = null;
-
-  /************************************************************************
-  ** Cross-references:
-  ************************************************************************/
-
-  /** Look up a cross-reference.  
-   *	All keywords are lowercased for lookup, which is a crock: it ought
-   *	to be specified by the application.
-   *
-   * @return a URL.
-   */
-  protected String lookupXref(String id) {
-    if (xrefs == null && xrefsName != null) {
-      if (top == null) top = getProcessor().getTopContext();
-      ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
-      if (n == null) {
-	//top.message(-2, "no binding for "+xrefsName, 0, true);
-      } else {
-	xrefs = n.asNamespace();
-	if (xrefs instanceof PropertiesWrap) pxrefs = (PropertiesWrap)xrefs; 
-      }
-      if (xrefs == null) {
-	if (n != null)
-	  top.message(-2, ("binding exists but not a namespace "
-			   + n.getClass().getName()), 0, true);
-	xrefsName = null;	// only give error once per document.
-      }
-    }
-    id = id.toLowerCase();
-    if (pxrefs != null) {
-      // if we have a PropertiesWrap, look up the string directly.
-      String s = pxrefs.getProperty(id);
-      if (s == null) return null;
-      if (xprefix != null) s = xprefix + s;
-      if (s.endsWith("/")) s += id;
-      return s;
-    } else if (xrefs != null) {
-      ActiveNodeList v = xrefs.getValueNodes(top, id);
-      if (v == null) return null;
-      String s = v.toString();
-      if (xprefix != null) s = xprefix + s;
-      if (s.endsWith("/")) s += id;
-      return s;
-    } else {
-      return null;
-    }
-  }
-
-
   /************************************************************************
   ** Recognizers:
   ************************************************************************/
-
-  /** Returns true if aString is an initial substring of buf
-   */
-  public final boolean lookingAt(String aString, int length) {
-    if (buf.length() < length) return false;
-    for (int i = 0; i < length; ++i)
-      if (buf.charAt(i) != aString.charAt(i)) return false;
-    return true;
-  }
-
-  /** Returns true if aString is a substring of buf
-   */
-  public final boolean bufContains(String aString) {
-    int slength = aString.length();
-    int blength = buf.length();
-    if (blength < slength) return false;
-    for (int i = 0; i <= blength - slength; ++i) {
-      boolean x = true;
-      for (int j = 0; j < slength; ++j)
-	if (buf.charAt(i + j) != aString.charAt(j)) {
-	  x = false;
-	  break;
-	}
-      if (x) return true;
-    }
-    return false;
-  }
 
   /** Get token starting with <code>last</code>.
    *
@@ -268,6 +182,10 @@ public class TextParser extends AbstractParser {
    *	<li> Comments are tagged as &lt;rem&gt;
    *	<li> Strings are tagged as &lt;str&gt;
    *	<li> Start tags are tagged as &lt;tag&gt;; end tags as &lt;etag&gt;
+   *	<li> SGML comments are tagged as &lt;comment&gt;
+   *	<li> SGML processing instructions are tagged as &lt;pi&gt;; ASP/JSP 
+   *	     code fragments delimited by &lt;% etc. are parsed as PI's. 
+   *	<li> SGML declarations are tagged as &lt;decl&gt;
    *</ul>
    *
    *<p> A distinction is made between TEXT and CODE states.  TEXT may contain
@@ -276,6 +194,9 @@ public class TextParser extends AbstractParser {
    *	<em>are</em> specially tagged, and may also contain strings and 
    *	comments.  Comments are considered TEXT.  Strings are TEXT-like, but 
    *	do not contain markup.
+   *
+   *<p> The content of SGML comment and processing instruction nodes is
+   *	parsed as code.  The values of attributes are parsed as strings.
    */
   protected ActiveNode getToken() throws IOException {
     String id = null;
@@ -323,8 +244,8 @@ public class TextParser extends AbstractParser {
 	  last = in.read();
 	  if (last == '-') {
 	    last = 0;
-	    markup("-->", "comment");
 	    buf.append("<!--");	// === temp.
+	    markup("-->", "comment");
 	  } else {
 	    buf.append("<!-");
 	  }
@@ -471,8 +392,6 @@ public class TextParser extends AbstractParser {
     comment = tse.getAttribute("comment");
     cbegin  = tse.getAttribute("cbegin");
     cend    = tse.getAttribute("cend");
-    xrefsName = tse.getAttribute("xrefs");
-    xprefix = tse.getAttribute("xprefix");
 
     wds = tse.getAttribute("string");
     if (wds == null) {

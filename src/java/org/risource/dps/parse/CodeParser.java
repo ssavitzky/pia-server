@@ -1,5 +1,5 @@
 ////// CodeParser.java: parser for "code" (non-SGML) files
-//	$Id: CodeParser.java,v 1.1 2000-10-06 00:30:45 steve Exp $
+//	$Id: CodeParser.java,v 1.2 2000-10-20 23:54:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.io.InputStream;
 import java.io.IOException;
 
 /**
- * A parser for non-SGML (code) files. 
+ * A shallow parser for non-SGML (code) files. 
  *
  * <p>	CodeParser is designed to add ``virtual markup'' to "code" files;
  *	i.e. source code in various programming languages.  
@@ -61,13 +61,13 @@ import java.io.IOException;
  *	markup (and in fact the initial implementation can't recognize markup
  *	at all).
  *
- * @version $Id: CodeParser.java,v 1.1 2000-10-06 00:30:45 steve Exp $
+ * @version $Id: CodeParser.java,v 1.2 2000-10-20 23:54:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.TextParser
  */
 
-public class CodeParser extends AbstractParser {
+public class CodeParser extends ShallowParser {
 
   /************************************************************************
   ** State Constants:
@@ -125,11 +125,9 @@ public class CodeParser extends AbstractParser {
   /** table of English stop-words (i.e. words not to index in text) */
   protected Table stopwords = new Table();
 
-  /** Table mapping the (one-character) strings that <em>start</em> strings
+  /** Array mapping the (one-character) strings that <em>start</em> strings
    *	into one or two character strings consisting of the end character
    *	and the escape character for that starting delimiter.
-   *
-   * === we'd gain speed if stringDelims was a String array. ===
    */
   protected String stringDelims[] = new String[256];
   protected final String stringDelim(int c) {
@@ -147,73 +145,9 @@ public class CodeParser extends AbstractParser {
   /** The string that ends a comment that started with "cbegin". */
   protected String cend    = null;
 
-  /** Name of cross-reference namespace */
-  protected String xrefsName = null;
-
-  /** cached reference to cross-reference namespace */
-  protected Namespace xrefs = null;
-  protected TopContext top = null;
-
-  /************************************************************************
-  ** Cross-references:
-  ************************************************************************/
-
-  /** Look up a cross-reference
-   *
-   * @return a URL.
-   */
-  protected String lookupXref(String id) {
-    if (xrefs == null && xrefsName != null) {
-      if (top == null) top = getProcessor().getTopContext();
-      ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
-      if (n == null) top.message(-2, "no binding for "+xrefsName, 0, true);
-      else xrefs = n.asNamespace();
-      if (xrefs == null) {
-	if (n != null)
-	  top.message(-2, ("binding exists but not a namespace "
-			   + n.getClass().getName()), 0, true);
-	xrefsName = null;	// only give error once per document.
-      }
-    }
-    if (xrefs != null) {
-      ActiveNodeList v = xrefs.getValueNodes(top, id);
-      return (v != null)? v.toString() : null;
-    } else {
-      return null;
-    }
-  }
-
-
   /************************************************************************
   ** Recognizers:
   ************************************************************************/
-
-  /** Returns true if aString is an initial substring of buf
-   */
-  public final boolean lookingAt(String aString, int length) {
-    if (buf.length() < length) return false;
-    for (int i = 0; i < length; ++i)
-      if (buf.charAt(i) != aString.charAt(i)) return false;
-    return true;
-  }
-
-  /** Returns true if aString is a substring of buf
-   */
-  public final boolean bufContains(String aString) {
-    int slength = aString.length();
-    int blength = buf.length();
-    if (blength < slength) return false;
-    for (int i = 0; i <= blength - slength; ++i) {
-      boolean x = true;
-      for (int j = 0; j < slength; ++j)
-	if (buf.charAt(i + j) != aString.charAt(j)) {
-	  x = false;
-	  break;
-	}
-      if (x) return true;
-    }
-    return false;
-  }
 
   /** Get token starting with <code>last</code>.
    *
@@ -369,7 +303,6 @@ public class CodeParser extends AbstractParser {
     comment = tse.getAttribute("comment");
     cbegin  = tse.getAttribute("cbegin");
     cend    = tse.getAttribute("cend");
-    xrefsName = tse.getAttribute("xrefs");
 
     wds = tse.getAttribute("string");
     if (wds == null) {

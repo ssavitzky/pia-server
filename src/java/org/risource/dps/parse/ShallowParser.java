@@ -1,5 +1,5 @@
 ////// ShallowParser.java: perform a ``shallow'' parse of SGML files
-//	$Id: ShallowParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
+//	$Id: ShallowParser.java,v 1.3 2000-10-20 23:54:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,17 +26,15 @@ package org.risource.dps.parse;
 
 import org.w3c.dom.Node;
 
-import org.risource.dps.Parser;
-import org.risource.dps.Syntax;
+import org.risource.dps.*;
 import org.risource.dps.active.*;
+import org.risource.dps.namespace.*;
 import org.risource.dps.util.Copy;
+import org.risource.dps.util.Index;
 
 import org.risource.dps.tree.TreeAttrList;
 import org.risource.dps.tree.TreeNodeList;
 import org.risource.dps.tree.TreeComment;
-
-import org.risource.dps.Context;
-
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -47,340 +45,128 @@ import java.io.InputStream;
 import java.io.IOException;
 
 /**
- * A Parser that produces a ``shallow'' parse of markup files. 
+ * A Parser that produces a ``shallow'' parse of text, code, or markup files. 
  *
- * <p>	ShallowParser parses marked-up text in exactly the same way as
+ * <p>	ShallowParser parses marked-up text in essentially the same way as
  *	BasicParser <em>except</em> that the markup it generates is 
  *	<em>not</em> the markup in the file itself, but instead describes
  *	the file's metasyntactic structure.  For example, start tags
  *	and end tags are exposed as &lt;tag&gt; and  &lt;etag&gt; elements,
  *	respectively.
  *
- * @version $Id: ShallowParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
+ * @version $Id: ShallowParser.java,v 1.3 2000-10-20 23:54:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
 
-public class ShallowParser extends AbstractParser {
+public abstract class ShallowParser extends AbstractParser {
+
 
   /************************************************************************
-  ** SGML Recognizers:
+  ** Cross-references:
   ************************************************************************/
 
-  /** Pull an entity off the input stream and return it in <code>next</code>.
-   *	Assume that <code>last</code> contains an ampersand.  If the next
-   *	available character does not belong in an identifier, appends the
-   *	ampersand to <code>buf</code>.  Eat a trailing semicolon if present.
-   * <p>
-   *	Correctly handles <code>&amp;<i>ident</i>=</code>, which is not
-   *	an entity reference but part of a query string.
+  /** Name of cross-reference namespace */
+  protected String xrefsName = null;
+
+  /** cached reference to cross-reference namespace */
+  protected Namespace xrefs = null;
+  protected PropertiesWrap pxrefs = null;
+
+  /** Prefix for cross-references */
+  protected String xprefix = null;
+
+  protected TopContext top = null;
+
+  /** Look up a cross-reference.  
+   *	All keywords are lowercased for lookup, which is a crock: it ought
+   *	to be specified by the application.
    *
-   * <p> Blindly appends character entities to the buffer.
-   *
-   * @param strict if <code>true</code>, <em>require</em> a semicolon.
-   * @return false if the next available character does not belong in
-   *	an entity name.
+   * @return a URL.
    */
-  protected boolean getEntity(boolean strict) throws IOException {
-    if (last != entityStart) return false;
-    last = in.read();
-    if (last == '#') {
-      last = 0;
-      if (!eatIdent()) {
-	buf.append(entityStart); 
-	buf.append("#");
-	return false;
-      } else if (last != entityEnd) {
-	buf.append(entityStart); 
-	buf.append("#");
-	buf.append(ident);
-	return false;
-      } else try {
-	last = 0;
-	// blindly append character entities to the buffer!
-	char c;
-	if (ident.startsWith("x") || ident.startsWith("X")) {
-	  c = (char)Integer.parseInt(ident, 16);
-	} else {
-	  c = (char)Integer.parseInt(ident, 10);
-	}
-	buf.append(c);
-	return false;
-      } catch (NumberFormatException e) {
-	buf.append(entityStart); 
-	buf.append("#");
-	buf.append(ident);
-	return false;
-      }
-    }
-    if (!eatIdent()) {
-      buf.append(entityStart); 
-      return false;
-    }
-    if (last == '=') {
-      buf.append(entityStart); buf.append(ident);
-      return false;
-    } else if (strict && last != entityEnd) {
-      // === should put out error message here
-      buf.append(entityStart); buf.append(ident);
-      return false;
-    }
-
-    next = createActiveNode(Node.ENTITY_REFERENCE_NODE, ident, null);
-    //if (last == entityEnd) next.setHasClosingDelimiter(true);
-    if (last == entityEnd) last = 0;
-    return true;
-  }
-
-  /** Get a literal, i.e. everything up to <code>endString</code>.
-   *	Clear endString and ignoreEntities when the end string is seen.
-   *	If ignoreEntities is false, entities will be recognized.
-   */
-  protected TreeNodeList getLiteral(String endString,
-				    boolean ignoreEntities) {
-
-    buf = new StringBuffer();
-    TreeNodeList list = new TreeNodeList();
-    
-    try {
-      for ( ; ; ) {
-	if (eatUntil(endString, !ignoreEntities)) {
-	  if (last == '&' && !ignoreEntities) {
-	    if (getEntity(strictEntities)) {
-	      if (buf.length() != 0) 
-		list.append(createActiveText(buf.toString(), false));
-	      list.append(next);
-	    } else {
-	      // getEntity has already stuffed the text back in the buffer
-	      continue;
-	    }
-	  } else {
-	    if (buf.length() != 0) {
-	      list.append(createActiveText(buf.toString(), false));
-	    }
-	    break;
-	  }
-	  // get here if we found an entity.  Reset the buffer.
-	  buf.setLength(0);
-	}
-      }
-    } catch (Exception e) {}
-    return list;
-  }
-
-
-  /** Get a value (after an attribute name inside a tag).
-   *	
-   *	@return the value; <code>null</code> if no "=" is present.
-   */
-  protected TreeNodeList getValue() throws IOException {
-    if (last != '=') return null;
-    TreeNodeList list = new TreeNodeList();
-
-    last = in.read();
-    if (last == '\'' || last == '"') {
-      int quote = last;
-      StringBuffer tmp = buf;
-      buf = new StringBuffer();
-      last = 0;
-      for ( ; ; ) {
-	if (eatUntil(quote, true)) {
-	  if (buf.length() != 0) {
-	    list.append(createActiveText(buf.toString(), false));
-	    buf.setLength(0);
-	  }
-	  if (last == quote) break;
-	} else break;
-	if (getEntity(strictEntities)) {
-	  list.append(next);
-	}
-      }
-      last = 0;
-      //debug("=" + (char)quote + (list.isText()? ".." : ".&.") + (char)quote);
-      //debug("=" + (char)quote + next.toString() + (char)quote);
-      buf = tmp;
-      return list;
-    } else if (last <= ' ' || last == '>') {
-      list.append(createActiveText("", false));
-      return list;
-    } else if (strictAttributeQuotes) {
-      if (eatIdent()) {
-	list.append(createActiveText(ident, false));
-      }
-      return list;
-    } else {
-      StringBuffer tmp = buf;
-      buf = new StringBuffer();
-      for ( ; ; ) {
-	if (eatUntil(notAttr, true)) {
-	  if (buf.length() != 0) {
-	    list.append(createActiveText(buf.toString(), false));
-	    buf.setLength(0);
-	  }
-	} else break;
-	if (getEntity(strictEntities)) {
-	  list.append(next);
-	} else break;
-      }
-      //debug("=" + (list.isText()? ".." : ".&."));
-      buf = tmp;
-      return list;
-    }
-    /* === checking for an Ident doesn't work; too many missing quotes === */
-  }
-
-  /** Get a tag starting with <code>last='&amp;'</code> and return it in
-   *	<code>next</code>.  If what follows is not, in fact, a valid
-   *	tag, it returns false and leaves the bad characters appended
-   *	to <code>buf</code>.  getTag is only called from getText. <p>
-   *
-   *	An end tag is returned with <code>null</code> in <code>next</code>
-   *	and the tag in <code>nextEnd</code>.
-   */
-  protected boolean getTag() throws IOException {
-    int tagStart = buf.length(); // save position in case we lose
-    buf.append("<");		// append the "<" that we know is there
-    last = 0;			// force eatIdent to read the next char.
-    next = null;
-
-    if (eatIdent()) {		// <tag...	start tag
-      buf.append(ident);
-      //debug(ident);
-
-      // === have to create the element at the end.
-      // === may want to get the handler at this point.
-      ActiveAttrList attrs = new TreeAttrList();
-      String tag = ident;
-
-      boolean hasEmptyDelim = false;
-      String a; StringBuffer v;
-
-      // Now go after the attributes.
-      //    They have to be separated by spaces.
-
-      while (last >= 0 && last != '>') {
-	// need to be appending the identifier in case we lose ===
-	eatSpaces();	
-	if (eatIdent()) {
-	  a = ident.toLowerCase(); // shouldn't lowercase attr names! ===
-	  buf.append(ident);
-	  //debug(" "+a);
-	  ActiveNodeList value = getValue();
-	  if (value == null) {
-	    // By longstanding SGML tradition (and XML _requirement_)
-	    //   a boolean attribute has its name as a value. 
-	    value = new TreeNodeList(createActiveText(a, false));
-	  }
-	  attrs.setAttributeValue(a, value);
-	} else if (last == '/') {
-	  // XML-style empty-tag indicator.
-	  hasEmptyDelim = true;
-	  last = 0;
-	} else break;
-      }
-      if (last != '>') return false;
-
-      // Done.  Clean up the buffer and return the new tag in next.
-      buf.setLength(tagStart);
-      next = createActiveElement(tag, attrs, hasEmptyDelim);
-      if (last >= 0) last = 0;
-
-      // Check for content entity and element handling 
-      Syntax syn = next.getSyntax();
-      if (!syn.parseElementsInContent()) {
-	TreeNodeList content = getLiteral(next.endString(),
-					   !syn.parseEntitiesInContent());
-	Copy.appendNodes(content, next);
-      }
-
-    } else if (last == '/') {	// </...	end tag
-      // debug("'/'");
-      buf.append("/"); last = 0;
-      eatIdent(); buf.append(ident);
-      // debug(ident);
-
-      eatSpaces();
-      if (last != '>') return false;
-      next = null;
-      nextEnd = (ident == null)? "" : ident;
-      buf.setLength(tagStart);
-      if (last >= 0) last = 0;
-    } else if (last == '!') {	// <!...	comment or declaration
-      StringBuffer tmp = buf;
-      buf = new StringBuffer();
-      last = 0; ident = null;
-      // note that -- is an identifier, so check for it with eatIdent
-      if (eatIdent() && ident.length() >= 2 &&
-	  ident.charAt(0) == '-' && ident.charAt(1) == '-') {
-	// it must be a comment
-	if (last != '>') eatUntil("-->", false);
-	if (last == '>') last = 0;
-	next = createActiveNode(Node.COMMENT_NODE, buf.toString());
+  protected String lookupXref(String id) {
+    if (xrefs == null && xrefsName != null) {
+      if (top == null) top = getProcessor().getTopContext();
+      ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
+      if (n == null) {
+	//top.message(-2, "no binding for "+xrefsName, 0, true);
       } else {
-	// it's an SGML declaration: <!...>
-	// == Comments or occurrences of '>' inside will fail.
-	eatUntil('>', false);
-	if (last == '>') last = 0;
-	if (ident.equalsIgnoreCase("doctype")) {
-	// === bogus -- really a declaration, and must be further analyzed. //
-	  next = createActiveNode(Node.DOCUMENT_TYPE_NODE,
-				  ident, buf.toString());
-	} else {
-	  next = createActiveNode(NodeType.DECLARATION, ident, buf.toString());
-	}
+	xrefs = n.asNamespace();
+	if (xrefs instanceof PropertiesWrap) pxrefs = (PropertiesWrap)xrefs; 
       }
-      buf = tmp;
-      buf.setLength(buf.length()-1); // remove the extraneous '<'
-    } else if (last == '?') {	// <?...	PI
-      StringBuffer tmp = buf;
-      buf = new StringBuffer();
-      last = 0; ident = null;
-      // note that -- is an identifier, so check for it with eatIdent
-      eatIdent();
-      eatUntil("?>", false);	// XML standard: <? .... ?>
-      if (last == '>') last = 0;
-      next = createActiveNode(Node.PROCESSING_INSTRUCTION_NODE, ident,
-			      buf.toString());
-      buf = tmp;
-      buf.setLength(buf.length()-1); // remove the extraneous '<'
-    } else if (last == '>') {	// <>		empty start tag
-      // === <> needs to get tag from enclosing element, which it ends.
-      next = createActiveElement(ident, null, false);
-    } else {			// not a tag.
-      return false;
+      if (xrefs == null) {
+	if (n != null)
+	  top.message(-2, ("binding exists but not a namespace "
+			   + n.getClass().getName()), 0, true);
+	xrefsName = null;	// only give error once per document.
+      }
     }
+    id = id.toLowerCase();
+    if (pxrefs != null) {
+      // if we have a PropertiesWrap, look up the string directly.
+      String s = pxrefs.getProperty(id);
+      if (s == null) return null;
+      if (xprefix != null) s = xprefix + s;
+      if (s.endsWith("/")) s += id;
+      return s;
+    } else if (xrefs != null) {
+      ActiveNodeList v = xrefs.getValueNodes(top, id);
+      if (v == null) return null;
+      String s = v.toString();
+      if (xprefix != null) s = xprefix + s;
+      if (s.endsWith("/")) s += id;
+      return s;
+    } else {
+      return null;
+    }
+  }
+
+
+  /************************************************************************
+  ** Recognizers:
+  ************************************************************************/
+
+  /** Returns true if aString is an initial substring of buf
+   */
+  public final boolean lookingAt(String aString, int length) {
+    if (buf.length() < length) return false;
+    for (int i = 0; i < length; ++i)
+      if (buf.charAt(i) != aString.charAt(i)) return false;
     return true;
   }
 
-  /** Get token starting with <code>last</code>.
-   *
-   *<p>	Ordinary text in the input is split into a sequence of Text objects, 
-   *	with whitespace, punctuation, identifiers, and newlines in separate 
-   *	Text objects.  Markup is inserted as follows:
-   *
-   *<ul>
-   *	<li> An empty &lt;line&gt; element preceeds each line.
-   *	<li> Language keywords are tagged as &lt;kw&gt;
-   *	<li> Other identifiers are tagged as &lt;id&gt;
-   *	<li> Comments are tagged as &lt;rem&gt;
-   *	<li> Start tags are tagged &lt;tag&gt;
-   *	<li> End tags are tagged with &lt;etag&gt;
-   *	<li> Entities are tagged &lt;ent&gt;
-   *	<li> Attribute lists are tagged &lt;atl&gt;
-   *	<li> Declarations are tagged &lt;decl&gt;
-   *	<li> &lt;&gt;
-   *</ul>
+  /** Returns true if aString is a substring of buf
    */
-  protected ActiveNode getToken() throws IOException {
-
-    while (eatText()) {
-      if ((last == '&' && getEntity(strictEntities)) ||
-	  (last == '<' && getTag()) ||
-	  (last < 0)) break;
+  public final boolean bufContains(String aString) {
+    int slength = aString.length();
+    int blength = buf.length();
+    if (blength < slength) return false;
+    for (int i = 0; i <= blength - slength; ++i) {
+      boolean x = true;
+      for (int j = 0; j < slength; ++j)
+	if (buf.charAt(i + j) != aString.charAt(j)) {
+	  x = false;
+	  break;
+	}
+      if (x) return true;
     }
-    return (buf.length() > 0)? createActiveText(buf.toString(), false) : null;
+    return false;
   }
 
+  /************************************************************************
+  ** Initialization:
+  ************************************************************************/
+
+  protected void initialize() {
+    // grab stuff as needed from the attributes of the tagset. 
+    // We know that a tagset is really an ActiveElement, so cast it.
+    ActiveElement tse = (ActiveElement)tagset;
+
+    xrefsName = tse.getAttribute("xrefs");
+    xprefix = tse.getAttribute("xprefix");
+
+    super.initialize();
+  }
 
   /************************************************************************
   ** Construction:

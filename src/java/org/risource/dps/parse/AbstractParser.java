@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.24 2000-09-30 00:10:13 steve Exp $
+//	$Id: AbstractParser.java,v 1.25 2000-10-20 23:54:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.dps.tree.TreeText;
  *	a char array instead of a String.  This would also let us eliminate
  *	<code>last</code> and allow multiple-character backup.
  *
- * @version $Id: AbstractParser.java,v 1.24 2000-09-30 00:10:13 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.25 2000-10-20 23:54:53 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -543,18 +543,14 @@ public abstract class AbstractParser extends CursorStack implements Parser
   ************************************************************************/
 
 
-  /** Holds the first item in a three-item queue of tokens.  
-   *
-   *<p>	In SGML-like markup languages, this will invariably be a text node.
-   *	In text-like files, this will usually be a start tag to be 
-   *	<em>wrapped around</em> the next text item.
-   */
-  protected ActiveNode first;
-
-  /** Holds the second item in a three-item queue of tokens.  
+  /** Holds the token that will come <em>after</em> the token returned
+   *	by <code>getToken</code>.  This is effectively the second item in
+   *	a three-item queue of tokens.
    *
    *<p>	In SGML-like markup languages, this will be the start tag or entity
-   *	that terminated the text node in <code>first</code>.
+   *	that terminated the text node returned by <code>getToken</code>.
+   *	In shallowly-parsed text, it will usually be the the text content
+   *	of the element returned by <code>getToken</code>.
    */
   protected ActiveNode next;
 
@@ -577,17 +573,20 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected ActiveNode nextToken() {
     ActiveNode n = null;
-    if (first == null && next == null && nextEnd == null) try {
+
+    // If there's nothing in the queue, get a new token.
+    if (next == null && nextEnd == null) try {
       buf.setLength(0);
-      first = getToken();	// Try to get some text.
+      n = getToken();	// Try to get a "token".
     } catch (IOException e) {
       return null;
     }
-    if (first != null) {
-      // === here we should check for an implicitly-required paragraph tag.
-      n = first;
-      first = null;
-    } else if (next != null) {
+    
+    // It's possible that getToken returned null but put something into 
+    // either next or nextEnd.  nextEnd is checked elsewhere. 
+
+    if (n != null) return n;
+    if (next != null) {
       n = next;
       next = null;
     } 
