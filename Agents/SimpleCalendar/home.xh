@@ -8,7 +8,7 @@
 
 
    <hide>  
-       <?-- decide between drop-down selections and typed-in entries -->
+       <?-- decide between drop-down selections and typed-in entries --?>
        <if>&FORM:newEventTime2;
            <then>
              <set name="FORM:newEventTime">&FORM:newEventTime2;</set>
@@ -20,18 +20,18 @@
            </then>
        </if>
 
-              <?-- get default date as today -->
+              <?-- get default date as today --?>
 	<set name="myYear" >&year;</set>
 	<set name="myMonth" ><numstrip>&month;</numstrip></set>
 	<set name="myDay" ><numstrip>&day;</numstrip></set>
    </hide>
 
-        <?-- show today as link to editing today -->
+        <?-- show today as link to editing today --?>
         <show-today />
 
    <hide>
         <if>
-           <?-- check if form called this page  -->
+           <?-- check if form called this page  --?>
            <test><logical or='or'> 
 	       <get name="FORM:Add" /> 
 	       <get name="FORM:Edit" />
@@ -40,14 +40,14 @@
 	       <get name="FORM:DeleteEvent" />
 	   </logical></test>
 	   <then>
-              <?-- get date submitted by form -->
+              <?-- get date submitted by form --?>
 	      <set name="myYear"  >&FORM:newYear;</set>
 	      <set name="myMonth"  >&FORM:newMonth;</set>
 	      <set name="myDay" >&FORM:newDay;</set>
 	   </then>
 	</if>
 
-        <?-- clean up inconsistent repeat info and package the rest -->
+        <?-- clean up inconsistent repeat info and package the rest --?>
         <set name="oldIntervalEvent"></set>
         <set name="intervalEntity"></set>
         <set name="started">
@@ -57,7 +57,7 @@
             </weekday>
         </set>
 
-        <?-- make sure proper (old) start date is used for editing old stuff-->
+        <?-- make sure proper (old) start date is used for editing old stuff--?>
         <if><logical and="yes" >
              <get name="FORM:startDate" />
              <get name="FORM:ReplaceEvent" />
@@ -128,17 +128,17 @@
 
   </hide>
 
-        <?-- put a navigation bar on here too -->
+        <?-- put a navigation bar on here too --?>
         <navbar />
 
-        <?-- make a URL which will pass this date on to other operations -->
+        <?-- make a URL which will pass this date on to other operations --?>
 	<set name="shortURL">newDay=<text
 	encode="url">&myDay;</text>&newMonth=<text
 	encode="url">&myMonth;</text>&newYear=<text
 	encode="url">&myYear;</text>&Add=submit</set>
 
 
-       <?-- create new event from form data (empty if deleting) -->
+       <?-- create new event from form data (empty if deleting) --?>
        <set name="newEventEntity"></set>
         <if>
           <logical or="yes">
@@ -165,7 +165,7 @@
 	      </set>
 
 
-              <?-- if the new entity repeats, wrap it in a "to-add" tag -->
+              <?-- if the new entity repeats, wrap it in a "to-add" tag --?>
 	      <if><get name="intervalEntity" />
 		  <then>
                       <set name="newEventEntity">
@@ -181,7 +181,7 @@
 
 
        <?-- write new information into directory first, before reading
-            everything out -->
+            everything out --?>
         <if>
            <get name="FORM:SaveNewEvent"/>
 	   <then>
@@ -192,7 +192,7 @@
         </if>
 
        
-       <?-- read out day's events (possibly empty) for editing-->
+       <?-- read out day's events (possibly empty) for editing--?>
        <set name="rawfile" >
 	  <lookup newYear="&myYear;"
 		  newMonth="&myMonth;"
@@ -200,7 +200,7 @@
 
        </set>
 
-       <?-- editing or deleting an existing no-repeat event, overwriting -->
+       <?-- editing or deleting an existing no-repeat event, overwriting --?>
        <if>
            <logical or="yes">
               <get name="FORM:ReplaceEvent" />
@@ -208,16 +208,16 @@
            </logical>
            <then>
 
-	       <?-- read out whole day's events prior to overwriting,  -->
-	       <?-- and store in entity "wholeEventList" with modifications.-->
+	       <?-- read out whole day's events prior to overwriting,  --?>
+	       <?-- and store in entity "wholeEventList" with modifications.--?>
 	       <set name="wholeEventList">
 		   <extract>
 		       <from>
 		           <get name="rawfile" />
 		       </from>
 		       <name>event</name>
-                       <?-- go through events to find one to replace -->
-                       <?-- match most fields (delete if not replacing) -->
+                       <?-- go through events to find one to replace --?>
+                       <?-- match most fields (delete if not replacing) --?>
                        <repeat>
                           <foreach>&list;</foreach>
                             <if>
@@ -265,7 +265,7 @@
                    </if>
 	       </set>
 
-               <?-- overwrite the file with the altered whole list -->
+               <?-- overwrite the file with the altered whole list --?>
                <store newYear="&myYear;" newMonth="&myMonth;"  newDay="&myDay;"
 		  rewriteEvent="yes" ><get name="wholeEventList" /></store>
 
@@ -273,27 +273,27 @@
             </then>
         </if>
 
-       <?-- done modifying files; now read them, display them, make forms -->
+       <?-- done modifying files; now read them, display them, make forms --?>
        <set name="wholeEventList">
 	  <lookup newYear="&myYear;"
 		  newMonth="&myMonth;"
 		  newDay="&myDay;" />
        </set>
 
-       <?-- encapsulate whole date into a smaller package -->
+       <?-- encapsulate whole date into a smaller package --?>
        <set name="datepack">
               <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
        </set>
 
-       <?-- initialize description variable -->
+       <?-- initialize description variable --?>
        <set name="chosenDesc"></set>
 
-        <?-- show events in a table, and grab selected ones for display elsewhere -->
+        <?-- show events in a table, and grab selected ones for display elsewhere --?>
 	<table bgcolor="lavender" cellpadding="10" border="0">
 
            <tr>
               <td bgcolor="&mybg;" colspan="4">
-		  <?-- show title and center date -->
+		  <?-- show title and center date --?>
 		  <font size="5"> Events for  <weekday>&datepack;</weekday>,
 		     <a href="grid.xh?&shortURL;"> <weekday monthname="yes">&datepack;</weekday></a>
 		       &myDay;, &myYear;
@@ -325,10 +325,10 @@
 	       <set name="myDesc"/>
 	       <set name="longURL" />
 
-               <?--readoneevent extracts time/place etc from li into my...-->
+               <?--readoneevent extracts time/place etc from li into my...--?>
                <readoneevent />
 
-               <?-- store chosen event description etc if it matches -->
+               <?-- store chosen event description etc if it matches --?>
                <if>
                    <logical and="yes">
                       <get name="FORM:Edit" />
@@ -339,7 +339,7 @@
 
                    <then>
 		       <set name="chosenDesc">&myDesc;</set>
-                       <?-- pluckintervals puts interval data into FORM:...-->
+                       <?-- pluckintervals puts interval data into FORM:...--?>
                        <pluckintervals />
 
                    </then>
@@ -362,7 +362,7 @@
 
 	</table>
 
-        <?-- set fields to good (not ugly) default printouts -->
+        <?-- set fields to good (not ugly) default printouts --?>
         <if>
            <test not="yes"><get name="FORM:newTime"/></test>
            <then>
@@ -382,7 +382,7 @@
            </then>
         </if>
 
-        <?-- show (blank) form for adding new event -->
+        <?-- show (blank) form for adding new event --?>
         <if><logical or="yes"><get name="FORM:Add"/><get name="FORM:Edit"/></logical>
             <then>
 

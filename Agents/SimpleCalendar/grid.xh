@@ -4,13 +4,13 @@
 <html>
 <body>
 
-<hide> <?-- first create zero-stripped month and day for display
-       <?-- get default date as today -->
+<hide> <?-- first create zero-stripped month and day for display --?>
+       <?-- get default date as today --?>
        <set name="myYear" >&year;</set>
        <set name="myMonth" ><numstrip>&month;</numstrip></set>
        <set name="myDay" ><numstrip>&day;</numstrip></set>
 
-       <?-- decide whether to show one month or whole year -->
+       <?-- decide whether to show one month or whole year --?>
        <set name="showMonthOnly">yes</set>
        <if><get name="FORM:wholeYear" />
          <then>
@@ -21,10 +21,10 @@
        <show-today />
 <hide>
        <if>
-           <?-- check if form called this page  -->
+           <?-- check if form called this page  --?>
            <get name="FORM:Add" /> 
 	   <then>
-              <?-- get date submitted by form, overwriting above values -->
+              <?-- get date submitted by form, overwriting above values --?>
 	      <set name="myYear"  >&FORM:newYear;</set>
 	      <set name="myMonth"  >&FORM:newMonth;</set>
 	      <set name="myDay" >&FORM:newDay;</set>
@@ -32,11 +32,11 @@
 	</if>
 </hide>
 
-       <?-- bar of links to nearby months and years -->
+       <?-- bar of links to nearby months and years --?>
        <navbar />
 
        <hide>
-	    <?-- flags and now-empty list for deciding to show events -->
+	    <?-- flags and now-empty list for deciding to show events --?>
 	    <set name="wholeEventList"> </set>
         </hide>
 	<table cellspacing="1"  cellpadding="2" border="0">
@@ -59,7 +59,7 @@
                     <set name="endMonth">12</set>
                 </then>
             </if>
-            <?-- show month name, as link to month -->
+            <?-- show month name, as link to month --?>
             <repeat start="&startMonth;" stop="&endMonth;" entity="thisMonth">
 	       <if><test not="yes">&showMonthOnly;</test>
                       <then>
@@ -86,12 +86,12 @@
                  <year>&myYear;</year>
             </weekday></set>
 
-	    <?-- week loop -->
+	    <?-- week loop --?>
 	    <repeat start="&offset;" entity="m" stop="&lastday;" step="7">
            
 	       <set name="stopDay"><numeric sum="sum">&m; 6</numeric></set>
 	       <tr>
-		 <?--  day loop -->
+		 <?--  day loop --?>
 		   <repeat start="&m;" stop="&stopDay;"><text trim="yes">
 		       <set name="myDay">&n;</set>
 		       <if><logical and="yes">
