@@ -18,6 +18,50 @@
 	projects.  
 </dl>
 
+<h2><a name="Interfaces">DPS and Standard Interfaces</a></h2>
+
+<p> I see the transition of the DPS to standard interfaces (DOM and SAX) as
+    proceeding in these stages:
+
+<ol>
+  <li> The Input and Output implementations <code>FromDocument</code>,
+       <code>FromSAX</code>, <code>ToDocument</code>, <code>ToSAX</code>.
+       (Document, of course, refers to the corresponding DOM class).
+       <code>ToDocument</code> already exists as a stub.  <code>FromSAX</code>
+       requires the use of two threads and a queue. 
+  <li> Extend Tagset to implement DocumentType (it's almost there now).  This
+       would probably be sufficient to allow our own DOM to be used in some
+       other applications.  (Not all -- in particular,
+       <code>getElementsByTagName</code> is still unimplemented.)
+  <li> Extend the Cursor implementation so that it doesn't require the
+       presence of an actual ActiveNode.  (A previous implementation involved
+       a DOM Node, but you don't actually need that, either.)  It may even be
+       reasonable to virtualize Text nodes as strings.  See <a
+       href="Design/dom.html">Design/dom.html</a> for details.
+  <li> Add the SAX interface to Processor.  This would require constructing
+       subtrees for some (perhaps not all) active nodes.  An alternative,
+       event-oriented <code>action</code> method would probably be needed in
+       the <code>Action</code> interface, or (more likely) a pair of them.  In
+       the default case these would simply pass the event (cursor) to the
+       Output.  For <em>active</em> nodes, these would construct a subtree and
+       call the original 3-argument <code>action</code> routine, but
+       eventually many handlers would be rewritten for better performance. 
+</ol>
+
+<p> The event-driven Processor is somewhat related to the <em>old</em>
+    <em>Token</em>-oriented ``interform interpretor'' enshrined in
+    <code>pia/src/java/crc/interform</code> -- not that it's a particularly
+    good example. 
+
+<h2><a name="C-port">C Port</a></h2>
+
+<blockquote><strong>
+  See <a href="porting.html">porting.html</a>
+</strong></blockquote>
+
+<p> We need to produce a sufficiently complete design sketch of a C/C++ port
+    that some other group can take over the job.   
+
 <h2><a name="XML-rep">Agents and Tagsets in XML</a></h2>
 
 <blockquote><strong>
@@ -135,7 +179,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.4 1999-05-25 23:07:23 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.5 1999-06-09 18:36:11 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
