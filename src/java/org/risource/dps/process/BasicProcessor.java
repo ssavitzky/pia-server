@@ -1,5 +1,5 @@
 ////// BasicProcessor.java: Document Processor basic implementation
-//	$Id: BasicProcessor.java,v 1.11 1999-07-14 20:21:00 steve Exp $
+//	$Id: BasicProcessor.java,v 1.12 1999-10-06 23:32:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.tree.TreeElement;
 /**
  * A minimal implementation for a document Processor. <p>
  *
- * @version $Id: BasicProcessor.java,v 1.11 1999-07-14 20:21:00 steve Exp $
+ * @version $Id: BasicProcessor.java,v 1.12 1999-10-06 23:32:44 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Output
@@ -124,6 +124,11 @@ public class BasicProcessor extends ContextStack implements Processor {
     ActiveNode node = input.getActive();
     if (node == null) return;
 
+    // Crock for PI comments:
+    if (node.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE
+	&& node.getNodeName().equals("--"))
+      return;
+
     // No need to check for an entity; active ones use EntityHandler.
     if (input.hasActiveAttributes()) {
       ActiveElement oe = node.asElement();
@@ -165,6 +170,11 @@ public class BasicProcessor extends ContextStack implements Processor {
    */
   protected final void copyCurrentNode(Node n) {
     if (n == null) return;
+    // Crock for PI comments:
+    if (n.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE
+	&& n.getNodeName().equals("--"))
+      return;
+
     if (input.hasChildren() && ! n.hasChildNodes()) {
       // Copy recursively only if the node hasn't been fully parsed yet.
       if (!input.toFirstChild()) output.putNode(n);
