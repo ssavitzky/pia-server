@@ -35,7 +35,7 @@
     <th align=right valign=top bgcolor=silver>Links:</th>
     <td>
 	||&nbsp;<a href="http://www.RiSource.org/">[www.RiSource.org]</a>
-	(&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
+	 (&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
 	||&nbsp;<a href="http://pia.rsv.ricoh.com/">[pia.rsv.ricoh.com]</a>
     </td>
     <td bgcolor=silver>&nbsp;</td>  
@@ -43,4 +43,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.11 1999-09-22 23:50:16 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.12 1999-09-24 00:24:00 steve Exp $"/>
