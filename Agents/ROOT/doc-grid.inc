@@ -12,7 +12,7 @@
     <th align=right valign=top bgcolor=silver>
 	This Release: </th>
     <td>
-	||&nbsp;<a href="/Doc/Release/r2.0.html"><strong>2.0</strong></a> 
+	||&nbsp;<a href="/Doc/Release/r2.1.html"><strong>2.1</strong></a> 
 	||&nbsp;<a href="/README">README</a>
 	||&nbsp;<a href="/LICENSE">LICENSE</a>
         ||&nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a> 
@@ -44,4 +44,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.14 1999-11-24 22:41:13 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.15 2000-03-02 04:27:29 steve Exp $"/>
