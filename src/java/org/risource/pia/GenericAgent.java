@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.26 1999-07-08 21:39:06 bill Exp $
+// $Id: GenericAgent.java,v 1.27 1999-07-09 01:51:57 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -1205,7 +1205,7 @@ public class GenericAgent extends BasicNamespace
      *	the documentSearchPath of the type agent.
      */
 
-    if (userDirectory() != null) path.push(userDiFile);
+    if (userDirectory() != null) path.push(userDirFile);
     if (!forWriting && homeDirectory() != null) path.push(homeDirFile);
 
     if (typeAgent() != null) {
@@ -1455,7 +1455,7 @@ public class GenericAgent extends BasicNamespace
     for (int i = 0; i < executableTypes.length; ++i) {
       String ext = "." + executableTypes[i] + "/";
       int pos = path.indexOf(ext);
-      if( pos  > 0 ){
+      if( pos > 0 ){
 	destFileName = path.substring(pos+ext.length());
 	return path.substring(0, pos+ext.length());
       }
