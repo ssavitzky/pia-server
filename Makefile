@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.18 1999-04-13 23:56:44 pgage Exp $
+#	$Id: Makefile,v 1.19 1999-04-14 00:07:47 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,7 @@ REL_DIR	    = $(HOME)/src_release	# source release will be built here
 REL_PIA_DIR = $(HOME)/src_release/PIA
 DEST_DIR    = /pia1/pia			# Where source release tar file ends up
 TAR_NAME    = pia_src$(VERSION)		# Append version to avoid overwrites
-CREATE_CVS_TAG = 1			# set to 1 to cvs rtag the release
+CREATE_CVS_TAG = 0			# set to 1 to cvs rtag the release
 
 SUBDIRS= src bin lib Doc
 
@@ -110,10 +110,10 @@ prep_rel_dir::
 src.tar:	update-version	
 	make prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
-		cd /pia1/CvsRoot; /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
+		cd /pia1/CvsRoot; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
 	 	cd $(REL_DIR); cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA; \
 	else \
-		cd /pia1/CvsRoot; /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
+		cd /pia1/CvsRoot; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
 		cd $(REL_DIR); cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA; \
 	fi
 	cd $(REL_PIA_DIR); make prep_src_rel
