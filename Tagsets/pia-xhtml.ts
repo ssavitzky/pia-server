@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.10 2000-07-25 22:17:02 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.11 2000-08-23 00:02:05 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -252,24 +252,27 @@ Note that we only need these inside the PIA.
     </if>
 </hide>
 <table cellpadding=0 cellspacing=0>
-<tr><th><a href="&PIA:rootPath;"><img src="&PIA:rootPath;Icon/pia45.png"
-			 border=0 width=85 height=45 alt="P I A" /></a></th>
-    <td valign=bottom>
-      <table>
-	<tr><th valign=bottom align=left>
-	       &RiSource.org;'s Platform for Information Applications</th></tr>
-	<tr height=6><td><img src="&PIA:rootPath;Icon/rule.png" height=6
-			      width=469 /></td></tr>
-      </table>
-    </td>
-</tr>
+  <tr><th><a href="&PIA:rootPath;"><img src="&PIA:rootPath;Icon/pia45.png"
+			   border=0 width=85 height=45 alt="P I A" /></a></th>
+      <td valign=bottom>
+	<table>
+	  <tr><th valign=bottom align=left>
+		 &RiSource.org;'s Platform for Information Applications</th>
+	  </tr>
+	  <tr height=6><td><img src="&PIA:rootPath;Icon/rule.png" height=6
+				width="469" /></td>
+	  </tr>
+	</table>
+      </td>
+  </tr>
 </table>
 <table cellspacing=0 cellpadding=0 border=0>
-<tr><th valign=top width=170>&nbsp;</th>
-    <th align=right valign=top width=170><get name="ltitle"/>&nbsp; </th>
-    <th align=left valign=top><if><get name="title"/>
-	<then><get name="title"/></then>
-	<else><get name="fileName"/></else></if></th></tr>
+  <tr><th valign=top width=170>&nbsp;</th>
+      <th align=right valign=top width=170><get name="ltitle"/>&nbsp; </th>
+      <th align=left valign=top><if><get name="title"/>
+	  <then><get name="title"/></then>
+	  <else><get name="fileName"/></else></if></th>
+  </tr>
 <if><get name="attributes:show-date"/><then>
   <tr nowrap nobr>
       <td colspan=2></td><td><get name="dayName"/>, <get name="year"/>-<get
