@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.5 2000-07-19 00:46:02 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.6 2000-09-23 00:51:14 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -501,12 +501,6 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 	  <tag>value</tag> and <tag>action</tag> elements.
     </doc>
   </define>
-  <define attribute="nonstrictEndTags" optional="optional">
-    <doc> If present, this attribute indicates that the parser should not
-	  complain about missing end tags.  It is used for markup languages
-	  such as HTML, in which end tags may be omitted in certain cases.
-    </doc>
-  </define>
   <define attribute="recursive" optional="optional">
     <doc> If present, this attribute indicates that elements defined in the
 	  tagset can be used in the <tag>action</tag> and <tag>value</tag>
@@ -520,6 +514,20 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 	  accurately describes a recursive tagset definition file.  It is
 	  reducible to a valid DTD, however, so that the documents
 	  <em>it describes</em> are valid SGML.</p>
+    </doc>
+  </define>
+  <define attribute="parser" optional="optional">
+    <doc> The <code>tagset</code> attribute specifies the class of the parser
+	  to be used with this tagset.  If not specified, an XML/HTML parser
+	  (<code>BasicParser</code>) is used.  Parser parameters are usually
+	  passed in the attributes of the <tag>tagset</tag> tag; the
+	  attributes used by <code>BasicParser</code> are defined below.
+    </doc>
+  </define>
+  <define attribute="nonstrictEndTags" optional="optional">
+    <doc> If present, this attribute indicates that the parser should not
+	  complain about missing end tags.  It is used for markup languages
+	  such as HTML in which end tags may be omitted in certain cases.
     </doc>
   </define>
 </define>
