@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.20 2000-04-14 23:06:11 steve Exp $
+//	$Id: TopProcessor.java,v 1.21 2000-10-04 22:06:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.20 2000-04-14 23:06:11 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.21 2000-10-04 22:06:31 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -324,6 +324,10 @@ public class TopProcessor extends BasicProcessor implements TopContext
     if (path.startsWith("file:")) {
       // Just remove the "file:" prefix.
       path = path.substring(5);
+    } else if (path.startsWith("pia:")) {
+      path = path.substring("pia:".length());
+      if (path.startsWith("/")) path = path.substring(1);
+      return new File(piaHome, path);
     }
     if (path.startsWith("/")) {
       // Path starting with "/" is relative to document root
@@ -550,6 +554,22 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /************************************************************************
   ** Construction:
   ************************************************************************/
+
+  protected static File piaHome = null;
+
+  /** Set the PIA home directory.
+   * 
+   *<p> This is not strictly necessary, but is needed in order to allow
+   *	the use of pia: when loading resources, especially for processing
+   *	include files during initialization.
+   */
+  public static void setPiaHome(String path) {
+    piaHome = new File(path);
+    if (!piaHome.exists()) {
+      piaHome = null;
+      System.err.println("*** Tagset home " + path + " does not exist!");
+    }
+  }
 
   public TopProcessor() {
     top = this;
