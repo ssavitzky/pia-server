@@ -39,13 +39,19 @@
     <tr><td width="170">&nbsp;</td><td></td></tr>
     <tr><th> </th>
         <td> <table>
-	  	<tr> <td> <a href="#general">general</a></td>
+	  	<tr> <td> <a href="#general">General Intro.</a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
-		     <td> <a href="#Woad_Warrior">Woad Warrior</a> </td>
+		     <td> <a href="#Woad_Trees"><ss>Woad</ss> Trees</a> </td>
+	        </tr>
+	  	<tr> <td> <a href="#modes">operating modes</a></td>
+		     <td> &nbsp;&nbsp;&nbsp; </td>
+		     <td> <a href="#Woad_Cmd">The <code>woad</code> Command</a>
+		     </td>
 	        </tr>
 	  	<tr> <td> <a href="#"></a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
-		     <td> <a href="#Woad_Trees">Woad Trees</a> </td>
+		     <td> <a href="#Woad_Warrior"><ss>Woad Warrior</ss></a>
+		     </td>
 	        </tr>
 	     </table>
 	</td>
@@ -55,67 +61,103 @@
 </td></tr></table>
 <hr />
 
-<h2><a name="general">General: about <font face="helvetica, sans-serif">
-    Woad</font></a></h2>
+<h2><a name="general">General Introduction to <ss>WOAD</ss></a></h2>
 
-<p> <font face="helvetica, sans-serif">WOAD</font> stands for Web-Organized
-    Application Development -- a collection of web-based tools for assisting
-    the devopment of applications, and especially web applications. 
+<p> <ss>WOAD</ss> stands for <ss>Web-Organized Application Development</ss> --
+    a collection of web-based tools for assisting the devopment of
+    applications, and especially web applications.  As the name suggests,
+    <ss>Woad</ss> uses the web to organize your development process:  in
+    effect, it turns an application's source code and web documents into a
+    web site that can be used by developers and by users who need to customize
+    the application.
 </p>
 
-<hr />
-<h2>Operating Modes</h2>
 
-<h3><a name="Woad_Cmd">The <code>woad</code> Command</a></h3>
+<h3><a name="Woad_Trees"><ss>Woad</ss> Trees</a></h3>
 
-<p> The following command starts a <ss>woad</ss> server on a given directory:
-</p>
-<pre>    woad <em>directory</em></pre>
-
-<p> Until it's implemented, use the following:
-</p>
-
-<pre>    pia -site $(PIA_HOME)/Apps/Woad/woad.xcf -vroot <em>directory</em>
-</pre>
-
-<p> In both cases, you can add the following parameter to set the ``<em>target
-    server</em>'' -- the server on which the web application is running:
-</p>
-
-<pre>    target=<em>host:port</em></pre>
-
-<blockquote>
-  <p> At the moment there isn't a good way to make the target correspond to a
-      <em>subdirectory</em> of the application directory, as would be the case
-      if you wanted the top level to be <code>/usr/local/apache</code> and the
-      document root was under that in <code>/usr/local/apache/htdocs</code>.
-      The parameter to set this ought to be <code>offset=<em>path</em></code>.
-  </p>
-</blockquote>
-
-<h3><a name="Woad_Trees">Woad Trees</a></h3>
-
-<p> A <font face="helvetica, sans-serif">Woad Tree </font> is the view that
-    <font face="helvetica, sans-serif">WOAD</font> provides of a directory
-    tree.  It lets you browse a directory as if it was a well-designed web
-    site, with URL's in the tree mapping directly into pathnamess in the
-    filesystem that contains the tree.  
+<p> A <ss>Woad</ss> Tree is the view that <ss>WOAD</ss> provides of a
+    directory tree.  It lets you browse a directory as if it was a
+    well-organized web site, with URL's in the tree mapping directly into
+    pathnames in the filesystem that contains the tree.  In the case of web
+    applications, there is also a direct mapping between URL's in the
+    <ss>Woad</ss> <em>source</em> tree and URL's in the <em>target</em> server
+    that the application is running on.
 </p>
 
 <p> In addition to providing a view of an applications's source code and
-    documents, a <font face="helvetica, sans-serif">Woad Tree</font> contains
+    documents, a <ss>Woad</ss> Tree contains
     <em>annotation</em> attached to each page, in the form of both threaded
     discussions and totally free-form webs.  This allows the developers of an
     application, as well as those users interested in customizing it, to
     communicate informally.
 </p>
 
-<h3><a name="Woad_Warrior">Woad Warrior</a></h3>
+<p> A web application which is designed primarily for customization or for
+    software development can include it's own <ss>Woad</ss> Tree; the PIA,
+    running in its standard configuration, does this.
+</p>
 
-<p> <font face="helvetica, sans-serif"><a href="warrior">Woad Warrior</a>
-    </font> is a web application designed to run on your local desktop
-    computer.  It lets you define multiple applications, called ``projects,''
-    and view both their source code and their web pages.
+<if><get name="SITE:sourceOffset"/>
+    <then>
+      <blockquote>
+	This application, in fact, <em>has</em> a <ss>Woad</ss> tree, located
+	at <a href="&SITE:sourceOffset;">&SITE:sourceOffset;</a>.
+      </blockquote>
+    </then>
+</if>
+
+<hr />
+<h2>Operating Modes</h2>
+
+<h3><a name="Woad_Cmd">The <code>woad</code> Command</a></h3>
+
+<p> The following command starts a stand-alone <ss>Woad</ss> server on a given
+    source directory:
+</p>
+<pre>    woad <em>directory</em></pre>
+
+<p> (Until it's implemented, use the following:)
+</p>
+
+<pre>    pia -site $(PIA_HOME)/Apps/Woad/woad.xcf -vroot <em>directory</em>
+</pre>
+
+<h4>Options</h4>
+
+<p> In both cases, you can add the following parameters
+</p>
+
+<dl>
+  <dt> <code>target=<em>host:port</em></code>
+  </dt>
+  <dd> sets the ``<em>target server</em>'' -- the server on which the web
+       application is running.
+  </dd>
+  <dt> <code>prefix=<em>path</em></code>
+  </dt>
+  <dd> Sets the ``<em>target prefix</em>'' -- the path, relative to the
+       application's root directory, at which the <em>target server's document
+       root</em> is located.  For example, if you wanted the top level to be
+       <code>/usr/local/apache</code> and the document root was under that in
+       <code>/usr/local/apache/htdocs</code>, you would use
+       ``<code>offset=/htdocs</code>''. 
+  </dd>
+  <dt> <code>offset=<em>path</em></code>
+  </dt>
+  <dd> Sets the ``<em>source offset</em>'' -- the path, relative to an
+       application's root directory, at which <em>its own <ss>Woad</ss>
+       Tree</em> (source tree) is located.  Typically, for example in the PIA
+       running with its default configuration, this is
+       ``<code>/.Tree</code>''.
+  </dd>
+</dl>
+
+<h3><a name="Woad_Warrior"><ss>Woad Warrior</ss></a></h3>
+
+<p> <ss><a href="warrior">Woad Warrior</a></ss> is a web application designed
+    to run on your local desktop computer.  It lets you define multiple
+    applications, called ``projects,'' and view both their source code and
+    their web pages.
 </p>
 
 
@@ -157,6 +199,13 @@
   </dt>
   <dd> The source code is parsed and tagged with a different tagset that is
        essentially language-independent.  
+  </dd>
+  <dt> <code>documented</code>
+  </dt>
+  <dd> Relevant documentation is <em>extracted</em> directly from the source
+       code and presented as a kind of reference manual.  This mode is not
+       available for all documents; it <em>is</em> available for tagsets and
+       <red>(soon)</red> selected programming languages.  
   </dd>
 </dl>
 
@@ -209,5 +258,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.3 2000-06-07 23:44:37 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.4 2000-06-08 23:14:38 steve Exp $" />
 </p></body></html>

@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.3 2000-06-07 23:44:37 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.4 2000-06-08 23:14:39 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -44,13 +44,21 @@
     <else-if>&FORM:tsdoc;<then>tsdoc</then></else-if>
     <else>processed</else>
   </if></set>
-  <set name="VAR:wrap">&FORM:wrap;</set></hide>
-  <head><title>&DOC:path; -- WOAD listing</title>
+  <set name="VAR:wrap">&FORM:wrap;</set>
+  <set name="tpath"><mapToTarget>&DOC:path;</mapToTarget></set>
+  <set name="spath">
+    <if>&SITE:sourceOffset;
+	<then><subst match="^&SITE:sourceOffset;"
+	             result="">&DOC:path;</subst></then>
+	<else>&DOC:path;</else>
+    </if></set>
+  </hide>
+  <head><title>&spath; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
     <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
       <tr><th align="left">
-          <h1><code>&DOC:path;</code></h1>
+          <h1><code>&spath;</code></h1>
           </th>
       </tr>
     </table>
@@ -82,10 +90,9 @@
 		      	    <xf fmt="tsdoc"href="&DOC:path;?tsdoc">tsdoc</xf>
 		          </then>
 		      </if>
-		      <if><get name="SITE:targetServer" />
+		      <if><get name="tpath" />
 		          <then>
-		      	    <a href="http://&SITE:targetServer;&DOC:path;">
-		      		&lt;server&gt;</a>
+		      	    <a href="&tpath;">&lt;server&gt;</a>
 		          </then>
 		      </if>
 		      <a href="/.Woad/help.xh#views">[help]</a>

@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.3 2000-06-07 23:44:38 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.4 2000-06-08 23:14:40 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -106,6 +106,78 @@ Note that we only need these inside the PIA.
                    >WOAD</font></a></value>
 </define>
 
+<h2>Path and Identifier Mapping</h2>
+
+<define element="removePrefix">
+  <doc> Remove a prefix from the content.
+  </doc>
+  <define attribute="prefix">
+    <doc> The prefix to be removed.
+    </doc>
+  </define>
+  <action><subst match="^&attributes:prefix;" result="">&content;</subst><hide>
+  </hide></action>
+</define>
+
+<define element="mapToTarget">
+  <doc> Map the path in <code>&amp;content;</code> to the corresponding URL on
+	the target server.  The content needs to be a full path, typically the
+	one returned by <code>&amp;DOC:path;</code>.
+
+	<p> The following global variables are used:
+        </p>
+	<table>
+	  <tr> <td> <code>SITE:targetServer</code></td>
+	       <td> <code><em>host</em>:<em>port</em></code> for the target
+		    server. 
+	       </td>
+	  </tr>
+	  <tr> <td> <code>SITE:sourceOffset</code></td>
+	       <td> A prefix that must be <em>removed from</em> the path in
+		    order to arrive at a path on the target server.  This
+		    represents the path from the root of the Woad tree to the
+		    target server's <code>DocumentRoot</code>.
+	       </td>
+	  </tr>
+	  <tr> <td> <code>SITE:targetPrefix</code></td>
+	       <td> A prefix that must be <em>added to</em> the path in order
+		    to arrive at a target path, typically on <em>the same
+		    server</em>.  
+	       </td>
+	  </tr>
+	</table>
+
+	<p> The <code>sourceOffset</code> and <code>targetPrefix</code> can be
+	    combined 
+	</p>
+  </doc>
+  <action><hide>
+	<let name="server"><get name="SITE:targetServer"/></let>
+	<let name="prefix"><get name="SITE:targetPrefix"/></let>
+	<let name="offset"><get name="SITE:sourceOffset"/></let>
+	<let name="path"><get name="content"/></let>
+	<if>&offset;
+	    <then><if><test match="^&offset;">&path;</test>
+			  <then><let name="path">
+				  <subst match="^&offset;" 
+				         result="">&path;</subst>
+				</let>
+			  </then>
+			  <else><let name="server"></let>
+				<let name="prefix"></let>
+				<let name="path"></let>
+			  </else>
+		      </if>
+		</then>
+	</if>
+     </hide><if><get name="server"/>
+	      <then>http://&server;&prefix;&path;</then>
+	    <else-if>&prefix;&offset;
+	      <then>&prefix;&path;</then></else-if>
+  </if></action>
+</define>
+
+<ul></ul><!-- reset === indentation column === -->
 
 <h2>Listing Components</h2>
 

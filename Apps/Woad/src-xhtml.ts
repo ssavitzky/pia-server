@@ -20,7 +20,7 @@
 <tagset name="src-xhtml"  include="src-html" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.3 2000-06-08 23:14:39 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 
@@ -66,22 +66,24 @@
 
 <define element="doc" syntax="quoted">
   <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="doc" tc="&dc;"><expand>&content;</expand></elt></action>
+    </hide><elt-b tag="doc" tc="&dc;"><expand>&content;</expand><hide>
+    </hide></elt-b></action>
 </define>
 <define element="note" syntax="quoted">
   <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="note" tc="&dc;"><expand>&content;</expand></elt></action>
+    </hide><elt-b tag="note" tc="&dc;"><expand>&content;</expand><hide>
+    </hide></elt-b></action>
 </define>
 
 <define element="do" syntax="quoted">
   <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="do" tc="&cc;"><expand>&content;</expand><hide>
-    </hide></elt></action>
+    </hide><elt-b tag="do" tc="&cc;"><expand>&content;</expand><hide>
+    </hide></elt-b></action>
 </define>
 <define element="make" syntax="quoted">
   <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="make" tc="&cc;"><expand>&content;</expand><hide>
-    </hide></elt></action>
+    </hide><elt-b tag="make" tc="&cc;"><expand>&content;</expand><hide>
+    </hide></elt-b></action>
 </define>
 
 

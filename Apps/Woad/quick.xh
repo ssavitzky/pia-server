@@ -3,9 +3,7 @@
   <title>WOAD Quick Start page</title>
 </head><body bgcolor="#99ccff">
 
-<set name="ltitle">
-  <a href="./"><font face="Helvetica, sans-serif">Woad</font></a>
-</set>
+<set name="ltitle"><a href="./"><ss>Woad</ss></a></set>
 <header ltitle="&ltitle;">Quick Start <br />
 </header>
 
@@ -20,14 +18,14 @@
 
     <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
         <td valign="top">
-	    <a href="about">About WOAD</a> || 
+	    <a href="about">About <ss>WOAD</ss></a> || 
 	    <b>Quick start</b> ||
 	    <a href="help">Help</a>
         </td>
     </tr>
     <tr><th valign="top" align="right" width="170"> Forms: &nbsp;</th>
         <td valign="top">
-	    <a href="defaults">Woad Defaults</a>
+	    <a href="defaults"><ss>Woad</ss> Defaults</a>
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
@@ -39,17 +37,14 @@
     <tr><td width="170">&nbsp;</td><td></td></tr>
     <tr><th> </th>
         <td> <table>
-	  	<tr> <td> <a href="#general">About Woad</a></td>
+	  	<tr> <td> <a href="#this">This tree</a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
-		     <td> <a href="#running">Running Woad</a> </td>
-	        </tr>
-	  	<tr> <td> <a href="#modes">operating modes</a></td>
-		     <td> &nbsp;&nbsp;&nbsp; </td>
-		     <td> <a href="#Woad_Trees">Woad Trees</a> </td>
+		     <td> <a href="#running">Running <ss>Woad</ss></a> </td>
 	        </tr>
 	  	<tr> <td> <a href="#"></a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
-		     <td> <a href="#Woad_Warrior">Woad Warrior</a> </td>
+		     <td> <a href="#Woad_Warrior"><ss>Woad Warrior</ss></a>
+		     </td>
 	        </tr>
 	     </table>
 	</td>
@@ -59,47 +54,29 @@
 </td></tr></table>
 <hr />
 
-<h2><a name="general">About <font face="helvetica, sans-serif">
-    Woad</font></a></h2>
+<h2><a name="this">About This <ss>Woad</ss> Tree</a></h2>
 
-<p> <font face="helvetica, sans-serif">WOAD</font> stands for Web-Organized
-    Application Development -- a collection of web-based tools for assisting
-    the devopment of applications, and especially web applications. 
-</p>
-
-<h3><a name="running">Running Woad</a></h3>
 
 <hr />
-<h2><a name="modes">Operating Modes</a></h2>
+<h2><a name="running">Running <ss>Woad</ss></a></h2>
 
-<h3><a name="Woad_Trees"><font face="helvetica, sans-serif">
-    Woad Trees</a></font></h3>
+<hr />
+<h2><a name="Woad_Warrior"><ss>Woad Warrior</ss></a></h2>
 
-<p> A <font face="helvetica, sans-serif">Woad Tree</font> is the view that
-    <font face="helvetica, sans-serif">WOAD</font> provides of a directory
-    tree.  It lets you browse a directory as if it was a well-designed web
-    site, with URL's in the tree mapping directly into pathnamess in the
-    filesystem that contains the tree.  
+<p> <ss><a href="warrior">Woad Warrior</a></ss> is a version of <ss>WOAD</ss>
+    intended for use by developers and web application designers working on
+    multiple projects at the same time.  It is a <em>personal</em> web
+    application designed to run on the developer's desktop computer.  It lets
+    you define multiple ``projects,'' and view them all on the same server.
 </p>
 
-<p> In addition to providing a view of an applications's source code and
-    documents, a <font face="helvetica, sans-serif">Woad Tree</font> contains
-    <em>annotation</em> attached to each page, in the form of both threaded
-    discussions and totally free-form webs.  This allows the developers of an
-    application, as well as those users interested in customizing it, to
-    communicate informally.
+<blockquote>
+<p> <red><ss><a href="warrior">Woad Warrior</a></ss> is not implemented
+    yet.</red>  You can get a vague idea of its eventual flavor by following
+    the preceeding link, but it won't really do anything for you.
 </p>
-
-<h3><a name="Woad_Warrior"><font face="helvetica, sans-serif">Woad
-    Warrior</font></a></h3>
-
-<p> <font face="helvetica, sans-serif"><a href="warrior">Woad Warrior</a>
-    </font> is a web application designed to run on your local desktop
-    computer.  It lets you define multiple applications, called ``projects,''
-    and view both their source code and their web pages.
-</p>
-
+</blockquote>
 
 <p>
-<short-footer cvsid="$Id: quick.xh,v 1.1 2000-06-02 23:48:33 steve Exp $" />
+<short-footer cvsid="$Id: quick.xh,v 1.2 2000-06-08 23:14:39 steve Exp $" />
 </p></body></html>
