@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.14 1999-05-20 20:15:15 steve Exp $
+//	$Id: ActiveDoc.java,v 1.15 1999-05-21 21:48:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.14 1999-05-20 20:15:15 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.15 1999-05-21 21:48:02 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -134,10 +134,12 @@ public class ActiveDoc extends TopProcessor {
    * @see #initializeHookEntities
    */
   public void initializeEntities() {
-    super.initializeEntities();
-    initializeNamespaceEntities();
-    initializeLegacyEntities();
-    initializeHookEntities();
+    if (entities == null) super.initializeEntities();
+    if (agent != null) {
+      initializeNamespaceEntities();
+      initializeLegacyEntities();
+      initializeHookEntities();
+    }
   }
 
   /** Initialize the entities that contain namespaces. */
@@ -366,12 +368,12 @@ public class ActiveDoc extends TopProcessor {
 
   public ActiveDoc(Input in, Context cxt, Output out, Tagset ts,
 		   Agent a, Transaction req, Transaction resp, Resolver res) {
-    super(in, cxt, out, (Namespace)null);
+    super(in, cxt, out, ts);
     agent = a;
     request = req;
     response = resp;
     resolver = res;
-    setTagset(ts);
+    initializeEntities();
   }
 
 }

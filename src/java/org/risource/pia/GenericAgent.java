@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.21 1999-05-20 20:23:24 steve Exp $
+// $Id: GenericAgent.java,v 1.22 1999-05-21 21:48:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -312,6 +312,8 @@ public class GenericAgent extends BasicNamespace
   /** Flag that says whether to run the initialization file. */
   public boolean runInitFile = true;
 
+  protected ActiveDoc initProcessor;
+
   /**
    * Set options with a hash table (typically a form).
    *	Ignore the <code>agent</code> option, which comes from the fact
@@ -341,26 +343,20 @@ public class GenericAgent extends BasicNamespace
     runInitFile = false;
 
     parseOptions(opts);
-    initialize();
+    basicInitialization();
 
     ToAgent loader = new ToAgent(this);
     loader.setContext(cxt);
-    Tagset ts = loadTagset(env, "xhtml");
+    Tagset     ts = (Tagset) tagsets.at("xhtml");
     TopContext tp = env.subDocument(in, cxt, loader, ts);
     // It's up to the subDocument processor to switch tagsets.
-    Processor p = tp.subProcess(in, loader, this);
+    Processor p = tp.subProcess(tp.getInput(), loader, this);
     p.processChildren();
     env.subDocumentEnd();
     initialized=false;
   }
 
-  /** Initialization.  Subclasses may override, but this should rarely
-   *	be necessary.  If they <em>do</em> override this method it is
-   *	important to call <code>super.initialize()</code>.
-   */
-  public void initialize(){
-    if (initialized) return;
-
+  protected void basicInitialization() {
     String n = name();
     String t = type();
     if (t != null && ! t.equals(name()) && ! t.startsWith("/")) {
@@ -372,21 +368,27 @@ public class GenericAgent extends BasicNamespace
     put("path", path());
     put("pathName", pathName());
 
+    if (initProcessor == null) {
       // Fake a request for the initialization file. 
       //    We might not need it, in which case this is a waste, 
       //	  but we need a processor in order to load tagsets.
-      String url = pathName() + "/" + "initialize.xh";
+      String      url = pathName() + "/" + "initialize.xh";
       Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
-      ActiveDoc   proc = null;
       Resolver    res = Pia.resolver();
-
-    if (! tagsetsInitialized) {
-      // Force tagsets to load if necessary. 
-      if (piaXHTMLtagset == null || findDocument(name()+"-xhtml") != null) {
-	proc = makeDPSProcessor(req, res);
-      }
+      initProcessor = makeDPSProcessor(req, res);
       tagsetsInitialized = true;
     }
+  }
+
+
+  /** Initialization.  Subclasses may override, but this should rarely
+   *	be necessary.  If they <em>do</em> override this method it is
+   *	important to call <code>super.initialize()</code>.
+   */
+  public void initialize(){
+    if (initialized) return;
+
+    basicInitialization();
 
     // At this point, we have all our options and files. 
     if (Pia.verbose()) dumpDebugInformation();
@@ -394,13 +396,13 @@ public class GenericAgent extends BasicNamespace
     initialized = true;
     ActiveNodeList initHook = getValueNodes(null, "initialize");
     if (initHook != null) {
-      if (proc == null) proc = makeDPSProcessor(req, res);
-      proc.setInput(new FromNodeList(initHook));
-      proc.setOutput(new DiscardOutput());
-      proc.run();
+      initProcessor.setInput(new FromNodeList(initHook));
+      initProcessor.setOutput(new DiscardOutput());
+      initProcessor.run();
     }
 
     if (runInitFile) runInitFile();
+    initProcessor = null;
   }
 
   /** Run the initialization file. 

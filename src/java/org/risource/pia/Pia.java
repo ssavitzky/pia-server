@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.11 1999-05-21 00:42:38 steve Exp $
+// $Id: Pia.java,v 1.12 1999-05-21 21:48:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.11 1999-05-21 00:42:38 steve Exp $
+  * @version $Id: Pia.java,v 1.12 1999-05-21 21:48:13 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -852,7 +852,7 @@ public class Pia implements Tabular {
     String fn = rootAgent.findDocument(adminAgentFile);
     if (fn != null) {
       System.err.println("Loading /Admin from " + fn);
-      rootAgent.loadFile(fn, "./Admin/Admin-xhtml.ts");
+      rootAgent.loadFile(fn, "./Admin/Admin-agent.ts");
       adminAgent = (Admin) resolver.agent(adminAgentName);
     } else {
       // Create the Admin agent.  Its initialize.xh file loads everything else.

@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.11 1999-05-18 20:12:48 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.12 1999-05-21 21:47:52 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -118,7 +118,7 @@
     <extract sep=' '>
 	     <from>&loaded;</from>
 	     <name recursive>AGENT</name>
-	     <name>pathName</name>
+	     <attr>pathName</attr>
 	     <eval />
     </extract>
   </text></action>
@@ -408,6 +408,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.11 1999-05-18 20:12:48 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.12 1999-05-21 21:47:52 steve Exp $</b><br />
 </tagset>
 
