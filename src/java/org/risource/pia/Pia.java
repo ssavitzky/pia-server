@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.16 1999-10-04 17:40:31 steve Exp $
+// $Id: Pia.java,v 1.17 1999-10-08 06:23:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -66,7 +66,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.16 1999-10-04 17:40:31 steve Exp $
+  * @version $Id: Pia.java,v 1.17 1999-10-08 06:23:46 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -645,9 +645,6 @@ public class Pia implements Tabular {
     if (getProperty("debug", null) != null) verbosity += 2;
     if (getProperty("verbose", null) != null) verbosity += 1;
 
-    /* Set proxy tables from properties that end in "_proxy" */
-    initializeProxies(); 
-
     /* If we still don't know our host name, complain. */
 
     if( host == null ){
@@ -750,6 +747,9 @@ public class Pia implements Tabular {
 
   /** Reset variables from the properties. */
   public void resetProperties() {
+
+    /* Set proxy tables from properties that end in "_proxy" */
+    initializeProxies(); 
 
     verbosity		= getInteger("verbosity", verbosity);
     piaHomePath		= getProperty("home", piaHomePath);
