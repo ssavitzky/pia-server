@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.26 1999-06-07 18:36:31 steve Exp $
+#	$Id: Makefile,v 1.27 1999-06-09 18:33:24 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -115,8 +115,10 @@ $(RELNOTES)/r$(RELEASE).$(MAJOR).html:: Makefile
 		$(RELNOTES)/r$(RELEASE).$(MAJOR).html
 	cvs commit -m 'Update to version $(VERSION)' $@
 
-version_id::
-	echo $(VERSION) `date` > version_id
+# make a version ID file.  copy it to Doc as well.
+version_id:: Makefile
+	echo $(VERSION) built `date` by `whoami` > version_id
+	cp version_id Doc
 
 ### Common cvs operations 
 
@@ -132,7 +134,7 @@ cvs_export::
 ### Release Components
 
 build_release::
-	cd $(REL_DIR)/PIA; $(MAKE) clean ; $(MAKE) all version_id doc
+	cd $(REL_DIR)/PIA; $(MAKE) all version_id doc
 
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
