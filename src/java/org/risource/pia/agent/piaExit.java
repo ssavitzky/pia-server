@@ -1,5 +1,5 @@
 ////// piaExit.java:  Handler for <agent-restore>
-//	$Id: piaExit.java,v 1.1 1999-05-18 20:24:19 steve Exp $
+//	$Id: piaExit.java,v 1.2 1999-05-20 20:21:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,6 +51,11 @@ public class piaExit extends org.risource.dps.handle.GenericHandler {
       admin = (Admin) env.getAgent();
     } catch (Exception e) {
       reportError(in, aContext, "only works in the Admin agent");
+      return;
+    }
+
+    if (admin.hasTrueAttribute("lockExit")) {
+      reportError(in, aContext, "no exit: locked");
       return;
     }
 
