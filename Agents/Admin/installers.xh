@@ -25,9 +25,9 @@
   <dt> <a name='View'>View agent</a></dt>
        <if><agent-running name='View'></agent-running>
            <then><em>installed</em></then><else>
-  <dd> <form action='/&AGENT:name;/create-agent' method='POST'>
-       <input type='submit' value='Create' />
-       name: <input name='agent' value='View' />
+  <dd> <form action='/&AGENT:name;/load-agent' method='POST'>
+       <input type='submit' value=Load' />
+       src: <input name='src' size="30" value='./View/AGENT.xml' />
        </form></dd></else></if>
   <dt> <a name='Proxie'>Proxie agent</a></dt>
        <if><agent-running name='Proxie'/>
@@ -240,5 +240,5 @@ Provides basic file browsing capabilities.
     into your own <code> START-UP.html </code> file.  When you design a new
     agent, you can add a default install form to this page.</p> 
 
-<footer cvsid='$Id: installers.xh,v 1.9 1999-05-06 20:36:36 steve Exp $' />
+<footer cvsid='$Id: installers.xh,v 1.10 1999-05-18 20:12:55 steve Exp $' />
 </body></html>

@@ -1,0 +1,6 @@
+<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<!-- $Id: AGENT.xml,v 1.1 1999-05-18 20:13:12 steve Exp $ -->
+
+<AGENT name='View' path='/' type='View' pathName='/View'>
+  <bind name='criteria'></bind>
+</AGENT>

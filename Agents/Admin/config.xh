@@ -12,7 +12,8 @@
     <code><var>USR_DIR</var>/Config/pia.props</code>, and will be read in the
     next time the PIA is started.  To change one of these values
     <em>immediately</em>, use the ``<a
-    href="control"><code>control</code></a>'' page. 
+    href="control"><code>control</code></a>'' page (but note that some
+    parameters can only be set when the PIA is started). 
 </p>
 <hr />
 <if><get name='FORM:submission' /> <then>
@@ -49,13 +50,14 @@
 </if>
 
 <form action='/Admin/config' method='POST'>
-<table cellspacing="0" border="0">
+<table cellspacing="0" border="0" width="90%" align="center">
   <tr><td bgcolor="silver">
           <input type='submit' name='submission' value="Write" /> </td>
       <th bgcolor="silver" align=left> Properties to configuration file</th>
+      <td bgcolor="silver">&nbsp;</td>
   </tr>
-  <tr><td valign="top" >
-      <td>
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td valign="top" align="left" width="90%">
 	  <TABLE>
 	  <TR>
 	  <TH align='right'><B><U>Property</U></B></TH>
@@ -98,10 +100,12 @@
 	  </TR>
 	  </TABLE>
       </td>
+      <td bgcolor="silver">&nbsp;</td>
   </tr>
+  <tr><td bgcolor="silver" colspan="3">&nbsp;</td></tr>
 </table>
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.3 1999-05-11 01:28:03 steve Exp $' />
+<footer cvsid='$Id: config.xh,v 1.4 1999-05-18 20:12:52 steve Exp $' />
 </body></html>

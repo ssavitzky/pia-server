@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:52 steve Exp $ -->
+<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<!-- $Id: AGENT.xml,v 1.2 1999-05-18 20:13:10 steve Exp $ -->
 
 <AGENT name='History' path='/' type='History' pathName='/History'
-       home-dir='./Proxie/History'>
+       home-dir='./Proxie/History' user-dir='/~/Agents/Proxie/History'>
   <bind name='criteria'>response agent-response-</bind>
   <bind name='act-on'>
    <set name='ct'><get name='TRANS:Content-type' /></set>

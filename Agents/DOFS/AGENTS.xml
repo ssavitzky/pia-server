@@ -1,21 +1,30 @@
 <!DOCTYPE AGENTS SYSTEM Admin-agent>
-<!-- $Id: AGENTS.xml,v 1.1 1999-05-06 20:36:40 steve Exp $ -->
+<!-- $Id: AGENTS.xml,v 1.2 1999-05-18 20:13:02 steve Exp $ -->
 
 <AGENTS>
+  <!-- Note: it is not yet feasible to save a modified version of this file -->
+  <!--       using any of the forms in the /Admin agent.                    -->
+
   <AGENT name='DOFS' path='/' type='DOFS'
 	 class='org.risource.pia.agent.Dofs' pathName='/DOFS'>
     <bind name='criteria'></bind>
-  </AGENT>
-
-  <AGENT name='PIA' path='/' type='/DOFS'
-	  class='org.risource.pia.agent.Dofs' pathName='/PIA'>
-    <bind name='criteria'></bind>
-    <bind name='root'>/home/steve/PIA</bind>
+    <bind name='doNotRemove'>LOCKED</bind>
+    <bind name='doNotSave'>LOCKED</bind>
   </AGENT>
 
   <AGENT name='Doc' path='/' type='/DOFS'
 	  class='org.risource.pia.agent.Dofs' pathName='/Doc'>
     <bind name='criteria'></bind>
     <bind name='root'>/home/steve/PIA/Doc</bind>
+    <bind name='doNotRemove'>LOCKED</bind>
+    <bind name='doNotSave'>LOCKED</bind>
+  </AGENT>
+
+  <AGENT name='PIA' path='/' type='/DOFS'
+	  class='org.risource.pia.agent.Dofs' pathName='/PIA'>
+    <bind name='criteria'></bind>
+    <bind name='root'>/home/steve/PIA</bind>
+    <bind name='doNotRemove'>LOCKED</bind>
+    <bind name='doNotSave'>LOCKED</bind>
   </AGENT>
 </AGENTS>

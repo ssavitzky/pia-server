@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.10 1999-05-11 01:28:01 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.11 1999-05-18 20:12:48 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -52,12 +52,69 @@
    </define>
 </define>
 
+
+<define element='register-agent'>
+  <doc> Register an agent's pathName and load file (content). 
+  </doc>
+  <define attribute="id" required>
+    <doc> The agent's <code>pathName</code> </doc>
+  </define>
+  <define attribute="on-start" optional>
+    <doc> If set, load the agent automatically on startup.  </doc>
+  </define>
+  <action>
+    <set name="new"><agent-file id="&attributes:id;"
+			        on-start="&attributes:on-start;"
+		       >&content;</agent-file></set>
+    <hide>
+      <if><extract><from>&AGENT:agent-files;</from>
+		   <id recursive>&attributes:id;</id></extract>
+	  <then>
+	    <extract><from>&AGENT:agent-files;</from>
+		     <id recursive>&attributes:id;</id>
+		     <replace node>&new;</replace>
+	    </extract>
+	  </then>
+	  <else>
+	    <extract><from>&AGENT:agent-files;</from>
+		     agent-files
+		     <insert>  &new;
+</insert>
+	    </extract>
+	  </else>
+      </if>
+    </hide>
+  </action>
+</define>
+
 <define element=agent-load>
   <doc> Load agents from the file specified in the content, using the
 	Admin-agent tagset.  Return the pathName of each agent loaded.
   </doc>
+   <define attribute=register optional>
+      <doc> If present, register the agent.
+      </doc>
+   </define>
   <action><text trim>
     <set name='loaded'><include src='&content;' tagset='Admin-agent'/></set>
+    <if>&attributes:register;
+	<then><hide>
+	   <set name="agents"><extract><from>&loaded;</from>
+					<name recursive>AGENT</name> #element
+			      </extract></set>
+	   <repeat><foreach>&agents;</foreach>
+		   <set name="id"><extract><from>&li;</from>
+					   <name>pathName</name>
+					   <eval/></extract></set>
+		   <set name="st"><extract><from>&li;</from>
+					   <name>onStart</name>
+					   <eval/></extract></set>
+		   <if>&id;<then><register-agent id="&id;"
+				   on-start="&st;">&content;</register-agent>
+                           </then></if>
+	  </repeat>
+	</hide></then>
+    </if>
     <extract sep=' '>
 	     <from>&loaded;</from>
 	     <name recursive>AGENT</name>
@@ -67,12 +124,26 @@
   </text></action>
 </define>
 
-<define element='agent-files'>
-  <doc> Load agents from the whitespace-separated list of files specified in
-	the content.  Reports progress using &lt;user-message&gt;.
+<define element='load-agent-files'>
+  <doc> Load agents from the list of files in the content, which must consist
+	of (expand to) an <tag>agent-files</tag> element that in turn contains
+	<tag>agent-file</tag> elements.  Reports progress using
+	&lt;user-message&gt;.  Only elements with the <code>onStart</code>
+	attribute are loaded.  The content is saved in
+	<code>&amp;AGENT:agent-files;</code> in order to track new or updated
+	agents. 
   </doc>
   <action>
-    <repeat><foreach>&content;</foreach>
+    <set name="AGENT:agent-files"><extract><from>&content;</from>
+			      		   agent-files
+				  </extract></set>
+    <set name="list"><extract><from>&AGENT:agent-files;</from>
+			      <name recursive>agent-file</name>
+			      <has-attr>on-start</has-attr>
+			      <content />
+		     </extract></set>
+
+    <repeat><foreach>&list;</foreach>
 	    <user-message>  loaded <hide>
 		    </hide><agent-load>&li;</agent-load><hide>
 		    </hide> from <status src='&li;' item='path'/></user-message>
@@ -81,31 +152,60 @@
   </action>
 </define>
 
-<h2>Legacy operations</h2>
+<define element='agent-file'>
+  <doc> Specifies an agent to load.  The content is the pathname of the file
+	to load from.  This is <em>not</em> an active element; this makes it
+	easier to construct file lists.
+  </doc>
+  <define attribute="id" required>
+    <doc> The agent's <code>pathName</code> </doc>
+  </define>
+  <define attribute="on-start" optional>
+    <doc> If set, load the agent automatically on startup. </doc>
+  </define>
+  <define attribute="src" optional>
+    <doc> The <em>original</em> path to the agent. </doc>
+  </define>
+</define>
 
-<define element=agent-home empty handler=org.risource.pia.agent.agentHome>
+<h3>Legacy operations</h3>
+
+
+<define element="agent-home" empty handler="org.risource.pia.agent.agentHome">
    <doc> Determine the home directory of an agent.  Prefixes the agent's name
 	 with its type, if necessary, to produce a complete path.
    </doc>
-   <define attribute=agent optional>
+   <define attribute="agent" optional>
       <doc> specifies the name of the agent being queried.  Defaults to the
 	    name of the current agent.
       </doc>
    </define>
-   <define attribute=link optional>
+   <define attribute="link" optional>
       <doc> If present, the result is a link to the agent's home. 
       </doc>
    </define>
 </define>
 
-<define element=agent-restore empty handler=org.risource.pia.agent.agentRestore>
+
+<define element="pia-exit" handler="org.risource.pia.agent.piaExit">
+   <doc> Exit the PIA. 
+   </doc>
+   <define attribute="status" optional>
+      <doc> Specifies the ``status'' returned to the OS when the program
+	    exits. 
+      </doc>
+   </define>
+</define>
+
+<define element="agent-restore" empty
+	handler="org.risource.pia.agent.agentRestore">
    <define attribute=file required>
       <doc> specifies the name of the file to be restored from.
       </doc>
    </define>
 </define>
 
-<define element=agent-save empty handler=org.risource.pia.agent.agentSave>
+<define element="agent-save" empty handler="org.risource.pia.agent.agentSave">
    <define attribute=file required>
       <doc> specifies the name of the file to be saved into.
       </doc>
@@ -308,6 +408,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.10 1999-05-11 01:28:01 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.11 1999-05-18 20:12:48 steve Exp $</b><br />
 </tagset>
 

@@ -1,6 +1,7 @@
-<!DOCTYPE AGENT SYSTEM Admin-agent>
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:45 steve Exp $ -->
+<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<!-- $Id: AGENT.xml,v 1.2 1999-05-18 20:13:04 steve Exp $ -->
 
  <AGENT name='Demo' path='/' type='Demo' pathName='/Demo'>
   <bind name='criteria'></bind>
+  <bind name='onStart'>on</bind>
 </AGENT>

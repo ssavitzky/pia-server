@@ -2,14 +2,15 @@
 <!-- Copyright 1999 Ricoh Silicon Valley -->
 
 <agent-files>
-  ./DOFS/AGENTS.xml
-  ./Demo/AGENT.xml
-  ./Proxie/AGENT.xml
-  ./Proxie/History/AGENT.xml
-  ./Proxie/Toolbar/AGENT.xml
-  ./Proxie/fileTools/AGENT.xml
-  ./Proxie/remoteTools/AGENT.xml
+  <agent-file id="/DOFS" on-start="on">./DOFS/AGENTS.xml</agent-file>
+  <agent-file id="/Proxie" on-start="on">./Proxie/AGENT.xml</agent-file>
+  <agent-file id="/History" on-start="on">./Proxie/History/AGENT.xml</agent-file>
+  <agent-file id="/Proxie/Toolbar" on-start="on">./Proxie/Toolbar/AGENT.xml</agent-file>
+  <agent-file id="/Proxie/Toolbar/fileTools" on-start="on">./Proxie/fileTools/AGENT.xml</agent-file>
+  <agent-file id="/Proxie/Toolbar/remoteTools" on-start="on">./Proxie/remoteTools/AGENT.xml</agent-file>
+  <agent-file id="/Demo" on-start="">./Demo/AGENT.xml</agent-file>
+  <agent-file id="/View" on-start="">./View/AGENT.xml</agent-file>
 </agent-files>
 
 
-<!-- $Id: agent-files.xml,v 1.1 1999-05-06 20:36:31 steve Exp $ -->
+<!-- $Id: agent-files.xml,v 1.2 1999-05-18 20:12:51 steve Exp $ -->

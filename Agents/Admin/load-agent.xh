@@ -5,14 +5,13 @@
 <header>Load Agent</header>
 <if>&FORM:quiet;<else><sub-head page='load-agent' /></else></if>
 <hr />
-<if><get name='FORM:src' />
+<if><get name="FORM:load" />
     <then><!-- ============== Load a file and report =============== -->
-	  <set name='a-path'><agent-load>&FORM:src;</agent-load></set>
+	  <set name='a-path'><agent-load register>&FORM:file;</agent-load></set>
 	  <if><get name='a-path'>
 	      <then>
-		 <!-- Need to record path and src in a namespace. -->
-		 <h3>Agent &a-path; loaded</h3>
-		 <user-message>Agent &a-path; loaded from &FORM:src;</user-message>
+		 <h2>Agent &a-path; loaded</h2>
+		 <user-message>Agent &a-path; loaded from &FORM:file;</user-message>
 		 <if>&FORM:quiet;
 		     <else><!-- Not quiet: report information -->
 		       <table>
@@ -34,17 +33,25 @@
 	        </if>
 	     </then>
 	     <else>
-		<h3>Loading &FORM:src; failed</h3>
+		<h3>Loading &FORM:file; failed</h3>
 		<p> Either the file does not exist, or it does not contain an
 		    AGENT element. </p>
 	     </else>
 	 </if>
     </then>
+<else-if><get name="FORM:dst" />
+    <then><!-- ============== Register a saved agent      =============== -->
+	<h2>Agent &FORM:a-path; Registered.</h2>
+	<register-agent id="&FORM:a-path;"
+			on-start="&FORM:on-start;">&FORM:dst;</register-agent>
+    </then>
     <else><!-- ============== No source file: ask for one =============== -->
 	<h2>Load an agent from an XML file:</h2>
 	<form action='/&AGENT:name;/load-agent' method='POST'>
-	  <input type='submit' value='Load Agent from:' />
-	  &nbsp;<input name='src' value='' size='40' />
+	  <input type='submit' name="load" value="Load" />
+	  <input type='submit' name="view" value="View" />
+	  <set name="file"><get name="FORM:file" /></set>
+	  &nbsp;<input name="file" value="&file;" size='40' />
 
 	  <p> This form is used to ``load'' an Agent from an XML file that
 	      specifies the internal data structure to be constructed.  If you
@@ -55,9 +62,83 @@
 	      option is mainly used during initialization, to skip the
 	      possibly-expensive step of extracting and reporting information
 	      from the newly-loaded agent.</p>
+
+	  <p> The ``View'' button can be used to preview an agent's XML data
+	      before loading it. 
 	</form>
     </else>
 </if>
 
-<short-footer cvsid='$Id: load-agent.xh,v 1.1 1999-05-06 20:36:38 steve Exp $'/>
+<if>&FORM:file;
+    <then>
+<hr />
+<h2><code>&FORM:file;</code></h2>
+<pre><protect markup result>
+<include src="&FORM:file;" unprocessed />
+</protect></pre>
+    </then>
+</if>
+
+<hr />
+<form>
+<table border="0">
+<tr><td valign="center">
+<h2>Known agent-description files</h2>
+<td bgcolor="silver">
+<if>&AGENT:doNotSave;
+    <else>
+  <input type="submit" name="saveList" value="Save agent file list">
+  <if>&FORM:saveList;
+      <then><strong><code>agent-files.xml</code> written.</strong>
+	    <output dst="agent-files.xml">
+<!DOCTYPE agent-files SYSTEM "Admin-xhtml">
+<!-- Written by load-agent.xh -->
+&AGENT:agent-files;
+</output>
+      <user-message>agent-files.xml written.</user-message>
+      </then>
+  </if>
+    </else>
+</if>
+</td>
+<tr><td></td>
+</table>
+</form>
+
+<table border="1">
+  <tr><th> Agent </th>
+      <th> on start? </th>
+      <th align="left"> XML file  </th>
+      <td> (click to view) </td>
+  </tr>
+<repeat><foreach><extract><from>&AGENT:agent-files;</from>
+			  <name recursive>agent-file</name></foreach>
+	<set name=id><extract><from>&li;</from><attr>id</attr><eval/>
+		     </extract></set>
+	<set name=on-start><extract><from>&li;</from>
+		                    <attr>on-start</attr><eval/>
+		           </extract></set>
+        <set name="file"><extract><from>&li;</from><content /></extract></set>
+
+  <tr><td><if>&id;<then><if><agent-running name="&id;" />
+			    <then><a href="&id;~">&id;</a></then>
+			    <else>&id;</else></if></then>
+		  <else>&nbsp;</else></if>
+      </td>
+      <td><if>&on-start;<then>yes</then><else>&nbsp;</else></if></td>
+<!-- file should be a link to this form with file pre-loaded -->
+      <td colspan="2"><a href="load-agent?file=&file;">&file;</a></td>
+  </tr>
+</repeat>
+</table>
+
+<verbosePage>
+<hr />
+<h2>Agent files</h2>
+<pre><protect markup result>
+&AGENT:agent-files;
+</protect></pre>
+</verbosePage>
+
+<short-footer cvsid='$Id: load-agent.xh,v 1.2 1999-05-18 20:12:58 steve Exp $'/>
 </body></html>

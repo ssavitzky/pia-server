@@ -13,20 +13,18 @@
 </if>
 
 <sub-head page='index'>
-  <if>=== <!--  ~/ doesn't work yet   -->
-      <status src='~/initialize.xh' item='exists' />
-  <then>
-    <tr><th></th><td><a href='options'>Options</a>
-	    	      <a href='initialize'>[re-initialize]</a></td></tr></then></if>
+    <tr><th></th><td>
+        <if><status src='initialize.xh' item='exists' />
+            <then><a href='initialize'>[re-initialize]</a></then></if>
+        </td></tr>
     <tr><th></th><td><a href='/PIA/Agents/&agentPath;/'>Agent documents</a>
 	        <a href='/~/Agents/&agentPath;/'>(Customized)</a>
-  
   
   <if>&AGENT:criteria;<then>
     <tr><th align='right'> criteria:&nbsp;
         </th><td>&AGENT:criteria;
   </td></tr></then></if>
-  <if>&AGENT:do-not-remove;<then></then><else>
+  <if>&AGENT:doNotRemove;<then></then><else>
     <tr><th align='right'>
         </th><td><form action='/Admin/remove-agent' method='POST'>
               <input name='agent' value='&agentName;' type='hidden' />
@@ -48,7 +46,7 @@
        </repeat><br />
 </td></tr></sub-head>
 
-<if><get name='AGENT:do-not-remove' /><then>
+<if><get name='AGENT:doNotRemove' /><then>
 <hr />
 <dl>
   <dt> Note:
@@ -106,6 +104,6 @@
 </then></if>
 
 
-<footer cvsid='$Id: index.xh,v 1.6 1999-03-27 02:29:14 pgage Exp $' />
+<footer cvsid='$Id: index.xh,v 1.7 1999-05-18 20:12:43 steve Exp $' />
 </body></html>
 

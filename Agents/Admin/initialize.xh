@@ -5,7 +5,6 @@
 <h1>The &AGENT:name; agent initialization document</h1>
 
 <user-message>Initializing &AGENT:name; from &filePath;</user-message>
-<set agent='agent' name='do-not-remove'>true</set>
 
 <if><status src="START-UP.html" item="exists" />
     <then>
@@ -15,7 +14,7 @@
     <else-if><status src='agent-files.xml' item='exists' />
     <then><user-message>Loading XML from '<status src='agent-files.xml'
 				           item='path' />'</user-message>
-	  <include src='agent-files.xml' />
+	  <load-agent-files><include src='agent-files.xml' /></load-agent-files>
     </then></else-if>
     <else>
 	  <user-message>Starting default DOFS and Demo agents.</user-message> 
@@ -37,5 +36,5 @@
     in (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code
     into it. </p>
 
-<short-footer cvsid='$Id: initialize.xh,v 1.7 1999-05-07 23:28:15 steve Exp $' />
+<short-footer cvsid='$Id: initialize.xh,v 1.8 1999-05-18 20:12:54 steve Exp $' />
 </p></body></html>

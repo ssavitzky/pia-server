@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: AGENT.xml,v 1.1 1999-05-06 20:36:47 steve Exp $ -->
+<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<!-- $Id: AGENT.xml,v 1.2 1999-05-18 20:13:07 steve Exp $ -->
 
 <AGENT name='Proxie' path='/' type='Proxie' pathName='/Proxie'>
   <bind name='criteria'></bind>

@@ -5,23 +5,46 @@
 <header show-date='yes'>Control the PIA</header>
 <sub-head page="control" />
 <hr />
+<nav-bar/> control:(
+	<a href="#actions">actions</a>
+	<a href="#properties">properties</a>
+	<a href="#options">options</a> )
+<hr />
 <p> This page lets you directly control the PIA.  Any forms submitted from
     this page take effect <em>immediately.</em>  Some of these parameters can
     be saved as defaults, to be set whenever the PIA is started.  This is done
     on the ``<a href="config"><code>Configure</code></a>'' page.
 </p>
+
+<h3>Contents:</h3>
+<ul>
+  <li> <a href="#actions">Immediate actions</a>
+  <li> <a href="#properties">PIA Properties</a>
+  <li> <a href="#options">Admin Agent options</a>
+</ul>
+
 <hr />
 
-<h2>Immediate Actions</h2>
+<!-- Processing for locks has to be done here because it suppresses -->
+<!-- some of the forms below.  lockExit, in particular.             -->
+<if><get name="FORM:locks" />
+    <then>
+	  <agentLock name="lockExit" />
+	  <agentLock name="lockInstall" />
+	  <agentLock name="lockRemove" />
+	  <agentLock name="doNotRemove" />
+	  <agentLock name="doNotSave" />
+    </then>
+</if>
+
+<h2><a name="actions">Immediate Actions</a></h2>
 
 <p> Forms in this section lets you take immediate actions to control the
-    running of the PIA.  (=== under construction ===)
+    running of the PIA.
 </p>
 
-<!-- === shutdown; checkpoint; ... -->
-
-<form action="control">
-<table border=0 cellspacing="0" width="90%">
+<form action="control" method="POST">
+<table border=0 cellspacing="0" width="90%" align="center">
   <if>&FORM:msg;
       <then><user-message>&FORM:text;</user-message>
 	    <set name="doit">&time;</set>
@@ -33,24 +56,58 @@
   <tr><th bgcolor="silver">
           <input type="submit" name="msg" value="&doit;"/> </th>
       <td bgcolor="silver">
-          Put a message into the PIA's log file or output stream.</td>
+          Put a message into the PIA's log file / output stream.</td>
+      <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
-  <tr><th> text: </th>
-      <td><input name="text" size="50" value="&text;" />
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td>&nbsp;<b>text:</b>&nbsp;<input name="text" size="50" value="&text;" />
+      <td bgcolor="silver">&nbsp;</td>
   </tr>
+  <tr><td bgcolor="silver" colspan=3>&nbsp;</td>
 </table>  
 </form>
 
-<form action="control">
-<table border=0 cellspacing="0" width="90%">
+<if>&AGENT:doNotSave;
+    <else>
+<form action="control" method="POST">
+<table border=0 cellspacing="0" width="90%" align="center">
+  <if>&FORM:saveAgentFiles;
+      <then><set name="doit">&time;</set>
+	    <set name="text"><strong><code>agent-files.xml</code>
+	         written.</strong></set> 
+	    <output dst="agent-files.xml">
+<!DOCTYPE agent-files SYSTEM "Admin-xhtml">
+<!-- Written by control.xh -->
+&AGENT:agent-files;
+</output>
+	    <user-message>agent-files.xml written.</user-message>
+      </then>
+      <else><set name="doit">Save!</set>
+	    <set name="text">Save agent file list.</set>
+      </else>
+  </if>
+  <tr><th bgcolor="silver" width="10%">
+          <input type="submit" name="saveAgentFiles" value="&doit;"/> </th>
+      <td bgcolor="silver">&text;</td>
+      <td bgcolor="silver">&nbsp;&nbsp;</td>
+  </tr>
+</table>  
+</form>
+</else>
+</if>
+
+<if>&AGENT:lockExit;
+<else>
+<form action="control" method="POST">
+<table border=0 cellspacing="0" width="90%" align="center">
   <if>&FORM:exitConfirmed;
       <then><user-message>Shutting down PIA at &time;</user-message>
 	    <set name="doit">&time;</set>
 	    <set name="bg">red</set>
 	    <set name="msg">SHUTTING DOWN at &time;</set>
 	    <set name="exit">SHUTTING DOWN</set>
-	    <submit-forms><!-- causes a null pointer exception! -->
-		<form action="control" type="POST">
+	    <submit-forms><!-- Note: must use full agent path -->
+		<form action="control.xh" method="POST">
 		  <input type="hidden" name="exitNow" value="NOW"/>
 		</form>
 	    </submit-forms>
@@ -63,73 +120,223 @@
       </then></else-if>
       <else-if>&FORM:exitNow;
       <then><user-message>Confirmed: shutting down PIA at &time;</user-message>
-	    <!-- === really do it === -->
+	    <pia-exit>Admin agent shutting down the PIA at &time;</pia-exit>
       </then></else-if>
-      <else><set name="doit">do it!</set>
+      <else><set name="doit">Exit</set>
 	    <set name="bg">silver</set>
-	    <set name="msg">Shut down (exit) the PIA server.</set>
+	    <set name="msg"> (shut down) the PIA server.</set>
 	    <set name="exit">exit</set></else>
   </if>
-  <tr><th bgcolor="#c40026" width="10%">
-          <input type="submit" name="&exit;" value="&doit;"/> </th>
+  <tr><th bgcolor="#c40026">&nbsp;
+          <input type="submit" name="&exit;" value="&doit;"/>&nbsp; </th>
       <td bgcolor="&bg;" width="90%">&nbsp;&msg;</td>
   </tr>
 </table>  
 </form>
+</else>
+</if><!-- lockExit -->
+
 
 <hr />
-<h2>Parameters</h2>
+<h2><a name="properties">PIA Properties</a></h2>
 
 <p> This form lets you change some of the internal parameters of the PIA.
     More will be added later.
 </p>
 
-<if><get name='FORM:submission' /> <then>
+<form action="control#properties" method='POST'>
+  <if><get name="FORM:properties" /> <then>
 	<!-- Set values to user entries -->
 	<set name='PIA:pia.debug'>&FORM:piadebug;</set>
 	<set name='PIA:pia.verbose'>&FORM:piaverbose;</set>
 	<set name='PIA:pia.reqtimeout'>&FORM:piareqtimeout;</set>
-</then>
-</if>
-
-<form action='/Admin/config' method='POST'>
-<table cellspacing="0" border="0">
-  <tr><td bgcolor="silver">
-          <input type='submit' name='submission' value="Change" /> </td>
-      <th bgcolor="silver" align=left> PIA parameters. </th>
+  </then>
+  </if>
+<table cellspacing="0" border="0" width="90%" align="center">
+  <tr><th bgcolor="silver" width="10%">
+          <input type='submit' name="properties" value="Change" /> </td>
+      <th bgcolor="silver" align="left" width="90%"> PIA parameters. </th>
+      <td bgcolor="silver">&nbsp;&nbsp;</td>
   </tr>
-  <tr><td valign="top" >
-      <td>
-	  <TABLE>
-	  <TR>
-	  <TH align='right'><B><U>Property</U></B></TH>
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td valign="top">
+	  <table>
+	  <tr>
+	  <th align='right'><b>Property</b></th>
+	  <th><b>Value</b></th>
+	  </tr>
 
-	  <TH align='left'><B><U>Value</U></B></TH>
-	  </TR>
+	  <tr>
+	  <td align='right'>pia.debug</td>
+	  <td><input type='text' name='piadebug' 
+		     value='&PIA:pia.debug;' /></td>
+	  <td>true/false</td>
+	  </tr>
 
-	  <TR>
-	  <TD align='right'>pia.debug</TD>
-	  <TD><input type='text' name='piadebug' value='&PIA:pia.debug;' /></TD>
-	  <TD>true/false</TD>
-	  </TR>
+	  <tr>
+	  <td align='right'>pia.verbose</td>
+	  <td><input type='text' name='piaverbose' 
+		     value='&PIA:pia.verbose;' /></td>
+	  <td>true/false</td>
+	  </tr>
 
-	  <TR>
-	  <TD align='right'>pia.verbose</TD>
-	  <TD><input type='text' name='piaverbose' value='&PIA:pia.verbose;' /></TD>
-	  <TD>true/false</TD>
-	  </TR>
-
-	  <TR>
-	  <TD align='right'>pia.reqtimeout</TD>
-	  <TD><input type='text' name='piareqtimeout' value='&PIA:pia.reqtimeout;' /></TD>
-	  <TD>milliseconds</TD>
-	  </TR>
-	  </TABLE>
+	  <tr>
+	  <td align='right'>pia.reqtimeout</td>
+	  <td><input type='text' name='piareqtimeout'
+		     value='&PIA:pia.reqtimeout;' /></td>
+	  <td>milliseconds</td>
+	  </tr>
+	  </table>
       </td>
+      <td bgcolor="silver">&nbsp;</td>
   </tr>
+  <tr><td bgcolor="silver" colspan=3>&nbsp;</td>
+
 </table>
 </form>
 
+<hr />
+<h2><a name="options">Admin Agent Options</a></h2>
 
-<footer cvsid='$Id: control.xh,v 1.1 1999-05-11 01:28:05 steve Exp $' />
+<p> Forms in this section let you set various options of the Admin agent.
+</p>
+
+<h3>Ordinary Options</h3>
+
+<p> Most of the options in this section control the appearance of the
+    &AGENT:name; agent's forms and pages.  Those that are common to all agents
+    can also be found on the <a href="options">options</a> page, which
+    includes a much more complete list.
+</p>
+
+<form action="control#options" method='POST'>
+  <if>&FORM:options;
+      <then>
+	  <agentOption name="verboseForms" />
+	  <agentOption name="verbosePages" />
+      </then>
+  </if>
+  <table cellspacing="0" border="0" width="90%" align="center">
+    <tr><th bgcolor="silver" width="10%">
+	    <input type='submit' name="options" value="  Set  " /> </td>
+	<th bgcolor="silver" align="left" width="90%"> Options </th>
+	<td bgcolor="silver">&nbsp;&nbsp;</td>
+    </tr>
+    <tr><td bgcolor="silver">&nbsp;</td>
+	<td valign="top">
+	    <checkbox value="&AGENT:verboseForms;" name="verboseForms" />
+	    <b>verboseForms</b>: 
+		  Include more information in forms. <br />
+	</td>
+	<td bgcolor="silver">&nbsp;</td>
+    </tr>
+    <verboseForm>
+       <tr><td bgcolor="silver">&nbsp;</td>
+	   <td> For example, this line is only included if verboseForms is
+		set.
+	   </td>
+	   <td bgcolor="silver">&nbsp;</td></tr>
+    </verboseForm>
+    <tr><td bgcolor="silver">&nbsp;</td>
+	<td valign="top">
+	    <checkbox value="&AGENT:verbosePages;" name="verbosePages" />
+	    <b>verbosePages</b>: 
+		  Include more information on the agent's pages. <br />
+	</td>
+	<td bgcolor="silver">&nbsp;</td>
+    </tr>
+    <verboseForm>
+       <tr><td bgcolor="silver">&nbsp;</td>
+	   <td> Setting <code>verbosePages</code> makes PIA-based applications
+		somewhat harder to use (because the pages are bigger and have
+		to be scrolled around in), but easier to learn.
+	   </td>
+	   <td bgcolor="silver">&nbsp;</td></tr>
+    </verboseForm>
+    <tr><td bgcolor="silver" colspan="3">&nbsp;</td></tr>
+  </table>
+</form>
+
+<verbosePage>
+  <p> You can use the <code>&lt;verbosePage&gt;</code> and
+      <code>&lt;verboseForm&gt;</code> elements to enclose text to be expanded
+      only when the corresponding (<code>&amp;verbosePages;</code> or
+      <code>&amp;verboseForms;</code>, respectively) attribute is set.
+  </p>
+</verbosePage>
+
+<h3><a name="locks">Locks</a></h3>
+
+<p> Lock options are ``sticky'' -- they cannot be reset without shutting down
+    and restarting the PIA.  These are used for locking out certain dangerous
+    actions and changes, and are especially useful for PIA servers on public
+    sites.
+</p>
+
+<form action="control#locks" method='POST'>
+<table cellspacing="0" border="0" width="90%" align="center">
+  <tr><th bgcolor="silver" width="10%">
+          <input type='submit' name="locks" value="*** Set" /> </td>
+      <th bgcolor="silver" align="left" width="90%"> Locks *** </th>
+      <td bgcolor="silver">&nbsp;&nbsp;</td>
+  </tr>
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td valign="top">
+	  <if>&AGENT:lockExit;
+	      <then><input type="checkbox" name="lockExit" checked/></then>
+	      <else><input type="checkbox" name="lockExit"/></else>
+	  </if> <b>lockExit</b>: 
+		disable the "Exit" form.  Prevent web users from shutting down
+		the PIA. <br />
+	  <if>&AGENT:lockInstall;
+	      <then><input type="checkbox" name="lockInstall" checked/></then>
+	      <else><input type="checkbox" name="lockInstall"></else>
+	  </if> <b>lockInstall</b>: 
+		prevent new agents from being installed. <br />
+	  <if>&AGENT:lockRemove;
+	      <then><input type="checkbox" name="lockRemove" checked/></then>
+	      <else><input type="checkbox" name="lockRemove"></else>
+	  </if> <b>lockRemove</b>: 
+		prevent agents from being un-installed. <br />
+      </td>
+      <td bgcolor="silver">&nbsp;</td>
+  </tr>
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td bgcolor="silver" align="center">
+	  The following locks are common to all agents.
+      </td>
+      <td bgcolor="silver">&nbsp;</td>
+  </tr>
+  <tr><td bgcolor="silver">&nbsp;</td>
+      <td>
+	  <if>&AGENT:doNotRemove;
+	      <then><input type="checkbox" name="doNotRemove" checked/></then>
+	      <else><input type="checkbox" name="doNotRemove"></else>
+	  </if> <b>doNotRemove</b>: 
+		prevent <em>this agent</em> from being un-installed. <br />
+	  <if>&AGENT:doNotSave;
+	      <then><input type="checkbox" name="doNotSave" checked/></then>
+	      <else><input type="checkbox" name="doNotSave"></else>
+	  </if> <b>doNotSave</b>: 
+		prevent this agent's saved state from being overwritten. <br />
+      </td>
+      <td bgcolor="silver">&nbsp;</td>
+  </tr>
+  <tr><td bgcolor="silver" colspan="3">&nbsp;</td></tr>
+</table>
+</form>
+
+<verbosePage>
+  <p> If you set one of these locks and then save the &AGENT:name; agent's
+      state, the lock will be set automatically every time the PIA is
+      started up.  The lock can be removed by editing or removing the
+      <code>AGENT.xml</code> file in the agent's user directory.
+  </p>
+  <p> Setting the <b>doNotSave</b> lock will prevent an agent's saved state
+      (<code>AGENT.xml</code> file) from being overwritten.  The only way to
+      set this permanently is to manually edit the appropriate &lt;bind&gt;
+      element into the agent's state.
+</verbosePage>
+
+<footer cvsid='$Id: control.xh,v 1.2 1999-05-18 20:12:53 steve Exp $' />
 </body></html>
