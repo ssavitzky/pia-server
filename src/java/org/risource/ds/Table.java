@@ -1,5 +1,5 @@
 // Table.java
-// $Id: Table.java,v 1.3 1999-03-12 19:28:48 steve Exp $
+// $Id: Table.java,v 1.4 2000-04-19 00:02:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -143,6 +143,11 @@ public class Table extends Hashtable implements Stuff, Tabular {
    append(t);
   }
 
+  public Table(Hashtable t) {
+   this((t.size()>0)?t.size():1) ;
+   append(t);
+  }
+
   public Table(List l) {
     this(l.nItems());
     append(l);
@@ -168,6 +173,16 @@ public class Table extends Hashtable implements Stuff, Tabular {
 
   /** Append a table */
   public void append(Table t) {
+    Enumeration e = t.keys();
+
+    while (e.hasMoreElements()) {
+      Object k = e.nextElement();
+      put(k, t.get(k));
+    }
+  }
+
+  /** Append a Hashtable */
+  public void append(Hashtable t) {
     Enumeration e = t.keys();
 
     while (e.hasMoreElements()) {
