@@ -71,7 +71,7 @@ SET REGEXP=%PIAHOME%\lib\java\regexp.jar
 SET JIGSAW=%PIAHOME%\lib\java\jigsaw.zip
 
 REM the path
-SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\src\java;%PIAHOME%\lib\java\crc.zip;%JDKHOME%\classes;%JDKHOME%\lib\classes.zip
+SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\src\java;%PIAHOME%\lib\java\pia.zip;%JDKHOME%\classes;%JDKHOME%\lib\classes.zip
 
 java -classpath %CPATH% crc.pia.Pia -root %PIAHOME% -u %UHOME%
 

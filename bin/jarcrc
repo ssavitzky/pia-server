@@ -1,7 +1,6 @@
 #!/bin/sh
 #	jarcrc,v 1.2 1997/07/17 22:15:46 rithy Exp
-# Pia launcher.  Also handles other classes in the PIA hierarchy.
-#	Always tacks on -p propertyFile, which may be a misfeature.
+# Put PIA classes together in a JAR
 #
 
 #find out where jar is
@@ -12,7 +11,7 @@ JAR_HOME=`dirname $PRG`/..
 JAR_BIN=$JAR_HOME/bin/jar
 export JAR_BIN
 
-exec $JAR_BIN cv0f crc.zip `cat pia_class.toc`
+exec $JAR_BIN cv0f pia.zip `cat pia_class.toc`
 
 
 

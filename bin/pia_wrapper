@@ -95,7 +95,7 @@ done
 ### Build a CLASSPATH.
 
 # The pia class library.
-PIA_CLASSES=${PIA_CLASSES-$PIA_DIR/lib/java/crc.zip}
+PIA_CLASSES=${PIA_CLASSES-$PIA_DIR/lib/java/pia.zip}
 REGEXP_CLASSES=${REGEXP_CLASSES-$PIA_DIR/lib/java/regexp.jar}
 
 # where zjigsaw lives, ya

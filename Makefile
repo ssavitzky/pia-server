@@ -92,15 +92,15 @@ cvs.tar::
 rm_bin_tar::
 	 rm -f pia_bin.toc 
 	 rm -f pia_bin.tgz
-	 rm -f $(PIALIBDIR)/crc.zip
+	 rm -f $(PIALIBDIR)/pia.zip
 rm_pia_tar::
 	rm -f pia.toc
 	rm -f pia_src.tgz
-	rm -f $(PIALIBDIR)/crc.zip
+	rm -f $(PIALIBDIR)/pia.zip
 
 prep_rel::
 	cd $(CLASSDIR); make clean ; make
-	cd $(CLASSDIR);make crc.zip; make alldoc
+	cd $(CLASSDIR);make pia.zip; make alldoc
 	cd $(CLASSDIR);rm -fr java
 
 cp_build_noa::

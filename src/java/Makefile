@@ -90,7 +90,7 @@ regex_class.toc::
 		find `echo $$p` -name "*.class" -print >> regex_class.toc; \
 	done
 
-org.risource.zip: pia_class.toc
+pia.zip: pia_class.toc
 	$(BINDIR)/jarcrc
 	for p in $(PACKAGES); do \
 		(cd `echo $$p`; make clean) ; \
