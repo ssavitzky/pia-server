@@ -5,9 +5,12 @@
 <h1>R2.1: To-Do List</h1>
 
 <blockquote><em>
-  This file contains pending tasks for the transition from the Release 2.0
-  series to the stable Release 2.1 series.  <strong>Other PIA developers are
-  encouraged to add their own favorites.</strong>
+<p> This file contains pending tasks for the transition from the Release 2.0
+    series to the stable Release 2.1 series.  <strong>Other PIA developers are
+    encouraged to add their own favorites.</strong>
+
+<p> Items labeled <b>Impr</b> or <b>Wish</b> are lower priority and may not be
+    fixed by 2.1.0, but are considered important enough to mention.
 </em></blockquote>
 
 <p> Items are grouped as follows:
@@ -51,6 +54,7 @@ See also:
        Need to be able to save PropertyTable objects, and read them back in.
        This may very well replace Namespace for everything except entities.
        It should also simplify site configuration files.
+       -- 1999-11-05 in progress; need tagset entry and testing.
 
   <li> <b>Bug</b> Need a way to construct named nodes <br>
        For example, declarations and processing instructions need both a name
@@ -65,9 +69,10 @@ See also:
        <p>
 
   <li> <b>Bug</b> Entity and Attr must keep value in children <br>
-       This will fix many problems with entities, extract, etc. -- it will
+       This would fix many problems with entities, extract, etc. -- it will
        also break some things.  It's needed for cached entities.  Entities, at
-       least, should also know their tagset. 
+       least, should also know their tagset.  It also brings us back into DOM
+       compliance, for what (little) that's worth.
 
   <li> <b>Hole</b> State maintenance <br>
        When a subsite's properties are changed, the changes have to be written
@@ -111,7 +116,12 @@ See also:
        and support the <code>IfModifiedSince</code> header for static pages.
 
        <p>
+</ol>
 
+<p> The following are currently low priority, since ampersands in URL's are
+    working reasonably well at the moment.
+
+<ol>
   <li> <b>Impr</b> toString for Element should use ToString <br>
        i.e. toString for element nodes should just use Copy and
        ToString -- end of story.  Note that you can get startString by simply
@@ -150,7 +160,7 @@ See also:
 <h2><a name="other">Other</a></h2>
 
 <ol>
-  <li> <b>Bug</b> GIF conversion <br>
+  <li> 1999-11-05 <b>Bug</b> GIF conversion <br>
        Need to convert all <code>.gif</code> files to <code>.jpeg</code> or
        <code>.png</code> to avoid patent entanglements.  See
        <a href="http://www.tuxedo.org/~esr/gif2png/">
@@ -158,10 +168,14 @@ See also:
        <code>~steve/download/gif2png*</code>).
        -- As of 11/4 the only GIF's left are in Doc/API/javadoc/images; these
 	  came from Sun.  To fix these we'd have to rejigger the extension
-	  mapping so that .gif's came out as text/png.
+	  mapping so that .gif's came out as text/png.<br>
+       -- Older browsers don't seem to handle transparent PNG's, so I hacked
+	  the background for the RiSource.org logo.  This may have destroyed
+	  the transparency for browsers that <em>do</em> support it.  All the
+	  PIA logo's had a white background, so they're still OK.
 
-  <li> <b>Wish</b> Use PIA off-line for RiSource.org <br> Should be an example
-       of off-line website management with the PIA.
+  <li> <b>Wish</b> Use <code>process</code> for RiSource.org <br>
+       Should be an example of off-line website management with the PIA.
 
   <li> <b>Note</b> Edit-in-place HTML <br>
        The right way to implement edit-in-place HTML is to use &lt;div&gt; or
@@ -197,5 +211,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.8 1999-11-05 01:12:45 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.9 1999-11-06 01:18:16 steve Exp $</b><br>
 </body></html>
