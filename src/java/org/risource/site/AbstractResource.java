@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.8 1999-10-14 21:47:41 steve Exp $
+//	$Id: AbstractResource.java,v 1.9 1999-12-14 18:44:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.8 1999-10-14 21:47:41 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.9 1999-12-14 18:44:00 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -325,6 +325,40 @@ public abstract class AbstractResource implements Resource {
   ** Path Operations:
   ************************************************************************/
 
+  /** Strip a colon-delimited prefix off the given path. */
+  protected final static String stripPrefix(String path) {
+    return path.substring(path.indexOf(":") + 1);
+  }
+
+  /** Return the initial colon-delimited prefix of the given path. */
+  protected final static String getPrefix(String path) {
+    return path.substring(0, path.indexOf(":"));
+  }
+
+  /** Get a resource that has a path starting with a colon-delimited
+   *	prefix.  The default is to simply send this to the root. 
+   */
+  protected Resource getPrefixedResource(String path, String prefix) {
+    if (prefix == null || prefix.indexOf('/') >= 0) return null;
+    return (getContainer() != null)
+      ? ((AbstractResource)getContainer()).getPrefixedResource(path, prefix)
+      : null;
+  }
+
+  /** Get a resource that has a path starting with a colon-delimited
+   *	prefix.  The default is to simply send this to the root. 
+   */
+  protected Resource locatePrefixedResource(String path, String prefix,
+					    boolean create, List extensions) {
+    if (prefix == null || prefix.indexOf('/') >= 0) return null;
+    return (getContainer() != null)
+      ? ((AbstractResource)getContainer()).locatePrefixedResource(path,
+								  prefix,
+								  create,
+								  extensions)
+      : null;
+  }
+
   /** Returns the path to this resource from the root of the resource tree. 
    *
    *<p> Note that, because a Resource corresponds to a URL, the names in the
@@ -347,6 +381,11 @@ public abstract class AbstractResource implements Resource {
 
   /** Returns a Resource that corresponds to a (typically relative) path.
    *
+   *<p>	Paths that start with <code>/</code> or a colon-delimited prefix
+   *	are sent directly to the root.  Paths that start with <code>/</code>
+   *	<em>followed by</em> a prefix are invalid.  Prefixes are only used
+   *	<em>inside</em> the PIA, and must not appear in URL's.
+   *
    * @param path a path, relative to either this Resource or (if it starts 
    *	with a slash) the root of the resource tree.
    */
@@ -358,11 +397,14 @@ public abstract class AbstractResource implements Resource {
     if (path.startsWith("./")) {
       path = path.substring(2);
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.indexOf(':') > 0) return null;
     }
     if (path.length() == 0) {      // Null or empty path: it's this. 
       return this;
     }
     int si = path.indexOf('/');	// Look for a slash.
+    int ci = path.indexOf(':');	// look for a colon (delimiting a prefix)
+
     if (si < 0) {		// No slash: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
       //if (path.equals(".")) return this;
@@ -370,7 +412,10 @@ public abstract class AbstractResource implements Resource {
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
       if (path.length() == 0) return getRoot();
-      return getRoot().getRelative(path);
+      else if (ci > 0) return null;
+      else return getRoot().getRelative(path);
+    } else if (ci >= 0 && (si < 0 || si > ci)) {
+      return getPrefixedResource(stripPrefix(path), getPrefix(path));
     } else if (path.startsWith("../")) {
       path = path.substring(3);
       while (path.startsWith("/")) { path = path.substring(1); }
@@ -413,11 +458,14 @@ public abstract class AbstractResource implements Resource {
     if (path.startsWith("./")) {
       path = path.substring(2);
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.indexOf(':') > 0) return null;
     }
     if (path.length() == 0) {	// Null or empty path: it's this. 
       return this;
     }
     int si = path.indexOf('/');	// Look for a slash.
+    int ci = path.indexOf(':');	// look for a colon (delimiting a prefix)
+
     if (si < 0) {		// No slash: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
       //if (path.equals(".")) return this;
@@ -433,7 +481,11 @@ public abstract class AbstractResource implements Resource {
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
       if (path.length() == 0) return getRoot();
-      return getRoot().locate(path, create, extensions);
+      else if (ci > 0) return null;
+      else return getRoot().locate(path, create, extensions);
+    } else if (ci >= 0 && (si < 0 || si > ci)) {
+      return locatePrefixedResource(stripPrefix(path), getPrefix(path),
+				    create, extensions);
     } else if (path.startsWith("../")) {
       path = path.substring(3);
       while (path.startsWith("/")) { path = path.substring(1); }

@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.7 1999-10-13 18:23:28 steve Exp $
+//	$Id: Site.java,v 1.8 1999-12-14 18:44:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.7 1999-10-13 18:23:28 steve Exp $
+ * @version $Id: Site.java,v 1.8 1999-12-14 18:44:00 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -178,6 +178,65 @@ public class Site extends Subsite implements Root {
     if (name.startsWith("~") && agentHomes != null) 
       return (Resource) agentHomes.at(name.substring(1));
     else return super.locateChild(name);
+  }
+
+  /** Get a resource that has a path starting with a colon-delimited
+   *	prefix.
+   *
+   * @param path the path to the resource, with the prefix stripped off.
+   * @param prefix the prefix, including its final colon.
+   */
+  protected Resource getPrefixedResource(String path, String prefix) {
+    if (prefix == null || prefix.indexOf('/') >= 0) return null;
+    if (prefix.equalsIgnoreCase("file:")) {
+      File f = new File(path);
+      return f.exists()? new FileDocument(f.getName(), null, f) : null;
+    } else if (prefix.equalsIgnoreCase("root:") 
+	       || prefix.equalsIgnoreCase("r:")) {
+      if (file == null || !file.exists()) return null;
+      while (path.startsWith("/")) { path = path.substring(1); }
+      return new FileDocument("root:", null, file).getRelative(path);
+    } else if( prefix.equalsIgnoreCase("vroot:") 
+	       || prefix.equalsIgnoreCase("v:")) {
+      if (virtualSearchPath == null || virtualSearchPath.length < 1)
+	return null;
+      File v = virtualSearchPath[0];
+      if (v == null || !v.exists()) return null;
+      return new FileDocument("vroot:", null, v).getRelative(path);
+    } else {
+      return null;
+    }
+  }
+
+  /** Get a resource that has a path starting with a colon-delimited
+   *	prefix.
+   *
+   * @param path the path to the resource, with the prefix stripped off.
+   * @param prefix the prefix, including its final colon.
+   */
+  protected Resource locatePrefixedResource(String path, String prefix,
+					    boolean create, List extensions) {
+    if (prefix == null || prefix.indexOf('/') >= 0) return null;
+    if (prefix.equalsIgnoreCase("file:")) {
+      File f = new File(path);
+      return f.exists()? new FileDocument(f.getName(), null, f) : null;
+    } else if (prefix.equalsIgnoreCase("root:") 
+	       || prefix.equalsIgnoreCase("r:")) {
+      if (file == null || !file.exists()) return null;
+      while (path.startsWith("/")) { path = path.substring(1); }
+      return new FileDocument("root:", this, file).locate(path, create,
+							  extensions);
+    } else if( prefix.equalsIgnoreCase("vroot:") 
+	       || prefix.equalsIgnoreCase("v:")) {
+      if (virtualSearchPath == null || virtualSearchPath.length < 1)
+	return null;
+      File v = virtualSearchPath[0];
+      if (v == null || !v.exists()) return null;
+      return new FileDocument("vroot:", this, v).locate(path, create,
+							extensions);
+    } else {
+      return null;
+    }
   }
 
 

@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.16 1999-10-15 17:15:42 steve Exp $
+//	$Id: Subsite.java,v 1.17 1999-12-14 18:44:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.16 1999-10-15 17:15:42 steve Exp $
+ * @version $Id: Subsite.java,v 1.17 1999-12-14 18:44:00 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -90,9 +90,6 @@ public class Subsite extends ConfiguredResource implements Resource {
   /** Table that maps tagset names into the corresponding tagsets. 
    */
   protected Table tagsetCache = null;
-
-  /** Context to be used for loading tagsets. */
-  protected SiteContext tsLoader = null;
 
   /** A table that maps resource names into child Subsite objects.
    */
@@ -671,31 +668,55 @@ public class Subsite extends ConfiguredResource implements Resource {
       : null;
   }
 
+  public boolean isLocalName(String path) {
+    return (name.indexOf("/") < 0) && (name.indexOf(":") < 0);
+  }
+
+
+  /** Load a tagset from a Resource. */
+  protected Tagset loadTagsetFromResource(Resource tsr) {
+    //System.err.println("looking for " + tsr.getPath() + " in " + getPath());
+    return Loader.loadTagsetFromResource(tsr);
+  }
+
   /** Load a tagset. */
   public Tagset loadTagset(String name) {
-    // === Probably should check the tagset name for signs of being a path 
     if (name == null) {
       throw new RuntimeException("Null name passed to loadTagset");
     }
 
+    // Check to see whether the name is local.
+    boolean local = isLocalName(name);
+
+    //	If it isn't, get it from the root.  Fall through if this IS the root.  
+    if (!local && getContainer() != null) {
+      return getRoot().loadTagset(name);
+    }
+
     // First look in the cache
+    //	There's a hazard here:  if you override a cached tagset with a
+    //	new file (e.g. a virtual file with a real one), it won't get loaded. 
     Tagset ts = (tagsetCache == null)? null : (Tagset) tagsetCache.at(name);
     if (ts != null && ts.upToDate()) {
       return ts;
     }
 
-    // Then look for it as a local ".ts" file.
-    long start = 0;
-    File tsfile = locateChildFile(name + ".ts");
-    if (tsfile != null) {
+    // Try to find the name as a local ".ts" file.
+    // 	  Use "locate" so that if the path is rooted, the tagset ends up
+    //	  in the root's cache.  This is usually the right thing.
+
+    long  start = 0;		// time we started loading.
+    String path = name.endsWith(".ts")? name : name + ".ts";
+    Resource tsr = local? getChild(path) : locate(path, false, new List());
+
+    if (tsr != null && tsr.exists()) {
       start = time();
-      if (tsLoader == null) tsLoader = new SiteContext(this, null);
-      ts = Loader.loadTagset(tsfile, tsLoader);
+      ts = loadTagsetFromResource(tsr);
       if (ts == null) {
 	getRoot().report(-2, "*** " + getPath() + " failed to load tagset '"
 			 + name, 0, false);
       } else {
-	getRoot().report(0, getPath() + " Loaded tagset '" + name 
+	getRoot().report(0, getPath() + " loaded tagset '" + name 
 			 + "' in " + timing(start) + " seconds.", 2, false);
 	if (tagsetCache == null) tagsetCache = new Table();
 	tagsetCache.at(name, ts);
@@ -703,10 +724,10 @@ public class Subsite extends ConfiguredResource implements Resource {
       }
     }
 
-    // Finally, fall back on the parent
+    // We didn't find it.  Look on the parent.
     if (getContainer() != null) return getContainer().loadTagset(name);
 
-    //	If there isn't a parent, hope that the tagset loader can find it.
+    //	If there isn't a resource, hope that the tagset loader can find it.
     start = time();
     ts = Loader.loadTagset(name);
     if (ts == null) {
@@ -715,8 +736,8 @@ public class Subsite extends ConfiguredResource implements Resource {
     } else {
       if (tagsetCache == null) tagsetCache = new Table();
       tagsetCache.at(name, ts);
-      getRoot().report(0, getPath() + " Loaded system tagset '" + name 
-		       + "' in " + timing(start) + " seconds.", 4, false);
+      getRoot().report(0, getPath() + " loaded system tagset '" + name 
+		       + "' in " + timing(start) + " seconds.", 2, false);
     }
     return ts;
   }
