@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.4 2000-06-28 07:07:30 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.5 2000-06-29 01:58:46 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -49,7 +49,7 @@
 	parent directory's listing page.
   </doc>
   <action>
-    <table  width="95%">
+    <table>
     <if> <get name="FORM:edit" />
 	 <then>
       	    <tr> 
@@ -79,6 +79,23 @@
 	    </tr>
 	 </else>
     </if>
+	    <tr> <th  bgcolor="#99ccff"> &nbsp; </th> </tr>
+    </table>
+  </action>
+</define>
+
+<define element="created">
+  <doc> This element delimits a brief summary of the note that appears on the
+	parent directory's listing page.
+  </doc>
+  <action>
+    <table>
+            <tr>
+	      <th bgcolor="#99ccff" align="left" valign="top" width="100">
+	          created:
+	      </th>
+	      <td bgcolor="#ffffff"> <get name="content"/> </td>
+	    </tr>
 	    <tr> <th  bgcolor="#99ccff"> &nbsp; </th> </tr>
     </table>
   </action>
