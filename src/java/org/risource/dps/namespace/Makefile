@@ -1,5 +1,5 @@
 ###### dps/namespace/Makefile:	DPS namespace classes
-# 	$Id: Makefile,v 1.2 1999-04-30 23:37:10 steve Exp $
+# 	$Id: Makefile,v 1.3 1999-10-04 17:35:05 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,6 +28,7 @@ CLASSES = \
 	AbstractNamespace.java \
 	BasicNamespace.java \
 	BasicEntityTable.java \
+	PropertyTable.java \
 	AttrIndirect.java \
 	EntityIndirect.java \
 	EntityWrap.java \
@@ -43,5 +44,7 @@ AbstractNamespace.class: ../Namespace.java ../tree/TreeGeneric.java
 BasicNamespace.class: AbstractNamespace.java ../Namespace.java 
 BasicEntityTable.class: AbstractNamespace.java BasicNamespace.java \
 	../Namespace.java ../EntityTable.java
+PropertyTable.class: AbstractNamespace.java BasicNamespace.java \
+	../Namespace.java ../PropertyMap.java
 NamespaceWrap.class: AbstractNamespace.java ../Namespace.java \
 	../../ds/Tabular.java
