@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.15 1999-10-04 17:35:59 steve Exp $
+//	$Id: TopProcessor.java,v 1.16 1999-10-14 21:45:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.15 1999-10-04 17:35:59 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.16 1999-10-14 21:45:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -503,6 +503,26 @@ public class TopProcessor extends BasicProcessor implements TopContext
     define("LOC", getLocConfig());
     define("PROPS", getDocConfig());
     define("SITE", getRootConfig());
+
+    if (getDocument() != null) {
+      define("docName", getDocument().getName());
+      define("docPath", getDocument().getPath());
+    }
+
+    Resource loc = getDocumentLoc();
+
+    if (loc != null) {
+      define("locName", getDocumentLoc().getName());
+      define("locPath", getDocumentLoc().getPath());
+    }
+
+    // Go up the location chain and add properties to the namespace.
+    for ( ; loc != null; loc = loc.getContainer()) {
+      String name = loc.getName();
+      Namespace props = loc.getProperties();
+      if (name == null || props == null || name.equals("/")) continue;
+      if (entities.getBinding(name) == null) define(name, props);
+    }
 
     // Extract formatted information from today's Date.
     initializeDateEntities(new Date());
