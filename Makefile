@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.16 1999-04-13 23:20:02 pgage Exp $
+#	$Id: Makefile,v 1.17 1999-04-13 23:52:28 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -107,7 +107,7 @@ prep_rel_dir::
 
 # Build a source release.  Before building, check all variables and set to
 # appropriate values.
-test:	make update-version	
+src.tar:	make update-version	
 	prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
 		cd /pia1/CvsRoot; /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
