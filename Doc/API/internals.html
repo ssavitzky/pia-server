@@ -52,8 +52,6 @@ href="../../../bin">pia/bin</a></code> directory:
        <code>pia.exe</code> for Windows)
   <li> <a href="../../../bin/process"><code>bin/process</code></a> (and
        <code>process.exe</code> for Windows)
-  <li> <a href="../../../bin/iffilter"><code>bin/filter</code></a> (and
-       <code>filter.exe</code> for Windows) -- the old InterForm filter
 </ol>
 
 Note that all are stand-alone applications.  None of these programs can be
@@ -86,7 +84,7 @@ The PIA is implemented using the following packages:
        active parse trees; these are extended to include syntax and semantic
        handlers. 
   <dt> <a href="JavaDoc/Package-org.risource.dps.handle.html">org.risource.dps.handle</a>
-  <dd> Classes that <em>handle</em> particular InterForm elements. 
+  <dd> Classes that <em>handle</em> particular active elements. 
   <dt> <a href="JavaDoc/org.risource.dps.Tagset.html">org.risource.dps.Tagset</a>
   <dd> Classes and tagset definition files that implement the various tagsets.
   <dt> <a href="JavaDoc/Package-org.risource.pia.html">org.risource.pia</a>
@@ -204,7 +202,7 @@ href="JavaDoc/org.risource.pia.agent.Logo.html">Logo</a>.  Cache, when we implem
 probably also require its own class.<p>
 
 The main reason for implementing an Agent as a separate class so that the Java
-code can grab control before dispatching a URL to an InterForm.  Efficiency
+code can grab control before dispatching a URL to an active document.  Efficiency
 (<a href="JavaDoc/org.risource.pia.agent.Agency.html">Agency</a>) and the ability to handle
 non-HTML data (<a href="JavaDoc/org.risource.pia.agent.Logo.html">Logo</a>) also play a part,
 although in fact <a href="JavaDoc/org.risource.pia.agent.Logo.html">Logo</a> is currently
@@ -212,10 +210,10 @@ implemented by dispatching to a <code>PERL</code> program.<p>
 
 
 <hr>
-<h2><a name="interforms">The InterForm Interpretor</a></h2>
+<h2><a name="interforms">The Document Processing System</a></h2>
 
 
-<h3>The InterForm Interpretor Algorithm</h3>
+<h3>The Document Processing Algorithm</h3>
 ...has been totally rewritten, and greatly simplified.  It used to be a
 variant of the PIA's Resolver algorithm, and operated on parse trees that had
 been flattened into a stream of ``tokens'', with each element represented as
@@ -258,5 +256,5 @@ actually be rather similar to the old Token-based interpretor.  Later. <p>
 
 <hr>
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: internals.html,v 1.4 1999-03-15 20:38:10 pgage Exp $</b><br>
+<b>$Id: internals.html,v 1.5 1999-03-23 00:16:54 steve Exp $</b><br>
 </body></html>
