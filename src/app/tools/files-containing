@@ -1,10 +1,10 @@
 #!/bin/sh
 #	Display the names of files that contain a pattern
-#	$Id: files-containing,v 1.4 1999-03-12 19:23:50 steve Exp $
+#	$Id: files-containing,v 1.5 1999-04-21 21:49:09 steve Exp $
 
 
 find . '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \
 	-o -name '*.tex'  -o -name '*make*' \
         -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f  \
-	\! -path '*JavaDoc*' \! -path '*/other/*' \
+	\! -path '*javadoc*' \! -path '*/other/*' \
     -exec grep -q $* {} \; -print 
