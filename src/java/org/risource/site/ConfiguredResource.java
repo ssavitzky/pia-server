@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.9 1999-10-13 18:23:28 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.10 1999-10-14 21:47:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.9 1999-10-13 18:23:28 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.10 1999-10-14 21:47:41 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -182,7 +182,7 @@ public abstract class ConfiguredResource extends AbstractResource
    *	<code>super</code> for the default case. 
    */
   protected void configItem(String tag, ActiveElement item) {
-    if (properties == null) properties = new PropertyTable(getName());
+    if (properties == null) getProperties();
     properties.setPropertyBinding(item);
 
     if (tag.equals("DOCUMENT")) {
@@ -253,6 +253,9 @@ public abstract class ConfiguredResource extends AbstractResource
 
   /** Return the entire collection of properties as a PropertyMap. */
   public PropertyMap getProperties() {
+    if (properties == null) {
+      properties = new PropertyTable(getName(), reportConfigAttrs());
+    }
     return properties;
   }
 

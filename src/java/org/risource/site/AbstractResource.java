@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.7 1999-10-13 18:23:28 steve Exp $
+//	$Id: AbstractResource.java,v 1.8 1999-10-14 21:47:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.7 1999-10-13 18:23:28 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.8 1999-10-14 21:47:41 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -156,6 +156,7 @@ public abstract class AbstractResource implements Resource {
     // === should use a tagset for this, or return an attr list.  ===
     ActiveAttrList cfg = new TreeAttrList();
     cfg.setAttribute("name", getName());
+    cfg.setAttribute("path", getPath());
     if (exists()) cfg.setAttribute("exists", "yes");
     if (isHidden()) cfg.setAttribute("hidden", "yes");
     if (isLocal()) cfg.setAttribute("local", "yes");
