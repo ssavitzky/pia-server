@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.10 2000-10-27 23:16:28 steve Exp $
+//	$Id: TextParser.java,v 1.11 2000-11-03 22:14:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -66,7 +66,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a number of different ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.10 2000-10-27 23:16:28 steve Exp $
+ * @version $Id: TextParser.java,v 1.11 2000-11-03 22:14:09 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -89,6 +89,9 @@ public class TextParser extends ShallowParser {
 
   /** State constant for SGML start tags.  This is basically code-like. */
   protected final static int IN_TAG = 3;
+
+  /** State constant for SGML declarations.  This is basically code-like. */
+  protected final static int IN_DECL = 3;
 
   /** State constant for "text": keywords become stopwords.
    *	All text-like states have 0 in the low-order bit.
@@ -119,6 +122,9 @@ public class TextParser extends ShallowParser {
   protected char   markupEndChar = 0;
 
   protected String markupTag = null;
+
+  /** current nesting depth in declarations */
+  protected int declDepth = 0;
 
   /** Character that will end the current string */
   protected char currentStringDelim = 0;
@@ -290,8 +296,9 @@ public class TextParser extends ShallowParser {
 	    buf.append("<!-");
 	  }
 	} else {			////// declaration
-	  // markup(">", "decl", IN_TAG);
-	  state = IN_TAG;
+	  // markup(">", "decl", IN_DECL);
+	  state = IN_DECL;
+	  declDepth = 1;
 	  markupTag = "decl";
 	  buf.append("<!");	// === temp.
 	  next = createActiveText("<!", false);
@@ -314,6 +321,23 @@ public class TextParser extends ShallowParser {
       state = IN_TEXT;
       if (nextEnd == "tag") { return null; }
       else return createActiveText(">", false);
+    } else if (state == IN_DECL && last == '>') {
+      // === This is only part of the solution for declarations.  
+      // === Need to handle [ and ]> and all that.   Punt.  See below.
+      last = 0; 
+      buf.append(">");
+      nextEnd = markupTag;
+      markupTag = null;
+      if (--declDepth == 0) state = IN_TEXT;
+      return createActiveText(">", false);
+    } else if (state == IN_DECL && last == '<') {
+      // === This is only part of the solution for declarations.  
+      // === Need to handle [ and ]> and all that.   Punt.  For now, just
+      // === make sure that < and > balance.  This will, of course, lose
+      // === big if the declaration contains CDATA sections or comments.
+      last = 0; 
+      ++declDepth;
+      buf.append("<");	// === temp.
     } else if (state == IN_CODE && stringDelim(last) != null) {
       String delims = stringDelim(last);
       currentStringDelim = delims.charAt(0);
@@ -345,6 +369,7 @@ public class TextParser extends ShallowParser {
       while (last > ' ' && idc[last] == 0 
 	     && (state != IN_CODE || stringDelim(last) == null)
 	     && (state != IN_TAG || last != '>')
+	     && (state != IN_DECL || last != '>')
 	     && (count == 0 || last != '>')
 	     ) {
 	buf.append((char)last);
