@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.5 2000-10-06 00:27:43 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.6 2000-10-06 01:18:42 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -355,12 +355,15 @@
 	This <tt>&VAR:format;</tt> listing shows the full contents
 	of the file with defined words made into cross-reference links.  
        <br />
-	<red>Note that the parser is presently extremely buggy. </red>  </em>
+	<red>Note that the parser is presently extremely buggy.  It does not
+	recognize HTML comments, PI's, or code embedded in them.  It does not
+	recognize filenames in attribute values.
+	</red>  </em>
 </yellow-note>
 
 <hr />
-<hide>&content;</hide>
-<pre><include src="&DOC:path;" tagset="/.Woad/Tools/src-xref" /></pre>
+<hide>&content;</hide><small>
+<pre><include src="&DOC:path;" tagset="/.Woad/Tools/src-xref" /></pre></small>
   </then></else-if>
 
 <else-if> &FORM:raw;	<!-- ====== raw ================================== -->
