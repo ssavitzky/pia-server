@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.13 2000-10-02 23:13:08 steve Exp $
+#	$Id: woad-index.pl,v 1.14 2000-10-05 19:07:12 steve Exp $
 # Create WOAD index files.
 #
 
@@ -897,7 +897,7 @@ sub globalIndices {
 	}
 	$c = '';
 	for ($i = 0; $i < @entries; ++$i) {
-	    $entries[$i] =~ /word\=\"(.)/; 
+	    $entries[$i] =~ /word\=\"(.)/; # " fix WOAD string parsing.
 	    $c = uc($1);
 	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
 	    ++ $nDefs;
@@ -958,7 +958,7 @@ sub makeCrossReference {
 	}
 	$c = '';
 	for ($i = 0; $i < @entries; ++$i) {
-	    $entries[$i] =~ /word\=\"(.)/; 
+	    $entries[$i] =~ /word\=\"(.)/;  # " fix WOAD string parsing.
 	    $c = uc($1);
 	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
 
@@ -1089,11 +1089,12 @@ sub stringify {
     $s =~ s/\&/\&amp\;/gs;
     $s =~ s/\</\&lt\;/gs;
     $s =~ s/\>/\&gt\;/gs;
-    $s =~ s/\"/\&quot\;/gs;
+    $s =~ s/\"/\&quot\;/gs; # " fix WOAD string parsing.
     return($s);
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.13 2000-10-02 23:13:08 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.14 2000-10-05 19:07:12 steve Exp $ ';
+    # put this last because the $'s confuse emacs.
 }
 
