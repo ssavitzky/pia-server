@@ -1,5 +1,5 @@
 // NameUtils.java
-// $Id: NameUtils.java,v 1.6 2000-08-30 22:58:24 steve Exp $
+// $Id: NameUtils.java,v 1.7 2000-09-21 17:15:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -177,8 +177,9 @@ public class NameUtils {
   }
 
   /** Load a named class.  The <code>packagePrefix</code> is prepended only if
-   *	the handle name contains no "." characters.  Util.javaName can be used
-   *	to convert an SGML identifier (e.g. a tag) to a class name.
+   *	the handle name contains no "." characters, and should end with a "." 
+   *	in most cases.  Util.javaName can be used to convert an SGML 
+   *	identifier (e.g. a tag) to a class name.
    *
    * @see Util#javaName
    */
