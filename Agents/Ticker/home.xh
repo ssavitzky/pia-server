@@ -11,13 +11,16 @@
 <extract>
   <from>&sourcefile;</from>
   <tm_like>
-           <tr align="right">
+           <tr align="center" valign="center">
+             <td>
               <b>
               </b>
+             </td>
            </tr>
   </tm_like>
 </extract>
 </set>
+
 
 <table>
   <tr>
@@ -30,6 +33,9 @@
     <td>
        <extract>
 	  <from>&goodrow;</from>
+          <tm_like>
+             <td colspan="2"> </td>
+          </tm_like>
 	 <name all="yes">b</name>
        </extract>
        &yen;
