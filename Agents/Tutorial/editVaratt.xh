@@ -1,0 +1,2 @@
+<edit demo-name="aboutVaratt.xh"><extract><from><include src="varatt.xh" quoted="yes"/></from>
+<name all="all">body</name><content/></extract> </edit>

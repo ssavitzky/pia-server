@@ -1,0 +1,16 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> Variable-attribute</title> </head>
+<body> <!-- Shows how an entity can be expanded as a "variable argument" in
+            a tag's  attribute. -->
+
+Today is &dayname; a.k.a. <get name="dayname"/>. <br/>
+
+<subst match="&dayname;" result="TODAY">
+   Monday Tuesday Wednesday Thursday Friday Saturday Sunday
+</subst>
+
+</body>
+</html>
+
+

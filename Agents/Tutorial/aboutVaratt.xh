@@ -1,0 +1,78 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Variable-attribute demo </title> </head>
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
+<table>
+  <tr>
+        <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editVaratt.xh"/>
+            <td><input  type="submit" value="Try variable argument/attribute demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+
+    <h2> <a name="intro">The Variable-Attribute Demo</a></h2>
+
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="varatt.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+<p>  <b>What happens?  </b> </p>
+
+  <p> The named variable, or "entity," called "dayname" has a value (such as
+      "Wednesday"). That value can be accessed/referenced/expanded in two
+      ways, as occurs in the "Today is ..." line of the code:</p>
+
+
+<p>
+  <pre><code>
+     (1)   &lt;get name="dayname" /&gt;
+     (2)   &amp;dayname;
+  </code></pre>
+</p>
+
+<p> Both do exactly the same thing, but the shorter notation (2) can be used
+     <em>inside</em> a tag's attributes, where (1) would not be allowed.  So
+     in the above example, the substitution tag effectively becomes something
+     like</p>
+
+<p>
+  <pre><code>
+      &lt;subst match="Wednesday" result="TODAY" /&gt;
+
+  </code></pre>
+</p>
+
+    <p> This <strong>extremely useful</strong> trick allows you to do what
+	traditional programming functions do: pass variables into the function
+	as arguments. For example, you might want to read in a file whose name
+	was provided by a form-field called "whichFile" as follows:
+    </p>
+
+    
+<p>
+  <pre><code>
+      &lt;include src="&FORM:whichFile;" /&gt;
+  </code></pre>
+</p>
+
+    <p>We use this trick all the time in the applications we provide with the
+    PIA, but be forwarned that it may cause problems in the unlikely event you
+    try using the PIA with a "parser" component written by someone else; see
+    the <a href="intro.xh#quirks">Introduction</a> for more details. </p>
+
+
+
+
+     </let>
+   </make>
+
+</html>  
+
+
