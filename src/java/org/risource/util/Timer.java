@@ -1,5 +1,5 @@
 // Timer.java
-// $Id: Timer.java,v 1.4 1999-03-12 19:50:03 pgage Exp $
+// $Id: Timer.java,v 1.5 1999-10-11 21:55:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,15 +82,6 @@ public class Timer implements EventHandler{
   }
 
 
-  public static void main(String argv[]){
-    Timer ztimer = new Timer( new hello(), "Crazy u" );
-    ztimer.setTimeout(50);
-
-    while( ztimer.notdone ){
-      sleep( 1000 );
-    }
-  }
-
   private static void sleep(int howlong){
     Thread t = Thread.currentThread();
     
@@ -101,19 +92,6 @@ public class Timer implements EventHandler{
   }
   
 }
-
-  /** 
-   * for testing only
-   */
-  class hello implements UnaryFunctor{
-
-    public Object execute( Object object ){
-      String s = (String) object;
-      System.out.println( s );
-      return object;
-    }
-    
-  }
 
 
 
