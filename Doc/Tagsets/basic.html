@@ -255,7 +255,7 @@ their parent in element.  </p>
 <td>None</td>
 </tr>
 <tr>
-<td rowspan="4"><a name="#Expansion" href="#Expansion">Expansion
+<td rowspan="6"><a name="#Expansion" href="#Expansion">Expansion
 Control</a></td>
 <td><code><a href="tsdoc/basic.html#expand">&#60;expand></a></code></td>
 <td><code><a href="tsdoc/basic.html#hide.hide">hide</a></code></td>
@@ -278,6 +278,27 @@ Control</a></td>
 <td>None</td>
 <td>None</td>
 </tr>
+
+<tr>
+<td><code><a href="tsdoc/xhtml.html#show-errors">&#60;show-errors></a></code></td>
+<td>None</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><code><a href="tsdoc/xhtml.html#pretty">&#60;pretty></a></code></td>
+
+<td><code><a href="tsdoc/xhtml.html#pretty.hide-above-depth">hide-above-depth</a></code><br>  
+    <code><a
+    href="tsdoc/xhtml.html#pretty.hide-below-depth">hide-below-depth</a></code><br>
+    <code><a  href="tsdoc/xhtml.html#pretty.hide-below-tag">hide-below-tag</a></code><br>
+<code><a href="tsdoc/xhtml.html#pretty.white-tag">white-tag</a></code><br>
+<code><a
+href="tsdoc/xhtml.html#pretty.yellow-tag">yellow-tag</a></code><br> </td>
+<td>None</td>
+</tr>
+
+
 <tr>
 <td rowspan="4"><a href="#DataManip">Data Manipulation</a></td>
 <td><code><a href="tsdoc/basic.html#numeric">&#60;numeric></a></code></td>
@@ -402,7 +423,9 @@ Control</a></td>
 <td>None</td>
 </tr>
 </tbody>
-</table><h2><a name="Construct">Construct Specification Elements</a></h2><p>The
+</table>
+
+<h2><a name="Construct">Construct Specification Elements</a></h2><p>The
 construct specification elements are used to create a tagset. They
 include the <code><a href="tsdoc/basic.html#define">&#60;define></a></code> element
 and its subelements.</p><table border="1" frame="border">
@@ -875,17 +898,39 @@ are. No tests are performed.</p><table border="1" frame="border">
 <td><code><a>result</a></code></td>
 </tr>
 <tr>
-<td><code><a>marksup</a></code></td>
+<td><code><a>markup</a></code></td>
 </tr>
 <tr>
 <td><code><a href="tsdoc/basic.html#hide">&#60;hide></a></code></td>
 <td><code><a>text</a></code></td>
 </tr>
 <tr>
-<td><code><a href="tsdoc/basic.html#hide">&#60;debug></a></code></td>
+<td><code><a href="tsdoc/basic.html#debug">&#60;debug></a></code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code><a href="tsdoc/xhtml.html#show-errors">&#60;show-errors></a></code></td>
 <td>None</td>
 </tr>
 </tbody>
+
+<tr>
+<td rowspan="5"><code><a href="tsdoc/xhtml.html#pretty">&#60;pretty></a></code></td>
+<td><code><a>hide-above-depth</a></code></td>
+</tr>
+<tr>
+<td><code><a>hide-below-depth</a></code></td>
+</tr>
+<tr>
+<td><code><a>hide-below-tag</a></code></td>
+</tr>
+<tr>
+<td><code><a>white-tag</a></code></td>
+</tr>
+<tr>
+<td><code><a>yellow-tag</a></code></td>
+</tr>
+
 </table><h2><a name="DataManip"></a>Data Manipulation Elements</h2><p>Data
 manipulation elements perform operations on data, typically text,
 that depend on some non-structural features of its content (e.g.
