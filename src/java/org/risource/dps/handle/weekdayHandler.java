@@ -1,5 +1,5 @@
 ////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.5 1999-10-09 00:15:08 steve Exp $
+//	$Id: weekdayHandler.java,v 1.6 1999-10-11 21:40:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally by
  *	Abraham Savitzky.
  *
- * @version $Id: weekdayHandler.java,v 1.5 1999-10-09 00:15:08 steve Exp $
+ * @version $Id: weekdayHandler.java,v 1.6 1999-10-11 21:40:40 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -92,6 +92,8 @@ public class weekdayHandler extends GenericHandler {
       : (year % 4   == 0)? 29
       : 28;
   }
+
+  static long origin = Julian.jday(1970, 1, 1);
 
   /************************************************************************
   ** Semantic Operations:
@@ -171,9 +173,16 @@ public class weekdayHandler extends GenericHandler {
 	Date theTime = new Date( unixdate*1000 ); //unix gets seconds, not msec
 	theDay = new GregorianCalendar( );
 	theDay.setTime(theTime);
-	month = theDay.get(Calendar.MONTH);
-	day = theDay.get(Calendar.DAY_OF_MONTH);
-	year = theDay.get(Calendar.YEAR);
+	long j = (unixdate / 86400) + origin;
+	month = Julian.month(j) - 1;
+	day   = Julian.day(j);
+	year  = Julian.year(j);
+	if (month != theDay.get(Calendar.MONTH)) 
+	  System.err.println("Java computes wrong month");
+	if (day != theDay.get(Calendar.DAY_OF_MONTH)) 
+	  System.err.println("Java computes wrong day");
+	if (year != theDay.get(Calendar.YEAR)) 
+	  System.err.println("Java computes wrong year");
 	//System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
     }
 
@@ -200,9 +209,14 @@ public class weekdayHandler extends GenericHandler {
     //int wday = (theDay.get(Calendar.DAY_OF_WEEK)- Calendar.SUNDAY + 7) % 7;
     List dayNames = List.split("Sunday Monday Tuesday Wednesday"
 				    + " Thursday Friday Saturday");
-    long longDay = theDay.getTime().getTime() / 86400000;
+    long unixDay = theDay.getTime().getTime() / 86400000L;
     //    System.out.println(" " + longDay + "=" + year + "/" + month + "/" + day);
 
+    long longDay = jday - origin;
+
+    if (unixDay != longDay) {
+      System.err.println("Warning: unixday=" + unixDay + " longDay=" + longDay);
+    }
     String wkday = (String)dayNames.at( wday );
     // done with compuatation
 
