@@ -50,7 +50,7 @@ examples, and as a basis for creating new agents.</p>
     same.)
 </p>
 
-<p> The base directories PIA_DIR and USR_DIR can be set on the
+<p> The base directories PIA_HOME and PIA_ROOT can be set on the
     <code>pia</code> command line or in the corresponding environment
     variables.  They are normally the root of the PIA directory tree (called
     PIA and located wherever the PIA is installed in your system) and (on
@@ -68,32 +68,32 @@ examples, and as a basis for creating new agents.</p>
        <th align=left> Description </th>
   </tr>
   <tr> <td> <code>/<em>path</em>/<em>name</em></code>  			</td>
-       <td> <code>PIA_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td> 
+       <td> <code>PIA_HOME/Agents/<em>path</em>/<em>name</em></code> 	</td> 
        <td> &nbsp; 		</td>
        <td> root directory 	</td>
   </tr>
   <tr> <td> <code>/<em>path</em>/<em>name</em>~</code> 			</td>
-       <td> <code>PIA_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td> 
+       <td> <code>PIA_HOME/Agents/<em>path</em>/<em>name</em></code> 	</td> 
        <td> AGENT:home-dir 	</td>
        <td> home directory 	</td>
   </tr>
   <tr> <td> <code>/<em>path</em>/<em>name</em>/~</code> 		</td>
-       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
        <td> AGENT:data-dir  	</td>
        <td> data directory 	</td>
   </tr>
   <tr> <td> <code>/~<em>name</em></code> 		</td>
-       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
        <td> AGENT:data-dir  	</td>
        <td> data directory (deprecated)	</td>
   </tr>
   <tr> <td> <code>/~/Agents/<em>path</em>/<em>name</em></code> 		</td>
-       <td> <code>USR_DIR/Agents/<em>path</em>/<em>name</em></code> 	</td>
+       <td> <code>PIA_ROOT/Agents/<em>path</em>/<em>name</em></code> 	</td>
        <td> AGENT:user-dir 	</td>
        <td> data directory 	</td>
   </tr>
   <tr> <td> <code>/~/<em>path</em>/<em>name</em>~</code> 		</td>
-       <td> <code>USR_DIR/<em>path</em>/<em>name</em></code> 		</td>
+       <td> <code>PIA_ROOT/<em>path</em>/<em>name</em></code> 		</td>
        <td> AGENT:data-dir 	</td>
        <td> data directory 	</td>
   </tr>
@@ -145,7 +145,7 @@ others are "sub-agents."</p>
     files are ``inherited''.  An agent will search for files first in its user
     directory, then its home directory, and then in the directories of its
     type agent.  An agent without a type will finally look in the
-    <code>Agent</code> subdirectories of USR_DIR and PIA_DIR.
+    <code>Agent</code> subdirectories of PIA_ROOT and PIA_HOME.
 </p>
 
 <p> Agents that are not "sub-agents" of some type have their type the same as
@@ -230,15 +230,16 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
     following conventions are used for agent initialization:
 </p>
 
+<!-- === the following table is totally wrong now! === -->
 <table>
   <tr><td> <code>~/</code></td>
       <td> The user's home directory </td>
   <tr><td> <code>./</code></td>
       <td> (or any relative path) the PIA agent directory</td>
   <tr><td> <code>../</code></td>
-      <td> the PIA's root directory <code>PIA_DIR</code></td>
+      <td> the PIA's home directory <code>PIA_HOME</code></td>
   <tr><td> <code>/~/</code></td>
-      <td> The PIA user directory <code>USR_DIR</code></td>
+      <td> The PIA's real root directory <code>PIA_ROOT</code></td>
   <tr><td> <code>/</code></td>
       <td> An absolute path in URL format.</td>
   <tr><td> <code>file:</code></td>
@@ -269,9 +270,9 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
   <tr><td> <code>pia:./</code></td>
       <td> (or any relative path) the PIA agent directory</td>
   <tr><td> <code>pia:../</code></td>
-      <td> the PIA home directory <code>PIA_DIR</code></td>
+      <td> the PIA home directory <code>PIA_HOME</code></td>
   <tr><td> <code>pia:/~/</code></td>
-      <td> The PIA user directory <code>USR_DIR</code></td>
+      <td> The PIA user directory <code>PIA_ROOT</code></td>
   <tr><td> <code>pia:/</code></td>
       <td> An absolute path in URL format.</td>
   <tr><td> <code>file:</code></td>
@@ -284,7 +285,7 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
 extended HTML (XHTML) files organized in a directory.
 Agents require a set of standard files.
 Those files, listed below, are "inherited" from the root directory
-(PIA_DIR/Agents) if they are not found in the agent's home directory.</p>
+(PIA_HOME/Agents) if they are not found in the agent's home directory.</p>
 
 <ul>
 <li> <code>home.xh</code><br>
@@ -501,29 +502,29 @@ details'' document.</p>
 <p>Your Information Agency makes use of two directories:</p>
 
 <ul>
-  <li> <var>PIA_DIR</var> contains the code, documentation, agents and
+  <li> <var>PIA_HOME</var> contains the code, documentation, agents and
        other files released by the PIA group.</li>
 
-  <li> <var>USR_DIR</var> (typically <tt>~/.pia</tt> on Unix) stores agent
+  <li> <var>PIA_ROOT</var> (typically <tt>~/.pia</tt> on Unix) stores agent
        data and customized active documents.</li>
 </ul>
 
 <p>By default, agents read and write their data files into <var>
-USR_DIR/AGENT_NAME</var> (where <var>AGENT_NAME</var> is the name
+PIA_ROOT/AGENT_NAME</var> (where <var>AGENT_NAME</var> is the name
 of the agent. For example, the <var>History</var> agent keeps lists
 of visited URLs in <tt>~/.pia/History/</tt>)</p>
 
 <p>In seeking their documents, agents look first in <code><var>
-USR_DIR/Agents/AGENT_NAME</var></code>, where <var>
+PIA_ROOT/Agents/AGENT_NAME</var></code>, where <var>
 AGENT_NAME</var> is the name of the agent in question. If that
 search fails, the agent then checks <var><code>
-PIA_DIR/Agents/AGENT_NAME</code></var>. Thus the <var>History</var>
+PIA_HOME/Agents/AGENT_NAME</code></var>. Thus the <var>History</var>
 agent searches for its files in <kbd>~/.pia/Agents/History</kbd>
 and then in <kbd>/usr/local/bin/pia/Agents/History</kbd>.</p>
 
 <p>This makes it easy to customize your agents by simply putting
 new documents in <code><var>
-USR_DIR/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a
+PIA_ROOT/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a
 customized form, <tt>foo.xh</tt> for the <var>History</var> agent
 would go in <tt>~/.pia/Agents/History/foo.xh</tt>.)</p>
 
@@ -533,7 +534,7 @@ would go in <tt>~/.pia/Agents/History/foo.xh</tt>.)</p>
 History</var> agent. The new feature allows you to see a display of
 all web pages visited on the current day.</p>
 
-<p>In the example that follows, assume that <var>USR_DIR</var> has
+<p>In the example that follows, assume that <var>PIA_ROOT</var> has
 the value <code>~/.pia</code>.</p>
 
 <ol>
@@ -766,9 +767,9 @@ is an easy way to install a <em>new</em> agent to experiment with or to
 extend. </p>
 
 <p>On start-up, the Information Agency looks in the directory
-<var>USR_DIR</var> and then <var>PIA_DIR</var> for the
+<var>PIA_ROOT</var> and then <var>PIA_HOME</var> for the
 <code>/Admin/agent-files.xml</code>, which specifies the XML files that need
-to be loaded.  It also looks in <var>USR_DIR</var> for
+to be loaded.  It also looks in <var>PIA_ROOT</var> for
 <code>/Admin/START-UP.html</code>, which contains HTML forms to submit in
 order to <em>create</em> agents.</p>
 
