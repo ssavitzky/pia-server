@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.5 1999-10-04 17:28:54 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.6 1999-10-05 15:08:35 steve Exp $ -->
 
 <Container> <!-- Get all attributes from the environment. -->
 
@@ -24,6 +24,13 @@
 
   <!-- You can set most of the PIA's ``properties'' this way -->
   <port>8888</port>
+
+  <!-- If /etc/passwd exists, use it (and hence your Unix password) to
+	authenticate access to the Admin agent.
+    -->
+  <if><status item="exists" src="file:/etc/passwd"/>
+      <then><authenticate>/etc/passwd</authenticate></then>
+  </if>
 
   <note> This is the standard default configuration that you get if no
 	configuration file or root directory is specified on the pia command

@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.9 1999-09-22 00:28:57 steve Exp $
+// $Id: Resolver.java,v 1.10 1999-10-05 15:08:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,6 +35,7 @@ import java.net.URL;
 import org.risource.pia.Agent;
 import org.risource.pia.Transaction;
 import org.risource.util.Utilities;
+import org.risource.site.Resource;
 
 import org.risource.ds.Queue;
 import org.risource.ds.Table;
@@ -83,6 +84,11 @@ public class Resolver extends Thread {
    * Just a temporary fix for now.
    */
   protected  List agentsInOrder = new List();
+
+  /** A table of agents listed by the prefix of the pathname to which they
+   *	apply.  At the moment the only use of this is for authenticators. 
+   */
+  protected Table agentsByPrefix = new Table();
 
   /**
    * Attribute index - whether to stop running
@@ -179,16 +185,26 @@ public class Resolver extends Thread {
       agentsByPathName.put(agent.getHomePath(), agent);
     }
     agent.initialize();
+
+    boolean registered = false;
+
     if (agent.criteria() != null) {
       if (!agent.getAttribute("criteria").equalsIgnoreCase("false"))
 	agentsInOrder.push(agent);
-    } else {
-      Table timings = CrontabEntry.getTimings(agent);
-      if (timings != null) {
-	crontab.makeEntry(agent, timings);
-      } else {
-	Pia.warningMsg("Agent with unknown function " + agent.startString());
-      }
+      registered = true;
+    } 
+    if (agent.hasTrueAttribute("authenticate")) {
+      registerAuthenticator(agent);
+      registered = true;
+    } 
+    Table timings = CrontabEntry.getTimings(agent);
+    if (timings != null) {
+      crontab.makeEntry(agent, timings);
+      registered = true;
+    }
+
+    if (!registered) {
+      Pia.warningMsg("Agent with unknown function " + agent.startString());
     }
   }
 
@@ -211,9 +227,23 @@ public class Resolver extends Thread {
     if (agent == null) return agent;
     if (agent.name() != null) agentsByName.remove(agent.name());
     agentsByPathName.remove(agent.getHomePath());
+    agentsByPrefix.remove(agent.getHomePath());
     agentsInOrder.remove(agent);
     return agent;
   } 
+
+  public void registerAuthenticator(Agent agent) {
+    agentsByPrefix.put(agent.getHomePath(), agent);
+  }
+
+  public Agent getAuthenticatorForResource(Resource resource) {
+    if (! resource.isContainer()) resource = resource.getContainer();
+    for ( ; resource != null; resource = resource.getContainer()) {
+      Agent a = (Agent)agentsByPrefix.at(resource.getPath());
+      if (a != null) return a;
+    }
+    return null;
+  }
 
   /**
    * agents that are able to match transactions.

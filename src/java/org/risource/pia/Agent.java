@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.12 1999-09-22 00:28:54 steve Exp $
+// $Id: Agent.java,v 1.13 1999-10-05 15:08:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,6 +39,7 @@ import org.risource.dps.Tagset;
 
 import org.risource.site.Subsite;
 import org.risource.site.Document;
+import org.risource.site.Resource;
 
 import org.risource.ds.List;
 import org.risource.ds.Criteria;
@@ -148,6 +149,15 @@ public interface Agent extends ActiveElement {
    * may want to intercept a transaction meant for somewhere else.
    */
   public boolean handle(Transaction ts, Resolver res);
+
+  /** 
+   * Authenticate a request for a given resource.  
+   *	Return false if the browser must be prompted for authentication.
+   */
+  public boolean authenticateRequest(Transaction request, Resource resource);
+
+  /** Return an authentication policy for the agent. */
+  public Authenticator getAuthenticator();
 
   /**
    * This method is called to handle a ``crontab'' agent.

@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.3 1999-09-22 00:17:12 steve Exp $
+// $Id: SiteMachine.java,v 1.4 1999-10-05 15:08:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -338,6 +338,48 @@ public class SiteMachine extends Machine {
     return true;
   }
 
+  /** Test whether the given resource is in a home directory which
+   *	should be redirected.
+   */
+  protected boolean redirectHome(Resource resource) {
+    return true;		// for now, always redirect
+  }
+
+  /** Compute the appropriate redirection for a path. */
+  protected String getRedirection(Resource resource, String path) {
+    if (path.startsWith("~") && redirectHome(resource)) {
+      if (resource.isContainer() && !path.endsWith("/")) {
+	return resource.getPath() + "/";
+      } else {
+	return resource.getPath();
+      }
+    } else if (resource.isContainer() && !path.endsWith("/") ) {
+      return path + "/";
+    } else {
+      return null;
+    }
+  }
+
+  public void requestAuthentication ( Transaction trans, Agent auth, 
+				      Resource resource) {
+
+    Authenticator aPolicy = auth.getAuthenticator();
+
+   //do we need content for authentication response??
+      Pia.debug(this, "Authentication required");
+    Transaction response = new HTTPResponse( trans, false );
+     if(trans.has("UnauthorizedUser")) 
+       response.setStatus( 403 ); 
+     else 
+       response.setStatus( 401 ); 
+    aPolicy.setResponseHeaders(response, auth);
+    Content c = new org.risource.content.text.StringContent(
+		   "Authorization required for access to "
+		   + resource.getPath());
+    response.setContentType( "text/plain" );
+    response.setContentObj( c );
+    response.startThread();
+ }
   /**
    * Respond to a request directed at one of an site's documents, 
    * with a (possibly-modified) path.
@@ -358,7 +400,7 @@ public class SiteMachine extends Machine {
     // Perform URL decoding:
     path = Utilities.urlDecode(path);
 
-    // Locate the resource
+    // Locate the resource.  Fail if it can't be found.
     Resource resource = site.locate(path, false, null);
     if (resource == null) return false;
 
@@ -366,21 +408,15 @@ public class SiteMachine extends Machine {
     if (resource.isHidden()) return false;
 
     // If the request needs to be redirected, do so now.
-    if (resource.isContainer() && !path.endsWith("/")) {
-      return sendRedirection(request, path + "/");
+    String redirection = getRedirection(resource, path);
+    if (redirection != null) return sendRedirection(request, redirection);
+
+    // See if the request needs to be authenticated.
+    Agent auth = res.getAuthenticatorForResource(resource);
+    if (auth != null && !auth.authenticateRequest(request, resource)) {
+      requestAuthentication(request, auth, resource);
+      return true; // returning true because response has been set
     }
-
-    /* === worry about authentication ===
-
-    // authenticate the requester if necessary;
-    // internal requests are not authenticated currently--eg. virtual machines
-    if( !(request.fromMachine() instanceof AgentMachine)
-	&& !authenticateRequest(request,file)){
-      requestAuthentication(request);
-      return true; //not clear-returning true because response has been set
-    }
-
-    */
 
     Document doc = resource.getDocument();
     if (doc == null) {

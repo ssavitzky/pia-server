@@ -1,5 +1,5 @@
 // Generic.java
-// $Id: Generic.java,v 1.2 1999-09-24 00:26:28 steve Exp $
+// $Id: Generic.java,v 1.3 1999-10-05 15:08:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,8 +60,7 @@ import org.risource.dps.input.FromNodeList;
 import org.risource.dps.tree.TreeElement;
 import org.risource.dps.tree.TreeNodeList;
 
-import org.risource.site.Subsite;
-import org.risource.site.Document;
+import org.risource.site.*;
 
 import org.risource.util.NullOutputStream;
 import org.risource.util.NameUtils;
@@ -111,6 +110,9 @@ public class Generic extends TreeElement
    * should be called.
    */
   protected Criteria criteria;
+
+  /** An Authenticator for paths under this agent. */
+  protected Authenticator authPolicy = null;
 
   /**
    * Attribute index - virtual Machine to which local requests are directed.
@@ -217,6 +219,12 @@ public class Generic extends TreeElement
 
     // Add a few necessary things to the attributes:
     setAttribute("path", agentHome.getPath()); 
+
+    // Look for an "authenticate" attribute. 
+    s = getAttribute("authenticate");
+    if (s != null) {
+      authPolicy = new Authenticator("Basic", s);
+    }
 
     // Look for <intialize> and <action> elements.
     // <action> can be omitted, though it may be dangerous to do so.
@@ -404,6 +412,20 @@ public class Generic extends TreeElement
     return proc;
   }
 
+  /************************************************************************
+  ** Authentication:
+  ************************************************************************/
+
+  /**
+   * authenticate the origin of a request
+   * @return false if cannot authenticate
+   */
+  public boolean authenticateRequest(Transaction request, Resource resource){
+    if (authPolicy == null) return true;
+    return authPolicy.authenticateRequest(request, resource.getPath(), this);
+  }
+
+  public Authenticator getAuthenticator() { return authPolicy; }
 
 
   /************************************************************************

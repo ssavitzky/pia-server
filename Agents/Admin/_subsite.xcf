@@ -1,12 +1,20 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.2 1999-10-04 17:05:55 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.3 1999-10-05 15:08:39 steve Exp $ -->
 
 <Container>
 
   <Ext name="xh"	type="text/html"	tagset="Admin-xhtml"	/>
 
-  <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin">
-     <initialize><user-message>Admin agent initialized</user-message>
+  <!-- If the site property "authenticate" exists, access to the admin
+       agent will require a password.  Look at _subsite.xcf in PIA to
+       see how this is set.
+    -->
+  <set name="auth"><get name="SITE:authenticate"/></set>
+  <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin"
+	 authenticate="&auth;" >
+     <initialize><user-message>Admin agent initialized <if>&SITE:authenticate;
+	<then> authenticated with &SITE:authenticate;</then>
+        </if> </user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
 	  marker, so that ~Admin works and the admin-specific tags have a way
