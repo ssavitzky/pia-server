@@ -1,4 +1,5 @@
-
+<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<!-- $Id: AGENT.xml,v 1.2 1999-05-21 00:30:19 steve Exp $ -->
 
 <AGENT name='Admin' path='/' type='Admin'
         class='org.risource.pia.agent.Admin' pathName='/Admin'>
@@ -16,7 +17,7 @@
 </agent-files></bind>
 
   <bind name='initialize'>
-    <user-message>Loading XML from '<status src='agent-files.xml'
+    <user-message>Loading agents from '<status src='agent-files.xml'
 				             item='path' />'</user-message>
     <load-agent-files><include src='agent-files.xml' /></load-agent-files>
   </bind>
