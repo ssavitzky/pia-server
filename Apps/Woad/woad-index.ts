@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.9 2000-10-12 23:11:09 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.10 2000-11-22 22:56:13 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -153,22 +153,27 @@
       <let name="path"><get name="attributes:path"/></let>
       <let name="line"><get name="attributes:line"/></let>
     </hide>
-    <tr> <td valign="top"> <a href="&id;">&word;</a>
-<!-- === wrong: word needs to link to .words/&context;/&word; if outside
-     === the context directory -->
+    <tr> <td valign="top"> 
+             <if>&cxt;<then><a href="/.words/&cxt;/">&cxt;</a> :</then></if>
+             <a href="&id;">&word;</a>
+<!-- === word should link to .words/&context;/&word; (iff it exists) -->
 	 </td>
 	 <td> <a href="&sourcePrefix;&path;">&path;</a>
-	      <if> &line;
+	      <if> <test not="not" zero="zero">&line;</test>
 	           <then> <a href="&sourcePrefix;&path;#&line;">(&line;)</a>
 	           </then>
 	      </if>
 	 </td>
     </tr>
-    <tr> <td> &cxt; (defined)
-	 </td>
-         <td> &nbsp;&nbsp;&nbsp; <get name="content" />
-	 </td>
-    </tr>
+    <if><get name="content" />
+        <then>
+	  <tr> <td> (defined)
+	       </td>
+	       <td> &nbsp;&nbsp;&nbsp; <get name="content" />
+	       </td>
+	  </tr>
+        </then>
+    </if>
   </action>
 </define>
 
@@ -183,9 +188,10 @@
       <let name="path"><get name="attributes:path"/></let>
       <let name="line"><get name="attributes:line"/></let>
     </hide>
-    <tr> <td valign="top"> <a href="&id;">&word;</a>
-<!-- === wrong: word needs to link to .words/&context;/&word; if outside
-     === the context directory -->
+    <tr> <td valign="top"> 
+             <if>&cxt;<then><a href="/.words/&cxt;/">&cxt;</a> :</then></if>
+             <a href="&id;">&word;</a>
+<!-- === word should link to .words/&context;/&word; (iff it exists) -->
 	 </td>
 	 <td> <a href="&sourcePrefix;&path;">&path;</a>
 	      <if> &line;
@@ -194,11 +200,15 @@
 	      </if>
 	 </td>
     </tr>
-    <tr> <td> &cxt; (used)
-	 </td>
-         <td> &nbsp;&nbsp;&nbsp; <get name="content" />
-	 </td>
-    </tr>
+    <if><get name="content" />
+        <then>
+	  <tr> <td> (used)
+	       </td>
+	       <td> &nbsp;&nbsp;&nbsp; <get name="content" />
+	       </td>
+	  </tr>
+        </then>
+    </if>
   </action>
 </define>
 
