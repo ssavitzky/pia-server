@@ -41,7 +41,7 @@
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#running">Running <ss>Woad</ss></a> </td>
 	        </tr>
-	  	<tr> <td> <a href="#"></a></td>
+	  	<tr> <td> <a href="#blue">Why blue?</a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#Woad_Warrior"><ss>Woad Warrior</ss></a>
 		     </td>
@@ -58,9 +58,57 @@
 
 <include src="app-info.inc" />
 
-
 <hr />
 <h2><a name="running">Running <ss>Woad</ss></a></h2>
+
+<p> To run <ss>WOAD</ss> on a directory that contains HTML documents:
+</p>
+<pre>
+    woad <em>directory</em>
+</pre>
+
+<p> If that directory is visible on a server, add
+    ``<code>target=<em>host:port</em></code>'' to the command. 
+</p>
+
+<p> If the documents are in a subdirectory, e.g.,
+    ``<code>.../<em>subdir</em></code>'', add
+    ``<code>prefix=/<em>subdir</em></code>''
+</p>
+
+<h4>Examples:</h4>
+
+<p> For example, if you have a typical Red Hat Linux installation, use:
+</p>
+
+<pre>
+    woad /home/httpd/html target=localhost:80
+</pre>
+
+<p> If you want to see the <code>cgi-bin</code> and <code>icons</code>
+    directories as well, use:
+</p>
+
+<pre>
+    woad /home/httpd target=localhost:80 prefix=/html
+</pre>
+
+<p> On a Windows machine you currently have to substitute</p>
+<pre>    pia -site %PIA_HOME%/Apps/Woad/woad.xcf -vroot</pre>
+<p> for <code>woad</code> in the sample commands.
+</p>
+
+
+<hr />
+<h2><a name="blue">Why Blue?</a></h2>
+
+<p> The short answer is that the plant <em>Isatis tinctoria</em>, common name
+    Dyer's Woad, is a source of the same blue dye that comes from the tropical
+    Indigo plant.  It was used for body decoration by the Pictish warriors of
+    ancient Britain.  More information about Woad can be found in the <a
+    href="about.html#see_also">references</a> section of <a href="about.html">
+    About <ss>WOAD</ss></a>.
+</p>
 
 <hr />
 <h2><a name="Woad_Warrior"><ss>Woad Warrior</ss></a></h2>
@@ -73,12 +121,13 @@
 </p>
 
 <blockquote>
-<p> <red><ss><a href="warrior">Woad Warrior</a></ss> is not implemented
-    yet.</red>  You can get a vague idea of its eventual flavor by following
-    the preceeding link, but it won't really do anything for you.
+<p> <ss><a href="warrior"><red>Woad Warrior</red></a></ss> <red>is not
+    implemented yet.</red> You can get a vague idea of its eventual flavor by
+    following the link to its ``home page'', but it won't really do anything
+    for you at this point.
 </p>
 </blockquote>
 
 <p>
-<short-footer cvsid="$Id: quick.xh,v 1.3 2000-06-08 23:55:43 steve Exp $" />
+<short-footer cvsid="$Id: quick.xh,v 1.4 2000-06-09 16:58:18 steve Exp $" />
 </p></body></html>
