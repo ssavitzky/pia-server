@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.12 2000-06-08 23:16:02 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.13 2000-06-17 00:03:01 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -41,11 +41,34 @@
        not really suitable for the default configuration.
     -->
 
-<!-- Woad tree -->
+<!-- Woad forms directory -->
+  <Container name=".Woad" virtual="/Apps/Woad">
+    <doc> We put the Woad application directory into <code>/.Woad</code> so as
+	  to make it invisible in (most) directory listings.  Note that the
+	  extensions and so on are path-dependent, so that if we run across
+	  <code>Apps/Woad</code> as part of the source tree it will display
+	  properly as source.
+    </doc>
+    <HomeDocumentName>woad</HomeDocumentName>
+    <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="html"	type="text/html" tagset="HTML" 			/>
+  </Container>
 
-  <sourceOffset>/.Tree</sourceOffset>
-  <Container name=".Tree" virtual="pia:/" suspect="true">
+<!-- Woad Annotation Tree -->
+
+  <notesPrefix>/.notes</notesPrefix>
+  <Container name=".notes" suspect="true">
     <HomeDocumentName>woad-index.wh</HomeDocumentName>
+    <IndexDocumentPath>/.Woad/Tools/woad-listing.xh</IndexDocumentPath>
+
+  </Container>
+
+<!-- Woad Source Tree -->
+  <sourcePrefix>/.source</sourcePrefix>
+  <sourceRoot>&PIA:PIA_HOME;</sourceRoot>
+  <Container name=".source" virtual="pia:/" suspect="true">
+    <HomeDocumentName>woad-index.wh</HomeDocumentName>
+    <IndexDocumentPath>/.Woad/Tools/src-listing.xh</IndexDocumentPath>
     <ConfigFileName>_woad.xcf</ConfigFileName>
 
     <!-- These are the tagsets used for woad's active documents: -->
@@ -63,16 +86,4 @@
 
   </Container>
 
-<!-- Woad forms directory -->
-  <Container name=".Woad" virtual="pia:/Apps/Woad">
-    <doc> We put the Woad application directory into <code>/.Woad</code> so as
-	  to make it invisible in (most) directory listings.  Note that the
-	  extensions and so on are path-dependent, so that if we run across
-	  <code>Apps/Woad</code> as part of the source tree it will display
-	  properly as source.
-    </doc>
-    <HomeDocumentName>woad</HomeDocumentName>
-    <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
-    <Ext name="html"	type="text/html" tagset="HTML" 			/>
-  </Container>
 </Container>

@@ -365,14 +365,39 @@
     (Note that the current ones are misnamed.)
 </p>
 
+<p> OLD parameters (mostly phased out by now):
+</p>
+<ul>
+  <li> <code>sourcePrefix</code> -> <code>notesPrefix</code> OR
+       <code>sourcePrefix</code> depending on usage.
+       <code>sourcePrefix</code> is more likely.  sourceOffset and
+       sourcePrefix were getting concatenated.; this is no longer true.
+  </li>
+  <li> <code>targetPrefix</code> [prefix] -> <code>docOffset</code> [offset]
+  </li>
+  <li> <code>sourceOffset</code> [offset] -> <code>sourcePrefix</code>
+  </li>
+  <li> <code>vroot</code> -> <code>sourceRoot</code>
+  </li>
+  <li> <code>.Woad</code> -> <code>woadPrefix</code>
+  </li>
+  <li> <code>mapToTarget</code> -> <code>mapSrcToTarget</code>; add
+       <code>mapNoteToTarget</code>, <code>mapNoteToSrc</code>,
+       <code>mapSrcToNote</code>. 
+  </li>
+</ul>
+we pretty much end up swapping <code>offset</code> and <code>prefix</code>
+when those are used as variables.
+
+
+
 <ul>
   <li> <code>notesPrefix</code> 
-       <p> The location of the root of the WOAD annotation tree relative to the
-           root of the WOAD server.  It is normally only needed if the WOAD
-           tree is on the same server as the application.
-           (Presently called <em>sourceOffset</em>.)  Note that we do not need
-           to put this on the command line -- if needed, it's guaranteed to be
-           somewhere in the target server's configuration.
+       <p> The location of the root of the WOAD annotation tree relative to
+           the root of the WOAD server.  It is normally only needed if the
+           WOAD tree is on the same server as the application.  Note that we
+           do not need to put this on the command line -- if needed, it's
+           guaranteed to be somewhere in the target server's configuration.
        </p>
        <blockquote>
        <p> <code>notesPrefix</code> defaults to null.  If a non-null value is
@@ -385,25 +410,24 @@
 	   relative to the root of the WOAD server.  
        </p>
        <blockquote>
-       <p> <code>sourcePrefix</code> defaults to ``<code>.Woad</code>'' and
-	   will rarely, if ever, have to be changed.
+       <p> <code>woadPrefix</code> defaults to ``<code>.Woad</code>'' and will
+	   rarely, if ever, have to be changed.  <font color="red">In fact, it
+	   is presently fixed and changing it might be very difficult</font>
        </p>
        </blockquote>
   </li>
-  <li> <code>docOffset</code> / <code>offset=</code> <br />
+  <li> <code>docOffset</code> / <code>offset=</code>
        <p> The location of the document sources relative to the source root.
-           (Presently called <code>targetPrefix</code>.)
        </p>
   </li>
-  <li> <code>sourcePrefix</code> / <code>prefix=</code> <br />
+  <li> <code>sourcePrefix</code> / <code>prefix=</code>
        <p> The location of the source root relative to the WOAD server root.
-           (Presently fixed at null.)  If a target URL corresponds to a real
-           source document, the latter can be found at
-           <code>sourcePrefix+docOffset/...</code>
+           If a target URL corresponds to a real source document, the latter
+           can be found at <code>sourcePrefix+docOffset/...</code>
        </p>
        <p> Note that <code>notesPrefix</code> is <em>not</em> automatically
-	   prepended to <code>sourcePrefix</code> -- this allows a source tree
-	   and an annotation tree to be at the same level.
+	   prepended to <code>sourcePrefix</code> -- this allows the source
+	   tree and annotation trees to be at the same level.
        </p>
        <blockquote>
        <p> <code>sourcePrefix</code> defaults to ``<code>.source</code>''.
@@ -971,6 +995,6 @@
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: about.html,v 1.4 2000-06-15 01:22:11 steve Exp $</b><br />
+<b>$Id: about.html,v 1.5 2000-06-17 00:03:05 steve Exp $</b><br />
 <address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
 </body></html>

@@ -1,17 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>&LOC:path; : Woad annotations</title>
-</head><body>
+</head><body bgcolor="#99ccff">
 <hide>
-  <set name="spath">
-    <if>&SITE:sourceOffset;
-	<then><subst match="^&SITE:sourceOffset;"
+  <set name="npath">
+    <if>&SITE:notesPrefix;
+	<then><subst match="^&SITE:notesPrefix;"
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
-  <set name="VAR:format"><if> &FORM:all; <then>complete</then>
-    <else-if>&FORM:detail;<then>detail</then></else-if>
-    <else>filtered</else>
+  <set name="tail"><if><get name="PATH_INFO"/>
+		       <then>/<get name="PATH_INFO"/></then>
   </if></set>
 
   <doc> The following crockery is used to compute &amp;decoratedPath;,
@@ -19,7 +18,7 @@
 	".." links to the directories above "."
   </doc>
   <set name="depth">0</set>
-  <set name="split"><subst match="/" result=" ">[]&spath;</subst></set>
+  <set name="split"><subst match="/" result=" ">[TOP]&npath;</subst></set>
   <repeat>
     <foreach><text split>&split;</text></foreach>
     <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
@@ -36,12 +35,13 @@
 
   <doc> Set other variables.
   </doc>
-  <set name="tpath"><mapToTarget>&LOC:path;</mapToTarget></set>
+  <set name="tpath"><mapNoteToTarget>&LOC:path;&tail;</mapNoteToTarget></set>
+  <set name="spath"><mapNoteToSource>&LOC:path;&tail;</mapNoteToSource></set>
 </hide>
 
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr><th align="left">
-    <h1><code>&decoratedPath;</code></h1>
+    <h1><code>&decoratedPath; &tail;</code></h1>
     </th>
   </tr>
   <tr> <td>
@@ -57,11 +57,16 @@
 	       <tr>
 		 <td align="right">-&gt;&nbsp;</td>
 		 <td>
-		      <xf fmt="filtered" href="&LOC:path;">filtered</xf>
-		      <xf fmt="complete" href="&LOC:path;?all">complete</xf>
+		      <xf fmt="filtered" href="&LOC:path;&tail;">filtered</xf>
+		      <xf fmt="complete" href="&LOC:path;&tail;?all">complete</xf>
 		      <if><get name="tpath" />
 		          <then>
-		      	    <a href="&tpath;/">&lt;server&gt;</a>
+		      	    <a href="&tpath;">&lt;server&gt;</a>
+		          </then>
+		      </if>
+		      <if><get name="spath" />
+		          <then>
+		      	    <a href="&spath;">[source]</a>
 		          </then>
 		      </if>
 		      <a href="/.Woad/help.xh#views">[help]</a>
@@ -70,7 +75,6 @@
 	     </table>
 	</td>
     </tr>
-  </tr>
 </table>
 
 <define element="rejectFile">
@@ -78,19 +82,33 @@
   </doc>
   <action>
     <if> &FORM:all;
-	<then> </then>
-        <else><test match="~$">&f;</test>
-              <test match=".bak$">&f;</test>
-              <test match="^[.]">&f;</test>
+	<then><test match="~$">&content;</test>
+              <test match="logs">&content;</test><!-- bogus: check hidden -->
+              <test match=".bak$">&content;</test>
+              <test match="^[.]">&content;</test>
+	 </then>
+        <else><logical op="and">
+		<test not="not" match="\.ww$">&content;</test>
+		<test match="\.">&content;</test>
+	      </logical>
+              <test match="logs">&content;</test><!-- bogus: check hidden -->
 	</else>
     </if>
   </action>
 </define>
 
+<h2>Explicit Annotations:</h2>
+
+<blockquote>
+<p> The following is a list of annotation topics available at this
+    location. 
+</p>
+</blockquote>
+
 <table bgcolor="white">
 <repeat>
   <foreach entity="f">
-     <text sort><status item="files" src="&LOC:path;" /></text>
+     <text sort><status item="files" src="&LOC:path;&tail;" /></text>
   </foreach>
   <if><rejectFile>&f;</rejectFile>
       <else>
@@ -101,5 +119,95 @@
 </repeat>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.1 2000-06-15 01:25:46 steve Exp $" />
+<!-- ==================================================================== -->
+<doc> Here we load the page <em>from the target server</em> and attempt to
+      extract information from it.  EVIL!  Long pages will run out of memory.
+</doc>
+
+<hide>
+  <set name="serverPage">
+    <if>&SITE:notesPrefix;
+	<then><include src="&PIA:url;&tpath;" tagset="/.Woad/src-html"
+	       quoted="yes"/>
+	</then>
+	<else><include src="&tpath;" tagset="/.Woad/src-html" quoted="yes"/>
+	</else>
+    </if>
+  </set>
+</hide>
+
+<h3>Links:</h3>
+<blockquote>
+<table bgcolor="white" cellpadding=1>
+  <tr>
+    <th bgcolor="#cccccc">URL</th>
+    <th bgcolor="#cccccc"> description </th>
+  </tr>
+  <repeat><foreach><extract><from>&serverPage;</from>
+    			    <name all>a</name>
+  			    <attr>href</attr> 
+  			    <eval />
+    	    </extract></foreach>
+            <tr><!-- may need to remap absolute links to annotation loc's -->
+	      <td> <a href="&li;">&li;</a> </td>
+	      <td> &nbsp;
+		   <!-- for descriptions, need full path in any case. -->
+	      </td>   
+	    </tr>
+    </repeat>
+</table>
+</blockquote>
+
+<h3>Images:</h3>
+
+<blockquote>
+<table bgcolor="white">
+  <repeat><foreach><extract><from>&serverPage;</from>
+    			    <name all>img</name>
+  			    <attr>src</attr> 
+  			    <eval />
+    	    </extract></foreach>
+            <tr><!-- need to map these to server loc's:
+	      	     annotation mangles images severely. -->
+	      <td> <a href="&li;">&li;</a> </td>
+	    </tr>
+    </repeat>
+</table>
+</blockquote>
+
+<hr />
+<h2>Woad source view</h2>
+
+<!-- For images, should simply insert the image here (DUH!) -->
+
+<blockquote>
+<p> This is a WOAD source view of <a href="&tpath;"><code>&tpath;</code></a>
+    as it comes from the server.  Links are ``live'' and will take you to the
+    appropriate <em>annotation</em> page.  (The link in this paragraph will
+    take you to the page <em>on the target server</em>.)
+</p>
+
+<if>&SITE:notesPrefix;
+    <then><table bgcolor="yellow" width="90%" cellpadding="5">
+             <tr>
+	       <td> <red> Note that in this situation, links starting with
+		    ``<code>/</code>'' in the source view will be incorrect.
+		    Sorry about that.  </red>
+	       </td>
+	     </tr>
+          </table>	  
+    </then>
+</if>
+</blockquote>
+
+<table bgcolor="white" cellpadding="5">
+  <tr><td>
+<pre><expand><extract>
+               <from>&serverPage;</from>
+               -document- <content/>
+</extract></expand></pre> </td>
+  </tr>
+</table>
+
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.2 2000-06-17 00:03:10 steve Exp $" />
 </body></html>

@@ -5,9 +5,6 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
-  <li> <b>Bug</b> rename the path parameters per about.html <br />
-       (2000-06-14)
-  </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things: proper tagging of identifiers in context,
        and figuring out where in the tree to link them.  Generally, each
@@ -16,13 +13,17 @@
        tags.
        (2000-06-07)
   </li>
+  <li> <b>Bug</b> prefixes not robust <br />
+       Need to explicitly force prefixes to have or not have leading slash.
+       (2000-06-16)<br />
+  </li>
   <li> <b>Hole</b> annotation tagset. <br />
        
        (2000-06-07)
   </li>
   <li> <b>Bug</b> (site) <code>file:</code> in <code>.xcf</code> file <br />
-       Need to be able to make virtual links to absolute paths.  There
-       has to be some kind of restriction to prevent security holes.
+       Need to be able to make virtual links to absolute paths, and it works,
+       but there ought to be some kind of restriction to prevent security holes.
        Possibly restrict to normal user, not <code>pia</code>; also perhaps
        make the resulting subtrees non-trusted.
        (2000-05-30)
@@ -39,7 +40,10 @@
        (2000-05-30)
   </li>
   <li> <b>Bug</b> (pia) make PIA namespace available to config files <br />
-       Configuration files need to be read with the PIA: namespace in effect. 
+       Configuration files need to be read with the PIA: namespace in effect.
+       It's actually more subtle: a Site under construction has to read its
+       own site-config file (oops).  It's not an issue if it's just using the
+       default <code>_subsite.xcf</code>.
        (2000-05-30)
   </li>
   <li> <b>Hole</b> make Woad: namespace available in subs. <br />
@@ -51,7 +55,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.6 2000-06-15 01:23:57 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.7 2000-06-17 00:03:07 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

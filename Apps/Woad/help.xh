@@ -97,11 +97,12 @@
     running in its standard configuration, does this.
 </p>
 
-<if><get name="SITE:sourceOffset"/>
+<if><get name="SITE:woadPrefix"/>
     <then>
       <blockquote>
 	This application, in fact, <em>has</em> a <ss>Woad</ss> tree, located
-	at <a href="&SITE:sourceOffset;">&SITE:sourceOffset;</a>.
+	at <a href="/&SITE:woadPrefix;">/&SITE:woadPrefix;</a>.  You can
+	navigate from there to the annotations, source code, and keyword index.
       </blockquote>
     </then>
 </if>
@@ -258,5 +259,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.5 2000-06-09 18:02:52 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.6 2000-06-17 00:03:06 steve Exp $" />
 </p></body></html>

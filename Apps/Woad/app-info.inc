@@ -22,26 +22,35 @@
     </td>
   </tr>
   <tr>
-    <th bgcolor="silver"> target Prefix </th>
-    <td>  <get name="SITE:targetPrefix">&nbsp;</get>
+    <th bgcolor="silver"> annotation Prefix </th>
+    <td>  <get name="SITE:notesPrefix">&nbsp;</get>
     </td>
-    <td> <code>prefix=<em><get name="SITE:targetPrefix">/path</get></em>
-	 </code>
-    </td>
-  </tr>
-  <tr>
-    <th bgcolor="silver"> source Offset </th>
-    <td>  <get name="SITE:sourceOffset">&nbsp;</get>
-    </td>
-    <td> <code>offset=<em><get name="SITE:sourceOffset">/path</get></em>
-	 </code>
+    <td> <em>set in site config file</em>
     </td>
   </tr>
   <tr>
-    <th bgcolor="silver"> Application root </th>
-    <td> &SITE:virtual;
+    <th bgcolor="silver"> source Prefix </th>
+    <td>  <get name="SITE:sourcePrefix">&nbsp;</get>
     </td>
-    <td> <code>-vroot <em>&SITE:virtual;</em></code> </td>
+    <td> <code>prefix=<em><get name="SITE:sourcePrefix">/path</get></em></code>
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> source Root </th>
+    <td> &SITE:sourceRoot;
+    </td>
+    <td> <code>sources=<em>&SITE:sourceRoot;</em></code>
+	 <!-- should probably do some configuration checking  -->
+	 <!-- to see exactly where this parameter was set     -->
+    </td>
+  </tr>
+  <tr>
+    <th bgcolor="silver"> document Offset </th>
+    <td>  <get name="SITE:docOffset">&nbsp;</get>
+    </td>
+    <td> <code>offset=<em><get name="SITE:docOffset">/path</get></em>
+	 </code>
+    </td>
   </tr>
   <tr>
     <th bgcolor="silver"> Annotation root </th>
@@ -52,4 +61,4 @@
 </table>
 </blockquote>
 
-<inc-footer cvsid="$Id: app-info.inc,v 1.1 2000-06-08 23:55:42 steve Exp $">
+<inc-footer cvsid="$Id: app-info.inc,v 1.2 2000-06-17 00:03:06 steve Exp $">

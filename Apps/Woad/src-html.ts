@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.6 2000-06-15 01:23:09 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.7 2000-06-17 00:03:06 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -45,16 +45,17 @@
     <else>processed</else>
   </if></set>
   <set name="VAR:wrap">&FORM:wrap;</set>
-  <set name="tpath"><mapToTarget>&DOC:path;</mapToTarget></set>
+  <set name="tpath"><mapSrcToTarget>&DOC:path;</mapSrcToTarget></set>
+  <set name="npath"><mapSourceToNote>&DOC:path;</mapSourceToNote></set>
   <set name="spath">
-    <if>&SITE:sourceOffset;
-	<then><subst match="^&SITE:sourceOffset;"
+    <if>&SITE:sourcePrefix;
+	<then><subst match="^&SITE:sourcePrefix;"
 	             result="">&DOC:path;</subst></then>
 	<else>&DOC:path;</else>
     </if></set>
   <set name="slpath">
-    <if>&SITE:sourceOffset;
-	<then><subst match="^&SITE:sourceOffset;"
+    <if>&SITE:sourcePrefix;
+	<then><subst match="^&SITE:sourcePrefix;"
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
@@ -64,7 +65,7 @@
 	".." links to the directories above "."
   </doc>
   <set name="depth">0</set>
-  <set name="split"><subst match="/" result=" ">TOP&slpath;</subst></set>
+  <set name="split"><subst match="/" result=" ">[SRC]&slpath;</subst></set>
   <repeat>
     <foreach><text split>&split;</text></foreach>
     <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
@@ -116,6 +117,11 @@
 		      <if><get name="tpath" />
 		          <then>
 		      	    <a href="&tpath;">&lt;server&gt;</a>
+		          </then>
+		      </if>
+		      <if><get name="npath" />
+		          <then>
+		      	    <a href="&npath;">[notes]</a>
 		          </then>
 		      </if>
 		      <if> &FORM:entities;<!-- this is wrong now. -->

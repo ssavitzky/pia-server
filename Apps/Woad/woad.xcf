@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.7 2000-06-15 01:22:46 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.8 2000-06-17 00:03:07 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -14,12 +14,32 @@
   <virtualport>8001</virtualport>
 
   <targetServer><get name="PIA:target"/></targetServer>
-  <targetPrefix><get name="PIA:prefix"/></targetPrefix>
-  <sourceOffset><get name="PIA:offset"/></sourceOffset>
+  <sourcePrefix>/<get name="PIA:prefix">.source</get></sourcePrefix>
+  <docOffset><get name="PIA:offset"/></docOffset>
 
   <HomeDocumentName>woad-index.wh</HomeDocumentName>
-  <IndexDocumentPath>/.Woad/Tools/src-listing.xh</IndexDocumentPath>
   <ConfigFileName>_woad.xcf</ConfigFileName>
+
+  <if><get name="PIA:prefix">/.source</get>
+      <then>
+	<doc> This WOAD server is being used as an annotation server, with
+	      annotations in the main tree and source listings in a subtree. 
+	</doc>
+	<IndexDocumentPath>/.Woad/Tools/woad-listing.xh</IndexDocumentPath>
+	<sourceRoot>&PIA:sources;</sourceRoot>
+	<let name="pfx"><get name="PIA:prefix">.source</get></let>
+	<Container name="&pfx;" virtual="file:&PIA:sources;">
+	  <IndexDocumentPath>/.Woad/Tools/src-listing.xh</IndexDocumentPath>
+	</Container>
+      </then>
+      <else>
+	<doc> This WOAD server is being used as a listing server, with sources
+	      in the main tree at the virtual root.
+	</doc>
+	<IndexDocumentPath>/.Woad/Tools/src-listing.xh</IndexDocumentPath>
+	<sourceRoot>&PIA:vroot;</sourceRoot>
+      </else>
+  </if>
 
   <Container name=".Woad" virtual="pia:/Apps/Woad">
     <doc> We put the Woad application directory into <code>/.Woad</code> so as
