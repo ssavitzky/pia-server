@@ -1,5 +1,5 @@
 ###### Top-level Makefile for PIA
-#	$Id: Makefile,v 1.44 2000-09-30 00:08:50 steve Exp $
+#	$Id: Makefile,v 1.45 2000-10-06 00:32:02 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -64,6 +64,10 @@ RMT_HOST = www.risource.org
 WEB_RMT  = /home/web/risource-htdocs
 FTP_RMT  = /home/ftp/PIA
 CVS_RMT  = /home/cvsroot
+
+### PIA setup information
+
+PIA_ROOT = $$HOME/.pia
 
 ############################################################################# 
 ###
@@ -223,16 +227,33 @@ all-dirs.log::
 ###
 ### WOAD indices:
 ###
-###	my-woad-index 	constructed in $HOME/.pia
+###	my-woad-index 	constructed in $HOME/.pia  just the indices
 ###	
-###	One would like to ship a WOAD index with the PIA, but it's almost
-###	impossible without forcing the use of the pre-built index as the
-###	WOAD root.  Also, it requires the use of subdirectories that start
-###	with ".", which some OS's may not support.  Bad idea.
+###	  One would like to ship a WOAD index with the PIA, but it's almost
+###	  impossible without forcing the use of the pre-built index as the
+###	  WOAD root.  Also, it requires the use of subdirectories that start
+###	  with ".", which some OS's may not support.  Bad idea.
 ###
+###	my-woad-xref 	constructed in $HOME/.pia  index plus cross-references
+###
+###	  WARNING! At the moment, this requires about 200Mb of RAM!
+###		 The resulting cross-reference index eats 170Mb of disk.
+###
+###	my-woad-yref 	constructed in $HOME/.pia  index plus cross-references
+###
+###	  Just indexes the definitions.  This saves an enormous amount of 
+###	  both space and time. 
 
 my-woad-index::
-	perl src/app/tools/woad-index.pl source=. root=$$HOME/.pia \
+	time perl src/app/tools/woad-index.pl source=. root=$(PIA_ROOT) \
+	| tee woad-index.log
+
+my-woad-xref::
+	time perl src/app/tools/woad-index.pl source=. root=$(PIA_ROOT) -x \
+	| tee woad-index.log
+
+my-woad-yref::
+	time perl src/app/tools/woad-index.pl source=. root=$(PIA_ROOT) -y \
 	| tee woad-index.log
 
 ############################################################################# 
