@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.9 1999-07-14 20:19:51 steve Exp $
+//	$Id: Filter.java,v 1.10 1999-08-20 00:02:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -123,7 +123,7 @@ public class Filter {
     if (tsname.equals("tagset")) loadTagset = true;
     if (tsname.equals("BOOT")) loadTagset = true;
 
-    Tagset ts = org.risource.dps.tagset.Loader.getTagset(tsname);
+    Tagset ts = org.risource.dps.tagset.Loader.loadTagset(tsname);
     if (ts == null) {
       System.err.println("Unable to load Tagset " + tsname);
       System.exit(-1);

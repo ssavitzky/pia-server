@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.6 1999-05-28 21:49:26 steve Exp $
+//	$Id: tagsetHandler.java,v 1.7 1999-08-20 00:02:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.6 1999-05-28 21:49:26 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.7 1999-08-20 00:02:18 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -145,7 +145,8 @@ public class tagsetHandler extends GenericHandler {
       : new BasicTagset("TAGSET", name, n.getAttrList(), null);
 
     if (parentTSname != null && ! "HTML".equals(parentTSname)) {
-      Tagset parentTS =  org.risource.dps.tagset.Loader.require(parentTSname);
+      Tagset parentTS = tproc.loadTagset(parentTSname);
+	//org.risource.dps.tagset.Loader.require(parentTSname);
       cxt.debug("Loading tagset=" + parentTSname + 
 		((parentTS == null)? " FAILED" : " OK"));
       if (parentTS == null) {
@@ -161,7 +162,8 @@ public class tagsetHandler extends GenericHandler {
       StringTokenizer inames = new StringTokenizer(inclusions);
       while (inames.hasMoreElements()) {
 	String incN  = inames.nextElement().toString();
-	Tagset incTS = org.risource.dps.tagset.Loader.require(incN);
+	Tagset incTS = tproc.loadTagset(incN);
+	  // org.risource.dps.tagset.Loader.require(incN);
 	cxt.debug("Loading tagset=" + incN + 
 		   ((incTS == null)? " FAILED" : " OK"));
 	if (incTS == null) {
@@ -176,7 +178,8 @@ public class tagsetHandler extends GenericHandler {
     if (parserTSname != null) {
       // load the specified parserTagset (TAGSET attribute)
       // Make it the current tagset in the parser.
-      parserTagset = org.risource.dps.tagset.Loader.require(parserTSname);
+      parserTagset = tproc.loadTagset(parserTSname);
+	// org.risource.dps.tagset.Loader.require(parserTSname);
       cxt.debug("Loading tagset=" + parserTSname + 
 		   ((parserTagset == null)? " FAILED" : " OK"));
       if (parserTagset == null) {
