@@ -29,6 +29,9 @@ PACKAGES= \
 	misc \
 	org
 
+REGEXPACKAGE= \
+	JP
+
 ### These are the names of all the packages in the PIA.
 ###	We need these because javadoc does _not_ operate recursively.
 
@@ -39,7 +42,6 @@ PIAPACKAGENAMES= \
 	org.risource.dps.input org.risource.dps.output org.risource.dps.parse \
 	org.risource.dps.active org.risource.dps.util \
 	org.risource.ds \
-	org.risource.gnu.regexp \
 	org.risource.pia org.risource.pia.agent \
 	org.risource.tf \
 	org.risource.util \
@@ -62,7 +64,10 @@ MISCPACKAGENAMES= \
 	org.w3c.dom \
 	org.w3c.dom.html
 
-PACKAGENAMES= $(PIAPACKAGENAMES) $(MISCPACKAGENAMES) $(SUNPACKAGENAMES)
+REGEXPACKAGENAMES= \
+	JP.ac.osaka_u.ender.util.regex
+
+PACKAGENAMES= $(PIAPACKAGENAMES) $(MISCPACKAGENAMES) $(SUNPACKAGENAMES) $(REGEXPACKAGENAMES)
 
 
 # makefiles/file.make defines PIADIR, LIBDIR, BINDIR, DOCDIR
@@ -78,11 +83,22 @@ pia_class.toc::
 		find `echo $$p` -name "*.class" -print >> pia_class.toc; \
 	done
 
+# make a separate jar file for regex package
+regex_class.toc::
+	rm -f regex_class.toc
+	for p in $(REGEXPACKAGE); do \
+		find `echo $$p` -name "*.class" -print >> regex_class.toc; \
+	done
+
 org.risource.zip: pia_class.toc
 	$(BINDIR)/jarcrc
 	for p in $(PACKAGES); do \
 		(cd `echo $$p`; make clean) ; \
 	done
+	mv $@ $(LIBDIR)
+
+regexp.jar: regex_class.toc
+	jar cv0f regexp.jar `cat regex_class.toc`
 	mv $@ $(LIBDIR)
 
 ### Recursive documentation:

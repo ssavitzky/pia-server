@@ -58,8 +58,8 @@ import org.risource.ds.List;
 
 import org.risource.content.ByteStreamContent;
 
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 import org.risource.util.Utilities;
 
 import java.util.Properties;

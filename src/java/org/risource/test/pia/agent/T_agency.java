@@ -47,8 +47,8 @@ import org.risource.pia.Transaction;
 import org.risource.pia.Machine;
 import org.risource.pia.HTTPRequest;
 
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 
 import org.risource.pia.agent.Agency;
 public class T_agency {

@@ -36,8 +36,8 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 
 import java.util.Enumeration;
 

@@ -25,8 +25,8 @@
 package org.risource.content.text;
 
 import org.risource.pia.Transaction;
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 
 /**
  * class for html which is not parsed. only difference with plain text is

@@ -57,8 +57,8 @@ import org.risource.ds.Features;
 import org.risource.ds.Table;
 import org.risource.ds.List;
 
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 import org.risource.util.Utilities;
 
 import w3c.www.http.HTTP;

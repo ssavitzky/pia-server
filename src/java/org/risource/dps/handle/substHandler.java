@@ -33,7 +33,7 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 
-import gnu.regexp.RegExp;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
 
 
 /** Handler class for &lt;subst&gt tag 

@@ -41,8 +41,8 @@ import org.risource.ds.Association;
 import org.risource.ds.List;
 import org.risource.ds.SortTree;
 
-import gnu.regexp.RegExp;
-import gnu.regexp.MatchInfo;
+import JP.ac.osaka_u.ender.util.regex.RegExp;
+import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 
 import java.util.Enumeration;
 
