@@ -1,114 +1,90 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
-<!-- Begin Document Specific Declarations -->
-
-
-<!-- End Document Specific Declarations -->
-
-
 <html><head><title>PIA Installation Manual, release 2.0</title></head>
 
-<body><center><h1>Installing the PIA</h1></center><p>This manual
-describes how to install the Platform for Information Applications
-(PIA).  Developers intending
-to create applications should also consult the <a href="author.html">Author's
-Guide</a>.</p><p>Topics covered include:</p>
+<body>
+<center><h1>Installing the PIA</h1></center>
 
-<ul><li><a href="#Before">Before You Begin</a></li>
-<li><a href="#Obtaining">Obtaining the Files</a></li>
-<li><a href="#Installing">Installing the Files</a></li>
-<li><a href="#Running">Running the PIA</a></li>
-<li><a href="#Questions">Questions, Problems and Comments</a></li></ul>
-<p>
-For information on use of the PIA, see the <a href="doclist.html">PIA
-Document List</a>.</p>
-<hr>
-<h2><a name="Before"></a>Before You Begin</h2>
-<p>
-You need the following software to run the PIA:</p>
+<p>This manual describes how to install the Platform for Information
+   Applications (PIA).  Developers intending to create applications should
+   also consult the <a href="author.html">Author's Guide</a>. 
+</p>
+
+<p> For further information about configuring, operating, and updating the
+    PIA, see <a href="using.html">Using the PIA</a>.  For information about
+    obtaining the files in the first place, see <a
+    href="http://www.risource.org/PIA/Downloading.shtml">
+    <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.  A
+    complete list of documentation can be found in the <a
+    href="doclist.html">PIA Document List</a>.
+</p>
+
+<p>Topics covered in this document include:</p>
+
 <ul>
-<li> Java (A Java Runtime Environment, <code>JRE 1.1.3</code> or higher, is
-     needed to use the software.  Programmers wishing to modify the code will
-     need a Java Development Kit <code>JDK</code>.) Java for Solaris and
-     Windows can be obtained from <code>
-     <a href="http://www.javasoft.com">java.sun.com</a></code> (direct links
-     to <a
-     href="http://www.javasoft.com/products/jdk/1.2/jre/index.html">JRE</a> or
-     <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>).  Java for
-     Linux can be obtained from
-     <a href="http://www.blackdown.org/"><code>www.blackdown.org</code></a>
-     </li>
-
-<li> An operating system that supports sockets and long filenames.  We
-     have run the PIA software on Linux (Red Hat 4.2 -6.0 with the <a
-     href="http://www.blackdown.org/">blackdown.org</a> JDK), Windows 9X, and
-     Solaris on SPARC.  It does not seem to work on the Macintosh
-     because of differences in file handling.
-     </li>
-<li> Utilities for unpacking the files (<code>tar</code> and
-     <code>gunzip</code> on unix, <code>winzip</code> on Windows).
-     </li>
+  <li> <a href="#Installing">Installing the Files</a></li>
+  <li> <a href="#Setup">Initial Setup</a>
+  <li> <a href="#Running">Running the PIA</a></li>
 </ul>
 
-
-<h2><a name="Obtaining">Obtaining the Files</a></h2>
-<p>
-The PIA files are available via HTTP, from <code>
-<a href="http://www.risource.org/PIA/">http://www.risource.org/PIA/</a>.</code></p>
-<p>
-The latest stable releases are maintained in compressed form in the
-directories <code>ftp://ftp.risource.org/PIA/pia_src.tgz</code>.  This is
-always a link to the most recent version.
-</p>
-
-<h3>Uncompressing the Files</h3>
-<p>
-Before the PIA files can be extracted from the tar file, it must first
-be uncompressed.  For example:
-</p>
-<blockquote>
-<code>gunzip pia_src.tgz</code>
-</blockquote>
-
-<h3>Alternative: CVS</h3>
-
-<p> If you are planning to do PIA <em>development</em>, it is better to obtain
-    the files using the CVS version-control system.  More information on this
-    can be obtained from <code><a href="http://www.risource.org/PIA/cvs.shtml"
-    >www.risource.org/PIA/cvs.shtml</a></code>
-</p>
-
-<p> The CVS repository is updated more frequently than the <code>tar</code>
-    archive -- essentially whenever a developer feels that the portion of the
-    PIA they have been working on is stable enough for others to try.
-</p>
-
 <h2><a name="Installing">Installing the Files</a></h2>
-<p>
-The files are supplied in the form of a gzip'ed tar file. Set your working
-directory to the intended parent directory for the PIA files.
-Extract the files using <code>tar</code>.  For example:
+
+<p> The files are supplied in the form of a <code>gzip</code>'ed
+    <code>tar</code> file, obtained as described in 
+    <a href="http://www.risource.org/PIA/Downloading.shtml">
+    <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.
 </p>
 
-<blockquote><code>tar xvf pia_src</code></blockquote>
+<p> You should unpack the <code>tar</code> archive inside the directory
+    where you want the PIA to be installed; typically this will be your home
+    directory, or possibly <code>/usr/local</code> or a subdirectory of
+    <code>/usr/local/src</code> on a Unix system.
+</p>
 
-<p>
-This creates the directory <code>PIA/</code> under your current directory. </p>
+<p> Unpacking can be done on a Unix or Linux machine with one of the following
+    two commands; <code>winzip</code> can be used on Windows.
+</p>
 
-<table
-    border="1" frame="border">
+<ol>
+  <li> <code>tar xzf pia_src.tgz</code><br>
+       (requires GNU <code>tar</code>).
+  <li> <code>gunzip pia_src.tgz; tar xf pia_src*</code>
+</ol>
+
+<p> Unpacking the files will create a directory called <code>PIA</code>.  This
+    is the PIA's ``home directory,'' and in the documentation that follows we
+    will refer to it as <code>$PIA_HOME</code>.
+</p>
+
+<h3>Directory Structure</h3>
+
+<p> The following table describes the directory structure immediately under
+    the PIA directory.  Every directory also contains a file called
+    <code>HEADER.html</code> which describes its contents. 
+</p>
+
+<table border="1" frame="border">
 <caption> Directory Structure (inside the PIA directory)</caption>
 <tbody>
 <tr>
+<th align="left">Doc</th>
+<td> Complete documentation for the PIA.  </td>
+</tr>
+<tr>
 <th align="left">Agents</th>
-<td>Subdirectories for standard agents and applications. Each subdirectory
-contains the collection of XML files (active pages) that work together
+<td>Subdirectories for standard applications and agents. Each subdirectory
+contains the collection of XML and HTML files (active pages) that work together
 to form an application.  </td>
 </tr>
 <tr>
 <th align="left">Config</th>
 <td>Configuration information, including subdirectories for Makefiles and for
 XML site configuration files.</td>
+</tr>
+<tr>
+<th align="left">Samples</th>
+<td>Contains a few simplified active pages, which are meant to be copied and
+    modified as templates for writing your own active pages.</td>
 </tr>
 <tr>
 <th align="left">Contrib</th>
@@ -124,7 +100,9 @@ only.)</td>
 </tr>
 <tr>
 <th align="left">lib</th>
-<td>Currently not being used.</td>
+<td>Currently not being used.  This directory is meant to  be used to hold
+class files and other libraries when the PIA is packaged as an application
+without its source code.</td>
 </tr>
 <tr>
 <th align="left">src</th>
@@ -135,67 +113,89 @@ corresponding to <code>org.risource.*</code> package names.
 code referenced by the PIA software and included for convenience. <code>src/app</code> contains
 utility applications.</td>
 </tr>
+<tr>
+<th align="left">CVS</th>
+<td> CVS directories exist in <var>PIA_HOME</var>  and in each of the
+	directories under it, for keeping track of updates and source-code
+	versions; you shouldn't need to modify or even look in these
+	directories, and you should remove them when copying applications to
+	modify for your own use (e.g. copying the <code>HelloWorld</code>
+	application out of <code>PIA/Samples</code>). </td>
+</tr>
 </tbody>
 </table>
 
-<h3 id="CHDCECIE">Setting Up</h3>
-<p>
-The
-PIA uses two environment variables:</p>
-<ul><li><var>PIA_HOME</var> indicates the location of the PIA directory just
-installed.</li> 
+<h2><a name="Setup">Initial Setup</a></h2>
 
-<li><var>PIA_ROOT</var> indicates the location to which the PIA writes
-its data files.</li></ul>
+<h3>The PIA's Directories</h3>
 
-<p>The scripts in the bin directory that run the software attempt to set the
-<var>PIA_HOME</var> variable based on the location of the script or the current
-working directory.  You may have to explicitly set this variable to the
-location of the PIA directory you just installed
-(e.g. <code>PIA_HOME=~/PIA</code>).</p>
+<p> The PIA uses two directories, which can (optionally) be set up using
+    environment variables:</p>
+<ul>
+  <li> <var>PIA_HOME</var> indicates the location where the PIA files were
+       installed.</li> 
 
-<p> <var>PIA_ROOT</var> is automatically created by the PIA. You are free to
-reset its location if desired.  On Unix, the default directory for
-<var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On Windows, the default directory is
-<code>c:\PIAUSERS\<var>username</var></code> (if a username is not available
-<code>nobody</code> is used).</p>
+  <li> <var>PIA_ROOT</var> indicates the location where the PIA web server
+       looks for its web pages, and where applications write their data
+       files.</li> 
+</ul>
 
-<p>If you use the <kbd>-root</kbd> command line option to specify
-<var>PIA_ROOT</var>, that setting takes precedence over the one you specify in
-the environment variable.</p>
+<p> The PIA also has a ``virtual root'' directory which <em>overlays</em> the
+    ``real root'' (<var>PIA_ROOT</var>).  Whenever a PIA application needs to
+    write a file it does so under the real root; the virtual root could even
+    be on a CD-ROM.  Similarly, whenever the PIA <em>serves</em> a file to a
+    browser, it looks first under the real root.
 
-<p>When the PIA starts, it looks for either a configuration file or a ``root''
-directory (which should <em>contain</em> a configuration file).  The PIA will
-look for its top-level configuration file in the following places:</p>
+<p> The default virtual root for the PIA, in its standard configuration, is
+    <code>PIA_HOME</code>, the PIA's home directory.  In this way, we keep
+    the PIA's files, which you have just downloaded and which can be
+    automatically updated using CVS, separate from any application data and
+    personal customizations you may have done.
 
-<ol>
-  <li> A file or directory specified on the command line.
-  <li> The environment variable <var>PIA_ROOT</var>
-  <li> A system-specific default root directory (see above)
-  <li> The PIA's ``home directory,'' <var>PIA_HOME</var>
-</ol>
+<p> As a consequence of this arrangement, <strong> we recommend you don't edit
+    <i>anything</i> in <var>PIA_HOME</var>, which is automatically
+    updated/overwritten by <code>cvs update,</code> unless you plan on
+    contributing to the PIA codebase via RiSource.org.</strong>
 
-<p>The default configuration file name is <var>_subsite.xcf</var>; this can be
-changed with the <code>-config</code> command-line option or in the top-level
-configuration file.  Any directory may contain a configuration file with the
-specified name, except that the configuration file in the root is ignored if a
-separate top-level configuration file is specified. </p>
+<p> The execution scripts (e.g. <code>PIA/bin/pia</code>) attempt to set the
+    <var>PIA_HOME</var> variable based on the location of the script or the
+    current working directory. Usually this process is invisible to you,
+    especially if you are running the pia from <code>PIA/bin</code> and/or you
+    have not set <var>PIA_HOME</var> as an environment variable. But if you
+    want to run the pia from a different location, or run a different version,
+    you may have to explicitly set this variable to the location of the PIA
+    directory you just installed (e.g. <code>PIA_HOME=~/PIA</code>).
+</p>
 
-<p>Once a configuration file is found, all of the PIA's configuration
-information is loaded from it -- <em>including</em> the path of the root
-directory.  Several sample configuration files can be found in the directory
-<code>$PIA_HOME/Config/Site/</code>.
+<p> The directory <var>PIA_ROOT</var> is automatically created by the PIA the
+    first time it is run.  You are free to reset its location if desired; this
+    can be done on the command line with the <kbd>-root</kbd> option, or by
+    setting the environment variable <var>PIA_ROOT</var>.  On Unix, the
+    default location for <var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On
+    Windows, the default directory is
+    <code>c:\PIAUSERS\<var>username</var></code> (if a username is not
+    available <code> nobody</code> is used). <strong> These are where you
+    should create and edit all your active pages.</strong> (except those you
+    wish to contribute back to RiSource.org).
+</p>
+
+<p> If you use the <kbd>-root</kbd> or <kbd>-home</kbd> command line option to
+    specify <var>PIA_ROOT</var> or <kbd>PIA_HOME</kbd>, that setting takes
+    precedence over the one you specify in the corresponding environment
+    variable.
 </p>
 
 <p>It is convenient to put the directory <code>$PIA_HOME/bin</code>, which
 contains scripts (including the one that implements the <code>pia</code>
-command!)  into your shell's search path.  On Linux you can do this by putting
+command!)  into your shell's search path.  You may also want to specify a
+different root.  On Linux you can do this by putting
 the following into your <code>~/.bash_profile</code> file: </p>
 
 <pre>
   # The following line will change depending on where the PIA is installed
   export PIA_HOME=$HOME/PIA
   export PATH=$PIA_HOME/bin:$PATH
+  export PIA_ROOT=$HOME/.pia
 </pre>
 
 <p> You may also need to set up Java's <code>CLASSPATH</code> environment
@@ -221,10 +221,10 @@ use of the <code><var>PIA_HOME</var></code> and <code><var>PIA_ROOT</var></code>
 environment variables, and is similar in function to <code>pia_wrapper</code>
 on Unix.</p>
 
-<p>The <code>process</code> command allows the PIA software to be
-used as a unix filter for processing HTML and XML documents.  Under Windows 9x
-and NT the CLASSPATH must be set to <code><var>PIA_HOME</var>/src/java</code>
-in order for <code>process</code> to run.
+<p> More information about running the PIA, including the available
+    command line and configuration file options, can be found in the companion
+    manual <a href="using.html">Using the PIA</a>.
+</p>
 
 <h2>Using the PIA</h2>
 
@@ -244,9 +244,17 @@ in order for <code>process</code> to run.
     your browser and go from there. 
 </p>
 
-<p>Some of the functions work best if you set your browser's proxies to
-the PIA as well. In most cases, <code>http://localhost:8888</code> will
-work.</p>
+<p> There are some applications---such as a browser proxy and browsing-history
+    system---which require that your browser use the PIA as a proxy.  This
+    enables the PIA to process any incoming and outgoing pages as you would
+    like.  See the <code>Proxie</code> for more details.
+</p>
+
+<p> It is also possible to use the PIA ``off line'' from the command line, as
+    a pure document processor.  See <a href="using.html#process">Using the
+    PIA</a>.
+</p>
+
 
 <h2><a name="Questions">Questions, Problems, or Comments</a></h2>
 
@@ -263,6 +271,6 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.11 1999-10-15 17:17:44 steve Exp $</i><br>
+<i>$Id: install.html,v 1.12 1999-10-19 19:52:01 steve Exp $</i><br>
 
 </body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head><title>Using the PIA</title></head>
+
+<body>
+
+<center><h1>Using the PIA</h1></center>
+
+<p> This manual describes how to run and configure the Platform for
+    Information Applications (PIA).  Developers intending to create
+    applications should also consult the <a href="author.html">Author's
+    Guide</a>.
+</p>
+
+<p>Topics covered include:</p>
+
+<ul>
+  <li> <a href="#Environment">Operating Environment</a></li>
+  <li> <a href="#Running">Running the PIA</a></li>
+  <li> <a href="#Using">Using the PIA</a></li>
+  <li> <a href="#Processing">Processing Documents</a>
+  <li> <a href="#Configuring">Configuring the PIA</a></li>
+  <li> <a href="#Updating">Updating the PIA</a></li>
+  <li> <a href="#Troubleshooting">Troubleshooting</a>
+  <li> <a href="#Questions">Questions, Problems and Comments</a></li>
+</ul>
+
+<p> For information on installing the PIA and developing applications, see the
+    <a href="doclist.html">PIA Document List</a>.
+</p>
+
+<hr>
+<h2><a name="Environment">Operating Environment</a></h2>
+
+<p> You need the following software to run the PIA:</p>
+
+<ul>
+<li> Java (A Java Runtime Environment, <code>JRE 1.1.3</code> or higher, is
+     needed to use the software.  Programmers wishing to modify the code will
+     need a Java Development Kit <code>JDK</code>.) Java for Solaris and
+     Windows can be obtained from <code>
+     <a href="http://www.javasoft.com">java.sun.com</a></code> (direct links
+     to <a
+     href="http://www.javasoft.com/products/jdk/1.2/jre/index.html">JRE</a> or
+     <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>).  Java for
+     Linux can be obtained from
+     <a href="http://www.blackdown.org/"><code>www.blackdown.org</code></a>
+
+     <p>The PIA is known to run under Java 1.1.3 and and Java 1.2 on Solaris,
+     Linux, and Windows.  It runs on Linux under Kaffe, but there are some
+     problems with compilation. </p>
+     </li>
+
+<li> An operating system that supports sockets and long filenames.  We
+     have run the PIA software on Linux (Red Hat 4.2 -6.0 with the <a
+     href="http://www.blackdown.org/">blackdown.org</a> JDK), Windows 9X, and
+     Solaris on SPARC.  It does not seem to work on the Macintosh
+     because of differences in file handling.
+     </li>
+     
+<li> Utilities for unpacking the files (<code>tar</code> and
+     <code>gunzip</code> on unix, <code>winzip</code> on Windows).
+     </li>
+</ul>
+
+<h2><a name="Running">Running the PIA </a></h2>
+
+
+<p>On UNIX or Linux, once you have set up the <code><var>PIA_HOME</var></code>
+and <code><var>PIA_ROOT</var></code> environment variables you can launch the
+PIA with the command: ``<code>$PIA_HOME/bin/pia</code>'', or just
+``<code>pia</code>'' if <code>$PIA_HOME/bin</code> is in your search path.  A
+complete list of command-line options can be found by running
+<kbd>$PIA_HOME/bin/pia -help</kbd> at the shell prompt.</p>
+
+<p>Under Windows 9x and NT, launch the PIA in a DOS window with the command:
+<code><var>PIA_HOME</var>/bin/pia.bat</code> -- this is a batch file that makes
+use of the <code><var>PIA_HOME</var></code> and <code><var>PIA_ROOT</var></code>
+environment variables, and is similar in function to <code>pia_wrapper</code>
+on Unix.</p>
+
+<p>The <code>process</code> command allows the PIA software to be
+used as a unix filter for processing HTML and XML documents.  Under Windows 9x
+and NT the CLASSPATH must be set to <code><var>PIA_HOME</var>/src/java</code>
+in order for <code>process</code> to run.
+
+
+<p> <strong>=== this section needs lots more work ===</strong>
+
+<p>The
+<code>-port</code> option can be used to set the port (default is 8888, a
+non-privileged port that allows normal user logins to run the PIA on Unix
+boxes.  You can also set it to most other port numbers (8080, 8001, etc.) in
+the <code>PIA/_subsite.xcf</code> file, as shown in
+<code>Config/Site/sample.xcf</code>. But note that such ports may not be
+accessible by machines everywhere (a browser behind a firewall may not be
+allowed to access these ports)... so if you want to ensure your PIA server is
+completely accessible to the public, try the port-80 trick below.</p>
+
+<p>If you want to use the administrator-priveleged port 80 (accessed by the
+simpler URL <code> http://HOST/ </code> instead of <code>
+http://HOST:8888/</code>), you must either have administrator priveleges when
+running the PIA, or you must run a web server, such as Apache, on port 80 as a
+proxy to the PIA on a different port, and set the PIA's "virtualport"
+variable to 80 so that pages served by the PIA appear to
+come from port 80 rather than from the port the PIA listens to.
+
+<p>The <code>process</code> command allows the PIA software to be
+used as a unix filter for processing HTML and XML documents.  Under Windows 9x
+and NT the CLASSPATH must be set to <code><var>PIA_HOME</var>/src/java</code>
+in order for <code>process</code> to run.
+
+<h2><a name="Using">Using the PIA</a></h2>
+
+<p> The PIA acts as a Web server.  Assuming you have gotten the PIA to run in
+    its default configuration, you should now be able to browse to <code><a
+    href="http://localhost:8888/">http://localhost:8888/</a></code> in order
+    to access the PIA's own web pages.  If the default configuration is
+    different and you have run the PIA from a command line, it will have
+    printed out a line like:
+</p>
+
+<pre>
+  Point your browser to &lt;URL: http://blackroot.crc.ricoh.com:8001&gt;
+</pre>
+
+<p> after initializing, and you can cut-and-paste the URL on that line into
+    your browser and go from there. 
+</p>
+
+<p> There are some applications--such as a browser proxy and browsing-history
+    system--which require that your browser use the PIA as a proxy.  This
+    enables the PIA to process any incoming and outgoing pages as you would
+    like.  See the <code>Proxie</code> for more details.
+</p>
+
+
+<h2><a href="Processing">Processing Documents</a></h2>
+
+<p> If you want to use the pia as a XML-to-XML processor---reading and writing
+    XML files using active tags, no web ports involved---you can use the
+    command <code>process [filename]</code>, which sends the converted XML
+    directly to the console (standard output).
+</p>
+
+
+<p> <strong>=== this section needs lots more work ===</strong>
+
+
+<h2><a name="Configuring">Configuring the PIA</a></h2>
+
+<p>When the PIA starts, it looks for either a configuration file or a ``root''
+directory (which should <em>contain</em> a configuration file).  The PIA will
+look for its top-level configuration file in the following places:</p>
+
+<ol>
+  <li> A file or directory specified on the command line.
+  <li> The environment variable <var>PIA_ROOT</var>
+  <li> A system-specific default root directory (see above)
+  <li> The PIA's ``home directory,'' <var>PIA_HOME</var>
+</ol>
+
+<p>The default configuration file name is <var>_subsite.xcf</var>; this can be
+changed with the <code>-config</code> command-line option or in the top-level
+configuration file.  Any directory may contain a configuration file with the
+specified name, except that the configuration file in the root is ignored if a
+separate top-level configuration file is specified. </p>
+
+<p>Once a configuration file is found, all of the PIA's configuration
+information is loaded from it -- where to look for active pages, which ones to
+start up immeditely in the background (such as broswer-proxies), what ports,
+filename-extension mappings, and tagsets to use, and so forth... even the path
+of the root directory can appear there.  Several sample configuration files can
+be found in the directory <a
+href="../Config/Site/"><code>$PIA_HOME/Config/Site/</code></a>.  </p> 
+
+
+<p> If you change any configuration options (such as editing a
+    <code>_subsite.xcf</code> file or renaming a tagset file), you should
+    re-start the PIA to ensure the server knows about those changes.  The
+    results may be very confusing otherwise.</p>
+
+
+<h2><a name="Updating">Updating the PIA</a></h2>
+
+<p> The PIA is maintained using the CVS version control system, and a public
+    CVS repository is available on RiSource.org.  See <code><a
+    href="http://www.RiSource.org/PIA/cvs.shtml"
+    >www.risource.org/PIA/cvs.shtml</a></code> for more information, including
+    how to log in to the anonymous CVS server.
+</p>
+
+<p> CVS version control information is included in the <code>tar</code> file
+    you used for installation; once you have logged in (which you only need to
+    do once) all you have to do in order to update your copy of the PIA to the
+    latest version is:
+
+<pre>
+  cd $PIA_HOME
+  cvs update -d -P
+</pre>
+
+<p> The CVS repository is updated more frequently than the <code>tar</code>
+    archive -- essentially whenever a developer feels that the portion of the
+    PIA they have been working on is stable enough for others to try.
+</p>
+
+
+<h2><a name="Troubleshooting">Troubleshooting</a></h2>
+
+<p> Here are some frequently encountered problems:</p>
+
+<ul>
+  <li>
+<p> <strong>The PIA doesn't seem to pay attention to changes in a file, or
+    doesn't read or write a file where expected.</strong>  This usually
+    occurs because there are two parallel directory trees: <code>PIA/</code>
+    and <code>.pia/</code> (or more formally, <code>$PIA_HOME/</code> and
+    <code>$PIA_ROOT/</code>), and <code>.pia/</code> takes precedence.  So
+    changes made in the <code>PIA/</code> tree may (or may not) be used,
+    depending upon whether there is a corresponding file in the
+    <code>.pia/</code> tree: the server always reads files in
+    <code>.pia/</code> first if it can, and always writes them there. </p>
+    </li>
+
+<li><p>
+     <strong> The PIA doesn't seem to pay attention to newly-written tags,
+	       extensions, or configuration options.</strong> This usually
+	       occurs for one of two reasons.
+     <ol> <li>The PIA was not restarted after a change (and thus did not know
+	       about recent configuration changes).  The solution is to
+	       restart the PIA after every configuration change, i.e. after
+	       changing anything but the contents of <code>.xh</code> or
+	       <code>.ts</code> file.</li>
+	  <li> The PIA was not instructed to use the appropriate tagset or
+	       extension.  While tags defined inside an active page are
+	       automatically used, separate ".ts" tagset files are only used
+	       when the <code>_subsite.xcf</code> file explicitly says
+	       so.  So make sure that the file-extension type and desired
+	       tagsets are explicitly mentioned (look at <code>Agents/</code>,
+	       <code>Samples/</code>, and <code>Config/Site/</code> for
+	       working examples.) </li>
+      </ol>
+     </p></li>
+
+        <li>
+<p> <strong>When testing for equality, the PIA thinks two things (strings,
+    numbers, entities) are different when they should be the same.</strong>
+    The PIA keeps track of <i>everything</i> in an object or entity, including
+    carriage returns and leading/trailing spaces.  Unfortunately, when you
+    follow proper indentation rules, all that invisible stuff becomes part of
+    your object and changes it in subtle ways.  Here's an example of the
+    problem and one way to fix it (you can find other such example solutions
+    in our applications, such as SimpleCalendar):</p>
+	     
+	     <code><pre>
+    Bad:     &lt;set name="hometown">
+	         SiliconValley
+	     &lt;/set>
+             </pre></code>
+
+    <p> In this case, the entity <code>hometown</code> contains leading and
+	trailing carriage returns and spaces, which will register as separate
+	text elements in a list and may disrupt tests like <nobr><code>&lt;test
+	match="SiliconValley">&amp;hometown;&lt;/test></code></nobr>.  Here's the
+	fix, which involves explicity trimming off that invisible stuff: </p>
+
+	     <code><pre>	     
+    Good:    &lt;set name="hometown">&lt;text trim="yes">
+	         SiliconValley
+	     &lt;/text>&lt;/set>
+             </pre></code>
+
+	     
+    </li>
+
+
+	<li>
+<p> <strong> Lots of blank lines appear in the browser's "Page Source" window,
+    and/or lists which should be empty do not test as empty, even after
+    trimming.</strong> You may be using standard HTML-style comments
+    <nobr><code>&lt;!-- like this --&gt;</code></nobr>, which the processor
+    keeps track of (along with all the spaces and carriage returns between
+    them!).  We suggest you instead use our special style of comments
+    <nobr><code>&lt;?-- like this --?&gt;</code></nobr>, which are stripped
+    away before any processing is done.
+
+	     </p> </li>
+
+</ul>
+
+
+<h2><a name="Questions">Questions, Problems, or Comments</a></h2>
+
+<p>You can check for known bugs by going to <code><a
+href="http://www.RiSource.org/PIA/">http://www.risource.org/PIA/</a></code></p>
+
+<p>Questions, problems and comments should be directed to <code><a
+href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
+
+
+<hr>
+<b>Copyright &copy; 1999 <a href="http://rsv.ricoh.com/">Ricoh Silicon
+   Valley</a>.</b>
+   Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
+                         href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
+<i>$Id: using.html,v 1.1 1999-10-19 19:52:01 steve Exp $</i><br>
+
+</body></html>
