@@ -51,11 +51,14 @@
        for this to work.  Otherwise, you'll have to do it manually, so
        <code>ssh</code> can prompt you for your passphrase:
        
-     <pre>
+       <pre>
 cd /pia1/CvsRoot
 rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ </pre>
-     
-     </li>
+       Don't be alarmed by the fact that this uploads everything -- the
+       previous step (tagging) changes every file in the repository.  Can't be
+       helped. 
+       </li>
+       
 
   <li><code>make src-release</code> -- This does the rest of the build. <br />
 
