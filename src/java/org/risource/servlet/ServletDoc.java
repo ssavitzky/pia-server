@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.3 2000-04-12 00:47:33 steve Exp $
+//	$Id: ServletDoc.java,v 1.4 2000-04-12 00:51:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.File;
 
 import java.net.URL;
+import java.util.Enumeration;
 
 import org.risource.dps.*;
 import org.risource.dps.util.*;
@@ -62,7 +63,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.3 2000-04-12 00:47:33 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.4 2000-04-12 00:51:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -158,6 +159,13 @@ public class ServletDoc extends TopProcessor {
     Table pia = new Table();
     if (request != null) pia.at("url", servletURL);
     pia.at("servlet", this.getClass().getName());
+
+    Enumeration names = servlet.getServletConfig().getInitParameterNames();
+    while (names.hasMoreElements()) {
+      String n = names.nextElement().toString();
+      pia.at(n, servlet.getServletConfig().getInitParameter(n));
+    }
+
     define("PIA", pia);
 
     /* === 
