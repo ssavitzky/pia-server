@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.17 1999-12-29 19:15:07 bill Exp $
+# 	$Id: Makefile,v 1.18 2000-01-21 23:11:56 bill Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -76,6 +76,8 @@ PRIM_HANDLERS = \
 	setHandler.java \
 	statusHandler.java \
 	substHandler.java \
+	mailnowHandler.java \
+	signHandler.java \
 	tagsetHandler.java \
 	testHandler.java \
 	textHandler.java \
@@ -164,6 +166,8 @@ selectHandler.class: $(HANDLER_DEPS)
 setHandler.class: $(HANDLER_DEPS)
 submitHandler.class: $(HANDLER_DEPS)
 substHandler.class: $(HANDLER_DEPS)
+mailnowHandler.class: $(HANDLER_DEPS)
+signHandler.class: $(HANDLER_DEPS)
 tagsetHandler.class: $(HANDLER_DEPS)
 testHandler.class: $(HANDLER_DEPS)
 textHandler.class: $(HANDLER_DEPS)
