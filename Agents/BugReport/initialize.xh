@@ -1,0 +1,14 @@
+<!doctype  html system "html.dtd">
+<html><head>
+<title>Initialize the &agentName; agent</title>
+</head><body>
+<h1>Initialize the &agentName; agent</h1>
+
+<!--  ===================================================================  -->
+<!--  Initialize variables used by Readers' Helper.
+<!-- ===================================================================  -->
+<user-message>Initializing &agentName; from &filePath;</user-message>
+
+
+<footer cvsid='$Id: initialize.xh,v 1.1 1999-04-20 00:50:22 pgage Exp $ />
+</body></html>

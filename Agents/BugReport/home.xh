@@ -1,0 +1,31 @@
+<!doctype  html public "-//IETF//DTD HTML//EN//2.0"><HTML>
+<html><head>
+<title>Bug Report Home Page</title>
+</head>
+
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+
+<!--  ===================================================================  -->
+<!--  header is an element that puts the standard agent header at the top
+<!-- of the page.  This includes the PIA logo, that lets you navigate back to 
+<!-- the PIA home page. This tag is part of the predefined pia-xhtml tagset.
+<!-- ===================================================================  -->
+<header show-date='yes'>Bug Report</header>
+
+<sub-head page='home' />
+
+<h1>Bug Report Home Page</h1>
+
+<p>
+Currently, this page lets you navigate to the other Bug Report pages.
+</p>
+
+<ul>
+<li> <a href='BugTemplate?edit=true'>Submit a bug report</a>
+</li>
+</ul>
+
+<footer cvsid='$Id: home.xh,v 1.1 1999-04-20 00:50:22 pgage Exp $' />
+</p></body>
+</html>
+</HTML>

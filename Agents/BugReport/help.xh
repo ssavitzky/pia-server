@@ -1,0 +1,35 @@
+<!doctype  html public "-//IETF//DTD HTML//EN//2.0"><HTML>
+<head>
+<title>Bug Report Help Page</title>
+</head>
+
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+
+<!--  ===================================================================  -->
+<!--  header is an element that puts the standard agent header at the top
+<!-- of the page.  This includes the PIA logo, that lets you navigate back to 
+<!-- the PIA home page. This tag is part of the predefined pia-xhtml tagset.
+<!-- ===================================================================  -->
+<header show-date='yes'>Help</header>
+
+<sub-head page='help' />
+
+<h1>Bug Report Help Page</h1>
+
+<h2>Severity</h2>
+
+The levels of severity for a bug are as follows:
+<ol>
+<li> </li>
+<li> </li>
+<li> </li>
+<li> </li>
+<li> </li>
+</ol>
+
+<h2>Guidelines for Filling Out a Bug Report</h2>
+
+
+<footer cvsid='$Id: help.xh,v 1.1 1999-04-20 00:50:20 pgage Exp $' />
+</body>
+</HTML>
