@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head>
+<title>Debug Handler Demo</title>
+</head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Debug Demo</header>
+
+<h2>Debug Handler Demo</h2>
+
+The debug handler prints all or part of a document in tree format to show
+how the PIA document parser has interpreted the document.  All that needs
+to be done is to wrap <code>debug</code> tags around a document, part of a
+document, or a single node in order to print the parse tree.
+
+<h3>Print an Unordered List that is Correct</h3>
+
+<b> Description:</b> This shows how the debug tags print out a simple
+unordered list:
+<p>
+<b> Input:      </b><protect markup><ul><li>one</li><li>two</li><li>three</li></ul></protect>
+<p>
+<b> Result:     </b><ul><li>one</li><li>two</li><li>three</li></ul>
+<p>
+<b> Debug Input:</b>&lt;debug>&lt;ul>&lt;li>one&lt;/li>&lt;li>two&lt;/li>&lt;li>three&lt;/li>&lt;/ul>&lt;/debug>
+<p>
+<b> Debug Result: </b><debug><ul><li>one</li><li>two</li><li>three</li></ul></debug>
+
+<hr>
+
+<h3>Print an Unordered List with Errors</h3>
+
+<b> Description:</b> The list below has an error.  Instead of list item "one" being preceded by
+an <code>&lt;li></code> tag, it has an <code>&lt;i></code> tag.  Although in this instance it is 
+clear from the output where the problem is, this is not always the case when errors are more 
+subtle.  The debug result shows the relationship between the tags where items two and three 
+are now children of item one.  This provides a hint that element one may not be closed off as expected.
+<p>
+<b> Input:      </b><protect markup><ul><i>one</li><li>two</li><li>three</li></ul></protect>
+<p>
+<b> Result:     </b><ul><i>one</li><li>two</li><li>three</li></ul>
+<p>
+<b> Debug Input:</b>&lt;debug>&lt;ul>&lt;i>one&lt;/li>&lt;li>two&lt;/li>&lt;li>three&lt;/li>&lt;/ul>&lt;/debug>
+<p>
+<b> Debug Result: </b><debug><ul><i>one</li><li>two</li><li>three</li></ul></debug>
+
+<footer />
+
+</body></html>
+
