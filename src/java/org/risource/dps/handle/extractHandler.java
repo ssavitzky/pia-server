@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.18 1999-08-31 21:38:26 bill Exp $
+//	$Id: extractHandler.java,v 1.19 1999-10-06 17:27:49 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,7 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.output.ToNodeList;
+import org.risource.dps.input.FromNodeList;
 import org.risource.dps.tree.TreeEntity;
 import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeNodeList;
@@ -47,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.18 1999-08-31 21:38:26 bill Exp $
+ * @version $Id: extractHandler.java,v 1.19 1999-10-06 17:27:49 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -58,21 +59,58 @@ public class extractHandler extends GenericHandler {
 
   /** Action for &lt;extract&gt; node. */
   public void action(Input in, Context cxt, Output out) {
+
+    if (! in.toFirstChild()) return;
+
+    // === strictly speaking, this should use the tagset to create the entity.
     String tag = in.getTagName();
+
+    BasicEntityTable ents = new BasicEntityTable(tag);
+    TreeEntity extracted = new TreeEntity("list");
+    ents.setBinding("list", extracted);
+
+
+    // put the below stuff into sub-method which  uses an alraedy-filled list
+
+    
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     String sep = (atts == null)? null : atts.getAttribute("sep");
 
-    BasicEntityTable ents = new BasicEntityTable(tag);
+    //    extractLoop( extracted, in, cxt, out, atts, sep, ents);
+    extractLoop( extracted, in, cxt, atts, sep, ents);
+
+    in.toParent();
+
+    putList(out, extracted.getValueNodes(cxt), sep);
+  }
+
+  /************************************************************************
+  ** Core loop after initializing list
+  ************************************************************************/
+  public void extractLoop(TreeEntity extracted, Input in, 
+		     Context cxt,  ActiveAttrList atts,
+	  //		     Context cxt, Output out, ActiveAttrList atts,
+			   String sep, BasicEntityTable ents) {
+
+
+    // put the below stuff into sub-method which  uses an alraedy-filled list
+
+
+
+      //    ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
+      //    String sep = (atts == null)? null : atts.getAttribute("sep");
+
+    // BasicEntityTable ents = new BasicEntityTable(tag);
     ToNodeList collect = new ToNodeList(cxt.getTopContext().getTagset());
+
+    // default empty input set
     ActiveNodeList currentSet = null;
     boolean terminateExtract = false;
 
-    // === strictly speaking, this should use the tagset to create the entity.
-    TreeEntity extracted = new TreeEntity("list");
-    ents.setBinding("list", extracted);
     Processor process = cxt.subProcess(in, collect, ents);
 
-    if (! in.toFirstChild()) return;
+
+    // cut  here
     do {
       if (terminateExtract) continue;
       ActiveNode item = in.getActive();
@@ -110,10 +148,11 @@ public class extractHandler extends GenericHandler {
 	collect.clearList();
       }
     } while (in.toNext());
-    in.toParent();
 
-    putList(out, extracted.getValueNodes(cxt), sep);
   }
+
+
+
 
   /************************************************************************
   ** Utilities:
@@ -420,11 +459,13 @@ class nameHandler extends extract_subHandler {
 	name = content.toString();
     if (name != null) name = name.trim();
 
+
     if (name == null || name.length() == 0) {
       extractNames(extracted, out); 
     } else if (name.startsWith("#")) {
       extractByType(name, extracted, out);
     } else extractByName(name, extracted, out);
+
   }
   nameHandler() { super(true, false); }
   public Action getActionForNode(ActiveNode n) {
@@ -502,6 +543,216 @@ class name_recursive extends extract_subHandler {
   }
   name_recursive() { super(true, false); }
 }
+
+
+
+
+
+/** &lt;sort&gt;<em>n</em>&lt;/&gt; extracts every node with a matching sort.
+ */
+class sortHandler extends extract_subHandler {
+  protected void action(Input in, Context aContext, Output out, 
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No extracted list: possibly not inside < sort >");
+      return;
+    }
+
+    if ( content == null || content.toString().length() == 0 ) {
+      reportError(in, aContext, "No key-search content: possibly not inside < sort >");
+      return;
+    }
+
+    // decide if sort is numeric or not
+    boolean numericSort = false;
+    if (atts.hasTrueAttribute("numeric") ){
+	numericSort = true;
+    }
+    boolean floatOnly = false;
+    if (atts.hasTrueAttribute("floatonly") ){
+	floatOnly = true;
+	numericSort = true;
+    }
+    boolean intOnly = false;
+    if (atts.hasTrueAttribute("intonly") ){
+	intOnly = true;
+	numericSort = true;
+    }
+    // decide on forward/reverse ordering
+    boolean reverse = false;
+    if (atts.hasTrueAttribute("reverse") ){
+	reverse = true;
+    }
+
+    SortTree sorter = new SortTree();
+
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+	// create an empty Output to store results of this key-search
+	//	ToNodeList  keyResult = 	new 
+	//  ToNodeList( aContext.getTopContext().getTagset() );
+
+	// create a new Input (composed of the same old extract-style
+	// content) for each separate key-search
+	FromNodeList  fakeInput = 	new FromNodeList( content  );
+
+	// set up entity tables 
+	String tag = fakeInput.getTagName();
+	BasicEntityTable fakeEnts = new BasicEntityTable(tag);
+
+	// copy present item into the "current node list" (i.e. extracted)
+	// Just like the list for the fakeInput, but this is a past
+	// result rather than a future process
+	ActiveNode exItem = extracted.activeItem(i).deepCopy();
+	ActiveNodeList exItemList = new TreeNodeList();
+	exItemList.append( exItem );
+
+	//	TreeEntity fakeExtracted = new TreeEntity("list");
+	TreeEntity fakeExtracted = new TreeEntity("list", exItemList );
+	fakeEnts.setBinding("list", fakeExtracted);
+
+
+	//exItemList.append( exItem );
+	//fakeExtracted.append( exItem );
+
+	//    content = new TreeNodeList(ListUtil.getListItems(content));
+	//    putList(out, content);
+
+	Context fakeCxt = aContext.newContext();
+	ActiveAttrList fakeAtts = Expand.getExpandedAttrs(fakeInput,
+							  fakeCxt);
+	String sep = (fakeAtts == null)? null : 
+	    fakeAtts.getAttribute("sep");
+
+	extractLoop( fakeExtracted, (Input)fakeInput, 
+		     fakeCxt, fakeAtts,  sep, fakeEnts);
+	//     fakeCxt, (Output)keyResult, fakeAtts,  sep, fakeEnts);
+
+	// take the "returned" (i.e. extracted) nodes, pull out text,
+	// concatenate them into a single string, and associate that with
+	// the node to be sorted.
+	ActiveNodeList exList =  fakeExtracted.getValueNodes();
+
+
+	Enumeration exEnum = ListUtil.getTextItems( exList ) ;
+
+
+	String exString = "";
+
+	// numericOnly means only keep numbers; strip all else
+	Enumeration numList = MathUtil.getNumbers( exList );
+	if (floatOnly || intOnly){
+	    while( numList.hasMoreElements() ){
+		Association testAssoc = (Association) numList.nextElement();
+		String testStr = "";
+		if (intOnly && testAssoc.isIntegral() )
+		    testStr = MathUtil.numberToString(
+						testAssoc.longValue(), 0);
+		else if (intOnly){  // read float, truncate
+		    testStr = MathUtil.numberToString(
+					     testAssoc.doubleValue(), 0);
+		}
+		else{             // read float, keep
+		    testStr = MathUtil.numberToString(
+					     testAssoc.doubleValue(), -1);
+		}
+		exString += testStr;
+
+	    }
+	}
+	else{
+	    while( exEnum.hasMoreElements() ){
+		exString += exEnum.nextElement().toString();
+	    }
+	}
+
+	Association aa = Association.associate( exItem, exString, numericSort);
+	sorter.insert(aa, false);
+    }
+    
+    List resultList = new List();
+    if(reverse) {
+	sorter.descendingValues(resultList);
+    }
+    else
+	sorter.ascendingValues(resultList);
+
+    Enumeration resultEnum = resultList.elements();
+    while (resultEnum.hasMoreElements() ){
+	ActiveNode resultItem = (ActiveNode)resultEnum.nextElement();
+	out.putNode( resultItem );
+    }
+  }
+  sortHandler() { super(false, false); }
+  public Action getActionForNode(ActiveNode n) {
+    ActiveElement e = n.asElement();
+    //    if (dispatch(e, "recursive")) 	return new sort_recursive();
+    //    if (dispatch(e, "all")) 	 	return new sort_recursive();
+    return this;
+  }
+}
+
+/** &lt;sort recursive&gt;<em>n</em>&lt;/&gt; 
+ *	extracts every node with a matching sort; recurses into content.
+ */
+class sort_recursive extends extract_subHandler {
+  protected void action(Input in, Context aContext, Output out, 
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
+    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean all = atts.hasTrueAttribute("all");
+    String key = content.toString();
+
+    if (key != null) key = key.trim();
+    if (key != null && !caseSens) key = key.toLowerCase();
+    if (key != null && key.startsWith("#")) {
+      int ntype = NodeType.getType(key.substring(1));
+      extractByType(extracted, ntype, all, out);
+    } else {
+      extract(extracted, key, caseSens, all, out);
+    }
+  }
+  protected void extract(ActiveNodeList extracted, String key, 
+			boolean caseSens, boolean all, Output out) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      String sort = getNodeName(item, caseSens);
+      if (key == null || (sort != null && key.equals(sort))) {
+	out.putNode(item);
+      } else if (!all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, all, out);
+      }
+      if (all && item.hasChildNodes()) {
+	extract(item.getContent(), key, caseSens, all, out);
+      }
+    }
+  }
+  protected void extractByType(ActiveNodeList extracted, int ntype,
+			       boolean all, Output out) {
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      if (ntype == NodeType.ALL || ntype == item.getNodeType()) {
+	out.putNode(item);
+      } else if (!all && item.hasChildNodes()) {
+	extractByType(item.getContent(), ntype, all, out);
+      }
+      if (all && item.hasChildNodes()) {
+	extractByType(item.getContent(), ntype, all, out);
+      }
+    }
+  }
+  sort_recursive() { super(true, false); }
+}
+
+
+
 
 /** &lt;key&gt;<em>k</em>&lt;/&gt; extracts every node with a matching key. */
 class keyHandler extends extract_subHandler {
