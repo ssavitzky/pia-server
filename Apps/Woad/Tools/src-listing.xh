@@ -234,7 +234,7 @@
  	  <input name="create" value="Create Note" type="submit" />
        </td>
        <td valign="top" colspan="2">
-	  <textarea name="summary" cols="60" rows="4"> </textarea>
+	  <textarea name="summary" cols="60" rows="4" wrap="wrap"></textarea>
        </td>
   </tr>
 </table>
@@ -441,5 +441,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.15 2000-07-20 02:08:57 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.16 2000-07-21 22:48:21 steve Exp $" />
 </body></html>

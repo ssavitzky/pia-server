@@ -203,7 +203,7 @@
  	  <input name="create" value="Create Note" type="submit" />
        </td>
        <td valign="top" colspan="2">
-	  <textarea name="summary" cols="60" rows="4"> </textarea>
+	  <textarea name="summary" cols="60" rows="4" wrap="wrap"></textarea>
        </td>
   </tr>
 </table>
@@ -232,10 +232,11 @@
 </define>
   <set name="serverPage">
     <if>&SITE:notesPrefix;
-	<then><include src="&PIA:url;&tpath;" tagset="/.Woad/src-html"
+	<then><include src="&PIA:url;&tpath;" tagset="/.Woad/Tools/src-html"
 	       quoted="yes"/>
 	</then>
-	<else><include src="&tpath;" tagset="/.Woad/src-html" quoted="yes"/>
+	<else><include src="&tpath;" tagset="/.Woad/Tools/src-html" 
+	       quoted="yes"/>
 	</else>
     </if>
   </set>
@@ -433,5 +434,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.16 2000-07-20 02:08:58 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.17 2000-07-21 22:48:23 steve Exp $" />
 </body></html>
