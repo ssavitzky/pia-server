@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.7 1999-04-17 01:19:16 steve Exp $
+//	$Id: testHandler.java,v 1.8 1999-05-18 20:18:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.7 1999-04-17 01:19:16 steve Exp $
+ * @version $Id: testHandler.java,v 1.8 1999-05-18 20:18:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -77,6 +77,7 @@ public class testHandler extends GenericHandler {
     if (dispatch(e, "null")) 	 return test_null.handle(e);
     if (dispatch(e, "numeric"))	 return test_numeric.handle(e);
     if (dispatch(e, "sorted"))	 return test_sorted.handle(e);
+    if (dispatch(e, "markup"))	 return test_markup.handle(e);
 
     if (e.getAttributes() == null || e.getAttributes().getLength() == 0)
       return this;
@@ -167,9 +168,6 @@ public class testHandler extends GenericHandler {
     } else if (it.hasAttr("text")) {
       test = test.contentText();
     } 
-
-    } else if (it.hasAttr("markup")) {
-      result = ! test.isText();
 */
 
 /* ***********************************************************************
@@ -319,5 +317,22 @@ class test_null extends testHandler {
   }
   public test_null(ActiveElement e) { super(e); }
   static Action handle(ActiveElement e) { return new test_null(e); }
+}
+
+/** Test for the presence of markup, defined as anything other than text. */
+class test_markup extends testHandler {
+  public void action(Input in, Context aContext, Output out) {
+    ActiveNodeList content = Expand.getProcessedContent(in, aContext);
+    int len = (content == null)? 0 : content.getLength();
+    for (int i = 0; i < len; i++) {
+      if (! NodeType.isText(content.activeItem(i))) {
+	returnBoolean(true, aContext, out);
+	return;
+      }
+    }
+    returnBoolean(false, aContext, out);
+  }
+  public test_markup(ActiveElement e) { super(e, true, true); }
+  static Action handle(ActiveElement e) { return new test_markup(e); }
 }
 
