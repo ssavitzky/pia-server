@@ -1,0 +1,99 @@
+<set name="testURL">home.xh?x=xval&y=yval&z=zval : &amp; &#38; &nbsp;</set>
+
+testURL=&testURL; : &#38; &nbsp ;&amp; 
+
+<user-message>message: &testURL; : &#38; &amp; </user-message>
+<make name="#string">string: &testURL; : &#38; &nbsp; &amp; </make>
+
+<?--                <subst match="&attributes:swapname;=.*\&"
+               result="">&content;</subst></text></action> --?>
+
+<make type="PI" name="test">this is a test</make>
+<make type="DECLARATION" name="element"> foo bar garp </make>
+<make type="DOCTYPE" name="foo">bar garp </make>
+
+<dl>
+  <dt>
+       <p>
+
+  <dd> 
+</dl>
+
+<table><tr><td><p><tr><td></table>
+<p>
+<h3>testing</h3>
+
+
+AND of two trues:
+<set name="hello"> 3 </set>
+<set name="there"> 3 </set>
+
+<if> <get name="hello"/> <get name="there"/>
+   <then>TRUE!</then>
+   <else>FALSE</else>
+</if>
+<br />
+
+Should be OR of true + false (ooops!):
+<set name="hello"> 3 </set>
+<set name="there">  </set>
+
+<if> <get name="hello"/> <get name="there"/>
+   <then>TRUE!</then>
+   <else>FALSE</else>
+</if>
+<br/>
+
+
+Also OR of true + false (differs only in entity vs get):
+<if> &hello; &there;
+   <then>TRUE!</then>
+   <else>FALSE</else>
+</if>
+<br/>
+
+Also OR, explicitly using logical:
+<if> <logical or="yes"><get name="hello"/> <get name="there"/>
+</logical>
+   <then>TRUE!</then>
+   <else>FALSE</else>
+</if>
+
+<subst match="foo" result="bar">xyzfoox</subst>
+
+<date><day></day></date>
+
+<define element="frob">
+  <action>
+<set name="foo">&attributes:foo;</set>
+<set name="bar">zorch</set>
+xxx&foo;xxx&foo;xxx<get name="&foo;"/>
+  </action>
+</define>
+
+<frob foo="bar">test</frob>
+
+
+<define element="junk">
+ <action>
+   <get name="attributes:" />
+ </action>
+</define>
+
+START
+  <junk />
+END
+
+
+<define element="foo">
+  <action mode="replace-content">
+    New content goes here
+  </action>
+</define>
+
+
+
+Here follows tag with content: <foo>  </foo>
+<hr/>
+Here follows a self-ending tag: <foo />
+<hr/>
