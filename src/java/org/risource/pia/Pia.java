@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.10 1999-05-20 20:23:30 steve Exp $
+// $Id: Pia.java,v 1.11 1999-05-21 00:42:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.10 1999-05-20 20:23:30 steve Exp $
+  * @version $Id: Pia.java,v 1.11 1999-05-21 00:42:38 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -165,6 +165,11 @@ public class Pia implements Tabular {
    */
   public static final String ADMIN_AGENT_NAME = "pia.adminagent";
 
+  /** 
+   * Property name of admin agent XML file
+   */
+  public static final String ADMIN_AGENT_FILE = "pia.adminxml";
+
 
   /************************************************************************
   ** Private fields:
@@ -254,12 +259,17 @@ public class Pia implements Tabular {
   /**
    *  Attribute index - Root agent
    */
-  protected Agent rootAgent;
+  protected Root rootAgent;
 
   /**
    *  Attribute index - Admin agent name
    */
   protected String adminAgentName = "Admin";
+
+  /**
+   *  Attribute index - Admin agent XML filename
+   */
+  protected String adminAgentFile = "./Admin/AGENT.xml";
 
   /**
    *  Attribute index - Root agent name
@@ -766,9 +776,9 @@ public class Pia implements Tabular {
 
     rootAgentName    = properties.getProperty(ROOT_AGENT_NAME, rootAgentName);
     adminAgentName   = properties.getProperty(ADMIN_AGENT_NAME, adminAgentName);
+    adminAgentFile   = properties.getProperty(ADMIN_AGENT_FILE, adminAgentFile);
 
     /* Set proxy tables from properties that end in "_proxy" */
-
     initializeProxies(); 
 
     /* If we still don't know our host name, complain. */
@@ -839,9 +849,10 @@ public class Pia implements Tabular {
     rootAgent = new Root(rootAgentName, usrRootStr);
     resolver.registerAgent( rootAgent );
 
-    String fn = null; //rootAgent.findDocument("./Admin/AGENT.xml");
+    String fn = rootAgent.findDocument(adminAgentFile);
     if (fn != null) {
-      ((GenericAgent)rootAgent).loadFile(fn, null);
+      System.err.println("Loading /Admin from " + fn);
+      rootAgent.loadFile(fn, "./Admin/Admin-xhtml.ts");
       adminAgent = (Admin) resolver.agent(adminAgentName);
     } else {
       // Create the Admin agent.  Its initialize.xh file loads everything else.
