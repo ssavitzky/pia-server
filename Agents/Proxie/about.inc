@@ -3,7 +3,8 @@
 <h2>About ``&AGENT:name;''</h2>
 
 <p> &AGENT:name; is your personal web-browsing assistant.  It gets its name
-    from the fact that it operates when the PIA is used as a <em>proxy</em>.
+    from the fact that it operates when the PIA is used as a <em><a
+    href="using#proxy">proxy</a></em>. 
     &AGENT:name; is actually a sort of ``super-agent'' under which
     <em>all</em> of the agents that operate while proxying are collected.
     These include:
@@ -22,8 +23,7 @@
        </ul>
 </dl>
 
-<p>``&AGENT:name;'' agents ``watch over your shoulder'' while you browse the
-    Web. 
-<p>  
+<p> You can find out more about proxying, and how to set up your browser, 
+    <a href="using#proxy">here</a>.
 
-<inc-footer cvsid="$Id: about.inc,v 1.2 1999-03-12 19:22:23 steve Exp $">
+<inc-footer cvsid="$Id: about.inc,v 1.3 1999-05-27 00:43:00 steve Exp $">
