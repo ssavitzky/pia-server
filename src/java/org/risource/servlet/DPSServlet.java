@@ -1,5 +1,5 @@
 ////// DPSServlet.java: PIA DPS Servlet implementation
-//	$Id: DPSServlet.java,v 1.3 2000-04-12 00:47:06 steve Exp $
+//	$Id: DPSServlet.java,v 1.4 2000-04-13 15:59:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,22 @@ import javax.servlet.http.*;
  *	is used -- everything is obtained from its ServletContext and
  *	ServletConfig.
  *
- * @version $Id: DPSServlet.java,v 1.3 2000-04-12 00:47:06 steve Exp $
+ * <p>	The only information the DPSServlet requires from its environment
+ *	is the directory in which to look for tagsets that are not specified
+ *	by complete paths, and the table that maps file extensions to tagsets.
+ *	The complete list of initialization variables is:
+ * <ul>
+ *   <li> <code>logfile</code> a file in which to log information.
+ *   <li> <code>home</code> the PIA home directory.  Tagsets will be found
+ *		in the <code>lib</code> subdirectory unless 
+ *		<code>lib</code> is specified.
+ *   <li> <code>lib</code> the default directory for tagset lookup.
+ *   <li> <code>tagset</code> the default tagset name.
+ *   <li> <code>tagset.<em>ext</em></code> tagset for files with an extension
+ *		of <code><em>ext</em></code>.
+ * </ul>
+ *
+ * @version $Id: DPSServlet.java,v 1.4 2000-04-13 15:59:11 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.PIAServlet
  * @see org.risource.dps
@@ -59,6 +74,12 @@ public class DPSServlet
 {
   /** Table that maps extensions into tagset names. */
   protected Table tagsetMap = new Table();
+
+  /** Tagset library directory. */
+  protected String tslib = null;
+
+  /** PIA home directory. */
+  protected String home = null;
 
   /** Table that maps extensions into result MIME types. */
   protected Table mimeTypeMap = new Table();
@@ -109,7 +130,6 @@ public class DPSServlet
     * UnavailableException should be thrown. It will not call the method 
     * System.exit. 
     *
-    * <p> === totally bogus at present: needs to get tagset and mimetype maps.
     */
   public void init(ServletConfig conf) throws ServletException
   {
@@ -135,13 +155,30 @@ public class DPSServlet
     }
     //get home, etc. out of config 
 
-    String home = config.getInitParameter("home");
+    home  = config.getInitParameter("home");
+    tslib = config.getInitParameter("lib");
 
     // tell the tagset loader where .../lib is
-    if (home != null) {
+    if (home != null && tslib == null) {
       String filesep  = System.getProperty("file.separator");
-      String tsHome = home + filesep + "lib";
-      Loader.setTagsetHome(tsHome);
+      tslib = home + filesep + "lib";
+    }
+    if (tslib != null) Loader.setTagsetHome(tslib);
+
+    // get the default tagset name.
+    String n = config.getInitParameter("tagset");
+    if (n != null) defaultTagsetName = n;
+
+    // Go through the init parameters looking for "tagset.ext" entries.
+    Enumeration names = config.getInitParameterNames();
+    while (names.hasMoreElements()) {
+      String n = names.nextElement().toString();
+
+      if (n.startsWith("tagset.")) {
+	String v = config.getInitParameter(n);
+	n = n.substring("tagset.".length());
+	tagsetMap.at(n, v);
+      }
     }
 
     // === need to get tagset and mime type maps from config.
@@ -245,6 +282,7 @@ public class DPSServlet
     if (ts == null) {
       throw new ServletException("Unable to load tagset " + tagsetName);
     }
+    // should we cache tagsets?
 
     Parser p = ts.createParser();
     p.setReader(new FileReader(f));
