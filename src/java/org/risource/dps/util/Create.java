@@ -1,5 +1,5 @@
 ////// Create.java: Utilities for Creating nodes.
-//	$Id: Create.java,v 1.7 2001-01-11 23:37:41 steve Exp $
+//	$Id: Create.java,v 1.8 2001-02-04 01:07:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.Enumeration;
 /**
  * Node Creation utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Create.java,v 1.7 2001-01-11 23:37:41 steve Exp $
+ * @version $Id: Create.java,v 1.8 2001-02-04 01:07:43 steve Exp $
  * @author steve@rii.ricoh.com
  *
  */
@@ -91,6 +91,8 @@ public class Create {
     switch (nodeType) {
     case Node.COMMENT_NODE:
       return new TreeComment(data);
+    case Node.CDATA_SECTION_NODE:
+      return new TreeCDATA(data);
     case Node.PROCESSING_INSTRUCTION_NODE:
       return new TreePI(name, data);
     case Node.ATTRIBUTE_NODE:
@@ -120,6 +122,8 @@ public class Create {
     switch (nodeType) {
     case Node.COMMENT_NODE:
       return new TreeComment(TextUtil.getCharData(value));
+    case Node.CDATA_SECTION_NODE:
+      return new TreeCDATA(TextUtil.getCharData(value));
     case Node.PROCESSING_INSTRUCTION_NODE:
       return new TreePI(name, TextUtil.getCharData(value));
     case Node.ATTRIBUTE_NODE:

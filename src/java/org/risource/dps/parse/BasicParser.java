@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.13 2001-01-11 23:37:34 steve Exp $
+//	$Id: BasicParser.java,v 1.14 2001-02-04 01:07:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.13 2001-01-11 23:37:34 steve Exp $
+ * @version $Id: BasicParser.java,v 1.14 2001-02-04 01:07:40 steve Exp $
  * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -316,6 +316,19 @@ public class BasicParser extends AbstractParser {
 	if (last != '>') eatUntil("-->", false);
 	if (last == '>') last = 0;
 	next = createActiveNode(Node.COMMENT_NODE, buf.toString());
+      } else if (ident == null && last == '[') {
+	// it's probably a CDATA section.
+	last = 0; ident = null;
+	if (eatIdent() && ident.equalsIgnoreCase("CDATA") && last == '[') {
+	  last = 0; 
+	  eatUntil("]]>", false);
+	  next = createActiveNode(Node.CDATA_SECTION_NODE, buf.toString());
+	} else {
+	  // darned if I know, but we'll treat it as CDATA
+	  last = 0; 
+	  eatUntil("]]>", false);
+	  next = createActiveNode(Node.CDATA_SECTION_NODE, buf.toString());
+	}
       } else {
 	// it's an SGML declaration: <!...>
 	// == Comments or occurrences of '>' inside will fail.
