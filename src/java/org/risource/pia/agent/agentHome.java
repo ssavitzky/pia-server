@@ -1,5 +1,5 @@
 ////// agentHome.java:  Handler for <agent-home>
-//	$Id: agentHome.java,v 1.7 1999-09-22 00:23:15 steve Exp $
+//	$Id: agentHome.java,v 1.8 1999-09-24 20:44:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ public class agentHome extends org.risource.dps.handle.GenericHandler {
 
     if (link) {
       ActiveElement t = new TreeElement("a", null, null, null);
-      t.setAttribute("href", home + "~/home");
+      t.setAttribute("href", home + "/");
       t.addChild(new TreeText(home));
       out.putNode(t);
     } else {
