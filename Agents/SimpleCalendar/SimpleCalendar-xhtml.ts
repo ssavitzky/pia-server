@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s):   bill@rii.ricoh.com                                   -->
@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="SimpleCalendar-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.14 2001-01-11 23:36:33 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.15 2001-04-03 00:03:49 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing

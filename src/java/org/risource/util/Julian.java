@@ -1,5 +1,5 @@
 // Julian.java -- Julian date utilities
-// $Id: Julian.java,v 1.2 2001-01-11 23:37:53 steve Exp $
+// $Id: Julian.java,v 1.3 2001-04-03 00:05:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s): Abraham Savitzky
@@ -46,7 +46,7 @@ package org.risource.util;
  *	in the late 1960's in Fortran IV.  Dad died this year, but the code
  *	lives on.
  *
- * @version $Id: Julian.java,v 1.2 2001-01-11 23:37:53 steve Exp $
+ * @version $Id: Julian.java,v 1.3 2001-04-03 00:05:32 steve Exp $
  * @author Abraham Savitzky, steve@rii.ricoh.com
  */
 public class Julian {

@@ -10,8 +10,8 @@
 <!-- See the License for the specific language governing rights and         -->
 <!-- limitations under the License.                                         -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.	    -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are Copyright (C)       -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.	    -->
+<!-- Portions created by Ricoh Innovations, Inc. are Copyright (C)       -->
 <!-- 1995-2000.  All Rights Reserved.                                       -->
 <!--                                                                        -->
 <!-- Contributor(s):  steve@rii.ricoh.com                                   -->
@@ -129,5 +129,5 @@
     </if></action>
 </define>
 
-<em>$Id: toc.ts,v 1.5 2001-01-11 23:37:01 steve Exp $</em>
+<em>$Id: toc.ts,v 1.6 2001-04-03 00:04:03 steve Exp $</em>
 </tagset>

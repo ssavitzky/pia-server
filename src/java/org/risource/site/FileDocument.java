@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.8 2001-01-11 23:37:50 steve Exp $
+//	$Id: FileDocument.java,v 1.9 2001-04-03 00:05:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -39,7 +39,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.8 2001-01-11 23:37:50 steve Exp $
+ * @version $Id: FileDocument.java,v 1.9 2001-04-03 00:05:22 steve Exp $
  * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 

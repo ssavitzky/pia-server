@@ -1,5 +1,5 @@
 /**** run_pia
-** 	$Id: run_pia.c,v 1.3 1999-10-04 17:05:20 steve Exp $
+** 	$Id: run_pia.c,v 1.4 2001-04-03 00:04:05 steve Exp $
 **
 **	Run ~pia/bin/pia as user pia.  Must be setuid ROOT.
 **	Install with: chown root run_pia; chmod u+s run_pia
@@ -19,8 +19,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by by Ricoh Innovations, Inc.  Portions
+ * created by by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):

@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.11 2001-01-11 23:37:51 steve Exp $
+//	$Id: Site.java,v 1.12 2001-04-03 00:05:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -44,7 +44,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.11 2001-01-11 23:37:51 steve Exp $
+ * @version $Id: Site.java,v 1.12 2001-04-03 00:05:24 steve Exp $
  * @author steve@rii.ricoh.com 
  */
 

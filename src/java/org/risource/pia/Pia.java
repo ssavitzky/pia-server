@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.32 2000-10-04 22:07:08 steve Exp $
+// $Id: Pia.java,v 1.33 2001-04-03 00:05:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -72,7 +72,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.32 2000-10-04 22:07:08 steve Exp $
+  * @version $Id: Pia.java,v 1.33 2001-04-03 00:05:13 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {

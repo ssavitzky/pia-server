@@ -1,5 +1,5 @@
 // Version.java
-// $Id: Version.java,v 1.17 2001-01-12 00:43:18 steve Exp $
+// $Id: Version.java,v 1.18 2001-04-03 00:04:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -31,7 +31,7 @@ package org.risource;
  *
  * <p> Note that this is currently not changed from PIA/Makefile
  *
- * @version $Id: Version.java,v 1.17 2001-01-12 00:43:18 steve Exp $
+ * @version $Id: Version.java,v 1.18 2001-04-03 00:04:08 steve Exp $
  * @see org.risource.pia.Setup
  */
 public interface Version {
@@ -65,5 +65,5 @@ public interface Version {
 
   /** The CVS revision of this file. */
   public static final String CVS_REV    =
-    "$Id: Version.java,v 1.17 2001-01-12 00:43:18 steve Exp $";
+    "$Id: Version.java,v 1.18 2001-04-03 00:04:08 steve Exp $";
 }

@@ -1,5 +1,5 @@
 ////// submitHandler.java: <submit> Handler implementation
-//	$Id: submitHandler.java,v 1.2 2001-01-11 23:37:47 steve Exp $
+//	$Id: submitHandler.java,v 1.3 2001-04-03 00:05:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -47,7 +47,7 @@ import org.risource.pia.site.SiteMachine;
  *
  * <p> The intent is for this to be equivalent to the old <submit-forms> tag. 
  *
- * @version $Id: submitHandler.java,v 1.2 2001-01-11 23:37:47 steve Exp $
+ * @version $Id: submitHandler.java,v 1.3 2001-04-03 00:05:18 steve Exp $
  * @author steve@rii.ricoh.com
  */
 

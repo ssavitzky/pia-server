@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.12 2001-01-11 23:36:37 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.13 2001-04-03 00:03:50 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 

@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
@@ -22,7 +22,7 @@
         include="src-wrapper src-html" documentWrapper="-document-"
 >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.6 2001-01-11 23:36:40 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.7 2001-04-03 00:03:54 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 

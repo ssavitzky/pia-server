@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.9 2001-01-11 23:37:48 steve Exp $
+//	$Id: SiteDoc.java,v 1.10 2001-04-03 00:05:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -60,7 +60,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.9 2001-01-11 23:37:48 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.10 2001-04-03 00:05:20 steve Exp $
  * @author steve@rii.ricoh.com
  *
  * @see org.risource.pia

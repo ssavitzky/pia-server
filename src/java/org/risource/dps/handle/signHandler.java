@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -57,7 +57,7 @@ import  sun.security.tools.KeyTool;
  * the key store then you should not need the Sun classes and can 
  * remove the generateKeys method.)
  *
- * @version $Id: signHandler.java,v 1.2 2001-01-11 23:37:24 steve Exp $
+ * @version $Id: signHandler.java,v 1.3 2001-04-03 00:04:31 steve Exp $
  * @author wolff@rii.ricoh.com
  */
 

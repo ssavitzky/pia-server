@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.9 2001-01-11 23:37:14 steve Exp $
+//	$Id: BasicHandler.java,v 1.10 2001-04-03 00:04:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.9 2001-01-11 23:37:14 steve Exp $
+ * @version $Id: BasicHandler.java,v 1.10 2001-04-03 00:04:17 steve Exp $
  * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler

@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s):   bill@rii.ricoh.com                                   -->

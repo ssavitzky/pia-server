@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rii.ricoh.com                                    -->
@@ -208,6 +208,6 @@
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Innovations, Inc.</b><br>
-<b>$Id: tsdoc.ts,v 1.5 2001-01-11 23:37:02 steve Exp $</b><br>
+<b>$Id: tsdoc.ts,v 1.6 2001-04-03 00:04:03 steve Exp $</b><br>
 </tagset>
 

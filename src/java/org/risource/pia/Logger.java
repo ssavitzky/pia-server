@@ -1,5 +1,5 @@
 // Logger.java
-// $Id: Logger.java,v 1.5 1999-10-04 17:40:30 steve Exp $
+// $Id: Logger.java,v 1.6 2001-04-03 00:05:12 steve Exp $
 // From: Id: CommonLogger.java,v 1.12 1996/10/01 18:45:00 abaird 
 
 /*****************************************************************************
@@ -13,8 +13,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -25,7 +25,7 @@
 // Please first read the full copyright statement in file COPYRIGHT.html
 //
 // Logger.java -- modified from CommonLogger; does not inherit from any class
-// $Id: Logger.java,v 1.5 1999-10-04 17:40:30 steve Exp $
+// $Id: Logger.java,v 1.6 2001-04-03 00:05:12 steve Exp $
 // (c) COPYRIGHT Ricoh California Research Center, 1997.
 
 package org.risource.pia;

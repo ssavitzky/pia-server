@@ -1,5 +1,5 @@
 ////// dateHandler.java: <date> Handler implementation
-//	$Id: dateHandler.java,v 1.4 2001-01-11 23:37:17 steve Exp $
+//	$Id: dateHandler.java,v 1.5 2001-04-03 00:04:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s): softky@rii.ricoh.com, steve@rii.ricoh.com
@@ -70,7 +70,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally 
  *	written in FORTRAN IV by Abraham Savitzky.
  *
- * @version $Id: dateHandler.java,v 1.4 2001-01-11 23:37:17 steve Exp $
+ * @version $Id: dateHandler.java,v 1.5 2001-04-03 00:04:22 steve Exp $
  * @author softky@rii.ricoh.com
  * @see org.risource.util.Julian
  */

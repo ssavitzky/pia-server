@@ -11,8 +11,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * <p>	This class is used to construct an Agent, and in particular a
  *	Generic.
  *
- * @version $Id: ToAgent.java,v 1.5 2001-01-11 23:37:47 steve Exp $
+ * @version $Id: ToAgent.java,v 1.6 2001-04-03 00:05:16 steve Exp $
  * @author steve@rii.ricoh.com 
  * @see org.risource.pia.Agent
  * @see org.risource.pia.agent.Generic

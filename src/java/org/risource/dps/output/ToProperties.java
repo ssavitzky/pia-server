@@ -11,8 +11,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
  * Contributor(s):
@@ -36,7 +36,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Properties.<p>
  *
- * @version $Id: ToProperties.java,v 1.3 2001-01-11 23:37:33 steve Exp $
+ * @version $Id: ToProperties.java,v 1.4 2001-04-03 00:04:44 steve Exp $
  * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  */

@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.10 2001-01-11 23:37:49 steve Exp $
+//	$Id: PIAServlet.java,v 1.11 2001-04-03 00:05:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -12,8 +12,8 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * This code was initially developed by Ricoh Silicon Valley, Inc.  Portions
- * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-2000.  All
+ * This code was initially developed by Ricoh Innovations, Inc.  Portions
+ * created by Ricoh Innovations, Inc. are Copyright (C) 1995-2000.  All
  * Rights Reserved.
  *
  * Contributor(s): steve@rii.ricoh.com, paskin@rii.ricoh.com
@@ -53,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.10 2001-01-11 23:37:49 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.11 2001-04-03 00:05:21 steve Exp $
  * @author steve@rii.ricoh.com after paskin@rii.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -66,7 +66,7 @@ public class PIAServlet
 
   /** Cache for the servlet engine context. */
   protected ServletContext context;
-  protected static String revision = "$Revision: 1.10 $";
+  protected static String revision = "$Revision: 1.11 $";
 
   /** The configuration of this servlet, including any parameters passed
     * to the servlet.

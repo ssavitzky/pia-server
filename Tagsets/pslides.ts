@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
@@ -243,5 +243,5 @@
 </slide></action>
 </define>
 
-<em>$Id: pslides.ts,v 1.3 2001-01-11 23:36:59 steve Exp $</em>
+<em>$Id: pslides.ts,v 1.4 2001-04-03 00:04:00 steve Exp $</em>
 </tagset>

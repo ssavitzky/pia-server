@@ -10,8 +10,8 @@
 <!-- the License for the specific language governing rights and limitations -->
 <!-- under the License.                                                     -->
 <!--                                                                        -->
-<!-- This code was initially developed by Ricoh Silicon Valley, Inc.        -->
-<!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
+<!-- This code was initially developed by Ricoh Innovations, Inc.        -->
+<!-- Portions created by Ricoh Innovations, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s):   bill softky bill@rii.ricoh.com                       -->
@@ -46,7 +46,7 @@ mysql> select minute(now() ) < minute( when_notified) + 25 from notifications wh
 <?--
 <!-- tagset name="Workflow-template" parent="/Agents/Workflow/Workflow-test.ts"  parent="Workflow-xhtml" recursive="recursive" -->
 --?>
-<cvs-id>$Id: Workflow-template.ts,v 1.2 2001-01-11 23:36:58 steve Exp $</cvs-id>
+<cvs-id>$Id: Workflow-template.ts,v 1.3 2001-04-03 00:03:58 steve Exp $</cvs-id>
 
 <define element="sql" handler="handler">
 
