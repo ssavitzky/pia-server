@@ -1,5 +1,5 @@
 // TreeAttrList.java
-// $Id: TreeAttrList.java,v 1.4 1999-04-30 23:37:37 steve Exp $
+// $Id: TreeAttrList.java,v 1.5 1999-11-09 21:29:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -107,9 +107,7 @@ public class TreeAttrList extends TreeNodeMap
    */
   public String getAttribute(String name) {
     ActiveNode attr = getActiveAttr(name);
-    // === getAttribute: need to return value as a string in INTERNAL form
-    NodeList value = (attr == null)? null : attr.getValueNodes(null);
-    return (value == null)? null : value.toString();
+    return (attr == null)? null : attr.getNodeValue();
   }
 	 
   /** Convenience function: get an Attribute by name and return its value
