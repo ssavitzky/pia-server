@@ -1,0 +1,17 @@
+This is a test of &lt;filter&gt;
+<define element="filter" handler="filterHandler" />
+
+<filter cmd="ls" />
+
+<filter cmd="ls -al" shell="/bin/sh"/>
+
+<filter cmd="cat" src="t1.xh"  tagset="" />
+
+<filter cmd="ps | grep java" shell="/bin/sh" tagset="" />
+
+<filter cmd="false" />
+
+<xfilter cmd="foo" /><!-- croaks with null pointer exception -->
+<xfilter shell="foo" cmd="x" /><!-- croaks with null pointer exception -->
+
+<filter cmd="pia:/" shell="echo" />

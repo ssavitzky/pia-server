@@ -1,0 +1,22 @@
+This is a test of namespaces
+
+
+<namespace name="foo">
+	<bind name="bar">vbar</bind>
+	<bind name="baz">vbaz</bind>
+	<set name="VAR:gorp">foo:bar=&foo:bar;</set>
+</namespace>
+
+foo:bar=&foo:bar;
+gorp="&gorp;"
+
+<set name="foo">
+  <namespace>
+	<bind name="bar">vbar</bind>
+	<bind name="baz">vbaz</bind>
+  </namespace>
+</set>
+
+foo:bar=&foo:bar;
+foo:baz=&foo:baz;
+
