@@ -1,0 +1,23 @@
+#!/bin/sh
+# $Id: move-history-data,v 1.1 1999-10-04 17:33:00 steve Exp $
+# Move history data from ~/.pia/History to ~/.pia/Agents/Proxie/History/DATA
+#
+#	Handles the perverse case where the old history is a link to another 
+#	filesystem, which can happen if you have been experimenting with
+#	two different versions of the PIA in different home directories.
+#	
+#	Fix the directory you've been experimenting in first.  After you
+#	have fixed both directories, you will have to fix whichever one
+#	has the symbolic link to the other's .pia/History.
+#
+#	Unless you're steve, you probably won't need to know all this.
+
+cd $HOME/.pia
+if [ -d Agents/Proxie/History/DATA ]; then
+    (cd Agents/Proxie/History/DATA; tar -cf - .) | (cd History; tar -tpBf -)
+    rm -rf Agents/Proxie/History/DATA
+else
+    mkdir Agents/Proxie/History
+fi
+mv History Agents/Proxie/History/DATA
+
