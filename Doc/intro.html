@@ -33,19 +33,22 @@ information on specific aspects of the PIA:<p>
 <h1>Introduction</h1>
 </center>
 
-<p>The PIA defines a new generation of
-document-oriented infoware with its reliance on XML to specify
-processing. Information designers (authors, webmasters,
-programmers, and others) use the PIA framework to build complete,
-information intensive applications, called <i><a href= 
-"http://www.sunworld.com/swol-01-1999/swol-01-regex.html#2">
-infoware</a></i> that can be used via any web browser.</p>
+<p> The PIA (Platform for Information Applications) defines a new kind of
+    document-oriented, web-accessible application platform.  Information
+    designers (authors, webmasters, programmers, and others) can use the PIA
+    framework to build complete, information intensive applications, which
+    some people call
+    <i><a href= "http://www.sunworld.com/swol-01-1999/swol-01-regex.html#2">
+    infoware</a></i>, that can be used via any web browser.
+</p>
 
-<p>For the information developer, the PIA provides a core software
-base on which they can build these kinds of applications without
-having to learn a programming language. Developers benefit because
-they can much more easily create, deliver, and maintain infoware
-applications.</p>
+<p> For the information developer, the PIA provides a core software base on
+    which to build information applications without having to learn a
+    programming language.  Applications consist entirely of active web pages
+    written in HTML with extensions in XML.  Developers benefit because they
+    can much more easily create, deliver, and maintain infoware
+    applications.
+</p>
 
 <table width='80%' cellspacing='0' border='0' align='center'>
 <tr>
@@ -130,14 +133,10 @@ Agency:</th>
 &nbsp;</th>
 </tr>
 
-<tr>
-<td align="center" colspan="2">Information designers build
-information applications on top of the platform.</td>
-</tr>
 </table>
 
 <p>For the infoware user, the PIA just looks like a regular web server that
-provides them access to information applications -- the collections of active
+gives them access to information applications -- collections of active
 pages that form a web site (or several sub-sites). Infoware provides users
 with the information and functions they require in the convenient and familiar
 form of web pages. The PIA further benefits users by extending the open
@@ -146,14 +145,14 @@ processing associated with documents. This standard reduces costs and
 complexity of managing their documents, and ensures that multiple infoware
 applications in an office will work together.</p>
 
-<p>The PIA design divides an application into a core processing
-engine, the softare base that we call an <strong>agency</strong>,
-and task specific collections of active XML web pages that we call
-<strong>applications</strong>. The applications contain all the knowledge
-required for a particular document processing task, and they are
-supported by the agency.</p>
+<p> The PIA design includes a core web-serving and document-processing engine,
+    which we call the <strong>agency</strong>, and task specific collections
+    of active XML web pages that we call <strong>applications</strong>.  The
+    applications contain all the knowledge required for a particular document
+    processing task, and they are supported by the agency.
+</p>
 
-The slides accompanying the open source announcement of the PIA
+<p> The slides accompanying the open source announcement of the PIA
 give the best overview of the benefits of this technology and the
 goals of the PIA project. This <a href= 
 "http://www.risource.org/PIA/LinuxWorld1999/lw99.slides.html">
@@ -161,7 +160,7 @@ presentation</a> was given at the LinuxWorld Conference &amp; Expo,
 March 4, 1999. 
 
 <p>The full potential of the PIA will be realized as users and
-developers build useful, task oriented applications. The PIA provides a
+developers build useful, task-oriented applications. The PIA provides a
 solid foundation that enables rapid development and customization
 of applications. The PIA group has provided a number of example applications to
 demonstrate some possibilities. See the <a href="agents.html">Application
@@ -176,6 +175,10 @@ available.</p>
 <li><a href="#Applications">Working with Applications</a></li>
 </ul>
 
+<font color=red><strong>The rest of this document is dangerously obsolete!
+</strong></font>
+
+<blockquote><small>
 <hr>
 <h2><a name="Agency">Working with PIA Agency</a></h2>
 
@@ -242,7 +245,7 @@ provides a new platform for document-oriented computing.</p>
     like static web pages or CGI scripts, waiting for a specific request and
     responding to it with an HTML page, and (2) active ones, which
     which actively monitor and sometimes modify requests and responses passing
-    through the Agency's port. </em>
+    through the Agency's port.
 
 <h3 id="CEGCDJID"><a name="How">How Active Agencies Work</a></h3>
 
@@ -359,7 +362,7 @@ for use. See the <em><a class="Tagsets/basic.html" href=
 "Tagsets/basic.html">Basic Tagset Manual</a></em> for more on these
 tags.</p>
 
-<h3><a name="Running"></a>Running an Information Agency</h3>
+<h3><a name="Running">Running the PIA</a></h3>
 
 <p>To run the PIA, it must be <a href= "install.html">installed</a> at your
 site.  Even if it has been installed in a shared location, you can customize
@@ -449,7 +452,7 @@ that manages all other applications</li>
 <li><var><var><a name="agent.html#History" href="/History/home.xh">
 History</a></var></var> maintains list of visited web pages</li>
 
-<li>The Toolbar agencies
+<li>The Toolbar applicacations
 
 <ul>
 <li><var><a href="/fileTools/">fileTools</a></var> adds a control
@@ -463,86 +466,16 @@ agency</li>
 
 </ul>
 
-<p>These agents are further described in the <em><a href= 
+<p>These applications are further described in the <em><a href= 
 "agents.html">Application Guide</a></em>.</p>
 
-<h4>Installing, Removing or Running Applications</h4>
-
-<p>The PIA home page provides interforms that can be used to
-perform basic management of applications including listing, adding and
-removing applications.</p>
-
-<p>The application list presents links to an index of all of the
-interforms for applications of a given type and to those application's home
-pages.</p>
-
-<p>For more information on application installation and customization, see the
-<em><a href= "author.html#installing">Author's Guide</a></em>.</p>
-
-<h2><a name="invoke">Pure XML processing</a></h2>
-
-<p>The PIA Document Processor can be invoked stand-alone as a CGI or filter
-(formatter) or as part of the PIA. The command for invoking the document
-processor as a filter--no network transactions involved--is:</p>
-
-<blockquote>
-<pre>
-process <em>[option]...</em> <em>input_filename</em>
-</pre>
-</blockquote>
-
-<p>The command-line options are:</p>
-
-<dl compact="compact">
-<dt><code>-e</code></dt>
-
-<dd>Do not define standard entities.</dd>
-
-<dt><code>-h</code></dt>
-
-<dd>Print a help string.</dd>
-
-<dt><code>-o <em>filename</em></code></dt>
-
-<dd>Specify output file.</dd>
-
-<dt><code>-p</code></dt>
-
-<dd>Build a parse tree (which is output as a serialized Java
-object)</dd>
-
-<dt><code>-t <em>tagset-name</em></code></dt>
-
-<dd>Specify tagset (default <code>xhtml</code>).</dd>
-
-<dt><code>-s</code></dt>
-
-<dd>Silent. Non-fatal error messages are suppressed.</dd>
-
-<dt><code>-q</code></dt>
-
-<dd>Quiet. Warnings and informational messages are suppressed.</dd>
-
-<dt><code>-v</code></dt>
-
-<dd>Verbose. Additional informational messages are output.</dd>
-
-<dt><code>-d</code></dt>
-
-<dd>Debugging. Information is output which may be of use for
-debugging the interpreter.</dd>
-</dl>
-
-<p>For example, a possible start up command is:</p>
-
-<blockquote><code>process -t xxml home.xh</code></blockquote>
-
+</small></blockquote>
 <hr>
 <b>Copyright &copy; 1999 <a href="http://rsv.ricoh.com/">Ricoh Silicon
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: intro.html,v 1.11 1999-10-20 17:22:54 bill Exp $</i><br>
+<i>$Id: intro.html,v 1.12 1999-10-22 23:09:45 steve Exp $</i><br>
 </body>
 </html>
 

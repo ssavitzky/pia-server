@@ -3,31 +3,32 @@
 <!-- End Document Specific Declarations -->
 <html>
 <head>
-<title>Guide to PIA Applications and Agents</title>
+<title>Guide to PIA Applications</title>
 </head>
 <body>
 <center>
-<h1>Guide to PIA Applications and Agents</h1>
+<h1>Guide to PIA Applications</h1>
 </center>
 
-<p>This document describes the sample applications and agents that ship with
-the PIA. PIA applications fall into three categories:</p>
+<p>This document describes the sample applications that ship with
+the PIA.  PIA applications fall into three basic categories:</p>
 
 <ul>
-<li><a href="#Standard">Standard agents</a> that are automatically
-started when the PIA is set up.</li>
+  <li> <a href="#Standard">Standard applications</a> that are part of the PIA
+       distribution and are automatically started when the PIA is run in its
+       default configuration.</li>
 
-<li><a href="#Optional">Optional agents/applications</a> that ship with
-the PIA and can be installed at the user's discretion.</li>
+  <li> <a href="#Contributed">Contributed applications</a> made available by
+       the PIA developer community.</li>
 
-<li><a href="#Contributed">Contributed agents</a> made available by
-the PIA developer community.</li>
+  <li> <a href="#Private">Private applications</a> that an organization
+       develops for its own use.</li>
 </ul>
 
 <hr>
-<h2><a name="Standard">Standard Agents</a></h2>
+<h2><a name="Standard">Standard Applications</a></h2>
 
-<p>The agents currently available are:</p>
+<p>The applications currently available are:</p>
 
 <ul>
   <li> <a href="#Admin">Admin</a></li>
@@ -37,41 +38,46 @@ the PIA developer community.</li>
 	 <li> <a href="#History">History</a></li>
 	 <li> <a href="#Cache">Cache</a> (presently unimplemented)</li>
        </ul>
+  <li> <a href="#SimpleCalendar">SimpleCalendar</a>
+  <li> <a href="#View">View</a>
+  <li> <a href="#Tutorial">Tutorial</a>
+  <li> <a href="#Demo">Demo</a>
 </ul>
 
 <h3><a name="Admin">Admin</a></h3>
 
-<p> The Admin agent is the ``server administration'' or ``control panel''
-    agent.  It manages all the other agents that make up the PIA Agency.
-    Because Admin is potentially dangerous, the default configuration protects
-    it with the Unix password file, if there is one. 
+<p> The Admin application is the ``server administration'' or ``control
+    panel'' application.  It manages all the other applications that make up
+    the PIA Agency.  Because Admin is potentially dangerous, the default
+    configuration protects it with the Unix password file, if there is one.
 </p>
 
-<h3><a name="Proxie">The Proxie Agents</a></h3>
+<h3><a name="Proxie">The Proxie Applications</a></h3>
 
-<p> Proxie is the main agent in a group of related agents that operate when
-    the PIA is used as a proxy for web browsing.   The Proxie family of agents
-    combine to make the PIA a powerful ``web browser's assistant,'' which was
-    the original goal when the PIA was designed.
+<p> Proxie is the main application in a group of related applications that
+    operate when the PIA is used as a proxy for web browsing.  The Proxie
+    family of applications combine to make the PIA a powerful ``web browser's
+    assistant,'' which was the original goal when the PIA was designed.
 </p>
 
-<p> To use these agents, set your browsers to use your PIA (sometimes referred
-    to as your Personal Information Agency when it's being used in this way)
-    as your proxy.  This setting is usually found under the Network options
-    available under edit/preferences, options/network, or some similar
+<p> To use these applications, set your browsers to use your PIA (sometimes
+    referred to as your Personal Information Agency when it's being used in
+    this way) as your proxy.  This setting is usually found under the Network
+    options available under edit/preferences, options/network, or some similar
     menu. You need to specify both the host name and port--8888 by default--
     where your agency is running.
 </p>
 
-<h4><a name="Toolbar">Toolbar</a></h4>
-
-<p> The Toolbar agent is the ``type'' agent for agents that put a ``toolbar''
-    of links at the top of a page.  
+<p> All of the Proxie applications are ``<em>agents</em>'' -- they contain
+    pieces of XML code that ``look over your shoulder'' and operate on HTTP
+    requests and responses as they pass through the PIA.
 </p>
 
-<p> There are two Toolbar agents. The <code>fileTools</code> agent adds a
-    toolbar to pages served from local files by DOFS agents in the PIA
-    agency. The remoteTools agent adds a toolbar to remote pages proxied
+<h4><a name="Toolbar">Toolbar</a></h4>
+
+<p> There are two Toolbar applications. The <code>fileTools</code> agent adds a
+    toolbar to pages served from local files by DOFS applications in the PIA
+    agency. The remoteTools application adds a toolbar to remote pages proxied
     through your agency.
 </p>
 
@@ -106,63 +112,62 @@ the PIA developer community.</li>
     want to be able to display the differences if a page has changed since the
     last time you visited it.
 
-<h2><a name="Optional">Optional Applications</a></h2>
 
-<p> The following applications, some of which include agents, are started
-    automatically when you visit their ``home directories'' under
-    <code>/Agents/</code>:</p> 
+<h3><a name="SimpleCalendar">SimpleCalendar</a></h3>
 
-<ul>
-  <li>SimpleCalendar </li>
-  <li>View</li>
-  <li>Tutorial</li>
-  <li>Demo</li>
-</ul>
-
-<h3>SimpleCalendar</h3>
-
-<p> The SimpleCalendar agent is a simple appointment calendar with day, month,
-    and year views, storing both one-time and repeating events as XML files
-    in a simple directory tree.
+<p> The SimpleCalendar application is a simple appointment calendar with day,
+    month, and year views, storing both one-time and repeating events as XML
+    files in a simple directory tree.
 </p>
 
-<h3>View</h3>
+<h3><a name="View">View</a></h3>
 
-<p>The View agent lets you view documents after those document are processed
-with a tagset or script.  Three of the ``views'' provided are as raw text, as a
-``slide'' presentation, and as the documentation for a ``tagset''.</p>
+<p>The View application lets you view documents after those document are
+processed with a tagset or script.  Three of the ``views'' provided are as raw
+text, as a ``slide'' presentation, and as the documentation for a
+``tagset''.</p>
 
-<h3>Tutorial</h3>
+<h3><a name="Tutorial">Tutorial</a></h3>
 
-<p> The Tutorial agent gives you an interactive tutorial in the PIA's tag
-    language; it is also available <a
-    href="http://pia.rsv.ricoh.com/Tutorial/home.xh">online</a>.
+<p> The Tutorial application gives you an interactive tutorial in the PIA's
+    XML-based document-processing language; it is also available from the <a
+    href="http://pia.rsv.ricoh.com/Tutorial/home.xh">PIA demonstration
+    server</a>. 
 </p>
 
-<h3>Demo</h3>
+<h3><a name="Demo">Demo</a></h3>
 
-<p>This agent serves as both a demonstration and testbed for the PIA's
+<p>This application serves as both a demonstration and testbed for the PIA's
 executable tag markup language and its formatter/interpreter. Its home page
 provides links to pages that show examples of tag usage.  It is more like a
 reference manual than a tutorial.</p>
 
-<h2>Contributed Agents</h2>
+<h2><a name="Contributed">Contributed Applications</a></h2>
 
-<p>Agents <a name="Contributed">contributed</a> by the PIA
-developer community can be found in the directory <code>
-Contrib/&lt;host.name&gt;/Agents</code> Install these agents much
-as you would any of the optional agents provided by Ricoh.</p>
+<p> The <a href="../Contrib/"><code>PIA/Contrib</code></a> directory is
+    intended for applications, documentation, and tools contributed by members
+    of the PIA developer community.
+</p>
 
-<p>Users can place a copy of their agent directories in <code>
-/Contrib/<em>host.name</em>/</code> and submit them to the PIA group for
-inclusion in the general release. </p>
+<p> These are the applications we expect <em>you</em> and information
+    developers like you to develop.
+</p>
+
+<h2><a name="Private">Private Applications</a></h2>
+
+<p> Note that the PIA's <a href="../LICENSE">license</a> allows you
+    to build your own private applications using the PIA; you don't have to
+    contribute them back to the community if you don't want to (although we
+    would prefer it if you did).  This is because the PIA's applications are
+    considered documents rather than source code. 
+</p>
 
 <hr>
 <b>Copyright &copy; 1999 <a href="http://rsv.ricoh.com/">Ricoh Silicon
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: agents.html,v 1.9 1999-10-19 22:39:11 steve Exp $</i><br>
+<i>$Id: agents.html,v 1.10 1999-10-22 23:09:44 steve Exp $</i><br>
 </body>
 </html>
 

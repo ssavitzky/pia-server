@@ -181,7 +181,7 @@ their parent in element.  </p>
 <td>None</td>
 </tr>
 <tr>
-<td rowspan="4"><a href="#Namespace">Namespace</a></td>
+<td rowspan="5"><a href="#Namespace">Namespace</a></td>
 <td><code><a href="tsdoc/basic.html#namespace">&#60;namespace></a></code></td>
 <td><code><a href="tsdoc/basic.html#namespace.name">name</a></code><br>
     <code><a href="tsdoc/basic.html#namespace.hide">hide</a></code><br>
@@ -197,6 +197,11 @@ their parent in element.  </p>
 <tr>
 <td><code><a href="tsdoc/basic.html#get">&#60;get></a></code></td>
 <td><code><a href="tsdoc/basic.html#get.name">name</a></code><br></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code><a href="tsdoc/basic.html#let">&#60;let></a></code></td>
+<td><code><a href="tsdoc/basic.html#let.name">name</a></code><br></td>
 <td>None</td>
 </tr>
 <tr>
@@ -238,8 +243,9 @@ their parent in element.  </p>
 <tr>
 <td rowspan="2"><a href="#Logical">Logical </a></td>
 <td><code><a href="tsdoc/basic.html#logical">&#60;logical></a></code></td>
-<td><code><a href="tsdoc/basic.html#logical.and">and</a></code><br>
-    <code><a href="tsdoc/basic.html#logical.or">or</a></code></td>
+<td><code><a href="tsdoc/basic.html#logical.op">op</a></code><br>
+    <code><a href="tsdoc/basic.html#logical.and">&nbsp;and</a></code><br>
+    <code><a href="tsdoc/basic.html#logical.or">&nbsp;or</a></code></td>
 <td>None</td>
 </tr>
 <td><code><a href="tsdoc/basic.html#test">&#60;test></a></code></td>
@@ -302,20 +308,21 @@ href="tsdoc/xhtml.html#pretty.yellow-tag">yellow-tag</a></code><br> </td>
 <tr>
 <td rowspan="4"><a href="#DataManip">Data Manipulation</a></td>
 <td><code><a href="tsdoc/basic.html#numeric">&#60;numeric></a></code></td>
-<td><code><a href="tsdoc/basic.html#numeric.sum">sum</a></code><br>
+<td><code><a href="tsdoc/basic.html#numeric.op">op</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.sum">&nbsp;sum</a></code><br>
     <code><a
-    href="tsdoc/basic.html#numeric.difference">difference</a></code><br> 
+    href="tsdoc/basic.html#numeric.difference">&nbsp;difference</a></code><br> 
     <code><a
-    href="tsdoc/basic.html#numeric.product">product</a></code><br>
+    href="tsdoc/basic.html#numeric.product">&nbsp;product</a></code><br>
     <code><a
-    href="tsdoc/basic.html#numeric.quotient">quotient</a></code><br> 
+    href="tsdoc/basic.html#numeric.quotient">&nbsp;quotient</a></code><br> 
     <code><a
-    href="tsdoc/basic.html#numeric.remainder">remainder</a></code><br>
-    <code><a href="tsdoc/basic.html#numeric.power">power</a></code><br>
-    <code><a href="tsdoc/basic.html#numeric.sort">sort</a></code><br>
-    <code><a href="tsdoc/basic.html#numeric.reverse">reverse</a></code><br>
-    <code><a href="tsdoc/basic.html#numeric.pairs">pairs</a></code><br>
-    <code><a href="tsdoc/basic.html#numeric.sep">sep</a></code><br>
+    href="tsdoc/basic.html#numeric.remainder">&nbsp;remainder</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.power">&nbsp;power</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.sort">&nbsp;sort</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.reverse">&nbsp;&nbsp;reverse</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.pairs">&nbsp;&nbsp;pairs</a></code><br>
+    <code><a href="tsdoc/basic.html#numeric.sep">&nbsp;&nbsp;sep</a></code><br>
     <code><a href="tsdoc/basic.html#numeric.digits">digits</a></code><br>
     <code><a href="tsdoc/basic.html#numeric.integer">integer</a></code><br>
     <code><a href="tsdoc/basic.html#numeric.extended">extended</a></code><br>
@@ -588,10 +595,13 @@ because there is always a "current" namespace and tagset in effect.</p>
 
 <h3><a name="Namespace"></a>Name Definition Elements</h3>
 
-<p>The <code>&#60;namespace></code> element provides the context in which
-<code>&#60;define entity></code>, <code>&#60;get></code>,
-<code>&#60;set></code> and <code>&#60;bind></code> operate, i.e., in which
-names are associated with values.</p>
+<p> The <code>&#60;namespace></code> element provides the context in which
+    <code>&#60;define entity></code>, <code>&#60;get></code>,
+    <code>&#60;set></code>, <code>&#60;let></code> and <code>&#60;bind></code>
+    operate, i.e., in which names are associated with values.  It's best to
+    think of a Namespace as a collection of what most programming languages
+    call ``variables''.
+</p>
 
 <p>It is, however, meaningful for <code>&#60;define></code>, etc. to occur
 outside of a <code>&#60;namespace></code> element
@@ -599,12 +609,39 @@ because there is always a "current" namespace in effect.  The outermost
 namespace in a document is called (has the prefix) ``<code>VAR:</code>'',
 because it contains the document processor's variables.</p>
 
-<p>The <code>&lt;bind&gt;</code> element is used almost exclusively for
-initialization: its contents are not expanded and the name cannot contain a
-namespace prefix.  It is, however, significantly more efficient when it can be
-used.  You will usually see it in XML code resulting from the
-<code>output</code> of a namespace; this allows namespaces and things that
-resemble namespaces (e.g., Agents) to be read in efficiently. </p>
+<p> Namespaces are ``nested'' -- if a name is not defined in the current
+    namespace, <code>&#60;get></code> will look ``up the stack'' to find a
+    namespace that <em>does</em> contain it.  Inner namespaces always have the
+    name of the element (tag) that defines them; the following elements define
+    namespaces:
+</p>
+
+<ul>
+  <li> <code>&lt;namespace&gt;</code>
+  <li> <code>&lt;extract&gt;</code>
+  <li> <code>&lt;repeat&gt;</code>
+  <li> any tag defined by <code>&lt;define&gt;</code>
+</ul>
+
+<p> The difference between <code>&#60;let></code> and <code>&#60;set></code>
+    is that if a variable already has a value, <code>&#60;set></code> will
+    simply change its value no matter which namespace it's defined in.  If no
+    such variable already exists, <code>&#60;set></code> will create one in
+    the <em>outermost</em> namespace, <code>VAR:</code>.  On the other hand,
+    <code>&#60;let></code> will always set a variable in the
+    <em>innermost</em> namespace, and will create a new one there if
+    necessary.
+</p>
+
+<p> The <code>&lt;bind&gt;</code> element is used almost exclusively for
+    initialization: its contents are not expanded and the name cannot contain
+    a namespace prefix.  It always defines its variable in the innermost
+    namespace.  Because it makes no attempt to expand its contents,
+    <code>&lt;bind&gt;</code> is significantly more efficient when it can be
+    used.  You will usually see it in XML code resulting from the
+    <code>output</code> of a namespace; this allows namespaces and things that
+    resemble namespaces (e.g., Agents) to be read in efficiently.
+</p>
 
 <h3>Documentation Elements</h3>
 
@@ -729,11 +766,13 @@ logical elements are <code>&#60;logical></code> and <code>&#60;test></code>.</p>
 </thead>
 <tbody>
 <tr>
-<td rowspan="2"><code><a>&#60;logical></a></code></td>
-<td><code><a>and</a></code></td>
+<td rowspan="3"><code><a>&#60;logical></a></code></td>
+<td><code><a>op</a></code></td>
+</tr>
+<td><code><a>&nbsp;and</a></code></td>
 </tr>
 <tr>
-<td><code><a>or</a></code></td>
+<td><code><a>&nbsp;or</a></code></td>
 </tr>
 <tr>
 <td rowspan="10"><code><a>&#60;test></a></code></td>
@@ -767,6 +806,9 @@ logical elements are <code>&#60;logical></code> and <code>&#60;test></code>.</p>
 <td><code><a>null</a></code></td>
 </tr>
 </tbody>
+
+
+
 </table><h2><a name="Document"></a>Document Structure Elements</h2><p>Document
 structure elements extract nodes or sets of nodes from a parse tree,
 and perform structural modifications on trees. The tree being operated
