@@ -50,7 +50,7 @@ goto ENDUSRDIR
 REM PIA_ROOT not set default is the user's home\.pia -- 
 REM  check for a home variable
 if  "%HOME%"==""  goto  NOHOME
-SET UHOME="%HOME%\.pia"
+SET UHOME="%HOME%\pia"
 goto ENDHOME
 :NOHOME
 REM No Home variable use default of c:\PIAUSERS
@@ -81,7 +81,7 @@ REM example: path=%path%;%JDKHOME%\bin
 REM cd to PIA\src\java directory as there is no explicit CLASSPATH
 
 echo Changing directories to %PIACLASSES%
-cd %PIACLASSES%
+cd /d %PIACLASSES%
 
 echo Running java org.risource.pia.Pia -vroot %PIAHOME% -root %UHOME% -home %PIAHOME%
 REM may need to change java to jre
