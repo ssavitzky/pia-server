@@ -4,7 +4,7 @@
 <body> <!-- Presents a form to collect a name, and processes it upon 
     return. -->
 
-<if>  <get name="FORM:submitNameButton"/>
+<if>  <get name="FORM:inputName"/>
    <then>  The name submitted was <b><get name="FORM:inputName"/></b></then>
    <else>  Type your name in the box</else>
 </if>

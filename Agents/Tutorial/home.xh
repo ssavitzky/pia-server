@@ -244,6 +244,30 @@
     <tr>
         <td>
             <font size='2' color='crimson'>
+                |
+            </font>
+        </td>
+        <form action='tutorial.xh' name='getDemo'>
+            <input type='hidden' name='demoName' value='editVaratt.xh' />
+            <td>
+                <input type='submit' value='try' checked='checked' />
+            </td>
+        </form>
+        <td>
+            <i>
+                Variable arguments/attributes
+            </i>
+        </td>
+        <td>
+            <a href='aboutVaratt.xh'>
+                about
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <font size='2' color='crimson'>
                 tough
             </font>
         </td>
