@@ -70,9 +70,17 @@
   <action mode="replace-content"><hide>
     <set name="VAR:h2"><numeric op="sum">1 <get name="VAR:h2"/></numeric></set>
     <set name="VAR:h3">0</set>
+    <let name="delinked">
+      <repeat><foreach>&content;</foreach><text op="trim">
+	 <logical op="or">
+	   <extract><from>&li;</from> a <content /></extract>
+	   &li;
+	 </logical>
+      </text> </repeat>
+    </let>
     <set name="VAR:toc"><get name="VAR:toc"/>
  <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-&h2;">&h2;: <text op="trim">
-	&content;
+	&delinked;
 	</text></a>
     </set>
     </hide> <a name="section-&h2;">&h2;:</a> <text op="trim">&content;</text><hide>
@@ -86,9 +94,17 @@
 	<test op="zero">&VAR:h2;</test>
 	<then>&content;</then>
 	<else><hide>
+	      <let name="delinked">
+		<repeat><foreach>&content;</foreach><text op="trim">
+		   <logical op="or">
+		     <extract><from>&li;</from> a <content /></extract>
+		     &li;
+		   </logical>
+		</text> </repeat>
+	      </let>
 	      <set name="VAR:h3"><numeric op="sum">1 <get name="VAR:h3"/></numeric></set>
 	      <set name="VAR:toc"><get name="VAR:toc"/>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-&h2;.&h3;">&h2;.&h3;: <text op="trim">&content;</text></a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-&h2;.&h3;">&h2;.&h3;: <text op="trim">&delinked;</text></a></font>
 	      </set>
 	      </hide><a name="section-&h2;.&h3;">&h2;.&h3;:</a> <text op="trim">&content;</text></else>
   </if></action>
@@ -113,5 +129,5 @@
     </if></action>
 </define>
 
-<em>$Id: toc.ts,v 1.3 2000-07-19 00:46:35 steve Exp $</em>
+<em>$Id: toc.ts,v 1.4 2000-07-21 20:22:59 steve Exp $</em>
 </tagset>
