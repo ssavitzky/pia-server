@@ -1,5 +1,5 @@
 ////// connectHandler.java: <connect> Handler implementation
-//	$Id: connectHandler.java,v 1.6 1999-04-17 01:19:07 steve Exp $
+//	$Id: connectHandler.java,v 1.7 1999-11-06 01:08:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.tree.TreeExternal;
  *	within external entities.  That suggests that the best implementation
  *	is simply to create a suitable entity and return its value.
  *
- * @version $Id: connectHandler.java,v 1.6 1999-04-17 01:19:07 steve Exp $
+ * @version $Id: connectHandler.java,v 1.7 1999-11-06 01:08:11 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -91,7 +91,7 @@ public class connectHandler extends GenericHandler {
       Output xout = ent.getValueOutput(cxt);
       if (xout != null) {
 	Copy.copyNodes(content, xout);
-	ent.closeOutput();
+	xout.close();
       } else {
 	// === should report an error if we can't output.
       }
@@ -107,7 +107,7 @@ public class connectHandler extends GenericHandler {
     } else if (!hide) {
       Input xin = ent.getValueInput(cxt);
       Copy.copyNodes(xin, out);
-      ent.closeInput();
+      xin.close();
     }
   }
 

@@ -1,5 +1,5 @@
 ////// ActiveOutput.java:  abstract base class for Output implementations.
-//	$Id: ActiveOutput.java,v 1.6 1999-07-14 20:20:35 steve Exp $
+//	$Id: ActiveOutput.java,v 1.7 1999-11-06 01:08:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,7 +32,7 @@ import org.w3c.dom.*;
  * An abstract base class for implementations of the Output interface
  *	that operate exclusively on ActiveNode's.<p>
  *
- * @version $Id: ActiveOutput.java,v 1.6 1999-07-14 20:20:35 steve Exp $
+ * @version $Id: ActiveOutput.java,v 1.7 1999-11-06 01:08:13 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input
@@ -60,6 +60,7 @@ public abstract class ActiveOutput extends CurrentActive implements Output {
 			  char[] buffer, int start, int length) {
     super.putCharData(nodeType, nodeName, buffer, start, length);
   }
+  public void close() {}
 
   public ActiveOutput(Tagset ts) { super(ts); }
 }

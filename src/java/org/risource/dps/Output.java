@@ -1,5 +1,5 @@
 ////// Output.java: Document Builder
-//	$Id: Output.java,v 1.6 1999-07-14 20:19:54 steve Exp $
+//	$Id: Output.java,v 1.7 1999-11-06 01:08:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.w3c.dom.NamedNodeMap;
  *	    <li> Convert a subtree into a String.
  *	</ul>
  *
- * @version $Id: Output.java,v 1.6 1999-07-14 20:19:54 steve Exp $
+ * @version $Id: Output.java,v 1.7 1999-11-06 01:08:08 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input
@@ -113,5 +113,8 @@ public interface Output {
    */
   public void putCharData(short nodeType, String nodeName,
 			  char[] buffer, int start, int length);
+
+  /** Close the output stream, if any. */
+  public void close();
 
 }

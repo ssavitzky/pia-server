@@ -1,5 +1,5 @@
 ////// Proxy: filtering proxy for an Output
-//	$Id: Proxy.java,v 1.5 1999-07-14 20:20:41 steve Exp $
+//	$Id: Proxy.java,v 1.6 1999-11-06 01:08:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import java.io.PrintStream;
  *	A Proxy can be used with no target to simply discard output.
  *	This is reasonably efficient.
  *
- * @version $Id: Proxy.java,v 1.5 1999-07-14 20:20:41 steve Exp $
+ * @version $Id: Proxy.java,v 1.6 1999-11-06 01:08:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -88,6 +88,10 @@ public class Proxy implements Output {
 			  char[] buffer, int start, int length) {
     if (target != null)
       target.putCharData(nodeType, nodeName, buffer, start, length);
+  }
+
+  public void close() { 
+    if (target != null) target.close();
   }
 
   /************************************************************************

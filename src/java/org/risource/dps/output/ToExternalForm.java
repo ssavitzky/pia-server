@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.7 1999-07-14 20:20:44 steve Exp $
+//	$Id: ToExternalForm.java,v 1.8 1999-11-06 01:08:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.7 1999-07-14 20:20:44 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.8 1999-11-06 01:08:14 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -109,6 +109,8 @@ public abstract class ToExternalForm extends CursorStack implements Output {
   /************************************************************************
   ** Operations:
   ************************************************************************/
+
+  public void close() {}
 
   public void putNode(Node aNode) { 
     // === should probably use syntax if defined.
