@@ -20,7 +20,7 @@
 <tagset name="src-xhtml"  include="src-html" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.1 2000-07-21 22:48:22 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.2 2000-08-10 16:00:48 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 
@@ -35,53 +35,53 @@
 <define entity="dc"><value>#3366ff</value></define><!-- definition color -->
 
 <define element="tagset" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="tagset" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="namespace" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="namespace" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="properties" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="properties" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 
 <define element="define" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="define" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="value" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="value" tc="&dc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="action" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="action" tc="&dc;"><expand>&content;</expand></elt></action>
 </define>
 
 <define element="doc" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="doc" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="note" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="note" tc="&dc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 
 <define element="do" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="do" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="make" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="make" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
@@ -90,94 +90,94 @@
 <h3>Name-binding tags</h3>
 
 <define element="bind">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="bind" tc="&dc;">&content;</elt></action>
 </define>
 <define element="let">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="let" tc="&dc;">&content;</elt></action>
 </define>
 <define element="get">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="get" tc="&dc;">&content;</elt></action>
 </define>
 <define element="set">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="set" tc="&dc;">&content;</elt></action>
 </define>
 
 <h3>Control-structure tags</h3>
 
 <define element="if" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="if" tc="&cc;"><expand>&content;</expand></elt-b></action>
 </define>
 <define element="then" syntax="quoted">
-  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="then" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="else" syntax="quoted">
-  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="else" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="else-if" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><wrap /><elt tag="else-if" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="elif" syntax="quoted">
-  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="elif" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="elsf" syntax="quoted">
-  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="elsf" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="test" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="test" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 
 <define element="repeat" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="repeat" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="foreach" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="foreach" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="for" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="for" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="start" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="start" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="stop" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="stop" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="step" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="step" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="while" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="while" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="until" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="until" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="first" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="first" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="finally" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="finally" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
@@ -186,163 +186,163 @@
 <h3>Computational Elements</h3>
 
 <define element="logical" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="logical" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="numeric" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="numeric" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="text" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="text" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="subst" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="subst" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="parse" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="parse" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="to-text" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="to-text" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 
 <define element="extract" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="extract" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="from" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="from" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="in" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="in" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="id" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="id" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="name" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="name" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="tm_like" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="tm_like" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="any-tag" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="any-tag" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="sort" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="sort" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="key" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="key" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="match" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="match" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="child" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="child" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="attr" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="attr" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="has-attr" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="has-attr" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="nodes" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="nodes" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="xptr" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="xptr" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="eval" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="eval" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="content" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="content" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="parent" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="parent" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="next" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="next" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="prev" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="prev" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="replace" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="replace" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="append" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="append" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="insert" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="insert" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="remove" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="remove" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt-b></action>
 </define>
 <define element="unique" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="unique" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
@@ -350,17 +350,17 @@
 <h3>Expansion Control Elements</h3>
 
 <define element="expand" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="expand" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="protect" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="protect" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="hide" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="hide" tc="&cc;"><em><expand>&content;</expand></em><hide>
     </hide></elt></action>
 </define>
@@ -369,22 +369,22 @@
 <h3>Link-like tags</h3>
 
 <define element="include" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="include" tc="&lc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="output" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="output" tc="&lc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="connect" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="connect" tc="&lc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="status" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="status" tc="&lc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
@@ -392,34 +392,29 @@
 <h3>Data Structures</h3>
 
 <define element="DOCUMENT" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="DOCUMENT" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="HEADERS" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="HEADERS" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="URL" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="URL" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
 <define element="QUERY" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="QUERY" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 
-<define element="" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="" tc="&cc;"><expand>&content;</expand><hide>
-    </hide></elt></action>
-</define>
 
 <h2>Tags defined in <code>xhtml.ts</code></h2>
 
