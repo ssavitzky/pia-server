@@ -141,7 +141,7 @@
   <li> Copy a <code>site.config</code> file if it has one.
   <li> Create a <em>modified</em> <code>subsite.config</code> file that puts
        the original directory in the default search path, but copies
-       everything else.
+       the rest of the metadata.
   <li> Create a new <code>README.html</code> file containing the date, user's
        name, and the pathname of the original directory.
 </ol>
@@ -161,7 +161,9 @@
 <blockquote><em>
     We need to take more than a cursory look at WebDAV, since the idea of
     XML-based metadata and file manipulation is very much the same idea as
-    what we're considering here.
+    what we're considering here.  WebDAV refers to a resource that contains
+    the URI's of ``member'' resources as a ``collection'', and the metadata
+    associated with a resource as ``properties''.
 </em></blockquote>
 
 <p> A directory's <code>subsite.config</code> file contains the following:
@@ -293,10 +295,85 @@
 
 <h2>Agents</h2>
 
+<p> The relationship between agents and directories will become simpler but
+    possibly less direct.  Every agent will have a single ``home directory'',
+    but it may be possible for a directory to serve as the home of more than
+    one agent.  Agents, in this case, would look like files under a directory,
+    rather than like directories.  For example, the history agent might be
+    something like <code>/History/History.agent</code>; the toolbar agents
+    might be <code>*.agent</code> under <code>/Toolbar</code>.
+
+<p> It will be possible to access agents by name by way of a namespace;
+    e.g. <code>AGENTS:History</code>.  Note, however, that individual agents
+    will not be mounted in URL space the way they are now -- there will just
+    be a collection of pages that ``know about'' a particular agent or group
+    of agents; the agents, in turn, will ``know about'' their home
+    directories.
+
+<p> Agents <em>will</em> correspond rather directly to the XML
+    (<code>.agent</code>) <em>document</em> that spawn them: it will be
+    possible (easy) for an agent to synchronize its state with its home file.
+    Similarly, inside an agent's code, presumably <code>~</code> will refer to
+    the agent's home subsite (directory).
+
+<p> In most cases it will be useful to map the URL <code>/~foo</code> into the
+    home subsite of agent <code>foo</code>; this will be an option, however.
+    Note that the mapping will be to the agent's home, not the agent's
+    internal namespace -- it will be up to the pages in the directory to
+    know about their corresponding agent(s).
+
+<p> In any case the whole idea of a DOFS agent simply goes away -- many of
+    the entries at the top level of the URL tree will just be passive virtual
+    subsites (for example, <code>/Doc</code>, <code>/Icon</code>, and
+    <code>/PIA</code>).
+
+<h3>Naming Alternatives</h3>
+
+<p> There are actually three alternatives for associating agents with
+    subsites: 
+
+<ol>
+  <li> There really <em>is</em> a subsite called, e.g.,
+       <code>/Toolbars/~remote</code>; it takes its default forms from, e.g.,
+       <code>/Toolbars/AgentDefaults</code>.  The ``history agent'' would
+       correspond directly to a subsite called <code>~History</code>.
+  <li> <code>~remote</code> is just a shorthand notation for the home
+       subsite of the <code>remote</code> agent, and might correspond to,
+       for example, <code>/Toolbar</code>.  Forms in <code>Toolbar</code>
+       would have to look at the <code>AGENT:</code> namespace to see how they
+       were invoked.  <code>/History</code> and <code>/~History</code> would
+       be synonyms.
+  <li> <code>~remote</code> is shorthand for the home subsite of the
+       <code>remote</code> agent, but we require a subsite to have at most a
+       single <em>visible</em> agent associated with it. 
+</ol>
+
+<p> The first scheme might have problems in some operating systems, if tildes
+    are treated specially.  It also makes a firm -- perhaps <em>too</em> firm
+    -- distinction between agent subsites and ordinary subsites, and makes it
+    impossible (by construction) to support multiple agents out of a single
+    subsite (though they can be accomodated by means of virtual subsites). 
+
+<p> On the other hand the second scheme, while reminiscent of Apache's virtual
+    directory scheme for users, may prove to be too confusing or complex for
+    application developers.  It also means that forms in subsites that
+    correspond to single agents either behave differently (by knowing their
+    agent) from forms in subsites with multiple agents, or else behave
+    differently depending on how we name them.
+
+<p> The third scheme sounds (superficially) like it may be a good compromise.
+    It avoids both the naming ugliness of the first scheme and the ambiguities
+    of the second.  It still permits invisible ``helper'' agents, though these
+    may be required to have virtual subsites as their homes.
+
+<p> A possibly-significant advantage of the second scheme is that it makes it
+    easy to restrict agents' write access to their own home subsites, without
+    relying on complicated systems of virtual links or more complex
+    permission schemes.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.11 1999-07-22 20:38:41 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.12 1999-07-24 00:14:11 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
