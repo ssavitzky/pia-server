@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA Release 2.1: To-Do List</title>
+</head><body>
+<h1>R2.1: To-Do List</h1>
+
+<blockquote><em>
+  This file contains pending tasks for the transition from the Release 2.0
+  series to the stable Release 2.1 series.  <strong>Other PIA developers are
+  encouraged to add their own favorites.</strong>
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="#Keywords">Keywords</a>
+  <li> <a href="#end">Oldest Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> <b>Hole</b> State maintenance <br>
+       When a subsite's properties are changed, the changes have to be written
+       out.  Concievably this could be done as a delta file, maybe even
+       <code>_subsite.xci</code>, that is always read in after the
+       <code>_subsite.xcf</code>.  It can even be defaulted so that, e.g.,
+       agents are read only once.  Alternatively one could save only the
+       properties, as a namespace.
+
+  <li> <b>Hole</b> Cached entities <br>
+       Need a way to specify that certain documents are to be cached as
+       entities.  This is another way to do state maintenance, giving
+       finer-grained control over what's preserved and what isn't, at the
+       expense of some conceptual complication for the developer. 
+
+  <li> <b>Hole</b> PropertyTable needs a handler. <br>
+       Need to be able to save PropertyTable objects, and read them back in.
+       This may very well replace Namespace for everything except entities.
+
+  <li> <b>Bug</b> Need a way to construct named nodes <br>
+       For example, declarations and processing instructions need both a name
+       and a type.
+
+  <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
+       with, e.g., a &lt;DOCTYPE&gt; element. 
+
+  <li> <b>Hole</b> Caching <br>
+       Need both ability to tee-off and save a proxied document, and a
+       &lt;copy&gt; tag (along the lines of &lt;input&gt; and &lt;output&gt;).
+       Possibly just &lt;connect&gt; with both <code>src</code> and
+       <code>dst</code> attributes.
+
+  <li> <b>Bug</b> GIF conversion <br>
+       Need to convert all <code>.gif</code> files to <code>.jpeg</code> or
+       <code>.png</code> to avoid patent entanglements.
+
+  <li> <b>Wish</b> Use PIA off-line for RiSource.org <br>
+       Should be an example of off-line website management with the PIA.
+
+  <li> <b>Bug</b> Non-strict HTML parsing <br>
+       Need a "nonstrict" attribute in &lt;tagset&gt;.
+
+  <li> <b>Impr</b> Separate tutorials and references <br>
+       Possibly bring back the old ``Manuals'' directory, or perhaps just move
+       each reference into its own subdirectory (which is true of tagset and
+       api references now).
+
+</ol>
+
+<a name="end">(End of list)</a>
+
+<h2><a name="Keywords">Description of Keywords</a></h2>
+
+(Listed in order of decreasing urgency.)
+
+<dl>
+  <dt> <b>Bug</b>
+  <dd> A (typically small) problem with a simple, unambiguous description of
+       its symptoms.
+  <dt> <b>Hole</b>
+  <dd> A piece of missing, but important, functionality.
+  <dt> <b>Goal</b>
+  <dd> A target capability (includes a date)
+  <dt> <b>Check</b>
+  <dd> Something to check for; a potential stumbling block or place where the
+       implementor may have cut corners in the heat of the moment.  For
+       example, Y2K problems.
+  <dt> <b>Impr</b>ovement
+  <dd> A desirable improvement.
+  <dt> <b>Prop</b>osal
+  <dd> A proposal that will need to be discussed further.
+  <dt> <b>Wish</b>
+  <dd> A desired improvement of low priority.
+</dl>
+
+<hr>
+<b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: r2.1.to-do.html,v 1.1 1999-10-27 22:06:31 steve Exp $</b><br>
+</body></html>
