@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 2000-02-29 01:12:51 bill Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 2000-04-25 23:40:59 steve Exp $ -->
 
 <Container>
   <!-- configure the workflow template directory -->
@@ -21,8 +21,7 @@
     -->
 
    
- <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin"
-         authenticate="/etc/passwd" >
+ <AGENT name="Workflow" criteria="false"  authenticate="/etc/passwd" >
 
      <initialize>
         <user-message>Workflow agent initialized with /etc/passwd
