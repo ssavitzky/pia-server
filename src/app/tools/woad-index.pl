@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.4 2000-06-27 18:36:19 steve Exp $
+#	$Id: woad-index.pl,v 1.5 2000-07-19 00:47:44 steve Exp $
 # Create WOAD index files.
 #
 
@@ -13,8 +13,10 @@ sub usage {
     print "	-v		Print version string and exit\n";
     print "  parameters: \n";
     print "	sources=<dir>	source root\n";
+    print "	root=<dir>	annotation root (same as -root <dir>)\n";
     print "	offset=<path>	document offset from root\n";
     print "	project=<name>	project identifier\n";
+    print "	prune=<regexp>	directories not to index (default [0-9]+)\n";
 }
 
 ### Parameters: 
@@ -28,6 +30,8 @@ $project	= "";
 $sourcePrefix	= ".source";
 $sourceSuffix	= ".notes";
 $wordPrefix	= ".words";
+
+$prune		= '[0-9]+';	# pattern for directories to prune
 
 ### Filename and extension classifiers:
 #	Each maps the extension or name onto a type description.
@@ -171,7 +175,7 @@ for ($i = 0; $i < @ARGV; ++$i) {
 	print version() . "\n";  
 	exit(0);
     } elsif ($arg eq '-root') {
-
+	$root = $ARGV[++$i];
     } elsif ($arg =~ /^-/) {
 	usage();
 	exit(1);
@@ -181,6 +185,10 @@ for ($i = 0; $i < @ARGV; ++$i) {
 	$offset = $1;
     } elsif ($arg =~ /^project\=(\S+)/) {
 	$project = $1;
+    } elsif ($arg =~ /^root\=(\S+)/) {
+	$root = $1;
+    } elsif ($arg =~ /^prune\=(\S+)/) {
+	$prune = $1;
     } elsif ($arg =~ /\=/) {
 	print STDERR "Unrecognized parameter $arg ignored\n";
     } else {				# handle file
@@ -221,16 +229,20 @@ sub indexDir {
     my ($d, $path) = (@_);
 
     # Open and read the directory.
-    opendir(DIR, "$d") || die "can't open directory $d";
-    my @files = readdir(DIR);
+    if (! opendir(DIR, "$d")) {
+	print STDERR "cannot open directory $d\n";
+	return;
+    }
+    my @files = sort(readdir(DIR));
     my @subdirs = ();
 
     # Open the corresponding index file for output
     my $xd = "$root$project/$sourcePrefix$path";
     $xd =~ s@//@/@g;
-    -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd\n";
+    -d $xd || mkdir($xd, 0777) || die "cannot create directory $xd/\n";
 
-    open (DIRINDEX, ">$xd/dirIndex.wi") || die "cannot open $xd/dirIndex.wi";
+    # === eventually compare dates on directory and dirIndex.wi
+    open (DIRINDEX, ">$xd/dirIndex.wi") || die "cannot create $xd/dirIndex.wi";
     print STDERR "indexing $d -> $xd\n";
 
     for (my $i= 0; $i < @files; ++$i) {
@@ -289,6 +301,14 @@ sub indexFile {
     if (-d $absPath) {		# Fill out entry for directory
 	$type = "dir";
 	$tdscr = $noIndexDirs{$f};
+	if ($prune ne '' && $f =~ /^$prune$/) { 
+	    $indexme = 0;		# prune as specified
+	    $tdscr = "directory (not indexed)";
+	    if (-f "$woadPath/dirIndex.wi") {
+		unlink("$woadPath/dirIndex.wi");
+		print STDERR "removed dirIndex.wi in pruned $woadPath";
+	    }
+	}
 	if (! $tdscr) {
 	    $indexme = 1;
 	    $tdscr = "directory";
@@ -399,5 +419,5 @@ sub globalIndices {
 ###### Utilities ########################################################
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.4 2000-06-27 18:36:19 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.5 2000-07-19 00:47:44 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
