@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.3 2000-06-07 23:44:37 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -35,7 +35,7 @@
 	defined here in HTML gets case-smashed.
   </doc>
   <action>
-<html>
+<html><hide>
   <if>&FORM:code;<then><set name="FORM:tsdoc">tsdoc</set></then></if>
   <set name="VAR:format"><if> &FORM:nested; <then>nested</then>
     <else-if>&FORM:raw;<then>raw</then></else-if>
@@ -44,7 +44,7 @@
     <else-if>&FORM:tsdoc;<then>tsdoc</then></else-if>
     <else>processed</else>
   </if></set>
-  <set name="VAR:wrap">&FORM:wrap;</set>
+  <set name="VAR:wrap">&FORM:wrap;</set></hide>
   <head><title>&DOC:path; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
@@ -60,24 +60,32 @@
     </if>
 
     <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
-      <tr><th align="left" colspan="2">
-          <big> &nbsp;<ss><a href="/.Woad/">WOAD</a> &VAR:format; source
-		listing</ss>
-	  </big>     
-	</th>
-      </tr>
       <tr> <td>
-	     <table>
+	     <table><!-- the nested table shrink-wraps its contents     -->
+	            <!-- so it doesn't get spread out by the width=100% -->
+	       <tr><th align="left">
+		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
+		   </th>
+		   <th align=left>
+		      <big> &VAR:format; source listing</big>
+		   </th>
+	       </tr>
 	       <tr>
-		 <td width="50">&nbsp;</td>
+		 <td align="right">-&gt;&nbsp;</td>
 		 <td>
 		      <xf fmt="processed" href="&DOC:path;">processed</xf>
 		      <xf fmt="wrapped" href="&DOC:path;?wrap">wrapped</xf>
 		      <xf fmt="nested" href="&DOC:path;?nested">nested</xf>
 		      <xf fmt="raw" href="&DOC:path;?raw">raw</xf>
-		      <if><test match=".ts$">&DOC:name;</match>
+		      <if><test match=".ts$">&DOC:name;</test>
 		          <then>
 		      	    <xf fmt="tsdoc"href="&DOC:path;?tsdoc">tsdoc</xf>
+		          </then>
+		      </if>
+		      <if><get name="SITE:targetServer" />
+		          <then>
+		      	    <a href="http://&SITE:targetServer;&DOC:path;">
+		      		&lt;server&gt;</a>
 		          </then>
 		      </if>
 		      <a href="/.Woad/help.xh#views">[help]</a>
@@ -88,21 +96,21 @@
 	   <td>&nbsp;</td>
       </tr>
     </table>
-
-<if> &FORM:nested;
+<!-- ===================================================================== -->
+<if> &FORM:nested;	<!-- ====== nested =============================== -->
   <then>
     <blockquote><em>
       This <tt>&VAR:format;</tt> listing is color-coded and indented to show
       the nesting level of the tags.  
 
-      <red>Note that because of current limitations omitted end
-      tags are shown, and linebreaks inside of tags are eliminated.  Missing
-      end tags may not be handled correctly.</red>
+      <red>Note that because of current limitations omitted end tags are
+      shown, and linebreaks inside of tags are eliminated.  Missing end tags
+      may not be handled correctly.</red>
 </em></blockquote>
 <hr />
 <pretty>&content;</pretty>
   </then>
-<else-if> &FORM:raw;
+<else-if> &FORM:raw;	<!-- ====== raw ================================== -->
   <then>
 <blockquote><em> This <tt>&VAR:format;</tt> listing shows the full contents of
   the file with no alteration.
@@ -110,7 +118,7 @@
 <hr />
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
-<else-if> &FORM:tsdoc;
+<else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
   <then>
 <blockquote><em> This <tt>&VAR:format;</tt> listing shows tagset
   documentation. 
@@ -118,7 +126,7 @@
 <hr />
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
-<else>
+<else>			<!-- ====== processed ============================ -->
     <blockquote><em>
 
       This <tt>&VAR:format;</tt> listing is color-coded and font-coded
@@ -127,9 +135,9 @@
       href="&DOC:path;">processed</a></tt> format, and is more readable in
       some cases.
 
-      <red>Note that because of current limitations omitted end
-      tags are shown, and linebreaks inside of tags are eliminated.  Missing
-      end tags may not be handled correctly.</red>
+      <red>Note that because of current limitations omitted end tags are
+      shown, and linebreaks inside of tags are eliminated.  Missing end tags
+      may not be handled correctly.</red>
     </em></blockquote>
 <hr />
 <if>&wrap;
@@ -138,8 +146,8 @@
 </if>
   </else>
 </if>
-<hr />
 
+<hr /><!-- ====== End of Listing ===================================== -->
 <if> &FORM:probe;
   <then>
 <hr />
@@ -166,7 +174,7 @@
   </body>
 </html>
   </action>
-</define>
+</define><!-- ====== end of wrapper =================================== -->
 
 <h3>Structural elements</h3>
 

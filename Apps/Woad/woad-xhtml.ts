@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.3 2000-06-07 23:44:38 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -67,10 +67,10 @@ Note that we only need these inside the PIA.
 </define>
 
 <define entity="blank-170x1">
-  <value><img src="&PIA:rootPath;Icon/white170x1.png" width="170" height="1" alt=" "></value>
+  <value><img src="&LOC:path;/Icon/white170x1.png" width="170" height="1" alt=" "></value>
 </define>
 <define entity="blue-dot">
-  <value><img src="&PIA:rootPath;Icon/dot-blue.png"
+  <value><img src="&LOC:path;/Icon/dot-blue.png"
 		height="20" width="20" alt="*"></value>
 </define>
 
@@ -330,13 +330,13 @@ Note that we only need these inside the PIA.
     </if>
 </hide>
 <table cellpadding=0 cellspacing=0>
-<tr><th><a href="&PIA:rootPath;"><img src="&PIA:rootPath;Icon/pia45.png"
+<tr><th><a href="http://RiSource.org/PIA/"><img src="&LOC:path;/Icon/pia45.png"
 			 border=0 width=85 height=45 alt="P I A"></a></th>
     <td valign=bottom>
       <table>
 	<tr><th valign=bottom align=left><expand>&WOAD-LOGO;</expand>: 
 	       Web-Organized Application Development</th></tr>
-	<tr height=6><td><img src="&PIA:rootPath;Icon/rule.png" height=6 width=469></td></tr>
+	<tr height=6><td><img src="&LOC:path;/Icon/rule.png" height=6 width=469></td></tr>
       </table>
     </td>
 </tr>
