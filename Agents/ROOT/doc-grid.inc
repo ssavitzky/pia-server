@@ -9,7 +9,7 @@
 
   <tr>  <td width=20>&nbsp;
     <th align=right valign=top bgcolor=silver>
-	<a href="/Doc/Release/">Release:</a> </th>
+	<a href="/Doc/Release/">Release Notes:</a> </th>
     <td>
 	||&nbsp;<a href="/Doc/Release/r2.0.html"><strong>2.0</strong></a> 
 	||&nbsp;<a href="/PIA/README">README</a>
@@ -37,4 +37,4 @@
     <td bgcolor=silver>&nbsp; 
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.8 1999-05-06 20:38:12 steve Exp $">
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.9 1999-05-11 01:28:17 steve Exp $">
