@@ -41,41 +41,35 @@
 <h3><a name='agents'>Standard Agents</a></h3>
 <dl> 
   <dt> <a name='View'>View agent</a>
-       <if><agent-running name='View'></agent-running><then><em>installed</em></then><else>
+       <if><agent-running name='View'></agent-running>
+           <then><em>installed</em></then><else>
   <dd> <form action='/&AGENT:name;/install-agent' method='POST'>
        <input type='submit' value='Install' />
        name: <input name='agent' value='View' />
        </form></dd></else></if>
   </dt><dt> <a name='Proxie'>Proxie agent</a>
-       <if><agent-running name='Proxie'></agent-running><then><em>installed</em></then><else>
+       <if><agent-running name='Proxie'/>
+           <then><em>installed</em></then><else>
   <dd> <form action='/&AGENT:name;/install-agent' method='POST'>
        <input type='submit' value='Install' />
        name: <input name='agent' value='Proxie' />
        </form></dd></else></if>
        <dl>
-	 <dt> <a name='Proxie'>Proxie agent</a>
-	      <if><agent-running name='Proxie'>
-	      </agent-running><then><em>installed</em></then><else>
-	 <dd> <form action='/Admin/install-agent' method='POST'>
-	      <input type='submit' value='Install' />
-	      name: <input name='agent' value='Proxie' />
-	      </form></dd></else></if>
-
 	 </dt><dt> <a name='History'>History agent</a>
-	      <if><agent-running name='History'>
-	      </agent-running><then><em>installed</em></then><else>
+	      <if><agent-running name='History' />
+	          <then><em>installed</em></then><else>
 	 <dd> <form action='/Admin/install-agent' method='POST'>
 	      <input type='submit' value='Install' />
 	      name: <input name='agent' value='History' />
 	      home: <input name='home-dir' value='./Proxie/History' />
 	      </form></dd></else></if>
 	 </dt><dt> <a name='Toolbar'>Toolbar agent</a>
-	      <if><agent-running name='Toolbar'>
-	      </agent-running><then><em>installed</em></then><else>
+	      <if><agent-running name='Toolbar' />
+	          <then><em>installed</em></then><else>
 	 <dd> <form action='/&AGENT:name;/install-agent' method='POST'>
 	      <input type='submit' value='Install' />
 	      name: <input name='agent' value='Toolbar' />
-	      type: <input name='type' value='Proxie' />
+	      path: <input name=path' value='Proxie' />
 	      </form></dd></else></if>
 	 </dt><dt> <em>Note:</em>
 	 </dt><dd> The following are properly sub-agents of Toolbar, but are
@@ -88,7 +82,9 @@
 		<dd> <form action='/&AGENT:name;/install-agent' method='POST'>
 		     <input type='submit' value='Install' />
 		     name: <input name='agent' value='remoteTools' />
-		     type: <input name='type' value='Proxie' />
+		     type: <input name="type" value="Proxie/Toolbar" />
+		     path: <input name="path" value="Proxie/Toolbar" />
+		     home: <input name="home-dir" value="Proxie/remoteTools" />
 		     </form></dd></else></if>
 		</dt><dt> <a name='fileTools'>fileTools agent</a>
 		     <if><agent-running name='fileTools'>
@@ -96,7 +92,9 @@
 		<dd> <form action='/&AGENT:name;/install-agent' method='POST'>
 		     <input type='submit' value='Install' />
 		     name: <input name='agent' value='fileTools' />
-		     type: <input name='type' value='Proxie' />
+		     type: <input name="type" value="Proxie/Toolbar" />
+		     path: <input name="path" value="Proxie/Toolbar" />
+		     home: <input name="home-dir" value="Proxie/fileTools" />
 		     </form></dd></else></if>
 	      </dt></dl>
 	 </dd><dt> <a name='Cache'>Cache agent</a> (keeps a copy of every external
@@ -106,21 +104,24 @@
 	 <dd> <form action='/&AGENT:name;/install-agent' method='POST'>
 	      <input type='submit' value='Install' />
 	      name:<input name='agent' value='Cache' />
-	      type: <input name='type' value='Proxie' /><br />
+	      path: <input name=path' value='Proxie' /><br />
 	      (could add more options here, like update frequency: always, never,
 	      once,...) 
 	      </form> </dd></else></if>
        </dt></dl>
 
-  </dt><dt> <a name='Demo'>Demo: Active Document Demonstration and Test agent</a>
+  </dt><dt> <a name='Demo'>Demo</a>
+       Active Document Demonstration and Test agent
        <if><agent-running name='Demo'></agent-running><then><em>installed</em></then><else>
   <dd> <FORM action='/&AGENT:name;/install-agent' method='POST'>
        <input type='submit' value='Install' />
        name: <input name='agent' value='Demo' />
        </FORM></dd></else></if>
 
-  </dt><dt> <a name='Swifty'>Tutorial agent</a> (Illustrates how to create an agent)
-       <if><agent-running name='Swifty'></agent-running><then><em>installed</em></then><else>
+  </dt><dt> <a name='Swifty'>Swifty</a>
+       (from tutorial: illustrates how to create an agent)
+       <if><agent-running name='Swifty' />
+           <then><em>installed</em></then><else>
   <dd> <form action='/&AGENT:name;/install-agent' method='POST'>
        <input type='submit' value='Install' />
        name:<input name='agent' value='Swifty' /><br />
@@ -208,5 +209,5 @@ Provides basic file browsing capabilities.
        form.
 </dd></dl>
 
-<footer cvsid='$Id: installers.xh,v 1.7 1999-03-27 02:29:23 pgage Exp $' />
+<footer cvsid='$Id: installers.xh,v 1.8 1999-03-30 01:08:53 steve Exp $' />
 </body></html>
