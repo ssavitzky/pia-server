@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.5 1999-10-19 01:04:20 steve Exp $
+//	$Id: SiteDoc.java,v 1.6 1999-11-17 18:31:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.5 1999-10-19 01:04:20 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.6 1999-11-17 18:31:35 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -192,6 +192,7 @@ public class SiteDoc extends TopProcessor {
     }
 
     Pia pia = Pia.instance();
+    define("agentNames", resolver.agentNames());
 
   }
 
@@ -204,8 +205,6 @@ public class SiteDoc extends TopProcessor {
     define("AGENT", (agent == null)? null : (Namespace)((ActiveNode)agent).getAttrList());
     define("agentName", agent.name());
     define("agentHome", agent.getHome().getPath());
-
-    define("agentNames", resolver.agentNames());
 
     define("entityNames", "");
     define("entityNames", entities.getNames());
