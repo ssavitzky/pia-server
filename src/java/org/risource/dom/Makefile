@@ -1,5 +1,5 @@
 ###### pia/Makefile:	Platform for Information Appliances
-#	$Id: Makefile,v 1.4 1999-04-07 23:20:33 steve Exp $
+#	$Id: Makefile,v 1.5 2000-04-28 22:48:00 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,7 +26,8 @@ TOPDIR=../../..
 
 PACKAGES =
 
-FILES = 
+FILES = \
+	ToDocument.java
 
 include $(TOPDIR)/makefiles/file.make
 #include $(TOPDIR)/makefiles/package.make
