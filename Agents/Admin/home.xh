@@ -3,29 +3,42 @@
 <title>&piaUSER;'s &AGENT:name;: Home Page</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
-<set entity='entity' name='title'>Server administration agent</set>
+<set entity='entity' name='title'>Server administration</set>
 <header show-date='yes'>&title;</header>
 <sub-head page='home' />
 
 <hr />
-This is the home page for the ``<strong>&agentName;</strong>'' agent.  It is
-used for controlling the other agents running on this PIA.  An agent name
-without a final slash leads to the agent's <em>home page</em>.  With the slash
-you get a generic <em><a href='index'>index</a></em> page.
+<p> This is the home page for the ``<strong>&agentName;</strong>''
+    application.  It is used for controlling the other applications running on
+    this PIA.  A name with a ``<code>~</code>'' (tilde) character in front of
+    it is a shortcut to the application's <em>home directory</em>, which may
+    be anywhere in the PIA's URL space.
+</p>
+
+<p> Note that not all web applications in a PIA correspond to agents (although
+    this was once the case).  Strictly speaking, an ``agent'' is a
+    semi-autonomous piece of XML code that gets invoked (expanded) when
+    certain criteria are met.  However, any application with a
+    ``<code>~</code>''-prefixed home directory is called an agent by courtesy,
+    in part for historical reasons (just as some lawyers use the courtesy
+    title ``esquire''), and in part because it just plain sounds better than
+    ``application''. 
+</p>
+
 <hr />
 <table><tr><td width='340' valign='top'>
 <h3>Useful Documents and Forms:</h3>
 <ul>
-  <li> <a href='/&AGENT:name;/list-agents'>list running agents</a></li>
-  <li> <a href='/&AGENT:name;/installers'>install new agents</a></li>
-  <li> <a href='/&AGENT:name;/options'>view/change options</a></li>
+  <li> <a href='list-agents'>list running applications</a></li>
+  <li> <a href='installers'>install new agents</a></li>
+  <li> <a href='options'>view/change options</a></li>
 <if><test not='not' exact='exact' match='pia'>&piaUSER;</test>
 <then>
-  <li> <a href='/&AGENT:name;/debug'>control debugging</a>(currently
+  <li> <a href='debug'>control debugging</a>(currently
        <if><test zero='zero'><get name='PIA:debugging' /></test>
            <then>off</then><else>on</else></if>)</li>
-  <li> <a href='/&AGENT:name;/remove-agent'> remove agent</a></li>
-  <li> <a href='/&AGENT:name;/dump-agents'> display all agents in XML</a></li>
+  <li> <a href='remove-agent'> remove agent</a></li>
+  <li> <a href='dump-agents'> display all agents in XML</a></li>
 </then>
 <else>
 <!--  was a link to shutdown.if  -->
@@ -35,51 +48,56 @@ you get a generic <em><a href='index'>index</a></em> page.
 <h3>Other Information:</h3>
 <ul>
   <li> <a href='/Doc/'><b>Documentation</b> </a>
-       <if><agent-running name='Doc'></agent-running>
-       <else><a href='/&AGENT:name;/installers#Doc'><em>install needed!</em></a>
-       </else></if>
        <ul>
 	 <li> <a href='/Doc/doclist.html'>Complete list</a></li>
 	 <li> <a href='/Doc/Release'>Release Notes</a></li>
 	 <li> <a href='/Doc/Notes'>Notes</a></li>
        </ul>
   </li>
-  <li> <a href='/&AGENT:name;/programming'>Programming information</a>
+  <li> <a href='programming'>Programming information</a>
   </li>
-  <li> <a href='/&AGENT:name;/help'>Online Help</a></li>
+  <li> <a href='help'>Online Help</a></li>
 </ul>
 </td></tr></table>
+
+<p> <strong>Note: </strong> Some of the preceeding forms are not working yet;
+    there have been major changes in the way the PIA's information is
+    organized, and many links may be broken.
+</p>
+
 <hr />
 <h2><a name='naming'>Naming Conventions:</a></h2>
 <set name='name'><em>Agent</em></set>
 
 <p> An Agent name without a final slash is redirected to the Agent's ``home
-page'' (usually <code>home.xh</code>).  With a final slash you will always go
-to a more-or-less generic index page.  A name of the form <a
-href='/&AGENT:name;~'>/&name;~</a> (i.e. appending a tilde to the Agent's
-name) will take you to the Agent's ``home page.''  In the 1-line index above,
-the generic index is linked from the ``<code>/</code>'' <em>after</em> the
-name.
+    page'' (usually <code>home.xh</code>).  With a final slash you will always
+    go to a more-or-less generic index page.  A name of the form <a
+    href='/~&AGENT:name;'>/~&name;</a> (i.e. prefixing a tilde to the Agent's
+    name) will take you to the Agent's ``home page''.
+</p>
 
 <dl>
-  <dt> <a href='/&AGENT:name;'>/&name;</a>
-  </dt><dd> Usually, the &name; agent's home page;, except that some agents may
-       redirect this (for example, to their data directory).
-  </dd><dt> <a href='/&AGENT:name;~'>/&name;~</a>
-  </dt><dd> The &name; agent's <em>real</em> home page: <code>home.xh</code>
-  in the agent's 
-  code directory.  This link works even if the home page is redirected.
-  </dd><dt> <a href='/&AGENT:name;~/'>/&name;~/</a>
-  </dt><dd> The &name; agent's ``generic'' index page.  Usually not very
-       interesting, but occasionally useful if there are things the home page
-       leaves out.
-  </dd><dt> <a href='/~&AGENT:name;'>/~&name;</a>
-  </dt><dd> The home page of the &name; agent's data directory (typically
-       <code>index.html</code>), or a generic directory listing.
-  </dd><dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
-  </dt><dd> A generic listing of the &name; agent's data directory.
-</dd></dl>
+  <dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
+  </dt>
+  <dd> An alias for the &name; agent's home directory.
+  </dd>
+  <dt> <a href='/~&AGENT:name;/.'>/~&name;/.</a>
+  </dt>
+  <dd> A generic listing of the agent's home directory.  This will work
+       with <em>any</em> directory, not just agent homes, although it can be
+       hidden by the site designer.
+  </dd>
+  <dt> <a href='/~&AGENT:name;/DATA/'>/~&name;/DATA/</a>
+  </dt>
+  <dd> Usually the &name; agent's data directory, if it has one.  This is just
+       a convention that may not be universal.
+  </dd>
+  <dt> <a href='/~&AGENT:name;/DATA/.'>/~&name;/.</a>
+  </dt>
+  <dd> A generic listing of the &name; agent's data directory.
+       </dd>
+</dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.10 1999-07-09 20:54:37 steve Exp $' />
-</p></body></html>
+<footer cvsid='$Id: home.xh,v 1.11 1999-09-24 18:49:11 steve Exp $' />
+</body></html>

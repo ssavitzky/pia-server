@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.14 1999-07-09 20:54:35 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.15 1999-09-24 18:49:11 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -35,6 +35,10 @@
    belong, in the <code>org.risource.pia.agent</code> package.
 </note>
 
+<note author=steve>
+  Almost of the following stuff is made obsolete by the new
+  naming structure.
+</note>
 
 <define element=AGENT handler='org.risource.pia.agent.AgentBuilder'
         quoted='quoted'>
@@ -256,55 +260,29 @@
 <h3>Miscellaneous tables and lists:</h3>
 
 <define element=agent-index empty>
-  <doc> Put out an index of agents. </doc>
+  <doc> Put out an index of agents and applications. </doc>
   <action>
     <table border=1>
-      <tr><th align=left> /path/name  </th>
-	  <th> home  </th>
+      <tr><th> name  </th>
+	  <th align=left> home directory </th>
 	  <th> index </th>
 	  <th> data  </th>
-	  <th> type  </th>
       </tr>
       <repeat>
         <foreach entity="li"><get name="agentNames"/></foreach>
         <tr>
 	  <set name=pname><agent-home agent="&li;"/></set>
-	  <set name=type><agent-home type agent="&li;"/></set>
-	  <th align=left><a href="&pname;"><get name="pname"/></a> </th>
-	  <td> <a href="&pname;~"><em>path</em>~</a> </td>
-	  <td> <a href="&pname;~/"><em>path</em>~/</a> </td>
+	  <th align=left> <a href="/~&pname;">&li;</a> </th>
+	  <td><a href="&pname;/"><get name="pname"/></a> </td>
+	  <td> <a href="&pname;/.">/~&li;/.</a> </td>
 	  <td>
-		<if><status item=exists src="&pname;~/~/" />
-		    <then><a href="&pname;~/~/"><em>path</em>~/~/</a></then>
+		<if><status item=exists src="&pname;/DATA" />
+		    <then><a href="&pname;/DATA/">/~&li;/DATA/</a></then>
 		    <else>&nbsp;</else>
-		</if></td>
-	  <td>
-		<if><test exact match="/"><get name="type"/></test>
-		    <then>&nbsp;</then>
-		    <else><a href="&type;"><get name="type"/></a></else>
-		</if></td>
+		</if>
+	  </td>
 	</tr>
       </repeat>
-    </table>
-  </action>
-</define>
-
-<define element=agent-index-pre empty>
-  <doc> Put out an index of agents using <tag>pre</tag>.  Might be useful
-	with browsers that lack table support, if there are any left.
-  </doc>
-  <action>
-    <table cellspacing=0 cellpadding=0 align=center border=0>
-    <tr><th width=170 valign=center><get name="A100"/></th>
-      <td valign=center>
-	<table cellspacing=0 cellpadding=0 align=center border=0>
-	<tr> <!-- need an image to fix the size -->
-      <pre><i><text pad align=right width=15>Index</text>	Home</i>
-      <repeat list="&agentNames;" entity="li"
-	     ><text pad align=right width=15><a href="/&li;/"><b>&li;/</b></a
-	     ></text>	<agent-home link agent="&li;"/>
-      </repeat></pre></tr>
-    </table></td></tr>
     </table>
   </action>
 </define>
@@ -331,7 +309,6 @@
 	     <xopt pages="home index help options"><get name="blue-dot"/></xopt>
 	</th>
 	<td> <xa href="home">Home</xa>
-    	     <xa href="index">Index</xa>
     	     <xa href="help">Help</xa>
 	     <xa href="options">Options</xa>
 	</td></tr>
@@ -340,6 +317,7 @@
 	<td> <xa href="config">Configure</xa> /
 	     <xa href="control">Control</xa> PIA
 	</td></tr>
+  <if><then><!-- This stuff is currently obsolete! -->
     <tr><th valign=top align=right>
 	     <xopt page="&attributes:page;"
 		   pages="agents installers load-agent remove-agent"
@@ -352,6 +330,8 @@
  	    <xa href="remove-agent">remove</xa>
 	    agents
 	</td></tr>
+      </then>
+  </if>
     <tr><th valign=top align=right>Files: &nbsp; </th>
 	<td><a href="/Doc/"><b>Docs</b></a>
 	    <a href="/~/">Data</a>
@@ -362,10 +342,8 @@
     <tr><th valign=top align=right><b>Agents:</b> &nbsp;
         <td valign=top>
             <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
-              <do name="a"><set name="href">/<get name="foo"/></set>
+              <do name="a"><set name="href">/~<get name="foo"/>/</set>
 		  <get name="foo"/></do>
-	      <do name="a"><set name="href">/<get name="foo"/>~/</set>
-		  <b> / </b></do>
             </repeat><br>
 	</td></tr>
    <get name=content />
@@ -383,10 +361,9 @@
   <action>
 	<a href="/">PIA</a> ||
           <make name="a">
-	    <set name="href"><get name="AGENT:pathName"/></set>
+	    <set name="href">/~<get name="AGENT:name"/>/</set>
 	    <get name="AGENT:name"/></make>:
-          <xlink text="home"><get name="AGENT:pathName"/>~</xlink>
-          <xlink text="/index/"><get name="AGENT:pathName"/>~/</xlink>
+          <xlink text="/home/"><get name="AGENT:pathName"/></xlink>
 	  <xlink text="agents"><get name="AGENT:pathName"/>/list-agents</xlink>
   </action>
 </define>
@@ -424,6 +401,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.14 1999-07-09 20:54:35 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.15 1999-09-24 18:49:11 steve Exp $</b><br />
 </tagset>
 
