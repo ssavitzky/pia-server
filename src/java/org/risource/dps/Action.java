@@ -1,5 +1,5 @@
 ////// Action.java: Active Node action handler interface
-//	$Id: Action.java,v 1.3 1999-03-12 19:24:44 steve Exp $
+//	$Id: Action.java,v 1.4 1999-03-27 01:28:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import org.risource.dps.active.*;
  *	processing (including presenting) a Node.  <p>
  *
  *
- * @version $Id: Action.java,v 1.3 1999-03-12 19:24:44 steve Exp $
+ * @version $Id: Action.java,v 1.4 1999-03-27 01:28:26 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -115,37 +115,5 @@ public interface Action {
    *	Otherwise, it is simply copied.
    */
   public boolean expandContent();
-
-  /************************************************************************
-  ** Presentation Operations:
-  ************************************************************************/
-
-  /** Converts the Node to a String. <p>
-   *
-   *	Note that a Nodewould be quite capable of doing this using the 
-   *	standard defaults; passing it off to the Handler means that
-   *	we can give the same Document different physical representations
-   *	if necessary.<p>
-   *
-   *	<b>Implementation Note:</b> It is important that the Handler's
-   *	<code>convertToString</code> method <em>not</em> call the Token's
-   *	<code>toString</code>, method, since that will normally call the
-   *	Handler and produce an infinite recursion.  Use
-   *	<code>basicToString</code> instead. <p>
-   *
-   * === Not clear where entity, url encoding and decoding is done. ===
-   */
-  public String convertToString(ActiveNode n);
-
-  /** Converts the Node to a String according to the given syntax. <p>
-   *
-   *  The string corresponding to a node is:
-   *	<pre>
-   *	     convertToString(t, -1) + 
-   *	     convertToString(t,  0) +
-   *	     convertToString(t,  1)
-   *	</pre>
-   */
-  public String convertToString(ActiveNode n, int syntax);
 
 }

@@ -1,5 +1,5 @@
 ////// ParseTreePI.java -- implementation of ActivePI
-//	$Id: ParseTreePI.java,v 1.3 1999-03-12 19:25:48 steve Exp $
+//	$Id: ParseTreePI.java,v 1.4 1999-03-27 01:28:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActivePI interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: ParseTreePI.java,v 1.3 1999-03-12 19:25:48 steve Exp $
+ * @version $Id: ParseTreePI.java,v 1.4 1999-03-27 01:28:33 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dom.Node
  * @see org.risource.dps.active.ActiveNode
@@ -114,9 +114,7 @@ public class ParseTreePI extends ParseTreeNamed implements ActivePI {
   }
 
 
-  /** Convert the Token to a String using the Handler's
-   *	<code>convertToString</code> method, if there is one.
-   *	Otherwise it uses  <code>basicToString</code>.
+  /** Convert the Token to a String.
    */
   public String toString() {
     return startString() + contentString() + endString();
