@@ -1,5 +1,5 @@
 // NameUtils.java
-// $Id: NameUtils.java,v 1.5 1999-07-20 01:05:44 steve Exp $
+// $Id: NameUtils.java,v 1.6 2000-08-30 22:58:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -120,6 +120,8 @@ public class NameUtils {
     String s = (base == null)? "" : base;
     if (base != null && !base.endsWith(filesep)
 	&& !urlPath.startsWith("/")) s += filesep;
+    else if (base != null && base.endsWith(filesep)
+	&& urlPath.startsWith("/")) urlPath = urlPath.substring(1);
     for (int i = 0; i < urlPath.length(); ++i) {
       char c = urlPath.charAt(i);
       if (c == '/') s += filesep; else s += c;
