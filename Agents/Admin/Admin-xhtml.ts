@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.12 1999-05-21 21:47:52 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.13 1999-06-26 00:47:27 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -63,22 +63,23 @@
     <doc> If set, load the agent automatically on startup.  </doc>
   </define>
   <action>
-    <set name="new"><agent-file id="&attributes:id;"
-			        on-start="&attributes:on-start;"
-		       >&content;</agent-file></set>
+    <set name="new"><do name="agent-file">
+			<set name="id"><get name="attributes:id"/></set>
+			<set name="on-start"><get name="attributes:on-start"/></set>
+		       <get name="content"/></do></set>
     <hide>
-      <if><extract><from>&AGENT:agent-files;</from>
-		   <id recursive>&attributes:id;</id></extract>
+      <if><extract><from><get name="AGENT:agent-files"/></from>
+		   <id recursive><get name="attributes:id"/></id></extract>
 	  <then>
-	    <extract><from>&AGENT:agent-files;</from>
-		     <id recursive>&attributes:id;</id>
-		     <replace node>&new;</replace>
+	    <extract><from><get name="AGENT:agent-files"/></from>
+		     <id recursive><get name="attributes:id"/></id>
+		     <replace node><get name="new"/></replace>
 	    </extract>
 	  </then>
 	  <else>
-	    <extract><from>&AGENT:agent-files;</from>
+	    <extract><from><get name="AGENT:agent-files"/></from>
 		     agent-files
-		     <insert>  &new;
+		     <insert>  <get name="new"/>
 </insert>
 	    </extract>
 	  </else>
@@ -87,39 +88,44 @@
   </action>
 </define>
 
-<define element=agent-load>
+<define element="agent-load">
   <doc> Load agents from the file specified in the content, using the
 	Admin-agent tagset.  Return the pathName of each agent loaded.
   </doc>
-   <define attribute=register optional>
+   <define attribute="register" optional>
       <doc> If present, register the agent.
       </doc>
    </define>
   <action><text trim>
-    <set name='loaded'><include src='&content;' tagset='Admin-agent'/></set>
-    <if>&attributes:register;
+    <set name='loaded'><do name="include">
+			   <set name="src"><get name="content"/></set>
+			   <bind name="tagset">Admin-agent</bind></do></set>
+    <if><get name="attributes:register"/>
 	<then><hide>
-	   <set name="agents"><extract><from>&loaded;</from>
+	   <set name="agents"><extract><from><get name="loaded"/></from>
 					<name recursive>AGENT</name> #element
 			      </extract></set>
-	   <repeat><foreach>&agents;</foreach>
-		   <set name="id"><extract><from>&li;</from>
+	   <repeat><foreach><get name="agents"/></foreach>
+		   <set name="id"><extract><from><get name="li"/></from>
 					   <name>pathName</name>
 					   <eval/></extract></set>
-		   <set name="st"><extract><from>&li;</from>
+		   <set name="st"><extract><from><get name="li"/></from>
 					   <name>onStart</name>
 					   <eval/></extract></set>
-		   <if>&id;<then><register-agent id="&id;"
-				   on-start="&st;">&content;</register-agent>
-                           </then></if>
+		   <if><get name="id"/>
+		       <then><do name="register-agent">
+				<set name="id"><get name="id"/></set>
+				<set name="on-start"><get name="st"/></set>
+				<get name="content"/></do>
+                       </then></if>
 	  </repeat>
 	</hide></then>
     </if>
     <extract sep=' '>
-	     <from>&loaded;</from>
-	     <name recursive>AGENT</name>
-	     <attr>pathName</attr>
-	     <eval />
+	<from><get name="loaded"/></from>
+	<name recursive>AGENT</name>
+	<attr>pathName</attr>
+	<eval />
     </extract>
   </text></action>
 </define>
@@ -134,18 +140,18 @@
 	agents. 
   </doc>
   <action>
-    <set name="AGENT:agent-files"><extract><from>&content;</from>
+    <set name="AGENT:agent-files"><extract><from><get name="content"/></from>
 			      		   agent-files
 				  </extract></set>
-    <set name="list"><extract><from>&AGENT:agent-files;</from>
+    <set name="list"><extract><from><get name="AGENT:agent-files"/></from>
 			      <name recursive>agent-file</name>
 			      <has-attr>on-start</has-attr>
 			      <content />
 		     </extract></set>
 
-    <repeat><foreach>&list;</foreach>
+    <repeat><foreach><get name="list"/></foreach>
 	    <user-message>  loaded <hide>
-		    </hide><agent-load>&li;</agent-load><hide>
+		    </hide><agent-load><get name="li"/></agent-load><hide>
 		    </hide> from <status src='&li;' item='path'/></user-message>
     </repeat>
     <user-message>Loading complete.</user-message>
@@ -259,10 +265,12 @@
 	  <th> data  </th>
 	  <th> type  </th>
       </tr>
-      <repeat list="&agentNames;" entity="li"><tr>
+      <repeat>
+        <foreach entity="li"><get name="agentNames"/></foreach>
+        <tr>
 	  <set name=pname><agent-home agent="&li;"/></set>
 	  <set name=type><agent-home type agent="&li;"/></set>
-	  <th align=left><a href="&pname;">&pname;</a> </th>
+	  <th align=left><a href="&pname;"><get name="pname"/></a> </th>
 	  <td> <a href="&pname;~"><em>path</em>~</a> </td>
 	  <td> <a href="&pname;~/"><em>path</em>~/</a> </td>
 	  <td>
@@ -271,9 +279,9 @@
 		    <else>&nbsp;</else>
 		</if></td>
 	  <td>
-		<if><test exact match="/">&type;</test>
+		<if><test exact match="/"><get name="type"/></test>
 		    <then>&nbsp;</then>
-		    <else><a href="&type;">&type;</a></else>
+		    <else><a href="&type;"><get name="type"/></a></else>
 		</if></td>
 	</tr>
       </repeat>
@@ -287,7 +295,7 @@
   </doc>
   <action>
     <table cellspacing=0 cellpadding=0 align=center border=0>
-    <tr><th width=170 valign=center>&A100;</th>
+    <tr><th width=170 valign=center><get name="A100"/></th>
     <td valign=center>
       <table cellspacing=0 cellpadding=0 align=center border=0>
       <tr> <!-- need an image to fix the size -->
@@ -312,37 +320,37 @@
 	  <code>home</code>.
     </doc>
   </define>
-  <action>
+  <action><set name="page"><get name="attributes:page"></set>
 <table cellspacing=0 cellpadding=0 border=0>
-<tr><th align=center valign=center nowrap width=170>&A100;
+<tr><th align=center valign=center nowrap width=170><get name="A100"/>
     <td>
     <table cellspacing=0 cellpadding=0 border=0>
-    <tr><th align=left nowrap width=170>&blank-170x1;</th><td></td></tr>
-    <tr><th align=right><xopt page="&attributes:page;"
-			      pages="home index help
-			      options">&blue-dot;</xopt></th>
-	<td> <xa href="home" page="&attributes:page;">Home</xa>
-    	     <xa href="index" page="&attributes:page;">Index</xa>
-    	     <xa href="help" page="&attributes:page;">Help</xa>
-	     <xa href="options" page="&attributes:page;">Options</xa>
+    <tr><th align=left nowrap width=170><get name="blank-170x1"/></th>
+	<td></td></tr>
+    <tr><th align=right>
+	     <xopt pages="home index help options"><get name="blue-dot"/></xopt>
+	</th>
+	<td> <xa href="home">Home</xa>
+    	     <xa href="index">Index</xa>
+    	     <xa href="help">Help</xa>
+	     <xa href="options">Options</xa>
 	</td></tr>
     <tr><th align=right>
-	     <xopt page="&attributes:page;"
-		   pages="config control">&blue-dot;</xopt> </th>
-	<td> <xa href="config" page="&attributes:page;">Configure</xa> /
-	     <xa href="control" page="&attributes:page;">Control</xa> PIA
+	     <xopt pages="config control"><get name="blue-dot"/></xopt> </th>
+	<td> <xa href="config">Configure</xa> /
+	     <xa href="control">Control</xa> PIA
 	</td></tr>
     <tr><th valign=top align=right>
 	     <xopt page="&attributes:page;"
 		   pages="agents installers load-agent remove-agent"
-		  >&blue-dot;</xopt> </th>
-	     &nbsp;
+		  ><get name="blue-dot"/></xopt>
+	     &nbsp; </th>
 	<td valign=top>
-	    <xa href="list-agents" page="&attributes:page;">list</xa> / 
-	    <xa href="installers" page="&attributes:page;">install</xa> / 
-	    <xa href="load-agent" page="&attributes:page;">load</xa> / 
- 	    <xa href="remove-agent" page="&attributes:page;">remove</xa>
-	     agents
+	    <xa href="list-agents">list</xa> / 
+	    <xa href="installers">install</xa> / 
+	    <xa href="load-agent">load</xa> / 
+ 	    <xa href="remove-agent">remove</xa>
+	    agents
 	</td></tr>
     <tr><th valign=top align=right>Files: &nbsp; </th>
 	<td><a href="/Doc/"><b>Docs</b></a>
@@ -352,8 +360,12 @@
 	    <a href="/~/Agents/">(Customized)</a>
 	</td></tr>
     <tr><th valign=top align=right><b>Agents:</b> &nbsp;
-        <td valign=top> <repeat list="&agentNames;" entity="foo">
-            <a href="/&foo;">&foo;</a> <a href="/&foo;/"><b> / </b></a>
+        <td valign=top>
+            <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
+              <do name="a"><set name="href">/<get name="foo"/></set>
+		  <get name="foo"/></do>
+	      <do name="a"><set name="href">/<get name="foo"/>~/</set>
+		  <b> / </b></do>
             </repeat><br>
 	</td></tr>
    <get name=content />
@@ -369,9 +381,13 @@
 	want to put after the standard start.
   </doc>
   <action>
-<a href="/">PIA</a> || <a href="/&AGENT:name;">&AGENT:name;</a>:
-<a href="/&AGENT:name;/">/index/</a>
-<a href="/&AGENT:name;/agents">agents</a>
+	<a href="/">PIA</a> ||
+          <make name="a">
+	    <set name="href"><get name="AGENT:pathName"/></set>
+	    <get name="AGENT:name"/></make>:
+          <xlink text="home"><get name="AGENT:pathName"/>~</xlink>
+          <xlink text="/index/"><get name="AGENT:pathName"/>~/</xlink>
+	  <xlink text="agents"><get name="AGENT:pathName"/>/list-agents</xlink>
   </action>
 </define>
 
@@ -387,27 +403,27 @@
 <hr>
 <nav-bar/>
 <hr>
-<a href="/&AGENT:name;">&AGENT:name;</a> agent on
-<if><test exact  match='pia'>&piaUSER;</test>
+<a href="/&AGENT:name;"><get name="AGENT:name"/></a> agent on
+<if><test exact  match='pia'><get name="piaUSER"/></test>
     <then> the </then>
-    <else> &piaUSER;'s</else></if>
-<if><test exact match='pia'>&piaUSER;</test>
+    <else> <get name="piaUSER"/>'s</else></if>
+<if><test exact match='pia'><get name="piaUSER"/></test>
     <then> information appliance </then>
     <else>Personal Information Agency</else></if><br>
-<b>URL:</b> &lt;<a href="&url;">&url;</a>&gt;
+<b>URL:</b> &lt;<xlink>&url;</xlink>&gt;
 <hr>
 <set name=myear><subst match="/.* " result=", "><extract>
     &attributes;<name>cvsid<eval/><text split>&list;</text> 3
     </extract> </set>
-<b>Copyright &copy; &myear; Ricoh Silicon Valley</b>.
-   Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
-<em><extract>&attributes;<name>cvsid<eval/></extract></em>
+<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
+   Open Source at &lt;<b><get name="RiSource.org"/>/<get name="RiSource.org.pia"/></b>&gt;.<br>
+<em><extract><get name="attributes"/><name>cvsid<eval/></extract></em>
 
   </action>
 </define>
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.12 1999-05-21 21:47:52 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.13 1999-06-26 00:47:27 steve Exp $</b><br />
 </tagset>
 
