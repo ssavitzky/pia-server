@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.17 2000-02-25 22:30:33 steve Exp $
+//	$Id: defineHandler.java,v 1.18 2000-06-07 19:09:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.17 2000-02-25 22:30:33 steve Exp $
+ * @version $Id: defineHandler.java,v 1.18 2000-06-07 19:09:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -112,7 +112,8 @@ public class defineHandler extends GenericHandler {
    *	Clumsy, because it has to take into account the SGML convention
    *	that an attribute can be minimized if it's equal to its own name.
    */
-  protected String getHandlerClassName(ActiveAttrList atts, String dflt) {
+  protected String getHandlerClassName(Context cxt,
+				       ActiveAttrList atts, String dflt) {
     ActiveAttr handler = atts.getActiveAttr("handler");
     return (handler == null)     ? null
       : (! handler.getSpecified()) ? dflt
@@ -162,7 +163,7 @@ class define_element extends defineHandler {
 
     // Analyze the attributes: === could do this in one scan.
     String tagname = atts.getAttribute(attrName);
-    String handlerClass = getHandlerClassName(atts, tagname);
+    String handlerClass = getHandlerClassName(cxt, atts, tagname);
     String parents = atts.getAttribute("parent");
     String notIn   = atts.getAttribute("implicitly-ends");
 
@@ -264,6 +265,21 @@ class define_element extends defineHandler {
     return e.hasTrueAttribute("name")? handle_name : handle;
   }
 }
+
+/** Define an element without allowing a handler class. */
+class define_element_safely extends define_element {
+  define_element_safely(String aname) { super(aname); }
+
+  protected String getHandlerClassName(Context cxt,
+				       ActiveAttrList atts, String dflt) {
+    cxt.message(-1, "Handler classes not permitted in this tagset",
+		0, true);
+    return null;
+  }
+  static define_element_safely handle = new define_element_safely("element");
+  static define_element_safely handle_name = new define_element_safely("name");
+}
+
 
 /** Define an entity.  Corresponds to &lt!ENTITY ...&gt; */
 class define_entity extends defineHandler {

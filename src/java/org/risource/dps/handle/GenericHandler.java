@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.11 1999-10-14 21:50:01 steve Exp $
+//	$Id: GenericHandler.java,v 1.12 2000-06-07 19:09:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.11 1999-10-14 21:50:01 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.12 2000-06-07 19:09:22 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -131,10 +131,15 @@ public class GenericHandler extends BasicHandler {
    * @see org.risource.dps.handle.extractHandler
    */
   protected final void defaultAction(Input in, Context aContext, Output out) {
+    ActiveNode node = in.getActive();
+    if (node.getNodeType() != NodeType.ELEMENT) {
+      nonElementAction(node, aContext, out, Expand.getContent(in, aContext));
+      return;
+    }
     ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
     if (atts == null) atts = new TreeAttrList();
     if (passTag) {
-      ActiveElement e = in.getActive().asElement();
+      ActiveElement e = node.asElement();
       ActiveElement element = e.editedCopy(atts, null);
       out.startNode(element);
     }
@@ -205,6 +210,8 @@ public class GenericHandler extends BasicHandler {
       Tagset ts = aContext.getTopContext().getTagset();
       BasicEntityTable ents = new BasicEntityTable(e.getTagName());
       ents.setValueNodes(aContext, "content", content, ts);
+      ents.setValueNodes(aContext, "tagname",
+			 Create.createNodeList(e.getTagName()), ts);
       ents.setValueNodes(aContext, "element", new TreeNodeList(element), ts);
       ents.setValueNodes(aContext, "attributes", atts.asNodeList(), ts);
       // ... in which to expand this Actor's definition
@@ -221,6 +228,40 @@ public class GenericHandler extends BasicHandler {
       Copy.copyNodes(content, out);
       out.endElement(e.isEmptyElement() || e.implicitEnd());
     }
+  }
+
+  /** Perform default action for a non-Element node. 
+   *
+   *<p> The action is run with <code>name</code> and <code>value</code> 
+   *	bound to the <code>nodeName</code> and <code>nodeValue</code> 
+   *	respectively.  
+   *	=== fails when a node has element content, e.g. for attributes 
+   */
+  public void nonElementAction(ActiveNode aNode, Context aContext, Output out,
+			       ActiveNodeList content) {
+    ActiveNodeList value = Create.createNodeList(aNode.getNodeValue());
+    
+    if (hasChildNodes()) {	
+      // Children exists, so this is a defined action (macro). 
+      // Create a suitable sub-context for the expansion:
+
+      Tagset ts = aContext.getTopContext().getTagset();
+      BasicEntityTable ents = new BasicEntityTable(aNode.getNodeName());
+      if (value != null) 
+	ents.setValueNodes(aContext, "value", value, ts);
+      ents.setValueNodes(aContext, "content", content, ts);
+      if (aNode.getNodeName() != null) 
+	ents.setValueNodes(aContext, "name",
+			   Create.createNodeList(aNode.getNodeName()), ts);
+      // ... in which to expand this Actor's definition
+      Input def = new FromParseTree(this);
+      Processor p = aContext.subProcess(def, out, ents);
+      // ... Expand the definition in the sub-context
+      p.processChildren();
+    } else if (content == null) {
+      // No content: just put the new element. 
+      out.putNode(aNode);
+    } 
   }
 
   public ActiveNodeList getValue(Node aNode, Context aContext) {
