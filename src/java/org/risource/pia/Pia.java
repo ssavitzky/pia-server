@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.31 2000-07-19 00:49:39 steve Exp $
+// $Id: Pia.java,v 1.32 2000-10-04 22:07:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,6 +58,7 @@ import org.risource.pia.site.*;
 import org.risource.dps.Tagset;
 import org.risource.dps.Parser;
 import org.risource.dps.tagset.Loader;
+import org.risource.dps.process.TopProcessor;
 
 import org.risource.dps.namespace.*;
 
@@ -71,7 +72,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.31 2000-07-19 00:49:39 steve Exp $
+  * @version $Id: Pia.java,v 1.32 2000-10-04 22:07:08 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -741,6 +742,7 @@ public class Pia implements Tabular {
     if (piaHomePath != null) {
       String tsHome = piaHomePath + filesep + "lib";
       Loader.setTagsetHome(tsHome);
+      TopProcessor.setPiaHome(piaHomePath);
     }
 
     // Now set the properties that had to be computed.
