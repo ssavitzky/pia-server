@@ -1,5 +1,5 @@
 // TreeValue.java
-// $Id: TreeValue.java,v 1.4 1999-04-30 23:37:45 steve Exp $
+// $Id: TreeValue.java,v 1.5 2000-02-25 16:37:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -87,8 +87,8 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
    *	 the children from values stored in a separate nodelist.
    */
   public ActiveNodeList getValueNodes(){ 
-    return hasChildNodes()
-      ? (ActiveNodeList) new TreeChildList( this )
+    return (nodeValue != null)? nodeValue 
+      : hasChildNodes()? (ActiveNodeList) new TreeChildList( this )
       : nodeValue; 
   }
 
@@ -96,6 +96,18 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
    */
   public Input fromValue(Context cxt){ 
     return new FromNodeList(getValueNodes(cxt));
+  }
+
+  protected void smashValue(ActiveNodeList newValue) {
+
+    // nodeValue = new TreeNodeList(newValue); // === smash children!
+
+    while (hasChildNodes()) { removeChild(getFirstChild()); }
+    if (newValue != null) for (int i = 0; i < newValue.getLength(); ++i) {
+      addChild(newValue.activeItem(i));
+    }
+
+    nodeValue = new TreeChildList(this); // kludge for legacy code
   }
 
   /** Get the associated namespace, if any. */
@@ -111,20 +123,16 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
     if (newValue == null) {
       isAssigned = false;
       names = null;
-      nodeValue = new TreeNodeList(newValue); // === smash children!
-      return;
     } else {
       isAssigned = true;
       if (newValue instanceof Namespace) {
 	names = (Namespace)newValue;
-	nodeValue = new TreeNodeList(newValue); // === children = newValue;
 	// === this may not work for namespaces (e.g. attr. lists)!!!!!
       } else {
-	nodeValue = new TreeNodeList(newValue); // === children = newValue;
 	names = null;
       }
     }
-    //setChildren(newValue);
+    smashValue(newValue);
   }
 
   public void setValueNodes(Context cxt, ActiveNodeList newValue) {
@@ -160,13 +168,14 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
   }
 
   /**
-   * deep copy constructor.
+   * copy constructor.
+   *  Note that we copy the value even if <code>copyChildren</code> is false. 
    */
   public TreeValue(TreeValue attr, boolean copyChildren){
-    super(attr, copyChildren);
-    nodeValue = attr.nodeValue;
+    super(attr, false);
     names = attr.names;
     isAssigned = attr.isAssigned;
+    setValueNodes(attr.getValueNodes());
   }
 
   /**
