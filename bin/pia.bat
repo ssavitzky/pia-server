@@ -55,7 +55,7 @@ goto ENDHOME
 :NOHOME
 REM No Home variable use default of c:\PIAUSERS
 SET UHOME=c:\PIAUSERS
-if exists %UHOME% goto UEXISTS
+if exist %UHOME% goto UEXISTS
 mkdir %UHOME%
 :UEXISTS
 REM If USERNAME exists use that as next dir
