@@ -199,7 +199,8 @@
   </set>
   <set name="linksToPage">
     <sort-unique><extract>
-	<from><include quoted src="&LOC:path;&tail;/linksTo.wi"> </include>
+	<from><include quoted src="&LOC:path;&tail;/linksTo.wi"
+		       tagset="/.Woad/woad-xhtml"> </include>
 	</from>
 	<name all="all">Page</name>
 	<content />
@@ -366,5 +367,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.18 2000-07-25 22:18:52 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.19 2000-10-05 19:02:20 steve Exp $" />
 </body></html>
