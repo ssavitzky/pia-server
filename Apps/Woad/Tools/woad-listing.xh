@@ -243,11 +243,21 @@
     </sort-unique>
   </set>
   <set name="linksToPage">
-    <sort-unique><text split="split">
-	<include quoted src="&LOC:path;&tail;/linksTo.wi"> </include>
-    </text></sort-unique>
+    <sort-unique><extract>
+	<from><include quoted src="&LOC:path;&tail;/linksTo.wi"> </include>
+	</from>
+	<name all="all">Page</name>
+	<content />
+    </extract></sort-unique>
   </set>
-  <!-- === really ought to rewrite linksTo after sorting === -->
+  <!-- rewrite linksTo after sorting; -->
+  <!-- === will change somewhat when we put titles in the Page nodes -->
+  <if> <get name="linksToPage" />
+       <then><output dst="&LOC:path;&tail;/linksTo.wi"><repeat><hide>
+	     </hide><foreach>&linksToPage;</foreach>  <Page>&li;</Page>
+</repeat></output>
+       </then>
+  </if>
   <if> &pageTitle;
        <then><output dst="&LOC:path;&tail;/pageTitle.wi">&pageTitle;
 	     </output>
@@ -299,10 +309,11 @@
             <let name="absLink"><get name="SITE:notesPrefix" />&absPath;</let>
             <let name="title">
       		<include src="&absLink;/pageTitle.wi">
-      		      <em> (<a href="&absPath;">&absPath;</a> not indexed)</em>
+      		      <em> (<a href="&absLink;">&absPath;</a> not indexed)</em>
 	        </include> 
       	    </let>
-  	    <output append="append" dst="&absLink;/linksTo.wi">&npath;&tail;
+	    <!-- === should put title in Page node to save a lookup === -->
+  	    <output append="append" dst="&absLink;/linksTo.wi"><Page>&npath;&tail;</Page>
 </output>
         </then>
         <else>
@@ -418,5 +429,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.8 2000-06-27 01:16:14 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.9 2000-06-27 05:19:04 steve Exp $" />
 </body></html>
