@@ -67,4 +67,4 @@ SET JIGSAW=%PIAHOME%\lib\java\jigsaw_s.jar
 
 REM the classpath
 SET CPATH=%JIGSAW%;%REGEXP%;%PIAHOME%\lib\java\pia.zip;%PIAHOME%\src\java
-jre -cp %CPATH% crc.pia.Pia -root %PIAHOME% -u %UHOME%
+jre -cp %CPATH% org.risource.pia.Pia -root %PIAHOME% -u %UHOME%
