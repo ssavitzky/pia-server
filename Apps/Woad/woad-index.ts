@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.3 2000-08-10 17:30:28 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.4 2000-08-22 23:51:59 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -116,13 +116,16 @@
   <action><hide>
     <let name="cxt"><get name="attributes:context"/></let>
     <let name="word"><get name="attributes:word"/></let>
+    <let name="id"><get name="attributes:id"><get name="word"/></get></let>
     <let name="path"><get name="attributes:path"/></let></hide>
-    <tr> <td rowspan="2"> <a href="&path;">&word;</a>
+    <tr> <td rowspan="2"> <a href="&id;">&word;</a>
+<!-- === wrong: word needs to link to .words/&context;/&word; if outside
+     === the context directory -->
 	 </td>
 	 <td> <a href="&path;">&path;</a>
 	 </td>
     </tr>
-    <tr> <td> &nbsp;&nbsp;&nbsp; &content;
+    <tr> <td> &nbsp;&nbsp;&nbsp; <get name="content" />
 	 </td>
     </tr>
   </action>
