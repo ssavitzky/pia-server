@@ -1,5 +1,5 @@
 ### subdir.make -- makefile template for subdirectories
-#   $Id: subdir.make,v 1.3 1999-07-14 22:18:59 steve Exp $
+#   $Id: subdir.make,v 1.4 1999-10-14 18:05:24 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -70,8 +70,8 @@ setup::
 
 setupSub: 
 	echo   '### Makefile for' $(MYPATH) 			 > Makefile
-	echo   '#	$$Id: subdir.make,v 1.3 1999-07-14 22:18:59 steve Exp $$	'				>> Makefile
-	echo   '# 	COPYRIGHT 1998, Ricoh Silicon Valley' 	>> Makefile
+	echo   '#	$$Id: subdir.make,v 1.4 1999-10-14 18:05:24 steve Exp $$	'				>> Makefile
+	echo   '# 	COPYRIGHT 1999, Ricoh Silicon Valley' 	>> Makefile
 	echo    						>> Makefile
 	[ -z $(ABSPIA) ] || echo 'ABSPIA=$(ABSPIA)'		>> Makefile
 	echo   'PIADIR=$(PIADIR)'				>> Makefile
