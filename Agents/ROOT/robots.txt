@@ -1,4 +1,4 @@
-# $Id: robots.txt,v 1.2 1999-03-12 19:22:46 steve Exp $
+# $Id: robots.txt,v 1.3 1999-03-22 18:57:35 steve Exp $
 User-agent: *
 Disallow: / #Comment out this line to allow robots into your PIA
  
@@ -7,11 +7,9 @@ Disallow: / #Comment out this line to allow robots into your PIA
 Disallow: /~		# keeps robots out of your data.
 Disallow: /Agency	# Has form for controlling the PIA
 Disallow: /DOFS		# Has a form for installing new DOFS's
-Disallow: /Interform	# May contain dangerous forms and active links
+Disallow: /Demo 	# May contain dangerous forms and active links
 Disallow: /Root		# you'd have to be crazy to allow this!
 Disallow: /Home		# Likewise: remember the PIA is _you_
-Disallow: /My
 Disallow: /History	# Do you really want people to know where you've been?
 Disallow: /Cache
-Disallow: /cia		# Active links
-Disallow: /fbi		# Active links
+Disallow: /Proxie	# Active links
