@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.27 1999-12-20 17:15:31 steve Exp $
+// $Id: Pia.java,v 1.28 2000-03-29 17:35:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Reader;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -54,6 +55,8 @@ import org.risource.ds.List;
 import org.risource.site.*;
 import org.risource.pia.site.*;
 
+import org.risource.dps.Tagset;
+import org.risource.dps.Parser;
 import org.risource.dps.tagset.Loader;
 
 import org.risource.dps.namespace.*;
@@ -68,7 +71,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.27 1999-12-20 17:15:31 steve Exp $
+  * @version $Id: Pia.java,v 1.28 2000-03-29 17:35:15 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -802,6 +805,26 @@ public class Pia implements Tabular {
     initDocPath	     = getProperty("initalize", initDocPath);
   }
 
+  /** Get a processor suitable for an initialization document.
+   */
+  public SiteDoc getProcessor(Document doc) {
+    if (doc == null) return null;
+
+    String tsname = doc.getTagsetName();
+    SiteDoc proc = new SiteDoc(doc, null, null, null, Pia.resolver());
+    proc.setVerbosity((Pia.verbose()? 1 : 0) + (Pia.debug()? 2 : 0));
+
+    Tagset ts  = doc.loadTagset(tsname);
+    proc.setTagset(ts);
+    Reader reader =  doc.documentReader();
+
+    Parser p = ts.createParser();
+    p.setReader(reader);
+    proc.setInput(p);
+
+    return proc;
+  }
+
   protected void createPiaSite() {
     threadPool   = new ThreadPool();
     resolver     = new Resolver();
@@ -830,7 +853,7 @@ public class Pia implements Tabular {
 
     Resource init = rootResource.locate(initDocPath, false, null);
     Document initDoc = (init == null)? null : init.getDocument();
-    SiteDoc proc = getSiteMachine().getProcessor(initDoc);
+    SiteDoc proc = getProcessor(initDoc);
     if (proc != null) {
       proc.setOutput(new org.risource.dps.output.DiscardOutput());
       proc.run();
