@@ -1,0 +1,43 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: my-system.xcf,v 1.1 1999-10-12 18:45:52 steve Exp $ -->
+
+<Container real="none" virtual="/">
+  <!-- This gives you a view of the entire filesystem.
+	It does no good to try to include the extension map at this point,
+	since we don't know where we are.  It seems to be getting the 
+	defaults anyway, which is a bug.
+    -->
+
+  <Ext name="xh" type="text/plain" />
+  <Ext name="html" type="text/plain" />
+
+  <Container name="home">
+    <Resource name="HEADER.html">
+      <DOCUMENT><protect>
+	<html><head><title>File System View</title></head>
+	    <body>
+		<h1>This is My Computer!</h1>
+		<p> Note that this is the "home" resource of
+		    <a href="/."><code>/</code></a> (the root)</p>
+	    </body>
+	</html>
+      </protect></DOCUMENT>
+    </Resource>
+  </Container>
+
+   <Resource name="HEADER.html">
+      <DOCUMENT><protect>
+	<html><head><title>File System View</title></head>
+	    <body>
+		<h1>This is My Computer!</h1>
+		<p> This is <code>HEADER.html</code> in the actual root
+		    directory.  Please enjoy viewing your entire computer as
+		    a single website, but for security reasons <em>please</em>
+		    don't leave this server running!
+		</p>
+	    </body>
+	</html>
+      </protect></DOCUMENT>
+    </Resource>
+
+</Container>
