@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.3 1999-03-12 19:29:19 steve Exp $
+// $Id: HTTPResponse.java,v 1.4 1999-03-24 21:23:21 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,6 @@ import org.risource.pia.Transaction;
 import org.risource.tf.Registry;
 
 public class  HTTPResponse extends Transaction {
-  public boolean DEBUG = false;  
 
   /** 
    * status code of response
@@ -519,52 +518,17 @@ public class  HTTPResponse extends Transaction {
   ************************************************************************/
 
   public void run(){
-    if(!DEBUG)
       super.run();
-    else{
-      // make sure we have the header information
-      try{
-	if(headersObj ==  null) initializeHeader();
-
-	// and the content
-	if(contentObj ==  null) initializeContent();
-      }catch (PiaRuntimeException e){
-	errorResponse(e);
-	Thread.currentThread().stop();
-      }catch (IOException e){
-	errorResponse(e);
-	Thread.currentThread().stop();
-      }catch (Exception e){
-	errorResponse(e);
-	Thread.currentThread().stop();
-      }
-
-      //This is actually call if constructor
-      //HTTPResponse( Machine from, Machine to, Content ct )
-      //is used
-      if( contentObj != null ){
-	boolean done = false;
-	while( ! done ){
-	  if(! contentObj.processInput()){
-	    done = true;
-	  }
-	}
-      }
-      Pia.debug(this, "Done running");
-    }
   }
 
   /**
    * Header and content is created from the fromMachine -- for debugging only.
    * @param from where request is originated
    * @param to where response is sent to
-   * @param debug set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */
-  public HTTPResponse( Machine from, Machine to, boolean debug ){
+  public HTTPResponse( Machine from, Machine to ){
     super();
 
-    DEBUG = debug;
     Pia.debug(this, "Constructor-- [ machine from, machine to ] on duty...");
     
     fromMachine( from );
@@ -578,13 +542,10 @@ public class  HTTPResponse extends Transaction {
    * @param to where to send response
    * @param ct a define content
    * @param doStart if false thread does not start -- allows user to set header information.
-   * @param debug set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */
-  public HTTPResponse( Machine from, Machine to, Content ct, boolean doStart, boolean debug ){
+  public HTTPResponse( Machine from, Machine to, Content ct, boolean doStart ){
     super();
 
-    DEBUG = debug;
     Pia.debug(this, "Constructor-- [ machine from, machine to, content ct ] on duty...");
 
     contentObj = ct;
@@ -602,13 +563,10 @@ public class  HTTPResponse extends Transaction {
    * Content is known and a blank header is created -- for debugging only.
    * @param t request transaction
    * @param ct a define content
-   * @param debug set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */
-  public HTTPResponse(  Transaction t, Content ct, boolean debug ){
+  public HTTPResponse(  Transaction t, Content ct ){
     super();
 
-    DEBUG = debug;
     Pia.debug(this, "Constructor-- [ transaction t, content ct ] on duty...");
 
     contentObj = ct;
@@ -626,13 +584,10 @@ public class  HTTPResponse extends Transaction {
    * A response to a request transaction -- a blank header is created -- for debugging only.
    * @param t request transaction
    * @param doStart if false thread does not start automatically
-   * @param debug set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */
-  public HTTPResponse(  Transaction t, boolean doStart, boolean debug  ){
+  public HTTPResponse(  Transaction t, boolean doStart ){
     super();
 
-    DEBUG = debug;
     Pia.debug(this, "Constructor-- [ transaction t, boolean startThread ] on duty...");
 
     contentObj = null;

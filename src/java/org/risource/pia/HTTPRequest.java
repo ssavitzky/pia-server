@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.3 1999-03-12 19:29:16 steve Exp $
+// $Id: HTTPRequest.java,v 1.4 1999-03-24 21:23:20 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -61,7 +61,6 @@ import org.risource.tf.Registry;
 
 
 public class  HTTPRequest extends Transaction {
-  public boolean DEBUG;
 
   /**  method
    * should be get, post, put, head, etc.
@@ -769,121 +768,75 @@ public class  HTTPRequest extends Transaction {
   }
 
   /**
-   * Here for debugging purpose -- if DEBUG flag is false call Transaction's run method()
+   * Call Transaction's run method()
    */
   public void run(){
-    if(!DEBUG){
       try{
-	// make sure we have the header information
-	if(headersObj ==  null) initializeHeader();
+	  // make sure we have the header information
+	  if(headersObj ==  null) initializeHeader();
 	
-	Pia.debug(this, "Got a head...");
+	  Pia.debug(this, "Got a head...");
 
-	// and the content
-	if( method().equalsIgnoreCase( "POST" ) || method().equalsIgnoreCase( "GET" ) ||  method().equalsIgnoreCase( "PUT" )){
-	  if(contentObj ==  null) initializeContent();
-	  Pia.debug(this, "Got a body...");
-	  // incase body needs to update header about content length
-	  if( headersObj!= null && contentObj != null )
-	    contentObj.setHeaders( headersObj );
-	}
+	  // and the content
+	  if( method().equalsIgnoreCase( "POST" ) || method().equalsIgnoreCase( "GET" ) ||  method().equalsIgnoreCase( "PUT" )){
+	      if(contentObj ==  null) initializeContent();
+	      Pia.debug(this, "Got a body...");
+	      // incase body needs to update header about content length
+	      if( headersObj!= null && contentObj != null )
+		  contentObj.setHeaders( headersObj );
+	  }
       }catch (PiaRuntimeException e){
-	errorResponse(e );
-	Thread.currentThread().stop();      
-	notifyThreadPool();
+	  errorResponse(e );
+	  Thread.currentThread().stop();      
+	  notifyThreadPool();
       }catch( IOException e){
-	errorResponse(e);
-	Thread.currentThread().stop();      
-	notifyThreadPool();
+	  errorResponse(e);
+	  Thread.currentThread().stop();      
+	  notifyThreadPool();
       }
 
       // now we are ready to be resolved
       resolver.push(this);
-      
-      
+            
       // loop until we get resolution, filling content object
       // (up to some memory limit)
       while(!resolved){
-	//contentobject returns false when object is complete
-	//if(!contentObj.processInput(fromMachine)) 
+	  //contentobject returns false when object is complete
+	  //if(!contentObj.processInput(fromMachine)) 
 	
-	Pia.debug(this, "Waiting to be resolved");
+	  Pia.debug(this, "Waiting to be resolved");
 	
-	long delay = 1000;
+	  long delay = 1000;
 
-	if( method().equalsIgnoreCase( "POST" ) ){
-	  if(!contentObj.processInput()) {
-	    try{
-	      Thread.currentThread().sleep(delay);
-	    }catch(InterruptedException ex){;}
+	  if( method().equalsIgnoreCase( "POST" ) ){
+	      if(!contentObj.processInput()) {
+		  try{
+		      Thread.currentThread().sleep(delay);
+		  }catch(InterruptedException ex){;}
+	      }
+	  }else{
+	      try{
+		  Thread.currentThread().sleep(delay);
+	      }catch(InterruptedException ex){;}
 	  }
-	}else{
-	  try{
-	    Thread.currentThread().sleep(delay);
-	  }catch(InterruptedException ex){;}
-	}
-	
       }
-    
       // resolved, so now satisfy self
       satisfy( resolver);
       
-      
       // cleanup?
       notifyThreadPool();
-      
-
-    }
-    else{
-      // make sure we have the header information
-      Pia.debug(this, "Running HTTPRequest's run method");
-
-      try{
-	if(headersObj ==  null) initializeHeader();
-	//Pia.debug(this, "Got a head...");
-	System.out.println("Got a head...");
-
-	// and the content
-	if(contentObj ==  null) initializeContent();
-	Pia.debug(this, "Got a body...");
-	// incase body needs to update header about content length
-	if( headersObj!= null && contentObj != null )
-	  contentObj.setHeaders( headersObj );
-      }catch (PiaRuntimeException e){
-	errorResponse(e);
-	Thread.currentThread().stop();      
-      }catch( IOException e ){
-	errorResponse(e);
-	Thread.currentThread().stop();
-      }
-
-      if( contentObj != null ){
-	boolean done = false;
-	while( ! done ){
-	  if(! contentObj.processInput()){
-	    done = true;
-	  }
-	}
-      }
-
-      Pia.debug(this, "Done running");
-    }
   }
 
   /**
    * Take machine as source of input -- this is a debugging constructor
    * @param from source of input for header and content
-   * @param debugflag set DEBUG flag -- if true use local run method;
-   *	thread does not start automatically.
    */
-  public HTTPRequest( Machine from, boolean debugflag ){
+  public HTTPRequest(Machine from){
     super();
 
-    DEBUG = debugflag;
     Pia.debug(this, "Constructor-- [ machine from ] -- on duty...");
 
     // we probably only need one instance of these objects
-    
     fromMachine( from );
     toMachine( null );// done by default anyway
   }
@@ -892,14 +845,11 @@ public class  HTTPRequest extends Transaction {
    * A request transaction with default blank header and a define content -- debugging version.
    * @param from originator of request -- later data will be sent to this machine.
    * @param ct a define content.
-   * @param debugflag set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */
 
-  public HTTPRequest( Machine from, Content ct, Boolean debugflag ){
+  public HTTPRequest( Machine from, Content ct){
     super();
 
-    DEBUG = debugflag.booleanValue();
     Pia.debug(this, "Constructor-- [ machine from, content ct ] on duty...");
 
     contentObj = ct;
@@ -917,13 +867,9 @@ public class  HTTPRequest extends Transaction {
    * @param from originator of request -- later data will be sent to this machine.
    * @param ct a define content.
    * @param hd a define header.
-   * @param debug set DEBUG flag -- if true use local run method and thread does not start
-   * automatically
    */ 
-  public HTTPRequest( Machine from, Content ct, Headers hd, boolean debug ){
+  public HTTPRequest( Machine from, Content ct, Headers hd ){
     super();
-
-    DEBUG = debug;
 
     Pia.debug(this, "Constructor-- [ machine from, content ct, headers hd ] -- on duty...");
 
@@ -936,9 +882,6 @@ public class  HTTPRequest extends Transaction {
     fromMachine( from );
     toMachine( null );
   }
-
-
-
 }
 
 

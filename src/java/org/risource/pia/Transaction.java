@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.4 1999-03-12 19:49:59 pgage Exp $
+// $Id: Transaction.java,v 1.5 1999-03-24 21:23:22 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -69,8 +69,6 @@ import org.w3c.www.http.HTTP;
 public abstract class Transaction 
     implements Runnable, HasFeatures, Tabular
 {
-
-  public boolean DEBUG = false;
 
   /**
    * Attribute index - indicates whether first line of transaction is correctly
