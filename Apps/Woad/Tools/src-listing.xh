@@ -7,29 +7,35 @@
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
+  <if> <get name="spath" />
+       <else><set name="spath">/</set></else>
+  </if>
   <set name="sroot">
     <if>&SITE:sourcePrefix;
 	<then>&SITE:sourcePrefix;</then>
 	<else></else>
     </if></set>
+  <set name="tail"><if> <logical op="and">
+			  <get name="PATH_INFO"/>
+			  <test exact="yes" match="\/">&spath;</test>
+			</logical>
+		        <then>/<get name="PATH_INFO"/></then>
+		        <else><get name="PATH_INFO"/></else>
+  </if></set>
 </hide>
-<title>&spath; : Woad source listing</title>
+<title>&spath;&tail; : Woad source listing</title>
 </head><body bgcolor="#ffffff">
 <hide>
   <set name="VAR:format"><if> &FORM:all; <then>complete</then>
     <else-if>&FORM:detail;<then>detail</then></else-if>
     <else>filtered</else>
   </if></set>
-  <set name="tail"><if><get name="PATH_INFO"/>
-		       <then>/<get name="PATH_INFO"/></then>
-  </if></set>
   <set name="decoratedPath">
-	<decoratePath base="&sroot;">[SRC]&spath;/&tail;</decoratePath></set>
+	<decoratePath base="&sroot;">[SRC]&spath;&tail;</decoratePath></set>
 
   <set name="tpath"><mapSrcToTarget>&LOC:path;&tail;</mapSrcToTarget></set>
   <set name="npath"><mapSourceToNote>&LOC:path;&tail;</mapSourceToNote></set>
 </hide>
-
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr> <td>
 	     <table><!-- the nested table shrink-wraps its contents     -->
@@ -66,18 +72,6 @@
 </table>
 
 <index-bar name="Notes">Notes Files HEADER</index-bar>
-
-<if> &npath;
-     <then>
-       <table bgcolor="yellow" width="80%" align="center" >
-	 <tr> <td> <b>Note:</b> This is a source directory listing.  If
-		   there's a page here called <code>index.html</code>, that's
-		   probably what the browser will show for it.
-	      </td>
-	 </tr>
-       </table>
-     </then>
-</if>
 
 <doc> Look for notes.
 </doc>
@@ -195,7 +189,9 @@
 	 <td> &nbsp;
 	      <logical op="or">
 	        <get name="attributes:title"/>
-	        <get name="attributes:dscr"/>
+	        <if> <get name="attributes:dscr"/>
+	      	     <then><em><get name="attributes:dscr"/></em>
+	        </if>
 	        <em><if> <get name="attributes:tdscr" />
 	      	    <then> <get name="attributes:tdscr" />
 	      	 	   <if> <test match="file">
@@ -230,6 +226,24 @@
 </define>
 <set name="cvs-controlled"></set>
   
+
+<if> &npath;
+     <then>
+       <table bgcolor="yellow" width="90%" cellspacing="0" border="0"
+	      align="center" >
+	 <tr> <td valign="top"> <b>Note:</b>
+	      </td>
+	      <td> This is a source directory listing.  If
+		   there's a page here called <code>index.html</code>, that's
+		   probably what the browser will show for it, but this can be
+		   changed in server configuration files that <ss>WOAD</ss>
+		   doesn't understand yet.
+	      </td>
+	 </tr>
+       </table>
+     </then>
+</if>
+
 <if>&tail;
     <then>
 	<h3>Invalid source path <code>&spath;&tail;</code>.</h3>
@@ -245,6 +259,15 @@
     </then>
   </else-if>
     <else>
+       <table bgcolor="yellow" width="90%" cellspacing="0" border="0">
+	 <tr> <td valign="top"> <b>Note:</b>
+	      </td>
+	      <td> This directory has not been indexed!  Indexing is done
+		   using the <code>woad-index.pl</code> command, which you can
+		   find in <code>PIA/src/apps/tools</code>
+	      </td>
+	 </tr>
+       </table>
 	<table bgcolor="white">
 	<repeat>
 	  <foreach entity="f">
@@ -301,5 +324,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.6 2000-06-23 17:32:44 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.7 2000-06-24 00:43:29 steve Exp $" />
 </body></html>

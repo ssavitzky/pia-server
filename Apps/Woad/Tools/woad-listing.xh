@@ -12,8 +12,12 @@
 	<then>&SITE:notesPrefix;</then>
 	<else></else>
     </if></set>
-  <set name="tail"><if><get name="PATH_INFO"/>
-		       <then>/<get name="PATH_INFO"/></then>
+  <set name="tail"><if> <logical op="and">
+			  <get name="PATH_INFO"/>
+			  <test exact="yes" match="\/">&npath;</test>
+			</logical>
+		        <then>/<get name="PATH_INFO"/></then>
+		        <else><get name="PATH_INFO"/></else>
   </if></set>
 </hide>
 <title>&npath;&tail; : Woad annotations</title>
@@ -251,19 +255,25 @@
 </blockquote>
 
 <index-bar name="Source">Notes Links Images Source Listing</index-bar>
-
-<table bgcolor="white" width="90%" cellpadding="5">
+<p>
+<table bgcolor="white" width="90%" cellpadding="5" align="center">
   <tr>
     <td valign="top"> 
-	 <a href="&spath;">View document source.</a>
+	 <a href="&spath;">View&nbsp;document&nbsp;[source]</a>
+    </td>
+    <td> <code>&spath;</code> </td>
+  </tr>
+  <tr>
+    <td bgcolor="#99ccff">
     </td>
     <td> This will show you the source document or directory that corresponds
-	 to this URL.  Usually this will be the document that this page
-	 <em>comes from</em>.
+	 to this URL.  Usually this will be the document that this page comes
+	 from, but in some cases <ss>WOAD</ss> may not be able to correctly map
+	 the URL onto a document.
     </td>
   </tr>
 </table>	  
-
+</p>
 
 <index-bar name="Listing">Notes Links Images Source Listing</index-bar>
 
@@ -278,7 +288,12 @@
 <table bgcolor="white" width="90%" cellpadding="5">
   <tr>
     <td valign="top"> 
-	 <a href="&spath;">View document source.</a>
+	 <a href="&spath;">View&nbsp;document&nbsp;[source]</a>
+    </td>
+    <td> <code>&spath;</code> </td>
+  </tr>
+  <tr>
+    <td bgcolor="#99ccff">
     </td>
     <td> This will show you the source document or directory that corresponds
 	 to this URL.  Usually this will be the document that this page
@@ -287,7 +302,12 @@
   </tr>
   <tr>
     <td valign="top"> 
-	 <a href="&tpath;">View page on server.</a>
+	 <a href="&tpath;">View&nbsp;page&nbsp;on&nbsp;&lt;server&gt;</a>
+    </td>
+    <td> <code>&tpath;</code> </td>
+  </tr>
+  <tr>
+    <td bgcolor="#99ccff">
     </td>
     <td> This will show you the document directly on the server.
     </td>
@@ -315,5 +335,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.5 2000-06-23 17:32:44 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.6 2000-06-24 00:43:29 steve Exp $" />
 </body></html>
