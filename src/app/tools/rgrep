@@ -1,0 +1,10 @@
+#!/bin/sh
+#	Recursive grep
+#	files-containing,v 1.1 1997/08/12 22:51:49 steve Exp
+
+
+find . '(' -name '*.java' -o -name '*.html' -o -name '*.xh' -o -name '*.ts' \
+	-o -name '*.tex' -o -name '*make*' \
+        -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f  \
+	\! -path '*JavaDoc*' \
+    -exec grep $* {} /dev/null \;
