@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: maketoc,v 1.1 2000-04-25 23:22:43 steve Exp $
+#	$Id: maketoc,v 1.2 2000-05-09 17:04:19 steve Exp $
 #	maketoc file...
 #
 #	Use the toc.ts tagset to add or update a table of contents in an
@@ -7,11 +7,7 @@
 #
 for f in $*; do
   if [ -f $f.bak ]; then
-     if [ -f $f.orig ]; then
-        rm $f.bak
-     else 
-        mv $f.bak $f.orig
-     fi
+     rm $f.bak
   fi
   mv $f $f.bak
   process -t toc $f.bak > $f
