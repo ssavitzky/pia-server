@@ -1,5 +1,5 @@
 ////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.4 1999-10-08 17:29:41 steve Exp $
+//	$Id: weekdayHandler.java,v 1.5 1999-10-09 00:15:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally by
  *	Abraham Savitzky.
  *
- * @version $Id: weekdayHandler.java,v 1.4 1999-10-08 17:29:41 steve Exp $
+ * @version $Id: weekdayHandler.java,v 1.5 1999-10-09 00:15:08 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -109,7 +109,7 @@ public class weekdayHandler extends GenericHandler {
   		     ActiveAttrList atts, ActiveNodeList content) {
 
     // get subelements
-    int date = -1, month = -1, year = -1;
+    int day = -1, month = -1, year = -1;
     long unixdate = -1;
     for (int i = 0; i < content.getLength(); ++i) {
 	
@@ -123,12 +123,13 @@ public class weekdayHandler extends GenericHandler {
 	Enumeration en;
 	Association as;
 
-	if (name.equalsIgnoreCase("date")){
+	if (name.equalsIgnoreCase("date")
+	    || name.equalsIgnoreCase("day")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
 	    while( en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
-		    date = (int)( as.longValue() );
+		    day = (int)( as.longValue() );
 	    }
 	} else
 	if (name.equalsIgnoreCase("month")){
@@ -159,19 +160,19 @@ public class weekdayHandler extends GenericHandler {
     }
 
     // got all the available tags; now figure out what to return
-    if (unixdate < 0 && (date < 0 ||month < 0 || year < 0 )){
-	reportError(in, cxt,"weekday tag has missing date/month/year");
+    if (unixdate < 0 && (day < 0 ||month < 0 || year < 0 )){
+	reportError(in, cxt,"weekday tag has missing day/month/year");
 	return;
     }
     
-    // create the calendar, either by date/month/year or unixdate
-    Calendar theDay = new GregorianCalendar(year, month, date);
+    // create the calendar, either by day/month/year or unixdate
+    Calendar theDay = new GregorianCalendar(year, month, day);
     if (unixdate >= 0){
 	Date theTime = new Date( unixdate*1000 ); //unix gets seconds, not msec
 	theDay = new GregorianCalendar( );
 	theDay.setTime(theTime);
 	month = theDay.get(Calendar.MONTH);
-	date = theDay.get(Calendar.DAY_OF_MONTH);
+	day = theDay.get(Calendar.DAY_OF_MONTH);
 	year = theDay.get(Calendar.YEAR);
 	//System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
     }
@@ -185,22 +186,22 @@ public class weekdayHandler extends GenericHandler {
     // int maxDay = theDay.getActualMaximum(Calendar.DAY_OF_MONTH)
     int minDay = 1;            // theDay.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-    if (date < minDay || date > maxDay ||
+    if (day < minDay || day > maxDay ||
 	month < 0 /* theDay.getActualMinimum(Calendar.MONTH) */ ||
 	month > 11 /* theDay.getActualMaximum(Calendar.MONTH) */ ){
-	reportError(in, cxt,"weekday tag has illegal date/month/year");
+	reportError(in, cxt,"weekday tag has illegal day/month/year");
 	return;
     }
 
     /** Note: Julian uses natural origins: Jan. 1 is 1/1 */
-    long jday = Julian.jday(year, month + 1, date);
+    long jday = Julian.jday(year, month + 1, day);
     int wday = Julian.weekday(jday);
 
     //int wday = (theDay.get(Calendar.DAY_OF_WEEK)- Calendar.SUNDAY + 7) % 7;
     List dayNames = List.split("Sunday Monday Tuesday Wednesday"
 				    + " Thursday Friday Saturday");
     long longDay = theDay.getTime().getTime() / 86400000;
-    //    System.out.println(" " + longDay + "=" + year + "/" + month + "/" + date);
+    //    System.out.println(" " + longDay + "=" + year + "/" + month + "/" + day);
 
     String wkday = (String)dayNames.at( wday );
     // done with compuatation
