@@ -34,7 +34,7 @@ expected to continue for a while.
        of the Jigsaw classes that we are actually using have been brought up
        to date and moved to their proper places in the package hierarchy.
 
-  <li> CVS ID's had lost their all-important <code>$Id: r2.0.html,v 1.9 1999-03-13 01:31:37 wolff Exp $</code> due to an
+  <li> CVS ID's had lost their all-important <code>$Id: r2.0.html,v 1.10 1999-03-13 16:27:38 wolff Exp $</code> due to an
        ill-advised ``export''.  They're back.
 
   <li> HTML document types now refer to the correct public identifier,<br>
@@ -42,7 +42,17 @@ expected to continue for a while.
        some documents do not validate yet.  The document types in
        <code>.xh</code> files are passed through the document processor
        unmodified, so they refer to the DTD of the <em>output</em>, not of the
-       input file.  This will be fixed eventually.
+       input file.  This will change so that the document types are properly
+       set by the processor (<code>.xh</code> files will have XML DTD's
+       corresponding to the "tagsets" that they use.  Output files will have
+       their document types set appropriately -- usually HTML.)  Also, we
+       recommend that any <code>.xh</code> files you create adhere to the XML
+       spec (quoted attribute values, include all end tags, etc.)  Even though
+       our processor will accept a wider range of (SGML) document syntax,
+       using well formed XML will make it easier for you to process your
+       <code>.xh</code> files with other tools should you choose to do so.  We
+       are in the process of converting all of our examples to strictly
+       conform to the spec.
 
   <li> The Toolbar, History, and Cache agents, all of which operate by
        proxying through the PIA, have been gathered underneath the (new)
@@ -153,7 +163,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.9 1999-03-13 01:31:37 wolff Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.10 1999-03-13 16:27:38 wolff Exp $</b><br>
 </body></html>
 
 
