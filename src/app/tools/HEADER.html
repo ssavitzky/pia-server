@@ -16,27 +16,77 @@ edited, and sent to the relevant developers rather than used directly.
 <p> Please put a short description in a comment at the front of each script.
 </p>
 
-<p>
-The reason for having this directory is so that people don't have to go
-rummaging around in their e-mail archives to find out how to fix up a
-directory tree after moveing its CVS archive.
+<p> The reason for having this directory is so that people don't have to go
+    rummaging around in their e-mail archives to find out how to fix up a
+    directory tree after moving its CVS archive, or similar rarely-performed
+    actions.
 </p>
 
 
 <h2>Annotated Contents</h2>
 
 <dl>
-  <dt> <a href="fix-permissions">fix-permissions</a>
-  <dd> Make every directory under "." group-writable.
-  <dt> <a href="x-du">x-du</a>
-  <dd> Display line counts under "." using xdu.
-  <dt> <a href="cvs-move-directory">cvs-move-directory</a>
+  <dt> <a href="cvs-move-directory">cvs-move-directory</a></dt>
   <dd> Fix up a CVS-controled source tree after moving the
-       repository. (Sample) 
+       repository. (Sample)
+  </dd>
+  <dt> <a href="files-containing">files-containing</a></dt>
+  <dd> Display the names of all files that contain a pattern.  Looks only at
+       files that can reasonably be expected to contain text. 
+  </dd>
+  <dt> <a href="files-not-containing">files-not-containing</a></dt>
+  <dd> Display the names of all files that DO NOT contain a pattern.  Looks
+       only at files that can reasonably be expected to contain text.  Can be
+       used, for example, to find files that don't contain a copyright notice.
+  </dd>
+  <dt> <a href="files-with-holes">files-with-holes</a></dt>
+  <dd> Find files containing words or patterns that indicate a ``hole:''  The
+       string "===" or one of the words ``unimplemented'' or ``eventually''.
+  </dd>
+  <dt> <a href="fix-cvs-ids">fix-cvs-ids</a></dt>
+  <dd> repair damaged CVS ID strings damaged by a <code>cvs export</code>
+       command.  Don't do that!
+  </dd>
+  <dt> <a href="fix-document-types">fix-document-types</a></dt>
+  <dd> Set the DTD of files expected to contain HTML to
+       <code>"-//W3C//DTD&nbsp;HTML&nbsp;4.0&nbsp;Transitional//EN"</code>
+  </dd>
+  <dt> <a href="fix-package-names">fix-package-names</a></dt>
+  <dd> Change the names of packages from <code>crc.*</code> to
+       <code>org.risource.*</code> 
+  </dd>
+  <dt> <a href="fix-permissions">fix-permissions</a></dt>
+  <dd> Make every directory under "." group-writable.  Occasionally needed in
+       the CVS repository, if people create directories with a
+       <code>umask</code> setting of 200.
+  </dd>
+  <dt> <a href="fix-xh-doctypes">fix-xh-doctypes</a></dt>
+  <dd> Replace &lt;!DOCTYPE...&gt; declarations in <code>.xh</code> files with
+       an appropriate &lt;make...&gt; element, so as not to have DTD's that we
+       can't verify against in the original files.
+  </dd>
+  <dt> <a href="hole-report">hole-report</a></dt>
+  <dd> Like <code>files-with-holes</code> except that it displays the lines
+       instead of just the filenames.
+  </dd>
+  <dt> <a href="move-history-data">move-history-data</a></dt>
+  <dd> Moves <code>History</code> agent data files from their previous
+       location to the current one. 
+  </dd>
+  <dt> <a href="move-java-makefiles">move-java-makefiles</a></dt>
+  <dd> Fix Makefiles after the package renaming done by
+       <code>fix-package-names</code>
+  </dd> 
+  <dt> <a href="rgrep">rgrep</a></dt>
+  <dd> Recursive <code>grep</code> through files expected to contain text.
+  </dd>
+  <dt> <a href="x-lc">x-lc</a></dt>
+  <dd> Display line counts under "." using xdu.
+  </dd> 
 </dl>
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 2000-04-21 20:55:28 steve Exp $</b><br>
+<b>$Id: HEADER.html,v 1.5 2000-04-21 22:08:36 steve Exp $</b><br>
 <a name="files"><hr></a>
 
