@@ -1,12 +1,14 @@
-<h1>Document Object Models</h1>
+<h1>Document Object Model</h1>
 
 <a href="../">[..]</a>
 <a href="#files">[files]</a><p>
 
 
-<p> This package, <code>org.risource.dom</code>, is meant to contain utility
-    classes that use the ``pure'' DOM interfaces from
-    <code><a href="../../w3c/dom">org.w3c.dom</a></code>.
+<p> This package, <code>org.risource.dom</code>, contains classes and
+    interfaces that constitute a simplified API for programmers who wish to
+    use the DPS as part of an application based on the World Wide Web
+    Consortium's <a href="../../w3c/dom">DOM</a> (Document Object Model).
+</p>
 
 <blockquote><em>
   Originally this package simply contained a complete implementation of (an
@@ -19,17 +21,25 @@
 <h2>See Also</h2>
 
 <dl>
+  <dt> <a href="../../w3c/dom">org.w3c.dom</a>
+  <dd> The DOM interfaces.
+  <dt> <a href="http://www.w3.org/DOM/">www.w3.org/DOM/</a>
+  <dd> The official DOM web site.
+  <dt> <a href="../dps/">org.risource.dps</a>
+  <dd> A general-purpose document-processing system for XML, HTML, and SGML
+       documents. 
   <dt> <a href="../dps/active/">org.risource.dps.active</a>
-  <dd> Interfaces that combine the DOM and Active interfaces.  Classes that
-       implement these interfaces can be efficiently traversed using cursors.
+  <dd> Interfaces that combine the DOM and ``Active'' interfaces.  Classes that
+       implement these interfaces can be efficiently traversed using cursors,
+       and processed using the DPS.
   <dt> <a href="../dps/tree/">org.risource.dps.tree</a>
-  <dd> Classes that <em>implement</em> the DOM and Active interfaces, for use
-       in building parse trees.
+  <dd> Classes that <em>implement</em> the DOM Core and Active interfaces, for
+       use in building parse trees.
 </dl>
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.4 1999-04-07 23:20:33 steve Exp $</b>
+<b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: HEADER.html,v 1.5 1999-07-14 20:11:24 steve Exp $</b>
 <a name="files"><hr></a>
 
 
