@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.19 2000-11-30 00:10:17 steve Exp $
+#	$Id: woad-index.pl,v 1.20 2001-01-11 20:51:29 steve Exp $
 # Create WOAD index files.
 #
 
@@ -14,7 +14,7 @@
 #	to invoke it, of course.  Simply map identifier -> space-separated
 #	list of path#line's.
 #
-# Internally, much space could be saved by a different representation for 
+# Internally, much space has been saved by a different representation for 
 # the xrefs:  lc(name) => [\file-entry, [name], line#...]  Note that Perl
 # doesn't allow refs to strings, only to (possibly-scalar) variables.
 
@@ -1223,7 +1223,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.19 2000-11-30 00:10:17 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.20 2001-01-11 20:51:29 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 
