@@ -16,17 +16,28 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Hole</b> need input redecorator <br>
+       needed for TopProcessor.subDocument and subDocumentEnd when the input
+       is not a parser.
+       (1999-05-19) <br>
+
+  <li> <b>Hole</b> Comment and string handling <br>
+       Need a way to get information (especially entity expansions) into
+       comments and CDATA sections. 
+       (1999-05-18) <br>
+
   <li> <b>Hole</b> XML Attribute handling <br>
        Almost everything currently done in the PIA using the Syntax interface
        could be done using inherited attributes.  For example, there's an
        <code>xml:space</code> attribute specifying whitespace handling. 
-       (1999-05-17)
-
-  <li> <b>Hole</b> writeup of &lt;test&gt; seriously incomplete.<br>
-       For some reason it had been omitted from the table!
        (1999-05-17) <br>
 
-  <li> <b>Bug</b> &lt;bind&gt; can't have embedded &lt;namespace&gt; <br>
+  <li> <b>Hole</b> writeup of &lt;test&gt; seriously incomplete.<br>
+       For some reason it had been omitted from the table in
+       <a href="/Doc/tagsets/basic.html">/Doc/tagsets/basic.html</a>!
+       (1999-05-17) <br>
+
+  <li> <b>Bug</b> &lt;bind&gt; doesn't build embedded &lt;namespace&gt; <br>
        Because &lt;bind&gt; is quoted and &lt;namespace&gt; doesn't construct
        a namespace at parse time, this simply won't work.
        (1999-05-14) <br>
@@ -62,13 +73,6 @@ See also:
        <em>both</em> runtime selection of tagset, and<em></em> separate
        specification of the output document type.
        (1999-05-03) <br>
-
-  <li> <b>Hole</b> Need a way to change tagset in context. <br>
-       e.g. when defining an Agent or Tagset: need to switch tagsets for the
-       content.  Whether this is done by hacking the parser or interposing a
-       redecorator depends on the current Input's class (i.e. whether it's a
-       ProcessorInput).  Should be done in TopContext.subDocument.
-       (1999-04-30) <br>
 
   <li> <b>Impr</b> Output to Writer (or ToPrint) not String. <br>
        Something like writeNode(Writer); writeStart, writeContent, writeEnd
@@ -509,7 +513,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.14 1999-05-18 20:31:35 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.15 1999-05-20 20:26:40 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -195,11 +195,27 @@ See also:
        element for each agent, not just the filename.
        (1999-05-06) <br>
 
+  <li> 1999-05-18 <b>Bug</b> save on option.xh doesn't register; wrong file. <br>
+       save has wrong filename -- saves in data dir.  Doesn't register the
+       saved agent, either.
+       (1999-05-18) <br>
+
+  <li> 1999-05-19 <b>Bug</b> save on option.xh saves in wrong file. <br>
+       ./Home somehow ends up as .../Agents/Home/Home/...
+       (1999-05-18) <br>
+       -- that's because it's being written in the agent.  Need paths starting
+	  with <code>./</code> to refer to the top level.
+
+  <li> 1999-05-19 <b>Impr</b> pia-exit lock-out needed <br>
+       Need  a way to lock out &lt;pia-exit&gt; (global or agent property).
+       (1999-05-11) <br>
+       -- must check for AGENTS:Admin:lockExit in the handler. 
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.8 1999-05-18 20:31:38 steve Exp $</b><br>
+<b>$Id: done.html,v 1.9 1999-05-20 20:25:19 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

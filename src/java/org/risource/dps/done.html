@@ -817,11 +817,18 @@ If 4th node is there, returns "four".
        Want to be able to replace a whole node in its parent. 
        (1999-05-14) <br>
 
+  <li> 1999-05-19 <b>Hole</b> Need a way to change tagset in context. <br>
+       e.g. when defining an Agent or Tagset: need to switch tagsets for the
+       content.  Whether this is done by hacking the parser or interposing a
+       redecorator depends on the current Input's class (i.e. whether it's a
+       ProcessorInput).  Should be done in TopContext.subDocument.
+       (1999-04-30) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.13 1999-05-18 20:31:30 steve Exp $</b><br>
+<b>$Id: done.html,v 1.14 1999-05-20 20:26:36 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
