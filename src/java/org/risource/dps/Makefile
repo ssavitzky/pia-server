@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.13 1999-10-12 17:39:12 steve Exp $
+# 	$Id: Makefile,v 1.14 1999-10-13 18:19:30 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -73,13 +73,13 @@ all::	tagset/basic.tss tagset/tagset.tss
 
 # Note that we have to redefine TOPDIR on the command line in a recursion. 
 tagset/tagset.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. tagset.tss
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. tagset.tss
 
 tagset/basic.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. basic.tss
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. basic.tss
 
 tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. pia-xhtml.tss
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. pia-xhtml.tss
 
 # Documentation: copy to-do file to the release directory
 doc:: $(REL_DIR)/to-do.dps.html
