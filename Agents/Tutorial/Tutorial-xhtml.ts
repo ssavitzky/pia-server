@@ -20,7 +20,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.6 1999-09-02 00:00:46 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.7 1999-12-09 23:08:04 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -74,7 +74,7 @@
       <head><title>Editor</title></head>
       <body bgcolor='#ffffff' link='blue' vlink='blue'>
 
-        <form action='instantiate.xh' method='get' target='instantiation'>
+        <form action='instantiate.xh' method='post' target='instantiation'>
            <table width='100%'>
 
             <tr>
@@ -172,7 +172,7 @@
 
 <define element="widgetForm">
   <action>
-     <FORM NAME="widget_order" ACTION="test.xh" METHOD="get">
+     <FORM NAME="widget_order" ACTION="test.xh" METHOD="post">
      How many widgets do you want today?
        (min=&attributes:min; max=&attributes:max;) 
      <INPUT TYPE="text" NAME="quantity"  />
