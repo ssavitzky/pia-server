@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.15 1999-04-05 22:56:16 pgage Exp $
+#	$Id: Makefile,v 1.16 1999-04-13 23:20:02 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,7 @@ REL_DIR	    = $(HOME)/src_release	# source release will be built here
 REL_PIA_DIR = $(HOME)/src_release/PIA
 DEST_DIR    = /pia1/pia			# Where source release tar file ends up
 TAR_NAME    = pia_src$(VERSION)		# Append version to avoid overwrites
-CREATE_CVS_TAG = 0			# set to 1 to cvs rtag the release
+CREATE_CVS_TAG = 1			# set to 1 to cvs rtag the release
 
 SUBDIRS= src bin lib Doc
 
@@ -46,11 +46,8 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 3
+MINOR       = 4
 SUFFIX      = 
-
-
-
 
 ### Commands:
 
@@ -110,12 +107,14 @@ prep_rel_dir::
 
 # Build a source release.  Before building, check all variables and set to
 # appropriate values.
-src.tar:	make update-version	
+test:	make update-version	
 	prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
-	 	cd $(REL_DIR); cvs checkout -r $(VERSION_ID) PIA; \
+		cd /pia1/CvsRoot; /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
+	 	cd $(REL_DIR); cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA; \
 	else \
-		cd $(REL_DIR); cvs checkout PIA; \
+		cd /pia1/CvsRoot; /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
+		cd $(REL_DIR); cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA; \
 	fi
 	cd $(REL_PIA_DIR); make prep_src_rel
 	cd $(REL_DIR); tar czf $(TAR_NAME).tgz PIA; mv $(TAR_NAME).tgz $(DEST_DIR)
@@ -123,12 +122,7 @@ src.tar:	make update-version
 	cd $(DEST_DIR); mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
 
 # test making parts of a release
-test:	prep_rel_dir
-	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
-	 	cd $(REL_DIR); cvs checkout -r $(VERSION_ID) PIA; \
-	else \
-		cd $(REL_DIR); cvs checkout PIA; \
-	fi
+test:	
 
 ###
 ### Old stuff.
