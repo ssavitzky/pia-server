@@ -112,18 +112,31 @@
 <define element=agent-index empty>
   <doc> Put out an index of agents. </doc>
   <action>
-    <table cellspacing=0 cellpadding=0 border=0>
-      <tr><th width=170 valign=top><i>Agent Index:</i>
-	    </th>
-	  <td valign=center>
-	    <table cellspacing=0 cellpadding=0 align=center border=0>
-	      <tr><th width=170 align=right><i>Index</i>&nbsp;
-		  <th align=left><i>Home</i></tr>
-	      <repeat list="&agentNames;" entity="li"><tr>
-		  <th align=right><a href="/&li;/">&li;/</a>&nbsp;
-		  <td><agent-home link agent="&li;"></tr>
-	      </repeat>
-	    </table>
+    <table border=1>
+      <tr><th align=left> /path/name  </th>
+	  <th> home  </th>
+	  <th> index </th>
+	  <th> data  </th>
+	  <th> type  </th>
+      </tr>
+      <repeat list="&agentNames;" entity="li"><tr>
+	  <set name=pname><agent-home agent="&li;"/></set>
+	  <set name=type><agent-home type agent="&li;"/></set>
+	  <th align=left><a href="&pname;">&pname;</a> </th>
+	  <td> <a href="&pname;~"><em>path</em>~</a> </td>
+	  <td> <a href="&pname;~/"><em>path</em>~/</a> </td>
+	  <td>
+		<if><status item=exists src="&pname;~/~/" />
+		    <then><a href="&pname;~/~/"><em>path</em>~/~/</a></then>
+		    <else>&nbsp;</else>
+		</if></td>
+	  <td>
+		<if><test exact match="/">&type;</test>
+		    <then>&nbsp;</then>
+		    <else><a href="&type;">&type;</a></else>
+		</if></td>
+	</tr>
+      </repeat>
     </table>
   </action>
 </define>
