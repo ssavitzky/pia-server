@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.19 1999-10-13 21:59:26 steve Exp $
+// $Id: Pia.java,v 1.20 1999-10-14 21:46:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.19 1999-10-13 21:59:26 steve Exp $
+  * @version $Id: Pia.java,v 1.20 1999-10-14 21:46:58 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -788,13 +788,14 @@ public class Pia implements Tabular {
     /* make a new property table.  Could initialize from cmd line, 
      *	but whether to do that requires some thought.
      */
-    siteProperties = new PropertyTable("/");
+    siteProperties = null; //new PropertyTable("/");
     
     rootResource = new PiaSite(piaRootPath, piaHomePath, null, 
 			       configFileName, "pia-config", siteProperties);
     rootResource.setVerbosity(getVerbosity());
     if (siteConfigPath == null) rootResource.loadConfig() ;
     else rootResource.loadConfigFile(cfgFile);
+    siteProperties = (PropertyTable) rootResource.getProperties();
 
     handleSiteProps();
 
