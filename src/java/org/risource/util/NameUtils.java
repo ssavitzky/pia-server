@@ -1,5 +1,5 @@
 // NameUtils.java
-// $Id: NameUtils.java,v 1.4 1999-03-23 23:32:55 steve Exp $
+// $Id: NameUtils.java,v 1.5 1999-07-20 01:05:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -105,6 +105,14 @@ public class NameUtils {
     char sep = System.getProperty("file.separator", "/").charAt(0);
     int i = path.lastIndexOf(sep);
     return (i < 0)? path : path.substring(i+1);
+  }
+
+  /** Extract the extension from a filename. */
+  public static String filenameExt(String path) {
+    char sep = System.getProperty("file.separator", "/").charAt(0);
+    int i = path.lastIndexOf('.');
+    int j = path.lastIndexOf(sep);
+    return (i < 0 || i <= j)? null : path.substring(i+1);
   }
 
   /** Make a URL path (separated by "/") into a system path. */
