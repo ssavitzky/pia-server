@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.3 1999-03-12 19:26:10 steve Exp $
+//	$Id: defineHandler.java,v 1.4 1999-03-25 00:42:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.3 1999-03-12 19:26:10 steve Exp $
+ * @version $Id: defineHandler.java,v 1.4 1999-03-25 00:42:35 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -66,12 +66,7 @@ public class defineHandler extends GenericHandler {
     reportError(in, aContext, "Nothing being defined");
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching.  */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "element")) 	 return define_element.handle(e);

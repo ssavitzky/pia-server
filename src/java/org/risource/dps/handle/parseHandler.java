@@ -1,5 +1,5 @@
 ////// parseHandler.java: <parse> Handler implementation
-//	$Id: parseHandler.java,v 1.3 1999-03-12 19:26:27 steve Exp $
+//	$Id: parseHandler.java,v 1.4 1999-03-25 00:42:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.io.StringReader;
  *
  *	
  *
- * @version $Id: parseHandler.java,v 1.3 1999-03-12 19:26:27 steve Exp $
+ * @version $Id: parseHandler.java,v 1.4 1999-03-25 00:42:50 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -76,12 +76,7 @@ public class parseHandler extends GenericHandler {
     proc.run();
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching.  */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "usenet")) 	 return parse_usenet.handle(e);

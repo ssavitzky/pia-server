@@ -4,15 +4,17 @@
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 <header show-date=yes>Index Page</header>
 
-<set entity name="subs"><agent-list subs type="&agentType;"></set>
-<if><test exact match="&agentType">&agentName;</test>
-    <then><set name=agentPath>&agentName;</set></then>
-    <else><set name=agentPath>&agentType;/&agentName;</set></else>
+<set name=agentPath>&agentPath;&agentName;</set>
+<if><test exact match="&agentType;">&agentName;</test>
+    <then><set name="subs"><agent-list type="&agentPath;"></set>
+    </then>
+    <else><set name="subs"><agent-list type="&agentType;"></set>
+    </else>
 </if>
 
 <sub-head page=index>
   <if>=== <!-- ~/ doesn't work yet  -->
-      <status src="~/initialize.xh" item=exists>
+      <status src="~/initialize.xh" item=exists />
   <then>
     <tr><th><td><a href="options">Options</a>
 	    	      <a href="initialize">[re-initialize]</a></then></if>
@@ -33,8 +35,8 @@
   <if>&subs;<then>
     <tr><th align=right>
            <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;/</a></then>
-                <else>&agentType;/</else></if>
+	        <then><a href="&agentType;/home">&agentType;/</a></then>
+                <else>&agentPath;/</else></if>
         <td><repeat list="&subs;">
                <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a>
            </repeat></then>
@@ -55,10 +57,9 @@
        <then>appliance<else>Personal Information Agency</if>.
 </dl>
 </if>
-<if>&AGENT:criteria;&AGENT:act-on;
-    <then><hr>
-          <nav-bar/>
-</if>
+<hr>
+<nav-bar/>
+<hr>
 
 <!-- See whether there's an "about" file for this agent. -->
 <include src="about.inc">
@@ -107,6 +108,6 @@
 </then></if>
 
 
-<footer cvsid="$Id: index.xh,v 1.3 1999-03-23 20:34:56 steve Exp $">
+<footer cvsid="$Id: index.xh,v 1.4 1999-03-25 00:42:24 steve Exp $">
 </body></html>
 

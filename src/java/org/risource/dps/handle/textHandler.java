@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $
+//	$Id: textHandler.java,v 1.4 1999-03-25 00:43:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version $Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $
+ * @version $Id: textHandler.java,v 1.4 1999-03-25 00:43:00 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -64,12 +64,7 @@ public class textHandler extends GenericHandler {
     // Actually do the work. 
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "sort")) 	 return text_sort.handle(e);
@@ -459,7 +454,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.4 1999-03-25 00:43:00 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -625,7 +620,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.3 1999-03-12 19:26:42 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.4 1999-03-25 00:43:00 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */

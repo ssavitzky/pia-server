@@ -1,5 +1,5 @@
 ////// processHandler.java: <process> Handler implementation
-//	$Id: processHandler.java,v 1.3 1999-03-12 19:26:28 steve Exp $
+//	$Id: processHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;process&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: processHandler.java,v 1.3 1999-03-12 19:26:28 steve Exp $
+ * @version $Id: processHandler.java,v 1.4 1999-03-25 00:42:51 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -53,17 +53,6 @@ public class processHandler extends GenericHandler {
     unimplemented(in, cxt);	// process
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
-  public Action getActionForNode(ActiveNode n) {
-    ActiveElement e = n.asElement();
-    //if (dispatch(e, "")) 	 return process_.handle(e);
-    return this;
-  }
    
   /************************************************************************
   ** Constructor:

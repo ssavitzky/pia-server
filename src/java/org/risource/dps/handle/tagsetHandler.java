@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.3 1999-03-12 19:26:38 steve Exp $
+//	$Id: tagsetHandler.java,v 1.4 1999-03-25 00:42:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.3 1999-03-12 19:26:38 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.4 1999-03-25 00:42:57 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -78,17 +78,6 @@ public class tagsetHandler extends GenericHandler {
 
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
-  public Action getActionForNode(ActiveNode n) {
-    ActiveElement e = n.asElement();
-    return this;
-  }
-   
   /* === This is very twisty. ===
     
      The element we create at parse time with createElement becomes part of

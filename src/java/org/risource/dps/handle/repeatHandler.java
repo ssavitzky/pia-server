@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.3 1999-03-12 19:26:31 steve Exp $
+//	$Id: repeatHandler.java,v 1.4 1999-03-25 00:42:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.3 1999-03-12 19:26:31 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.4 1999-03-25 00:42:52 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -69,12 +69,7 @@ public class repeatHandler extends GenericHandler {
     }
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "numeric"))	 return repeat_numeric.handle(e);
@@ -144,6 +139,7 @@ public class repeatHandler extends GenericHandler {
 				   String dflt) {
     String name = atts.getAttributeString("entity");
     Tagset ts = cxt.getTopContext().getTagset();
+    if (name != null) name = name.trim();
     if (name == null) name = dflt;
     return ts.createActiveEntity(name, null);
   }

@@ -1,5 +1,5 @@
 ////// getHandler.java: <get> Handler implementation
-//	$Id: getHandler.java,v 1.3 1999-03-12 19:26:17 steve Exp $
+//	$Id: getHandler.java,v 1.4 1999-03-25 00:42:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.dps.util.*;
  *	<code>keys</code>, <code>values</code>, and <code>bindings</code>
  *	attributes are supported.
  *
- * @version $Id: getHandler.java,v 1.3 1999-03-12 19:26:17 steve Exp $
+ * @version $Id: getHandler.java,v 1.4 1999-03-25 00:42:42 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -59,31 +59,14 @@ public class getHandler extends GenericHandler {
   		     ActiveAttrList atts, NodeList content) {
     // Actually do the work. 
     String name = atts.getAttributeString("name");
-    Copy.copyNodes(Index.getIndexValue(aContext, name), out);
-  }
-
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
-  public Action getActionForNode(ActiveNode n) {
-    ActiveElement e = n.asElement();
-    //if (dispatch(e, "element"))	 return get_element.handle(e);
-    //if (dispatch(e, "local"))	 return get_local.handle(e);
-    //if (dispatch(e, "global")) return get_global.handle(e);
-    //if (dispatch(e, "index"))	 return get_index.handle(e);
-
-    //if (dispatch(e, "pia"))	 return get_pia.handle(e);
-    //if (dispatch(e, "env"))	 return get_env.handle(e);
-    //if (dispatch(e, "agent"))	 return get_agent.handle(e);
-    //if (dispatch(e, "trans"))	 return get_trans.handle(e);
-    //if (dispatch(e, "form"))	 return get_form.handle(e);
-
-    //if (dispatch(e, "file"))	 return read_file.handle(e); OBSOLETE
-    //if (dispatch(e, "href"))	 return read_href.handle(e); OBSOLETE
-    return this;
+    if (name != null) name = name.trim();
+    if (name == null || name.equals("")) {
+      aContext.message(-2, "<get> with null name", 0, true);
+      return;
+    }
+    NodeList value = Index.getIndexValue(aContext, name);
+    if (value == null) value = content;
+    if (value != null) Copy.copyNodes(value, out);
   }
    
   /************************************************************************

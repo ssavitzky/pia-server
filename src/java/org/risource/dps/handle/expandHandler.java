@@ -1,5 +1,5 @@
 ////// expandHandler.java: <expand> Handler implementation
-//	$Id: expandHandler.java,v 1.3 1999-03-12 19:26:13 steve Exp $
+//	$Id: expandHandler.java,v 1.4 1999-03-25 00:42:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import org.risource.dps.output.DiscardOutput;
 /**
  * Handler for &lt;expand&gt;  <p>
  *
- * @version $Id: expandHandler.java,v 1.3 1999-03-12 19:26:13 steve Exp $
+ * @version $Id: expandHandler.java,v 1.4 1999-03-25 00:42:36 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -53,12 +53,7 @@ public class expandHandler extends GenericHandler {
     Expand.processNodes(content, aContext, out);
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching. */
   public Action expandActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "hide")) 	 return expand_hide.handle(e);

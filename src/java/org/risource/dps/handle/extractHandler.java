@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.4 1999-03-12 19:26:14 steve Exp $
+//	$Id: extractHandler.java,v 1.5 1999-03-25 00:42:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.4 1999-03-12 19:26:14 steve Exp $
+ * @version $Id: extractHandler.java,v 1.5 1999-03-25 00:42:38 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -114,18 +114,6 @@ public class extractHandler extends GenericHandler {
     in.toParent();
 
     putList(out, extracted.getValue(), sep);
-  }
-
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
-  public Action getActionForNode(ActiveNode n) {
-    ActiveElement e = n.asElement();
-    //    if (dispatch(e, "")) 	 return extract_.handle(e);
-    return this;
   }
 
   /************************************************************************
@@ -243,6 +231,7 @@ public class extractHandler extends GenericHandler {
       if (key != null) key = key.trim();
     }
     if (!caseSens && key != null) key = key.toLowerCase();
+    if (key != null) key = key.trim();
     if (sep != null && key != null) {
       if (key.indexOf(sep)>=0) {
 	key = key.substring(0, key.indexOf(sep));
@@ -415,6 +404,7 @@ class nameHandler extends extract_subHandler {
 			ActiveAttrList atts, NodeList content) {
     NodeList extracted = getExtracted(aContext);
     String name = content.toString();
+    if (name != null) name = name.trim();
     if (name == null) {
       extractNames(extracted, out); 
     } else if (name.startsWith("#")) {
@@ -456,6 +446,7 @@ class name_recursive extends extract_subHandler {
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String key = content.toString();
+    if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     if (key != null && key.startsWith("#")) {
       int ntype = NodeType.getType(key.substring(1));
@@ -504,6 +495,7 @@ class keyHandler extends extract_subHandler {
     boolean caseSens = atts.hasTrueAttribute("case");
     String sep = atts.getAttributeString("sep");
     String key = content.toString();
+    if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     NodeEnumerator items = extracted.getEnumerator();
     for (Node item = items.getFirst(); item != null; item = items.getNext()) {
@@ -531,6 +523,7 @@ class key_recursive extends extract_subHandler {
     String  sep = atts.getAttributeString("sep");
     boolean all = atts.hasTrueAttribute("all");
     String  key = content.toString();
+    if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     extract(extracted, key, caseSens, sep, all, out);
   }
@@ -559,6 +552,7 @@ class idHandler extends extract_subHandler {
     NodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String id = content.toString();
+    if (id != null) id = id.trim();
     if (id != null && !caseSens) id = id.toLowerCase();
     NodeEnumerator items = extracted.getEnumerator();
     for (Node item = items.getFirst(); item != null; item = items.getNext()) {
@@ -585,6 +579,7 @@ class id_recursive extends extract_subHandler {
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String  id = content.toString();
+    if (id != null) id = id.trim();
     if (id != null && !caseSens) id = id.toLowerCase();
     extract(extracted, id, caseSens, all, out);
   }
@@ -614,6 +609,7 @@ class attrHandler extends extract_subHandler {
     NodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String name = content.toString();
+    if (name != null) name = name.trim();
     
     NodeEnumerator items = extracted.getEnumerator();
     for (Node item = items.getFirst(); item != null; item = items.getNext()) {
@@ -641,6 +637,7 @@ class matchHandler extends extract_subHandler {
     NodeList extracted = getExtracted(aContext);
     boolean caseSens = atts.hasTrueAttribute("case");
     String match = content.toString();
+    // === WARNING: match is not being trimmed! ===
     if (!caseSens) match = match.toLowerCase();
     NodeEnumerator items = extracted.getEnumerator();
     for (Node item = items.getFirst(); item != null; item = items.getNext()) {

@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.4 1999-03-12 19:26:40 steve Exp $
+//	$Id: testHandler.java,v 1.5 1999-03-25 00:42:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.4 1999-03-12 19:26:40 steve Exp $
+ * @version $Id: testHandler.java,v 1.5 1999-03-25 00:42:58 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -183,12 +183,6 @@ public class testHandler extends GenericHandler {
  *	really only work as <code>action</code> handlers because they
  *	assume that <code>trueValue</code>, <code>falseValue</code>, etc. 
  *	are set up properly. 
- *
- *	The correct thing is to have dispatching look at the tag as well
- *	as the attributes of the element being dispatched on; this is
- *	done by the <code>dispatch(<em>e, name</em>)</code> function 
- *	in the most common case where <em>name</em> is either the name
- *	of an attribute or a suffix of the element's tagname.
  *
  ************************************************************************/
 

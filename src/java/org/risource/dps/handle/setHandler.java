@@ -1,5 +1,5 @@
 ////// setHandler.java: <set> Handler implementation
-//	$Id: setHandler.java,v 1.3 1999-03-12 19:26:33 steve Exp $
+//	$Id: setHandler.java,v 1.4 1999-03-25 00:42:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import org.risource.dps.util.*;
  * <p>	This is an approximation to the legacy &gt;set&gt;; it lacks many
  *	of the old extraction modifiers, which have moved to &lt;extract&gt;.
  *
- * @version $Id: setHandler.java,v 1.3 1999-03-12 19:26:33 steve Exp $
+ * @version $Id: setHandler.java,v 1.4 1999-03-25 00:42:55 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -54,6 +54,7 @@ public class setHandler extends GenericHandler {
   		     ActiveAttrList atts, NodeList content) {
     // Actually do the work. 
     String name = atts.getAttributeString("name");
+    if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "Setting null name to "+content, 0, true);
       return;

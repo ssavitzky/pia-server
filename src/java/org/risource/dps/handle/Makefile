@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	 Tag handlers
-# 	$Id: Makefile,v 1.4 1999-03-23 23:31:45 steve Exp $
+# 	$Id: Makefile,v 1.5 1999-03-25 00:42:32 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -32,8 +32,7 @@ BASE_CLASSES = \
 	GenericHandler.java \
 	IgnorableHandler.java \
 	SkippableHandler.java \
-	TextNodeHandler.java \
-	TypicalHandler.java
+	TextNodeHandler.java
 
 ### These are the primitive handlers defined in basic.ts
 ###	Indented names are handlers for active sub-elements.

@@ -1,5 +1,5 @@
 ////// connectHandler.java: <connect> Handler implementation
-//	$Id: connectHandler.java,v 1.3 1999-03-12 19:26:08 steve Exp $
+//	$Id: connectHandler.java,v 1.4 1999-03-25 00:42:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.io.*;
  *	within external entities.  That suggests that the best implementation
  *	is simply to create a suitable entity and return its value.
  *
- * @version $Id: connectHandler.java,v 1.3 1999-03-12 19:26:08 steve Exp $
+ * @version $Id: connectHandler.java,v 1.4 1999-03-25 00:42:34 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -71,6 +71,7 @@ public class connectHandler extends GenericHandler {
 
     ParseTreeExternal ent = null;
     if (ename != null) {
+      ename = ename.trim();
       ent = new ParseTreeExternal(ename, src, null);
       // If the user gave a name, he is expecting it to be bound.
       cxt.setEntityBinding(ename, ent, false);
@@ -109,18 +110,6 @@ public class connectHandler extends GenericHandler {
       Copy.copyNodes(xin, out);
       ent.closeInput();
     }
-  }
-
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
-  public Action getActionForNode(ActiveNode n) {
-    ActiveElement e = n.asElement();
-    // if (dispatch(e, "")) 	 return connect_.handle(e);
-    return this;
   }
 
   /************************************************************************

@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.3 1999-03-12 19:25:52 steve Exp $
+//	$Id: AbstractHandler.java,v 1.4 1999-03-25 00:42:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.3 1999-03-12 19:25:52 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.4 1999-03-25 00:42:29 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -200,6 +200,21 @@ implements Handler {
    */
   public boolean dispatch(ActiveElement e, String name) {
     return (e.getAttribute(name) != null)
+      || e.getTagName().endsWith("."+name);
+  }
+
+  /** Called from <code>getActionForNode</code> to determine whether
+   *	dispatching should be done.  It returns true if the given Element
+   *	has the given <code>name</code> as either an attribute name,
+   *	the value of the attribute "attr", or a period-separated suffix 
+   *	of its tagname. 
+   */
+  public boolean dispatch(ActiveElement e, String name, String attr) {
+    String v = e.getAttributeString(attr);
+    if (v != null) v = v.trim();
+    // not clear whether to ignore case.  XML doesn't, so let's not.
+    return (v != null && name.equals(v))
+      || (e.getAttribute(name) != null)
       || e.getTagName().endsWith("."+name);
   }
 

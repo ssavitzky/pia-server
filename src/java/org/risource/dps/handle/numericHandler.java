@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.3 1999-03-12 19:26:25 steve Exp $
+//	$Id: numericHandler.java,v 1.4 1999-03-25 00:42:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.3 1999-03-12 19:26:25 steve Exp $
+ * @version $Id: numericHandler.java,v 1.4 1999-03-25 00:42:48 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -63,12 +63,7 @@ public class numericHandler extends GenericHandler {
     // Actually do the work. 
   }
 
-  /** This does the parse-time dispatching. <p>
-   *
-   *	Action is dispatched (delegated) to a subclass if the string
-   *	being passed to <code>dispatch</code> is either the name of an
-   *	attribute or a period-separated suffix of the tagname. <p>
-   */
+  /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
     if (dispatch(e, "sum")    ) 	 return numeric_sum.handle(e);

@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.3 1999-03-12 19:26:21 steve Exp $
+//	$Id: includeHandler.java,v 1.4 1999-03-25 00:42:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.dps.input.FromParseNodes;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.3 1999-03-12 19:26:21 steve Exp $
+ * @version $Id: includeHandler.java,v 1.4 1999-03-25 00:42:45 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -70,6 +70,7 @@ public class includeHandler extends GenericHandler {
     // Check the entity.  If it's already defined, we can just use its value
 
     if (entname != null) {
+      entname = entname.trim();
       ent = cxt.getEntityBinding(entname, false);
       if (ent != null) {
 	proc = top.subDocument(ent.getValueInput(cxt), cxt, out, ts);
