@@ -16,9 +16,24 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> Paths broken <br>
+       &lt;output dst='~/foo'&gt; doesn't create foo in the agent's data
+       directory, as it should.  &lt;output dst='foo'&gt; does.  On the other
+       hand, you need &lt;input src='pia:/~/Admin/foo'&gt; to read it.
+       Basically, agent-relative paths don't work right at all.
+       (1999-03-30) <br>
+
+  <li> <b>Bug</b> &lt;include&gt;Directory broken <br>
+       &lt;include src='~/'&gt; should give a directory listing of an agent's
+       data directory.  It raises a null pointer exception instead.
+       (1999-03-30) <br>
+
   <li> <b>Bug</b> getAttributeString needs to return internal form <br>
-       Probably, <em>everything</em> should return internal form, and
-       <code>ToExternalForm</code> should do the encoding as needed.
+       One might think that <em>everything</em> should return internal form,
+       and <code>ToExternalForm</code> should do the encoding as needed.  This
+       would be wrong, though -- it would break writing XML to a stream in a
+       form that can be read back.  So <code>toString</code> is right, but
+       <code>getAttributeString</code> shouldn't use it.
        (1999-03-30) <br>
 
   <li> <b>Impr</b> SGML/XML output flag <br>
@@ -404,20 +419,12 @@ Results: &lt;pre&gt;cat                                                         
        -- <code>subProcess</code> clears <code>free</code>; caller does
 	  <code>p.cleanup()</code> when finished to restore it.
 
-  <li> <b>Hole:</b> NamedNodeList wrapping a Table <br>
-       Want to be able to wrap a Table as a NamedNodeList.  This will provide
-       the DPS equivalent of <code>org.risource.sgml.AttrWrap</code>.
-       (1998-06-16) <br>
-
   <li> <b>Impr:</b> <code>Filter</code> parse tree input <br> 
        Filter should  be able to read a serialized parse tree.
        (1998-06-15) <br>
        -- It should do so if the input file ends in ``<code>.xho</code>'' or
           ``<code>.xxo</code>''.
        
-  <li> <b>Check:</b> attribute and tag case sensitivity <br>
-       Nothing is careful about cannonical attribute and tag names yet.
-
   <li> <b>Impr:</b> <code>NamedActiveNode</code> values <br>
        Named nodes should have defined, assigned and default values. Only
        defined value should be the children; it would be used for the
@@ -463,7 +470,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.5 1999-03-30 23:40:20 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.6 1999-03-31 02:04:33 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
