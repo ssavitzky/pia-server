@@ -16,6 +16,16 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Use &lt;container&gt; and &lt;document&gt; in cfg. <br>
+       Not clear whether to keep &lt;Resource&gt; or not; probably a good idea
+       to keep it for, e.g., files where we haven't determined whether it's a
+       directory or not.
+       (1999-08-23) <br>
+
+  <li> <b>Impr</b> Need a way to turn off caching in Subsite <br>
+       Do the basic lookup in ConfiguredResource, and use it if no location
+       cache exists.  Check a flag to see whether to build the cache.
+
   <li> <b>Hole</b> load config files.  <br>
        This is half of the biggest pending hole:  getting the files loaded in
        the first place.
@@ -108,5 +118,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.2 1999-08-23 21:55:59 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.3 1999-08-23 23:54:37 steve Exp $</b><br>
 </body></html>
