@@ -17,10 +17,10 @@
 <!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
 <!-- ====================================================================== -->
 
-<tagset name="src-file" tagset="woad-xhtml" 
+<tagset name="src-file" tagset="woad-xhtml" parser="TextParser"
 	include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-file.ts,v 1.1 2000-07-21 22:48:20 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.2 2000-09-23 00:50:48 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
@@ -64,6 +64,11 @@
   <action><font color="blue"><b>&content;</b></font></action>
 </define>
 
+<define element="id" syntax="quoted">
+  <doc> identifier. </doc>
+  <action>&content;</action>
+</define>
+
 <define element="fn">
   <doc> Filename <em>(or URL)</em> enclosed in double quotes.
   </doc>
@@ -71,17 +76,20 @@
 </define>
 
 <define element="line" syntax="empty">
-  <doc> Marks the start of a source line.  Note that
-	``<code>&lt;line&nbsp;/&gt;</code>'' occupies exactly eight
-	characters, so it doesn't mess up tabs if you're looking at the
+  <doc> Marks the start of a source line.  Note that both
+	``<code>&lt;line&nbsp;/&gt;</code>'' and its expansion occupy exactly
+	eight characters, so they don't mess up tabs if you're looking at the
 	marked-up source. <red> Eventually we want a variable that turns line
 	numbers on and off. </red>
   </doc>
   <note> <tag>line</tag> <em>must be empty</em> -- if it wraps the line in its
-	 content, it will foul up markup that spans multiple lines.
+	 content, it will foul up markup that straddles a line boundary.
   </note>
-  <action><set name="VAR:line"><numeric op="sum" pad="6">1 <get name="VAR:line" />
-	  </numeric></set><get name="VAR:line" />  </action>
+  <action><hide><set name="VAR:line">
+		     <numeric op="sum" pad="6">1 <get name="VAR:line" />
+	             </numeric></set>
+	  </hide><font color="#666699"><get name="VAR:line" /></font>  <hide>
+  </hide></action>
 </define>
 
 
@@ -93,6 +101,11 @@
 
 <define element="#comment" syntax="quoted">
   <action><font color="red">&lt;!--&value;--&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="rem">
+  <action><font color="red">&content;</font><hide>
     </hide></action>
 </define>
 
