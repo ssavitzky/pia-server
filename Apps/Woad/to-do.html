@@ -5,15 +5,132 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Impr</b> other word sources <br />
+       Some locations are too big to index.  Jargon file is marginal.  Online
+       dictionaries like <a href="http://www.m-w.com/">Merriam-Webster</a> are
+       simply out of the question, but we want to offer them in
+       <code>/.word</code>.  The list needs to be extensible.
+       (2000-08-21)
+  </li>
+  <li> <b>Impr</b> shallow parsing <br />
+       <a href="ftp://fas.sfu.ca/pub/cs/TR/1998/CMPT1998-17.html">REX: XML
+       Shallow Parsing with Regular Expressions</a> provides the regexp needed
+       to mark up an XML file as a listing.  OTOH it's within epsilon of what
+       we're already doing in AbstractParser.
+       (2000-08-11) 
+  </li>
+  <li> <b>Wish</b> Rating, sorting, and filtering on notes <br />
+       Suggestion from Amy Bruckman.  You'd like to be able to filter or sort
+       on like author, date, author's or note's rating in any of several
+       dimensions, etc.
+       (2000-08-10) 
+  </li>
+  <li> <b>Wish</b> Aribtrary metadata in notes <br />
+       Suggestion from Amy Bruckman.
+       (2000-08-10) 
+  </li>
+  <li> <b>Wish</b> Store notes using CVS <br />
+       Would provide for versioning and recovery from both unintentional
+       damage and intentional vandalism.  Could also be used for other
+       historical metadata and for sharing annotation among widely-separated
+       sites.  Suggestion from Amy Bruckman.
+       (2000-08-10) 
+  </li>
+  <li> <b>Impr</b> preference-based ordering for sections <br />
+       Can probably link this with the &lt;toolbar&gt; tag somehow; the idea
+       is that your profile specifies the order and selection for notes,
+       cross-references, source code, etc.
+       (2000-08-10) 
+  </li>
+  <li> <b>Bug</b> Listings in <code>.words</code> don't list files!<br />
+       They should at least <em>offer</em> the complete listing, and by
+       default provide a subset.
+       (2000-08-10)
+  </li>
+  <li> <b>Bug</b> subdirectory listings confused if prefix="" <br />
+       If the sourcePrefix is null, WOAD can't find index files in
+       subdirectories (but does find them at the top level).  Links, however,
+       are correct.
+       (2000-08-10)
+  </li>
+  <li> <b>Hole</b> mappings to <em>arbitrary</em> other servers <br />
+       Keep lists of URLs mapped to site, source, and word trees, with
+       optional mapping code (e.g. for forming queries).  Allows totally
+       general use of, e.g., indexers and viewers.  And of course there's
+       <code>file:/&amp;sourceRoot;/</code> for raw views.
+       (2000-08-10)
+  </li>
+  <li> <b>Impr</b> xref C code using LXR <br />
+       Why re-invent the wheel? <a href="http://lxr.linux.no/">LXR</a> looks
+       great, and it's in PERL.  GPL.  Doesn't grok Makefile, html or perl,
+       though. 
+       (2000-08-07)
+  </li>
+  <li> <b>Impr</b> Full-text source indexing <br />
+       <a href="http://webglimpse.org/">Glimpse</a> is what
+       <a href="http://lxr.linux.no/">LXR</a> uses.  Unfortunately it's
+       free only to nonprofits.  An earlier version
+       (4.0) was free; may be available from the CVS tree.  See
+       <a href="http://ls6.cs.uni-dortmund.de/ir/projects/freeWAIS-sf/">
+       FreeWAIS-sf</a> for a possible alternative.  The original
+       <a href="ftp://ftp.cnidr.org/pub/NIDR.tools/freewais/">FreeWAIS</a>
+       doesn't seem to have been worked on since 1996.  List of full-text
+       indexers in <a href="http://dmoz.org/Computers/Software/Information_Retrieval/Fulltext/">DMOZ</a>.
+       <a href="http://sunsite.Berkeley.EDU/SWISH-E/">SWISH-E</a> also possible.
+       <a href="http://hotwired.lycos.com/webmonkey/code/97/16/index2a.html">
+       This article</a> has useful info about doing it in PERL.  Turns out
+       that Swish and Glimpse are what Harvest calls "brokers" and BOTH are
+       included in the Harvest distro.  But the Glimpse in the current Harvest
+       distro is still non-free.
+       (2000-08-07)
+  </li>
+  <li> <b>Impr</b> Full-text site indexing <br />
+       <a href="http://www.tardis.ed.ac.uk/harvest/">Harvest</a> was
+       originally associated with Glimpse, but seems still to be free.  OTOH
+       there are plenty of crawlers around, including one in
+       <a href="http://sunsite.Berkeley.EDU/SWISH-E/">SWISH-E</a>, which is
+       mentioned in the Harvest archives as a faster alternative to glimpse.
+       See also <a href="http://webharvest.sourceforge.net/ng/">harvest-ng</a>
+       which is in perl rather than C.
+       (2000-08-07)
+  </li>
+  <li> <b>Impr</b> do we need <code>/.doc</code>? <br />
+       Isomorphic to <code>/.source</code> but showing HTML documents as they
+       are rather than marked up as source, though presumably <em>with</em>
+       the Woad wrappers.  Possibly called <code>.direct</code> instead of
+       <code>.doc</code>.  Source files would be shown through a documentation
+       extractor (e.g. tsdoc).  The idea being that you could view
+       documentation embedded in the code, and view the code as documentation,
+       and have links in the documentation work (right now they don't; you end
+       up looking at the listing and have to click to change the format).
+       Requires redefining &lt;a&gt; to fix local links.  May be able to do
+       this with just a tagset.
+       (2000-08-04)<br />
+       -- Do <em>not</em> need it: just fix up links in the source listing to
+	  carry current format info.
+  </li>
+  <li> <b>Hole</b> need CVS interface <br />
+       See <a href="http://stud.fh-heilbronn.de/~zeller/cgi/cvsweb.cgi/">
+       cvsweb</a> and <a href="http://www.mozilla.org/bonsai.html"> Bonsai </a>.
+       (2000-07-31)
+  </li>
+  <li> <b>Bug</b> suppress .wl extension in source listings <br />
+       <code>.wl</code> is used for pre-formatted or annotated listings.
+  </li>
   <li> <b>Impr</b> Authors and user preferences <br />
        Probably cookies are the simplest implementation.
        (2000-07-20)
   </li>
   <li> <b>Impr</b> standard wordlists in PIA/Apps/Woad <br />
        Possibly aliased in rather than directly in Woad/.word, but in any case
-       we should index such standard sources as the Jargon File, Sun's Java
+       we should index such standard sources as the <a
+       href="http://www.tuxedo.org/~esr/jargon/">Jargon File</a>, Sun's Java
        documentation, the Apache manual, PHP, Perl, HTML, and so on.  It
        should be easy to map lists in and out depending on the target app.
+       Jargon index is <a
+       href="http://www.tuxedo.org/~esr/jargon/html/The-Jargon-Lexicon.html"
+       >here</a> with sub-indices like <a
+       href="http://www.tuxedo.org/~esr/jargon/html/-A-.html">-A-</a>
        (2000-07-20)
   </li>
   <li> <b>Bug</b> don't follow links to directories when indexing. <br />
@@ -39,7 +156,7 @@
        (2000-06-23)
   </li>
   <li> <b>Bug</b> fix command-line decoding <br />
-       Check for presence of target, sources; set <code>vroot</code>
+       Check for presence of target, source; set <code>vroot</code>
        appropriately.  It may be feasible to do it in <code>woad.xcf</code>.
        (2000-06-23)
   </li>
@@ -132,5 +249,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.16 2000-07-25 22:19:47 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.17 2000-08-22 23:58:51 steve Exp $</b><br>
 </body></html>
