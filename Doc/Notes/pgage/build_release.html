@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+
+<TITLE>Building the PIA Source Release Tar File </TITLE></HEAD>
+<BODY BGCOLOR="#ffffff" link="#c40026" vlink="#e40026">
+
+<h2>Building the PIA Source Release Tar File</h2>
+
+<p>
+The build is done from your CVS working directory; however, the script
+does a clean checkout into a separate directory, <code>$REL_DIR</code>, which is set
+to <code>$(HOME)/src_release</code> by default.  The actual release build is done
+in this directory, not your working directory.
+</p><p>
+The release directory is copied over to /pia/pia1 as src_release<em>version_number</em>.
+Old src_release directories can just be deleted.
+</p><p>
+Here are the build steps:
+</p>
+<ol>
+<li>Before doing the build, update these variables in the <code>$PIA_DIR/Makefile</code>:
+<pre>
+       RELEASE     = 2
+       MAJOR       = 0
+       MINOR       = 3
+       SUFFIX      = 
+       
+       If you want to tag the version in the CVS repository, also set 
+       CREATE_CVS_TAG = 1
+
+       Set back to 0 when the build is complete.
+</pre></li>
+
+<li>Do a <code>CVS commit</code> on the Makefile after these have been set.  The build does a clean
+checkout from the repository and will use the version of the Makefile
+that is checked out, not the version in your working directory.
+</li>
+
+<li><code>make src.tar</code>
+<p>
+This should do everything:
+</p>
+<ul>
+<li>Update the version number for the pia executable.</li>
+<li>Build the source code.</li>
+<li>Build the documentation.</li>
+<li>Make a tar file and compress it.</li>
+<li>Copy the tar file to /pia1/pia.</li>
+<li>Link the tar file to pia_src.tgz.</li>
+<li>Copy the src_release directory to /pia1/pia.  This may not be strictly
+necessary, but it lets you check quickly what was in the last release.</li>
+</ul>
+</ol>
+
+</body>
+</html>
