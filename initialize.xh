@@ -10,13 +10,14 @@
 </p>
 
 <user-message>Running initialize.xh in PIA</user-message>
-<user-message>   init:	<status item="path" src="/Agents/Admin" />
-   init:	<status item="path" src="/Agents/Proxie" />
-   init:	<status item="path" src="/Agents/Proxie/Toolbar" />
-   init:	<status item="path" src="/Agents/Proxie/History" />
-   init:	<status item="path" src="/Agents/Proxie/remoteTools" />
-</user-message>
+
+<status item="path" src="/Agents/Admin" />
+<status item="path" src="/Agents/Proxie" />
+<status item="path" src="/Agents/Proxie/Toolbar" />
+<status item="path" src="/Agents/Proxie/History" />
+<status item="path" src="/Agents/Proxie/remoteTools" />
+
 <hr/>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.xh,v 1.2 1999-09-24 00:23:13 steve Exp $</b><br/>
+<b>$Id: initialize.xh,v 1.3 1999-10-04 17:27:32 steve Exp $</b><br/>
 </body></html>
