@@ -1,5 +1,5 @@
 #!/bin/sh
-# 	$Id: makeconfig,v 1.2 1999-03-12 19:23:38 steve Exp $
+# 	$Id: makeconfig,v 1.3 1999-03-15 23:11:03 steve Exp $
 # 	Generate property file for the PIA
 #
 # Usage: 
@@ -44,14 +44,14 @@ PIAPROPFILE=$USRPIA/Config/pia.props
 
 
 OPTIONS="Http_proxy Http_no_proxy Pia_root Port Debug Verbose Request_timeout User_dir Write Quit"
-PROXY="crc.pia.proxy_http=$HPROXENV"
-NOPROXY="crc.pia.no_proxy=$HOST"
-ROOT="crc.pia.root=$PIA_HOME"
-PORT="crc.pia.port=8888"
-DEBUG="crc.pia.debug=true"
-VERBOSE="crc.pia.verbose=false"
-REQTIMEOUT="crc.pia.reqtimeout=4000"
-USRDIR="crc.pia.usrroot="
+PROXY="pia.proxy_http=$HPROXENV"
+NOPROXY="pia.no_proxy=$HOST"
+ROOT="pia.root=$PIA_HOME"
+PORT="pia.port=8888"
+DEBUG="pia.debug=true"
+VERBOSE="pia.verbose=false"
+REQTIMEOUT="pia.reqtimeout=4000"
+USRDIR="pia.usrroot="
 
 function spitData()
 {
