@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Design notes for a C/C++ port</title>
+<link rev="made" href="mailto:steve@rsv.ricoh.com">
+</head><body>
+<h1>Design notes for a C/C++ port</h1>
+<h3>(for embedded systems)</h3>
+
+<blockquote><em>
+  See also the <a href="../porting.html">Notes on Porting the PIA</a>.
+</em></blockquote>
+
+<h2>Introduction</h2>
+
+<p> This document describes a design for a C or C++ port of the PIA.  The
+    design goals are:
+
+<ol>
+  <li> Integrate the PIA with existing open-source applications.
+  <li> Use as much existing open source code as possible.
+  <li> Port as much as possible of the DPS (document-processing system).
+  <li> Support a large fraction of the PIA server's functionality, but not
+       necessarily all of it. 
+</ol>
+
+<h2>Available Resources</h2>
+<ul>
+  <li> <a href="http://www.jclark.com/">James Clark</a>'s SP parser and its
+       derivatives.  It's written in C++ and has an event-oriented interface.
+       Clark also has an XML parser called Expat.
+  <li> <a href="http://www.jclark.com/">James Clark</a>'s Jade, a C++
+       implementation of the DSSSL style-sheet language for SGML.
+  <li> The <a href="http://www.apache.org/">Apache</a> web server.
+</ul>
+
+
+<h2>Alternative Designs</h2>
+
+<p> There are two plausible approaches:
+
+<ol>
+  <li> Implement the DPS using Jade.  This involves writing the bulk of the
+       DPS in DSSSL, which is basically an extension of Scheme.  This is
+       likely to be unfamiliar territory for C programmers, and may result in
+       an inefficient implementation.
+  <li> Implement the DPS directly in C or C++.  This can be done quite
+       efficiently if we give up the sub-elements of &lt;extract&gt; that
+       modify structure.
+</ol>
+
+<h3>Jade</h3>
+
+
+<h3>Direct Implementation</h3>
+
+<p> What I have in mind is an implementation that stores trees, not as
+    individual nodes connected by pointers, but as flattened arrays of
+    characters.  Each node would have a binary header and trailer that include
+    the length of its contents.  The only place pointers would be used would
+    be in namespaces.
+
+<p> The advantages of a flattened tree are that, although navigation is nearly
+    as fast as a linked tree, depth-first traversal is actually faster, and
+    storage-management is trivial.  In addition, by padding strings to some
+    reasonable length (8 bytes comes to mind), one could ensure that numeric
+    fields always start on word boundaries, which would allow the occasional
+    pointer for things like handlers.
+
+<p> Some kind of interleaving scheme (with "skip" spans as well as "content"
+    spans) would allow 
+
+<hr>
+<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
+<b>$Id: c-port.html,v 1.1 1999-06-29 00:52:59 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
