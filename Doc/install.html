@@ -24,11 +24,15 @@
 
 <ul>
   <li> <a href="#Installing">Installing the Files</a></li>
+  <li> <a href="#Setup">Initial Setup</a>
   <li> <a href="#Running">Running the PIA</a></li>
        
 </ul>
+</big>
 
-<h1><a name="Installing">Installing the Files</a></h1>
+<h2><a name="Installing">Installing the Files</a></h2>
+
+<big>
 
 <p> The files are supplied in the form of a <code>gzip</code>'ed
     <code>tar</code> file, obtained as described in 
@@ -60,6 +64,8 @@
 </p>
 
 </small></blockquote>
+
+</big>
 
 <h1>Directory Structure</h1>
 
@@ -130,24 +136,40 @@ utility applications.</td>
 </tbody>
 </table>
 
-<h3>The PIA's Directories</h3>
+<h1>Initial Setup</h1>
 
-<p> The PIA uses two very similar directories, which can (optionally) be set
-    up using environment variables:</p>
-<ul>
-  <li> <var>PIA_HOME</var> indicates the location where the PIA files were
-       installed.</li> 
+<big>
 
-  <li> <var>PIA_ROOT</var> indicates the location where the PIA web server
-       looks for its web pages, and where applications write their data
-       files.</li> 
-</ul>
+<p> In order to use the PIA, the PIA program needs to know three things:
+</p>
+
+<ol>
+  <li> Where to find its own files, including the Java class library.  This
+       directory is the directory named <code>PIA</code> where the PIA was
+       initially installed, and is called the PIA's ``<em>home</em>''
+       directory, or <var>PIA_HOME</var>. 
+  <li> Where the applications can write their data files, and the user can
+       place new or customized applications.  This is called the PIA's
+       ``<em>root</em>'' directory, or <var>PIA_ROOT</var>.
+  <li> Where to find the applications and documents that it serves to a
+       browser.  This is called the PIA's ``<em>virtual root</em>'' directory.
+       In most cases, this is the same as the PIA's home directory.
+</ol>
 
 <blockquote><small>
 
-<p> Why two directories?  So one of them can be shared by many users and
-    updated frequently (via CVS), while the other is personalized by each user
-    and not overwritten by the updates. </p>
+<p> Two of these can (optionally) be set up using environment variables:</p>
+<ol>
+  <li> <var>PIA_HOME</var> indicates the location where the PIA files were
+       installed.</li> 
+  <li> <var>PIA_ROOT</var> indicates the location where the PIA web server
+       looks for its web pages, and where applications write their data
+       files.</li> 
+</ol>
+
+<p> Why two ``root'' directories?  So that one of them can be shared by many
+    users and updated frequently (via CVS), while the other is personalized by
+    each user and not overwritten by the updates. </p>
 
 <p> The PIA's ``virtual root'' (usually <var>PIA_HOME</var>) directory
     <em>parallels</em> the ``real root'' (<var>PIA_ROOT</var>), but the real
@@ -167,28 +189,41 @@ utility applications.</td>
 
 <p> As a consequence of this arrangement, <strong> we recommend you don't edit
     <i>anything</i> in <var>PIA_HOME</var>, which is automatically
-    updated/overwritten by CVS, unless you plan on
-    contributing to the PIA codebase via RiSource.org.</strong>
-    Instead, write everything under <var>PIA_ROOT</var>
+    updated/overwritten by CVS, unless you are actively working on the PIA
+    codebase.</strong> Instead, write everything under <var>PIA_ROOT</var>
     (e.g. <kbd>~/.pia</kbd>). </p>
 
+<blockquote><small>
+  <p> Most people will develop applications by making a new subdirectory
+      of <code><var>PIA_ROOT</var>/Agents/</code>, then copying in documents
+      from the <code>PIA/Samples</code> directory or from other applications.
+      The completed application can then be moved to its proper place under
+      <code><var>PIA_HOME</var></code> when the time comes to check it in.
+  </p>
+</small></blockquote>
 
-<p> Usually the directory-setup process is invisible to you,
-    especially if you are running the pia from <code>PIA/bin</code> and/or you
-    have not set <var>PIA_HOME</var> as an environment variable.</p>
+<p> Usually the directory-setup process is invisible to you:
+</p>
+
+<ul>
+  <li> <var>PIA_HOME</var> is set automatically by the script that starts the
+       PIA. </li>
+  <li> <var>PIA_ROOT</var> is <em>created</em> automatically the first time
+       the PIA is run. </li>
+</ul>
 
 <blockquote><small>
 
 <p> The execution scripts (e.g. <code>PIA/bin/pia</code>) attempt to set the
     <var>PIA_HOME</var> variable based on the location of the script or the
-    current working directory. But if you
+    current working directory.  But if you
     want to run the pia from a different location, or run a different version,
     you may have to explicitly set this variable to the location of the PIA
-    directory you just installed (e.g. <code>PIA_HOME=~/PIA</code>).
+    directory you just installed.
 </p>
 
 <p> The directory <var>PIA_ROOT</var> is automatically created by the PIA the
-    first time it is run.  You are free to reset its location if desired; this
+    first time it is run.  You are free to change its location if desired; this
     can be done on the command line with the <kbd>-root</kbd> option, or by
     setting the environment variable <var>PIA_ROOT</var>.  On Unix, the
     default location for <var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On
@@ -203,14 +238,10 @@ utility applications.</td>
     variable.
 </p>
 
-</small></blockquote>
-
-<blockquote><small>
-
 <p>It is convenient to put the directory <code>$PIA_HOME/bin</code>, which
 contains scripts (including the one that implements the <code>pia</code>
 command!)  into your shell's search path.  You may also want to specify a
-different root.  On Linux you can do this by putting
+different root.  On Linux you can do all of this by putting
 the following into your <code>~/.bash_profile</code> file: </p>
 
 <pre>
@@ -219,6 +250,10 @@ the following into your <code>~/.bash_profile</code> file: </p>
   export PATH=$PIA_HOME/bin:$PATH
   export PIA_ROOT=$HOME/.pia
 </pre>
+
+<p> This setup is not necessary if you always run the PIA using the command
+    ``<code>PIA/bin/pia</code>'', but most users find this to be inconvenient.
+</p>
 
 <p> You may also need to set up Java's <code>CLASSPATH</code> environment
     variable.  The PIA's wrapper script will try to set one up for
@@ -229,9 +264,12 @@ the following into your <code>~/.bash_profile</code> file: </p>
 </p>
 </small></blockquote>
 
+</big>
+
 <h1><a name="Running">Running the PIA </a></h1>
 
-<p> It is easiest to launch the  PIA with the command
+<big>
+<p> It is easiest to launch the  PIA for the first time with the command
     <code>PIA/bin/pia</code>.<p>
 
 <blockquote><small>
@@ -290,8 +328,16 @@ on Unix.</p>
 </p>
 
 </small></blockquote>
+</big>
 
 <h1><a name="Questions">Questions, Problems, or Comments</a></h1>
+
+<big>
+<p> See the section on <a
+    href="using.html#Troubleshooting">Troubleshooting</a> in
+    <a href="using.html">Using the PIA</a> if you're having problems getting
+    the PIA started, or if it does something unexpected.
+</p>
 
 <p>You can check for known bugs by going to <code><a
 href="http://www.RiSource.org/PIA/">
@@ -300,14 +346,14 @@ http://www.risource.org/PIA/</a></code></p>
 <p> Questions, problems and comments should be directed to <code><a
 href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
 
+</big>
 
 <hr>
 <b>Copyright &copy; 1999 <a href="http://rsv.ricoh.com/">Ricoh Silicon
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.14 1999-10-20 00:29:04 bill Exp $</i><br>
+<i>$Id: install.html,v 1.15 1999-10-20 01:21:00 steve Exp $</i><br>
 
-</big>
 
 </body></html>
