@@ -1,5 +1,5 @@
 ////// GenericHandler.java: Node Handler generic implementation
-//	$Id: GenericHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
+//	$Id: GenericHandler.java,v 1.5 1999-04-17 01:15:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.dps.tree.TreeNodeList;
  *	specialized for Elements.  Specialized subclasses should be based 
  *	on TypicalHandler. <p>
  *
- * @version $Id: GenericHandler.java,v 1.4 1999-04-07 23:21:20 steve Exp $
+ * @version $Id: GenericHandler.java,v 1.5 1999-04-17 01:15:45 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.TypicalHandler
@@ -57,8 +57,6 @@ import org.risource.dps.tree.TreeNodeList;
  */
 
 public class GenericHandler extends BasicHandler {
-
-  protected static final TreeAttrList NO_ATTRS = new TreeAttrList();
 
   /************************************************************************
   ** State Used for Syntax:
@@ -152,7 +150,7 @@ public class GenericHandler extends BasicHandler {
    */
   protected final void defaultAction(Input in, Context aContext, Output out) {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
-    if (atts == null) atts = NO_ATTRS;
+    if (atts == null) atts = new TreeAttrList();
     if (passTag) {
       ActiveElement e = in.getActive().asElement();
       ActiveElement element = e.editedCopy(atts, null);
@@ -224,9 +222,9 @@ public class GenericHandler extends BasicHandler {
 
       Tagset ts = aContext.getTopContext().getTagset();
       BasicEntityTable ents = new BasicEntityTable(e.getTagName());
-      ents.setEntityValue(aContext, "content", content, ts);
-      ents.setEntityValue(aContext, "element", new TreeNodeList(element), ts);
-      ents.setEntityValue(aContext, "attributes", (ActiveNodeList)atts, ts);
+      ents.setValueNodes(aContext, "content", content, ts);
+      ents.setValueNodes(aContext, "element", new TreeNodeList(element), ts);
+      ents.setValueNodes(aContext, "attributes", atts.asNodeList(), ts);
       // ... in which to expand this Actor's definition
       Input def = new FromParseTree(this);
       Processor p = aContext.subProcess(def, out, ents);
