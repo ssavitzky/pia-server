@@ -17,9 +17,9 @@
     </td></tr><tr><th align='right'> <h3>Agent <a href='/&name;'>&name;</a>:</h3>
 	</th><td> <h3>Created</h3>
     </td></tr><tr><th width='340'>
-	</th><td> <a href='/&name;'>home</a>
-    	     <a href='/&name;/'>index</a>
-    	     <a href='/&name;/options'>options</a>
+	</th><td> <a href='/&name;~'>home</a>
+    	     <a href='/&name;~/'>index</a>
+    	     <a href='/&name;~/options'>options</a>
     <if>&type;
       <then>
       <tr><th width='340'></th><td> <a href='/&type;'>/&type;</a> (type agent)
@@ -70,5 +70,5 @@
 </else>
 </if>
 
-<short-footer cvsid='$Id: create-agent.xh,v 1.1 1999-05-06 20:36:32 steve Exp $' />
+<short-footer cvsid='$Id: create-agent.xh,v 1.2 1999-05-20 20:27:39 steve Exp $' />
 </body></html>
