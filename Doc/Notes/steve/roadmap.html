@@ -46,7 +46,7 @@
 <h3>Top Priorities</h3>
 
 <ol>
-  <li> New directory structure -- basically a single tree with possible
+  <li> (!) New directory structure -- basically a single tree with possible
        virtual entries, but no agents. 
   <li> (!) Event-driven interface to Processor -- using the DPS  as a SAX
        application falls out rather directly from this.  It also leads to...
@@ -62,15 +62,15 @@
 </strong></blockquote>
 
 <dl>
-  <dt> New ``single tree'' directory structure
+  <dt> (!) New ``single tree'' directory structure
   <dd> Instead of the present complex system of search paths, mounted agents,
        etc., make the directory structure seen from the DPS match the
        directory structure seen from the browser.  Directories will contain
        virtual entries, but this will be basically invisible inside the PIA:
        Java's mechanisms for locating files and reading directories will not
        be visible at the XML level.
-  <dt> Decouple agents from URL's
-  <dd> Agents will <em>only</em> do operations on transactions; they won't get
+  <dt> (!) Decouple agents from URL's
+  <dd> Agents <em>only</em> do operations on transactions; they don't get
        involved in serving files.  The objects that represent virtual files
        and directories will be different.
   <dt> Support WebDAV
@@ -103,7 +103,7 @@
        e.g. a handler hash table with keys in a <code>DPS:handler</code>
        attribute.
 
-  <dt> <code>Namespaces</code>
+  <dt> <code>XML Namespaces</code>
   <dd> Along the way we need to support XML namespaces; in particular DPS and
        PIA namespaces.  The PIA's current namespaces should properly be called
        ``entity namespaces'' or ``variable namespaces'', and the documentation
@@ -162,10 +162,10 @@
 
 <h3>Other</h3>
 <dl>
-  <dt> PIA command line
-  <dd> The PIA's command-line processing needs to be simplified; it's
-       currently a kludge.  It should be possible to load agents from the
-       command line.
+  <dt> (!) PIA command line
+  <dd> The PIA's command-line processing needed to be simplified; it used to
+       be a kludge.  It is now possible to do all configuration from the
+       command line. 
   <dt> (x) Pia rationalization
   <dd> Currently the <code>org.risource.pia.Pia</code> class is a nightmare.
        It needs to be transformed into something like a namespace or
@@ -423,7 +423,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: roadmap.html,v 1.12 1999-07-26 16:44:09 steve Exp $</b><br>
+<b>$Id: roadmap.html,v 1.13 1999-11-20 00:16:55 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
