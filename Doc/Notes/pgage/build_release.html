@@ -1,9 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-
-<TITLE>Building the PIA Source Release Tar File </TITLE></HEAD>
-<BODY BGCOLOR="#ffffff" link="#c40026" vlink="#e40026">
+<html>
+<head>
+<title>Building the PIA Source Release Tar File </title></head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 
 <h1>Building the PIA Source Release Tar File</h1>
 
@@ -23,6 +22,27 @@
     releases are no longer made, either.  Old src_release directories can just
     be deleted; <code>.tgz</code> files should be kept around for reference.
 </p>
+
+<h3>Preliminary Checking</h3>
+
+<p> Use the following command to ensure that references to your home directory
+    have not snuck into the code; typically this happens when you save an
+    <code>AGENT.xml</code> file for a new agent.  (Note that the references to
+    <code>/home/steve</code> in <code>Doc/intro.html</code> are OK -- they're
+    in an example.)
+
+<pre>
+find . -type f \! -name \*class \! -name Root \! -name Repository -print0 |\
+xargs -0 -e grep -n -e "$HOME"
+</pre>
+
+<p> Replace <code>$HOME</code> with <code>/pia1</code> to catch additional
+    references to CRC's local directory structure.  References in the
+    top-level Makefile and this note are OK because they involve the release
+    process; a few other references occur in comments.
+
+<p> Of course, you should make sure that the PIA actually runs on your
+    machine, and that the links (at least on the home page) are still good.  
 
 <h3>The Build Steps</h3>
 
@@ -59,7 +79,7 @@
 
        This uses <code>rsync</code> to synchronize the internal and external
        cvs respositories.  You have to be running under <code>ssh-agent</code>
-       for this to work.  Otherwise, you'll have to do it manually, so
+       for this to work.  Otherwise, you'll have to do it manually so that
        <code>ssh</code> can prompt you for your passphrase:
        
        <pre>
