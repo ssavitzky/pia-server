@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.8 1999-12-14 18:38:49 steve Exp $
+// $Id: SiteMachine.java,v 1.9 2000-02-25 22:35:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -348,7 +348,7 @@ public class SiteMachine extends Machine {
   public void requestAuthentication ( Transaction trans, Agent auth, 
 				      Resource resource) {
 
-    Authenticator aPolicy = auth.getAuthenticator();
+    org.risource.pia.Authenticator aPolicy = auth.getAuthenticator();
 
    //do we need content for authentication response??
       Pia.debug(this, "Authentication required");
