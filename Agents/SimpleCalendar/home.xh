@@ -29,10 +29,10 @@
 
        <?-- encapsulate whole date into a smaller package --?>
        <set name="datepack">
-              <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+              <day>&myDay;</day><month>&myMonth;</month><year>&myYear;</year>
        </set>
     <set name="todaypack">
-         <date>&day;</date><month>&month;</month><year>&year;</year>
+         <day>&day;</day><month>&month;</month><year>&year;</year>
     </set>
        <set name="title">Events for <weekday>&datepack;</weekday>,
 		     <weekday monthname="yes">&datepack;</weekday>
@@ -53,7 +53,7 @@
         <set name="intervalEntity"></set>
         <set name="started">
             <weekday longday="yes">
-                 <date>&myDay;</date><month>&myMonth;</month>
+                 <day>&myDay;</day><month>&myMonth;</month>
                  <year>&myYear;</year>
             </weekday>
         </set>

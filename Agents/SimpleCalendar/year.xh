@@ -16,10 +16,10 @@
 	</if>
     <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
     <set name="todaypack">
-         <date>&day;</date><month>&month;</month><year>&year;</year>
+         <day>&day;</day><month>&month;</month><year>&year;</year>
     </set>
     <set name="mypack">
-          <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+          <day>&myDay;</day><month>&myMonth;</month><year>&myYear;</year>
     </set>
 </hide>
   <head>
@@ -54,11 +54,11 @@
             </tr>
 
 	    <set name="offset"><weekday startsun="yes">
-                   <date>15</date><month>&thisMonth;</month>
+                   <day>15</day><month>&thisMonth;</month>
                    <year>&myYear;</year>
             </weekday></set>
 	    <set name="lastday"><weekday lastdate="yes">
-                 <date>15</date><month>&thisMonth;</month>
+                 <day>15</day><month>&thisMonth;</month>
                  <year>&myYear;</year>
             </weekday></set>
 
@@ -99,6 +99,6 @@
     </repeat>
     <show-errors />
 
-    <short-footer cvsid="$Id: year.xh,v 1.5 1999-10-12 15:53:58 steve Exp $"/>
+    <short-footer cvsid="$Id: year.xh,v 1.6 1999-11-16 18:46:35 steve Exp $"/>
   </body>
 </html>

@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.10 1999-11-05 01:12:38 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.11 1999-11-16 18:46:34 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -158,7 +158,7 @@
 	name of the corresponding month.
   </doc>
   <action><weekday monthname="yes">
-		  <date>15</date><month>&content;</month><year>&myYear;</year>
+		  <day>15</day><month>&content;</month><year>&myYear;</year>
   </weekday></action>
 </define>
 
@@ -169,7 +169,7 @@
     <action>
        <!-- encapsulate whole date into a smaller package -->
        <set name="todaypack">
-              <date>&day;</date><month>&month;</month><year>&year;</year>
+              <day>&day;</day><month>&month;</month><year>&year;</year>
        </set>
         <!-- show today's date as link to the day -->
 <h2> Today is  
@@ -419,8 +419,8 @@
              <!-- look for repeating events -->
 	     <set name="longdaytoday">
 		    <weekday longday="yes">
-			  <date>&attributes:newday;
-			  </date><month>&attributes:newmonth;</month>
+			  <day>&attributes:newday;
+			  </day><month>&attributes:newmonth;</month>
 			  <year>&attributes:newyear;</year>
 		    </weekday>
 	     </set>
@@ -480,8 +480,8 @@
 
              <!-- by week, looping over 1-4 week intervals -->
 	     <set name="wkdayname"><weekday>
-		    <date>&attributes:newday;
-                    </date><month>&attributes:newmonth;</month>
+		    <day>&attributes:newday;
+                    </day><month>&attributes:newmonth;</month>
                     <year>&attributes:newyear;</year>
              </weekday></set>
 
@@ -541,8 +541,8 @@
        <!--- now months -->
        <set name="monthtoday">
               <weekday monthnum="yes">
-		    <date>&attributes:newday;
-                    </date><month>&attributes:newmonth;</month>
+		    <day>&attributes:newday;
+                    </day><month>&attributes:newmonth;</month>
                     <year>&attributes:newyear;</year>
               </weekday>
        </set>
@@ -570,12 +570,12 @@
 		      </set>
                       <set name="startmonth">
                           <weekday monthnum="yes">
-                             <unixdate>
+                             <seconds>
                                <numeric product="yes">
                                   &startday;
                                   86410
                                </numeric>
-                             </unixdate>
+                             </seconds>
                            </weekday>
                       </set>
 
@@ -606,8 +606,8 @@
        <!--- finally by year -->
        <set name="mthname"><text trim="yes">
               <weekday monthname="yes">
-		    <date>&attributes:newday;
-                    </date><month>&attributes:newmonth;</month>
+		    <day>&attributes:newday;
+                    </day><month>&attributes:newmonth;</month>
                     <year>&attributes:newyear;</year>
               </weekday>
        </text></set>
@@ -662,7 +662,7 @@
 	    <then>
 		 <set name="wkdayname"><text trim="yes">
 		    <weekday>
-		       <date>&attributes:newday;</date>
+		       <day>&attributes:newday;</day>
 		       <month>&attributes:newmonth;</month>
 		       <year>&attributes:newyear;</year>
 		    </weekday>
@@ -697,7 +697,7 @@
 	    <then>
 		 <set name="mthname"><text trim="yes">
 		    <weekday monthname="yes">
-		       <date>&attributes:newday;</date>
+		       <day>&attributes:newday;</day>
 		       <month>&attributes:newmonth;</month>
 		       <year>&attributes:newyear;</year>
 		    </weekday>

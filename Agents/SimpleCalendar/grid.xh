@@ -67,7 +67,7 @@
 			 <tr><td>
                             <a href="grid.xh?newDay=15&amp;newMonth=&thisMonth;&amp;newYear=&myYear;">
 	       			    <weekday monthname="yes">
-		               	       <date>15</date><month>&thisMonth;</month>
+		               	       <day>15</day><month>&thisMonth;</month>
 			               <year>&myYear;</year>
 			            </weekday> 
                              </a>
@@ -77,11 +77,11 @@
                      
 
 	    <set name="offset"><weekday startsun="yes">
-                   <date>15</date><month>&thisMonth;</month>
+                   <day>15</day><month>&thisMonth;</month>
                    <year>&myYear;</year>
             </weekday></set>
 	    <set name="lastday"><weekday lastdate="yes">
-                 <date>15</date><month>&thisMonth;</month>
+                 <day>15</day><month>&thisMonth;</month>
                  <year>&myYear;</year>
             </weekday></set>
 
