@@ -7,7 +7,7 @@
   <body>
     <h2>Source code for &URL;</h2>
     <hr/>
-        <a href="source"><b>Source Viewer</b></a>
+        <a href="source?default=&FORM:url;"><b>Source Viewer</b></a>
     <if>&FORM:pretty;
 	<then><b>[pretty-printed]</b>
               <a href="source?url=&FORM:url;">[raw source]</a>
@@ -15,6 +15,11 @@
 	<else><a href="source?url=&FORM:url;&pretty=yes">[pretty-printed]</a>
 	      <b>[raw source]</b>
         </else>
+    </if>
+    <if><status src="&FORM:url;" item="absolute-path" />
+        <then><b>file: </b>
+	      <code><status src="&FORM:url;" item="absolute-path" /></code>
+        </then>
     </if>
     <hr/>
     <if>&FORM:pretty;
@@ -43,13 +48,15 @@
 </td></tr></sub-head>
 <hr />
 
+<set name="default"><get name="FORM:default">/Agents/View/source.xh</get></set>
+
 <form method='GET' action='source'>
   <input type='hidden' name='tagset' value='HTML' />
   <table>
     <tr><td> <input type='submit' value='View source' /> </td>
         <th align="right">URL:</th>
         <td><input name='url' size='50' maxlength='200'
-    			value='/Agents/View/source.xh' /></td>
+    			value='&default;' /></td>
     </tr>
     <tr><th align="right" colspan="2">Formatting: </th>
         <td> <select>
@@ -72,7 +79,7 @@
        not defined in this tagset.</dd>
 </dl>
 
-<footer cvsid='$Id: source.xh,v 1.8 1999-10-25 19:18:51 steve Exp $' />
+<footer cvsid='$Id: source.xh,v 1.9 1999-10-25 20:16:27 steve Exp $' />
 </body></html>
 </else>
 </if>
