@@ -16,6 +16,13 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> pia: broken for config files and tagsets <br />
+       Can't specify a tagset relative to pia:, for example.  For
+       <code>include</code>in config files, at least, it's because they're not
+       loaded using the Subsite under construction.
+       (2000-06-01)<br />
+       
+  </li>
   <li> <b>Bug</b> Loop in tagset inheritance not detected <br>
        If a tagset includes or inherits from itself, loading should resume
        from one level up in the Subsite tree, or from /lib if at root
@@ -218,5 +225,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.21 2000-04-20 22:57:49 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.22 2000-06-02 23:26:53 steve Exp $</b><br>
 </body></html>
