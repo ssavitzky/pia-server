@@ -16,6 +16,14 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Goal</b> Implement and integrate with PIA <br>
+       <ol>
+	 <li> finish implementing, mainly the loading of config files. 
+	 <li> simplify <code>org.risource.pia.Agent</code> and use
+	      <code>org.risource.site.Site</code> for URL lookup.
+       </ol>
+       (1999-08-23) goal: 09-03<br>
+
   <li> <b>Impr</b> Use &lt;container&gt; and &lt;document&gt; in cfg. <br>
        Not clear whether to keep &lt;Resource&gt; or not; probably a good idea
        to keep it for, e.g., files where we haven't determined whether it's a
@@ -37,9 +45,15 @@ See also:
        mapping, and the default search path.
        (1999-08-20) <br>
 
+  <li> <b>Note</b> alien resources. <br>
+       An ``alien'' resource is a link (alias) to something outside the site,
+       with no real counterpart.  An alien resource cannot be realized.  Best
+       represented by a <code>FileResource</code>.
+       (1999-08-23) <br>
+
   <li> <b>Note</b> search paths. <br>
        Note that typically the search path will have three components: the
-       real location, the virtual location and the defaults. 
+       real location, the virtual location and the defaults.  
        (1999-08-20) <br>
 
   <li> <b>Note</b> Document should set up Processor somehow. <br>
@@ -118,5 +132,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.3 1999-08-23 23:54:37 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.4 1999-08-24 00:48:32 steve Exp $</b><br>
 </body></html>
