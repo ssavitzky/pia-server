@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.23 2000-09-30 00:08:51 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.24 2000-10-06 00:33:04 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -132,6 +132,8 @@
   <Ext name="o"		type="application/binary" />
   <Ext name="obj"	type="application/binary" />
   <Ext name="exe"	type="application/binary" />
+
+  <include src="_subsite.xci"> </include>
 
   </Container>
 
