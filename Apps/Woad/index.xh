@@ -1,0 +1,71 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+  <title>WOAD -- Web-Organized Application Development</title>
+</head><body bgcolor="#99ccff">
+
+<set name="ltitle"><font face="Helvetica, sans-serif">WOAD</font>:</set>
+<header ltitle="&ltitle;">
+  <if><test exact="exact" case="insens" match="pia">&user.name;</test>
+			    <then>Control page</then>
+	    		    <else>Home page</else>
+			</if><br />
+</header>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+  <th width="170"><img src="Icon/dyerwoad.jpg" alt="WOAD" />
+  </th>
+  <td valign="top">
+    <table cellspacing="0" cellpadding="0" border="0" valign="top">
+    <tr><th valign="top" align="right" width="170">&nbsp;</th>
+        <td valign="top">&nbsp;</td></tr>
+
+    <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
+        <td valign="top">
+	    <a href="quick">Quick start</a> ||
+	    <a href="about">about WOAD</a>  ||
+	    <a href="help">Help</a>	    
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr> <th> </th>
+        <td valign="top"> <font face="Helvetica, sans-serif">WOAD</font>
+	    (Web-Organized Application Development) provides a web-based view
+	    of an application's documents, configuration files, and source
+	    code.  In addition, it provides for web-based editing and
+	    collaborative annotation.  Think of it as organizing whatever
+	    tools you're using now into a web-based IDE.  The <a
+	    href="quick">quick start</a> explains how to run <font
+	    face="Helvetica, sans-serif">WOAD</font> on the application of
+	    your choice.
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th valign="top" align="right" width="170"> 
+	    <font face="Helvetica, sans-serif">
+                  <a href="warrior">Woad</a></font>&nbsp;
+        </th>
+        <td valign="top">
+	    <font face="Helvetica, sans-serif">
+                  <a href="warrior"><b>Warrior</b></a>
+            </font> -- use WOAD on your desktop machine as a personal
+		    web-based assistant for application development. 
+        </td>
+    </tr>
+    <tr><th align="right">Demos:&nbsp;</th><td></td></tr>
+    <tr><th valign="top" align="right" width="170"> &nbsp;</th>
+        <td valign="top">
+	    <a href="tree"><b>ThisPIA</b></a> -- use WOAD to browse
+	    the PIA source tree. 
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+  </table>
+</td></tr></table>
+<hr />
+
+<include src="ww-trees.inc" />
+
+<p>
+<short-footer cvsid="$Id: index.xh,v 1.1 2000-06-02 23:48:33 steve Exp $" />
+</p></body></html>

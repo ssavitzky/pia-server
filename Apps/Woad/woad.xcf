@@ -1,0 +1,60 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: woad.xcf,v 1.1 2000-06-02 23:48:36 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
+
+<Container>
+  <doc> This is the site configuration file to use for a stand-alone WOAD
+	tree server.  It is meant to be used with <code>vroot</code> pointing
+	to the root of the target server's document tree, and <code>root</code>
+	pointing to the root of the annotation tree.
+  </doc>
+
+  <realport>8001</realport>
+  <virtualport>8001</virtualport>
+
+  <HomeDocumentName>woad-index.wh</HomeDocumentName>
+  <ConfigFileName>_woad.xcf</ConfigFileName>
+
+  <Container name=".Woad" virtual="pia:/Apps/Woad">
+    <doc> We put the Woad application directory into <code>/.Woad</code> so as
+	  to make it invisible in (most) directory listings.  Note that the
+	  extensions and so on are path-dependent, so that if we run across
+	  <code>Apps/Woad</code> as part of the source tree it will display
+	  properly as source.
+    </doc>
+    <HomeDocumentName>woad</HomeDocumentName>
+    <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+    <Ext name="html"	type="text/html" tagset="HTML" 			/>
+  </Container>
+
+  <Resource name="logs" hidden="true">
+    <doc> Hide the log directory in the root.  The real solution is to rename
+	  it, but we can fake that by aliasing it.  Note that resources with
+	  names starting with "." are filtered out of listings, but can still
+	  be accessed by the browser.  Hidden resources are not browsable.
+    </doc>
+  </Resource>
+  <Container name=".logs" virtual="/logs" />
+
+  <!-- include fails because not loading cf using the site being config'd  -->
+  <include src="pia:/Apps/Woad/extensions.xci" />
+
+  <!-- Extension map: "pia:" doesn't work in include -->
+
+  <Ext name="png"	type="image/png"				/>
+  <Ext name="jpeg"	type="image/jpeg"				/>
+  <Ext name="jpg"	type="image/jpeg"				/>
+  <Ext name="xbm"	type="image/x-xbitmap"				/>
+  <Ext name="gif"	type="image/gif"				/>
+
+  <!-- These are the tagsets used for woad's active documents: -->
+  <Ext name="wh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
+  <Ext name="ww"	type="text/html" tagset="/.Woad/woad-web"	/>
+
+  <!-- These are the tagsets used for formatting source code: -->
+  <Ext name="ts" 	type="text/html"	tagset="tsdoc"		/>
+  <Ext name="html"	type="text/html" tagset="/.Woad/src-html"	/>
+  <Ext name="xh"	type="text/html" tagset="/.Woad/src-xhtml"	/>
+
+</Container>

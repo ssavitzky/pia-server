@@ -1,0 +1,76 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+  <title>WOAD -- Web-Organized Application Development</title>
+</head><body bgcolor="#99ccff">
+
+<set name="ltitle"><font face="Helvetica, sans-serif">WOAD</font>:</set>
+<header ltitle="&ltitle;">Application Information <br /> &DOC:path;
+</header>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+  <th width="170"><img src="Icon/dyerwoad.jpg" alt="WOAD" width="170" />
+  </th>
+  <td valign="top">
+    <table cellspacing="0" cellpadding="0" border="0" valign="top">
+    <tr><th valign="top" align="right" width="170">&nbsp;</th>
+        <td valign="top">&nbsp;</td></tr>
+
+    <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
+        <td valign="top">
+	    <a href="quick">Quick start</a> ||
+	    <a href="about">About
+      		<font face="Helvetica, sans-serif">WOAD</font></a>  ||
+	    <a href="help">Help</a>	    
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr> <th> </th>
+        <td valign="top"> <font face="Helvetica, sans-serif">WOAD</font>
+	    (Web-Organized Application Development) provides a web-based view
+	    of an application's documents, configuration files, and source
+	    code.  In addition, it provides for web-based editing and
+	    collaborative annotation.  This page gives you information about
+	    the application.
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th valign="top" align="right" width="170"> 
+	   &nbsp;
+        </th>
+        <td valign="top"> The <a href="quick">quick start</a> explains how to
+	    run <font face="Helvetica, sans-serif">WOAD</font> on the
+	    application of your choice.  <a href="about">About
+            <font face="Helvetica, sans-serif">WOAD</font></a> gives some
+            background information.
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+  </table>
+</td></tr></table>
+<hr />
+
+<h2><font face="Helvetica, sans-serif">WOAD</font> Application Information</h2>
+
+<blockquote>
+<table>
+  <tr>
+    <th> Application server </th>
+    <td> 
+    </td>
+  </tr>
+  <tr>
+    <th> Application location </th>
+    <td> &SITE:virtual;
+    </td>
+  </tr>
+  <tr>
+    <th> Annotation location </th>
+    <td>  &SITE:file;
+    </td>
+  </tr>
+</table>
+</blockquote>
+<p>
+<short-footer cvsid="$Id: woad.xh,v 1.1 2000-06-02 23:48:37 steve Exp $" />
+</p></body></html>

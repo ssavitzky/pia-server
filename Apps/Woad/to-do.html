@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>To-Do list: WOAD</title>
+</head><body>
+<h1>To-Do list: WOAD</h1>
+
+<ol>
+  <li> <b>Hole</b> Do a _subsite.xcf file for standalone Woad <br />
+       i.e. an Apache's document root.  This may be simpler than the PIA
+       version, but will still involve bug fixes to make the top-level
+       <code>/Woad</code> directory work for tagsets and so on.  Of course,
+       could put <code>src-*.ts</code> in <code>PIA/lib</code> for now.
+       (2000-05-30)
+  </li>
+  <li> <b>Hole</b> (dps) wrappers, #element in tagsets <br />
+       Need to define wrapper element and default bindings for #element,
+       #comment, etc.
+       (2000-05-30)
+  </li>
+  <li> <b>Bug</b> (site) <code>file:</code> in <code>.xcf</code> file <br />
+       Need to be able to make virtual links to absolute paths.  There
+       has to be some kind of restriction to prevent security holes.
+       Possibly restrict to normal user, not <code>pia</code>; also perhaps
+       make the resulting subtrees non-trusted.
+       (2000-05-30)
+  </li>
+  <li> <b>Bug</b> (site) override config file name <br />
+       Need to be able to override <code>_subsite.xcf</code> as the default
+       configuration file name in subsites.  Currently, configFileName is only
+       in Site.
+       (2000-05-30)
+  </li>
+  <li> <b>Bug</b> (site) re-read config file <br />
+       Need to be able to re-read the subsite config file in order to make
+       changes to projects.
+       (2000-05-30)
+  </li>
+  <li> <b>Bug</b> (pia) make PIA namespace available to config files <br />
+       Configuration files need to be read with the PIA: namespace in effect. 
+       (2000-05-30)
+  </li>
+  <li> <b>Hole</b> make Woad: namespace available in subs. <br />
+       It turns out that what you need is <code>&amp;Woad:path;</code> for the
+       path to wherever Woad's home directory is.  It gets used for forms, for
+       example. 
+  </li>
+</ol>
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: to-do.html,v 1.1 2000-06-02 23:48:35 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

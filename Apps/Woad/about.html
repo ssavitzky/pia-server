@@ -1,0 +1,774 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>WOAD: Web-Organized Application Development</title>
+</head><body bgcolor="#99ccff"><!--  was ccccff  -->
+<!--  99ccff  from http://www.lars.bbsrc.ac.uk/plantsci/woad.htm  -->
+<h1 align="center">WOAD: Web-Organized Application Development</h1>
+<h3 align="center">A Development Environment to Dye For</h3>
+
+<h3>Note to the Reader:</h3>
+
+<blockquote>
+<p> This document is a general description of the WOAD system.  However, it is
+    written not as a tutorial but as a working design sketch.  Hence, the
+    exposition follows the design process and includes the designer's musings
+    and the rationale for major design decisions.  
+</p>
+</blockquote>
+
+<h3> Contents</h3>
+<toc>
+<br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-1">1: General Description</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-2">2: Operating Modes</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-3">3: Requirements</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-4">4: Features</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-4.1">4.1: Code Viewing and Understanding</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-4.2">4.2: Cross-application editing and linking</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-4.3">4.3: Collaborative Annotation</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-5">5: Use Cases</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.1">5.1: Single-User Development</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.2">5.2: Developer Community: Decentralized</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.3">5.3: Developer Community: Centralized</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.4">5.4: Customization</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.5">5.5: Platform</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-6">6: Implementation Plan</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-7">7: Implementation Notes</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.1">7.1: Filenames, Extensions, Directories</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.2">7.2: Where It Lives</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.3">7.3: What does a WOAD site look like?</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.4">7.4: Project Structure</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.5">7.5: Application Structure</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-8">8: <a name="alternatives">Alternatives</a></a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.1">8.1: Alternative Derivations of WOAD</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.2">8.2: Alternative Acronyms</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.3">8.3: See Also</a></font>
+  </toc>
+
+<h2> <a name="section-1">1:</a> General Description</h2>
+
+<p> WOAD stands for Web-Organized Application Development (see <a href="#alternatives">here</a> for alternative derivations) -- a web-based
+    application development tehnique, philosophy, and toolkit (WOAD Warrior)
+    based on browsing, annotating, and editing the application's source tree
+    using a web browser and specialized codebase server.  Putting it another
+    way, the idea is to make an application (or collection of applications)
+    into a website around which the developer community is organized. 
+</p>
+
+<p> Note that this technique is orthogonal, but complementary, to the idea of
+    a ``Web Application'' -- WOAD can be used to organize <em>any</em>
+    application, though it is <em>highly optimized</em> for web applications
+    (e.g., it's easy to go from a web page's source to a browser preview).  It
+    is also possible to <em>link</em> a web application with its WOAD server
+    in order to make a tight coupling between a user community and a developer
+    community. 
+</p>
+
+<p> WOAD can be thought of as a kind of ``IDE for the Web'' as well as being a
+    browser-based IDE.  The general idea is to build a web-based tree browser,
+    code viewer (with syntax-based color highlighting, as in Emacs
+    <code>font-lock-mode</code>), and documentation extractor (e.g. JavaDoc),
+    with full cross-linking between keywords and documentation and between
+    application web page previews and the corresponding source code.  In
+    addition, any page in the application, and any file in the source tree,
+    can be collectively annotated, just like the <a href="http://php.net/manual/">manual</a> at <a href="http://php.net/">php.net/</a>.  It's sort of like Code Warrior meets
+    Slashdot in a Wiki-Wiki Web.
+</p>
+
+
+<blockquote>
+  <p> It's actually slightly more accurate to regard WOAD as a
+      <em>Dis-</em>integrated Development Environment -- it works quite
+      happily <em>alongside</em> whatever editor, version-control system,
+      build manager, web server, upload program, and so on you are presently
+      using in your development.
+  </p>
+</blockquote>
+
+<h2> <a name="section-2">2:</a> Operating Modes</h2>
+
+<p> WOAD can be used in several different ways, depending on whether it is a
+    personal tool or a shared environment, and whether it is separate from or
+    integrated with the application being developed:
+</p>
+
+<ul>
+  <li> As a stand-alone, personal development tool called <strong>WOAD
+       Warrior</strong>.  <strong>WOAD Warrior</strong> allows a developer to
+       participate in multiple projects (WOAD-enabled or not) and provides a
+       powerful tool for browsing and managing web sites and source-code
+       directories.  If you are running a personal PIA server, you are already
+       running <strong>WOAD Warrior</strong>.  Otherwise, the command
+       <code>warrior</code> in the PIA <code>bin</code> directory runs a
+       stand-alone version.
+  </li>
+  <li> As a shared server for an application's developers and/or users.  A
+       <strong>WOAD server</strong> provides a close working connection
+       between the developer community and the user community.  The command
+       <code>woad</code> in the PIA <code>bin</code> directory runs a
+       <strong>WOAD server</strong>.
+  </li>
+  <li> Integrated with a web application or web site, as part of the
+       application's or site's URL space.  A <strong>WOAD Tree</strong>
+       provides power users with the kind of documentation and tools (``web
+       wizards'') required for easy customization of the application.  The
+       standard PIA distribution automatically includes its own <strong>WOAD
+       Tree</strong>, and it is easy to incorporate one into any PIA-based
+       application. 
+  </li>
+  <li> As a stand-alone, shared server for collaborative writing and
+       discussion.  A <strong>WOAD Web</strong> combines some of the best
+       features of collaborative websites like
+       <a href="http://c2.com/cgi/wiki?WelcomeVisitors">Wiki-Wiki</a>, and
+       threaded discussion sites like <a href="http://slashdot.org/">
+       Slashdot</a>.
+  </li>
+</ul>
+
+<h2> <a name="section-3">3:</a> Requirements</h2>
+
+<p> WOAD <em>requires</em>:
+</p>
+
+<ul>
+  <li> Java JDK 1.2 or later -- required for running the PIA.
+  </li>
+  <li> PERL 5 -- several tools are written in PERL because I'm lazy, and
+       because PERL is faster than Java for certain kinds of text-processing
+       operations.
+  </li>
+  <li> A web browser.  Tables are almost essential; frames are optional but
+       can be used if desired. 
+  </li>
+</ul>
+
+<p> WOAD <em>works well with</em> but does not require:
+</p>
+
+<ul>
+  <li> GNU <code>make</code>
+  </li>
+  <li> GNU <code>emacs</code>
+  </li>
+  <li> WebDAV
+  </li>
+  <li> Apache
+  </li>
+  <li> The CVS concurrent version control system
+  </li>
+  <li> Netscape6/Mozilla -- WOAD can create and customize sidebars, and
+       someday eventually chrome (because Mozilla is basically just another
+       web application).
+  </li>
+</ul>
+
+<p> The applications and development tools above are the ones that WOAD is
+    designed to work with ``out of the box'' -- it should be easy to add
+    interfaces to others. 
+</p>
+
+<h2> <a name="section-4">4:</a> Features</h2>
+
+<h3><a name="section-4.1">4.1:</a> Code Viewing and Understanding</h3>
+
+<p> The ``understanding'' part comes from the ability of the code viewer to
+    link <em>every</em> identifier or keyword with its corresponding
+    definition (if it has one) and documentation (if it has any).  For
+    example, in the statement:
+</p>
+
+<pre>   String foo = new Table(bar.getSomething())</pre>
+
+<p> The idea would be to link <code>String</code>, a system class, directly to
+    its documentation at Sun, <code>Table</code>, a PIA class, to its local
+    source file (which in turn would link to its <code>javadoc</code>
+    documentation), and <code>bar</code> and <code>getSomething</code> to
+    their declarations.
+</p>
+
+<h3><a name="section-4.2">4.2:</a> Cross-application editing and linking</h3>
+
+<p> Every file would be linked to, typically, <em>two</em> editors: one
+    web-based and implemented directly in the WOAD server, and one
+    user-specified application (e.g. Emacs).  Suitably-equipped editors would
+    have links back to the browser.
+</p>
+
+<p> Similarly, every file would be viewable both in source form through WOAD,
+    and in final form through a local copy of the target server.  The latter
+    would be visible through multiple browsers (e.g. Netscape and Lynx).
+</p>
+
+<p> In the various WOAD views, there will of course be controls for building
+    derived files, handling version control, updating the website, and so on.
+    These will have to be configurable for different build programs
+    (<code>make</code> and <code>ant</code>), different version control
+    systems (<code>CVS</code> and <code>RCS)</code>), different update
+    techniques (<code>ftp</code>, <code>rsync</code>, <code>scp</code>, ...)
+    and so on.
+</p>
+
+<h3><a name="section-4.3">4.3:</a> Collaborative Annotation</h3>
+
+<p> It will be easy to attach annotation to the code, and in some cases to see
+    it (or at least find it) from the resulting web pages.  Linking between
+    annotation and code, <em>and vice versa</em> (from the code view to the
+    annotation) will be as simple as possible. 
+</p>
+
+<p> Some applications, of course, will not want to make annotation and
+    developer-feedback links available on the final website, but some (e.g.
+    <a href="http://php.net/">php.net/</a>) will, and WOAD will make this
+    functionality available too, e.g. by means of PIAServlet.
+</p>
+
+<p> Two general styles of annotation are required: threaded discussions, which
+    are best for gathering input from a large user community, and
+    collaborative ``anything goes'' web editing, which works best in a small
+    developer community.  Text formatting and linking conventions will be the
+    same for both.
+</p>
+
+
+<hr />
+<h2> <a name="section-5">5:</a> Use Cases</h2>
+
+<h3><a name="section-5.1">5.1:</a> Single-User Development</h3>
+
+<p> This is the simplest case.  I start with a copy of WOAD Warrior on a local
+    machine, and use it either by itself or, more likely, alongside my regular
+    editor to develop a web application.
+</p>
+
+<p> Another use for WOAD Warrior will be as a tree browser and customizer for
+    <em>imported</em> applications.  In other words, I download a source tree
+    and set up a parallel WOAD tree for annotation.
+</p>
+
+<p> In this mode, WOAD is just a personal tool along the lines of an IDE.
+</p>
+
+<p> Once the web application is deployed (for example, on an Apache server
+    with PHP), I have the <em>option</em> of deploying all or, more likely,
+    part of my WOAD tree for PHP-style documentation that my users can add
+    to.  (See below.)
+</p>
+
+
+<h3><a name="section-5.2">5.2:</a> Developer Community: Decentralized</h3>
+
+<p> This is almost as simple.  A development team sets up a CVS repository for
+    a new application.  Each team member then uses a personal copy of the WOAD
+    server as a tree browser and editor, occasionally checking their changes
+    back in.
+</p>
+
+<h3><a name="section-5.3">5.3:</a> Developer Community: Centralized</h3>
+
+<p> In this case the source tree and the WOAD annotation tree are separate.
+    Ordinary programming is decentralized using CVS, as usual, but everyone
+    shares the same WOAD tre so that annotations can be immediately shared
+    with all other developers.
+</p>
+
+<p> Even in the centralized case, an individual developer may well run a local
+    copy of WOAD Warrior as a code browser over their personal code tree, and
+    to keep personal notes and personal customizations.  The local copy will
+    of course <em>proxy</em> to the shared one.
+</p>
+
+<h3><a name="section-5.4">5.4:</a> Customization</h3>
+
+<p> Once an application is deployed, there are suddenly two communities to
+    worry about: the developer community and the user/customizer community.
+    In this case there may be two distinct WOAD trees overlaid on the same
+    source tree: one for the developers and one for the users.  It's also
+    likely that the users' view will be restricted; e.g. to only the web
+    pages. 
+</p>
+
+<p> Because WOAD makes it easy to develop specialized, web-based editors for
+    configuration files and web pages, it's a good way to deploy specialized
+    customization tools for an application.
+</p>
+
+<p> Customization is of course going to be done locally at each installation
+    of the application, so there will be many customization communities
+    springing up, each around its own WOAD server.  Each group of users will
+    have to decide on a policy about which annotations and customizations to
+    share with other groups; the simple default is just to keep them local.
+</p>
+
+<p> Even with a local WOAD server, requests that can't be fulfilled locally
+    will be proxied up to the centralized server so that changes in the shared
+    content will be immediately available.  Note that there will need to be
+    ways of locking both WOAD pages and application files so that users trying
+    to customize things don't step on the originals. 
+</p>
+
+<h3><a name="section-5.5">5.5:</a> Platform</h3>
+
+<p> There will be some kinds of applications that can be implemented directly
+    over a WOAD server: mainly applications that include discussion forums,
+    collaborative editing and annotation, and collaborative development of
+    structured web pages.  For example, <a href="http://dmoz.org/">dmoz</a>,
+    <a href="http://c2.com/cgi/wiki?WelcomeVisitors">Wiki</a>, and <a href="http://slashdot.org/">slashdot</a> are examples.
+</p>
+
+<p> A ``real-world'' WOAD-based application might be part of a larger website,
+    perhaps an intranet.  
+</p>
+
+<hr />
+<h2> <a name="section-6">6:</a> Implementation Plan</h2>
+
+<ol>
+  <li> Sketch out the basic tree-browsing tagset and configuration files. 
+  </li>
+  <li> HTML/XML viewing, with links to the tagset documentation, included or
+       otherwise referenced files, and to the parallel web-server used for
+       previews.  <em>At this point you would have something you can point at
+       a directory tree and browse around with.</em>
+  </li>
+  <li> Code viewing, which will require parsers and indexers for
+       non-SGML-based languages but otherwise is just like HTML viewing.  It
+       may be possible to leverage Emacs ETAGS files here. 
+  </li>
+  <li> Threaded discussions and collaborative web-page creation.  (These are
+       closely related because they will use the same text-to-HTML parser,
+       with editing and linking conventions similar to <a href="http://minnow.cc.gatech.edu/squeak/guide">those used in
+       SWiki</a>.  Linking will eventually have to evolve to include code
+       and other non-local linkages, which are tricky.  Also, it should be
+       possible to make certain linkages without requiring the user to
+       explicitly delimit them (e.g.,  class names should be recognized
+       anywhere). 
+  </li>
+  <li> CVS history browsing.  Possibly using one of the existing CGI's. 
+  </li>
+  <li> Linkage to programs: <code>make</code>, <code>emacs</code>, ...
+  </li>
+  <li> Web-based editing for text.  (Essentially trivial, since you just throw
+       the whole file into a text box.)
+  </li>
+  <li> Web-based (wizard-like) editing for specialized files such as
+       Makefile's and XML configuration files, and for page fragments such as
+       HTML tables and lists of links.  <em>At this point you would have
+       something you could use for maintaining a small web site. </em>
+  </li>
+  <li> Web-based structured editing for code and XML files, using the same
+       parsers as code viewing.  See the old InterLisp editor.
+  </li>
+  <li> Simplified parser development using XML description files for both
+       syntax and viewing/editing semantics.  <em>At this point you have
+       something that can be self-extended to handle any kind of programming
+       language or web-page structure. </em>
+  </li>
+  <li> Linkages <em>between</em> WOAD-based applications.  WOAD restricted to
+       subtrees.  <em>This is what you need in order to share information
+       between a developer community and multiple user/customizer groups.</em>
+  </li>
+</ol>
+
+<p> Note that this is only one of many possible orderings:  most of the
+    ``steps'' above are independent.  
+</p>
+
+
+
+<hr />
+<h2> <a name="section-7">7:</a> Implementation Notes</h2>
+
+<h3><a name="section-7.1">7.1:</a> Filenames, Extensions, Directories</h3>
+
+<p> In most cases it will be necessary  to keep WOAD configuration files and
+    so on carefully separate from the application's own files.  In particular,
+    we have to stay away from things like <code>HEADER.html</code>,
+    <code>_subsite.xcf</code>, <code>*.xh</code>, <code>Makefile</code>, and
+    so on.  This suggests:
+</p>
+
+<ul>
+  <li> <code>_woad.xcf</code> config file
+  </li>
+  <li> <code>WOAD/</code> annotation directory
+  </li>
+  <li> <code>*.woad</code> XHTML files
+  </li>
+  <li> <code>*.ww</code> (Woad Web) annotation files
+  </li>
+  <li> <code>woad.ts</code> tagset
+  </li>
+</ul>
+
+<p> There are actually several good ways of doing the annotation; we'll
+    probably want to be able to handle all of them:
+</p>
+
+<ul>
+  <li> <code>WOAD/</code> or <code>.woad/</code> subdirectory and a
+       <code>_woad.xcf</code> config file in every source-tree directory.
+       This is most suitable for an application developed from the ground up
+       using WOAD.
+  </li>
+  <li> parallel WOAD tree.  This is most suitable for importing a non-local
+       application (e.g. the eCabinet code) and managing it with WOAD.  Even
+       with a parallel tree, annotation will be kept in <code>WOAD/</code>
+       subdirectories just to keep it out of the way.
+  </li>
+  <li> interspersed <code>.woad</code> files in every source directory.  This
+       is most suitable for an application which is basically <em>nothing
+       but</em> a WOAD tree used as a collaborative authoring and discussion
+       environment.  Even then it would be simplest to keep annotation in
+       subdirectories for security reasons, so we'll ignore this case for now.
+  </li>
+</ul>
+
+<h3><a name="section-7.2">7.2:</a> Where It Lives</h3>
+
+<p> Possibly the most difficult decision will be where to put WOAD's own
+    source tree -- or even whether it should have one!  
+</p>
+
+<ul>
+  <li> Logically, WOAD is a PIA application, so it could go under PIA/WOAD or
+       PIA/Apps/WOAD or something like that.  Possibly Woad to prevent
+       conflict with <code>WOAD</code> annotation directories.  Parsers, tag
+       handlers, etc. would be scattered around the PIA tree as appropriate.
+  </li>
+  <li> Or it could go into its own top-level directory: WOAD or Woad.  This
+       makes it a little more difficult to integrate with the PIA, and whether
+       to put a tagset or handler into the PIA or the WOAD tree would have to
+       be decided case-by-case.  On the other hand, it puts the PIA on a level
+       with other frameworks like PHP and Zope in the <em>WOAD</em> scheme of
+       things.  
+  </li>
+</ul>
+
+<p> After consultation with Greg it looks like the best choice is
+    PIA/Apps/Woad, so here we are. 
+</p>
+
+<h3><a name="section-7.3">7.3:</a> What does a WOAD site look like?</h3>
+
+<p> The flip side of ``where it lives'' is how you navigate around a WOAD
+    site.  My guess is that <em>all</em> of the alternatives below will be
+    wanted, in different situations.
+</p>
+
+<ul>
+  <li> WOAD home page on top, with multiple application summaries underneath.
+       This makes it possible for a developer to organize multiple
+       applications under a single WOAD server.  Clearly the most general, and
+       perhaps optimal for a developer's personal server.
+  </li>
+  <li> WOAD project (application-summary) page on top, pointing down to the
+       source tree (or trees), the preview, documentation, and so on.  This is
+       the simplest and cleanest alternative for most applications, and
+       gracefully handles situations like RedHat's screwy arrangement with
+       docs in <code>/home/httpd</code>, config files in
+       <code>/etc/httpd</code>, and source code scattered around all over the
+       place.
+  </li>
+  <li> Source root on top.  WOAD is nothing but a directory listing on
+       steroids.  This works great for things like the PIA and X11 that are
+       totally contained in a single large tree, but gets into trouble when
+       part of the application (like the CGI code) is off someplace else.
+       (This, perhaps, is the STEAM case, where an entire application is a
+       single source tree.)
+  </li>
+  <li> Document root on top.  Again, WOAD is a directory on steroids, but you
+       have to look elsewhere for the config files and the code.  This scheme
+       gives a particularly simple mapping between application paths and WOAD
+       paths, but falls apart if documents are in multiple places because of
+       virtual directories.  Probably just right for websites that are
+       uploaded to a hosting service, where the config files are out of your
+       control.
+  </li>
+  <li> Virtual root on top.  This is a variant of ``Document root on top'' and
+       actually works pretty well if the application is put together by
+       mounting subtrees (like <code>cgi-bin</code> or servlets) under the
+       virtual root.  This probably works best for straight web site
+       development. 
+  </li>
+  <li> Application home page on top.  A simple transformation,
+       e.g. <code><em>path</em>/WOAD</code> or
+       <code>/WOAD/<em>path</em></code>, gets you from an application path to
+       the corresponding WOAD directory.  This is even a more difficult
+       mapping than looking at the document root, but is exactly what you want
+       for previewing.  This is clearly the optimum for a collaborative
+       application (for example an intranet or an open-source project like the
+       PIA) that exposes its own WOAD tree.
+  </li>
+</ul>
+
+<h3><a name="section-7.4">7.4:</a> Project Structure</h3>
+
+<p> There are three different cases for a project:
+</p>
+
+<ul>
+  <li> The project is contained in multiple directories, and we want each
+       of those directories to look like a subdirectory of the Woad root.
+       This is simple and straightforward -- essentially, the project page is
+       the index page for the root, and everything's cool.
+  </li>
+  <li> The entire project is contained in a single directory tree.  In this
+       case, we probably want the Woad project page to include the directory
+       listing.  This isn't so hard, either, because the project page is
+       <em>still</em> the index page for the root.
+  </li>
+  <li> We want the Woad root directory to correspond, not to the project
+       directory, but to the server's document root.  This is most likely to
+       be the case if we had a separate Woad server running in parallel to an
+       application.  It's not really a problem if we either disregard the
+       sources, or mount them as (additional) virtual directories under the
+       root.
+  </li>
+</ul>
+
+<p> The conclusion is that, in all cases, a project page <em>is</em> just the
+    index page of the project's WOAD tree.  This simplifies things.
+</p>
+
+<h3><a name="section-7.5">7.5:</a> Application Structure</h3>
+
+<p> So, now that we know what a WOAD <em>site</em> is supposed to look like,
+    how do we structure <code><a href="-">PIA/Apps/Woad</a></code> and the PIA
+    root directory (<code>~/.pia</code>) to make it look like that?
+</p>
+
+<p> There's a bit of a problem, in that Woad can run in several different
+    configurations: 
+</p>
+<ul>
+  <li> As part of a standard (default configuration) PIA.  This is the
+       simplest case from an <em>implementation</em> point of view, since it
+       gives us access to all of the usual PIA pages in their usual places.
+  </li>
+  <li> Stand-alone Woad Warrior.  This is the simplest case from the
+       <em>user's</em> point of view.  Each project is a subdirectory of the
+       root. 
+  </li>
+  <li> Stand-alone Woad <em>tree</em>.  What would normally be the Woad
+       Warrior <em>project page</em> should be the home page.  This makes it a
+       little unclear where the necessary forms, tagsets, and so on should go
+       -- we can't very well use <code>/../</code>, so it may be necessary to
+       use, for example, <code>/Woad/</code> (possibly something like
+       <code>/--/</code> <code>/.Woad/</code> if we want to make it less
+       obvious).
+  </li>
+  <li> As the WOAD tree attached to a PIA-based application.  In that case, we
+       want the project page to be <em>at</em> the top level, but not the home
+       page, with the root of the WOAD tree one level down, i.e.,
+       <code>/WOAD/</code>.
+  </li>
+</ul>
+
+<p> There are also four plausible configurations; they ought to be selectable
+    on a per-project basis:
+</p>
+
+<ul>
+  <li> Real root points to the annotations and customizations, virtual root
+       points to the source tree.  Annotations are mixed in. 
+  </li>
+  <li> Real root points to the annotations and customizations; virtual root
+       points to the source tree.  Annotations are in a WOAD subdirectory.
+  </li>
+  <li> Real root points to the source tree, annotations are mixed in.
+  </li>
+  <li> Real root points to the source tree, annotations are in a WOAD
+       subdirectory. 
+  </li>
+</ul>
+
+<p> Getting the real root to point to the source tree may be tricky.  It
+    requires either rewriting the <code>_subsite.xcf</code> in Warrior's real
+    root directory (and rereading it, which isn't supported yet), or adding
+    some kind of <code>mount(<em>path</em>)</code> method to
+    <code>Subsite</code>.  Getting the virtual root to point to the source
+    should be easier: just create the new real directory and write its
+    <code>_subsite.xcf</code> file.  <em>(But does this really work?  It's
+    possible that the <code>_subsite.xcf</code> file gets read as soon as the
+    directory is created, at which point we're in trouble.)</em>  It's
+    probably simplest just to fix <code>Subsite</code> so that it can reread
+    the config file -- we need to do that anyway.
+</p>
+
+<blockquote>
+  <em> During initial implementation we can finesse this problem by
+       hand-building the necessary project directories.  And we can build it
+       into the top-level <code>woad</code> script for starting the server.
+       It's not a problem for the <code>ThisPIA</code> project, either,
+       because we can just put the necessary stuff into <code>PIA/</code>. 
+  </em>
+</blockquote>
+
+<h3>File Viewing and Editing</h3>
+
+<p> The big problem here is that we want to be able to view files in multiple
+    formats.  This means that the most obvious thing, just redefining all the
+    tagsets, doesn't work.  What we <em>really</em> would like is an automatic
+    wrapper document that does an <code>&lt;include&gt;</code> of the file
+    with the appropriate tagset, based on a query string.
+</p>
+
+<p> It might be possible to dance around <em>this</em> problem, too, in one of
+    the following almost equally disgusting ways. 
+</p>
+
+<ul>
+  <li> First, one could use a redirection agent.  This would have to do
+       explicit pattern matching on the URL -- quite a lot of it, in fact.
+       Ugly.
+  </li>
+  <li> Alternatively, one could use a viewer wrap <em>explicitly</em>, simply
+       passing it the path of the file to be viewed as a query.  It would have
+       to rewrite URL's explicitly, using exactly the same kind of pattern
+       matching as the redirection agent.  On the other hand, it's easy to use
+       different pages for viewing and editing.
+  </li>
+  <li> The third way is to extend the extension-mapping mechanism to
+       explicitly provide for this kind of redirection -- i.e. map an
+       extension into a viewer instead of into a tagset.  That's the cleanest,
+       so it's probably where we're headed eventually.  The viewer has to do
+       explicit rewriting only in two cases: the edit link, and images.
+  </li>
+  <li> Or, one could put wrappers into tagsets by means of a special
+       definition (<code>&lt;define wrapper&gt;</code> perhaps.  This is
+       elegant and <em>almost</em> clean, but it means that you can't change
+       the viewer's tagset based on the query string or current state.
+       Combined with one of the other schemes, though, it could give you a
+       good default view.
+  </li>
+  <li> What happens if you use an ordinary page as if it were a container?  In
+       other words, <code>Apps/Woad/<em>viewer.xh</em>/<em>path</em></code> --
+       is the code in place yet for passing what a CGI would call
+       <code>PATHINFO</code> down to the viewer?  <em>No: it ends up giving
+       a ``404: not found'' error.</em>  A trailing slash is accepted,
+       however, so there's hope. This scheme would work best, of course, if
+       the <em>project</em> was the viewer.
+  </li>
+  <li> This leads to a different possibility, that of making the <em>project
+       directory</em> into the viewer.  It's syntactically elegant, but blows
+       away the nice simple site structure and extension mapping. 
+  </li>
+  <li> If you append <code>/-</code> to an ordinary document's name, it lists
+       the directory it's in.  This might be another, more elegant, way to go
+       from a path to a wrapper -- unconditionally appending is a lot simpler
+       than checking extensions and rewriting parts of a path.  The Subsite
+       could look up the MIME type and default tagset and pass them down to
+       the viewer as entities.
+  </li>
+</ul>
+
+<p> All of these schemes get into a certain amount of trouble with images --
+    sometimes you want them wrapped, but sometimes you want to just see the
+    darned thing.  So this requires explicit rewriting in the wrapper.
+</p>
+
+<p> <em>All</em> schemes have to worry about paths that start with
+    ``<code>/</code>'' -- in other words, ``absolute'' paths that need to be
+    prepended with the server root.  
+</p>
+
+<p> Schemes that modify the path to splice in the viewer, rather than changing
+    the tagset mapping, make it much easier to get previews and view images --
+    just don't modify the path.  The ``trailing <code>/-</code>'' scheme
+    additionally allows the extension map to specify the <em>real</em> tagset
+    for the page, which is a <em>good thing</em>, but it also means that the
+    tree is ``live,'' which may be a <em>very bad thing</em>.
+</p>
+
+<p> My guess is that the right thing to do is the following:
+</p>
+
+<ol>
+  <li> Start by mapping extensions into tagsets that give a default source
+       view.  Use the definition for <code>&lt;html&gt;</code> to fake start
+       and end wrappers.
+  </li>
+  <li> Add tagset/parser logic to allow a <em>real</em> wrapper to be
+       defined.  Probably needs lazy <code>&amp;content;</code> evaluation at
+       the same time to make it work efficiently.
+  </li>
+  <li> Figure out how to remap <code>/-</code> to a wrapper for directory
+       listing. 
+  </li>
+  <li> Use explicit viewer pages with URL's in query strings to provide
+       additional views and editors.  They'll be linked from the wrapper in
+       the main view, so tagset information can be passed at that point.
+  </li>
+  <li> Implement either the <code>/-</code> mechanism or the pathinfo
+       mechanism (<code>viewer.xh/<em>path</em></code> to simplify views.
+  </li>
+</ol>
+
+<h3>Demo Trees</h3>
+
+<p> The presence of the PIA project wants to be conditional on whether
+    PIA_HOME is the virtual root.  Some explicit checking might be in order to
+    see whether one should make an Apache project.
+</p>
+
+<hr />
+<h2> <a name="section-8">8:</a> <a name="alternatives">Alternatives</a></h2>
+
+<h3><a name="section-8.1">8.1:</a> Alternative Derivations of WOAD</h3>
+<ul>
+  <li> Web-Oriented Application Design
+  </li>
+  <li> Web Optimized Application Development
+  </li>
+  <li> Web Oriented Applications for Dummies
+  </li>
+</ul>
+
+<h3><a name="section-8.2">8.2:</a> Alternative Acronyms</h3>
+
+<ul>
+  <li> STEAM: Source Tree Enabled Application Maintenance.  (STEAM driven)
+  </li>
+  <li> STEAM: Source Tree Extensible Application Maintainer.
+  </li>
+</ul>
+
+<h3><a name="section-8.3">8.3:</a> See Also</h3>
+
+<ul>
+  <li> <a href="http://www.nyrond.co.uk/filks/fantasy/woadwarr.txt">Woad
+       Warrior</a> -- the song that inspired the acronym.
+  </li>
+  <li> <a href="http://www.dandelion.com/catalog/ww.html">The Album Cover</a>
+  </li>
+  <li> <a href="http://www.frivolity.com/teatime/Songs_and_Poems/woad_ode.html">
+       Woad</a> -- an older and better-known Woad song.
+  </li>
+  <li> <a href="http://www.songworm.com/lyrics/songworm-parody/Code.html">
+       Code</a> -- a parody of the above.
+  </li>
+  <li> <a href="http://www.net-link.net/~rowan/crafts/woad/woadpage.html">The
+       Woad Page</a> --  ``A page devoted to the Woad plant <em>Isatis
+       tinctoria</em> and its uses.'' 
+  </li>
+  <li> <a href="http://www.iacr.bbsrc.ac.uk/lars/depts/plantsci/woad.html">
+       Woad</a> under
+       <a href="http://www.iacr.bbsrc.ac.uk/lars/depts/plantsci/tdyeplant.html">
+       Cultivation and Extraction of Natural Dyes for Industrial Use</a> at
+       <a href="http://www.iacr.bbsrc.ac.uk/lars/tlarshome.html">IACR - Long
+       Ashton</a> 
+  </li>
+  <li> <a href="http://www.woad.com/">The Radio Station</a>
+  </li>
+  <li> <a href="http://www.poppyware.com/dunham/ror/orlanthi.html">Some Woad
+       Warriors</a> 
+  </li>
+  <li> <a href="http://www.ext.usu.edu/garden/garden/woad.htm">Woad Rage</a>
+       -- Woad is regarded as a noxious weed in some areas.
+  </li>
+</ul>
+
+<hr />
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
+<b>$Id: about.html,v 1.1 2000-06-02 23:48:32 steve Exp $</b><br />
+<address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

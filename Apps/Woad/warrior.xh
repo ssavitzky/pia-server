@@ -1,0 +1,78 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+  <title>WOAD Warrior main page</title>
+</head><body bgcolor="#99ccff">
+
+<set name="ltitle"><expand>&WOAD-LOGO;</expand>
+<font face="Helvetica, sans-serif">Warrior</font> </set>
+<header ltitle="&ltitle;">Main Page <br /> &DOC:path;
+</header>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+  <th width="170"><img src="Icon/warrior.jpg" alt="WOAD Warrior" width=170 />
+  </th>
+  <td valign="top"><form method="PUT" action="ww-detail">
+    <table cellspacing="0" cellpadding="0" border="0" valign="top">
+    <tr><th valign="top" align="right" width="170">&nbsp;</th>
+        <td valign="top">&nbsp;</td></tr>
+
+    <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
+        <td valign="top">
+	    <a href="ww-about">Woad Warrior</a> || 
+	    <a href="quick">Quick start</a>	||
+	    <a href="ww-help">Help</a>	    
+        </td>
+    </tr>
+    <tr><th valign="top" align="right" width="170"> Forms: &nbsp;</th>
+        <td valign="top">
+	    <a href="ww-project">Project Details</a> || 
+	    <a href="ww-defaults">Woad Warrior Defaults</a>
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th align="right" valign="top"> Projects:&nbsp; </th>
+        <td valign="top">
+	    These are the projects currently registered in Woad Warrior:
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th> </th>
+        <td> <table>
+	  	<tr> <th> Project </th>
+		     <th> tree </th>
+			  <td>&nbsp;&nbsp;&nbsp;</td>
+		     <th> Project </th>
+		     <th> tree </th>
+	        </tr>
+	  	<tr bgcolor=white>
+		     <th align="right"> ThisPIA </th>
+		     <td> [tree] </td>
+	        </tr>
+	     </table>
+	</td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th align="right" valign="top">
+            <input type="submit" name="op" value="Add" />
+        </th>
+        <td valign="top"> This form lets you add a new project.  The input
+	    box is for the short name by which the project will be known
+	    in lists like the one above.
+        </td>
+    </tr>
+    <tr><th align="right">  &nbsp; </th>
+        <td> <input size="20" name="prjname" />
+	     <a href="ww-help#prjname">[help]</a>
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+  </table> </form>
+</td></tr></table>
+<hr />
+
+<include src="ww-trees.inc" />
+
+<p>
+<short-footer cvsid="$Id: warrior.xh,v 1.1 2000-06-02 23:48:35 steve Exp $" />
+</p></body></html>

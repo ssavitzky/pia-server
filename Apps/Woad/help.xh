@@ -1,0 +1,138 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+  <title>WOAD help page</title>
+</head><body bgcolor="#99ccff">
+
+<set name="ltitle">
+  <a href="./"><font face="Helvetica, sans-serif">Woad</font></a>
+</set>
+<header ltitle="&ltitle;">help page <br /> &DOC:path;
+</header>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+  <th width="170"><img src="Icon/dyerwoad.jpg" alt="WOAD" width=170 />
+  </th>
+  <td valign="top">
+    <table cellspacing="0" cellpadding="0" border="0" valign="top">
+    <tr><th valign="top" align="right" width="170">&nbsp;</th>
+        <td valign="top">&nbsp;</td></tr>
+
+    <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
+        <td valign="top">
+	    <a href="about">About WOAD</a> || 
+	    <a href="quick">Quick start</a>	||
+	    <b>Help</b>	    
+        </td>
+    </tr>
+    <tr><th valign="top" align="right" width="170"> Forms: &nbsp;</th>
+        <td valign="top">
+	    <a href="defaults">Woad Defaults</a>
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th align="right" valign="top"> Contents:&nbsp; </th>
+        <td valign="top">
+	    These are the topics for which help is available on this page:
+        </td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr><th> </th>
+        <td> <table>
+	  	<tr> <td> <a href="#general">general</a></td>
+		     <td> &nbsp;&nbsp;&nbsp; </td>
+		     <td> <a href="#Woad_Warrior">Woad Warrior</a> </td>
+	        </tr>
+	  	<tr> <td> <a href="#"></a></td>
+		     <td> &nbsp;&nbsp;&nbsp; </td>
+		     <td> <a href="#Woad_Trees">Woad Trees</a> </td>
+	        </tr>
+	     </table>
+	</td>
+    </tr>
+    <tr><td width="170">&nbsp;</td><td></td></tr>
+  </table>
+</td></tr></table>
+<hr />
+
+<h2><a name="general">General: about <font face="helvetica, sans-serif">
+    Woad</font></a></h2>
+
+<p> <font face="helvetica, sans-serif">WOAD</font> stands for Web-Organized
+    Application Development -- a collection of web-based tools for assisting
+    the devopment of applications, and especially web applications. 
+</p>
+
+<hr />
+<h2>Operating Modes</h2>
+
+<h3><a name="Woad_Warrior">Woad Warrior</a></h3>
+
+<p> <font face="helvetica, sans-serif"><a href="warrior">Woad Warrior</a>
+    </font> is a web application designed to run on your local desktop
+    computer.  It lets you define multiple applications, called ``projects,''
+    and view both their source code and their web pages.
+</p>
+
+<h3><a name="Woad_Trees">Woad Trees</a></h3>
+
+<p> A <font face="helvetica, sans-serif">Woad Tree </font> is the view that
+    <font face="helvetica, sans-serif">WOAD</font> provides of a directory
+    tree.  It lets you browse a directory as if it was a well-designed web
+    site, with URL's in the tree mapping directly into pathnamess in the
+    filesystem that contains the tree.  
+</p>
+
+<p> In addition to providing a view of an applications's source code and
+    documents, a <font face="helvetica, sans-serif">Woad Tree</font> contains
+    <em>annotation</em> attached to each page, in the form of both threaded
+    discussions and totally free-form webs.  This allows the developers of an
+    application, as well as those users interested in customizing it, to
+    communicate informally.
+</p>
+
+
+<hr />
+<h2>Forms and Tables</h2>
+
+
+<hr />
+<h2>Data Items and Links</h2>
+<h3><a name="prjname">Project Name</a></h3>
+
+<p> The <strong>project name</strong> is a short name that <em>you</em> assign
+    to identify the project.  It must be a valid filename for your operating
+    system, and must not contain spaces.  Whenever a project name appears on a
+    <font face="helvetica, sans-serif">Woad</font> page, it is a link to the
+    project's ``home page.'' 
+</p>
+
+<h3><a name="prjdscr">Brief Description</a></h3>
+
+<p> The <strong>brief description</strong> is a short, typically single-line,
+    description of the project.  It is shown in the project list. 
+</p>
+
+<h3><a name="summary">Project Summary</a></h3>
+
+<p> The <strong>project summary</strong> is a somewhat longer description of
+    the project, typically a paragraph or two.  It is shown in the project
+    list if it is listed in ``verbose form''. 
+</p>
+
+
+<hr /><!-- filler -->
+<table width="90%" align="center">
+  <tr><td align="center" height="1000">
+          <table><tr><td> This space intentionally left blank<br />
+	                  in order to force the last few items<br />
+                          to the top of the page when linked to.
+	       </td></tr>
+	  </table>
+      </td>
+  </tr>
+</table>
+
+<p>
+<short-footer cvsid="$Id: help.xh,v 1.1 2000-06-02 23:48:32 steve Exp $" />
+</p></body></html>
