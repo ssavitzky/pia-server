@@ -10,8 +10,8 @@
 		<a href='/~History/DATA/&year;/&month;/&day;.html'>&day;</a>
 </td></tr></sub-head>
 
-<if><agent-running name='History'>
-  </agent-running><else>see the <a href='/Admin/installers#History'>installation page</a>
+<if><agent-running name='History'/>
+  <else>see the <a href='/Admin/installers#History'>installation page</a>
         or <br />
         <form method='POST' action='/Admin/load-agent'>
           <input name='src' value='./Proxie/History/AGENT.xml' size='30' />
@@ -115,5 +115,5 @@ sorting files by date very easy.  <p>
 <pre><protect result='result' markup='markup'>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid='$Id: home.xh,v 1.7 1999-09-24 00:23:17 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.8 1999-09-24 22:08:38 steve Exp $' />
 </body></html>
