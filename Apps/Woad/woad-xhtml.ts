@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.1 2000-06-02 23:48:36 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -58,6 +58,11 @@ Note that we only need these inside the PIA.
 
 <define element="ss">
   <action><font face="Verdana, Arial, Helvetica, sans-serif">&content;</font>
+  </action>
+</define>
+
+<define element="red">
+  <action><font color="#ff0000">&content;</font>
   </action>
 </define>
 
@@ -147,30 +152,75 @@ Note that we only need these inside the PIA.
 <define element="elt-b">
   <doc> Display an element in source-listing format, making the tags bold.
 	Unlike <tag>elt</tag>, this does not handle empty tags -- we use
-	boldface to indicate tags with defined element content.
+	boldface to indicate tags with defined element content.  If wrapping
+	is turned on, the start and end tags are each preceeded by a line
+	break.  One should really keep track of nesting level.
   </doc>
-  <action><hide>
+  <action><if>&wrap; <then><br /></then></if><hide>
     <if>&attributes:tc;
         <then><let name="tc-">&attributes:tc;</let></then>
 	<else><let name="tc-">&tc;</let></else>
     </if>
     </hide><b><tag>&attributes:tag;<atl><get name="atts"/></atl></tag></b><hide>
-    </hide><if>&content;<then>&content;</then></if><hide>
+    </hide><if>&content;
+		<then><if>&wrap;
+		          <then><table border=0 cellspacing=0 cellpadding=0>
+			           <tr><td>&nbsp;&nbsp;&nbsp;</td>
+				        <td>&content;</td></tr></table></then>
+		          <else>&content;</else>
+		</if></then></if><hide>
     <if>&attributes:tc;
         <then><let name="tc-">&attributes:tc;</let></then>
 	<else><let name="tc-">&tc;</let></else>
     </if>
     </hide><b><etag>&attributes:tag;</etag></b><hide>
+  </hide><if>&wrap; <then><br /></then></if><hide>
   </hide></action>
+</define>
+
+<define element="wrap">
+  <doc> Insert a line break if wrapping is turned on.  If content is present,
+	wrap the content in a table so as to force linebreaks around it.
+  </doc>
+  <action><if>&wrap;
+	<then><if>&content;
+		  <then><table border=0 cellspacing=0 cellpadding=0>
+			     <tr><td>&content;</td></tr></table></then>
+		  <else><br /></else>
+	      </if></then>
+	<else><if>&content;<then>&content;</then></if></else>
+  </if></action>
 </define>
 
 <h2>Page Components</h2>
 
 <h3>Utility tags for use in page components</h3>
+
+<define element="xf">
+  <doc> Either an anchor link or a bold name.  Used on lines that
+	contain links to any of several different pages.
+  </doc>
+  <define attribute="fmt">
+    <doc> The "format", attached as a query string to the URL and matched
+	  against the current value of <code>&amp;format;</code>.
+    </doc>
+  </define>
+  <define attribute="href">
+    <doc> The URL of the page.
+    </doc>
+  </define>
+  <action>
+    <if><test exact match="&attributes:fmt;">&VAR:format;</test>
+	<then><b><get name="content"/></b></then>
+	<else><a href="&attributes:href;">&content;</a></else>
+    </if>
+  </action>
+</define> 
+
 <define element="xa">
   <doc> Either an anchor link or a bold name.  Used on lines that
 	contain links to any of several different pages.
-  <doc>
+  </doc>
   <define attribute="page">
     <doc> The base name of the current page, matched against the URL (href
 	  attribute).  If missing, the current binding of "page" is used.
@@ -200,7 +250,7 @@ Note that we only need these inside the PIA.
 	names listed in the pages attribute.  Used for an indicator
 	(e.g, a blue dot) on lines that contain links to several
 	different pages.
-  <doc>
+  </doc>
   <define attribute="page">
     <doc> the base name of the current page, matched against the
 	  <code>pages</code> attribute.  If missing, the current binding of
@@ -327,7 +377,7 @@ Note that we only need these inside the PIA.
 	</tr>
 	<tr><th align=right>
 	      <xopt pages="home index help options">
-	  	<expand><get name="blue-dot"/></expand></xopt>
+	  	<expand><get name="blue-dot"/></expand></xopt></th>
 	    <td><xa href="home">Home</xa>
 		<xa href="-">Index</xa>
 		<if><status item="exists" src="help.xh" />

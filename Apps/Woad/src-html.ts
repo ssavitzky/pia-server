@@ -18,69 +18,123 @@
 <!-- ====================================================================== -->
 
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
-        wrapper="-DOCUMENT-" >
+        documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.1 2000-06-02 23:48:34 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
 <doc> This tagset is used for listing HTML files.
 </doc>
 
-<define element="html" quoted="yes" >
-  <doc> This is the outside wrapper -- needs to be renamed -DOCUMENT- after we
-	get wrappers working in the parser.
+<h2>Document Wrapper</h2>
+
+<define element="-document-" quoted="yes" >
+  <doc> This is the outside wrapper.  Note that it has to be lowercase because
+	some including tagsets might not be case-insensitive, and every tag
+	defined here in HTML gets case-smashed.
   </doc>
   <action>
 <html>
-  <set name="format"><if> &FORM:pretty;
-    <then>pretty</then>
+  <if>&FORM:code;<then><set name="FORM:tsdoc">tsdoc</set></then></if>
+  <set name="VAR:format"><if> &FORM:nested; <then>nested</then>
     <else-if>&FORM:raw;<then>raw</then></else-if>
-    <else></else>
+    <else-if>&FORM:retag;<then>retagged</then></else-if>
+    <else-if>&FORM:wrap;<then>wrapped</then></else-if>
+    <else-if>&FORM:tsdoc;<then>tsdoc</then></else-if>
+    <else>processed</else>
   </if></set>
+  <set name="VAR:wrap">&FORM:wrap;</set>
   <head><title>&DOC:path; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
-    <h1><code>&DOC:path;</code></h1>
-
+    <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+      <tr><th align="left">
+          <h1><code>&DOC:path;</code></h1>
+          </th>
+      </tr>
+    </table>
     <if> &FORM:probe;
 	 <then> <a href="#entities"><b>entities</b></a>
 	 </then>
     </if>
 
-    <h3><ss>WOAD &format; source listing</ss></h3>    
+    <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+      <tr><th align="left" colspan="2">
+          <big> &nbsp;<ss><a href="/.Woad/">WOAD</a> &VAR:format; source
+		listing</ss>
+	  </big>     
+	</th>
+      </tr>
+      <tr> <td>
+	     <table>
+	       <tr>
+		 <td width="50">&nbsp;</td>
+		 <td>
+		      <xf fmt="processed" href="&DOC:path;">processed</xf>
+		      <xf fmt="wrapped" href="&DOC:path;?wrap">wrapped</xf>
+		      <xf fmt="nested" href="&DOC:path;?nested">nested</xf>
+		      <xf fmt="raw" href="&DOC:path;?raw">raw</xf>
+		      <if><test match=".ts$">&DOC:name;</match>
+		          <then>
+		      	    <xf fmt="tsdoc"href="&DOC:path;?tsdoc">tsdoc</xf>
+		          </then>
+		      </if>
+		      <a href="/.Woad/help.xh#views">[help]</a>
+		 </td>
+		</tr>
+	     </table>
+	   </td>
+	   <td>&nbsp;</td>
+      </tr>
+    </table>
 
-<if> &FORM:pretty;
+<if> &FORM:nested;
   <then>
-<blockquote><em> This <tt>&format;</tt> listing is color-coded and indented to
-show the nesting level of the tags. 
+    <blockquote><em>
+      This <tt>&VAR:format;</tt> listing is color-coded and indented to show
+      the nesting level of the tags.  
+
+      <red>Note that because of current limitations omitted end
+      tags are shown, and linebreaks inside of tags are eliminated.  Missing
+      end tags may not be handled correctly.</red>
 </em></blockquote>
 <hr />
 <pretty>&content;</pretty>
   </then>
 <else-if> &FORM:raw;
   <then>
-<blockquote><em> This <tt>&format;</tt> listing shows the full contents of the
-  file with no alteration.
+<blockquote><em> This <tt>&VAR:format;</tt> listing shows the full contents of
+  the file with no alteration.
 </em></blockquote>
 <hr />
-<pre><protect result="result" markup="markup">
-<include src="&DOC:path;" quoted="true" /></protect></pre>
+<pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
-  <else>
-<blockquote><em>
-  This <tt>&format;</tt> listing is color-coded and font-coded according to
-  syntax.  For a complete list of HTML tags and their attributes, see <a
-  href="http://werbach.com/barebones/barebones.html">The Bare Bones Guide to
-  HTML</a>.  Note that because of current limitations entities are expanded in
-  place, omitted end tags are shown, and linebreaks inside of tags are
-  eliminated.  Missing end tags are not handled correctly in many cases.
+<else-if> &FORM:tsdoc;
+  <then>
+<blockquote><em> This <tt>&VAR:format;</tt> listing shows tagset
+  documentation. 
 </em></blockquote>
 <hr />
-<doc> Wrap doesn't work well at this point </doc>
-<if>&FORM:wrap;
+<include src="&DOC:path;" tagset="tsdoc" />
+  </then></else-if>
+<else>
+    <blockquote><em>
+
+      This <tt>&VAR:format;</tt> listing is color-coded and font-coded
+      according to syntax.  The <tt><a href="&DOC:path;?wrap">wrapped</a></tt>
+      format tends to be more compact than the normal <tt><a
+      href="&DOC:path;">processed</a></tt> format, and is more readable in
+      some cases.
+
+      <red>Note that because of current limitations omitted end
+      tags are shown, and linebreaks inside of tags are eliminated.  Missing
+      end tags may not be handled correctly.</red>
+    </em></blockquote>
+<hr />
+<if>&wrap;
     <then><expand>&content;</expand></then>
-    <else><pre><tag>html</tag><expand>&content;</expand><tag>/html</tag></pre></else>
+    <else><pre><expand>&content;</expand></pre></else>
 </if>
   </else>
 </if>
@@ -126,19 +180,20 @@ show the nesting level of the tags.
 
 <define element="title" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="title"><b><expand>&content;</expand></b></elt></action>
+    </hide><elt tag="title"><b><expand>&content;</expand></b><hide>
+    </hide></elt><wrap /></action>
 </define>
 
 <define element="link" syntax="empty">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="link" tc="&lc;" /></action>
 </define>
 <define element="meta" syntax="empty">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="meta" /></action>
 </define>
 <define element="base" syntax="empty">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="link" tc="&lc;" /></action>
 </define>
 
@@ -154,7 +209,7 @@ show the nesting level of the tags.
     </hide></elt-b></action>
 </define>
 <define element="frame" syntax="empty">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
     </hide><elt tag="frame" /></action>
 </define>
 <define element="noframes" syntax="quoted">
@@ -166,34 +221,34 @@ show the nesting level of the tags.
 <h3>Headings</h3>
 
 <define element="h1" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h1" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 <define element="h2" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h2" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 <define element="h3" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h3" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 <define element="h4" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h4" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 <define element="h5" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h5" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 <define element="h6" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
+  <action><wrap><hide><let name="atts">&attributes;</let>
     </hide><elt tag="h6" tc="&sc;"><b><expand>&content;</expand></b><hide>
-    </hide></elt></action>
+    </hide></elt></wrap></action>
 </define>
 
 <h3>Lists</h3>
@@ -208,7 +263,7 @@ show the nesting level of the tags.
 </define>
 <define element="dl" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide>elt-b tag="dl"><expand>&content;</expand></elt-b></action>
+    </hide><elt-b tag="dl"><expand>&content;</expand></elt-b></action>
 </define>
 <define element="menu" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
@@ -219,17 +274,25 @@ show the nesting level of the tags.
     </hide><elt-b tag="dir"><expand>&content;</expand></elt-b></action>
 </define>
 
+<define element="toc" syntax="quoted">
+  <doc> This tag is not official HTML, but is used in the PIA to delimit the
+	table of contents.
+  </doc>
+  <action><hide><let name="atts">&attributes;</let>
+    </hide><elt-b tag="toc"><expand>&content;</expand></elt-b></action>
+</define>
+
 <define element="li" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="li"><expand>&content;</expand></elt></action>
+    </hide><elt tag="li"><expand>&content;</expand></elt><wrap /></action>
 </define>
 <define element="dt" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="dt"><expand>&content;</expand></elt></action>
+    </hide><elt tag="dt"><expand>&content;</expand></elt><wrap /></action>
 </define>
 <define element="dd" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="dd"><expand>&content;</expand></elt></action>
+    </hide><elt tag="dd"><expand>&content;</expand></elt><wrap /></action>
 </define>
 
 <h3>Tables</h3>
@@ -252,11 +315,15 @@ show the nesting level of the tags.
 </define>
 <define element="thead" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="thead"><expand>&content;</expand></elt></action>
+    </hide><elt-b tag="thead"><expand>&content;</expand></elt-b></action>
 </define>
 <define element="tfoot" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="tfoot"><expand>&content;</expand></elt></action>
+    </hide><elt-b tag="tfoot"><expand>&content;</expand></elt-b></action>
+</define>
+<define element="tbody" syntax="quoted">
+  <action><hide><let name="atts">&attributes;</let>
+    </hide><elt-b tag="tbody"><expand>&content;</expand></elt-b></action>
 </define>
 <define element="caption" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
@@ -268,7 +335,7 @@ show the nesting level of the tags.
 
 <define element="p" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="p"><expand>&content;</expand></elt></action>
+    </hide><elt tag="p"><expand>&content;</expand></elt><wrap /></action>
 </define>
 
 <define element="div" syntax="quoted">
@@ -278,21 +345,21 @@ show the nesting level of the tags.
 
 <define element="blockquote" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="blockquote"><expand>&content;</expand></elt></action>
+    </hide><elt-b tag="blockquote"><expand>&content;</expand></elt-b></action>
 </define>
 
 <define element="center" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="center"><expand>&content;</expand></elt></action>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
+    </hide><elt tag="center"><expand>&content;</expand><wrap /></elt></action>
 </define>
 
 <define element="br" syntax="empty">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="br" /></action>
+    </hide><elt tag="br" /><if>&wrap;<then><br /></then></if></action>
 </define>
 <define element="hr" syntax="empty">
-  <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="hr" /></action>
+  <action><wrap /><hide><let name="atts">&attributes;</let>
+    </hide><elt tag="hr" /><if>&wrap;<then><br /></then></if></action>
 </define>
 
 <h3>Flow Elements</h3>
@@ -343,9 +410,9 @@ show the nesting level of the tags.
 </define>
 
 <define element="pre" syntax="quoted">
-  <action><hide><let name="atts">&attributes;</let>
-    </hide><elt tag="pre"><expand>&content;</expand><hide>
-    </hide></elt></action>
+  <action><wrap><hide><let name="atts">&attributes;</let>
+    </hide><elt tag="pre"><tt><expand>&content;</expand></tt><hide>
+    </hide></elt></wrap></action>
 </define>
 
 <define element="font" syntax="quoted">
@@ -464,6 +531,32 @@ show the nesting level of the tags.
 <define element="legend" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="legend"><expand>&content;</expand></elt></action>
+</define>
+
+<define element="" syntax="quoted">
+  <action><hide><let name="atts">&attributes;</let>
+    </hide><elt tag="&tagname;" tc="#666666"><expand>&content;</expand><hide>
+    </hide></elt></action>
+</define>
+
+<define element="#comment" syntax="quoted">
+  <action><font color="red">&lt;!--&value;--&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#pi" syntax="quoted">
+  <action><font color="red">&lt;?&name; &value;?&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#reference" syntax="quoted">
+  <action><font color="#999999">&amp;&name;;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#doctype" syntax="quoted">
+  <action><font color="red">&lt;!&name; &value;&gt;</font><hide>
+    </hide></action>
 </define>
 
 </tagset>

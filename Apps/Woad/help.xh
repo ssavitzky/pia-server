@@ -66,12 +66,10 @@
 <hr />
 <h2>Operating Modes</h2>
 
-<h3><a name="Woad_Warrior">Woad Warrior</a></h3>
+<h3><a name="Woad_Cmd">The <code>woad</code> Command</a></h3>
 
-<p> <font face="helvetica, sans-serif"><a href="warrior">Woad Warrior</a>
-    </font> is a web application designed to run on your local desktop
-    computer.  It lets you define multiple applications, called ``projects,''
-    and view both their source code and their web pages.
+<p> The <code>woad&nbsp;<em>directory</em></code> command starts a Woad server
+    on a given directory.
 </p>
 
 <h3><a name="Woad_Trees">Woad Trees</a></h3>
@@ -91,6 +89,62 @@
     communicate informally.
 </p>
 
+<h3><a name="Woad_Warrior">Woad Warrior</a></h3>
+
+<p> <font face="helvetica, sans-serif"><a href="warrior">Woad Warrior</a>
+    </font> is a web application designed to run on your local desktop
+    computer.  It lets you define multiple applications, called ``projects,''
+    and view both their source code and their web pages.
+</p>
+
+
+<hr />
+<h2><a name="views">Source Views</a></h2>
+
+<p> <ss>WOAD</ss> provides the following views of source files:
+</p>
+
+<dl>
+  <dt> <code>processed</code>
+  </dt>
+  <dd> In this mode, the source is processed using a special tagset in which
+       all tags are redefined.  It presents a <em>nearly</em> verbatim view of
+       the file, color-coded and font-coded according to syntax.  The
+       differences from a strictly verbatim view are that omitted end tags are
+       shown, and linebreaks inside of tags are eliminated.  Missing end tags
+       may not be handled correctly in some cases.
+  </dd>
+  <dt> <code>wrapped</code>
+  </dt>
+  <dd> This is identical to the <code>processed</code> view except that text
+       is line-wrapped and set in a proportional font instead of being
+       preformatted.  The original indentation and line breaks are lost, but
+       new ones are provided based on structure, and the general result is
+       significantly more readable in most cases.
+  </dd>
+  <dt> <code>nested</code>
+  </dt>
+  <dd> The source code is color-coded and indented strictly according to
+       nesting depth.  The result is not especially readable, but can be very
+       useful for tracking down missing or misplaced end tags.
+  </dd>
+  <dt> <code>raw</code>
+  </dt>
+  <dd> The source code is presented as-is, with no processing whatever. 
+  </dd>
+  <dt> <code>retagged</code> [currently unimplemented]
+  </dt>
+  <dd> The source code is parsed and tagged with a different tagset that is
+       essentially language-independent.  
+  </dd>
+</dl>
+
+<p> There are supposed to be links between tagnames and their documentation.
+    This isn't implemented yet; in the interim, you can find a complete list
+    of HTML tags and their attributes in <a
+    href="http://werbach.com/barebones/barebones.html">The Bare Bones Guide to
+    HTML</a>.
+</p>
 
 <hr />
 <h2>Forms and Tables</h2>
@@ -134,5 +188,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.1 2000-06-02 23:48:32 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.2 2000-06-07 19:07:06 steve Exp $" />
 </p></body></html>

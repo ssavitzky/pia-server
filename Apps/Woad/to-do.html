@@ -12,10 +12,13 @@
        could put <code>src-*.ts</code> in <code>PIA/lib</code> for now.
        (2000-05-30)
   </li>
-  <li> <b>Hole</b> (dps) wrappers, #element in tagsets <br />
+  <li> <b>Hole</b> (dps) wrappers, #element, #type in tagsets <br />
        Need to define wrapper element and default bindings for #element,
-       #comment, etc.
-       (2000-05-30)
+       #comment, etc.  Default element is handled differently from other node
+       types, which have to be rewrapped as elements by the parser.
+       GenericHandler has to operate differently for non-elements.
+       (2000-05-30)<br />
+       -- (element="", documentWrapper, element="#type" 2000-06-05)
   </li>
   <li> <b>Bug</b> (site) <code>file:</code> in <code>.xcf</code> file <br />
        Need to be able to make virtual links to absolute paths.  There
@@ -48,7 +51,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.1 2000-06-02 23:48:35 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.2 2000-06-07 19:07:07 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

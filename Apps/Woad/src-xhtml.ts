@@ -18,9 +18,9 @@
 <!-- ====================================================================== -->
 
 <tagset name="src-xhtml"  include="src-html" tagset="woad-xhtml"
-        wrapper="-DOCUMENT-" >
+        documentWrapper="-document-" >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.1 2000-06-02 23:48:34 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.2 2000-06-07 19:07:07 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 
@@ -111,24 +111,24 @@
     </hide><elt-b tag="if" tc="&cc;"><expand>&content;</expand></elt-b></action>
 </define>
 <define element="then" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
     </hide><elt tag="then" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="else" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
     </hide><elt tag="else" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="else-if" syntax="quoted">
   <action><hide><let name="atts"><atl>&attributes;</atl></let>
-    </hide><elt tag="else-if" tc="&cc;"><expand>&content;</expand><hide>
+    </hide><wrap /><elt tag="else-if" tc="&cc;"><expand>&content;</expand><hide>
     </hide></elt></action>
 </define>
 <define element="elif" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
     </hide><elt tag="elif" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="elsf" syntax="quoted">
-  <action><hide><let name="atts"><atl>&attributes;</atl></let>
+  <action><wrap /><hide><let name="atts"><atl>&attributes;</atl></let>
     </hide><elt tag="elsf" tc="&cc;"><expand>&content;</expand></elt></action>
 </define>
 <define element="test" syntax="quoted">
@@ -535,6 +535,31 @@
 
 <!-- === some tags still missing === -->
 
+<define element="" syntax="quoted">
+  <action><hide><let name="atts">&attributes;</let>
+    </hide><elt tag="&tagname;" tc="#996666"><expand>&content;</expand><hide>
+    </hide></elt></action>
+</define>
+
+<define element="#comment" syntax="quoted">
+  <action><font color="red">&lt;!--&value;--&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#pi" syntax="quoted">
+  <action><font color="red">&lt;?&name; &value;?&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#reference" syntax="quoted">
+  <action><font color="#999999">&amp;&name;;</font><hide>
+    </hide></action>
+</define>
+
+<define element="#doctype" syntax="quoted">
+  <action><font color="red">&lt;!&name; &value;&gt;</font><hide>
+    </hide></action>
+</define>
 
 </tagset>
 
