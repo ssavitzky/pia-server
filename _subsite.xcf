@@ -1,5 +1,7 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.7 1999-10-06 17:24:17 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.8 1999-10-13 18:17:41 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container> <!-- Get all attributes from the environment. -->
 
@@ -12,6 +14,8 @@
   <note> For a better set of examples, see the sample configuration files in
 	 /Config/Site/
   </note>
+
+  <HomeDocumentName>index</HomeDocumentName>
 
   <!-- Include the standard extension map. -->
   <include src="Config/Site/extensions.xci"/>

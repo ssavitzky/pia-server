@@ -1,5 +1,7 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.4 1999-10-04 17:07:40 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.5 1999-10-13 18:17:50 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
   <AGENT name="History" criteria="response proxy-response">

@@ -1,5 +1,7 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.4 1999-10-12 15:55:28 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.5 1999-10-13 18:18:00 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
 

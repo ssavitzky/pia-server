@@ -1,5 +1,7 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.3 1999-10-11 22:37:00 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.4 1999-10-13 18:17:53 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
   <!-- Toolbar doesn't need any agents; it's just a bundle of documents. -->
