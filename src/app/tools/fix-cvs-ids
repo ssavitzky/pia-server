@@ -1,0 +1,16 @@
+#!/bin/sh
+#	$Id: fix-cvs-ids,v 1.1 1999-03-12 19:34:12 steve Exp $
+#	Hack to fix up CVS id's damaged by an ill-advised export.
+
+pat='[-_.a-zA-Z]*\$Id: fix-cvs-ids,v 1.1 1999-03-12 19:34:12 steve Exp $'
+fix='\$Id: fix-cvs-ids,v 1.1 1999-03-12 19:34:12 steve Exp $1 \$'
+exc='\$Id\:'
+
+# Smash anything that looks like a CVS id
+find . -type f \! -name '*.class' \
+     -exec grep -q "$pat" {} \; \
+     -exec perl -p -i -e "s@($pat)@$fix@ unless /$exc/;" {} \;  \
+     -exec grep "$pat" {} \;
+
+# Manually update the release number to 2.1 using, e.g. 
+#  cvs commit -r 2.1
