@@ -1,35 +1,10 @@
-
+<pretty nomarkup="no"><protect>
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html> 
 <head> <title> Test demo</title> </head>
 <body>
 
 
-<set name="raw"> <p>
-    hello there <br>
-    hi again   </p>
-</set>
-
-<set name="coded"><text encode="base64"><get name="raw"/></text></set>
-
-<set name="decoded"><text decode="base64"><get name="coded"/></text></set>
-
-raw text = <get name="raw"/>  <br><hr><br>
-
-encode text = <get name="coded"/>  <br><hr><br>
-
-
-decoded text = <get name="decoded"/>  <br><hr>
-
-<show-errors/>
-
-
-
-
-
-<pretty white-tag="hello" hide-above-depth="2" hide-below-tag="mid">
-
-<protect>
 <table bgcolor='green'>
     <hello>
     <get name='foo.xh' />
@@ -62,9 +37,6 @@ decoded text = <get name="decoded"/>  <br><hr>
         .
     </td>
 </table>
-
-</protect>
-</pretty>
 
 
 

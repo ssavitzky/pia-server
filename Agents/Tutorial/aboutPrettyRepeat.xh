@@ -54,7 +54,7 @@
 	<code>&lt;protect></code> tags, and re-processing... it ought to
 	reproduce itself. (This is a poor-man's "Structured XML Editor" which
 	also understands active tags; it can be very useful for analyzing
-	confusingly-nested documents and debugging mismatched tags). </p>
+	confusingly-nested documents and debugging mismatched tags.). </p>
 
     <p>Try adding the <code>white-tag</code> attribute (i.e. <code>&lt;pretty
 	yellow-tag="get"></code>), and watch that tag become highlighted in

@@ -9,13 +9,13 @@
 <h2> I am the &agentName; agent </h2> 
 
 <if><get name='FORM:data' /><then> 
-	You entered the greeting:
+	You have entered the greeting:
 	<p>
 	 <font size='+5' color='#FF0000'><get name='FORM:data' /> </font>
 	</p><p>
 </p></then><else> 
 	<form action='&urlPath;' method='post'> 
-	My mission is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
+	My mission impossible is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
 	My owner, &piaUSER;, may decide.
 	<p>
 	<input type='submit' value='Enter' /> 
