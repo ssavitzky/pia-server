@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.6 1999-09-22 00:42:33 steve Exp $
+//	$Id: Status.java,v 1.7 1999-10-14 00:53:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,14 +37,12 @@ import org.risource.site.*;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.HttpURLConnection;
+import java.net.*;
 
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.6 1999-09-22 00:42:33 steve Exp $
+ * @version $Id: Status.java,v 1.7 1999-10-14 00:53:06 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -254,12 +252,14 @@ public class Status {
 	URLConnection rc = ext.resourceConnection;
 	if (name.equals("content-type")) return nodes(rc.getContentType());
 	if (name.equals("last-modified")) return nodes(rc.getLastModified());
+	/* === HttpURLConnection not present in Kaffe. 
 	if (rc instanceof HttpURLConnection) try {
 	  HttpURLConnection hc = (HttpURLConnection) rc;
 	  if (name.equals("method")) return nodes(hc.getRequestMethod());
 	  if (name.equals("code")) return nodes(hc.getResponseCode());
 	  if (name.equals("message")) return nodes(hc.getResponseMessage());
 	} catch (IOException ex) {}
+	*/
       } 
       if (ext.resourceFile != null) {
 	if (name.equals("file")) return nodes(ext.resourceFile.getPath());
