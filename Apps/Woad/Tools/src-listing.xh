@@ -96,6 +96,8 @@
   </action>
 </define>
 
+<hr />
+
 <if>&tail;
     <then>
 	<h3>Invalid source path <code>&spath;&tail;</code>.</h3>
@@ -119,6 +121,28 @@
 	</table>
     </else>
 </if>
-	
-<short-footer cvs-id="$Id: src-listing.xh,v 1.2 2000-06-17 00:03:10 steve Exp $" />
+
+<if> <status item="exists" src="&LOC:path;/HEADER.html" />
+     <then>
+<hr />
+
+<table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+  <tr><td>&nbsp;</td>
+  <tr><th align="left">
+    <h2><code>&spath;/HEADER.html</code></h2>
+    </th>
+  </tr>
+</table>
+
+<table bgcolor="#ffffff" border="1">
+ <tr><td><small>
+	   <include src="&LOC:path;/HEADER.html" tagset="HTML" />
+	 </small>
+     </td>
+ </tr>
+</table>
+     </then>
+</if>
+
+<short-footer cvs-id="$Id: src-listing.xh,v 1.3 2000-06-17 15:19:28 steve Exp $" />
 </body></html>
