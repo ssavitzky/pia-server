@@ -305,6 +305,26 @@
     <code>PIA/src/app/tools/</code> directory.
 </p>
 
+<h3><a name="defs"><code>defs.wi</code></a></h3>
+
+<p> <code>defs</code> index files are found in the keyword index, and contain
+    links to the places where words (including filenames, function names, and
+    tags) are <em>defined.</em>
+</p>
+
+<p> In most cases, there will be an additional set of files with names like
+    <code>defs-A-.wi</code> and so on, for words starting with that 
+    letter.  Identifiers starting with a non-letter will be indexed in
+    <code>defs-0-.wi</code>.
+</p>
+
+<h3><a name="uses"><code>uses.wi</code></a></h3>
+
+<p> <code>uses</code> index files are found in the keyword index, and contain
+    links to the places where words (including filenames, function names, and
+    tags) are <em>used.</em>
+</p>
+
 <hr />
 <h2>Forms and Tables</h2>
 
@@ -374,5 +394,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.12 2000-08-22 23:53:37 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.13 2000-08-26 00:36:40 steve Exp $" />
 </p></body></html>
