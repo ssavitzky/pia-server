@@ -27,6 +27,41 @@ See also:
 <h2><a name="code">Code</a></h2>
 
 <ol>
+  <li> <b>Bug</b> Non-strict HTML parsing needed. <br>
+       Need a "nonstrict" attribute in &lt;tagset&gt;. Distinguish between
+       XHTML (XML) and HTMLX (HTML with eXtensions).  Need a more general way
+       to get at tagset attributes. 
+
+  <li> <b>Bug</b> Correct handling for character entities. <br>
+       Currently they're not defined, which causes several kinds of havoc.
+       Even defining them, though, doesn't seem to work right.
+
+  <li> <b>Bug</b> Conversion of text to <em>internal</em> form broken. <br>
+       The consequence is that STRING nodes and <code>href</code> attributes
+       containing ampersands don't work.
+
+  <li> <b>Impr</b> printOn instead of toString <br>
+       Conversion of nodes to external form should be done via a properly-
+       parametrized set of methods that can be called by an Output.
+       <code>toString</code> should return the internal form.  Parameters
+       should include indent, line width, etc.
+
+       <p>
+
+  <li> <b>Bug</b> PropertyTable needs a handler. <br>
+       Need to be able to save PropertyTable objects, and read them back in.
+       This may very well replace Namespace for everything except entities.
+       It should also simplify site configuration files.
+
+  <li> <b>Bug</b> Need a way to construct named nodes <br>
+       For example, declarations and processing instructions need both a name
+       and a type.
+
+  <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
+       with, e.g., a &lt;DOCTYPE&gt; element. 
+
+       <p>
+
   <li> <b>Hole</b> State maintenance <br>
        When a subsite's properties are changed, the changes have to be written
        out.  Concievably this could be done as a delta file, maybe even
@@ -49,36 +84,25 @@ See also:
        entity.  The correct solution may be to write all changed entities when
        they go out of context (scope), i.e. when a TopProcessor exits.
 
-  <li> <b>Hole</b> PropertyTable needs a handler. <br>
-       Need to be able to save PropertyTable objects, and read them back in.
-       This may very well replace Namespace for everything except entities.
+       <p>
 
-  <li> <b>Bug</b> Need a way to construct named nodes <br>
-       For example, declarations and processing instructions need both a name
-       and a type.
-
-  <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
-       with, e.g., a &lt;DOCTYPE&gt; element. 
-
-  <li> <b>Hole</b> Copying Documents <br>
-       Need both ability to tee-off and save a proxied document, and a
+  <li> <b>Impr</b> Copying Documents <br>
+       Want both ability to tee-off and save a proxied document, and a
        &lt;copy&gt; tag (along the lines of &lt;input&gt; and &lt;output&gt;).
        Possibly just &lt;connect&gt; with both <code>src</code> and
        <code>dst</code> attributes.
 
+  <li> <b>Hole</b> TEXT tagset <br>
+       Need a tagset and associated parser that simply treats files as text
+       nodes. 
+
   <li> <b>Hole</b> PUT <br>
        Need the ability to create documents using PUT requests.
 
-  <li> <b>Bug</b> Non-strict HTML parsing needed. <br>
-       Need a "nonstrict" attribute in &lt;tagset&gt;.
+  <li> <b>Impr</b> HEAD, <code>IfModifiedSince</code> <br>
+       It would be useful if we could support HEAD requests (for everything)
+       and support the <code>IfModifiedSince</code> header for static pages.
 
-  <li> <b>Bug</b> Correct handling for character entities. <br>
-       Currently they're not defined, which causes several kinds of havoc.
-
-  <li> <b>Bug</b> Conversion to <em>internal</em> form broken. <br>
-       The consequence is that STRING nodes and <code>href</code> attributes
-       containing ampersands don't work.
-       
 </ol>
 
 <h2><a name="doc">Documentation</a></h2>
@@ -98,10 +122,13 @@ See also:
 <ol>
   <li> <b>Bug</b> GIF conversion <br>
        Need to convert all <code>.gif</code> files to <code>.jpeg</code> or
-       <code>.png</code> to avoid patent entanglements.
+       <code>.png</code> to avoid patent entanglements.  See
+       <a href="http://www.tuxedo.org/~esr/gif2png/">
+       www.tuxedo.org/~esr/gif2png/</a> (rpm's downloaded to
+       <code>~steve/download/gif2png*</code>).
 
-  <li> <b>Wish</b> Use PIA off-line for RiSource.org <br>
-       Should be an example of off-line website management with the PIA.
+  <li> <b>Wish</b> Use PIA off-line for RiSource.org <br> Should be an example
+       of off-line website management with the PIA.
 
   <li> <b>Note</b> Edit-in-place HTML <br>
        The right way to implement edit-in-place HTML is to use &lt;div&gt; or
@@ -137,5 +164,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.5 1999-10-29 23:10:48 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.6 1999-11-02 01:02:48 steve Exp $</b><br>
 </body></html>
