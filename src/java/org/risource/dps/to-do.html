@@ -16,6 +16,22 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Improved error/message handling<br>
+       Create &amp;DOC:errors; entity in process.TopProcessor; Context.message 
+       (implemented in util.ContextStack) should copy messages
+       into it.  There should also be an entity 
+       that says which verbosity level to cut off at -- call it
+       &amp;verbosity; and default it to -1.  You'll need
+       active.ActiveNodeList.append(), tree.TreeText.new(String), and
+       Context.getBinding(String name).
+       (1999-06-09) <br>
+
+  <li> <b>Bug</b> &lt;text encode&gt; badly broken <br>
+       Should be &lt;text encode=entity&gt; not &lt;encode entity&gt;.
+       Also, it seems to be doing bad things to an entity in its contents, in
+       some totally incomprehensible way.
+       (1999-06-08) <br>
+
   <li> <b>Impr</b> allowing text in attr lists preserves formatting <br>
        It would also allow the use of entities that expand to multiple
        attributes.
@@ -526,7 +542,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.17 1999-05-28 21:49:19 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.18 1999-06-09 16:48:00 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
