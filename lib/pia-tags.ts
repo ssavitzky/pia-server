@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="pia-tags" parent="xxml" recursive="yes">
-<cvs-id>$Id: pia-tags.ts,v 1.1 1999-12-16 21:12:57 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-tags.ts,v 1.2 1999-12-17 22:05:55 steve Exp $</cvs-id>
 
 <h1>PIA Tags</h1>
 
@@ -80,7 +80,6 @@
     </doc>
   </define>
   <action>
-    <user-message>this is a test</user-message>
     <include tagset="pia-xxml" src="&attributes:src;"> </include>
   </action>
 </define>
