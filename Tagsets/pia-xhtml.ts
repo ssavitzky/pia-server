@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.7 2000-04-21 20:56:16 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.8 2000-06-09 16:56:42 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -368,7 +368,8 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
-<a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a>
+<!-- <a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a>-->
+<a href="&PIA:rootPath;.Tree&docPath;">view source</a>
   </action>
 </define>
 
@@ -398,9 +399,11 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
-<if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>
-    <then><a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a></then>
-</if>
+<!-- === really ought to check for existance of woad tree === -->
+<a href="&PIA:rootPath;.Tree&docPath;">view source</a>
+<!-- <if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>
+    <then><a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view
+    source</a></then> </if> -->
   </action>
 </define>
 
