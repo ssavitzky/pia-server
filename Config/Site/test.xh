@@ -4,15 +4,52 @@
 </head><body>
 <h1>PIA test file</h1>
 
+[<a href="test">Compact</a>]
+[<a href="test?expanded">Expanded</a>]
+<a href="#Explanations">Explanations</a><br>
+
+location: <a href="&locPath;">&locPath;</a>
+[<a href="&locPath;/.">listing</a>]
+
+<h2>Entities</h2>
 <ul>
 <repeat><foreach><get name="DOC:"/></foreach>
-        <li> &li; = <protect result markup><get name="DOC:&li;"/> </protect></li>
+  <if><get name="FORM:">
+      <then>
+      <li> &li; = <pretty hide-below-tag="action" yellow-tag="Properties">
+	       <protect result markup><get name="DOC:&li;"/>
+	   </protect></pretty></li>
+      </then>
+      <else>
+      <li> &li; = <protect result markup><get name="DOC:&li;"/>
+	   </protect></li>
+      </else>
+  </if>
 </repeat>
 </ul>
 
-<pre><protect result markup><get name="DOC:;"/> </protect></pre>
+
+<h2><a name="Explanations">Explanations</a></h2>
+
+<p> This active document produces a complete list of all entities defined
+    while processing documents in the current location (<a
+    href="&locPath;">&locPath;</a>).  The listing is available in both
+    compact and pretty-printed formats.
+</p>
+
+<p> Entities that refer to internal tables have the ``tag name''
+    <code>#Table</code> or <code>#Properties</code> to distinguish them from
+    tables that were constructed out of ``real'' XML in files.  Such tables
+    are read-only.
+</p>
+
+<p> Property lists associated with documents and locations (directories)
+    generally have attributes.  These are accessible by name just like
+    properties, but are read-only; they are specified in the resource's
+    configuration file or inherited from one of its parents. 
+</p>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.3 1999-10-13 21:50:43 steve Exp $</b><br>
+<b>$Id: test.xh,v 1.4 1999-10-14 21:44:28 steve Exp $</b><br>
 </body></html>
