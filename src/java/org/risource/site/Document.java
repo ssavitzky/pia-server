@@ -1,5 +1,5 @@
 ////// Document.java -- interface for a document resource
-//	$Id: Document.java,v 1.1 1999-08-07 00:29:46 steve Exp $
+//	$Id: Document.java,v 1.2 1999-09-09 21:47:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.net.URL;
  *	is the preferred access method.  Note that all the contents of a
  *	container need not have the same preferred access method.
  *
- * @version $Id: Document.java,v 1.1 1999-08-07 00:29:46 steve Exp $
+ * @version $Id: Document.java,v 1.2 1999-09-09 21:47:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -72,9 +72,6 @@ public interface Document extends Resource {
   /** Returns the name of the preferred tagset for processing the document. */
   public String getTagsetName();
 
-  /** Returns the time that the document was last modified. */
-  public long getLastModified();
-
   /************************************************************************
   ** Document Access:
   ************************************************************************/
@@ -83,7 +80,7 @@ public interface Document extends Resource {
    *      <code>null</code> if the resource is non-local. */
   public File documentFile();
 
-  /** @return a <code>LineNumberInputStream</code> for accessing the document.
+  /** @return a <code>BufferedInputStream</code> for accessing the document.
    */
   public BufferedInputStream documentInputStream();
 

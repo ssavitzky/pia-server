@@ -5,7 +5,7 @@
 <h1>Site: To-Do List</h1>
 
 <blockquote><em>
-  This file contains pending tasks for the DPS system. 
+  This file contains pending tasks for the site package. 
 </em></blockquote>
 
 See also:
@@ -16,6 +16,66 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> pure-virtual resources give null pointer exc. <br>
+       (1999-09-09) <br>
+
+  <li> <b>Bug</b> Subsite doesn't inherit files properly <br>
+       Need to set real, virtual, and default files properly.
+       (1999-09-09) <br>
+
+  <li> <b>Impr</b> All resources need config and name fields.<br>
+       This is most clearly seen in Listing.
+       (1999-09-08) <br>
+
+  <li> <b>Bug</b> Listing needs to use Resource, not File.<br>
+       Currently it uses <code>base.listNames()</code> to get names, but
+       needs to look at the children as resources, not files.  Similarly, it
+       needs to use a Document for <code>HEADER.html</code>, not a File, and
+       use DOM trees instead of strings. 
+       (1999-09-08) <br>
+
+  <li> <b>Impr</b> Need a way to get generic listing.<br>
+       The simplest way would be a virtual child called ``<code>.</code>'';
+       this can be constructed using the default ``<code>.xh</code>'',
+       defaulting to a Listing if it's not present.
+       (1999-09-08) <br>
+
+  <li> <b>Note</b> W3C's RDF for config? <br>
+       <a href="http://www.w3.org/RDF/">Resource Description Framework</a>
+       appears to be an XML DTD for describing resources.  The spec is <a
+       href="http://www.w3.org/TR/REC-rdf-syntax/">here</a>. It uses tagnames
+       as property names, inside an &lt;rdf:Description about="URI"&gt; 
+       element.  Namespaces are used to specify groups of properties (schemas).
+       Properties can also be attributes if their values are strings.
+       Containers use <code>ref:Bag</code>, <code>rdf:Seq</code>, and
+       <code>rdf:Alt</code> elements, but <code>Description</code> elements
+       don't nest inside them; they <em>do</em> nest in
+       <code>Description</code> elements, which are virtual bags.
+       (1999-09-07) <br>
+
+  <li> <b>Impr</b> use pure DOM nodes for config<br>
+       There may be cases in which it's convenient to use a different
+       representation for the configuration.
+       (1999-09-07) <br>
+
+  <li> <b>Hole</b> Defaults in extension map <br>
+       <ul> 
+	 <li> <code>"/"</code> for containers
+	 <li> <code>""</code> for documents with <em>no</em> extension
+	 <li> <code>"*"</code> for documents with an <em>unknown</em> extension.
+       </ul>
+       (1999-09-07) <br>
+
+  <li> <b>Hole</b> Agent initialization <br>
+       Need a way to initialize agents.  For now just keep the current
+       scheme, with the Root (Admin?) agent loading a file. 
+       (1999-09-07) <br>
+
+  <li> <b>Hole</b> Links <br>
+       We need full support for links (i.e. references to
+       <code>FileResource</code>'s that are <em>not</em> realizable. 
+       (1999-09-07) <br>
+
   <li> <b>Note</b> SiteMachine should allow header changes. <br>
        Either by delaying headers until first non-blank content, or by
        recognizing an extension/tagset as capable of generating headers.
@@ -53,11 +113,6 @@ See also:
        represented by a <code>FileResource</code>.
        (1999-08-23) <br>
 
-  <li> <b>Note</b> search paths. <br>
-       Note that typically the search path will have three components: the
-       real location, the virtual location and the defaults.  
-       (1999-08-20) <br>
-
   <li> <b>Note</b> Document should set up Processor somehow. <br>
        There's no good way now to negotiate between a Processor and a Document
        to set up the <em>optimum</em> kind of Input or to decide whether the
@@ -94,7 +149,8 @@ See also:
   <li> <b>Impr</b> tagset for directories. <br>
        Generating the index for a container that doesn't have a
        <code>home.xh</code> document ought to be done by applying a tagset to
-       the container's configuration element.
+       the container's configuration element.  We can use a pseudo-extension
+       of ``<code>/</code>'' for this. 
        (1999-08-20) <br>
 
   <li> <b>Hole</b> utility to retrieve a processed document <br>
@@ -134,5 +190,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.5 1999-09-04 01:01:51 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.6 1999-09-09 21:47:05 steve Exp $</b><br>
 </body></html>

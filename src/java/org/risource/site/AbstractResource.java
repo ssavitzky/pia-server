@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.2 1999-09-04 00:22:34 steve Exp $
+//	$Id: AbstractResource.java,v 1.3 1999-09-09 21:47:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.2 1999-09-04 00:22:34 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.3 1999-09-09 21:47:02 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -95,7 +95,9 @@ public abstract class AbstractResource implements Resource {
    *	     <code>.entities</code>
    *</ul>
    */
-  abstract ActiveElement getConfig();
+  ActiveElement getConfig() {
+    return new TreeElement("Resource", reportConfigAttrs());
+  }
 
   /** Initialize configuration information from the current configuration 
    *	element.

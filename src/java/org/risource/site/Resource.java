@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+//	$Id: Resource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+ * @version $Id: Resource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -166,6 +166,9 @@ public interface Resource {
   /** Write out any properties that have been changed, and check for 
    *	changes in the state of any underlying real resources. */
   public boolean synchronize();
+
+  /** Returns the time that the resource was last modified. */
+  public long getLastModified();
 
   /************************************************************************
   ** Predicates:
@@ -305,7 +308,16 @@ public interface Resource {
   /** Get the default extension list used by <code>locate</code>. */
   public List getDefaultExtensions(); 
 
-  /** Map a document name to a corresponding file type. */
+  /** Map a document name to a corresponding file type. 
+   *	The extension map uses the following ``pseudo-extensions'' for
+   *	defaults:
+   *
+   *<ul> 
+   *	<li> <code>"/"</code> for containers
+   *	<li> <code>""</code> for documents with <em>no</em> extension
+   *	<li> <code>"*"</code> for documents with an <em>unknown</em> extension.
+   *</ul>
+   */
   public String getContentTypeFor(String name);
 
   /** Map a document name to a corresponding tagset name. */

@@ -1,5 +1,5 @@
 ////// SiteDocument.java -- implementation for a document resource
-//	$Id: SiteDocument.java,v 1.2 1999-09-04 00:22:35 steve Exp $
+//	$Id: SiteDocument.java,v 1.3 1999-09-09 21:47:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.net.URL;
  * <p> Some of a SiteDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: SiteDocument.java,v 1.2 1999-09-04 00:22:35 steve Exp $
+ * @version $Id: SiteDocument.java,v 1.3 1999-09-09 21:47:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -89,10 +89,10 @@ public class SiteDocument extends ConfiguredResource implements Document {
   public long getLastModified() { return file.lastModified(); }
 
   /** Returns the MIME content type of the associated document. */
-  public String getContentType() { return getContentTypeFor(getName()); }
+  public String getContentType() { return base.getContentTypeFor(getName()); }
 
   /** Returns the name of the preferred tagset for processing the document. */
-  public String getTagsetName() { return getTagsetNameFor(getName()); }
+  public String getTagsetName() { return base.getTagsetNameFor(getName()); }
 
 
   /************************************************************************
@@ -133,6 +133,7 @@ public class SiteDocument extends ConfiguredResource implements Document {
       return new LineNumberReader(new FileReader(file));
     } catch (IOException e) {
       getRoot().reportException(e, "opening " + getPath());
+      System.err.println("Exception " + e + " opening " + getPath());
       return null;
     }	
   }

@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.5 1999-09-09 21:47:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -110,6 +110,33 @@ public abstract class ConfiguredResource extends AbstractResource
    *	element.
    */
   void configure() {
+    if (config == null) return;
+    configAttrs(config);
+    configItems(config);
+  }
+
+  /** Modify the configuration from a given ActiveElement. 
+   *
+   *<p> The attributes and contents of the given element are merged into the
+   *	current configuration.
+   */
+  boolean reconfigure(ActiveElement config) {
+    if (config == null) return true;
+    configAttrs(config);
+    // === need to do the merge at this point. ===
+    configItems(config);
+    return true;
+  }
+
+  /** Modify the configuration from the attributes of an ActiveElement.
+   *
+   *<p>	Subclasses of ConfiguredResource will normally override this 
+   *	to handle their own attributes, calling on <code>super</code> 
+   *	to handle the rest. 
+   */
+  protected boolean configAttrs(ActiveElement config) {
+    // === configAttrs should loop and call configAttr on each attribute.
+
     if (name != null) name = config.getAttribute("name");
     if (config.hasTrueAttribute("hidden")) hidden = true;
     // exists and local can be determined from file
@@ -117,11 +144,21 @@ public abstract class ConfiguredResource extends AbstractResource
     if (config.hasTrueAttribute("real")) real = true;
     if (config.hasTrueAttribute("passive")) passive = true;
     if (config.hasTrueAttribute("suspect")) suspect = true;
-    
+    return true;
+  }
+
+  /** Modify the configuration from the contents of an ActiveElement
+   *
+   *<p> If the given configuration element is not the current configuration,
+   *	the children of the given element are <em>appended to</em> the current 
+   *	configuration. 
+   */
+  protected void configItems(ActiveElement config) {
     // now go through the content:
     for (ActiveNode item = config.getFirstActive(); 
 	 item != null;
 	 item = item.getNextActive()) {
+      if (config != this.config) this.config.appendChild(item);
       ActiveElement e = item.asElement();
       if (e != null) configItem(e.getTagName(), e);
     }
@@ -160,15 +197,6 @@ public abstract class ConfiguredResource extends AbstractResource
     // Everything else is handled by AbstractResource (super)
     // === probably need real location in attrs as well ===
     return cfg;
-  }
-
-  /** Modify the configuration from a given ActiveElement. 
-   *
-   *<p> The attributes and contents of the given element are merged into the
-   *	current configuration.
-   */
-  boolean reconfigure(ActiveElement config) {
-    return false; // === unimplemented ===
   }
 
   /** Reports whether this resource has an explicit configuration.

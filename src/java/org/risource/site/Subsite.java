@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+//	$Id: Subsite.java,v 1.5 1999-09-09 21:47:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.4 1999-09-04 00:22:35 steve Exp $
+ * @version $Id: Subsite.java,v 1.5 1999-09-09 21:47:04 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -184,8 +184,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     return config;
   }
 
-  protected void configure() {
-    if (config == null) return;
+  protected boolean configAttrs(ActiveElement config) {
     String v;
 
     // Handle any attributes not handled by the parent. 
@@ -202,9 +201,8 @@ public class Subsite extends ConfiguredResource implements Resource {
       virtualSearchPath[1] = new File(v);
     }
 
-    super.configure();
-
-    // === handle any issues raised by the content. 
+    // Call on the parent to finish the job
+    return super.configAttrs(config);
   }
 
   protected void configItem(String tag, ActiveElement item) {
@@ -245,7 +243,9 @@ public class Subsite extends ConfiguredResource implements Resource {
     String ts = e.getAttribute("tagset");
     if (ts == null) ts = "";
 
+    if (tagsetMap == null) tagsetMap = new Table();
     tagsetMap.put(ext, ts);
+    if (mimeTypeMap == null) mimeTypeMap = new Table();
     mimeTypeMap.put(ext, type);
     if (! ts.startsWith("#")) {
       if (extSearch == null) extSearch = new List();
@@ -253,6 +253,26 @@ public class Subsite extends ConfiguredResource implements Resource {
     }
   }
 
+
+  /************************************************************************
+  ** Metadata:
+  ************************************************************************/
+
+  /** Returns the time that the resource was last modified. */
+  public long getLastModified() {
+    long mod = (file != null && file.exists())? file.lastModified() : 0;
+    
+    if (virtualSearchPath != null) {
+      for (int j = 0; j < virtualSearchPath.length; ++j) {
+	if (virtualSearchPath[j] != null && virtualSearchPath[j].exists()) {
+	  long vmod = virtualSearchPath[j].lastModified();
+	  if (vmod > mod) mod = vmod;
+	}
+      }
+    }
+
+    return mod;
+  }
 
   /************************************************************************
   ** Predicates:
@@ -275,7 +295,9 @@ public class Subsite extends ConfiguredResource implements Resource {
   public Document getDocument() {
     Resource doc = locate("home", false, null);	// === getDocument bogus
     if (doc == null)  doc = locate("index", false, null); // === getDocument
-    return (doc != null)? doc.getDocument() : null;
+    return (doc != null)
+      ? doc.getDocument()
+      : new Listing(getName(), this, file);
   }
 
   /************************************************************************
@@ -329,10 +351,10 @@ public class Subsite extends ConfiguredResource implements Resource {
     if (childConfigCache != null) 
       cfg = (ActiveElement) childConfigCache.at(name);
     if (f.isDirectory()) {
-      result = new Subsite(name, this, f, config, null);
+      result = new Subsite(name, this, f, cfg, null);
       subsiteCache.at(name, result);
     } else {
-      result = new SiteDocument(name, this, f, config);
+      result = new SiteDocument(name, this, f, cfg);
     }
     return result;
   }
@@ -377,11 +399,12 @@ public class Subsite extends ConfiguredResource implements Resource {
 	if (virtualSearchPath[j] == null 
 	    || !virtualSearchPath[j].isDirectory()) continue;
 	list = virtualSearchPath[j].list();
-	for (int i = 0; i < list.length; ++i) 
+	for (int i = 0; i < list.length; ++i) {
 	  if (t.at(list[i]) == null) {
-	    t.at(list[i], virtualSearchPath[i]);
+	    t.at(list[i], virtualSearchPath[j]);
 	    count ++;
 	  }
+	}
 	if (virtualSearchPath[j].lastModified() > locationTimestamp) 
 	  locationTimestamp = virtualSearchPath[j].lastModified();
       }
@@ -490,8 +513,17 @@ public class Subsite extends ConfiguredResource implements Resource {
     return extSearch;
   }
 
+  protected String getExtension(String name) {
+    int i = name.lastIndexOf(".");
+    return (i < 0)? "" : name.substring(i+1);
+  }
+
   /** Map a document name to a corresponding file type. */
   public String getContentTypeFor(String name) {
+    if (mimeTypeMap != null) {
+      Object s = mimeTypeMap.at(getExtension(name));
+      if (s != null) return s.toString();
+    }
     return (getContainer() != null)
       ? getContainer().getContentTypeFor(name)
       : null;
@@ -499,6 +531,10 @@ public class Subsite extends ConfiguredResource implements Resource {
 
   /** Map a document name to a corresponding tagset name. */
   public String getTagsetNameFor(String name) {
+    if (tagsetMap != null) {
+      Object s = tagsetMap.at(getExtension(name));
+      if (s != null) return s.toString();
+    }
     return (getContainer() != null)
       ? getContainer().getTagsetNameFor(name)
       : null;

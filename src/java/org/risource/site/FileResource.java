@@ -1,5 +1,5 @@
 ////// FileResource.java -- Minimal implementation of Resource
-//	$Id: FileResource.java,v 1.1 1999-08-07 00:29:47 steve Exp $
+//	$Id: FileResource.java,v 1.2 1999-09-09 21:47:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileResource.java,v 1.1 1999-08-07 00:29:47 steve Exp $
+ * @version $Id: FileResource.java,v 1.2 1999-09-09 21:47:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -217,6 +217,11 @@ public abstract class FileResource extends AbstractResource {
   public FileResource(String name, AbstractResource parent) {
     base = parent;
     file = new File(parent.documentFile(), name);
+  }
+
+  public FileResource(String name, AbstractResource parent, File f) {
+    base = parent;
+    file = f;
   }
 
   public FileResource(String name, AbstractResource parent, boolean container, 
