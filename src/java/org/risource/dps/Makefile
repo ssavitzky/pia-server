@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.12 1999-10-04 17:34:12 steve Exp $
+# 	$Id: Makefile,v 1.13 1999-10-12 17:39:12 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -69,10 +69,13 @@ all:: Filter.class
 # Make the ``stripped'' version of the basic tagset, for a 2x speedup.
 #	It's probably not worthwhile to strip any of the others;
 #	even stripping pia-xhtml saves only about .5 second.
-all::	tagset/basic.tss 
+all::	tagset/basic.tss tagset/tagset.tss
 
 # Note that we have to redefine TOPDIR on the command line in a recursion. 
-tagset/basic.tss: tagset/basic.ts tagset/tsstrip.ts
+tagset/tagset.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. tagset.tss
+
+tagset/basic.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
 	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. basic.tss
 
 tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
