@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.11 1999-07-16 23:26:48 steve Exp $
+# 	$Id: Makefile,v 1.12 1999-10-04 17:34:12 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -39,6 +39,7 @@ PACKAGES = \
 
 FILES = \
 	Action.java \
+	Syntax.java \
 	Active.java \
 	Context.java \
 	Cursor.java \
@@ -50,7 +51,7 @@ FILES = \
 	Parser.java \
 	Processor.java \
 	ProcessorInput.java \
-	Syntax.java \
+	PropertyMap.java \
 	Tagset.java \
 	TopContext.java
 
