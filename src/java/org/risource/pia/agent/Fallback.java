@@ -1,5 +1,5 @@
 // Fallback.java
-// $Id: Fallback.java,v 1.3 1999-03-12 19:29:53 steve Exp $
+// $Id: Fallback.java,v 1.4 1999-03-22 18:52:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 /**
  * This is the class used for an Agency if we cannot find the Agency's
- *	InterForm files.  It can also be used as an alternative Agency in 
+ *	documents.  It can also be used as an alternative Agency in 
  *	very small appliances.  Use <code>./stringify.pl</code> to convert 
  *	web pages to string constants.
  */
@@ -47,8 +47,6 @@ import org.risource.pia.Machine;
 import org.risource.pia.HTTPRequest;
 import org.risource.pia.agent.Agency;
 
-import org.risource.interform.Run;
-
 public class Fallback extends Agency {
   /**
    * Constructor.
@@ -64,9 +62,9 @@ public class Fallback extends Agency {
 
   public void respond(Transaction request, Resolver res)
        throws org.risource.pia.PiaRuntimeException{
-    if (respondToInterform(request, res)) return;
+    if (respondWithDocument(request, res)) return;
 
-    /* No InterForm found.  See if this a known fallback form. */
+    /* No document found.  See if this a known fallback form. */
 
     URL url = request.requestURL();
     if( url == null )
@@ -77,7 +75,7 @@ public class Fallback extends Agency {
     Agent agnt	  = this;
 
     if (! path.startsWith("/"+myname+"/")) {
-      if (!respondToInterform(request, res))
+      if (!respondWithDocument(request, res))
 	respondNotFound(request, url);
       return;
     }
