@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.14 1999-10-13 18:19:30 steve Exp $
+# 	$Id: Makefile,v 1.15 1999-12-14 18:59:20 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -65,21 +65,6 @@ include $(TOPDIR)/makefiles/package.make
 # Make the application, Filter.class, last. 
 #	This means that we can make the interfaces first. 
 all:: Filter.class
-
-# Make the ``stripped'' version of the basic tagset, for a 2x speedup.
-#	It's probably not worthwhile to strip any of the others;
-#	even stripping pia-xhtml saves only about .5 second.
-all::	tagset/basic.tss tagset/tagset.tss
-
-# Note that we have to redefine TOPDIR on the command line in a recursion. 
-tagset/tagset.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. tagset.tss
-
-tagset/basic.tss: tagset/basic.ts tagset/tagset.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. basic.tss
-
-tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
-	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. PIADIR=$(PIADIR)/.. pia-xhtml.tss
 
 # Documentation: copy to-do file to the release directory
 doc:: $(REL_DIR)/to-do.dps.html
