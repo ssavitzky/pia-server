@@ -16,6 +16,18 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Drop support for serialized objects <br>
+       It turns out that loading XML is faster, at least for stripped tagsets.
+       Any further improvements to XML processing will only widen the gap.
+       (1999-05-07) <br>
+
+  <li> <b>Impr</b> XML Representation of Tagset. <br>
+       Use &lt;ELEMENT&gt;, &lt;ENTITY&gt;, &lt;bind&gt; tags in content;
+       construct the objects in the parser(?).  Save the flags, etc. as
+       attributes.  Dump the <code>*.tso</code> files in favor of
+       <code>.tsx</code>.
+       (1999-05-07) <br>
+
   <li> <b>Impr</b> Namespace attribute in get, set. <br>
        This would allow the name to be literally any text.  Would require
        minor fixes in Index to allow ``:'' in namespace arg, not name.
@@ -39,10 +51,11 @@ See also:
        ProcessorInput).  Should be done in TopContext.subDocument.
        (1999-04-30) <br>
 
-  <li> <b>Impr</b> Output to Writer, not String. <br>
+  <li> <b>Impr</b> Output to Writer (or ToPrint) not String. <br>
        Something like writeNode(Writer); writeStart, writeContent, writeEnd
        ops for ActiveElement.  ActiveNode.toString can just use it.  The
-       start, content, end versions would have parameters (e.g. indent). 
+       start, content, end versions would have parameters (e.g. indent).
+       Alternative is keeping context in a specialized Output.
        (1999-04-29) <br>
 
   <li> <b>Impr</b> NamespaceWrap may need to use EntityIndirect. <br>
@@ -80,16 +93,8 @@ See also:
        ActiveEntityRef fixed 4/15.  ProcessException turns out to be unused;
        deleted 4/16.
 
-  <li> <b>Hole</b> XML Representations of nodes. <br>
-       Tagset, Namespace, and org.risource.pia.Agent all need to be
-       representable as XML.  Use &lt;ELEMENT&gt; and &lt;ENTITY&gt; tags for
-       the content; construct the objects in the parser.  Dump the
-       <code>*.tso</code> files in favor of <code>.tsx</code>.
-       (1999-04-07) <br>
-       -- saving works as of 4-27, but could be improved.
-
   <li> <b>Hole</b> Fully-cursorial processing. <br>
-       Cursor needs to give complete enough access to the current node, that
+       Cursor ought to give complete enough access to the current node that
        you never actually need to access the node itself.  ActiveNode needs to
        be extended with methods that return Input's instead of Node's.  Output
        needs Document-like methods to output nodes without having to create
@@ -115,7 +120,8 @@ See also:
        (1999-04-07) <br>
 
   <li> <b>Hole</b> SAX and DOM input and output <br>
-       FromSAX, FromDOM, ToSAX, ToDOM shims.
+       FromSAX, FromDOM, ToSAX, ToDOM shims.  Note that FromDOM can be used to
+       redecorate a parse tree with new semantics.
        (1999-04-07) <br>
 
   <li> <b>Bug</b> &lt;include&gt;Directory broken <br>
@@ -484,7 +490,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.11 1999-05-06 20:49:28 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.12 1999-05-07 23:38:14 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

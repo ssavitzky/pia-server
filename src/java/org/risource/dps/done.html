@@ -747,7 +747,7 @@ See also:
        -- Move done 5/3.
 
   <li>1999-05-04 <b>Bug</b> Trim buggy. <br>
-       (1999-04-??) <br>
+       (1999-04-?? pg) <br>
        -- TextUtil.trimListItems was <em>really</em> buggy.  Simplified and
 	  fixed. 
 
@@ -760,7 +760,7 @@ This version returns 1
 This version returns 0
 &lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt; &lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
         </pre> 
-	(1998-10-19)<br>
+	(1998-10-19 pg)<br>
 
   <li> 1999-05-05 <b>Bug</b> Logical and.  Does not return correct (or
        consistent) values. With two nodes, returns false; with 3 it returns
@@ -775,13 +775,22 @@ Returns nothing
 
 If 4th node is there, returns "four".
         </pre>
-	(1998-10-19)<br>
+	(1998-10-19 pg)<br>
+
+  <li> 1999-05-06 <b>Hole</b> XML Representations of nodes. <br>
+       Tagset, Namespace, and org.risource.pia.Agent all need to be
+       representable as XML.  Use &lt;ELEMENT&gt; and &lt;ENTITY&gt; tags for
+       the content; construct the objects in the parser.  Dump the
+       <code>*.tso</code> files in favor of <code>.tsx</code>.
+       (1999-04-07) <br>
+       -- saving works as of 4-27, but could be improved.  Only tagsets not
+	  done as of 5/6; they're less useful.
 
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.10 1999-05-06 20:49:24 steve Exp $</b><br>
+<b>$Id: done.html,v 1.11 1999-05-07 23:38:10 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
