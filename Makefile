@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.24 1999-06-04 20:32:44 steve Exp $
+#	$Id: Makefile,v 1.25 1999-06-07 18:33:25 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -54,10 +54,11 @@ TAR_NAME    = pia_src$(VERSION)
 CREATE_CVS_TAG = 1
 
 ### Remote host and directories: 
-
+###	Note that WEB_RMT is the _parent_ of a PIA subdirectory;
+###	you have to be in the parent to untar PIA/Doc (for instance).
 RMT_HOST = www.risource.org
-WEB_RMT  = /home/web/risource-htdocs/PIA 
-FTP_RMT  = /home/ftp/PIA 
+WEB_RMT  = /home/web/risource-htdocs
+FTP_RMT  = /home/ftp/PIA
 CVS_RMT  = /home/cvsroot
 
 ### How to make a source release:
@@ -72,6 +73,7 @@ CVS_RMT  = /home/cvsroot
 #	If part of this fails, it breaks down into these substeps:
 #	make do_checkout build_release tar_file copy_src_dir
 #   5. upload tar file: "make upload" works if running under ssh-agent. 
+#   6. Fix RiSource.org/PIA/{latest.html, downloading.html}
 
 ### src-release:
 ###   1. do_checkout	A complete "cvs checkout" from the PUBLIC SERVER.
@@ -160,16 +162,23 @@ tar_file::
 ### 	These make targets require you to be running "ssh-agent"
 ###	Otherwise you must issue the commands manually
 
+# rsync-cvs: synchronize the local and remote CVS trees.
 rsync-cvs::
 	$(RSYNC) -e ssh /pia1/CvsRoot/PIA/ $(RMT_HOST):$(CVS_RMT)/PIA
 # 	Trailing slash on src means other CVS modules on remote are allowed.
 #	Without the trailing slash on src and /PIA on dst, anything else
 #	in the destination directory would be deleted by rsync.
 
+# upload: upload the tar file, 
+#	  make a new symlink in the FTP directory
+#	  untar the PIA/Doc subtree into the web directory.
 upload::
 	scp $(DEST_DIR)/$(TAR_NAME).tgz $(RMT_HOST):$(FTP_RMT)
 	ssh $(RMT_HOST) rm -f $(FTP_RMT)/pia_src.tgz
 	ssh $(RMT_HOST) cd $(FTP_RMT) \; ln -s $(TAR_NAME).tgz pia_src.tgz
+	ssh $(RMT_HOST) cd $(WEB_RMT) \; tar xzf $(FTP_RMT)/pia_src.tgz PIA/Doc
+	echo 'Now fix RiSource.org/PIA/{latest.html, downloading.html}'
+	echo 'They then need to be uploaded to $(WEB_RMT)/PIA'
 
 ###
 ### Old stuff.
