@@ -8,26 +8,31 @@
        <td colspan=2 bgcolor=silver>&nbsp;
 
   <tr>  <td width=20>&nbsp;
-    <th align=right valign=top bgcolor=silver>Release 2.0:
+    <th align=right valign=top bgcolor=silver>
+	<a href="/Doc/Release/r2.0.html">Release 2.0:</a> </th>
     <td>
-	<a href="/PIA/README">README</a> ||
-        &nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a> ||
-        &nbsp;<a href="/Doc/FAQ/">/FAQs/</a>
-    </td><td bgcolor=silver>&nbsp; 
-  <tr>	 <td>&nbsp; 
-    <th align=right valign=top bgcolor=silver>Introductions:
-    <td>
-	<a href="/Doc/intro.html">to the PIA</a> ||
-	<a href="http://www.RiSource.org/">to RiSource.org</a>
-    </td> <td bgcolor=silver>&nbsp; 
+	||&nbsp;<a href="/PIA/README">README</a>
+        ||&nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a> 
+        ||&nbsp;<a href="/Doc/FAQ/">/FAQs/</a>
+    </td>
+    <td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>
-	<a href="/Doc/">Documentation:</a>
+	<a href="/Doc/">Documentation:</a> </th>
     <td>
-	<a href="/Doc/doclist.html">Index</a> ||
-        <a href="/Doc/Notes/">/Notes/</a> ||
-	<a href="/Doc/">/directory/</a>
-    </td> <td bgcolor=silver>&nbsp; 
+	||&nbsp;<a href="/Doc/doclist.html">Index</a> 
+	||&nbsp;<a href="/Doc/intro.html">Introduction</a> 
+        ||&nbsp;<a href="/Doc/Notes/">/Notes/</a> 
+	||&nbsp;<a href="/Doc/">/directory/</a>
+    </td>
+    <td bgcolor=silver>&nbsp; 
+  <tr>	 <td>&nbsp; 
+    <th align=right valign=top bgcolor=silver>Links: </th>
+    <td>
+	||&nbsp;<a href="http://www.RiSource.org/">www/RiSource.org</a>
+	(&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
+    </td>
+    <td bgcolor=silver>&nbsp; 
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.6 1999-04-13 18:32:11 steve Exp $">
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.7 1999-04-13 18:52:23 steve Exp $">
