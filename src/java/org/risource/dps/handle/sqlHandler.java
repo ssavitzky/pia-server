@@ -1,5 +1,5 @@
 ////// sqlHandler.java: <sql> Handler implementation
-//	$Id: sqlHandler.java,v 1.2 1999-12-29 19:15:07 bill Exp $
+//	$Id: sqlHandler.java,v 1.3 2000-01-04 17:16:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,31 +33,24 @@ import org.risource.dps.tree.*;
 
 import java.sql.*;
 
-/*
-import org.gjt.mm.mysql.Driver;
-import org.gjt.mm.mysql.EscapeTokenizer;
-import org.gjt.mm.mysql.DatabaseMetaData;
-import org.gjt.mm.mysql.Statement;
-import org.gjt.mm.mysql.Buffer;
-import org.gjt.mm.mysql.Debug;
-import org.gjt.mm.mysql.Statement;
-import org.gjt.mm.mysql.Statement;
-import org.gjt.mm.mysql.Statement;
-*/
-import org.gjt.mm.mysql.*;
-import org.gjt.mm.mysql.jdbc1.*;
-import org.gjt.mm.mysql.jdbc2.*;
 
 /**
  * Handler for &lt;sql&gt;....&lt;/&gt;  
  *
- * <p>	
- * initial implementation -- ship off string to specified database ...
- * @version $Id: sqlHandler.java,v 1.2 1999-12-29 19:15:07 bill Exp $
- * @author steve@rsv.ricoh.com
+ * <p>	initial implementation -- ship off string to specified database ...
+ * 
+ * @version $Id: sqlHandler.java,v 1.3 2000-01-04 17:16:45 steve Exp $
+ * @author bill@rsv.ricoh.com
  */
 
 public class sqlHandler extends GenericHandler {
+
+  /** Class name of driver.  Set this for your JDBC implementation. 
+   *	At one point we imported <code>org.gjt.mm.mysql.*</code>, but 
+   *	in fact the only thing needed is the <code>name</code> of the 
+   *	class that implements the Driver interface.
+   */
+  public String driverClassName ="org.gjt.mm.mysql.Driver";
 
   /************************************************************************
   ** Semantic Operations:
@@ -73,7 +66,7 @@ public class sqlHandler extends GenericHandler {
 
       // System.out.println("sqlURL=" + sqlURL + " user=" + user );
       try{
-	  Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+	  Class.forName(driverClassName).newInstance();
       }catch(Exception e)
       {
 	  System.out.println("can't register driver");
