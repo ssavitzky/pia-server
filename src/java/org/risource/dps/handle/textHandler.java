@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	$Id: textHandler.java,v 1.6 1999-07-08 21:58:25 wolff Exp $
+//	$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version $Id: textHandler.java,v 1.6 1999-07-08 21:58:25 wolff Exp $
+ * @version $Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -451,7 +451,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.6 1999-07-08 21:58:25 wolff Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -470,8 +470,8 @@ class text_decode extends textHandler {
 
     int len = content.getLength();
     for (int i = 0; i < len; ++i) {
-      ActiveNode n = content.activeItem(i);
-      str = TextUtil.getTextString(n);
+	ActiveNode n = content.activeItem(i);
+	str = TextUtil.getTextString(n);
       if(str != null){
 	
       if(url) {
@@ -480,8 +480,10 @@ class text_decode extends textHandler {
       }
       else if(base64) {
 	byte bytes[] = Utilities.decodeBase64(str);
-	dStr = new String(bytes);
-	resultStr += dStr;
+	if (bytes != null){
+	    dStr = new String(bytes);
+	    resultStr += dStr;
+	}
       }
       else if(entity) {
 	dStr = TextUtil.decodeEntity(str);
@@ -500,9 +502,13 @@ class text_decode extends textHandler {
   public text_decode(ActiveElement e) {
     super(e);
     ActiveAttrList atts = (ActiveAttrList) e.getAttributes();
-    url    = atts.hasTrueAttribute("url");
-    base64 = atts.hasTrueAttribute("base64");
-    entity = atts.hasTrueAttribute("entity");
+    String whichCoding = atts.getAttribute("decode");
+    if (whichCoding.equals("url"))
+	url = true;
+    else     if (whichCoding.equals("base64"))
+	base64 = true;
+    else if (whichCoding.equals("entity"))
+	entity = true;
   }
 
   static Action handle(ActiveElement e) { return new text_decode(e); }
@@ -621,7 +627,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.6 1999-07-08 21:58:25 wolff Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */
@@ -651,9 +657,13 @@ class text_encode extends textHandler {
   public text_encode(ActiveElement e) {
     super(e);
     ActiveAttrList atts = (ActiveAttrList) e.getAttributes();
-    url    = atts.hasTrueAttribute("url");
-    base64 = atts.hasTrueAttribute("base64");
-    entity = atts.hasTrueAttribute("entity");
+    String whichCoding = atts.getAttribute("encode");
+    if (whichCoding.equals("url"))
+	url = true;
+    else     if (whichCoding.equals("base64"))
+	base64 = true;
+    else if (whichCoding.equals("entity"))
+	entity = true;
   }
   static Action handle(ActiveElement e) { return new text_encode(e); }
 }
