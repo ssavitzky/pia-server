@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>WOAD Quick Start</title>
+</head><body bgcolor="#99ccff">
+<h1><font face="sans-serif, Helvetica">WOAD</font> Quick Start</h1>
+
+<h2><a name="running">Running <font face="sans-serif, Helvetica">Woad</font></a></h2>
+
+<p> To run <font face="sans-serif, Helvetica">WOAD</font> on a directory that contains HTML documents:
+</p>
+<pre>
+    woad <em>directory</em>
+</pre>
+
+<p> If that directory is visible on a server, add
+    ``<code>target=<em>host:port</em>&nbsp;sources=<em>directory</em></code>''
+    to the command.  <font color="red">(The ``<code>sources=</code>'' is
+    temporarily required to get around a deficiency in command-line decoding.)
+    </font>
+</p>
+
+<p> If the documents are in a subdirectory, e.g.,
+    ``<code>.../<em>subdir</em></code>'', add
+    ``<code>prefix=/<em>subdir</em></code>''
+</p>
+
+<p> <font face="sans-serif, Helvetica">WOAD</font>'s annotations and indices will normally be in your home
+    directory in a subdirectory called <code>.woad</code> -- This can be
+    changed by specifying ``<code>-root <em>directory</em></code>''.
+</p>
+
+
+<h4>Examples:</h4>
+
+<p> For example, if you have a typical Red Hat Linux installation, use:
+</p>
+
+<pre>
+    ~/PIA/src/app/tools/woad-index.pl sources=/home/httpd/html 
+    woad sources=/home/httpd/html target=localhost:80
+</pre>
+
+<p> If you want to see the <code>cgi-bin</code> and <code>icons</code>
+    directories as well, use:
+</p>
+
+<pre>
+    ~/PIA/src/app/tools/woad-index.pl sources=/home/httpd prefix=/html
+    woad sources=/home/httpd prefix=/html target=localhost:80 
+</pre>
+
+<p> On a Windows machine you currently have to substitute</p>
+<pre>    pia -site %PIA_HOME%/Apps/Woad/woad.xcf -vroot</pre>
+<p> for <code>woad</code> in the sample commands.
+</p>
+
+<p> If you have a personal copy of the PIA running, you can also use Woad to
+    view and annotate it.  To create the index, use the command:
+</p>
+<pre>    ~/PIA/src/app/tools/woad-index.pl sources="~/PIA" root="~/.pia"
+</pre>
+
+<hr />
+<h2><a name="why">Why Blue?  Why Woad?</a></h2>
+
+<p> The short answer is that the plant <em>Isatis tinctoria</em>, common name
+    Dyer's Woad, is a source of the same blue dye that comes from the tropical
+    Indigo plant.  It was used for body decoration by the Pictish warriors of
+    ancient Britain, so when ``Web Oriented Application Development'' came up
+    in the search for an acronym, the analogy between ``Code Warrior'' and
+    ``Woad Warrior'' made it irresistable.
+</p>
+
+<p> More information about Woad can be found in the <a
+    href="about.html#see_also">references</a> section of <a href="about.html">
+    About <font face="sans-serif, Helvetica">WOAD</font></a>.
+</p>
+
+<hr />
+<h2><a name="Woad_Warrior"><font face="sans-serif, Helvetica">Woad Warrior</font></a></h2>
+
+<p> <font face="sans-serif, Helvetica"><a href="warrior">Woad
+    Warrior</a></font> is a version of <font face="sans-serif,
+    Helvetica">WOAD</font> intended for use by developers and web application
+    designers working on multiple projects at the same time.  It is a
+    <em>personal</em> web application designed to run on a developer's
+    desktop computer.  It lets you define multiple ``projects,'' and view them
+    all on the same server.
+</p>
+
+<blockquote>
+<p> <font face="sans-serif, Helvetica" color="red">Woad Warrior</font> <font
+    color="red">is not implemented yet.</font> You can get a vague idea of its
+    eventual flavor by following this link to its ``<a href="warrior">home
+    page</a>'', but it won't really do anything for you at this point.
+</p>
+</blockquote>
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: quick-start.html,v 1.1 2000-07-21 20:26:01 steve Exp $</b><br>
+</body></html>
