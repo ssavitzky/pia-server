@@ -116,10 +116,10 @@
 </p>
 <pre>    woad <em>directory</em></pre>
 
-<p> (Until it's implemented, use the following:)
+<p> (On Windows, it is temporarily necessary to use the following:)
 </p>
 
-<pre>    pia -site $(PIA_HOME)/Apps/Woad/woad.xcf -vroot <em>directory</em>
+<pre>    pia -site %PIA_HOME%/Apps/Woad/woad.xcf <em>directory</em>
 </pre>
 
 <h4>Options</h4>
@@ -258,5 +258,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.4 2000-06-08 23:14:38 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.5 2000-06-09 18:02:52 steve Exp $" />
 </p></body></html>
