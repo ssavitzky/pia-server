@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.11 2000-02-25 22:30:32 steve Exp $
+//	$Id: AbstractHandler.java,v 1.12 2000-08-30 23:01:09 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,6 +35,7 @@ import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeNodeArray;
 
 import java.util.Enumeration;
+import java.io.File;
 
 /**
  * An abstract base class for a Node Handler. <p>
@@ -45,7 +46,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.11 2000-02-25 22:30:32 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.12 2000-08-30 23:01:09 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -336,6 +337,29 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
   protected ActiveText newText(Context cxt, String data) {
     Tagset ts = cxt.getTopContext().getTagset();
     return ts.createActiveText(data, false);
+  }
+
+
+  /** Convenience function: return PIA_HOME.  Goes to some lengths to 
+   *	track it down.  Very useful for tags that have unusual ways of 
+   *	handling "<code>pia:</code>".
+   */
+  protected String locatePia(Context cxt) {
+    String s = System.getProperty("PIA_HOME");
+    if (s != null) {
+      if (! s.endsWith(File.pathSeparator)) s += File.pathSeparator;
+      return s;
+    }
+    File f = cxt.getTopContext().locateSystemResource("pia:/", false);
+    if (f == null) {
+      f = org.risource.dps.tagset.Loader.getTagsetHome();
+      if (f != null) f = new File(f, "..");
+    }
+    if (f != null) {
+      s = f.getAbsolutePath();
+      if (! s.endsWith(File.pathSeparator)) s += File.pathSeparator;
+    } 
+    return s;
   }
 
   /************************************************************************
