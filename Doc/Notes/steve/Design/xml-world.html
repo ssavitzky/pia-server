@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>The XML World</title>
+</head><body>
+<h1>The XML World</h1>
+<h2>External XML Representations for PIA Objects</h2>
+
+<h2>Architectural Notes: Tags ``All the Way Down''</h2>
+
+<blockquote>
+  <p> ``The world is supported on the backs of four elephants standing on 
+      the shell of a giant turtle.''
+  <p> ``And what is the turtle standing on?''
+  <p> ``You're very clever, young man, but it's turtles all the way down.''
+  <p> -- <em>told of William James, Bertrand Russell, and others; see <a
+      href='http://www.celenet.org/usedtobe.htm'>here</a> and
+      <a href="http://home.earthlink.net/~mageist/turtle.html">here</a>.
+</em>
+</blockquote>
+
+<blockquote><em>
+  This section was originally in
+  <a href="../roadmap.html">../roadmap.html</a>.
+</em></blockquote>
+
+<p> The goal here is to represent as many PIA internal objects as possible in
+    XML.  This is comparatively easy:  we have an interface, ActiveElement,
+    that satisfies both DOM and DPS requirements, and an implementation for it
+    (currently called <code>ParseTreeGeneric</code>) that is easy to
+    subclass.  (In a previous implementation phase, GenericAgent actually
+    <em>did</em> descend from the class that implemented Elements.)
+
+<p> The parser is already capable of building elements with classes other than
+    the default ParseTreeElement, but this capability has not been tested and
+    more work needs to be done.
+
+<p> There are two main ways to represent PIA objects as XML: make them
+    subclasses of an existing ActiveElement implementation, or make them
+    independent implementations.  It is significantly easier to put them into
+    existing structures if they inherit from the same base class as our
+    existing parse trees, and it simplifies the implementation as well.
+
+<p> A third technique exists: to <em>wrap</em> the PIA objects.  This is
+    presently being done with Agent (using NamespaceWrap), but although it
+    makes it possible to put the wrapped objects into an XML document, it
+    means that you have to build a separate handler to do the construction.
+
+<h3>Benefits</h3>
+
+<p> Some of the benefits that would result from an XML representation are:
+
+<ul>
+  <li> When something is represented as XML, i.e. as a parse tree, it becomes
+       much easier to manipulate it using our XXML tag language.
+  <li> XML objects are more efficient to construct.  Currently, in order to
+       initialize something like a tagset, we have to:
+       <ul>
+	 <li> parse a document containing &lt;define&gt; tags
+	 <li> call on the <code>defineHandler</code> to interpret those tags
+	 <li> initialize the object by calling specialized methods known only
+	      to <code>defineHandler</code>
+       </ul>
+       <p> An XML representation would eliminate all but the first step:
+	   constructing the parse tree would <em>in itself</em> construct the
+	   object.
+  <li> XML objects can be written out in a form that can be read back in.
+       Currently agents, tagsets and namespaces can't easily be converted to
+       an external form, because they don't map directly into XML. 
+  <li> XML-represented objects can easily be manipulated by other tools.
+</ul>
+
+<h3>Targets</h3>
+
+<p> Some of the objects that could be represented in XML (in approximate order
+    of increasing complexity of implementation):
+
+<dl>
+  <dt> Tagsets and Namespaces
+  <dd> Actually, BasicTagset and BasicNamespace <em>already</em> inherit from
+       ParseTreeGeneric.  The only difficulty is that there is no set of
+       handlers to construct them directly from XML documents, and writing
+       them out doesn't produce something that could be read back in because
+       the implementation is incomplete.  The &lt;define&gt; tag imposes an
+       extra layer of indirection.
+  <dt> Agents
+  <dd> Presently these are simply wrapped as namespaces; it might work better
+       if some components (<code>name</code>, <code>path</code>, and the
+       directories, for example) were attributes.  Not essential, though.
+       There is a complexity for agents: if you don't know <em>both</em> the
+       home and user directories at initialization time, you don't know where
+       to look for the XML metadata.
+  <dt> Match Criteria
+  <dd> Presently an agent's criteria are initialized by means of a rather
+       simpleminded conversion from strings.  It would be easier if
+       they were real XML.
+  <dt> Transactions
+  <dd> There's a lot of complexity in Transaction and its subclasses that
+       might go away if they were XML.  There would be the further advantage
+       that many of the computations that need to be done on them could be
+       done via XXML rather than Java.  It's not <em>entirely</em> clear that
+       this would be a good idea, however.
+  <dt> Features 
+  <dd> The little objects that compute transaction features could
+       <em>also</em> be XML code, but this is probably <em>not</em> a good
+       idea, since it would be very inefficient.  It's not unreasonable to
+       surface the features themselves as attributes, however.
+</dl>
+
+<p> Note that this list is <em>not</em> in order of implementation priority;
+    it's not clear whether to do tagsets or agents first. 
+
+<h3>Advanced: XML serialization of arbitrary objects</h3>
+
+<p> There's actually a straightforward way to represent <em>any</em> Java
+    object as an XML element:
+
+<ul>
+  <li> Represent all numeric, boolean, and String instance variables as
+       attributes. 
+  <li> Represent all other instance variables as sub-elements. 
+  <li> Use the class name as the tagname.
+</ul>
+
+<p> It wouldn't surprise me much if there were already code available to do
+    this.  It has some problems:  since it doesn't map easily into the DOM,
+    one can't directly manipulate such an object from XXML code.  Also,
+    without some additional metadata, linked structures get <em>very</em> ugly
+    and don't map into the most obvious XML representation.
+
+
+<hr><!-- ========================================================== -->
+<h2>Design Notes</h2>
+
+<blockquote><em>
+  This section was originally in
+  <a href="../projects.html">../projects.html</a>.
+</em></blockquote>
+
+<p> Agents really want to be elements, with sub-elements for hooks and
+    criteria.  (They should really be a subclass of Tagset, so that
+    entities could be used for for ``options'' and element handlers for
+    actions.)  Similarly, tagsets want to be purely declarative, probably
+    using the XML schema tags.
+
+<p> Aside: Tagset should be a subclass of Namespace.  There's actually an
+    ambiguity here: building a Tagset should normally just be a matter of
+    loading it.  This implies a shift from the imperative (&lt;define&gt;,
+    &lt;set&gt;) to the declarative (&lt;element&gt;, &lt;entity&gt;).
+
+<p> In order to pull this off, handlers need the ability to specify the
+    class of the element being constructed.  <strong>But they already have
+    this!</strong>  The relevant method is <code>Syntax.createElement</code>.
+
+<p> Elements are created <em>by the parser</em>, so that one can just suck an
+    object in and use it.  The handler already knows, of course, whether to
+    wait until the whole element is present, but we do need to add the parser
+    hooks required to actually build the element even if we're streaming.  The
+    class name wants to be in a field in the handler.
+
+<p> There are some subtleties involved: even if one is processing on the fly,
+    the object gets built ``offline'' as a parse tree, then passed as a whole.
+    That is, of course, more efficient than executing definitions every time a
+    document is processed.  It requires a distinction between declarations and
+    actions, though.  All the construction is done at parse time using the
+    addChild operation in the node under construction.  All the parser needs
+    is a flag to say whether to build or pass.  It also needs to call the
+    new object's initializer when the end tag is seen.
+
+<p> Clearly, if we want to use conditionals, repeats, or other computation to
+    construct the object at run-time, we need to use actions instead.  The
+    pure declarative mode only works with quoted elements.  We can of course
+    mix them, and build a tree on the output after processing.  There is a
+    further point: entities in the <em>attributes</em> have to be expanded by
+    the handler.  (They should be anyway -- it's more efficient.  A proper DOM
+    implementation with <code>getValue</code> would do this automagically.)
+
+<p> There are advantages to the declarative approach, though.  Apart from
+    speed, there's reflection as well: an XML schema document would be trivial
+    to analyze and transform.  Clearly it's trivial for a tagset (in our
+    current scheme) to output a purely declarative schema, so a transition
+    would be simple.  But this isn't really necessary: just construct the
+    object as usual, and convert it to a string!
+
+<p> Once we get to this point, a lot of things can be simplified:
+
+<ul>
+  <li> Initialization is just reading an <code>agent.xml</code> file with the
+       <code>agent</code> tagset.  <code>initialize.xh</code> goes away except
+       for agents that really need to execute code on startup.  Even then, an
+       intialization <em>entity</em> should do most of the work.
+  <li> Checkpointing is just writing.
+  <li> Tagsets, inserts, initialization, etc. can be stored in an agent's
+       entities. 
+  <li> If read-write entities work, making agents persistant is
+       <em>trivial</em>.  (This suggests that persistant entities need a
+       search path, so that we can intialize from the home directory and write
+       to the user directory.)
+  <li> With a few more filename- and url-manipulating primitives, most of the
+       hairy path stuff can also be written in tags.
+  <li> It should be easy to make &lt;define&gt; simply construct objects and
+       stuff them into the appropriate tagsets and namespaces using
+       &lt;set&gt; or &lt;extract&gt;.
+</ul>
+
+<p> Similarly, transactions and their content should be represented as
+    specialized DOM nodes.  It's almost orthogonal, except that it so nicely
+    unifies actions (with their various ways of handling content) and
+    transactions, entities with machines, and so on.
+
+<p> We may continue to need ways of initializing agents (especially)
+    using initialize.xh, at least as a bootstrapping mechanism.  So the
+    installer needs to check.
+
+
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: xml-world.html,v 1.1 1999-04-13 18:30:58 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Cursors, Trees, and Document Object Models</title>
+</head><body>
+<h1>Cursors, Trees, and Document Object Models</h1>
+<h2>Internal Document Representation in the PIA.</h2>
+
+
+<h2>Architectural Notes</h2>
+
+<blockquote>
+  World <em>dom</em>ination.
+  <br>--<em>Linus Torvalds (emphasis added)</em>
+</blockquote>
+
+<blockquote><em>
+  This section was originally in
+  <a href="../roadmap.html">../roadmap.html</a>.
+</em></blockquote>
+
+<h3>The Two Great World Systems</h3>
+
+<blockquote>
+<dl>
+  <dt> Linguistic side-note:
+  <dd> In paleontology, ``cursorial'' refers to the hypothesis that dinosaurs
+       evolved into birds by running after flying insects with their
+       (feathered) forelimbs outstretched as catchers.  This contrasts with
+       the ``arboreal'' hypothesis that wings evolved to improve dinosaurs'
+       ability to jump out of trees.
+  <dt> Historical side-note:
+  <dd> <em>Dialog of the Two Great World Systems</em> was the title of
+       Galileo's (rather one-sided) comparison of the Ptolemaic and Copernican
+       representations of the universe.
+</dl>
+</blockquote>
+
+<h4>Trees</h4>
+
+<p> The DOM presently DOMinates the field of Java representations for XML
+    documents (parse trees).  Essentially, it's the only game in town.
+    Unfortunately it has some problems:
+
+<ul>
+  <li> Live NodeList's are notoriously hard to implement efficiently. 
+  <li> DOM Level 2's Iterator interface is defined as throwing an exception
+       when the structure it is iterating over is modified.
+  <li> The obvious representation as doubly-linked trees has quite a lot of
+       storage and processing overhead. 
+  <li> There is simply no way to move a node from one document to another, or
+       to have an isolated node that is not part of a document.
+  <li> There is no representation for element or attribute definitions in the
+       DocumentType interface, so a DTD cannot be completely represented. 
+  <li> Information about quote characters, implied end tags (in HTML), and so
+       on is lost.  It is impossible to reconstruct a document from its DOM
+       representation.  
+</ul>
+
+<p> Also, there is no place in the DOM for the kind of metadata (e.g.,
+    handlers) that the DPS needs in order to do its job.  This by itself is
+    enough to require the PIA to have its own implementation of the DOM.
+
+<h4>Cursors</h4>
+
+<p> The DPS notion of a Cursor evolved out the (subsequently abandoned) DOM
+    interface TreeIterator.  The basic idea is that a Cursor allows the DPS to
+    <em>traverse</em> a DOM tree, or what <em>appears to be</em> a DOM tree,
+    without actually looking at the DOM nodes themselves.
+
+<p> Presently there is a lot of leakage between the DOM and the DPS, and the
+    current version of Cursor actually <em>does</em> allow (and in fact
+    require) access to the DOM node.  This can be fixed, however.
+
+<p> The result would be a purely ``cursorial'' interface to documents,
+    <em>completely</em> independent of the DOM's ``arboreal'' interfaces.
+
+<h3>Benefits</h3>
+
+A split model, DOM + Cursors, would have several advantages:
+
+<ul>
+  <li> By reducing the number of things in the PIA that actually depend on the
+       DOM interfaces, it would be easier to transition the PIA from the old
+       DOM interfaces it is using now to the current, official ones.
+  <li> Any DOM could be ``dropped in'' by providing suitable cursors. 
+  <li> The PIA can operate by side-stepping the DOM's interfaces rather than
+       by abusing them, as it presently does.
+  <li> The PIA is free to evolve away from the DOM's object model to something
+       perhaps lighter-weight and less restrictive.  
+  <li> It becomes easier to ``wrap'' non-DOM data structures, since the
+       wrapper doesn't have to look like a DOM tree.  In fact, it is not
+       necessary to modify the wrapped object at all -- just provide a cursor
+       for it.
+</ul>
+
+<h3>Getting there</h3>
+
+<p> There are two distinct routes to a split model with an upgraded DOM:
+
+<ol>
+  <li> Upgrade the PIA's DOM implementation to the current standard, then
+       upgrade Cursor and the DPS to eliminate direct use of the DOM's
+       interfaces.
+  <li> Upgrade Cursor and the DPS to be totally DOM-independent, then fix the
+       DOM implementation. 
+</ol>
+
+<p> The second path is basically cleaner, but the first would get us to DOM
+    compliance more quickly, and integrates better with the other near-term
+    goal of an XML representation for Agents. 
+
+
+<hr><!-- ========================================================== -->
+<h2>Design Notes</h2>
+
+<blockquote><em>
+  This section was originally in
+  <a href="../projects.html">../projects.html</a>.
+</em></blockquote>
+
+<p> Possible name: GLOM (Generic Lightweight Object Model).  Other
+    possibilities include Dlite, DOC (Document Object Cursors), ...
+
+<h3>Relationship to the DOM</h3>
+
+<p> The problem is that once you start using the DOM, you're pretty-well stuck
+    with it, including all its unsuitable characteristics: lack of DTD
+    coverage, live nodelists, fragile iterators, doubly-linked trees, total
+    inability to move nodes between documents, and so on.
+
+<p> Our representation needs to be <em>compatible with</em> but <em>disjoint
+    from</em> the DOM.  Our trees should have <em>both</em> a DOM interface
+    (for compatibility with other tools) and our own; the DPS should use only
+    our own interface.
+
+<p> Insisting that parse trees be immutable fixes many of the DOM's problems.
+    There are still some problems with entities, but we can gloss over that:
+    if you're redefining entities you're by definition outside of the DOM.
+
+<h3>Desirable Characteristics</h3>
+
+<ul>
+  <li> The interfaces seen by the DPS should be purely navigational: you never
+       actually point to a DOM node, only navigate among them.  This gives
+       <em>total</em> isolation from the implementation.  In other words we
+       use <em>cursors</em>.
+
+  <li> For putting things into containers, we will want wrappers (handles?)
+       and wrapper factories.  These will go along with the cursors and
+       <em>their</em> factories.  They will basically be cursors without
+       navigation.  The usual tree nodes, of course, will not need wrappers. 
+
+  <li> Active objects like tagsets, namespaces, and agents might be DOM nodes
+       underneath, but we ignore that and use only their interfaces.  They can
+       be constructed either declaratively (by reading) or procedurally (by
+       tree manipulation).
+</ul>
+
+<p> Bascally what we're doing is splitting up the DOM interfaces into two
+    pieces: the informational and the navigational.  We want to be able to get
+    at the attributes, content/value/children, and text of our nodes without
+    worrying about the connections among them.
+
+<p> Of course, in addition to the DOM attributes, we also want to get at the
+    DPS attributes of our objects: action, syntax, key (for sorting and
+    extraction), etc.
+
+<h3><a name="where">Where Things Go</a></h3>
+
+<p> There are three possibilities:
+
+<ol>
+  <li> Move the ActiveNode interfaces to <code>org.risource.dom.active</code>,
+       and the implementations to <code>org.risource.dom.tree</code>.  Move
+       <code>Cursor</code> and related stuff to, perhaps,
+       <code>org.risource.dom.cursor</code>. Blow away
+       <code>org.risource.dps.active</code> or use it for purely DPS-specific
+       stuff (which might be hard to find).  It's rather hard to justify
+       having the ActiveNode interfaces under the DOM, but it does mean that
+       <code>org.risource.dom</code> and its sub-directories constitute a
+       completely stand-alone implementation of the DOM.
+  <li> Move the implementations to <code>org.risource.dps.tree</code>.  Blow
+       away <code>org.risource.dom</code> or use it for utilities that use
+       only the <code>org.w3c.dom</code> interfaces.  This leaves
+       <code>org.risource.dps</code> and its sub-packages as a stand-alone
+       document processor.  If the DOM and DPS go their separate ways, nobody
+       will notice. 
+  <li> Move the implementations to <code>org.risource.dom.tree</code> but
+       leave the ActiveNode interfaces in
+       <code>org.risource.dps.active</code>.  In this case, neither
+       <code>org.risource.dom</code> nor <code>org.risource.dps</code> can
+       stand alone, but minimal damage is done to the existing directory
+       structure (<code>tree</code> is added, but nothing goes away).  The way
+       is still open to a totally DOM-free version of the DPS.
+</ol>
+
+<p> <strong>We have taken the middle way.</strong>
+
+<h3>Implementation</h3>
+
+<p> There are basically three ways to proceed:
+
+<ol>
+  <li> Blow away the old DOM interfaces in org.risource.dom, put the new
+       interfaces in place, move the implementation to org.risource.dom.tree,
+       and basically go to completion in one step.  This leaves the working
+       copy of the PIA out of commission for the longest time.
+  <li> Develop new working copies of the mixed (ActiveNode) interfaces and
+       their implementation.  Then switch the DPS over, using the mixed
+       interfaces until we can shift it from ``arboreal'' to purely
+       ``cursorial'' form.  This is the fastest route to DOM compliance.
+  <li> Switch the DPS over to being purely cursorial.  <em>Then</em> drop in
+       the new ActiveNode implementation.
+</ol>
+
+<p> The nice thing about the middle path is that it is the most incremental
+    and least disruptive.  It proceeds very quickly to a compliant DOM
+    implementation, then merges it in.  It does mean several different
+    disruptions, but at least they would be fairly short ones.  It also means
+    that things can go under source control before work is complete.
+
+<p> During the transition, the <code>ActiveNode</code> interfaces will
+    continue to be used in the DPS.  Afterward, they will be used only in the
+    cursor implementations.
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: dom.html,v 1.1 1999-04-13 18:30:54 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
