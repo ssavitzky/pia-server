@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-#   $Id: file.make,v 1.6 1999-12-14 18:57:14 steve Exp $
+#   $Id: file.make,v 1.7 2000-05-25 17:04:16 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -71,23 +71,27 @@ setup:: HEADER.html
 	@echo "     You will probably need to edit the Makefile"
 
 HEADER.html:
-	echo "<h1>$(MYPATH)</h1>"					 > $@
-	echo "<a href=\"../\">[..]</a>"					>> $@
-	echo "<a href=\"#files\">[files]</a><p>"			>> $@
+	echo "<h1><a href=\"$(PIADIR)\">PIA</a> / $(MYPATH)</h1>"	 > $@
+	echo "<p>"							>> $@
+	echo "    <a href=\"../\">[..]</a>"				>> $@
+	echo "    <a href=\"#files\">[files]</a>"			>> $@
+	echo "</p>"							>> $@
 	echo "<!-- brief description goes here -->"			>> $@
 	echo "<h2>Annotated Contents</h2>"				>> $@
 	echo "<h3>Directories</h3>"					>> $@
 	echo "<dl>"							>> $@
-	echo "  <dt> <a href=\"\"></a>"					>> $@
+	echo "  <dt> <a href=\"\"></a> </dt>"				>> $@
 	echo "  <dd> "							>> $@
+	echo "  </dd> "							>> $@
 	echo "</dl>"							>> $@
 	echo "<h3>Files</h3>"						>> $@
 	echo "<dl>"							>> $@
-	echo "  <dt> <a href=\"\"></a>"					>> $@
+	echo "  <dt> <a href=\"\"></a> </dt>"				>> $@
 	echo "  <dd> "							>> $@
+	echo "  </dd> "							>> $@
 	echo "</dl>"							>> $@
 	echo "<hr>"							>> $@
-	echo "<b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>"	>> $@
+	echo "<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />"	>> $@
 	echo "<b>$$"Id"$$</b>"						>> $@
 	echo "<a name=\"files\"><hr></a>"				>> $@
 
