@@ -1,5 +1,5 @@
 ////// getHandler.java: <get> Handler implementation
-//	$Id: getHandler.java,v 1.6 1999-04-07 23:21:23 steve Exp $
+//	$Id: getHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.util.*;
  *	<code>keys</code>, <code>values</code>, and <code>bindings</code>
  *	attributes are supported.
  *
- * @version $Id: getHandler.java,v 1.6 1999-04-07 23:21:23 steve Exp $
+ * @version $Id: getHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -56,14 +56,30 @@ public class getHandler extends GenericHandler {
   		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
     String name = atts.getAttribute("name");
+    boolean expand = atts.hasTrueAttribute("expand");
+
     if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "<get> with null name", 0, true);
       return;
     }
+    /* === this unaccountably fails
+    ActiveNode binding = Index.getBinding(aContext, name);
+    if (binding == null) Expand.processNodes(content, aContext, out);
+    else if (expand) {
+	aContext.subProcess(binding.fromValue(aContext), out).run();
+    } else {
+	Copy.copyNodes(binding.fromValue(aContext), out);
+    }
+    */
     ActiveNodeList value = Index.getIndexValue(aContext, name);
-    if (value == null) value = Expand.processNodes(content, aContext);
-    if (value != null) Copy.copyNodes(value, out);
+    if (value == null) Expand.processNodes(content, aContext, out);
+    else if (expand) {
+	Expand.processNodes(value, aContext, out);
+    } else {
+	Copy.copyNodes(value, out);
+    }
+    
   }
    
   /************************************************************************

@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.6 2000-10-06 00:27:43 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.7 2000-10-06 06:28:43 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -232,6 +232,7 @@
 </yellow-note>
 
 <hr />
+<hide>&content;</hide>
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
 <else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
@@ -241,6 +242,7 @@
 </yellow-note>
 
 <hr />
+<hide>&content;</hide>
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
 <else>			<!-- ====== xref ============================ -->
@@ -252,9 +254,10 @@
 
 <hr />
 <!-- not clear whether we always want to make the listing <small>. -->
+<!-- === this this seems to work here but not in src-html. -->
 <if>&wrap;
-    <then><expand>&content;</expand></then>
-    <else><small><pre><expand>&content;</expand></pre></small></else>
+    <then><get expand="yes" name="content"/></then>
+    <else><small><pre><get expand="yes" name="content"/></pre></small></else>
 </if>
   </else>
 </if>

@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         include="src-wrapper" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.6 2000-10-06 01:18:42 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.7 2000-10-06 06:28:43 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -414,7 +414,7 @@
 <hr />
 <!-- not clear whether we always want to make the listing <small>. -->
 <if>&wrap;
-    <then><expand>&content;</expand></then>
+    <then><get expand="yes" name="content"/></then>
     <else><small><pre><expand>&content;</expand></pre></small></else>
 </if>
   </else>

@@ -1,5 +1,5 @@
 ////// expandHandler.java: <expand> Handler implementation
-//	$Id: expandHandler.java,v 1.6 2000-10-06 00:29:41 steve Exp $
+//	$Id: expandHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,11 +30,12 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
 import org.risource.dps.output.DiscardOutput;
+import org.risource.dps.input.FromNodeList;
 
 /**
  * Handler for &lt;expand&gt;  <p>
  *
- * @version $Id: expandHandler.java,v 1.6 2000-10-06 00:29:41 steve Exp $
+ * @version $Id: expandHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -48,7 +49,6 @@ public class expandHandler extends GenericHandler {
   public void action(Input in, Context aContext, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
     if (content == null) return;
-    Input in = new FromNodeList(nl);
     aContext.subProcess(new FromNodeList(content), out).run();
   }
 
