@@ -37,12 +37,17 @@ checkout from the repository and will use the version of the Makefile
 that is checked out, not the version in your working directory.
 </li>
 
+<li><code>make prep_checkout</code>.  This updates the pia version numer,
+removes the previous release directory, and tags the respository
+if <code>CREATE_CVS_TAG</code> has been set to 1.</li>
+
+<li>Manually rsync the internal and external cvs respositories.</li>
+
 <li><code>make src.tar</code>
 <p>
-This should do everything:
+This should do everything else that needs to be done:
 </p>
 <ul>
-<li>Update the version number for the pia executable.</li>
 <li>Build the source code.</li>
 <li>Build the documentation.</li>
 <li>Make a tar file and compress it.</li>
