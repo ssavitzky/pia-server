@@ -1,5 +1,5 @@
 // CrontabEntry.java
-// $Id: CrontabEntry.java,v 1.5 1999-11-04 22:46:56 steve Exp $
+// $Id: CrontabEntry.java,v 1.6 1999-12-14 18:36:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,6 @@ import org.risource.ds.List;
 import org.risource.ds.Tabular;
 import org.risource.ds.Table;
 
-import org.risource.util.Utilities;
 import org.risource.dps.util.Log;
 
 import org.w3c.dom.Element;
