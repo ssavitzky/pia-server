@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.21 1999-04-14 00:17:50 pgage Exp $
+#	$Id: Makefile,v 1.22 1999-04-14 23:09:23 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,11 +24,11 @@ PIADIR=.
 MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=pia
 MYPATH=
-REL_DIR	    = $(HOME)/src_release	# source release will be built here
+REL_DIR	    = $(HOME)/src_release
 REL_PIA_DIR = $(HOME)/src_release/PIA
-DEST_DIR    = /pia1/pia			# Where source release tar file ends up
-TAR_NAME    = pia_src$(VERSION)		# Append version to avoid overwrites
-CREATE_CVS_TAG = 0			# set to 1 to cvs rtag the release
+DEST_DIR    = /pia1/pia
+TAR_NAME    = pia_src$(VERSION)
+CREATE_CVS_TAG = 0
 
 SUBDIRS= src bin lib Doc
 
@@ -105,25 +105,33 @@ prep_src_rel::
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
 
-# Build a source release.  Before building, check all variables and set to
-# appropriate values.
-src.tar:	update-version	
+prep_checkout::
+	update-version
 	make prep_rel_dir
+	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; fi
+
+# Build a source release.  Before building:
+#   check all variables and set to appropriate values.  If the version number
+#   has changed, update it in this Makefile and check in the Makefile _before_
+#   starting the build.
+#   Do a make prep_checkout
+#   DO THIS MANUALLY:  cd /pia1/CvsRoot ;  /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
+#   Do a make src.tar
+#   NOTE:  this has not been field tested!
+src.tar:	
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
-		cd /pia1/CvsRoot ; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
 	 	cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA ; \
 	else \
-		cd /pia1/CvsRoot ; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
 		cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA ; \
 	fi
 	cd $(REL_PIA_DIR) ;  make prep_src_rel
 	cd $(REL_DIR) ; tar czf $(TAR_NAME).tgz PIA ; mv $(TAR_NAME).tgz $(DEST_DIR)
 	cd $(DEST_DIR) ;  rm pia_src.tgz ; ln -s $(TAR_NAME).tgz pia_src.tgz
-	cd $(DEST_DIR) ; mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
+	cd $(DEST_DIR) ; mkdir src_release$(VERSION) ; cp -r $(REL_DIR)/PIA src_release$(VERSION)
 
 # test making parts of a release
 test:	
-	cd /pia1/CvsRoot ; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
+
 ###
 ### Old stuff.
 ###
