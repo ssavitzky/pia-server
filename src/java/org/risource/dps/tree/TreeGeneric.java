@@ -1,5 +1,5 @@
 // TreeGeneric.java
-// $Id: TreeGeneric.java,v 1.3 1999-04-23 00:22:24 steve Exp $
+// $Id: TreeGeneric.java,v 1.4 1999-11-16 23:34:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -80,7 +80,9 @@ public class TreeGeneric extends TreeElement  {
    * Returns the name of this attribute. 
    * @return attribute name.
    */
-  public String getName()		{ return name; }
+  public String getName() {
+    return (name == null)? nodeName : name;
+  }
 
   /** 
    * Return the DOM ``nodeName'' appropriate for the current node type.
