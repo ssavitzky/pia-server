@@ -3,21 +3,10 @@
 <title>Generic Help Page for &AGENT:name;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header show-date='yes'>Help</header>
-<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<set name='subs'><agent-list subs='subs' type='&agentType;'/></set>
 <sub-head page='help'>
-    <tr><th align='right'>
-           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
-	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
-                <else>&agentType; agents: </else></if>
-        </th><td><repeat list='&subs;'>
-               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
-           </repeat>
-</td></tr></sub-head>
+</sub-head>
 
-<if><test exact='exact' match='&amp;agentType'>&agentName;</test>
-    <then><set name='agentPath'>&agentName;</set></then>
-    <else><set name='agentPath'>&agentType;/&agentName;</set></else>
-</if>
 <hr />
 <nav-bar />
 <hr />
@@ -27,13 +16,8 @@
 <dl>
   <dt> <strong>Where am I?</strong>
   </dt><dd>  &lt;URL:<a href='&url;'>&url;</a>&gt; <br />
-       This is the 
-       <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
-              <then><a href='/&agentType;/home'>&agentType;</a>
-	            <a href='/&agentType;/'> / </a>
-	            <a href='/&agentType;/&agentName;'>&agentName;</a>
-	      </then><else><a href='/&agentName;/home'>&agentName;</a>
-       </else></if> agent of
+       This is the <a href="&AGENT:name;">&AGENT:name;</a>
+       agent of
        <if><test exact='exact' match='pia'>&user.name;</test>
 		<then>An Information Appliance</then>
 		<else><a href='/~/'>&user.name;'s</a>
@@ -49,17 +33,17 @@
 <hr />
 
 <!--  Quietly see whether there's a "help" file for this agent.  -->
-<include src='help.inc'> </include>
+<include src='help.inc'><include src="/Agents/defaults/help.inc"/> </include>
 
 <hr />
 <h2><a name='general'>General Help</a></h2>
 
 This online help page is automatically customized for every agent that makes a
-link to it; you can <em>always</em> find a link to it from an Agent's
-<a href='&agentPath;/'>index page</a>.  More general information, including
+link to it; you can usually find a link to it from an Agent's
+<a href='&locPath;/'>home page</a>.  More general information, including
 links to the documentation and to many useful forms and active documents, can be
-found on the <a href='/Admin'>Admin Agent's home page</a>.
+found on the <a href='/Admin/'>Admin Agent's home page</a>.
 
 <hr />
-<footer cvsid='$Id: help.xh,v 1.2 1999-10-04 17:08:04 steve Exp $' />
+<footer cvsid='$Id: help.xh,v 1.3 1999-10-22 17:35:08 steve Exp $' />
 </body></html>
