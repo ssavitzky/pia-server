@@ -1,5 +1,5 @@
 // FormContent.java
-// $Id: FormContent.java,v 1.3 1999-03-12 19:29:08 steve Exp $
+// $Id: FormContent.java,v 1.4 1999-08-27 23:56:25 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -530,13 +530,24 @@ public class FormContent extends Properties implements InputContent {
   /**
    * Return this content's data as a string.
    * @return this content's data as a string.
+   * inherit from superclass -- method not normally used
+  public String toString(){
+  */
+
+
+
+  /**
+   * Return this content's data as a string.
+   * This is currently reads any posted data from the source and
+   * returns it all as a string.  
+   * @return this content's data as a string.
    */
 
-  public String toString(){
+  public String contentAsString(){
     int bytesRead;
     HttpBuffer data = new HttpBuffer();
 
-    if ( headers == null ){
+    if ( headers == null ){  // only when headers have not be read yet -- should not happen
       byte[] bytes = suckFromSource();
       if (bytes == null) return null;
       String zdata = new String ( bytes );
@@ -549,7 +560,7 @@ public class FormContent extends Properties implements InputContent {
     if( len <=0 ) return null;
 
     Pia.debug(this, "toString is processing...");
-    Pia.debug(this, "content length is =" + Integer.toString( len ));
+    Pia.debug(this, "content length is = " + Integer.toString( len ));
 
     try{
 
@@ -566,6 +577,11 @@ public class FormContent extends Properties implements InputContent {
 
 	data.append( buffer, 0, bytesRead );
       }
+      
+      // all data has been read but client may still have CRLF hanging
+      long skipped = body.skip(2);
+      Pia.debug(this, "skipped over " + skipped + " characters in Post");
+      
 
       Pia.debug(this, "data length is: " + Integer.toString( data.length() ) );
       if( data.length() == 0 ){
@@ -576,6 +592,7 @@ public class FormContent extends Properties implements InputContent {
       return zdata;
       
     }catch(IOException e){
+      Pia.debug(this, "Exception reading form content:" + e );
     }
     return null;
   }
@@ -597,7 +614,7 @@ public class FormContent extends Properties implements InputContent {
       Pia.debug(this, "the toSplit string is-->"+ toSplit);
       queryString = toSplit;
     } else{
-      String zcontent = toString();
+      String zcontent = contentAsString();
 
       Pia.debug(this, "the content is below:");
       Pia.debug(this, zcontent);
