@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: pia,v 1.8 1999-10-11 21:54:53 steve Exp $
+#	$Id: pia,v 1.9 1999-12-15 21:47:16 steve Exp $
 # Pia launcher. 
 #	
 #
@@ -41,7 +41,7 @@ if [ "$1" = "-debug" ] ; then
     shift
 fi
 
-# We will count on Pia to handle multiple occurrances of -root and -u,
+# We will count on Pia to handle multiple occurrances of -root and so on,
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 

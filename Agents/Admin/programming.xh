@@ -56,15 +56,5 @@
        (your customizations and agent output)  <br />
 </li></ul>
 
-<h3>Miscellaneous files...normally not accessed directly</h3>
-<ul>
-     <li> <a href='install-agent'> install agent</a> -- requires
-	  knowledge of several non-obvious parameters.
-     </li><li> <a href='START-UP.html'> start-up file</a> 
-	  (This file gets "executed" on start-up by submitting every form.)
-     </li><li> <a href='initialize'> initialize &AGENT:name; Agent</a>
-	  (This file gets "executed" when a new &AGENT:name; agent is created)
-</li></ul>
-
-<footer cvsid='$Id: programming.xh,v 1.9 1999-11-23 18:40:37 steve Exp $' />
+<footer cvsid='$Id: programming.xh,v 1.10 1999-12-15 21:47:12 steve Exp $' />
 </body></html>

@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: process,v 1.6 1999-10-04 17:05:01 steve Exp $
+#	$Id: process,v 1.7 1999-12-15 21:47:17 steve Exp $
 # Process a document
 #	Process a document using the (new) Document Processing System
 #
@@ -38,7 +38,7 @@ if [ "$1" = "-v" ] ; then
     shift
 fi
 
-# We will count on Pia to handle multiple occurrances of -root and -u,
+# We will count on Pia to handle multiple occurrances of -root and so on,
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 
