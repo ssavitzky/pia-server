@@ -12,11 +12,11 @@
     <th align=right valign=top bgcolor=silver>
 	This Release: </th>
     <td>
-	||&nbsp;<a href="/Doc/Release/r2.1.html"><strong>2.1</strong></a> 
-	||&nbsp;<a href="/README">README</a>
-	||&nbsp;<a href="/LICENSE">LICENSE</a>
-        ||&nbsp;<a href="/Doc/Release">/Release&nbsp;notes/</a> 
-        ||&nbsp;<a href="/Doc/FAQ/">/FAQs/</a>
+	||&nbsp;<a href="&PIA:url;/Doc/Release/r2.1.html"><strong>2.1</strong></a> 
+	||&nbsp;<a href="&PIA:url;/README">README</a>
+	||&nbsp;<a href="&PIA:url;/LICENSE">LICENSE</a>
+        ||&nbsp;<a href="&PIA:url;/Doc/Release">/Release&nbsp;notes/</a> 
+        ||&nbsp;<a href="&PIA:url;/Doc/FAQ/">/FAQs/</a>
     </td>
     <td bgcolor=silver>&nbsp;</td>
   </tr>
@@ -24,11 +24,11 @@
     <th align=right valign=top bgcolor=silver>
 	Other Documents: </th>
     <td>
-	||&nbsp;<a href="/Doc/doclist.html">Index</a> 
-	||&nbsp;<a href="/Doc/intro.html">Introduction</a> 
-	||&nbsp;<a href="/Doc/contributors.html">Contributors</a> 
-        ||&nbsp;<a href="/Doc/Notes/">/Notes/</a> 
-	||&nbsp;<a href="/Doc/">/directory/</a>
+	||&nbsp;<a href="&PIA:url;/Doc/doclist.html">Index</a> 
+	||&nbsp;<a href="&PIA:url;/Doc/intro.html">Introduction</a> 
+	||&nbsp;<a href="&PIA:url;/Doc/contributors.html">Contributors</a> 
+        ||&nbsp;<a href="&PIA:url;/Doc/Notes/">/Notes/</a> 
+	||&nbsp;<a href="&PIA:url;/Doc/">/directory/</a>
     </td>
     <td bgcolor=silver>&nbsp;</td> 
   </tr>
@@ -44,4 +44,4 @@
   <tr> <td>&nbsp; </td> <td bgcolor=silver colspan=3>&nbsp;</td> 
   </tr>
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.15 2000-03-02 04:27:29 steve Exp $"/>
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.16 2000-04-18 19:00:10 steve Exp $"/>

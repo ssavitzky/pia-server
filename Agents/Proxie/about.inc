@@ -11,15 +11,15 @@
 </p>
 
 <dl>
-  <dt> <a href="/History">History</a> </dt>
+  <dt> <a href="/~History">History</a> </dt>
   <dd> maintains your browsing history. </dd>
-  <dt> <a href="/Toolbar">Toolbar</a> </dt>
+  <dt> <a href="/~Toolbar">Toolbar</a> </dt>
   <dd> Toolbar agents put a ``toolbar'' of links on the front of pages.
        The Toolbar agents include:
        <ul>
-	 <li> <a href="/remoteTools">remoteTools</a> for remotely-located
+	 <li> <a href="/~remoteTools">remoteTools</a> for remotely-located
 	      pages. </li>
-	 <li> <a href="/fileTools">fileTools</a> for local <em>non-active</em>
+	 <li> <a href="/~fileTools">fileTools</a> for local <em>non-active</em>
 	      HTML files. </li>
        </ul>
   </dd>
@@ -29,4 +29,4 @@
     <a href="using#proxy">here</a>.
 </p>
 
-<inc-footer cvsid="$Id: about.inc,v 1.4 1999-07-09 22:06:17 steve Exp $"/>
+<inc-footer cvsid="$Id: about.inc,v 1.5 2000-04-18 18:59:56 steve Exp $"/>

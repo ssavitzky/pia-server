@@ -14,8 +14,8 @@
     </else>
 </if>
 
-<p>
-<a href="/&agentType;">&agentType;</a> agents have a great deal more
+<p><!-- === bogus === -->
+<a href="/~&agentType;">&agentType;</a> agents have a great deal more
 information on their <a href="/&agentPath;">home pages</a>, including
 information about how to customize their toolbars.</p>
 
@@ -43,4 +43,4 @@ information about how to customize their toolbars.</p>
     </then>
 </if>
 
-<!-- $Id: help.inc,v 1.5 2000-02-25 22:29:48 steve Exp $ -->
+<!-- $Id: help.inc,v 1.6 2000-04-18 18:59:56 steve Exp $ -->

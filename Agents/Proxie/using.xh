@@ -69,7 +69,8 @@ information, in the form of a ``toolbar,'' to the top or bottom of each page.
 <p> If your browser was already using a proxy (for example, to get through a
     firewall), you need to pass that information to the PIA.  You can do this
     on the PIA configuration page at <a
-    href="/Admin/config"><code>/Admin/config</code></a>.  At the moment, you
+    href="&PIA:url;/Admin/config"><code>&PIA:rootPath;Admin/config</code></a>.
+    At the moment, you 
     will have to restart the PIA before these settings will take effect.
 
 <p> The PIA also obeys the <code>http_proxy</code> and <code>no_proxy</code>
@@ -120,5 +121,5 @@ The toolbar normally also refers to the following items in the <a href='/History
   </dt><dd> <a href='/History/~/last.html'>/History/~/last.html</a>
 </dd></dl>
 
-<footer cvsid='$Id: using.xh,v 1.8 1999-11-23 18:40:56 steve Exp $' />
+<footer cvsid='$Id: using.xh,v 1.9 2000-04-18 18:59:56 steve Exp $' />
 </p></body></html>

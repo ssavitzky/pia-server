@@ -5,7 +5,7 @@
 
 <set name="ltitle"><if><test exact="exact" case="insens" match="pia">&user.name;</test>
 		     <then> </then>
-		     <else><a href="/~/">&user.name;'s</a> </else></if></set>
+		     <else><a href="&PIA:url;/~/">&user.name;'s</a> </else></if></set>
 <header show-date="yes" ltitle="&ltitle;">
   <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 			    <then>An Information Appliance</then>
@@ -15,7 +15,7 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="/Icon/logo100.png" height="100" width="111" alt=" " />
+  <th width="170"><img src="&PIA:url;/Icon/logo100.png" height="100" width="111" alt=" " />
   </th><td valign="center">
     <table cellspacing="0" cellpadding="0" border="0" valign="center">
     <tr><th valign="top" align="right" width="170"></th>
@@ -34,13 +34,13 @@
     </td></tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
     <!-- It is no longer necessary, since the config file can do it.    -->
-    <tr><th valign="top" align="right" width="170"><a href="/-"><b>Files:</b></a>&nbsp;
-	</th><td valign="top"> <a href="/Agents/">Applications</a>
-		<a href="/Doc/doclist.html">Documents</a>
-		<a href="/Tagsets">Tagsets</a>
-		<a href="/src/">Source code</a>
+    <tr><th valign="top" align="right" width="170"><a href="&PIA:url;/-"><b>Files:</b></a>&nbsp;
+	</th><td valign="top"> <a href="&PIA:url;/Agents/">Applications</a>
+		<a href="&PIA:url;/Doc/doclist.html">Documents</a>
+		<a href="&PIA:url;/Tagsets">Tagsets</a>
+		<a href="&PIA:url;/src/">Source code</a>
         </td></tr>
-    <tr><th valign="top" align="right" width="170"><a href="/Agents/"><b>Apps:</b></a>&nbsp;
+    <tr><th valign="top" align="right" width="170"><a href="&PIA:url;/Agents/"><b>Apps:</b></a>&nbsp;
 	</th><td valign="top"> 
             <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
               <do name="a"><set name="href">/~<get name="foo"/>/</set>
@@ -63,9 +63,9 @@
   </table>
 </td></tr></table>
 <hr />
-<include src="/welcome.inc"><include src="/Agents/ROOT/welcome.inc"/></include>
+<include src="welcome.inc"><include src="&PIA:url;/Agents/ROOT/welcome.inc"/></include>
 <hr />
-<include src="/Agents/ROOT/doc-grid.inc"/>
+<include src="&PIA:url;/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.13 2000-02-25 22:29:37 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.14 2000-04-18 18:59:48 steve Exp $" />
 </p></body></html>

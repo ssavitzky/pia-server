@@ -7,7 +7,7 @@
 
 <p>
 Casual browsers will be most interested in the <a
-href="/Doc/demos.html">Demos</a>.
+href="&PIA:url;/Doc/demos.html">Demos</a>.
 
 <hr>
 <p>	The PIA group announces the initial alpha release of the "Personal
@@ -22,4 +22,4 @@ href="/Doc/demos.html">Demos</a>.
 	experimental use.  Constructive criticisms is greatly appreciated.
 	Report bugs to the PIA group.
 
-<!-- $Id: public-welcome.inc,v 1.4 1999-03-15 23:12:58 steve Exp $ -->
+<!-- $Id: public-welcome.inc,v 1.5 2000-04-18 19:00:10 steve Exp $ -->

@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.3 2000-03-16 22:11:02 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.4 2000-04-18 19:00:22 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -57,10 +57,10 @@ Note that we only need these inside the PIA.
 <h3>Graphics and pseudo-graphics</h3>
 
 <define entity="blank-170x1">
-  <value><img src="/Icon/white170x1.png" width="170" height="1" alt=" "></value>
+  <value><img src="&PIA:url;/Icon/white170x1.png" width="170" height="1" alt=" "></value>
 </define>
 <define entity="blue-dot">
-  <value><img src="/Icon/dot-blue.png"
+  <value><img src="&PIA:url;/Icon/dot-blue.png"
 		height="20" width="20" alt="*"></value>
 </define>
 
@@ -250,13 +250,13 @@ Note that we only need these inside the PIA.
     </if>
 </hide>
 <table cellpadding=0 cellspacing=0>
-<tr><th><a href="/"><img src="/Icon/pia45.png"
+<tr><th><a href="&PIA:url;/"><img src="&PIA:url;/Icon/pia45.png"
 			 border=0 width=85 height=45 alt="P I A"></a></th>
     <td valign=bottom>
       <table>
 	<tr><th valign=bottom align=left>
 	       &RiSource.org;'s Platform for Information Applications</th></tr>
-	<tr height=6><td><img src="/Icon/rule.png" height=6 width=469></td></tr>
+	<tr height=6><td><img src="&PIA:url;/Icon/rule.png" height=6 width=469></td></tr>
       </table>
     </td>
 </tr>
@@ -320,7 +320,7 @@ Note that we only need these inside the PIA.
 	want to put after the standard start.
   </doc>
   <action>
-<a href="/">PIA</a> || <a href="/~Admin">Admin</a> ||
+<a href="&PIA:url;/">PIA</a> || <a href="/~Admin">Admin</a> ||
           <make name="a">
 	    <set name="href"><get name="locPath"/>/</set>
 	    <get name="locName"/></make>:
@@ -333,7 +333,7 @@ Note that we only need these inside the PIA.
                     />/help#general</xlink> )
 	</then></if>
 	<if><status src="&locPath;/DATA" item="exists" /><then>
-          <xlink text="/data/"><get name="locPath"/>/DATA/</xlink>
+          <xlink text="&PIA:url;/data/"><get name="locPath"/>/DATA/</xlink>
 	</then></if>
   </action>
 </define>
@@ -367,7 +367,7 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
-<a href="/Agents/View/source?url=&docPath;">view source</a>
+<a href="&PIA:url;/Agents/View/source?url=&docPath;">view source</a>
   </action>
 </define>
 
@@ -397,8 +397,8 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
-<if><status src="/Agents/View/source.xh" item="exists"/>
-    <then><a href="/Agents/View/source?url=&docPath;">view source</a></then>
+<if><status src="&PIA:url;/Agents/View/source.xh" item="exists"/>
+    <then><a href="&PIA:url;/Agents/View/source?url=&docPath;">view source</a></then>
 </if>
   </action>
 </define>
