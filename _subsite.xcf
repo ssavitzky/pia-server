@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.8 1999-10-13 18:17:41 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.9 1999-10-26 17:42:33 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -40,12 +40,9 @@
   <!-- You can set most of the PIA's ``properties'' this way -->
   <port>8888</port>
 
-  <!-- If /etc/passwd exists, use it (and hence your Unix password) to
-	authenticate access to the Admin agent.  Disable this if you're using
-	shadow passwords!
+  <!-- See Config/Site/sample.xcf to see how to use /etc/passwd, and hence
+       your Unix password, to authenticate access to the Admin agent.  It's
+       not really suitable for the default configuration.
     -->
-  <if><status item="exists" src="file:/etc/passwd"/>
-      <then><authenticate>/etc/passwd</authenticate></then>
-  </if>
 
 </Container>
