@@ -34,8 +34,8 @@
        <code>month.xh</code> and <code>year.xh</code> pages that are more
        specialized.
   </li>
-  <li> In order to retain the old look and feel where appropriate, I've added
-       the ``<code>mpage="grid"</code>'' attribute to all formatting elements
+  <li> In order to allow switching look and feel where appropriate, I've added
+       the ``<code>mpage="month"</code>'' attribute to all formatting elements
        that generate links; and a corresponding form keyword to the
        <code>year.xh</code> page.  This allows the old <code>grid.xh</code> to
        refer to the new <code>year.xh</code> page and eventually get back.
@@ -83,7 +83,7 @@
 </ul>
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.xh,v 1.2 1999-10-12 15:53:57 steve Exp $</b><br>
+<b>$Id: about.xh,v 1.3 1999-10-13 21:46:52 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~bill/"
          ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
          >bill@rsv.ricoh.com</a>&gt;</address>

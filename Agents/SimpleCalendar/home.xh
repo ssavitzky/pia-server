@@ -129,7 +129,7 @@
 
         <?-- put a navigation bar on here too --?>
   <hr/>
-        <navbar mpage="grid" />
+        <navbar mlink="yes" mpage="month" />
   <hr/>
 
         <?-- make a URL which will pass this date on to other operations --?>
@@ -296,7 +296,7 @@
               <td bgcolor="&mybg;" colspan="4">
 		  <?-- show title and center date --?>
 		  <font size="5"> Events for  <weekday>&datepack;</weekday>,
-		     <a href="grid.xh?&shortURL;"> <weekday monthname="yes">&datepack;</weekday></a>
+		     <a href="month.xh?&shortURL;"> <weekday monthname="yes">&datepack;</weekday></a>
 		       &myDay;, &myYear;
 		  </font>
                </td>

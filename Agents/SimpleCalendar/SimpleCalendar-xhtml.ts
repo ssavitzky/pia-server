@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.7 1999-10-13 20:51:57 bill Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.8 1999-10-13 21:46:51 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -205,8 +205,13 @@
     <doc> If present, use this as the page to use for the month display.
     </doc>
   </define>	 
+  <define attribute="mlink">
+    <doc> If present, make this month a link too.
+    </doc>
+  </define>	 
   <action>
     <set name="mpage"><get name="attributes:mpage"/></set>
+    <set name="mlink"><get name="attributes:mlink"/></set>
     <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
     <tr>
        <repeat entity="mth" start="1" stop="12"><text trim="yes">
@@ -220,7 +225,10 @@
 	 </hide>
 	   <if><test equals="&myMonth;">&mth;</test>
 	     <then>
-	       <th align="&align;"><font size="+2">&mthname;</font></th>
+	       <th align="&align;"><font size="+2"><if>&mlink;
+	 	  <then><a  href="&mpage;.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;</a></then>
+	          <else>&mthname;</else>
+	       </if></font></th>
 	     </then>
 	     <else>
 	         <td align="&align;"><a  href="&mpage;.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;</a> </td>
@@ -304,11 +312,16 @@
     <doc> If present, use this as the page to use for the month display.
     </doc>
   </define>	 
+  <define attribute="mlink">
+    <doc> If present, make this month a link too.
+    </doc>
+  </define>	 
   <action>
+     <set name="mlink"><get name="attributes:mlink"/></set>
      <set name="mpage"><get name="attributes:mpage"/></set>
      <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<monthRow mpage="&mpage;"/>
+	<monthRow mlink="&mlink;" mpage="&mpage;"/>
        <hide>  
 	   <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
 	   <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
