@@ -108,17 +108,15 @@
   <li> The command line, which may specify <em>either</em> the pathname of the
        configuration file itself, or the site root directory and other
        information that might be in the configuration file.  
-  <li> The $PIA_CONFIG environment variable.  Again, this might contain either
-       the pathname of the configuration file, or a complete command line. 
-  <li> A file called <code>pia.config</code> or <code>.pia-config</code> in
+  <li> A file called <code>pia-site.xcf</code> or <code>.pia-site.xcf</code> in
        the user's home directory.
-  <li> A file called <code>_subsite.cfg</code> in either $USR_DIR or
-       $PIA_DIR.  The latter is guaranteed to exist.
+  <li> A file called <code>_subsite.xcf</code> in either $PIA_ROOT or
+       $PIA_HOME.  The latter is guaranteed to exist.
 </ol>
 
-<p> The default setup makes $PIA_DIR the site's virtual root, and $USR_DIR the
-    site's real root.  Several alternative configuration files are provided in
-    the PIA/Config/Site directory.
+<p> The default setup makes $PIA_HOME the site's virtual root, and $PIA_ROOT
+    the site's real root.  Several alternative configuration files will be
+    provided in the PIA/Config/Site directory.
 
 <p> Once the PIA's root directory has been located, all of its active subsites
     that contain agents can be initialized.
@@ -390,7 +388,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.15 1999-09-24 00:25:21 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.16 1999-09-30 23:53:26 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
