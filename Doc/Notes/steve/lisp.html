@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA for LISPers</title>
+</head><body>
+<h1>PIA for LISPers</h1>
+
+<p> The PIA is very LISP-like internally:
+
+<ul>
+  <li> Both operate on tree-structured data.
+  <li> In both, the same representation is used for data and programs.
+</ul>
+
+<p> The main differences are:
+
+<ul>
+  <li> The default bindings simply copy elements and text from the input
+       document to the output.  The effect is very much like the backquote
+       operator in LISP.
+  <li> All function bindings are explicit.  Unlike LISP, in which the standard
+       functions are precompiled and always present, in the PIA the bindings
+       (tagset) for processing a document is always specified, and more than
+       one set of tag and entity bindings can be in effect.  This makes it
+       easier to specify completely different sets of bindings for different
+       purposes (for example, pretty-printing). 
+  <li> In LISP, processing takes place at two times: in READ (when data
+       structures are built and read macros interpreted) and in EVAL.  The PIA
+       has an Input (corresponding roughly to READ), a Processor
+       (corresponding to EVAL), and an Output (similar to PRINT) -- processing
+       is more like structure copying than evaluation, and substantial amounts
+       of processing can be done in the Output.
+  <li> Rather than simply expanding a tree, the Processor copies from a
+       tree traverser (the Input) to a tree constructor (the Output).  This
+       lets it operate on documents that are too large to fit in memory.
+</ul>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: lisp.html,v 1.1 1999-08-20 18:10:32 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
