@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.9 2000-06-24 00:42:12 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.10 2000-07-19 00:44:33 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -30,9 +30,9 @@
 <h2>Document Wrapper</h2>
 
 <define element="-document-" quoted="yes" >
-  <doc> This is the outside wrapper.  Note that it has to be lowercase because
-	some including tagsets might not be case-insensitive, and every tag
-	defined here in HTML gets case-smashed.
+  <doc> This is the outside wrapper.  Note that the tagname must be lowercase
+	because some tagsets (e.g. HTML) are case-insensitive, so every tag
+	defined here for HTML gets case-smashed.
   </doc>
   <action>
 <html><hide>
@@ -68,7 +68,11 @@
   <set name="decoratedPath">
 	<decoratePath base="&sroot;">[SRC]&spath;</decoratePath></set>
 
+  <set name="note-tail">
+	&SITE:sourceSuffix;/&DOC:name;/
+  </set>
   </hide>
+
   <head><title>&spath; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
@@ -81,7 +85,9 @@
 		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
 		   </th>
 		   <th align=left>
-		      <big> source listing: <code>&decoratedPath;</code> </big>
+		      <big> <i>source listing:</i>
+			    <code>&decoratedPath;</code>
+		      </big>
 		   </th>
 	       </tr>
 	       <tr>
@@ -99,6 +105,7 @@
 		      <if><get name="tpath" />
 		          <then>
 		      	    <a href="&tpath;">&lt;server&gt;</a>
+		      	    <a href="&tpath;" target="server">&lt;!&gt;</a>
 		          </then>
 		      </if>
 		      <if><get name="npath" />
@@ -122,15 +129,115 @@
       </tr>
     </table>
     
-<index-bar name="Notes">Notes Server Listing</index-bar>
-<p>
-    <table bgcolor="yellow">
-      <tr> <td> There are no notes associated with this source file.
-	   </td>
-      </tr>
-    </table>
-   </p> 
 
+<hide>
+    <!-- Create a new note:  have to do this before listing the directory -->
+
+    <if> <get name="FORM:create" />
+	 <then>
+	   <if> <status item="exists"
+    		        src="&LOC:path;&note-tail;&FORM:label;.ww" />
+	        <else><!-- create new note -->
+	    <output dst="&LOC:path;&note-tail;&FORM:label;.ww"><make name="note">
+		<make name="title"><get name="FORM:title" /></make>
+		<make name="created">&dateString;</make>
+		<make name="summary">
+		    <parse tagset="HTML"><get name="FORM:summary" /></parse>
+		</make>
+		<make name="content">
+		    <parse tagset="HTML"><get name="FORM:content" /></parse>
+		</make>
+</make><!-- note created using quick form -->
+</output>
+		</else>
+	   </if>
+	 </then>
+    </if>
+    <doc> Now locate the files.  Note that we don't need <code>&amp;tail;</code>
+	  here because we're browsing around in the source directories, which
+	  are all perfectly real (though referred to as ``virtual'').
+    </doc>
+    <listNoteFiles>&LOC:path;&note-tail;</listNoteFiles>
+</hide>
+
+<if> <status item="exists" src="HEADER.ww" />
+     <then>
+	<set name="haveHeader">yes</set>
+	<load-note>HEADER.ww</load-note>
+	<hr />
+	<displayNoteAsHeader />
+     </then>
+</if>
+
+<index-bar name="Notes">Notes Server Listing</index-bar>
+
+<form action="&DOC:path;" method="GET"><!-- === PIA isn't passing POST again === -->
+  <input type="hidden" name="path" value="&LOC:path;&note-tail;" />
+<table bgcolor="white" border="2">
+  <!-- First list the indices -->
+  <tr> <th bgcolor="#cccccc" width="150"> indices </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
+       help </th> 
+  </tr>
+<repeat>
+  <foreach entity="f">&indexFiles;</foreach>
+  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+  <tr> <td align="left" valign="top">
+		<a href="&f;"><code>&label;</code></a>
+       </td>
+       <td colspan="2" valign="top">
+		 <describeIndex>&f;</describeIndex>
+       </td>
+  </tr>
+</repeat>
+
+  <!-- Next, list the notes -->
+  <tr> <th bgcolor="#cccccc" width="150"> Notes </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
+  </tr>
+<repeat>
+  <foreach entity="f">&noteFiles;</foreach>
+  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+  <tr> <td align="left" valign="top" bgcolor="yellow">
+		<a href="&LOC:path;&note-tail;/&f;"><code>&label;</code></a>
+       </td>
+       <td colspan="2" valign="top" bgcolor="yellow">
+		 <describeNote>&LOC:path;&note-tail;/&f;</describeNote>
+       </td>
+  </tr>
+</repeat>
+	
+  <!-- Finally, the form for creating a new note (the easy way) -->
+  <tr> <th bgcolor="#cccccc" width="150"> new note </th>
+       <th bgcolor="#cccccc" colspan="2" align="left">
+    	    Enter note text or use &nbsp;&nbsp;&nbsp;
+    	    <a href="/.Woad/Tools/new-note?path=&xloc;">[advanced form]</a> 
+       </th>
+  </tr>
+  <tr> <td valign="top">
+    	  <select name="label"> 
+	       	   <option selected="selected"><uniquify>note</uniquify></option>
+	       	   <option><uniquify>bug</uniquify></option>
+	       	   <option><uniquify>wish</uniquify></option>
+	       	   <option><uniquify>see-also</uniquify></option>
+	       	   <option>&date;-&hour;&minute;</option>
+	       	   <option>&date;</option>
+	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
+	  </select><br />
+ 	  <input name="create" value="Create Note" type="submit" />
+       </td>
+       <td valign="top" colspan="2">
+	  <textarea name="summary" cols="60" rows="4"> </textarea>
+       </td>
+  </tr>
+</table>
+</form>
+
+<!-- ==================================================================== -->
+<!-- === actually this wants to be a separate section, on the index bar. -->
+<tool-bar />
+
+<!-- ==================================================================== -->
 <index-bar name="Server">Notes Server Listing</index-bar>
 
 <if> &tpath;
@@ -156,8 +263,11 @@
 	    </td>
 	  </tr>
 	  <tr>
-	    <td valign="top"> 
+	    <td valign="top" align="right"> 
 		 <a href="&tpath;">View page&nbsp;on&nbsp;&lt;server&gt;.</a>
+	         <br />
+	    	 <a href="&tpath;"
+    	    	    target="server">...&nbsp;in&nbsp;&lt;!new&nbsp;window&gt;</a>
 	    </td>
 	    <td> This is a link to this page <em>on the server</em> -- in
 		 other words, it's what a user will see if they browse to the
@@ -170,70 +280,60 @@
 	<p> This page is a <ss>WOAD</ss> source listing of
 	    <code>&spath;</code>. 
 	</p>
-	<table bgcolor="yellow">
-	  <tr> <td> There is no URL on the server that corresponds to this
-	            file. 
-	       </td>
-	  </tr>
-	</table>
+	<yellow-note>
+	  There is no URL on the server that corresponds to this file. 
+	</yellow-note>
      </else>
 </if>
 <p> 
 </p>
 <index-bar name="Listing">Notes Server Listing</index-bar>
+<hr />
 
 <!-- ===================================================================== -->
 <if> &FORM:nested;	<!-- ====== nested =============================== -->
   <then>
-<table border="2" width="90%" align="center">
-  <tr><td><em>
+<yellow-note><em>
       This <tt>&VAR:format;</tt> listing is color-coded and indented to show
       the nesting level of the tags.  
        <br />
       <red>Note that because of current limitations omitted end tags are
       shown, and linebreaks inside of tags are eliminated.  Omitted end tags
-      may not be in the right places.</red> </em>
-  </td></tr>
-</table>
+      may be shown in the wrong place.</red> </em>
+</yellow-note>
 <hr />
 <pretty>&content;</pretty>
   </then>
 <else-if> &FORM:raw;	<!-- ====== raw ================================== -->
   <then>
-<table border="2" width="90%" align="center">
-  <tr><td><em> This <tt>&VAR:format;</tt> listing shows the full contents of
+<yellow-note><em> This <tt>&VAR:format;</tt> listing shows the full contents of
   the file with no alteration.</em>
-  </td></tr>
-</table>
+</yellow-note>
 
 <hr />
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
 <else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
   <then>
-<table border="2" width="90%" align="center">
-  <tr><td><em> This <tt>&VAR:format;</tt> listing shows tagset
+<yellow-note><em> This <tt>&VAR:format;</tt> listing shows tagset
        documentation. </em>
-  </td></tr>
-</table>
+</yellow-note>
 
 <hr />
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
 <else>			<!-- ====== processed ============================ -->
-<table border="2" width="90%" align="center">
-  <tr><td><em>
+<yellow-note><em>
       This <tt>&VAR:format;</tt> listing is color-coded and font-coded
       according to syntax.  The <tt><a href="&DOC:path;?wrap">wrapped</a></tt>
       format tends to be more compact than the normal <tt><a
       href="&DOC:path;">processed</a></tt> format, and is more readable in
-      some cases.
+      some cases.<br />
 
-      <red>Note that because of current limitations omitted end tags are
-      shown, and linebreaks inside of tags are eliminated.  Missing end tags
-      may not be handled correctly.</red>  </em>
-  </td></tr>
-</table>
+      <red>Because of current limitations, omitted end tags are shown and
+      linebreaks inside of tags are removed.  Missing end tags may be shown in
+      the wrong place.</red> </em>
+</yellow-note>
 
 <hr />
 <if>&wrap;
@@ -401,15 +501,15 @@
     </hide><elt-b tag="toc"><expand>&content;</expand></elt-b></action>
 </define>
 
-<define element="li" syntax="quoted">
+<define element="li" syntax="quoted" implicitly-ends="li">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="li"><expand>&content;</expand></elt><wrap /></action>
 </define>
-<define element="dt" syntax="quoted">
+<define element="dt" syntax="quoted" implicitly-ends="dt dd">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="dt"><expand>&content;</expand></elt><wrap /></action>
 </define>
-<define element="dd" syntax="quoted">
+<define element="dd" syntax="quoted" implicitly-ends="dt dd">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="dd"><expand>&content;</expand></elt><wrap /></action>
 </define>
@@ -452,7 +552,7 @@
 
 <h3>Paragraph-level Elements</h3>
 
-<define element="p" syntax="quoted">
+<define element="p" syntax="quoted" implicitly-ends="p">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="p"><expand>&content;</expand></elt><wrap /></action>
 </define>
@@ -593,13 +693,20 @@
 
 <define element="a" syntax="quoted">
   <doc> If <code>href</code> attributes are doubled, it means you're inside a
-	tag that should have <code>syntax="quoted"</code> but doesn't.
+	tag that should have <code>syntax="quoted"</code> but doesn't.  Note
+	the special handling of the case where both <code>name</code> and
+	<code>href</code> attributes are present.
   </doc>
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="a" tc="&lc;"><hide>
-      </hide><if>&attributes:name;
-	<then><a name="&attributes:name;"><expand>&content;</expand></a></then>
-	<else><a href="&attributes:href;"><expand>&content;</expand></a></else>
+      </hide><if>&attributes:href;
+	<then><if>&attributes:name;
+		  <then><a name="&attributes:name;" href="&attributes:href;"
+			><expand>&content;</expand></a></then>
+		  <else><a href="&attributes:href;"
+			><expand>&content;</expand></a></else>
+	      </if></then>
+	<else><a name="&attributes:name;"><expand>&content;</expand></a></else>
     </if><hide>
     </hide></elt></action>
 </define>
@@ -625,7 +732,7 @@
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt-b tag="select"><expand>&content;</expand></elt-b></action>
 </define>
-<define element="option" syntax="quoted">
+<define element="option" syntax="quoted" implicitly-ends="option">
   <action><hide><let name="atts">&attributes;</let>
     </hide><elt tag="option"><expand>&content;</expand></elt></action>
 </define>

@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.6 2000-06-30 00:06:03 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.7 2000-07-19 00:44:34 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -161,7 +161,7 @@
 <define element="note" syntax="quoted">
   <doc> This element delimits the entire note.
   </doc>
-  <action>
+  <action><hide>
     <if> <get name="FORM:update" />
 	 <then> <hide><get name="content"/></hide><!-- discard old content -->
 <set name="content">
@@ -180,13 +180,20 @@
     </if>
     <set name="title"><extract><from><get name="content"/></from>
 			       title <content />
-       </extract></set>
-		
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+       		      </extract>
+    </set>
+    <if><get name="title"/>
+	<else>
+	  <set name="title">
+		<subst match="\.ww" result="">&DOC:name;</subst>
+	  </set>
+	</else>
+    </if>
+</hide><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>&title;</title>
 </head><body bgcolor="99ccff">
-<set name="ltitle"><ss>WOAD</ss> note:</set>
+<set name="ltitle"><ss>annotation:</ss></set>
 <header>&title;</header>
 <hr />
 <if> <get name="FORM:edit"/>
@@ -220,6 +227,8 @@
 	</table>
      </else>
 </if>
+<hr />
+<code>&DOC:path;</code>	
 </body></html>
   </action>
 </define>

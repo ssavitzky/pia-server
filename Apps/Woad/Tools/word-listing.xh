@@ -193,7 +193,7 @@
   <foreach entity="f">&noteFiles;</foreach>
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
   <tr> <td align="left" valign="top">
-		<a href="&f;"><code>&label;</code></a>
+		<a href="&xloc;/&f;"><code>&label;</code></a>
        </td>
        <td colspan="2" valign="top">
 		 <describeNote>&xloc;/&f;</describeNote>
@@ -313,5 +313,5 @@
 </table>
 
 
-<short-footer cvs-id="$Id: word-listing.xh,v 1.2 2000-06-30 00:07:37 steve Exp $" />
+<short-footer cvs-id="$Id: word-listing.xh,v 1.3 2000-07-19 00:44:54 steve Exp $" />
 </body></html>

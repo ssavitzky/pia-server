@@ -33,7 +33,7 @@
 	``decorated'' with ".." links to the directories above "."
   </doc>
   <set name="decoratedPath">
-	<decoratePath base="&nroot;">[SERVER]&npath;/&tail;</decoratePath></set>
+	<decoratePath base="&nroot;">[HOST]&npath;/&tail;</decoratePath></set>
   <doc> Set other path-related variables.
 	=== For some reason I have to use npath here, though LOC:path works in
 	=== src-listing.  Strange.
@@ -56,16 +56,15 @@
 
   <!-- Ensure that form submissions don't get redirected!  -->
   <set name="formLoc">
-    <if> <test match="\/$">&xloc;</test>
-         <then>&xloc;</then>
-         <else>&xlic;/</else>
+    <if> <test match="\/$">&LOC:path;&tail;</test>
+         <then>&LOC:path;&tail;</then>
+         <else>&LOC:path;&tail;/</else>
     </if>
   </set>
 </hide>
 
 <title>&npath;&tail; : Woad annotations</title>
 </head><body bgcolor="#99ccff">
-
 <!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
     xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
     tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
@@ -92,6 +91,7 @@
 		      <if><get name="tpath" />
 		          <then>
 		      	    <a href="&tpath;">&lt;server&gt;</a>
+		      	    <a href="&tpath;" target="server">&lt;!&gt;</a>
 		          </then>
 		      </if>
 		      <if><get name="spath" />
@@ -149,7 +149,7 @@
 
 <form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
-<table bgcolor="white">
+<table bgcolor="white" border="2">
   <!-- First list the indices -->
   <tr> <th bgcolor="#cccccc" width="150"> indices </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
@@ -174,10 +174,10 @@
 <repeat>
   <foreach entity="f">&noteFiles;</foreach>
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top">
+  <tr> <td align="left" valign="top" bgcolor="yellow">
 		<a href="&f;"><code>&label;</code></a>
        </td>
-       <td colspan="2" valign="top">
+       <td colspan="2" valign="top" bgcolor="yellow">
 		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
        </td>
   </tr>
@@ -338,8 +338,7 @@
         </else>
       </if>
       <td> <a href="&absLink;">&li;</a> </td>
-      <td> &nbsp;
-		   <get name="title" />
+      <td> &nbsp; <get name="title" />
 <!-- for descriptions, need full path in any case. -->
       </td>   
     </tr>
@@ -351,12 +350,15 @@
 
 <blockquote>
 <table bgcolor="white">
-  <repeat><foreach><text op="sort" unique="unique">
-	    <extract><from>&serverPage;</from>
-    			    <name all>img</name>
-  			    <attr>src</attr> 
-  			    <eval />
-    	    </extract></text></foreach>
+  <repeat><foreach>
+	    <sort-unique>
+	      <extract><from>&serverPage;</from>
+    			      <name all>img</name>
+  			      <attr>src</attr> 
+  			      <eval />
+    	      </extract>
+	    </sort-unique>
+  	  </foreach>
             <tr><!-- need to map these to server loc's:
 	      	     annotation mangles images severely. -->
 	      <td> <a href="&li;">&li;</a> </td>
@@ -418,7 +420,9 @@
     <td> <code>&tpath;</code> </td>
   </tr>
   <tr>
-    <td bgcolor="#99ccff">
+    <td align="right">
+	 <a href="&tpath;"
+    	    target="server">...&nbsp;in&nbsp;&lt;!new&nbsp;window&gt;</a>
     </td>
     <td> This will show you the document directly on the server.
     </td>
@@ -427,14 +431,10 @@
 </blockquote>
 
 <if>&SITE:notesPrefix;
-    <then><table bgcolor="yellow" width="90%" cellpadding="5">
-             <tr>
-	       <td> <red> Note that at the moment, links starting with
+    <then><yellow-note> <red> Note that at the moment, links starting with
 		    ``<code>/</code>'' in the source view will be broken
 		    Sorry about that.  </red>
-	       </td>
-	     </tr>
-          </table>	  
+          </yellow-note>	  
     </then>
 </if>
 <table bgcolor="white" cellpadding="5">
@@ -446,5 +446,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.14 2000-06-30 00:07:37 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.15 2000-07-19 00:44:53 steve Exp $" />
 </body></html>

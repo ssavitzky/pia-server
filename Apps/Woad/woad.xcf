@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.13 2000-06-30 00:06:04 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.14 2000-07-19 00:44:34 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -15,6 +15,7 @@
 
   <targetServer><get name="PIA:target"/></targetServer>
   <sourcePrefix>/<get name="PIA:prefix">.source</get></sourcePrefix>
+  <sourceSuffix>/<get name="PIA:prefix">.notes</get></sourceSuffix>
   <docOffset><get name="PIA:offset"/></docOffset>
   <wordPrefix>/.words</wordPrefix>
 
@@ -97,6 +98,7 @@
 
   <!-- These are the tagsets used for formatting source code: -->
   <Ext name="html"	type="text/html" tagset="/.Woad/src-html"	/>
+  <Ext name="shtml"	type="text/html" tagset="/.Woad/src-html"	/>
   <Ext name="xh"	type="text/html" tagset="/.Woad/src-xhtml"	/>
   <Ext name="xcf"	type="text/html" tagset="/.Woad/src-xhtml"	/>
   <Ext name="xci"	type="text/html" tagset="/.Woad/src-xhtml"	/>

@@ -71,8 +71,9 @@
 		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
 		   </th>
 		   <th align=left>
-		      <big> directory listing:
-		 	    <code>&decoratedPath; &tail;</code></big> 
+		      <big> <i>directory listing:</i>
+		 	    <code>&decoratedPath; &tail;</code>
+		      </big> 
 		   </th>
 	       </tr>
 	       <tr>
@@ -83,6 +84,7 @@
 		      <if><get name="tpath" />
 		          <then>
 		      	    <a href="&tpath;">&lt;server&gt;</a>
+		      	    <a href="&tpath;" target="server">&lt;!&gt;</a>
 		          </then>
 		      </if>
 		      <if><get name="npath" />
@@ -117,7 +119,7 @@
 </make><!-- note created using quick form -->
 </output>
 		</else>
-	   <if>
+	   </if>
 	 </then>
     </if>
 
@@ -141,7 +143,7 @@
 
 <form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
-<table bgcolor="white">
+<table bgcolor="white" border="2">
   <!-- First list the indices -->
   <tr> <th bgcolor="#cccccc" width="150"> indices </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
@@ -166,10 +168,10 @@
 <repeat>
   <foreach entity="f">&noteFiles;</foreach>
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top">
+  <tr> <td align="left" valign="top" bgcolor="yellow">
 		<a href="&f;"><code>&label;</code></a>
        </td>
-       <td colspan="2" valign="top">
+       <td colspan="2" valign="top" bgcolor="yellow">
 		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
        </td>
   </tr>
@@ -239,7 +241,7 @@
   </action>
 </define>
 
-<set name="dirIndex"><include src="&LOC:path;/dirIndex.wi"/></set>
+<set name="dirIndex"><include src="&LOC:path;/dirIndex.wi"> </include></set>
 
 <define element="rejectFile">
   <doc> decide whether to omit a file from the listing
@@ -259,17 +261,12 @@
 
 <if> &npath;
      <then>
-       <table bgcolor="yellow" width="90%" cellspacing="0" border="1">
-	 <tr> <td valign="top"> <b>Note:</b>
-	      </td>
-	      <td> This is a source directory listing.  If
-		   there's a page here called <code>index.html</code>, that's
-		   probably what the browser will show for it, but this can be
-		   changed in server configuration files that <ss>WOAD</ss>
-		   doesn't understand yet.
-	      </td>
-	 </tr>
-       </table>
+       <yellow-note>
+	 This is a source directory listing.  If there's a page here called
+	 <code>index.html</code>, that's  probably what the browser will show
+	 for it, but this can be changed in server configuration files that
+	 <ss>WOAD</ss> doesn't understand yet.
+       </yellow-note>
      </then>
 </if>
 
@@ -292,15 +289,11 @@
     </then>
   </else-if>
     <else>
-       <table bgcolor="yellow" width="90%" cellspacing="0" border="1">
-	 <tr> <td valign="top"> <b>Note:</b>
-	      </td>
-	      <td> This directory has not been indexed!  Indexing is done
-		   using the <code>woad-index.pl</code> command, which you can
-		   find in <code>PIA/src/apps/tools</code>
-	      </td>
-	 </tr>
-       </table>
+       <yellow-note>
+	 This directory has not been indexed!  Indexing is done using the
+	 <code>woad-index.pl</code> command, which you can find in
+	 <code>PIA/src/apps/tools</code> 
+       </yellow-note>
 	<table bgcolor="white">
 	<repeat>
 	  <foreach entity="f">
@@ -357,5 +350,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.13 2000-06-30 00:41:13 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.14 2000-07-19 00:44:53 steve Exp $" />
 </body></html>

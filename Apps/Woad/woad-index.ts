@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.1 2000-06-27 18:38:17 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.2 2000-07-19 00:44:34 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -61,7 +61,7 @@
 	      <logical op="or">
 	        <get name="attributes:title"/>
 	        <if> <get name="attributes:dscr"/>
-	      	     <then><em><get name="attributes:dscr"/></em>
+	      	     <then><em><get name="attributes:dscr"/></em></then>
 	        </if>
 	        <em><if> <get name="attributes:tdscr" />
 	      	    <then> <get name="attributes:tdscr" />
@@ -90,7 +90,7 @@
 	      <logical op="or">
 	        <get name="attributes:title"/>
 	        <if> <get name="attributes:dscr"/>
-	      	     <then><em><get name="attributes:dscr"/></em>
+	      	     <then><em><get name="attributes:dscr"/></em></then>
 	        </if>
 	        <em><if> <get name="attributes:tdscr" />
 	      	    <then> <get name="attributes:tdscr" />
