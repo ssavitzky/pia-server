@@ -2,7 +2,6 @@
 <html><head>
 <title>DOFS<if><test not exact match="&agentName;">&agentType;</test>
        <then>/&agentName;</then></if> home page</title>
-<link rev="made" href="mailto:wolff@crc.ricoh.com">
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 <header><if><test exact match="&agentName;">&agentType;</test>
         <then>(Document-Oriented Filing System) Home page</then>
