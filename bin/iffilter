@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: iffilter,v 1.2 1999-03-12 19:23:37 steve Exp $
+#	$Id: iffilter,v 1.3 1999-03-15 21:43:11 pgage Exp $
 # InterForm filter
 #	Process a document using the (old) InterForm interpretor.
 #
@@ -40,7 +40,7 @@ fi
 #	so that arguments provided by the user will override anything
 #	this script puts earlier in the argument list.
 
-exec $PIA_BIN_DIR/pia_wrapper crc.interform.Filter $V $*
+exec $PIA_BIN_DIR/pia_wrapper org.risource.dps.Filter $V $*
 
 
 
