@@ -28,9 +28,22 @@ See also:
 
 <h2>Main List</h2>
 <ol>
-  <li> <b>Bug</b> No way for an act-on method to handle. <br>
+  <li> <b>Impr</b> Servlet Interface <br>
+       Both the Resolver and Agent need to respond to the Servlet interface.
+       There also needs to be a way to wrap an arbitrary Servlet as an Agent
+       or (perhaps better) as a document inside an Agent. 
+       (1999-06-11) <br>
+
+  <li> <b>Hole</b> Criteria need to be XML <br>
+       Among other things, there should be a way to perform arbitrary tests on
+       a header.  It may even be desirable to allow arbitrary XXML code; this
+       would also simplify programming, though it would require a different
+       TopContext for efficiency.
+       (1999-06-11) <br>
+
+  <li> <b>Bug</b> No way for an act-on method to respond. <br>
        There doesn't seem to be any way for an XML act-on method to specify
-       that the agent is to <em>handle</em> the transaction.
+       that the agent is to <em>handle</em> (respond to) the transaction.
        (1999-05-25) <br>
 
   <li> <b>Impr</b> use more namespaces instead of tables <br>
@@ -127,7 +140,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.17 1999-05-28 21:50:12 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.18 1999-06-11 23:32:56 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
