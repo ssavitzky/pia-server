@@ -1,5 +1,5 @@
-### Makefile for pia
-#	$Id: Makefile,v 1.6 1999-03-13 01:08:05 steve Exp $
+###### Makefile for pia
+#	$Id: Makefile,v 1.7 1999-03-18 20:42:59 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,6 +24,12 @@ PIADIR=.
 MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=pia
 MYPATH=
+REL_DIR	    = $(HOME)/src_release	# source release will be built here
+REL_PIA_DIR = $(HOME)/src_release/PIA
+DEST_DIR    = /home/pgage/test_rel	# /pia1/pia for an actual release
+TAR_NAME    = pia_src$(VERSION)
+CREATE_CVS_TAG = 0			# set to 1 to cvs rtag the release
+TODAY       = `date '+%D'`		# get today's date in a form used by cvs
 
 SUBDIRS= src bin lib Doc
 
@@ -43,6 +49,8 @@ RELEASE     = 2
 MAJOR       = 0
 MINOR       = 2
 SUFFIX      = 
+
+
 
 
 ### Commands:
@@ -91,6 +99,37 @@ cvs_rtag::
 foobar::
 	echo $(VERSION_ID)
 
+# Make a source release
+export::
+	cvs export -r $(VERSION_ID)
+
+prep_src_rel::
+	make clean ; make; make doc
+	cd $(CLASSDIR);make pia.zip; 
+
+prep_rel_dir::
+	rm -rf $(REL_DIR); mkdir $(REL_DIR)
+
+# Build a source release.  Before building, check all variables and set to
+# appropriate values.
+src.tar:	prep_rel_dir
+	if [ $CREATE_CVS_TAG -gt 0 ]; then make cvs_rtag; fi
+	cd $(REL_DIR); cvs export -r $(VERSION_ID) PIA
+	cd $(REL_PIA_DIR); make prep_rel
+	cd $(REL_DIR); tar czf $(TAR_NAME).tgz PIA; cp $(TAR_NAME).tgz $(DEST_DIR)
+	cd $(DEST_DIR);  rm pia_src.tgz; ln -s $(TAR_NAME).tgz pia_src.tgz
+	cd $(DEST_DIR); mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
+
+# export based on today's date or latest version
+dated_src.tar:
+	prep_rel_dir
+	cd $(REL_DIR); cvs export -f -D $(TODAY) PIA
+	cd $(REL_PIA_DIR); make prep_rel
+	cd $(REL_DIR); tar czf $(TAR_NAME).tgz PIA; cp $(TAR_NAME).tgz $(DEST_DIR)
+	cd $(DEST_DIR);  rm pia_src.tgz; ln -s $(TAR_NAME).tgz pia_src.tgz
+	cd $(DEST_DIR); mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
+
+
 ###
 ### Old stuff.
 ###
@@ -114,7 +153,7 @@ cd_rom:		$(CD_ROM_SRC_DIR) $(CD_ROM_DEST_DIR) version_id
 
 ### Put all CVS files into a tar file for safekeeping.
 
-SRCDIR=src/java/crc
+SRCDIR=src/java/org/risource
 CLASSDIR=src/java
 PIALIBDIR=lib/java
 PIABINDIR=bin
@@ -139,8 +178,8 @@ rm_pia_tar::
 
 prep_rel::
 	cd $(CLASSDIR); make clean ; make
-	cd $(CLASSDIR);make pia.zip; make alldoc
-	cd $(CLASSDIR);rm -fr java
+	cd $(CLASSDIR);make pia.zip; make doc
+	cd $(CLASSDIR);
 
 ### add crln
 crfixbat:: 
@@ -184,6 +223,8 @@ pia.toc::
 
 pia.tar:	rm_pia_tar prep_rel crfixbat pia.toc
 	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
+
+
 
 ### Binary and source release
 pia_bin_src: 	rm_bin_tar rm_pia_tar prep_rel crfixbat pia_bin.toc pia.toc
