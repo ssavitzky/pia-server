@@ -32,11 +32,15 @@
   <li> Rather than simply expanding a tree, the Processor copies from a
        tree traverser (the Input) to a tree constructor (the Output).  This
        lets it operate on documents that are too large to fit in memory.
+  <li> The Processor can also be made to look like an Output, so pipelines can
+       be constructed.  (This is mainly used in tool chains like SAX in which
+       the parser expects to drive an application by calling a function on
+       every node.)
 </ul>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: lisp.html,v 1.1 1999-08-20 18:10:32 steve Exp $</b><br>
+<b>$Id: lisp.html,v 1.2 1999-08-21 01:05:55 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
