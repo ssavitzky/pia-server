@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.6 2000-06-02 23:17:34 steve Exp $
+//	$Id: FileDocument.java,v 1.7 2000-10-12 23:12:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,7 @@ package org.risource.site;
 
 import org.w3c.dom.*;
 import org.risource.dps.*;
+import org.risource.dps.util.Status;
 import org.risource.dps.active.*;
 import org.risource.ds.*;
 
@@ -38,7 +39,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.6 2000-06-02 23:17:34 steve Exp $
+ * @version $Id: FileDocument.java,v 1.7 2000-10-12 23:12:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -78,7 +79,9 @@ public class FileDocument extends FileResource implements Document {
   ************************************************************************/
 
   /** Returns the time that the associated document was last modified. */
-  public long getLastModified() { return file.lastModified(); }
+  public long getLastModified() {
+    return file.lastModified()/Status.fileTimeFactor;
+  }
 
   /** Returns the MIME content type of the associated document. */
   public String getContentType() { return getContentTypeFor(getName()); }

@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.23 2000-06-20 01:08:07 steve Exp $
+//	$Id: Subsite.java,v 1.24 2000-10-12 23:12:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,13 +26,15 @@ package org.risource.site;
 
 import org.risource.site.util.*;
 import org.risource.util.NameUtils;
-import org.risource.dps.namespace.PropertyTable;
 
 import org.w3c.dom.*;
 import org.risource.ds.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.tagset.Loader;
+import org.risource.dps.util.Status;
+import org.risource.dps.namespace.PropertyTable;
+
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
@@ -52,7 +54,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.23 2000-06-20 01:08:07 steve Exp $
+ * @version $Id: Subsite.java,v 1.24 2000-10-12 23:12:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -358,7 +360,7 @@ public class Subsite extends ConfiguredResource implements Resource {
       }
     }
 
-    return mod;
+    return mod/Status.fileTimeFactor;
   }
 
   /************************************************************************

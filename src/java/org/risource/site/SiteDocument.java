@@ -1,5 +1,5 @@
 ////// SiteDocument.java -- implementation for a document resource
-//	$Id: SiteDocument.java,v 1.6 1999-10-13 18:23:28 steve Exp $
+//	$Id: SiteDocument.java,v 1.7 2000-10-12 23:12:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,6 +29,7 @@ import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.ds.*;
 import org.risource.dps.input.FromNodeList;
+import org.risource.dps.util.Status;
 
 import java.io.*;
 import java.net.URL;
@@ -40,7 +41,7 @@ import java.net.URL;
  * <p> Some of a SiteDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: SiteDocument.java,v 1.6 1999-10-13 18:23:28 steve Exp $
+ * @version $Id: SiteDocument.java,v 1.7 2000-10-12 23:12:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -93,7 +94,7 @@ public class SiteDocument extends ConfiguredResource implements Document {
   /** Returns the time that the associated document was last modified. */
   public long getLastModified() {
     // === probably the wrong result for imaginary files.
-    return (file == null)? 0 : file.lastModified();
+    return (file == null)? 0 : file.lastModified()/Status.fileTimeFactor;
   }
 
   /** Returns the MIME content type of the associated document. */

@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.8 1999-10-25 20:18:15 steve Exp $
+//	$Id: Status.java,v 1.9 2000-10-12 23:12:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,11 +42,16 @@ import java.net.*;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.8 1999-10-25 20:18:15 steve Exp $
+ * @version $Id: Status.java,v 1.9 2000-10-12 23:12:41 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
 public class Status {
+
+  /** Constant to divide by to convert a file lastModified time to a
+   *	Unix/URL lastModified time. 
+   */
+  public static long fileTimeFactor = 1000;
 
   /************************************************************************
   ** Construct nodelist for return:
@@ -101,7 +106,7 @@ public class Status {
     //if (name.equals("readable")) return nodes(res.canRead());
     //if (name.equals("file")) return nodes(res.isFile());
     if (name.equals("directory")) return nodes(res.isContainer());
-    //if (name.equals("last-modified")) return nodes(res.lastModified());
+    if (name.equals("last-modified")) return nodes(res.getLastModified());
     //if (name.equals("length")) return nodes(res.length());
     if (name.equals("files"))
       return res.isContainer()? nodes(res.listNames()) : null;
@@ -158,7 +163,8 @@ public class Status {
     if (name.equals("readable")) return nodes(res.canRead());
     if (name.equals("file")) return nodes(res.isFile());
     if (name.equals("directory")) return nodes(res.isDirectory());
-    if (name.equals("last-modified")) return nodes(res.lastModified());
+    if (name.equals("last-modified")) 
+      return nodes(res.lastModified()/fileTimeFactor);
     if (name.equals("length")) return nodes(res.length());
     if (name.equals("files"))
       return res.isDirectory()? nodes(res.list()) : null;
@@ -254,7 +260,8 @@ public class Status {
       if (ext.resourceConnection != null) {
 	URLConnection rc = ext.resourceConnection;
 	if (name.equals("content-type")) return nodes(rc.getContentType());
-	if (name.equals("last-modified")) return nodes(rc.getLastModified());
+	if (name.equals("last-modified"))
+	  return nodes(rc.getLastModified());
 	/* === HttpURLConnection not present in Kaffe. 
 	if (rc instanceof HttpURLConnection) try {
 	  HttpURLConnection hc = (HttpURLConnection) rc;
@@ -267,7 +274,7 @@ public class Status {
       if (ext.resourceFile != null) {
 	if (name.equals("file")) return nodes(ext.resourceFile.getPath());
 	if (name.equals("last-modified"))
-	  return nodes(ext.resourceFile.lastModified());
+	  return nodes(ext.resourceFile.lastModified()/fileTimeFactor);
       }
     }
     return null;
