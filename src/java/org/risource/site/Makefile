@@ -1,5 +1,5 @@
 ###### site/Makefile:	Site Structure package.
-# 	$Id: Makefile,v 1.5 1999-09-09 21:44:48 steve Exp $
+# 	$Id: Makefile,v 1.6 1999-10-27 00:10:51 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -43,6 +43,12 @@ FILES = \
 
 include $(TOPDIR)/makefiles/file.make
 include $(TOPDIR)/makefiles/package.make
+
+# Documentation: copy to-do file to the release directory
+doc:: $(REL_DIR)/to-do.site.html
+
+$(REL_DIR)/to-do.site.html: to-do.html
+	cp $? $@
 
 ### Dependencies
 
