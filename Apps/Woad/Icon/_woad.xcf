@@ -1,0 +1,13 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _woad.xcf,v 1.1 2000-06-07 23:45:40 steve Exp $ -->
+
+<!-- WARNING: Restart the PIA after editing this file!       -->
+
+<Container>
+  <!-- alias the icons we need from the PIA  -->
+  <Resource name="rule.png" virtual="pia:/Agents/ROOT/Icon/rule.png" />
+  <Resource name="pia45.png" virtual="pia:/Agents/ROOT/Icon/pia45.png" />
+  <Resource name="dot-blue.png" virtual="pia:/Agents/ROOT/Icon/dot-blue.png" />
+  <Resource name="white170x1.png" virtual="pia:/Agents/ROOT/Icon/white170x1.png" />
+
+</Container>
