@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.10 2000-07-19 00:44:33 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.11 2000-07-20 02:08:55 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -32,7 +32,7 @@
 <define element="-document-" quoted="yes" >
   <doc> This is the outside wrapper.  Note that the tagname must be lowercase
 	because some tagsets (e.g. HTML) are case-insensitive, so every tag
-	defined here for HTML gets case-smashed.
+	defined here may get case-smashed.
   </doc>
   <action>
 <html><hide>
@@ -169,16 +169,18 @@
      </then>
 </if>
 
-<index-bar name="Notes">Notes Server Listing</index-bar>
+<index-bar name="Notes">Notes Views Listing</index-bar>
 
 <form action="&DOC:path;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;&note-tail;" />
 <table bgcolor="white" border="2">
   <!-- First list the indices -->
+<if>&indexFiles;<then>
   <tr> <th bgcolor="#cccccc" width="150"> indices </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
        help </th> 
   </tr>
+</then></if>  
 <repeat>
   <foreach entity="f">&indexFiles;</foreach>
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
@@ -192,7 +194,7 @@
 </repeat>
 
   <!-- Next, list the notes -->
-  <tr> <th bgcolor="#cccccc" width="150"> Notes </th>
+  <tr> <th bgcolor="#cccccc" width="150"> source notes </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
   </tr>
 <repeat>
@@ -207,6 +209,42 @@
   </tr>
 </repeat>
 	
+
+<if>&npath;
+  <then>
+    <hide>
+      <set name="VAR:nfiles">
+        <text sort><status item="files" src="&npath;" /></text>
+      </set>
+      <set name="VAR:nnoteFiles">
+        <repeat><foreach entity="f">&nfiles;</foreach>
+	   <if><rejectNote>&f;</rejectNote>
+	       <else>&f;</else>
+	   </if>
+        </repeat>
+     </set>
+    </hide>
+  <!-- list the corresponding URL annotations, if any -->
+  <if>&nnoteFiles; <then>
+    <tr> <th bgcolor="#cccccc" width="150"> page notes </th>
+	 <th bgcolor="#cccccc" colspan="2" align="left"> <em>(From the URL
+	 annotations for <a href="&npath;">&npath;</a>)</em></th>
+    </tr>
+  </then></if>
+  <repeat>
+    <foreach entity="f">&nnoteFiles;</foreach>
+    <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+    <tr> <td align="left" valign="top" bgcolor="#99ccff">
+		  <a href="&npath;/&f;"><code>&label;</code></a>
+	 </td>
+	 <td colspan="2" valign="top" bgcolor="#99ccff">
+		   <describeNote>&npath;/&f;</describeNote>
+	 </td>
+    </tr>
+  </repeat>
+  </then>
+</if>
+
   <!-- Finally, the form for creating a new note (the easy way) -->
   <tr> <th bgcolor="#cccccc" width="150"> new note </th>
        <th bgcolor="#cccccc" colspan="2" align="left">
@@ -238,7 +276,7 @@
 <tool-bar />
 
 <!-- ==================================================================== -->
-<index-bar name="Server">Notes Server Listing</index-bar>
+<index-bar name="Views">Notes Views Listing</index-bar>
 
 <if> &tpath;
      <then>
@@ -287,7 +325,9 @@
 </if>
 <p> 
 </p>
-<index-bar name="Listing">Notes Server Listing</index-bar>
+
+
+<index-bar name="Listing">Notes Views Listing</index-bar>
 <hr />
 
 <!-- ===================================================================== -->
@@ -336,9 +376,10 @@
 </yellow-note>
 
 <hr />
+<!-- not clear whether we always want to make the listing <small>. -->
 <if>&wrap;
     <then><expand>&content;</expand></then>
-    <else><pre><expand>&content;</expand></pre></else>
+    <else><small><pre><expand>&content;</expand></pre></small></else>
 </if>
   </else>
 </if>
@@ -720,7 +761,8 @@
 
 <define element="form" syntax="quoted">
   <action><hide><let name="atts">&attributes;</let>
-    </hide><elt-b tag="form"><expand>&content;</expand></elt-b></action>
+	        <let name="econtent"><expand>&content;</expand></let>
+    </hide><elt-b tag="form" tc="#cc00cc">&econtent;</elt-b></action>
 </define>
 
 <define element="input" syntax="empty">
@@ -783,6 +825,63 @@
 <define element="#doctype" syntax="quoted">
   <action><font color="red">&lt;!&name; &value;&gt;</font><hide>
     </hide></action>
+</define>
+
+<!-- ============ CHEATING! ========================= -->
+<doc> ... or maybe <em>not</em> cheating.  Associating these tags with, e.g.,
+      a <code>.wl</code> (<ss>WOAD</ss> <em>listing</em>) extension would
+      allow developers to customize the markup of individual files for maximum
+      clarity or emphasis.
+</doc>
+
+<define element="tag">
+  <doc> Used for tags <em>or things that look like tags</em> in source
+	listings.  Things that look like tags include, for example, PERL
+	filehandles.  When rendering code that outputs HTML (a good bet in web
+	development!) it may be better to leave intact those tags that are
+	properly nested, and to insert an "empty" flag in isolated start
+	tags.  On the other hand, it may be cleaner to just look up the
+	appropriate color. 
+  </doc>
+  <action><tag>&content;</tag></action>
+</define>
+
+<define element="qs">
+  <doc> Quoted string (<em>double</em> quotes) </doc>
+  <action><font color="#999999">"&content;"</font></action>
+</define>
+
+<define element="es">
+  <doc> <em>Emphasized </em>Quoted string (<em>double</em> quotes).  This is
+	meant to be used after keywords such as <code>print</code>.  An added
+	refinement would be to only emphasize strings above a certain length.
+  </doc>
+  <action><font color="red"><b>"&content;"</b></font></action>
+</define>
+
+<define element="kw">
+  <doc> Keyword. </doc>
+  <action><font color="blue"><b>&content;</b></font></action>
+</define>
+
+<define element="fn">
+  <doc> Filename <em>(or URL)</em> enclosed in double quotes.
+  </doc>
+  <action><a href="&content;">"&content;"</a></action>
+</define>
+
+<define element="line" syntax="empty">
+  <doc> Marks the start of a source line.  Note that
+	``<code>&lt;line&nbsp;/&gt;</code>'' occupies exactly eight
+	characters, so it doesn't mess up tabs if you're looking at the
+	marked-up source. <red> Eventually we want a variable that turns line
+	numbers on and off. </red>
+  </doc>
+  <note> <tag>line</tag> <em>must be empty</em> -- if it wraps the line in its
+	 content, it will foul up markup that spans multiple lines.
+  </note>
+  <action><set name="VAR:line"><numeric op="sum" pad="6">1 <get name="VAR:line" />
+	  </numeric></set><get name="VAR:line" />  </action>
 </define>
 
 </tagset>

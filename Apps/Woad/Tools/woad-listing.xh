@@ -145,7 +145,7 @@
      </then>
 </if>
 
-<index-bar name="Notes">Notes Links Images Source Listing</index-bar>
+<index-bar name="Notes">Notes Links Images Views Listing</index-bar>
 
 <form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
@@ -168,7 +168,7 @@
 </repeat>
 
   <!-- Next, list the notes -->
-  <tr> <th bgcolor="#cccccc" width="150"> Notes </th>
+  <tr> <th bgcolor="#cccccc" width="150"> page notes </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
   </tr>
 <repeat>
@@ -254,6 +254,11 @@
 			      <attr>href</attr> 
 			      <eval />
 	  </extract>
+	  <extract><from>&serverPage;</from>
+			      <name all>form</name>
+			      <attr>action</attr> 
+			      <eval />
+	  </extract>
 	</foreach>
 	<subst match="[#?&].*$" result="">&li;</subst>
       </repeat>
@@ -282,7 +287,7 @@
   </if>
 </hide>
 
-<index-bar name="Links">Notes Links Images Source Listing</index-bar>
+<index-bar name="Links">Notes Links Images Views Listing</index-bar>
 
 <blockquote>
 <table bgcolor="white" cellpadding=1>
@@ -346,7 +351,7 @@
 </table>
 </blockquote>
 
-<index-bar name="Images">Notes Links Images Source Listing</index-bar>
+<index-bar name="Images">Notes Links Images Views Listing</index-bar>
 
 <blockquote>
 <table bgcolor="white">
@@ -367,38 +372,9 @@
 </table>
 </blockquote>
 
-<index-bar name="Source">Notes Links Images Source Listing</index-bar>
+<index-bar name="Views">Notes Links Images Views Listing</index-bar>
 <p>
 <table bgcolor="white" width="90%" cellpadding="5" align="center">
-  <tr>
-    <td valign="top"> 
-	 <a href="&spath;">View&nbsp;document&nbsp;[source]</a>
-    </td>
-    <td> <code>&spath;</code> </td>
-  </tr>
-  <tr>
-    <td bgcolor="#99ccff">
-    </td>
-    <td> This will show you the source document or directory that corresponds
-	 to this URL.  Usually this will be the document that this page comes
-	 from, but in some cases <ss>WOAD</ss> may not be able to correctly map
-	 the URL onto a document.
-    </td>
-  </tr>
-</table>	  
-</p>
-
-<index-bar name="Listing">Notes Links Images Source Listing</index-bar>
-
-<!-- For images, should simply insert the image here (DUH!) -->
-
-<blockquote>
-<p> This is a <ss>WOAD</ss> listing of <code>&tpath;</code>
-    as it came from the server.  Links are ``live'' and will take you to the
-    appropriate <em>server annotation</em> page. 
-</p>
-
-<table bgcolor="white" width="90%" cellpadding="5">
   <tr>
     <td valign="top"> 
 	 <a href="&spath;">View&nbsp;document&nbsp;[source]</a>
@@ -428,7 +404,18 @@
     </td>
   </tr>
 </table>	  
-</blockquote>
+</p>
+
+<index-bar name="Listing">Notes Links Images Source Listing</index-bar>
+
+<!-- For images, should simply insert the image here (DUH!) -->
+
+<yellow-note>
+ This is a <ss>WOAD</ss> listing of <code>&tpath;</code>
+    as it came from the server.  Links are ``live'' and will take you to the
+    appropriate <em>server annotation</em> page. 
+</yellow-note>
+
 
 <if>&SITE:notesPrefix;
     <then><yellow-note> <red> Note that at the moment, links starting with
@@ -446,5 +433,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.15 2000-07-19 00:44:53 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.16 2000-07-20 02:08:58 steve Exp $" />
 </body></html>

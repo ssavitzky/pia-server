@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.15 2000-07-19 00:44:34 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.16 2000-07-20 02:08:55 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -380,9 +380,21 @@ Note that we only need these inside the PIA.
   <action><font color="&tc-;">&lt;/&content;&gt;</font></action>
 </define>
 
+<define element="atr">
+  <action><hide>
+      <let name="n"><extract><from>&content;</from><name /></extract></let>
+      <let name="v"><extract><from>&content;</from><eval /></extract></let>
+      <if><test exact match="src">&n;</test>
+	  <test exact match="href">&n;</test>
+	  <test exact match="action">&n;</test>
+	  <then><let name="v"><a href="&v;">&v;</a></let></then>
+      </if>
+    </hide><i>&n;="&v;"</i></action>
+</define>
+
 <define element="atl">
   <action><if>&content;
-	      <then><repeat><foreach>&content;</foreach> <i>&li;</i></repeat></then>
+	      <then><repeat><foreach>&content;</foreach> <atr>&li;</atr></repeat></then>
   </if></action>
 </define>
 
@@ -452,7 +464,7 @@ Note that we only need these inside the PIA.
 
 <h2>Note-listing components</h2>
 
-<!-- $Id: woad-xhtml.ts,v 1.15 2000-07-19 00:44:34 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.16 2000-07-20 02:08:55 steve Exp $ -->
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing

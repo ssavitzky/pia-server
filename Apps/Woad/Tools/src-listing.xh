@@ -139,16 +139,18 @@
      </then>
 </if>
 
-<index-bar name="Notes">Notes Files HEADER</index-bar>
+<index-bar name="Notes">Notes Files Views HEADER</index-bar>
 
 <form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
 <table bgcolor="white" border="2">
   <!-- First list the indices -->
+<if>&indexFiles;<then>
   <tr> <th bgcolor="#cccccc" width="150"> indices </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
        help </th> 
   </tr>
+</then></if>
 <repeat>
   <foreach entity="f">&indexFiles;</foreach>
   <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
@@ -162,7 +164,7 @@
 </repeat>
 
   <!-- Next, list the notes -->
-  <tr> <th bgcolor="#cccccc" width="150"> Notes </th>
+  <tr> <th bgcolor="#cccccc" width="150"> source notes </th>
        <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
   </tr>
 <repeat>
@@ -176,7 +178,42 @@
        </td>
   </tr>
 </repeat>
-	
+
+<if>&npath;
+  <then>
+    <hide>
+      <set name="VAR:nfiles">
+        <text sort><status item="files" src="&npath;" /></text>
+      </set>
+      <set name="VAR:nnoteFiles">
+        <repeat><foreach entity="f">&nfiles;</foreach>
+	   <if><rejectNote>&f;</rejectNote>
+	       <else>&f;</else>
+	   </if>
+        </repeat>
+     </set>
+    </hide>
+  <!-- list the corresponding URL annotations, if any -->
+  <if>&nnoteFiles; <then>
+    <tr> <th bgcolor="#cccccc" width="150"> page notes </th>
+	 <th bgcolor="#cccccc" colspan="2" align="left"> <em>(From the URL
+	 annotations for <a href="&npath;">&npath;</a>)</em></th>
+    </tr>
+  </then></if>
+  <repeat>
+    <foreach entity="f">&nnoteFiles;</foreach>
+    <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+    <tr> <td align="left" valign="top" bgcolor="#99ccff">
+		  <a href="&npath;/&f;"><code>&label;</code></a>
+	 </td>
+	 <td colspan="2" valign="top" bgcolor="#99ccff">
+		   <describeNote>&npath;/&f;</describeNote>
+	 </td>
+    </tr>
+  </repeat>
+  </then>
+</if>
+    
   <!-- Finally, the form for creating a new note (the easy way) -->
   <tr> <th bgcolor="#cccccc" width="150"> new note </th>
        <th bgcolor="#cccccc" colspan="2" align="left">
@@ -208,7 +245,7 @@
 <tool-bar />
 
 
-<index-bar name="Files">Notes Files HEADER</index-bar>
+<index-bar name="Files">Notes Files Views HEADER</index-bar>
 
 <define element="File">
   <doc> This is cheating.  We really need to make the index a namespace, and
@@ -327,10 +364,64 @@
 </if>
 
 
+<!-- ==================================================================== -->
+<index-bar name="Views">Notes Files Views HEADER</index-bar>
+
+<if> &tpath;
+     <then>
+	<p> This page is a <ss>WOAD</ss> listing of the application source
+	    directory <code>&spath;</code>
+	    <br />
+    	    It corresponds to the application URL <code>&tpath;</code>
+	</p>
+	<p> There are two options for viewing the associated application
+	    document: 
+	</p>
+	<table bgcolor="white" width="90%" cellpadding="5" border="2"
+	       align="center" >
+	  <tr>
+	    <td valign="top"> 
+		 <a href="&npath;">View&nbsp;[URL&nbsp;annotations].</a>
+	    </td>
+	    <td> This will show you the <ss>WOAD</ss> annotations associated
+		 with this URL.  It will also show you a listing, similar to
+		 this one, of the page <em>as it came from the server.</em>
+		 This can be useful for debugging an active document.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td valign="top" align="right"> 
+		 <a href="&tpath;">View page&nbsp;on&nbsp;&lt;server&gt;.</a>
+	         <br />
+	    	 <a href="&tpath;"
+    	    	    target="server">...&nbsp;in&nbsp;&lt;!new&nbsp;window&gt;</a>
+	    </td>
+	    <td> This is a link to this page <em>on the server</em> -- in
+		 other words, it's what a user will see if they browse to the
+		 url that corresponds to this document.  
+	    </td>
+	  </tr>
+	</table>	  
+     </then>
+     <else>
+	<p> This page is a <ss>WOAD</ss> source listing of
+	    <code>&spath;</code>. 
+	</p>
+	<yellow-note>
+	  Either there is no URL on the server that corresponds to this file,
+	  or <ss>WOAD</ss> does not yet know how to perform the appropriate
+	  mapping. 
+	</yellow-note>
+     </else>
+</if>
+<p> 
+</p>
+
+
 <if> <status item="exists" src="&LOC:path;/HEADER.html" />
      <then>
 
-<index-bar name="HEADER">Notes Files HEADER</index-bar>
+<index-bar name="HEADER">Notes Files Views HEADER</index-bar>
 
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr><td>&nbsp;</td>
@@ -350,5 +441,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.14 2000-07-19 00:44:53 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.15 2000-07-20 02:08:57 steve Exp $" />
 </body></html>
