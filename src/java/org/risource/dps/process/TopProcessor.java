@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.8 1999-04-23 00:22:07 steve Exp $
+//	$Id: TopProcessor.java,v 1.9 1999-05-20 20:15:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.8 1999-04-23 00:22:07 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.9 1999-05-20 20:15:17 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -91,6 +91,10 @@ public class TopProcessor extends BasicProcessor implements TopContext
   public void setTagset(Tagset bindings) {
     tagset = bindings;
     if (entities == null && bindings != null) initializeEntities();
+    // === It is not at all clear why this doesn't work, 
+    // === but doing it in the constructor does work.
+    //    if (tagset != null && input instanceof ProcessorInput) 
+    //  ((ProcessorInput)input).setTagset(tagset);
   }
 
   /** Return the current ProcessorInput, if there is one. */
@@ -339,13 +343,21 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /** Process a new subdocument. 
    * 
    * @param in the input.
-   * @param ts the tagset.  If null, the current tagset is used.
    * @param cxt the parent context. 
    * @param out the output.  If null, the parent context's output is used.
+   * @param ts the tagset.  If null, the current tagset is used.
    */
   public TopContext subDocument(Input in, Context cxt, Output out, Tagset ts) {
     if (ts == null) ts = tagset;
     return new TopProcessor(in, cxt, out, ts);
+  }
+
+  /** Called on a parent document when a subDocument is finished.
+   *	The parser's tagset is put back to its original value.
+   */
+  public void subDocumentEnd() {
+    if (input instanceof ProcessorInput) 
+      ((ProcessorInput)input).setTagset(tagset);
   }
 
   /************************************************************************
@@ -492,6 +504,8 @@ public class TopProcessor extends BasicProcessor implements TopContext
   public TopProcessor(Input in, Context prev, Output out, Tagset ts) {
     this(in, prev, out, (Namespace)null);
     setTagset(ts);
+    if (tagset != null && input instanceof ProcessorInput) 
+      ((ProcessorInput)input).setTagset(tagset);
   }
 
 }

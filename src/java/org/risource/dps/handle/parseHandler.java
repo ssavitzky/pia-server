@@ -1,5 +1,5 @@
 ////// parseHandler.java: <parse> Handler implementation
-//	$Id: parseHandler.java,v 1.6 1999-04-07 23:21:25 steve Exp $
+//	$Id: parseHandler.java,v 1.7 1999-05-20 20:15:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.io.StringReader;
  *
  *	
  *
- * @version $Id: parseHandler.java,v 1.6 1999-04-07 23:21:25 steve Exp $
+ * @version $Id: parseHandler.java,v 1.7 1999-05-20 20:15:13 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -71,6 +71,7 @@ public class parseHandler extends GenericHandler {
     TopContext proc = cxt.getTopContext().subDocument(p, cxt, out, ts);
     // Crank away.
     proc.copy();		// (was run.
+    cxt.getTopContext().subDocumentEnd();
   }
 
   /** This does the parse-time dispatching.  */

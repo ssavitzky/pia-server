@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.13 1999-04-30 23:37:20 steve Exp $
+//	$Id: ActiveDoc.java,v 1.14 1999-05-20 20:15:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.13 1999-04-30 23:37:20 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.14 1999-05-20 20:15:15 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -104,6 +104,10 @@ public class ActiveDoc extends TopProcessor {
     return agent;
   }    
 
+  public void setAgent(Agent a) {
+    agent = a;
+  }
+
   public Resolver getResolver() {
     return resolver;
   }    
@@ -140,7 +144,7 @@ public class ActiveDoc extends TopProcessor {
   public void initializeNamespaceEntities() {
 
     define("PIA", Pia.instance().properties());
-    define("AGENTS", Pia.instance().resolver().getAgentTable());
+    define("AGENTS", Pia.resolver().getAgentTable());
     Transaction transaction = getTransaction();
     if (transaction != null) {
       define("TRANS", "TRANSACTION", transaction);
@@ -273,8 +277,9 @@ public class ActiveDoc extends TopProcessor {
       return null;
     } else {
       // Path not starting with "/" is relative to documentBase (agent).
-      if (path.startsWith("./")) path = path.substring(2);
-      path = agent.pathName() + "/" + path;
+      if (!path.startsWith("./")) {
+	path = agent.pathName() + "/" + path;
+      }
       path = agent.findDocument(path, resourceSearch, forWriting);
       return (path == null)? null : new File(path);
     }

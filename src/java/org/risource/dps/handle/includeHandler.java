@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.7 1999-04-17 01:19:10 steve Exp $
+//	$Id: includeHandler.java,v 1.8 1999-05-20 20:15:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.7 1999-04-17 01:19:10 steve Exp $
+ * @version $Id: includeHandler.java,v 1.8 1999-05-20 20:15:12 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -73,6 +73,7 @@ public class includeHandler extends GenericHandler {
       if (ent != null) {
 	proc = top.subDocument(ent.fromValue(cxt), cxt, out, ts);
 	proc.run();
+	top.subDocumentEnd();
 	return;
       }
     }
@@ -125,6 +126,7 @@ public class includeHandler extends GenericHandler {
 
     // Crank away.
     if (quoted) proc.copy(); else proc.run();
+    top.subDocumentEnd();
 
     if (ent != null) cxt.setBinding(entname, ent, false);
   }
