@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.9 1999-07-12 18:51:56 wolff Exp $
+// $Id: HTTPRequest.java,v 1.10 1999-07-12 19:12:32 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -832,12 +832,6 @@ public class  HTTPRequest extends Transaction {
         }catch(InterruptedException ex){;}
       }
       
-      	  if( method().equalsIgnoreCase( "POST" ) ){
-	      while(contentObj.processInput()) {
-		// continue to process input until all is read
-	      }
-	  }
-	  
 	
       // now satisfy self
       satisfy( resolver);
