@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.22 1999-05-21 21:48:06 steve Exp $
+// $Id: GenericAgent.java,v 1.23 1999-05-21 23:59:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -271,6 +271,8 @@ public class GenericAgent extends BasicNamespace
       if (ts != null) return ts;
     }
 
+    if (tagsets == null) tagsets = new Table();
+
     time();
     if (piaXHTMLtagset == null) {
       piaXHTMLtagset = proc.loadTagset("pia-xhtml");
@@ -282,15 +284,23 @@ public class GenericAgent extends BasicNamespace
 
     // Note: this will no longer pick up tagset from type.
     //	as good a reason as any to drop the agent-name prefix.
-    ts  = proc.loadTagset(name()+"-" + name);
-    if (ts == null && name.equals("xhtml")) ts = piaXHTMLtagset;
-    if (ts == null) ts = proc.loadTagset("pia-" + name);
+    if (name.indexOf('-') < 0) {
+      ts  = proc.loadTagset(name()+"-" + name);
+      if (ts != null) tagsets.at(name()+"-" + name, ts);
+    }
+    if (ts == null && (name.equals("xhtml") || name.equals("pia-xhtml"))) {
+      ts = piaXHTMLtagset;
+      if (ts != null) { tagsets.at("xhtml", ts); tagsets.at("pia-xhtml", ts); }
+    }
+    if (ts == null && name.indexOf('-') < 0) {
+      ts = proc.loadTagset("pia-" + name);
+      if (ts != null) tagsets.at("pia-" + name, ts);
+    }
     if (ts == null) ts = proc.loadTagset(name);
     if (ts != null && ts != piaXHTMLtagset) 
       System.err.println(name() + " Loaded tagset '" + ts.getName()
 			 + "' in " + timing() + " seconds'.");
 
-    if (tagsets == null) tagsets = new Table();
     if (ts != null) tagsets.at(name, ts);
     return ts;
   }
@@ -329,7 +339,7 @@ public class GenericAgent extends BasicNamespace
       if (key.equalsIgnoreCase("agent")) continue;
       Object v = hash.get(key);
       String value = (v instanceof ActiveNode)
-	? ((ActiveNode)v).getNodeValue() : hash.get( key ).toString();
+	? ((ActiveNode)v).getNodeValue() : v.toString();
       put(key, value);
     }
   }
@@ -935,7 +945,10 @@ public class GenericAgent extends BasicNamespace
     ActiveDoc proc = new ActiveDoc(this, req, resp, res);
     proc.setVerbosity((Pia.verbose()? 1 : 0) + (Pia.debug()? 2 : 0));
 
-    Tagset ts = loadTagset(proc, "xhtml");
+    String tsname = getAttribute("tagset");
+    if (tsname == null || tsname.length() == 0) tsname = "xhtml";
+
+    Tagset ts = loadTagset(proc, tsname);
     if (ts == null) {
       // sendErrorResponse(trans, 500, "cannot load tagset " +tsn);
       return null;
@@ -1058,6 +1071,7 @@ public class GenericAgent extends BasicNamespace
     indirect("data-dir", true);
     indirect("user-dir", true);
     indirect("pathName", true);
+    indirect("tagset", false);
   }
 
   /** Replace an existing binding. 
