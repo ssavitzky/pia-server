@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.22 2000-06-14 17:08:03 steve Exp $
+//	$Id: Subsite.java,v 1.23 2000-06-20 01:08:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.22 2000-06-14 17:08:03 steve Exp $
+ * @version $Id: Subsite.java,v 1.23 2000-06-20 01:08:07 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -236,7 +236,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     v = config.getAttribute("virtual");
     if (v != null) {
       if (virtualSearchPath == null) virtualSearchPath = new File[2];
-      virtualSearchPath[0] = new File(v);
+      virtualSearchPath[0] = locateVirtual(v);
     }
 
     v = config.getAttribute("default");

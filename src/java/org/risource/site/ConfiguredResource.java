@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.12 2000-06-20 01:08:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.12 2000-06-20 01:08:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -155,7 +155,8 @@ public abstract class ConfiguredResource extends AbstractResource
     // container determined from class
     if (config.hasTrueAttribute("real")) real = true;
     if (config.hasTrueAttribute("passive")) passive = true;
-    if (config.hasTrueAttribute("suspect")) suspect = true;
+    if (config.hasTrueAttribute("suspect") 
+	|| (base != null && base.isSuspect())) suspect = true;
     return true;
   }
 
