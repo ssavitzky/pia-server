@@ -1,5 +1,5 @@
 ////// filterHandler.java: <filter> Handler implementation
-//	$Id: filterHandler.java,v 1.2 2000-08-30 23:01:31 steve Exp $
+//	$Id: filterHandler.java,v 1.3 2000-09-20 00:34:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,7 @@ import org.risource.site.*;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.util.Pump;
 
 import org.risource.dps.tree.TreeComment;
 
@@ -45,7 +46,7 @@ import org.risource.dps.tree.TreeComment;
  *	shell attribute is present, it is used as a shell to run the script
  *	specified by the cmd attribute. 
  *
- * @version $Id: filterHandler.java,v 1.2 2000-08-30 23:01:31 steve Exp $
+ * @version $Id: filterHandler.java,v 1.3 2000-09-20 00:34:22 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -300,33 +301,5 @@ public class filterHandler extends GenericHandler {
   filterHandler(ActiveElement e) {
     this();
     // customize for element.
-  }
-}
-
-class Pump implements Runnable {
-  BufferedInputStream in;
-  BufferedOutputStream out;
-
-  public Pump(InputStream i, OutputStream o) {
-    in = (i instanceof BufferedInputStream)
-      ? (BufferedInputStream)i
-      : new BufferedInputStream(i);
-    out = (o instanceof BufferedOutputStream)
-      ? (BufferedOutputStream)o
-      : new BufferedOutputStream(o);
-  }
-
-  public void run() {
-    byte buf[] = new byte[1024];
-    int len;
-    try {
-      for (len = in.read(buf, 0, 1024); len > 0; len = in.read(buf, 0, 1024)) {
-	out.write(buf, 0, len);
-      }
-    } catch (Exception e) {}
-
-    finally {
-      try { in.close(); out.close(); } catch (Exception ex) {}
-    }
   }
 }

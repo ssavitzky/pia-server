@@ -1,5 +1,5 @@
 ###### util/Makefile:	PIA Utilities package
-# 	$Id: Makefile,v 1.4 1999-10-08 16:15:20 steve Exp $
+# 	$Id: Makefile,v 1.5 2000-09-20 00:34:30 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -31,6 +31,7 @@ FILES = \
 	Utilities.java \
 	NullOutputStream.java \
 	CacheTable.java \
+	Pump.java \
 	Timer.java
 
 include $(TOPDIR)/makefiles/file.make

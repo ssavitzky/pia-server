@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.11 2000-06-15 01:24:16 steve Exp $
+// $Id: SiteMachine.java,v 1.12 2000-09-20 00:34:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -278,11 +278,18 @@ public class SiteMachine extends Machine {
 
     Content c = new ProcessedContent(doc.getPath(), reader, proc);
     if (pathinfo != null) proc.define("PATH_INFO", pathinfo);
+    Date now = new Date();
 
     response.setStatus( 200 ); 
     response.setHeader("Server", Version.SERVER);
     response.setHeader("Last-Modified",
 		       toGMTString(new Date(doc.getLastModified()))); 
+
+    // TEMPORARY!!! hack to prevent active pages from being cached. ===
+    // BAD JUJU with back button on form submissions!  TEMPORARY!!! ===
+    response.setHeader("Date", toGMTString(now));
+    response.setHeader("Expires", toGMTString(now));
+
     response.setContentType( ctype );
     response.setContentObj( c );
     response.startThread();
@@ -355,10 +362,22 @@ public class SiteMachine extends Machine {
    * Respond to a request directed at one of an site's documents, 
    * with a (possibly-modified) path.
    *
+   * <p> There are several possible ways of handling the document, depending
+   *	 on the "tagset name" associated with the document's extension:
+   *
+   * <ul>
+   *	<li> <i>none</i> ship the document as an ordinary file.
+   *    <li> <i>tagset</i> process the document with the named tagset
+   *    <li> <code>#</code><i>tsname</i> hide the document.
+   *    <li> <code>!</code><i></i> execute the document as a CGI.
+   *    <li> <code>|</code><i>cmd</i> filter the document through the given
+   *		command. 
+   * </ul>
+   *
    * @return false if the file cannot be found.
    */
   public boolean respondWithDocument(Transaction request, String path,
-				    Resolver res){
+				     Resolver res){
 
     // If the path includes a query string, remove it now
     int end = path.indexOf('?');
@@ -422,14 +441,20 @@ public class SiteMachine extends Machine {
     if( tsname == null || tsname.length() == 0 ) {
       if (pathinfo != null) return false; // passive docs don't handle pathinfo
       return sendStreamResponse(doc, ctype, request, res);
+    } else if (tsname.startsWith("#")) {
+      return false;
     } else if (tsname.startsWith("!")) {
       try{
 	execCgi(ctype, request, doc.documentFile().getPath(), doc, pathinfo);
       }catch(PiaRuntimeException ee ){
 	throw ee;
       }
-    } else if (tsname.startsWith("#")) {
-      return false;
+    } else if (tsname.startsWith("|")) {
+      try{
+	execFilter(ctype, tsname.substring(1), request, doc, pathinfo);
+      }catch(PiaRuntimeException ee ){
+	throw ee;
+      }
     } else if (pathinfo != null && ! (doc instanceof Listing)) {
       // not a Listing, hence not defined by IndexDocumentPath.
       //   There's no good way yet to tell whether a random XML file 
@@ -470,7 +495,7 @@ public class SiteMachine extends Machine {
       Transaction response = new HTTPResponse( request, ct);
       
     }catch(IOException ee){
-      String msg = "can not exec :"+file;
+      String msg = "exception " + ee + " trying to exec "+file;
       throw new PiaRuntimeException (this, "respondWithDocument", msg) ;
     }
   }
@@ -512,6 +537,41 @@ public class SiteMachine extends Machine {
     return envp;
   }
   
+  protected void execFilter(String ctype, String cmd, Transaction request,
+			    Document doc, String pathinfo)
+       throws PiaRuntimeException
+  {
+    Runtime rt = Runtime.getRuntime();
+    Process process = null;
+    Pump pump;
+
+    if (cmd.startsWith("pia:")) {
+      cmd = cmd.substring(4);
+      if (!cmd.startsWith("/")) cmd = "/" + cmd;
+      cmd = Pia.instance().getProperty("home") + cmd;      
+    }
+
+    try{
+      // String[] envp = setupEnvironment(request, doc, pathinfo);
+
+      process = rt.exec(cmd);
+      OutputStream out = process.getOutputStream();
+      InputStream in = process.getInputStream();
+      pump = new Pump(doc.documentInputStream(), out);
+      pump.run();
+
+      // === a ByteStreamContent is wrong for a CGI.
+      // === We should really create a Machine and let Transaction
+      // === parse the headers it returns.
+      Content ct = new ByteStreamContent( in );
+      Transaction response = new HTTPResponse( request, ct);
+      
+    }catch(IOException ee){
+      String msg = "exception " + ee + " trying to exec " + cmd ;
+      throw new PiaRuntimeException (this, "respondWithDocument", msg) ;
+    }
+  }
+
   /************************************************************************
   ** Construction:
   ************************************************************************/
