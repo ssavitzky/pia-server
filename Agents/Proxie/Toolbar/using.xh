@@ -35,7 +35,7 @@ information, in the form of a ``toolbar,'' to the top or bottom of each page.
 certain pages retrieved from the agency.  </p><p>
 
 </p><p>The toolbar usually starts out with a distinctive logo that indicates where
-the page came from.  For example, the <a href='/&agentType;/remote'>fbi</a>
+the page came from.  For example, the <a href='/&agentType;/remoteFiles'>remoteFiles</a>
 agent, which puts toolbars on pages that come from <em>outside the PIA</em>,
 attaches a logo (<img src='/Icon/pent24.gif' height='24' width='43' />)
 which is a link to the PIA's home page.</p><p>
@@ -71,5 +71,5 @@ The toolbar normally also refers to the following items in the <a href='/History
   </dt><dd> <a href='/History/~/last.html'>/History/~/last.html</a>
 </dd></dl>
 
-<footer cvsid='$Id: using.xh,v 1.4 1999-03-27 02:29:42 pgage Exp $' />
+<footer cvsid='$Id: using.xh,v 1.5 1999-04-02 01:04:24 pgage Exp $' />
 </p></body></html>

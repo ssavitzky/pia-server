@@ -103,7 +103,7 @@ banner, is the statements near the beginning of the file that look like:
   <agent-set-criterion name='agent_response'>
 </agent-set-criterion></agent-set-criterion></protect></pre>
 
-(to use the FBI as an example).  These statements determine the ``match
+(to use fileTools as an example).  These statements determine the ``match
 criteria'' for transactions that the agent will ``act on''.<p>
 
 By the way, if more than one &agentType; agent adds a banner to a page, they
@@ -111,7 +111,7 @@ will be concatenated.  There is no easy way at the moment to determine which
 banner will appear first, so it's best to end your banner with a horizontal
 rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.</p><p>
 
-The logo icons used by the <a href='/&agentType;/fbi'>fbi</a> and <a href='/&agentType;/cia'>cia</a> are 24 pixels high.
+The logo icons used by the <a href='/fileTools'>fileTools</a> and <a href='/remoteTools'>remoteTools</a> are 24 pixels high.
 
-<footer cvsid='$Id: writing.xh,v 1.6 1999-03-27 02:29:43 pgage Exp $' />
+<footer cvsid='$Id: writing.xh,v 1.7 1999-04-02 01:04:25 pgage Exp $' />
 </p></body></html>

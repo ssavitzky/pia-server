@@ -45,8 +45,8 @@
   <dt> <b>Note:</b>
   </dt><dd> The history agent adds items to the history database (makes sense,
        doesn't it).  It does <em>not</em> put anything on pages returned to
-       the user's browser; that's up to the <a href='/cia'>cia</a> agent.
+       the user's browser; that's up to the <a href='/remoteTools'>remoteTools</a> agent.
 </dd></dl>
 
-<footer cvsid='$Id: initialize.xh,v 1.4 1999-03-27 02:29:39 pgage Exp $' />
+<footer cvsid='$Id: initialize.xh,v 1.5 1999-04-02 01:04:23 pgage Exp $' />
 </body></html>
