@@ -8,9 +8,9 @@
   <agent-file id="/Proxie/Toolbar" on-start="on">./Proxie/Toolbar/AGENT.xml</agent-file>
   <agent-file id="/Proxie/Toolbar/fileTools" on-start="on">./Proxie/fileTools/AGENT.xml</agent-file>
   <agent-file id="/Proxie/Toolbar/remoteTools" on-start="on">./Proxie/remoteTools/AGENT.xml</agent-file>
-  <agent-file id="/Demo" on-start="">./Demo/AGENT.xml</agent-file>
+  <agent-file id="/Demo" on-start="on">./Demo/AGENT.xml</agent-file>
   <agent-file id="/View" on-start="">./View/AGENT.xml</agent-file>
 </agent-files>
 
 
-<!-- $Id: agent-files.xml,v 1.2 1999-05-18 20:12:51 steve Exp $ -->
+<!-- $Id: agent-files.xml,v 1.3 1999-05-28 21:33:28 steve Exp $ -->
