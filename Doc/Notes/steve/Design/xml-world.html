@@ -37,16 +37,25 @@
     construct something else, like a TreeEntity.  Again, this machinery is in
     the parser, but hasn't been tested.
 
+<p> The current technique is slightly different: use a handler to construct
+    the object.  Entities are represented using the <code>&lt;bind&gt;</code>
+    tag.  This has the disadvantage that entities cannot presently contain
+    anything that requires a parse-time constructor (e.g. a Namespace),
+    because <code>&lt;bind&gt;</code> quotes its contents.
+
 <p> There are two main ways to represent PIA objects as XML: make them
     subclasses of an existing ActiveElement implementation, or make them
     independent implementations.  It is significantly easier to put them into
     existing structures if they inherit from the same base class as our
     existing parse trees, and it simplifies the implementation as well.
 
-<p> A third technique exists: to <em>wrap</em> the PIA objects.  This is
-    presently being done with Agent (using NamespaceWrap), but although it
-    makes it possible to put the wrapped objects into an XML document, it
-    means that you have to build a separate handler to do the construction.
+<p> A third technique exists: to <em>wrap</em> the PIA objects.  This was done
+    with Agent (using NamespaceWrap), but although it makes it possible to put
+    the wrapped objects into an XML document, it means that you have to build
+    a separate handler to do the construction.  Agents have now been
+    re-implemented as subclasses of BasicNamespace, and the AgentBuilder
+    handler constructs them.  They do, however, require the use of a
+    Processor. 
 
 <h3>Benefits</h3>
 
@@ -65,11 +74,16 @@
        </ul>
        <p> An XML representation would eliminate all but the first step:
 	   constructing the parse tree would <em>in itself</em> construct the
-	   object.
+	   object.  Even the current scheme, using <code>&lt;bind&gt;</code>
+	   and a handler, is more efficient because <code>bindHandler</code>
+	   is significantly simpler than <code>defineHandler</code>. 
   <li> XML objects can be written out in a form that can be read back in.
        Currently agents, tagsets and namespaces can't easily be converted to
        an external form, because they don't map directly into XML. 
   <li> XML-represented objects can easily be manipulated by other tools.
+  <li> XML is far more robust than serialized Java objects across changes in
+       the classes being serialized.  It also turns out to be slightly
+       faster. 
 </ul>
 
 <h3>Targets</h3>
@@ -78,25 +92,20 @@
     of increasing complexity of implementation):
 
 <dl>
-  <dt> Tagsets and Namespaces
+  <dt> Tagsets and Namespaces (<strong>done 1999-05-06</strong>)
   <dd> Actually, BasicTagset and BasicNamespace <em>already</em> inherit from
        TreeGeneric.  The only difficulty is that there is no set of
        handlers to construct them directly from XML documents, and writing
        them out doesn't produce something that could be read back in because
        the implementation is incomplete.  The &lt;define&gt; tag imposes an
        extra layer of indirection.
-  <dt> Agents
+  <dt> Agents (<strong>done 1999-04-30</strong>)
   <dd> Presently these are simply wrapped as namespaces; it might work better
        if some components (<code>name</code>, <code>path</code>, and the
        directories, for example) were attributes.  Not essential, though.
        There is a complexity for agents: if you don't know <em>both</em> the
        home and user directories at initialization time, you don't know where
        to look for the XML metadata.
-       <ul>
-	 <li> As of 4/22 GenericAgent actually extends from BasicNamespace,
-	      but there are glitches that I haven't had time to fix; in the
-	      code actually in use, it is still wrapped.
-       </ul>
   <dt> Match Criteria
   <dd> Presently an agent's criteria are initialized by means of a rather
        simpleminded conversion from strings.  It would be easier if
@@ -132,8 +141,10 @@
 <p> It wouldn't surprise me much if there were already code available to do
     this.  It has some problems:  since it doesn't map easily into the DOM,
     one can't directly manipulate such an object from XXML code.  Also,
-    without some additional metadata, linked structures get <em>very</em> ugly
-    and don't map into the most obvious XML representation.
+    without some additional metadata, multiply-linked structures get
+    <em>very</em> ugly and don't map into the most obvious XML
+    representation.  Probably what's needed is an <code>id</code> attribute on
+    every node. 
 
 
 <hr><!-- ========================================================== -->
@@ -199,8 +210,8 @@
   <li> Checkpointing is just writing.
   <li> Tagsets, inserts, initialization, etc. can be stored in an agent's
        entities. 
-  <li> If read-write entities work, making agents persistant is
-       <em>trivial</em>.  (This suggests that persistant entities need a
+  <li> If read-write entities work, making agents persistent is
+       <em>trivial</em>.  (This suggests that persistent entities need a
        search path, so that we can intialize from the home directory and write
        to the user directory.)
   <li> With a few more filename- and url-manipulating primitives, most of the
@@ -235,6 +246,8 @@
 <p> At the moment it's all kind of moot: we want XML representations, and we
     don't parse doctypes properly.
 
+<p> The current implementation uses
+    <code>&lt;bind&nbsp;name="<em>n</em>"&gt;<em>v</em>&lt;/bind&gt;</code> 
 
 <h3>Agent and Entity Input</h3>
 
@@ -250,10 +263,16 @@
     the end of the content!  It's not a problem for Tagset or Namespace
     because the bindings just go right into the table, and nothing has to be
     done to their content after that.  Agents <em>have</em> to be
-    initialized. 
+    initialized.
 
-<p>&nbsp;
+<p> This is currently sidestepped by making <code>&lt;AGENT&gt;</code>
+    <em>active</em>, so that the <code>action</code> routine gets called
+    before handling the content.  This allows the handler to perform the
+    necessary initialization.  It is actually done in two places, because you
+    need to load the <em>new agent's</em> tagset in order to parse the content
+    correctly:
 
+<blockquote>
 <p> There's another complication: the Agent's tagset <em>must</em> be
     available while the Agent is being read in.  Passing it as an attribute or
     the first entity wouldn't work, because the node under construction
@@ -262,7 +281,9 @@
 
 <p> One correct solution is to put the tagset's filename into the DOCTYPE
     (where it belongs anyway) or into a processing instruction (targeted at
-    the parser).  Another is to separate construction from parsing.
+    the parser).  Another is to separate construction from parsing, which is
+    what we do.
+</blockquote>
 
 <p>&nbsp;
 
@@ -302,6 +323,12 @@
     TagsetProcessor is doing; the difference is that no processing needs to be
     done, just a copy.
 
+<blockquote>
+    <p> This, in fact, is the way we do it.  We use <code>ToNamespace</code>
+	and <code>ToAgent</code> Outputs along with the
+	<code>&lt;bind&gt;</code> element, which is processed normally.
+</blockquote>
+
 <p> There's also a more extreme version that requires even <code>less</code>
     intervention:  make an I/O pair called <code>ToTabular</code> and
     <code>FromTabular</code>!  That's disgusting: I like it.  Not really
@@ -339,7 +366,7 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: xml-world.html,v 1.4 1999-04-27 16:16:01 steve Exp $</b><br>
+<b>$Id: xml-world.html,v 1.5 1999-05-25 23:07:27 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

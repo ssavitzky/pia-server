@@ -100,14 +100,15 @@ A split model, DOM + Cursors, would have several advantages:
 <ol>
   <li> Upgrade the PIA's DOM implementation to the current standard, then
        upgrade Cursor and the DPS to eliminate direct use of the DOM's
-       interfaces.
+       interfaces.  
   <li> Upgrade Cursor and the DPS to be totally DOM-independent, then fix the
        DOM implementation. 
 </ol>
 
 <p> The second path is basically cleaner, but the first would get us to DOM
     compliance more quickly, and integrates better with the other near-term
-    goal of an XML representation for Agents. 
+    goal of an XML representation for Agents.  <strong>We have chosen the
+    first route, and the DOM re-implementation has been completed.</strong>
 
 
 <hr><!-- ========================================================== -->
@@ -225,7 +226,7 @@ A split model, DOM + Cursors, would have several advantages:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: dom.html,v 1.1 1999-04-13 18:30:54 steve Exp $</b><br>
+<b>$Id: dom.html,v 1.2 1999-05-25 23:07:26 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
