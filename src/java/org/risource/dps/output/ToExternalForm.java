@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.8 1999-11-06 01:08:14 steve Exp $
+//	$Id: ToExternalForm.java,v 1.9 2000-03-07 00:04:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.8 1999-11-06 01:08:14 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.9 2000-03-07 00:04:33 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -132,6 +132,12 @@ public abstract class ToExternalForm extends CursorStack implements Output {
     pushInPlace();
     setNode(aNode);
     if (active != null) {
+      ActiveElement e = active.asElement();
+      if (e != null && e.hasEmptyDelimiter()) {
+	// Presumably we're planning to put some content into this node,
+	// so suppress the "empty" delimiter.
+	e.setHasEmptyDelimiter(false);
+      }
       write(active.startString());
     } else {
       // === punt -- should never happen.
