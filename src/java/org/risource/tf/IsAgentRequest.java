@@ -1,5 +1,5 @@
 // IsAgentRequest.java
-// $Id: IsAgentRequest.java,v 1.3 1999-03-12 19:30:45 steve Exp $
+// $Id: IsAgentRequest.java,v 1.4 1999-10-19 01:04:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ public final class IsAgentRequest extends TFComputer {
     int lport = url.getPort();
     if (lport == -1) lport = 80;
 
-    if( (Pia.instance().portNumber() == lport
+    if( (Pia.instance().virtualPortNumber() == lport
 	 || Pia.instance().realPortNumber() == lport)
 	&& (Pia.instance().host().startsWith( lhost )
 	    || lhost.startsWith(Pia.instance().host())

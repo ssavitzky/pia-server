@@ -1,5 +1,5 @@
 // Accepter.java
-// $Id: Accepter.java,v 1.6 1999-09-15 17:34:24 bill Exp $
+// $Id: Accepter.java,v 1.7 1999-10-19 01:04:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,10 +23,6 @@
 
 
 
-/**
- * This object accepts connections on a port.
- */
-
 package org.risource.pia;
 
 import java.io.*;
@@ -38,11 +34,14 @@ import org.risource.pia.Machine;
 import org.risource.pia.Pia;
 import org.risource.pia.HTTPRequest;
 
+/**
+ * This object accepts connections on a port.
+ */
 public class Accepter extends Thread {
   /**
    * The default port number if none is given.
    */
-  public final static int DEFAULT_PORT=8001;
+  public final static int DEFAULT_PORT=8888;
 
   /**
    * Attribute index - The port to listen on.

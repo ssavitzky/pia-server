@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.20 1999-10-14 21:46:58 steve Exp $
+// $Id: Pia.java,v 1.21 1999-10-19 01:04:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -68,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.20 1999-10-14 21:46:58 steve Exp $
+  * @version $Id: Pia.java,v 1.21 1999-10-19 01:04:17 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -142,15 +142,16 @@ public class Pia implements Tabular {
 
   private String  piaHomePath 		= null;
   private String  piaRootPath		= null;
+  private String  piaVirtualRootPath	= null;
 
-  private String  url        = null;
-  private String  host       = null;
-  private int     port       = 8888;
-  private int	  realPort   = 8888;
-  private int     reqTimeout = 50000;
+  private String  url		= null;
+  private String  host       	= null;
+  private int	  realPort   	= 8888;
+  private int     virtualPort	= 8888;
+  private int     reqTimeout 	= 50000;
 
-  private Table proxies          = new Table();
-  private List  noProxies        = new List();
+  private Table proxies         = new Table();
+  private List  noProxies       = new List();
 
   private String configFileName = "_subsite.xcf";
   private String siteConfigPath = null;
@@ -205,9 +206,16 @@ public class Pia implements Tabular {
   /** Return the root of the site resource tree, typed as a Site. */
   public static Site getSite() { return rootResource; }
 
+  /** Get (construct, if necessary) our SiteMachine.
+   *	The SiteMachine is constructed out of the host:virtualPort pair
+   *	(which it needs in order to perform redirections), and the 
+   *	rootResource, which is what it serves.
+   */
   public static SiteMachine getSiteMachine() {
     if (siteMachine == null && rootResource != null) 
-      siteMachine = new SiteMachine(instance.host, instance.port, rootResource);
+      siteMachine = new SiteMachine(instance.host,
+				    instance.virtualPort,
+				    rootResource);
     return siteMachine;
   }
 
@@ -248,22 +256,22 @@ public class Pia implements Tabular {
   } 
 
   /**
-   * @return this port name
+   * @return the virtual port name
    */
-  public String port(){
-    Integer i = new Integer( port );
+  public String virtualPort(){
+    Integer i = new Integer( virtualPort );
     return i.toString();
   } 
 
   /**
-   * @return this port number
+   * @return the virtual port number
    */
-  public int portNumber() {
-    return port;
+  public int virtualPortNumber() {
+    return virtualPort;
   }
 
   /**
-   * @return this port number
+   * @return the real port number
    */
   public int realPortNumber() {
     return realPort;
@@ -526,11 +534,10 @@ public class Pia implements Tabular {
    * Get the server URL.
    *	Only called in HTTPRequest for computing full request URL
    */
-
    public String url() {
      if ( url == null ) {
-       if ( port != 80 ) 
-	 url = "http://" + host + ":" + port ;
+       if ( virtualPort != 80 ) 
+	 url = "http://" + host + ":" + virtualPort ;
        else
 	 url = "http://" + host ;
        }		
@@ -633,10 +640,16 @@ public class Pia implements Tabular {
     verbosity		= getInteger("verbosity", 0);
     piaHomePath		= getProperty("home", null);
     piaRootPath		= getProperty("root", null);
+    piaVirtualRootPath	= getProperty("vroot", null);
+
     host 		= getProperty("host", thisHost);
-    port 		= getInteger("port", port);
-    realPort		= getInteger("realport", port);
     reqTimeout 		= getInteger("req_timeout", 60000);
+
+    // "port" sets _both_ real and virtual ports, either of which can 
+    // then be overridden with the appropriate flag.
+    int port 		= getInteger("port", 8888);
+    virtualPort		= getInteger("virtualport", port);
+    realPort		= getInteger("realport", port);
     //loggerClassName 	= getProperty(PIA_LOGGER, loggerClassName);
 
     siteConfigPath   = getProperty("site", siteConfigPath);
@@ -702,12 +715,15 @@ public class Pia implements Tabular {
       warningMsg("Cannot locate or create root directory " + piaRootPath);
     }
 
-    if (piaRootPath == null && piaHomePath == null && siteConfigPath == null) {
+    if (piaRootPath == null && piaVirtualRootPath == null &&
+	piaHomePath == null && siteConfigPath == null) {
       report(-2, "Either a PIA home, a configuration file, "
 	     + "or a valid root directory must be specified.");
       System.exit(1);
     }
 	
+    if (piaVirtualRootPath == null) piaVirtualRootPath = piaHomePath;
+
     if (piaHomePath != null) {
       String tsHome = piaHomePath + filesep + "src" + filesep + "java"
 	+ filesep + "org" + filesep + "risource" + filesep + "dps"
@@ -720,8 +736,9 @@ public class Pia implements Tabular {
     setInteger("verbosity", verbosity);
     setProperty("home", piaHomePath);
     setProperty("root", piaRootPath);
+    setProperty("vroot", piaVirtualRootPath);
     setProperty("host", host);
-    setInteger("port", port);
+    setInteger("virtualport", virtualPort);
     setInteger("realport", realPort);
     setInteger("req_timeout", reqTimeout);
     //setProperty(PIA_LOGGER, loggerClassName);
@@ -765,8 +782,9 @@ public class Pia implements Tabular {
     piaHomePath		= getProperty("home", piaHomePath);
     piaRootPath		= getProperty("root", piaRootPath);
     host 		= getProperty("host", host);
-    port 		= getInteger("port", port);
-    realPort		= getInteger("realport", realPort);
+    int port 		= getInteger("port", 8888);
+    virtualPort		= getInteger("virtualport", port);
+    realPort		= getInteger("realport", port);
     reqTimeout 		= getInteger("req_timeout", reqTimeout);
     //loggerClassName 	= getProperty(PIA_LOGGER, loggerClassName);
     //siteConfigPath   = getProperty("site", siteConfigPath);
@@ -790,7 +808,7 @@ public class Pia implements Tabular {
      */
     siteProperties = null; //new PropertyTable("/");
     
-    rootResource = new PiaSite(piaRootPath, piaHomePath, null, 
+    rootResource = new PiaSite(piaRootPath, piaVirtualRootPath, null, 
 			       configFileName, "pia-config", siteProperties);
     rootResource.setVerbosity(getVerbosity());
     if (siteConfigPath == null) rootResource.loadConfig() ;
@@ -822,6 +840,14 @@ public class Pia implements Tabular {
       accepter = new Accepter( realPort );
     }catch(IOException e){
       System.err.println("Can not create Accepter: " + e.getMessage());
+      if (0 <= e.getMessage().indexOf("denied")) {
+	System.err.println(  "  Permission denied means that the port you"
+			   + " specified, " + realPort + ",\n"
+			   + "  is privileged, i.e. reserved for root.");
+      } else if (0 <= e.getMessage().indexOf("in use")) {
+	System.err.println(  "  There is already a server listening on "
+			   + "the port you specified, " + realPort);
+      }
       System.err.println(  "  Try using a different port number:\n" 
 			 + "    pia -port nnnn\n"
 			 + "  8000+your user ID is a good choice.");
@@ -1028,6 +1054,7 @@ public class Pia implements Tabular {
     "PIA_ROOT",	"root",
     "PIA_PORT",	"port",
     "REAL_PORT", "realport",
+    "VIRTUAL_PORT", "virtualport",
   };
 
   /** PIA option table: */
@@ -1040,8 +1067,10 @@ public class Pia implements Tabular {
     "-home",	"home",		"dir",		null,
     "-p",	"port",		"number",	"8888",
     "-port",	"port",		"number",	"8888",
+    "-virtual",	"virtualport",	"number",	"8888",
     "-real",	"realport", 	"number",	"8888",
     "-root",	"root",		"dir",		null,
+    "-vroot",	"virtualroot",	"dir",		null,
     "-host",	"host", 	"name",		null,
     "-config",	"configfile",	"file",		"_subsite.xcf",
     "-site",	"site",		"file",		null,
@@ -1050,7 +1079,8 @@ public class Pia implements Tabular {
 
   /** PIA property table: */
   protected static String[] piaPropTable = {
-    "verbosity", "home", "port", "realport", "root", "host", "configfile",
+    "verbosity", "home", "virtualport", "realport", "root", "virtualroot",
+    "host", "configfile",
     "http_proxy", "ftp_proxy", "gopher_proxy", "no_proxy",
   };
 

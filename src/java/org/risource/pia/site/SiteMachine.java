@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.5 1999-10-13 18:20:58 steve Exp $
+// $Id: SiteMachine.java,v 1.6 1999-10-19 01:04:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -486,7 +486,7 @@ public class SiteMachine extends Machine {
       envp[1] += req.contentLength();
     }
     envp[2]="GATEWAY_INTERFACE=" + "CGI/1.0";
-    envp[3]="SERVER_PORT="       + Pia.instance().port();
+    envp[3]="SERVER_PORT="       + Pia.instance().virtualPort();
     envp[4]="SERVER_PROTO="      + req.version();
     envp[5]="REQUEST_METHOD="    + req.method();
     envp[6]="REMOTE_ADDR=";

@@ -1,5 +1,5 @@
 // IsProxyResponse.java
-// $Id: IsProxyResponse.java,v 1.1 1999-06-11 23:44:48 wolff Exp $
+// $Id: IsProxyResponse.java,v 1.2 1999-10-19 01:04:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ public final class IsProxyResponse implements UnaryFunctor{
       int lport = url.getPort();
       if (lport == -1) lport = 80;
 
-      if( (Pia.instance().portNumber() == lport
+      if( (Pia.instance().virtualPortNumber() == lport
 	   || Pia.instance().realPortNumber() == lport)
 	  && (Pia.instance().host().startsWith( lhost )
 	      || lhost.startsWith(Pia.instance().host())

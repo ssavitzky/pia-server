@@ -1,5 +1,5 @@
 //  HTTPrequest.java
-// $Id: HTTPRequest.java,v 1.13 1999-10-04 17:40:30 steve Exp $
+// $Id: HTTPRequest.java,v 1.14 1999-10-19 01:04:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,12 +46,6 @@ import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
-
-import org.risource.pia.Machine;
-import org.risource.pia.agent.AgentMachine;
-import org.risource.pia.Content;
-import org.risource.pia.Transaction;
-import org.risource.pia.HTTPResponse;
 
 import org.risource.ds.Queue;
 import org.risource.ds.Features;
@@ -587,7 +581,8 @@ public class  HTTPRequest extends Transaction {
 	port = url.getPort();
 	String zport = Integer.toString( port );
 	if( host.equals( Pia.instance().host() )
-	    && zport.equals( Pia.instance().port() )) {
+	    && (port == Pia.instance().virtualPortNumber() ||
+		port == Pia.instance().realPortNumber())) {
 	  toMachine = Pia.getSiteMachine();
 	} else {
 	  toMachine = new Machine( host, port );

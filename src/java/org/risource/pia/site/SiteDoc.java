@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.4 1999-10-04 17:40:47 steve Exp $
+//	$Id: SiteDoc.java,v 1.5 1999-10-19 01:04:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.4 1999-10-04 17:40:47 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.5 1999-10-19 01:04:20 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -193,12 +193,6 @@ public class SiteDoc extends TopProcessor {
 
     Pia pia = Pia.instance();
 
-    /* === these can go away after a decent interval
-    define("piaHOST", pia.getProperty("host"));
-    define("piaPORT", pia.getProperty("port"));
-    define("piaHOME", pia.getProperty("home"));
-    define("piaROOT", pia.getProperty("root"));
-    */
   }
 
   /** Initialize entities that differ for each hook called on a transaction. */
