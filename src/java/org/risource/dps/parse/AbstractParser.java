@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.18 2000-06-07 19:10:27 steve Exp $
+//	$Id: AbstractParser.java,v 1.19 2000-06-27 01:17:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.18 2000-06-07 19:10:27 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.19 2000-06-27 01:17:01 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -693,11 +693,13 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** Test whether the current node has children that have not been parsed. */
   protected boolean hasUnparsedChildren() {
+    if (node == null) return false;
     return !node.hasChildNodes()
       && tagName != null && !active.asElement().isEmptyElement();
   }
 
   public boolean hasChildren() {
+    if (node == null) return false;
     return node.hasChildNodes()
       || (tagName != null && !active.asElement().isEmptyElement());
   }

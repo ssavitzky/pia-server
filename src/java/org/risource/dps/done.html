@@ -1215,9 +1215,16 @@ If 4th node is there, returns "four".
        (2000-05-30)<br />
        -- (element="", documentWrapper, element="#type" 2000-06-05)
   </li>
+  <li> 2000-06-26 <b>Bug</b> (woad) parser dies on empty file. <br />
+       cgi-bin blows up; CVS doesn't.  The difference is that there's a
+       dirIndex for cgi-bin, but it's empty. 
+       (2000-06-23)<br />
+       -- initial symptom: listing an empty dir. blows up if indexed.  The
+	  problem was that the dirIndex file was empty.
+  </li>
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.49 2000-06-09 18:01:47 steve Exp $</b><br>
+<b>$Id: done.html,v 1.50 2000-06-27 01:16:56 steve Exp $</b><br>
 </body></html>
