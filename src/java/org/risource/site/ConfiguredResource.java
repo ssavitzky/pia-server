@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.10 1999-10-14 21:47:41 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.10 1999-10-14 21:47:41 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -385,6 +385,23 @@ public abstract class ConfiguredResource extends AbstractResource
   /************************************************************************
   ** Construction and Initialization:
   ************************************************************************/
+
+  /** Configure a new resource. 
+   *
+   * @param name the name of the new Resource
+   * @param parent its parent resource
+   * @param container whether this resource is a container
+   * @param config its configuration
+   * @return the new resource.  This need not be the resource handling the
+   *	call; in some cases it may be necessary to return an instance of
+   *`	a different class.  
+   */
+  public Resource configure(String name, Resource parent, Element config) {
+    this.base = (Subsite) parent;
+    this.name = name;
+    setConfig((ActiveElement) config); // === bogus conversion
+    return this;
+  }
 
   public ConfiguredResource(String name, Subsite parent, 
 			    boolean container, boolean real, File file, 

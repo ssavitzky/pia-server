@@ -1,5 +1,5 @@
 ////// FileResource.java -- Minimal implementation of Resource
-//	$Id: FileResource.java,v 1.3 1999-10-04 17:42:37 steve Exp $
+//	$Id: FileResource.java,v 1.4 2000-04-14 23:10:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileResource.java,v 1.3 1999-10-04 17:42:37 steve Exp $
+ * @version $Id: FileResource.java,v 1.4 2000-04-14 23:10:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -213,6 +213,22 @@ public abstract class FileResource extends AbstractResource {
   /************************************************************************
   ** Construction:
   ************************************************************************/
+
+  /** Configure a new resource. 
+   *
+   * @param name the name of the new Resource
+   * @param parent its parent resource
+   * @param container whether this resource is a container
+   * @param config its configuration (ignored)
+   * @return the new resource.  This need not be the resource handling the
+   *	call; in some cases it may be necessary to return an instance of
+   *`	a different class.  
+   */
+  public Resource configure(String name, Resource parent, Element config) {
+    this.base = (AbstractResource) parent;
+    file = new File(base.documentFile(), name);
+    return this;
+  }
 
   public FileResource(String name, AbstractResource parent) {
     base = parent;

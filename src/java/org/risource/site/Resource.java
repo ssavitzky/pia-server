@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.6 1999-10-04 17:42:37 steve Exp $
+//	$Id: Resource.java,v 1.7 2000-04-14 23:10:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,7 +82,7 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.6 1999-10-04 17:42:37 steve Exp $
+ * @version $Id: Resource.java,v 1.7 2000-04-14 23:10:07 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -343,5 +343,16 @@ public interface Resource {
    */
   public Resource create(String name, boolean container, boolean virtual, 
 			 Element config);
+
+  /** Configure a new resource. 
+   *
+   * @param name the name of the new Resource
+   * @param parent its parent resource
+   * @param config its configuration
+   * @return the new resource.  This need not be the resource handling the
+   *	call; in some cases it may be necessary to return an instance of
+   *`	a different class.  
+   */
+  public Resource configure(String name, Resource parent, Element config);
 
 }

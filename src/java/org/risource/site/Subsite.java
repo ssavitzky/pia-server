@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.18 1999-12-17 22:15:18 steve Exp $
+//	$Id: Subsite.java,v 1.19 2000-04-14 23:10:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -25,7 +25,7 @@
 package org.risource.site;
 
 import org.risource.site.util.*;
-
+import org.risource.util.NameUtils;
 import org.risource.dps.namespace.PropertyTable;
 
 import org.w3c.dom.*;
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.18 1999-12-17 22:15:18 steve Exp $
+ * @version $Id: Subsite.java,v 1.19 2000-04-14 23:10:07 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -478,14 +478,28 @@ public class Subsite extends ConfiguredResource implements Resource {
   protected Resource configureChild(String name, ActiveElement cfg) {
     Resource result = null;
     File loc = null;
+    boolean container = ( cfg.hasTrueAttribute("container") || 
+			  cfg.getTagName().equals("Container") );
+    if (container) {
+      result = (Resource)subsiteCache.at(name);
+      if (result != null) return result; // subsite already configured
+    }
+    String cname = cfg.getAttribute("class");
+    if (cname != null) {
+      Class rc = NameUtils.loadClass(cname, "org.risource.site");
+      if (result != null) try {
+	result = (Resource)rc.newInstance();
+	result = result.configure(name, this, cfg);
+	if (container && result != null) subsiteCache.at(name, result);
+      } catch (Exception e) {
+      }
+      return result;
+    }
     String vpath = cfg.getAttribute("virtual");
     if (vpath != null) {
       loc = locateVirtual(vpath);
     }
-    if (cfg.hasTrueAttribute("container") 
-	|| cfg.getTagName().equals("Container")) {
-      result = (Resource)subsiteCache.at(name);
-      if (result != null) return result; // subsite already configured
+    if (container) {
       result = new Subsite(name, this, null, loc,  cfg);
       subsiteCache.at(name, result);
     } else {

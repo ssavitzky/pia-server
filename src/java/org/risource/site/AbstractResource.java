@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.10 1999-12-16 21:24:46 steve Exp $
+//	$Id: AbstractResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.10 1999-12-16 21:24:46 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -647,5 +647,17 @@ public abstract class AbstractResource implements Resource {
   /************************************************************************
   ** Construction and Initialization:
   ************************************************************************/
+
+  /** Configure a new resource. 
+   *
+   * @param name the name of the new Resource
+   * @param parent its parent resource
+   * @param config its configuration
+   * @return the new resource.  This need not be the resource handling the
+   *	call; in some cases it may be necessary to return an instance of
+   *`	a different class.  
+   */
+  public abstract Resource configure(String name, Resource parent,
+				     Element config) ;
 
 }
