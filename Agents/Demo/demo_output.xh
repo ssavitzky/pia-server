@@ -1,0 +1,96 @@
+<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html><head>
+<title>Output Demo</title>
+</head>
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>Output Demo</header>
+
+
+<h2>Output Demo</h2>
+<p>
+The <a name='output_demo'>output handler</a> provides a method of writing data to a file.
+
+</p>
+<h2>Write to a Log File</h2>
+<p>
+<b>Description: </b> This writes the agent name, the current date and time, to an output log using
+predefined <a href='/Doc/entities.html'>entities</a>.  It uses the <code>file:</code> keyword to specify a filesystem path.
+</p>
+<p>
+<b>Input: </b> 
+</p><pre>
+&lt;output dst='file:/tmp/demo.log'&gt;
+	&amp;filePath;:&amp;fileName;:&amp;dateString;
+	
+&lt;/output&gt;
+</pre>
+
+
+<p>
+
+<b>Result: </b> 
+<output dst='file:/tmp/demo.log'>
+	&filePath;:&fileName;:&dateString;
+	
+</output>
+
+The entry in demo.log should look something like this:
+</p><pre>
+/home/pgage/PIA/Agents/Demo/demo_output.xh:demo_output.xh:Tuesday, March 30, 1999 3:18:33 PM PST
+</pre>
+
+
+
+<h2>Create a Directory</h2> 
+<p> 
+Often you want to create an output file in a directory that may or may not exist.  
+To do this, first create the directory using <code>&lt;output&gt;</code> 
+with the <code>directory</code> attribute, then call <code>&lt;output&gt;</code> a
+second time to create the output file.  If the directory already exists,
+<code>directory</code> does nothing.  </p>
+
+
+<p>
+<b> Input:      </b>&lt;output directory='directory' dst='file:/tmp/logdir'&gt;&lt;/output&gt;
+</p>
+<p>
+<b> Result:     </b><output directory='directory' dst='file:/tmp/logdir'></output>
+The directory /tmp/logdir is created.
+</p>
+<p>
+<b> Input:      </b>&lt;output dst='file:/tmp/logdir/demo2.log'&gt;Temporary file for testing&lt;/output&gt;
+</p>
+<p>
+<b> Result:     </b><output dst='file:/tmp/logdir/demo2.log'>Temporary file for testing</output>
+The file has been created containing the string.
+</p><pre>
+more /tmp/logdir/demo2.log
+Temporary file for testing
+</pre>
+
+
+
+<h2>Output to PIA Data Directory</h2>
+<p>
+This example shows how to use the PIA <a href='/Doc/author.html'>naming scheme</a> to create a data file
+in your .pia directory.
+</p><p>
+<b> Input:      </b>&lt;output directory dst='/~/demo3.log'&gt;Test file created in PIA Data Directory&lt;/output&gt;
+</p>
+<p>
+<b> Result:     </b><output dst='/~/demo3.log'>Test file created in PIA Data Directory</output>
+The following file is created:
+</p><pre>
+more .pia/demo3.log
+Test file created in PIA Data Directory
+</pre>
+
+<hr />
+
+<p>
+
+<footer cvsid='$Id: demo_output.xh,v 1.1 1999-04-02 00:44:10 pgage Exp $' /></p><p>
+
+</p></body></html>
+
