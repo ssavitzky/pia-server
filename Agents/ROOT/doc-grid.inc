@@ -35,18 +35,6 @@
 	<a href="/PIA/Doc">Other Docs:</a>
     <td><a href="/PIA/Doc/Notes/">/Notes/</a> 
     </td> <td bgcolor=silver>&nbsp; 
-  <if><test match='crc.ricoh.com'>&url;><then>
-  <tr>	 <td>&nbsp;
-    <!-- This row only appears inside Ricoh.  Should be an include -->
-    <th align=right valign=top bgcolor=silver>Demonstrations:
-    <td>
-	<a href="/PIA/Doc/demos.html">Appliances</a>, 
-        &nbsp;<a href="http://ookami.crc.ricoh.com:8888/MB3/home.if">MediaBoard</a>,
-	&nbsp;<a href="http://Forms:8000/">Form&nbsp;server</a>,
-	&nbsp;<a href="http://gelion:8888/">Steve's&nbsp;pia</a>
-    </td> <td bgcolor=silver>&nbsp; 
-  </tr>
-  </if>
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
 <inc-footer cvsid="doc-grid.inc,v 1.2 1999/03/03 17:43:30 pgage Exp">
