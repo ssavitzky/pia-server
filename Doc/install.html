@@ -15,6 +15,7 @@
   <dd> 
        <ul>
 	 <li> <a href="#Installing">Installing the Files</a></li>
+	 <li> <a href="#Quick">Quick Start</a>
 	 <li> <a href="#Setup">Initial Setup</a>
 	 <li> <a href="#Running">Running the PIA</a></li>
        </ul>
@@ -42,40 +43,56 @@
 
 <big>
 <p> We will assume that you have already downloaded and unpacked the PIA
-    files.  You should now have a directory called <code>PIA</code>; this is
-    the PIA's ``<em>home directory</em>'' and will be referred to from now on
-    as ``<var>PIA_HOME</var>''.
+    files, as described in <a
+    href="http://www.risource.org/PIA/Downloading.shtml">
+    <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.  You
+    should now have a directory called <code>PIA</code>; this is the PIA's
+    ``<em>home directory</em>'' and will be referred to from now on as
+    ``<var>PIA_HOME</var>''.
 </p>
 
 <blockquote><small>
 
-<p> The files are supplied in the form of a <code>gzip</code>'ed
-    <code>tar</code> file, obtained as described in 
-    <a href="http://www.risource.org/PIA/Downloading.shtml">
-    <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.
-</p>
-
-<p> You should unpack the <code>tar</code> archive inside the directory
+<p> You should have unpacked the <code>tar</code> archive inside the directory
     where you want the PIA to be installed; typically this will be your home
     directory, or possibly <code>/usr/local</code> or a subdirectory of
     <code>/usr/local/src</code> on a Unix system.
 </p>
 
-<p> Unpacking can be done on a Unix or Linux machine with one of the following
-    two commands; <code>winzip</code> can be used on Windows.
-</p>
-
-<ol>
-  <li> <code>tar xzf pia_src.tgz</code><br>
-       (requires GNU <code>tar</code>).
-  <li> <code>gunzip pia_src.tgz; tar xf pia_src*</code>
-</ol>
-
 </small></blockquote>
 
 </big>
 
-<h1>Initial Setup</h1>
+<h1><a name="Quick">Quick Start</a></h1>
+
+<big>
+<p> If you are feeling lucky, you can now start the PIA with the command:
+</p>
+
+<pre>./PIA/bin/pia .</pre>
+
+<blockquote><small>
+<p> Assuming all went well, you can now click on the following link: <a
+    href="http://localhost:8888/">http://localhost:8888/</a> to point your
+    browser at a running PIA-based web server.
+</small></blockquote>
+
+<p> If that didn't work, try reading the next section on <a
+    href="#Setup">Initial Setup</a>, possibly followed by the section on <a
+    href="using.html#Troubleshooting">Troubleshooting</a> in
+    <a href="using.html">Using the PIA</a>
+</p>
+
+<p> If it <em>did</em> work, you should now try to start the PIA in its
+    <em>default</em> configuration as a platform for web-based applications,
+    with the command:
+</p>
+
+<pre>./PIA/bin/pia</pre>
+
+</big>
+
+<h1><a name="Setup">Initial Setup</a></h1>
 
 <big>
 
@@ -92,7 +109,9 @@
        ``<em>root</em>'' directory, or <var>PIA_ROOT</var>.
   <li> Where to find the applications and documents that it serves to a
        browser.  This is called the PIA's ``<em>virtual root</em>'' directory.
-       In most cases, this is the same as the PIA's home directory.
+       In most cases, this is the same as the PIA's home directory.  It can be
+       set explicitly on the command line (the <code>-vroot</code> option) or
+       in the site configuration file.
 </ol>
 
 <blockquote><small>
@@ -218,28 +237,30 @@ your <code>~/.bash_profile</code> file: </p>
 <h1><a name="Running">Running the PIA </a></h1>
 
 <big>
-<p> It is easiest to launch the  PIA for the first time with the command
-    <code>PIA/bin/pia</code>.<p>
+<ul>
+  <li> See the <a href="#Quick">Quick Start</a> section for the commands 
+       for running the PIA without setup.
+  <li> If you have done the initial setup described above, you should be able
+       to use the command <code>pia</code> by itself.
+  <li> <code>pia -help</code> will display all of the command-line options
+  <li> See <a href="using.html">Using the PIA</a> for more information,
+       including the available command line and configuration file options.
+</ul>
 
 <blockquote><small>
 
 <p>On UNIX or Linux, once you have set up the <code><var>PIA_HOME</var></code>
-and <code><var>PIA_ROOT</var></code> environment variables you can launch the
-PIA with the command: ``<code>$PIA_HOME/bin/pia</code>'', or just
-``<code>pia</code>'' if <code>$PIA_HOME/bin</code> is in your search path.  A
-complete list of command-line options can be found by running
-<kbd>$PIA_HOME/bin/pia -help</kbd> at the shell prompt.</p>
+and <code><var>PIA_ROOT</var></code> environment variables and put
+<code><var>PIA_HOME</var>/bin</code> in your search path as described in the
+previous section, you should be able to start the PIA with the command:
+``<code>pia</code>'' A complete list of command-line options can be found by
+running <kbd>$PIA_HOME/bin/pia -help</kbd> at the shell prompt.</p>
 
 <p>Under Windows 9x and NT, launch the PIA in a DOS window with the command:
 <code><var>PIA_HOME</var>/bin/pia.bat</code> -- this is a batch file that makes
 use of the <code><var>PIA_HOME</var></code> and <code><var>PIA_ROOT</var></code>
 environment variables, and is similar in function to <code>pia_wrapper</code>
 on Unix.</p>
-
-<p> More information about running the PIA, including the available
-    command line and configuration file options, can be found in the companion
-    manual <a href="using.html">Using the PIA</a>.
-</p>
 
 </small></blockquote>
 
@@ -302,7 +323,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.18 1999-10-20 16:20:06 steve Exp $</i><br>
+<i>$Id: install.html,v 1.19 1999-10-22 17:33:49 steve Exp $</i><br>
 
 
 </body></html>
