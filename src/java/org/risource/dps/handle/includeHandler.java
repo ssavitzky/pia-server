@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.12 1999-12-14 18:48:36 steve Exp $
+//	$Id: includeHandler.java,v 1.13 2000-06-07 19:09:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.12 1999-12-14 18:48:36 steve Exp $
+ * @version $Id: includeHandler.java,v 1.13 2000-06-07 19:09:57 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -60,7 +60,7 @@ public class includeHandler extends GenericHandler {
     String entname  = atts.getAttribute("entity");
     boolean quoted  = atts.hasTrueAttribute("quoted");
 
-    Tagset      ts  = top.loadTagset(tsname);	// correctly handles null
+    Tagset      ts  = ("".equals(tsname))? null : top.loadTagset(tsname);
     TopContext proc = null;
     InputStream stm = null;
     Reader 	rdr = null;
@@ -122,10 +122,31 @@ public class includeHandler extends GenericHandler {
       }
     }
 
-    if (ts == null) {
+    if (tsname.equals("")) {
+      LineNumberReader lnr = new LineNumberReader(rdr);
+      String line;
+      do {
+	try {	
+	  if (!lnr.ready()) break;
+	  line = lnr.readLine();
+	  line = (line == null)? "\n" : line+"\n"; 
+	  putText(out, cxt, line);
+	} catch (IOException e) { break; }
+      } while (line != null);
+      try {      
+	if (lnr != null) lnr.close();
+	if (rdr != null) rdr.close();
+	if (stm != null) stm.close();
+      } catch (IOException e) {}
+      return;
+    } else if (ts == null) {
       reportError(in, cxt, "Cannot open tagset " + tsname);
       if (content != null) Expand.processNodes(content, cxt, out);
       else out.putNode(new TreeComment("Cannot open tagset " + tsname));
+      try {      
+	if (rdr != null) rdr.close();
+	if (stm != null) stm.close();
+      } catch (IOException e) {}
       return;
     }
 
