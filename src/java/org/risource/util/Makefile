@@ -1,5 +1,5 @@
 ###### util/Makefile:	PIA Utilities package
-# 	$Id: Makefile,v 1.3 1999-03-12 19:31:01 steve Exp $
+# 	$Id: Makefile,v 1.4 1999-10-08 16:15:20 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,7 @@ TOPDIR=../../..
 
 
 FILES = \
+	Julian.java \
 	NameUtils.java \
 	Utilities.java \
 	NullOutputStream.java \
