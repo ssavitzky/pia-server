@@ -1,5 +1,5 @@
 ### Makefile for Tagsets
-#	$Id: Makefile,v 1.1 1999-12-14 18:26:52 steve Exp $
+#	$Id: Makefile,v 1.2 2000-04-20 22:59:19 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -32,7 +32,9 @@ include $(MF_DIR)/file.make
 ### Tagsets
 
 TAGSETS = \
-	pia-xhtml.ts
+	pia-xhtml.ts \
+	pslides.ts \
+	slides.ts
 
 TAGSET_DOCS = $(TAGSETS:.ts=.html)
 TAGSET_TSSS = $(TAGSETS:.ts=.tss)
