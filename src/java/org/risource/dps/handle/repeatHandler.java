@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.5 1999-04-07 23:21:26 steve Exp $
+//	$Id: repeatHandler.java,v 1.6 1999-04-17 01:19:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.5 1999-04-07 23:21:26 steve Exp $
+ * @version $Id: repeatHandler.java,v 1.6 1999-04-17 01:19:11 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -345,10 +345,10 @@ class foreachHandler extends repeat_subHandler {
     String  name = getEntityName(Expand.expandAttrs(p, e.getAttrList()), "li");
     ActiveNodeList items = Expand.processChildren(e, p);
     items = new TreeNodeList(ListUtil.getListItems(items));
-    p.setEntityValue(name + "-list", items, true);
-    p.setEntityValue(name + "-index",
+    p.setValueNodes(name + "-list", items, true);
+    p.setValueNodes(name + "-index",
 		     new TreeNodeList(new TreeText(0)), true);
-    p.setEntityValue(name, null, true);
+    p.setValueNodes(name, null, true);
   }
 
   /** This is the per-iteration action.  It would be more efficient if the
@@ -358,8 +358,8 @@ class foreachHandler extends repeat_subHandler {
   public void action(Input in, Context cxt, Output out) {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     String name = getEntityName(atts, "li");
-    ActiveNodeList items = cxt.getEntityValue(name + "-list", true);
-    String index = cxt.getEntityValue(name + "-index", true).toString();
+    ActiveNodeList items = cxt.getValueNodes(name + "-list", true);
+    String index = cxt.getValueNodes(name + "-index", true).toString();
     long n = MathUtil.getNumeric(index).longValue();
 
     if (n >= items.getLength()) {
@@ -368,8 +368,8 @@ class foreachHandler extends repeat_subHandler {
     }
 
     ActiveNode item = items.activeItem((int)n);
-    cxt.setEntityValue(name, new TreeNodeList(item), true);
-    cxt.setEntityValue(name+"-index",
+    cxt.setValueNodes(name, new TreeNodeList(item), true);
+    cxt.setValueNodes(name+"-index",
 		       new TreeNodeList(new TreeText(n+1)), true);
   }
 }
@@ -404,7 +404,7 @@ class forHandler extends repeat_subHandler {
 
   /** Get an iteration parameter from the current context. */
   Association getParameter(Context cxt, String name) {
-    ActiveNodeList v = cxt.getEntityValue(name, false);
+    ActiveNodeList v = cxt.getValueNodes(name, false);
     if (v == null) return null;
     return MathUtil.getNumeric(v);
   }
@@ -418,13 +418,13 @@ class forHandler extends repeat_subHandler {
     ActiveAttrList atts = Expand.expandAttrs(p, e.getAttrList());
     String name = getEntityName(atts, "n");
     ActiveNodeList items = Expand.processChildren(e, p);
-    p.setEntityValue(name + "-step",
+    p.setValueNodes(name + "-step",
 		     toValue(getParameter(atts, items, "step", "1")),
 		     true);
-    p.setEntityValue(name + "-stop",
+    p.setValueNodes(name + "-stop",
 		     toValue(getParameter(atts, items, "stop", "0")),
 		     true);
-    p.setEntityValue(name + "-start",
+    p.setValueNodes(name + "-start",
 		     toValue(getParameter(atts, items, "start", "0")),
 		     true);
   }
@@ -461,7 +461,7 @@ class forHandler extends repeat_subHandler {
 	} else if (istep < 0) {
 	  if (iiter < istop) iterationStop(cxt);
 	}
-	cxt.setEntityValue(name, new TreeNodeList(new TreeText(iiter)), true);
+	cxt.setValueNodes(name, new TreeNodeList(new TreeText(iiter)), true);
       } else {
 	fiter = iter.doubleValue();
 	fstop = stop.doubleValue();
@@ -472,7 +472,7 @@ class forHandler extends repeat_subHandler {
 	} else {
 	  if (fiter < fstop) iterationStop(cxt);
 	}
-	cxt.setEntityValue(name, new TreeNodeList(new TreeText(fiter)), true);
+	cxt.setValueNodes(name, new TreeNodeList(new TreeText(fiter)), true);
       }
     } else if (iter.isIntegral() && stop.isIntegral() && step.isIntegral()) {
       iiter = iter.longValue();
@@ -486,7 +486,7 @@ class forHandler extends repeat_subHandler {
 	iiter -= istep;
 	if (iiter < istop) iterationStop(cxt);
       }
-      cxt.setEntityValue(name, new TreeNodeList(new TreeText(iiter)), true);
+      cxt.setValueNodes(name, new TreeNodeList(new TreeText(iiter)), true);
     } else {
       fiter = iter.doubleValue();
       fstop = stop.doubleValue();
@@ -499,7 +499,7 @@ class forHandler extends repeat_subHandler {
 	fiter -= fstep;
 	if (fiter < fstop) iterationStop(cxt);
       }
-      cxt.setEntityValue(name, new TreeNodeList(new TreeText(fiter)), true);
+      cxt.setValueNodes(name, new TreeNodeList(new TreeText(fiter)), true);
     }
   }
 }

@@ -1,5 +1,5 @@
 // TreeValue.java
-// $Id: TreeValue.java,v 1.1 1999-04-07 23:22:11 steve Exp $
+// $Id: TreeValue.java,v 1.2 1999-04-17 01:19:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -55,7 +55,7 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
 
   public String getName() { return getNodeName(); }
   public String getValue() {
-    return TextUtil.getCharData(getValueNodes(null));
+    return TextUtil.getCharData(getValueNodes());
   }
   public void setValue(String newValue) {
     setValueNodes(new TreeNodeList(new TreeText(newValue)));
@@ -72,12 +72,21 @@ public abstract class TreeValue extends TreeNode implements ActiveValue {
   public boolean getIsAssigned() { return isAssigned; }
   public void setIsAssigned(boolean value) { isAssigned = value; }
 
+  /** Get the node's value in a given context. 
+   *
+   * <p> ActiveValue nodes have intrinsic value, so we simply ignore 
+   *	 the context in this case. 
+   */
+  public ActiveNodeList getValueNodes(Context cxt){ 
+    return getValueNodes();
+  }
+
   /** Get the node's value. 
    *
    * <p> Eventually we may want a way to distinguish values stored in
    *	 the children from values stored in a separate nodelist.
    */
-  public ActiveNodeList getValueNodes(Context cxt){ 
+  public ActiveNodeList getValueNodes(){ 
     return hasChildNodes()
       ? (ActiveNodeList) new TreeChildList( this )
       : nodeValue; 

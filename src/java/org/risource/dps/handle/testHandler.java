@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
+//	$Id: testHandler.java,v 1.7 1999-04-17 01:19:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
+ * @version $Id: testHandler.java,v 1.7 1999-04-17 01:19:16 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -93,7 +93,7 @@ public class testHandler extends GenericHandler {
    */
   public void returnBoolean(boolean value, Context cxt, Output out,
 			    ActiveAttrList atts) {
-    if (atts == NO_ATTRS) {
+    if (atts.getLength() == 0) {
       if (value) { putText(out, cxt, "1"); }
       return;
     }

@@ -1,5 +1,5 @@
 ////// ActiveNodeMap.java: Active Attribute List interface
-//	$Id: ActiveNodeMap.java,v 1.1 1999-04-07 23:20:58 steve Exp $
+//	$Id: ActiveNodeMap.java,v 1.2 1999-04-17 01:19:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -25,6 +25,8 @@
 package org.risource.dps.active;
 
 import org.w3c.dom.*;
+import org.risource.dps.Input;
+import java.util.Enumeration;
 
 /**
  * A DOM NamedNodeMap that includes additional convenience functions.
@@ -32,7 +34,7 @@ import org.w3c.dom.*;
  * <p>	In addition to the usual functions of a NamedNodeMap, an 
  *	ActiveNodeMap can associate unnamed nodes with arbitrary strings. 
  *
- * @version $Id: ActiveNodeMap.java,v 1.1 1999-04-07 23:20:58 steve Exp $
+ * @version $Id: ActiveNodeMap.java,v 1.2 1999-04-17 01:19:00 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -42,14 +44,36 @@ public interface ActiveNodeMap extends NamedNodeMap {
   ** Extensions:
   ************************************************************************/
 
-  /** Associate an arbitrary node with a string. */
-  public ActiveNode setActiveItem(String name, ActiveNode item);
+  /** Associate an arbitrary node with a name. 
+   *
+   * <p> Unlike a NamedNodeMap, the name need not be the new item's n
+   *	 <code>nodeName</code>, although it is in almost all cases.
+   */
+  public ActiveNode setBinding(String name, ActiveNode item);
 
-  public ActiveNode getActiveItem(String name);
+  /** Retrieve the ActiveNode associated with (bound to) a name. */
+  public ActiveNode getBinding(String name);
+
+  /** Returns the bindings defined in this table, in the same order as the 
+   *	names returned by <code>getNames</code>.
+   */
+  public Input getBindings();
+
+  /** Returns an Enumeration of the names defined in this table, in the same 
+   *	order as the bindings returned by <code>getBindings</code>. 
+   */
+  public Enumeration getNames();
 
   /************************************************************************
   ** Convenience functions:
   ************************************************************************/
+
+  /** Return the ActiveNodeMap as an ActiveNodeList. 
+   * <p>Every ActiveNodeMap trivially implements the NodeList interface, but 
+   *	the ActiveNodeMap interface cannot extend <em>both</em> NodeList and
+   *	NamedNodeMap because that introduces ambiguities.
+   */
+  public ActiveNodeList asNodeList();
 
   /** Associate an arbitrary node with a string. */
   public Node setNamedItem(String name, Node item);

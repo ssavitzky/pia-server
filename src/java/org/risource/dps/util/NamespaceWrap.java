@@ -1,5 +1,5 @@
 ////// NamespaceWrap.java: Wrap a Tabular as a Namespace
-//	$Id: NamespaceWrap.java,v 1.6 1999-04-07 23:22:17 steve Exp $
+//	$Id: NamespaceWrap.java,v 1.7 1999-04-17 01:20:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,7 +46,7 @@ import org.risource.ds.Tabular;
  * ===	The implementation is crude, and will probably want to be revisited. ===
  * ===	We may want to insist that NamespaceWrap implement Entity.
  *
- * @version $Id: NamespaceWrap.java,v 1.6 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: NamespaceWrap.java,v 1.7 1999-04-17 01:20:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Namespace
@@ -71,7 +71,7 @@ public class NamespaceWrap extends TreeGeneric implements Namespace {
   /** Wrap an object as a binding.  This would work better if we had
    *	some kind of EntityWrap to go with NamespaceWrap.
    */
-  public ActiveNode wrap(Object o) {
+  public ActiveNode wrap(String name, Object o) {
     if (o == null) return null;
     if (o instanceof ActiveNode) return (ActiveNode)o;
     if (o instanceof Tabular) return new NamespaceWrap(name, (Tabular)o);
@@ -94,16 +94,7 @@ public class NamespaceWrap extends TreeGeneric implements Namespace {
   /** Look up a name and get a (local) binding. */
   public ActiveNode getBinding(String name) {
     if (!caseSensitive) name = cannonizeName(name);
-    return wrap(itemsByName.get(name));
-  }
-
-  public ActiveNodeList getValueNodes(Context cxt, String name) {
-    ActiveNode binding = getBinding(name);
-    if (binding == null) {
-      return null;
-    } else {
-      return binding.getValueNodes(cxt);
-    }
+    return wrap(name, itemsByName.get(name));
   }
 
   /** Add a new local binding or replace an existing one. 
@@ -138,17 +129,6 @@ public class NamespaceWrap extends TreeGeneric implements Namespace {
     return old;
   }
 
-  public void setValueNodes(Context cxt, String name, ActiveNodeList value) {
-    Tagset ts = cxt.getTopContext().getTagset();
-    ActiveNode binding = getBinding(name);
-    if (binding == null) {
-      addBinding(name, ts.createActiveEntity(name, value));
-    } else {
-      // We never actually replace bindings here.
-      setBinding(name, ts.createActiveEntity(name, value));
-    }
-  }
-
 
   /** Add a new local binding.  Assumes that the name has already been
    *	cannonized if necessary.   Can be useful for initialization.
@@ -169,7 +149,8 @@ public class NamespaceWrap extends TreeGeneric implements Namespace {
     Enumeration enum = getNames();
     TreeNodeArray list = new TreeNodeArray();
     while(enum.hasMoreElements()) {
-      list.append(wrap(getBinding((String)enum.nextElement())));
+      String name = enum.nextElement().toString();
+      list.append(wrap(name, getBinding(name)));
     }
     return new FromNodeList(list);
   }

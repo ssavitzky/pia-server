@@ -1,5 +1,5 @@
 // TreeNodeTable.java
-// $Id: TreeNodeTable.java,v 1.1 1999-04-07 23:22:10 steve Exp $
+// $Id: TreeNodeTable.java,v 1.2 1999-04-17 01:19:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,6 +26,10 @@ package org.risource.dps.tree;
 
 import org.w3c.dom.*;
 import org.risource.dps.active.*;
+import org.risource.dps.Input;
+import org.risource.dps.input.FromEnumeration;
+
+import org.risource.ds.Tabular;
 
 import java.io.*;
 import java.util.Hashtable;
@@ -38,7 +42,7 @@ import java.util.Enumeration;
  *
  * === Should probably implement Namespace
  */
-public abstract class TreeNodeTable implements Serializable {
+public abstract class TreeNodeTable implements Serializable, Tabular {
 
   protected boolean caseSensitive = true;
 
@@ -47,12 +51,12 @@ public abstract class TreeNodeTable implements Serializable {
    * @param name Key used to retreive value.
    * @return Value associated with name.
    */
-  public ActiveNode getActiveItem(String name) {
+  public ActiveNode getBinding(String name) {
     name = cannonizeName(name);
     return (ActiveNode) nameSpace.get( name );
   }
 
-  public Node getNamedItem(String name) { return getActiveItem(name); }
+  public Node getNamedItem(String name) { return getBinding(name); }
 
   /**
    *  Add a new item to the end of the list and associate it with the given
@@ -68,10 +72,10 @@ public abstract class TreeNodeTable implements Serializable {
    * @param o The value.
    * @return Previous value associated with name; otherwise null.
    */
-  public ActiveNode setActiveItem(String name, ActiveNode o) {
+  public ActiveNode setBinding(String name, ActiveNode o) {
     name = cannonizeName(name);
 
-    if (getActiveItem(name) == null) {
+    if (getBinding(name) == null) {
       itemList.append(o); 
       nameSpace.put(name, o);
     } else {
@@ -84,6 +88,17 @@ public abstract class TreeNodeTable implements Serializable {
     return o;
   }
   
+  /** Returns the bindings defined in this table. */
+  public Input getBindings() {
+    return new FromEnumeration(nameSpace.elements());
+  }
+
+  /** Returns an Enumeration of the entity names defined in this table. 
+   */
+  public Enumeration getNames() { 
+    return nameSpace.keys();
+  }
+
   /**
    * Remove value indicated by name.
    * @param name The key.
@@ -140,6 +155,16 @@ public abstract class TreeNodeTable implements Serializable {
   }
   protected Hashtable nameSpace = new Hashtable();
   protected TreeNodeArray itemList = new TreeNodeArray();
+
+  /************************************************************************
+  ** Tabular Interface:
+  ************************************************************************/
+
+  public Object get(String key) { return getBinding(key);  }
+
+  public void put(String key, Object v) { setBinding(key, (ActiveNode)v); }
+
+  public Enumeration keys() { return nameSpace.keys(); }
 
   /************************************************************************
   ** Namespace Operations (not a complete set):

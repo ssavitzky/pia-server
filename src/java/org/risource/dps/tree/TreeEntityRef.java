@@ -1,5 +1,5 @@
 ////// TreeEntityRef.java -- implementation of ActiveEntity
-//	$Id: TreeEntityRef.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+//	$Id: TreeEntityRef.java,v 1.2 1999-04-17 01:19:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,11 +37,11 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntityRef.java,v 1.1 1999-04-07 23:22:07 steve Exp $
+ * @version $Id: TreeEntityRef.java,v 1.2 1999-04-17 01:19:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
-public class TreeEntityRef extends TreeValue implements ActiveEntityRef {
+public class TreeEntityRef extends TreeNode implements ActiveEntityRef {
 
   /************************************************************************
   ** Entity Interface:
@@ -50,19 +50,6 @@ public class TreeEntityRef extends TreeValue implements ActiveEntityRef {
   protected boolean isParameterEntity = false;
   public void setIsParameterEntity(boolean value) { isParameterEntity = value; }
   public boolean getIsParameterEntity() { return isParameterEntity; }
-
-  public Output getValueOutput(Context cxt) {
-    // === actually have to look up binding ===
-    ToNodeList out = new ToNodeList();
-    setValueNodes(out.getList());
-    return out;
-  }
-
-  public void setValueNodes(Context cxt, ActiveNodeList v) {
-    // === changes when value becomes children ===
-    // === actually, ref doesn't HAVE a value!
-    setValueNodes(v);
-  }
 
   /************************************************************************
   ** Construction:
@@ -106,7 +93,7 @@ public class TreeEntityRef extends TreeValue implements ActiveEntityRef {
    *	with special significance, such as ampersand.
    */
   public String contentString() {
-    return getName();
+    return getNodeName();
   }
 
   /** Return the String equivalent of the Token's end tag (for an element)

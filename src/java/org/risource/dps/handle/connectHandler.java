@@ -1,5 +1,5 @@
 ////// connectHandler.java: <connect> Handler implementation
-//	$Id: connectHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
+//	$Id: connectHandler.java,v 1.6 1999-04-17 01:19:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.tree.TreeExternal;
  *	within external entities.  That suggests that the best implementation
  *	is simply to create a suitable entity and return its value.
  *
- * @version $Id: connectHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
+ * @version $Id: connectHandler.java,v 1.6 1999-04-17 01:19:07 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -73,7 +73,7 @@ public class connectHandler extends GenericHandler {
       ename = ename.trim();
       ent = new TreeExternal(ename, src, null);
       // If the user gave a name, he is expecting it to be bound.
-      cxt.setEntityBinding(ename, ent, false);
+      cxt.setBinding(ename, ent, false);
     } else {
       ent = new TreeExternal(in.getTagName(), src, null);
       // not clear whether to bind the entity or not here.

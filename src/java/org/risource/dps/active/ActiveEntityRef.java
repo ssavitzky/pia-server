@@ -1,5 +1,5 @@
 ////// ActiveEntityRef.java: Active Entity Reference
-//	$Id: ActiveEntityRef.java,v 1.1 1999-04-07 23:20:57 steve Exp $
+//	$Id: ActiveEntityRef.java,v 1.2 1999-04-17 01:18:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,9 +34,9 @@ import org.risource.dps.Context;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveEntityRef.java,v 1.1 1999-04-07 23:20:57 steve Exp $
+ * @version $Id: ActiveEntityRef.java,v 1.2 1999-04-17 01:18:58 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
-public interface ActiveEntityRef extends EntityReference, ActiveValue {
+public interface ActiveEntityRef extends ActiveNode, EntityReference {
 }

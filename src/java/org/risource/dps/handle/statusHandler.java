@@ -1,5 +1,5 @@
 ////// statusHandler.java: <status> Handler implementation
-//	$Id: statusHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
+//	$Id: statusHandler.java,v 1.7 1999-04-17 01:19:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  *
  * <p>	Determine the status of a resource. 
  *
- * @version $Id: statusHandler.java,v 1.6 1999-04-07 23:21:26 steve Exp $
+ * @version $Id: statusHandler.java,v 1.7 1999-04-17 01:19:14 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -97,7 +97,7 @@ public class statusHandler extends GenericHandler {
   void getStatusForEntity(String name, Context cxt, Output out, 
 			  ActiveAttrList atts, ActiveNodeList content) {
     String item = atts.getAttribute("item");
-    ActiveEntity entity = cxt.getEntityBinding(name, false);
+    ActiveNode entity = cxt.getBinding(name, false);
     if (entity == null) {
       if (content != null) Expand.processNodes(content, cxt, out);
     }

@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+//	$Id: Status.java,v 1.5 1999-04-17 01:20:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.net.HttpURLConnection;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: Status.java,v 1.5 1999-04-17 01:20:02 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -81,7 +81,7 @@ public class Status {
    */
   public static ActiveNodeList getStatusItem(File res, String name) {
     if (res == null) return null;
-    if (name == null) return (ActiveNodeList) getStatusItems(res);
+    if (name == null) return getStatusItems(res).asNodeList();
     name = name.toLowerCase();
 
     if (name.equals("local")) return nodes(true);
@@ -136,7 +136,7 @@ public class Status {
   /** Get the value of a named status item for a URL. */
   public static ActiveNodeList getStatusItem(URL res, String name) {
     if (res == null) return null;
-    if (name == null) return (ActiveNodeList) getStatusItems(res);
+    if (name == null) return getStatusItems(res).asNodeList();
     name = name.toLowerCase();
 
     if (name.equals("url")) return nodes(res.toString());
@@ -173,9 +173,9 @@ public class Status {
   ************************************************************************/
 
   /** Get the value of a named status item for an Entity. */
-  public static ActiveNodeList getStatusItem(ActiveEntity res, String name) {
+  public static ActiveNodeList getStatusItem(ActiveNode res, String name) {
     if (res == null) return null;
-    if (name == null) return (ActiveNodeList) getStatusItems(res);
+    if (name == null) return getStatusItems(res).asNodeList();
     name = name.toLowerCase();
 
     if (name.equals("entity")) return nodes(true);
@@ -209,11 +209,11 @@ public class Status {
     return null;
   }
 
-  public static ActiveAttrList getStatusItems(ActiveEntity res) {
+  public static ActiveAttrList getStatusItems(ActiveNode res) {
     return getStatusItems(res, entityItems);
   }
 
-  public static ActiveAttrList getStatusItems(ActiveEntity res,
+  public static ActiveAttrList getStatusItems(ActiveNode res,
 					      String items[]) {
     TreeAttrList list = new TreeAttrList();
     for (int i = 0; i < items.length; ++i) {

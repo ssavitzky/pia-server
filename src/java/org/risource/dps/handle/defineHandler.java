@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.7 1999-04-07 23:21:22 steve Exp $
+//	$Id: defineHandler.java,v 1.8 1999-04-17 01:19:08 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.7 1999-04-07 23:21:22 steve Exp $
+ * @version $Id: defineHandler.java,v 1.8 1999-04-17 01:19:08 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -304,13 +304,13 @@ class define_entity extends defineHandler {
     
     if (hasNamespace(name)) {
       // Have to worry about namespace. 
-      cxt.setEntityBinding(name, ent, false);
+      cxt.setBinding(name, ent, false);
     } else if (tproc != null ) {
       // If we're in a tagset, define it there.
       tproc.getTagset().setEntityBinding(name, ent);
     } else {
       // Otherwise, define it in the document's entity table. 
-      top.setEntityBinding(name, ent, false);
+      top.setBinding(name, ent, false);
     }
   }
   define_entity(String aname) { super(aname); }

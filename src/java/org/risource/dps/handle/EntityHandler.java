@@ -1,5 +1,5 @@
 ////// EntityHandler.java: Entity Node Handler implementation
-//	$Id: EntityHandler.java,v 1.5 1999-04-07 23:21:19 steve Exp $
+//	$Id: EntityHandler.java,v 1.6 1999-04-17 01:19:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityHandler.java,v 1.5 1999-04-07 23:21:19 steve Exp $
+ * @version $Id: EntityHandler.java,v 1.6 1999-04-17 01:19:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -114,8 +114,8 @@ public class EntityHandler extends AbstractHandler {
     ActiveNodeList value;
     if (simple) {
       value = (namepart != null)
-	? aContext.getEntityValue(namepart, false)
-	: aContext.getEntityValue(name, false);
+	? aContext.getValueNodes(namepart, false)
+	: aContext.getValueNodes(name, false);
     } else if (indexed) {
       value = (namepart != null) 
 	? Index.getValue(aContext, namespace, namepart)
@@ -123,7 +123,7 @@ public class EntityHandler extends AbstractHandler {
     } else if (name.indexOf(':') >= 0) {
       value = Index.getIndexValue(aContext, name);
     } else {
-      value = aContext.getEntityValue(name, false);
+      value = aContext.getValueNodes(name, false);
     }
 
     //aContext.debug("&" + name + "; => " + value + "\n");

@@ -1,5 +1,5 @@
 // TreeGeneric.java
-// $Id: TreeGeneric.java,v 1.1 1999-04-07 23:22:08 steve Exp $
+// $Id: TreeGeneric.java,v 1.2 1999-04-17 01:19:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,10 +33,17 @@ import org.risource.dps.Namespace;
 
 /** 
  * Abstract base class for nodes with names, attributes, and a variable 
- *	nodeType. <p>
+ *	nodeType.
  *
- *	Generic nodes can be used for things like Tagset, that might
- *	be either elements or declarations in different contexts.
+ * <p>	Generic nodes can be used for things like Tagset or Entity that
+ *	might be either elements or declarations in different contexts.
+ *
+ * <p>	A Generic node has <em>two</em> names: its ``name'' and its
+ *	``tagname''.  The first is always accessible using 
+ *	<code>getName</code>, the second with <code>getTagName</code>. 
+ *	When functioning as an Element, <code>getNodeName</code> returns
+ *	the tagname, and the ``name'' is accessible as the value of the 
+ *	<code>name</code> <em>attribute</em>.  
  */
 public class TreeGeneric extends TreeElement  {
 
@@ -48,6 +55,9 @@ public class TreeGeneric extends TreeElement  {
   protected Namespace names = null;
   protected boolean isAssigned = false;
 
+  /** The ``name'' of this node.  Note that the ActiveNode protected
+   *	variable <code>nodeName</code> contains the tagname. 
+   */
   protected String name;
 
   /************************************************************************
@@ -56,6 +66,9 @@ public class TreeGeneric extends TreeElement  {
 
   /** In some cases it may be necessary to make the node type more specific. */
   void setNodeType(short value)		{ nodeType = value; }
+  
+  /** It is possible to set the tag name. */
+  void setTagName(String value)		{ nodeName = value; }
   
   /**
    * Set attribute name.
@@ -68,6 +81,13 @@ public class TreeGeneric extends TreeElement  {
    * @return attribute name.
    */
   public String getName()		{ return name; }
+
+  /** 
+   * Return the DOM ``nodeName'' appropriate for the current node type.
+   */
+  public String getNodeName() {
+    return (nodeType == Node.ELEMENT_NODE)? nodeName : name;
+  }
   
   /** Get the associated namespace, if any. */
   public Namespace asNamespace() { return names; }

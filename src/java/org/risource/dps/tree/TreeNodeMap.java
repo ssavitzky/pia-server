@@ -1,5 +1,5 @@
 // TreeNodeMap.java
-// $Id: TreeNodeMap.java,v 1.1 1999-04-07 23:22:10 steve Exp $
+// $Id: TreeNodeMap.java,v 1.2 1999-04-17 01:19:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,17 +47,19 @@ public class TreeNodeMap extends TreeNodeTable
       initialize( l );
   }
 
-  
+
+  public ActiveNodeList asNodeList() { return this; }
+
   public Node item(int index) { return activeItem(index); }
 
   public boolean hasTrueItem(String name) {
-    return Test.trueValue(getActiveItem(name));
+    return Test.trueValue(getBinding(name));
   }
 
   public Node setNamedItem(String name, Node o) {
     if (! (o instanceof ActiveNode))
       throw new DPSException(DPSException.NOT_ACTIVE_NODE_ERR);
-    return setActiveItem(name, (ActiveNode)o);
+    return setBinding(name, (ActiveNode)o);
   }
 
   public Node setNamedItem(Node o) {
@@ -69,7 +71,7 @@ public class TreeNodeMap extends TreeNodeTable
   }
 
   public String getItemValue(String name) {
-    ActiveNode n = getActiveItem(name);
+    ActiveNode n = getBinding(name);
     return (n == null) ? null : n.getNodeValue();
   }
 

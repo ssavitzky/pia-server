@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
+//	$Id: includeHandler.java,v 1.7 1999-04-17 01:19:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
+ * @version $Id: includeHandler.java,v 1.7 1999-04-17 01:19:10 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -63,13 +63,13 @@ public class includeHandler extends GenericHandler {
     Tagset      ts  = top.loadTagset(tsname);	// correctly handles null
     TopContext proc = null;
     InputStream stm = null;
-    ActiveEntity ent= null;
+    ActiveNode  ent = null;
 
     // Check the entity.  If it's already defined, we can just use its value
 
     if (entname != null) {
       entname = entname.trim();
-      ent = cxt.getEntityBinding(entname, false);
+      ent = cxt.getBinding(entname, false);
       if (ent != null) {
 	proc = top.subDocument(ent.fromValue(cxt), cxt, out, ts);
 	proc.run();
@@ -126,7 +126,7 @@ public class includeHandler extends GenericHandler {
     // Crank away.
     if (quoted) proc.copy(); else proc.run();
 
-    if (ent != null) cxt.setEntityBinding(entname, ent, false);
+    if (ent != null) cxt.setBinding(entname, ent, false);
   }
 
   /************************************************************************

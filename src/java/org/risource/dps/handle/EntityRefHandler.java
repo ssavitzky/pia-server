@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.1 1999-04-07 23:21:19 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.2 1999-04-17 01:19:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.1 1999-04-07 23:21:19 steve Exp $
+ * @version $Id: EntityRefHandler.java,v 1.2 1999-04-17 01:19:05 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -112,8 +112,8 @@ public class EntityRefHandler extends AbstractHandler {
     ActiveNodeList value;
     if (simple) {
       value = (namepart != null)
-	? aContext.getEntityValue(namepart, false)
-	: aContext.getEntityValue(name, false);
+	? aContext.getValueNodes(namepart, false)
+	: aContext.getValueNodes(name, false);
     } else if (indexed) {
       value = (namepart != null) 
 	? Index.getValue(aContext, namespace, namepart)
@@ -121,7 +121,7 @@ public class EntityRefHandler extends AbstractHandler {
     } else if (name.indexOf(':') >= 0) {
       value = Index.getIndexValue(aContext, name);
     } else {
-      value = aContext.getEntityValue(name, false);
+      value = aContext.getValueNodes(name, false);
     }
 
     //aContext.debug("&" + name + "; => " + value + "\n");

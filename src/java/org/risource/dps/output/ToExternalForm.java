@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.5 1999-04-07 23:21:39 steve Exp $
+//	$Id: ToExternalForm.java,v 1.6 1999-04-17 01:19:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.5 1999-04-07 23:21:39 steve Exp $
+ * @version $Id: ToExternalForm.java,v 1.6 1999-04-17 01:19:20 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
@@ -92,7 +92,7 @@ public abstract class ToExternalForm extends CursorStack implements Output {
     } else if (aNode.getNodeType() == Node.ENTITY_REFERENCE_NODE) {
       // Convert character entities back to characters.
       Entity e = (Entity)aNode;
-      NodeList value = defaultEntityTable.getEntityValue(null, e.getNodeName());
+      NodeList value = defaultEntityTable.getValueNodes(e.getNodeName());
       // === new DOM: check entity's value first. 
       if (value != null) write(value.toString());
       else write(aNode.toString());

@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.6 1999-04-07 23:21:49 steve Exp $
+//	$Id: TopProcessor.java,v 1.7 1999-04-17 01:19:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.6 1999-04-07 23:21:49 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.7 1999-04-17 01:19:33 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -120,27 +120,27 @@ public class TopProcessor extends BasicProcessor implements TopContext
    *
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveEntity getEntityBinding(String name, boolean local) {
-    ActiveEntity ent = (entities == null)
-      ? null : entities.getEntityBinding(name);
+  public ActiveNode getBinding(String name, boolean local) {
+    ActiveNode ent = (entities == null)
+      ? null : entities.getBinding(name);
     if (ent == null && tagset != null) ent = tagset.getEntityBinding(name);
     //if (debug() && ent != null)
     //debug("Binding found for " + name + " " + ent.getClass().getName());
     return (local || ent != null || nameContext == null)
-      ? ent : nameContext.getEntityBinding(name, local);
+      ? ent : nameContext.getBinding(name, local);
   }
 
-  /** Get the namespace containing an entity, given its name. 
-   * @return <code>null</code> if the entity is undefined.
+  /** Get the namespace containing a given name. 
+   * @return <code>null</code> if the name is undefined.
    */
-  public Namespace locateEntityBinding(String name, boolean local) {
-    ActiveEntity ent = (entities == null)
-      ? null : entities.getEntityBinding(name);
+  public Namespace locateBinding(String name, boolean local) {
+    ActiveNode ent = (entities == null)
+      ? null : entities.getBinding(name);
     if (ent != null) return entities;
     ent = tagset.getEntityBinding(name);
     if (ent != null) return tagset.getEntities();
     return (local || nameContext == null)
-      ? null : nameContext.locateEntityBinding(name, local);
+      ? null : nameContext.locateBinding(name, local);
   }
 
   /** Return a namespace with a given name.  If the name is null, 
@@ -369,14 +369,14 @@ public class TopProcessor extends BasicProcessor implements TopContext
   /** Make an entity-table entry for a String. */
   public void define(String n, Object v) {
     if (v == null)
-      setEntityValue(n, new TreeNodeList(), false);
+      setValueNodes(n, new TreeNodeList(), false);
     else
-      setEntityValue(n, Create.createNodeList(v.toString()), false);
+      setValueNodes(n, Create.createNodeList(v.toString()), false);
   }
 
   /** Make an entity-table entry for a List. */
   public void define(String n, Enumeration v) {
-    setEntityValue(n, new TreeNodeList(v), false);
+    setValueNodes(n, new TreeNodeList(v), false);
   }
 
   static List dayNames = List.split("Sunday Monday Tuesday Wednesday"

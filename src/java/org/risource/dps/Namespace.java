@@ -1,5 +1,5 @@
 ////// Namespace.java: Node Handler Lookup Table interface
-//	$Id: Namespace.java,v 1.4 1999-04-07 23:20:47 steve Exp $
+//	$Id: Namespace.java,v 1.5 1999-04-17 01:18:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,7 @@ import org.risource.dps.active.*;
 import java.util.Enumeration;
 
 /**
- * The interface for a Namespace -- a lookup table for named nodes.
+ * The interface for a Namespace -- a lookup table for nodes.
  *
  * <p>	Note that a Namespace might be either a Node (e.g. BasicEntityTable)
  *	or a NamedNodeMap, or something else entirely.  As long as it maps
@@ -40,23 +40,19 @@ import java.util.Enumeration;
  *	however; it may simply be the value of that name in another 
  *	Namespace, or even <em>contained in</em> some name's value.
  *
- * @version $Id: Namespace.java,v 1.4 1999-04-07 23:20:47 steve Exp $
+ * @version $Id: Namespace.java,v 1.5 1999-04-17 01:18:52 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Input */
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.active.ActiveNodeMap
+ */
 
 public interface Namespace {
 
   /************************************************************************
   ** Lookup Operations:
   ************************************************************************/
-
-  // NamedNodeMap uses:
-  //	 Node                      getNamedItem(in wstring name);
-  //     void                      setNamedItem(in Node arg);
-  //     Node                      removeNamedItem(in wstring name);
-  //     Node                      item(in unsigned long index);
 
   /** Look up a name and get a binding (node). */
   public ActiveNode getBinding(String name);
@@ -66,12 +62,6 @@ public interface Namespace {
    *	<code>null</code>
    */
   public ActiveNode setBinding(String name, ActiveNode binding);
-
-  /** Look up a name and get a value. */
-  public ActiveNodeList getValueNodes(Context cxt, String name);
-
-  /** Set a value. */
-  public void setValueNodes(Context cxt, String name, ActiveNodeList value);
 
   /************************************************************************
   ** Information Operations:

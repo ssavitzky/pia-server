@@ -1,5 +1,5 @@
-////// BasicContext.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.5 1999-04-07 23:22:14 steve Exp $
+////// ContextStack.java: A linked-list stack of current nodes.
+//	$Id: ContextStack.java,v 1.6 1999-04-17 01:19:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.process.BasicProcessor;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.5 1999-04-07 23:22:14 steve Exp $
+ * @version $Id: ContextStack.java,v 1.6 1999-04-17 01:19:58 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -81,12 +81,12 @@ public class ContextStack  implements Context {
  ************************************************************************/
 
   /** getEntities returns the most-local Entity namespace. */
-  public EntityTable getEntities() 	{ 
+  protected Namespace getEntities() 	{ 
     return (entities == null && nameContext != null) 
-      ? nameContext.getEntities() 
+      ? nameContext.getNamespace(null) 
       : entities;
   }
-  public void setEntities(EntityTable bindings) { entities = bindings; }
+  protected void setEntities(EntityTable bindings) { entities = bindings; }
 
   public Input getInput() 		{ return input; }
   public void  setInput(Input in) 	{ input = in; }
@@ -132,60 +132,64 @@ public class ContextStack  implements Context {
   }
 
   /************************************************************************
-  ** Bindings:
+  ** Namespace convenience functions:
   ************************************************************************/
 
   /** Get the value of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveNodeList getEntityValue(String name, boolean local) {
-    ActiveEntity binding = getEntityBinding(name, local);
+  public ActiveNodeList getValueNodes(String name, boolean local) {
+    ActiveNode binding = getBinding(name, local);
     if (binding == null) return null;
     return binding.getValueNodes(this);
   }
 
   /** Set the value of an entity. 
    */
-  public void setEntityValue(String name, ActiveNodeList value, boolean local) {
-    ActiveEntity binding = getEntityBinding(name, local);
-    if (binding != null) {
+  public void setValueNodes(String name, ActiveNodeList value, boolean local) {
+    Namespace ns = locateBinding(name, local);
+    if (ns != null) {
+      ActiveNode binding = ns.getBinding(name);
       binding.setValueNodes(this, value);
+      if (! (ns instanceof BasicNamespace)) ns.setBinding(name, binding);
+      // need to locate the binding and rebind it, because the namespace
+      // may be something special (like an Agent).
     } else {
       if (entities == null && (local || nameContext == null))
 	entities = new BasicEntityTable();
       Tagset ts = this.getTopContext().getTagset();
-      getEntities().setBinding(name, ts.createActiveEntity(name, value));
+      getNamespace(null).setBinding(name, ts.createActiveEntity(name, value));
     } 
   }
 
   /** Get the binding (Entity node) of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveEntity getEntityBinding(String name, boolean local) {
-    ActiveEntity ent = (entities == null)
-      ? null : entities.getEntityBinding(name);
+  public ActiveNode getBinding(String name, boolean local) {
+    ActiveNode ent = (entities == null)
+      ? null : entities.getBinding(name);
     //if (debug() && ent != null) 
     //  debug("Binding found for " + name + " " + ent.getClass().getName());
     return (local || ent != null || nameContext == null)
-      ? ent : nameContext.getEntityBinding(name, local);
+      ? ent : nameContext.getBinding(name, local);
   }
 
   /** Get the namespace containing an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public Namespace locateEntityBinding(String name, boolean local) {
-    ActiveEntity ent = (entities == null)
-      ? null : entities.getEntityBinding(name);
+  public Namespace locateBinding(String name, boolean local) {
+    ActiveNode ent = (entities == null)
+      ? null : entities.getBinding(name);
     if (ent != null) return entities;
     return (local || nameContext == null)
-      ? null : nameContext.locateEntityBinding(name, local);
+      ? null : nameContext.locateBinding(name, local);
   }
 
   /** Set the binding (Entity node) of an entity, given its name. 
    *	Note that the given name may include a namespace part. 
    */
-  public void setEntityBinding(String name, ActiveEntity ent, boolean local) {
-    Namespace ns = locateEntityBinding(name, local);
+  public void setBinding(String name, ActiveNode ent, boolean local) {
+    Namespace ns = locateBinding(name, local);
     if (ns == null) {
       if (entities == null && (local || nameContext == null))
 	entities = new BasicEntityTable();

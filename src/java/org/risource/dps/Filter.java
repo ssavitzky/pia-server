@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.5 1999-04-07 23:20:46 steve Exp $
+//	$Id: Filter.java,v 1.6 1999-04-17 01:18:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -161,12 +161,12 @@ public class Filter {
     ii.setInput(p);
     ii.setTagset(ts);
 
-    if (debug && (ii.getEntities() != null)) {
+    if (debug && (ii.getNamespace(null) != null)) {
       System.err.println("Entities defined: ");
-      java.util.Enumeration names = ii.getEntities().getNames();
+      java.util.Enumeration names = ii.getNamespace(null).getNames();
       while (names.hasMoreElements()) {
 	String name = names.nextElement().toString();
-	ActiveNodeList v = ii.getEntityValue(name, false);
+	ActiveNodeList v = ii.getValueNodes(name, false);
 	System.err.println(" " + name + "=" + v);
       }
       System.err.print("\n");

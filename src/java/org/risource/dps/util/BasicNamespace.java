@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.5 1999-04-07 23:22:14 steve Exp $
+//	$Id: BasicNamespace.java,v 1.6 1999-04-17 01:19:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.ds.Table;
  *
  * ===	The implementation is crude, and will probably want to be revisited. ===
  *
- * @version $Id: BasicNamespace.java,v 1.5 1999-04-07 23:22:14 steve Exp $
+ * @version $Id: BasicNamespace.java,v 1.6 1999-04-17 01:19:56 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -88,6 +88,8 @@ public class BasicNamespace extends TreeGeneric implements Namespace {
       } 
     } else if (old == null) {	// We are adding a new binding.  Easy.
       addBinding(name, binding);
+    } else if (old == binding) { // We are replacing a binding by itself
+      // nothing to do.
     } else try {		// We are replacing an old binding.
       itemsByName.at(name, binding); // ... in hash table.  Name stays.
       replaceChild(old, binding);    // ... in children
@@ -115,25 +117,6 @@ public class BasicNamespace extends TreeGeneric implements Namespace {
     if (binding.asNamespace() != null) namespaceItems ++;
   }
 
-  public ActiveNodeList getValueNodes(Context c, String name) {
-    ActiveNode b = getBinding(name);
-    if (b == null) return null;
-    else return b.getValueNodes(c);
-  }
-
-  public void setValueNodes(Context c, String name, ActiveNodeList value) {
-    ActiveNode b = getBinding(name);
-    if (b == null) {
-      Tagset ts = c.getTopContext().getTagset();
-      setBinding(name, ts.createActiveEntity(name, value));
-    } else if (b.asEntity() != null) {
-      b.asEntity().setValueNodes(c, value);
-    } else if (b.asAttribute() != null) {
-      b.asAttribute().setValueNodes(c, value);
-    } else {
-      // === problem -- namespace can't set value (DOM update needed)
-    }
-  }
 
   /************************************************************************
   ** Information Operations:

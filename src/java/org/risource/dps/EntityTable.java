@@ -1,5 +1,5 @@
 ////// EntityTable.java: Entity Lookup Table interface
-//	$Id: EntityTable.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+//	$Id: EntityTable.java,v 1.5 1999-04-17 01:18:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import java.util.Enumeration;
  *
  *	Entities are named values that can be substituted into a document.
  *
- * @version $Id: EntityTable.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+ * @version $Id: EntityTable.java,v 1.5 1999-04-17 01:18:50 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.active.ActiveEntity
@@ -49,14 +49,16 @@ public interface EntityTable extends Namespace {
   /** Look up a name and return the corresponding Entity. */
   public ActiveEntity getEntityBinding(String name);
 
-  public ActiveNodeList getEntityValue(Context cxt, String name);
-
-  /************************************************************************
-  ** Documentation Operations:
-  ************************************************************************/
-
-  /** Returns an Enumeration of the entity names defined in this table. 
+  /** Look up a name and return its value. 
+   *	No context is required, because we can guarantee that the table
+   *	contains only Entity nodes, which have values.
    */
-  public Enumeration entityNames();
+  public ActiveNodeList getValueNodes(String name);
+
+  /** Set a value.  
+   *	A context is required because we may need its tagset
+   *	in order to construct a new binding.
+   */
+  public void setValueNodes(Context cxt, String name, ActiveNodeList value);
 
 }

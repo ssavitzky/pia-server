@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+//	$Id: Index.java,v 1.5 1999-04-17 01:20:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.4 1999-04-07 23:22:17 steve Exp $
+ * @version $Id: Index.java,v 1.5 1999-04-17 01:20:00 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -58,7 +58,7 @@ public class Index {
     } else if (i >= 0) {
       return getValue(c, index.substring(0, i), index.substring(i+1));
     } else {
-      return c.getEntityValue(index, false);
+      return c.getValueNodes(index, false);
     }
   }
 
@@ -70,7 +70,7 @@ public class Index {
     } else if (i >= 0) {
       setValue(c, index.substring(0, i), index.substring(i+1), value);
     } else {
-      c.setEntityValue(index, value, false);
+      c.setValueNodes(index, value, false);
     }
   }
 
@@ -89,7 +89,8 @@ public class Index {
 
     // If we wanted the whole space, return its list of bindings.
     if (name == null) return new TreeNodeList(ns.getBindings());
-    else return ns.getValueNodes(c, name);
+    ActiveNode binding = ns.getBinding(name);
+    return (binding == null)? null : binding.getValueNodes(c);
   }
 
   public static void setValue(Context c, String space, String name,
@@ -98,11 +99,18 @@ public class Index {
     Tagset ts = c.getTopContext().getTagset();
 
     if (ns != null) {
-      ns.setValueNodes(c, name, value);
+      ActiveNode binding = ns.getBinding(name);
+      if (binding != null) {
+	binding.setValueNodes(c, value);
+	if (! (ns instanceof BasicNamespace)) ns.setBinding(name, binding);
+      } else {
+	ns.setBinding(name, ts.createActiveEntity(name, value));
+      }
     } else {
       // If there's nothing there, make a namespace and populate it.
       BasicEntityTable ents = new BasicEntityTable(space);
-      ents.setEntityValue(c, name, value, ts);
+      ents.setValueNodes(c, name, value, ts);
+      // === this has a problem: the context doesn't get the namespace.
     }
   }
 

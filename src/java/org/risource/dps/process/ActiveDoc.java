@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.10 1999-04-07 23:21:48 steve Exp $
+//	$Id: ActiveDoc.java,v 1.11 1999-04-17 01:19:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.10 1999-04-07 23:21:48 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.11 1999-04-17 01:19:31 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -226,7 +226,7 @@ public class ActiveDoc extends TopProcessor {
     define("agentNames", resolver.agentNames());
 
     define("entityNames", "");
-    define("entityNames", entities.entityNames());
+    define("entityNames", entities.getNames());
   }
 
   /************************************************************************

@@ -1,5 +1,5 @@
 // TreeAttrList.java
-// $Id: TreeAttrList.java,v 1.1 1999-04-07 23:22:03 steve Exp $
+// $Id: TreeAttrList.java,v 1.2 1999-04-17 01:19:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -122,7 +122,7 @@ public class TreeAttrList extends TreeNodeMap
   public void setAttributeValue(String aname, ActiveNodeList value) {
     TreeAttr attr = new TreeAttr(aname, value);
     //attr.setSpecified(value != null);
-    setActiveItem( aname, attr );
+    setBinding( aname, attr );
   }
 
   public void setAttributeValue(String name, ActiveNode value) {
@@ -139,7 +139,7 @@ public class TreeAttrList extends TreeNodeMap
   public void addAttribute(String aname, ActiveNodeList value) {
     ActiveAttr attr = new TreeAttr(aname, value);
     //attr.setSpecified(value != null);
-    setActiveItem( aname, attr );
+    setBinding( aname, attr );
   }
 
   /************************************************************************
@@ -147,10 +147,6 @@ public class TreeAttrList extends TreeNodeMap
   ************************************************************************/
 
   public String getName() { return "#attributes"; }
-
-  public ActiveNode getBinding(String name) {
-    return getActiveItem(name);
-  }
 
   public ActiveNodeList getValueNodes(Context cxt, String name) {
     // === getValueNodes should pass context to getAttributeValue ===
@@ -161,9 +157,8 @@ public class TreeAttrList extends TreeNodeMap
     if (!(binding instanceof ActiveAttr)) 
       throw new DPSException(DPSException.NOT_ACTIVE_NODE_ERR,
 			     "ActiveAttr expected");
-    return setActiveItem(name, binding);
+    return super.setBinding(name, binding);
   }
-
 
   public void setValueNodes(Context cxt, String name, ActiveNodeList value) {
     setAttributeValue(name, value);

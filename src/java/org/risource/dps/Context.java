@@ -1,5 +1,5 @@
 ////// Context.java: Document processing context interface
-//	$Id: Context.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+//	$Id: Context.java,v 1.5 1999-04-17 01:18:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,7 +24,7 @@
 
 package org.risource.dps;
 
-import org.risource.dps.active.ActiveEntity;
+import org.risource.dps.active.ActiveNode;
 import org.risource.dps.active.ActiveNodeList;
 
 import java.io.PrintStream;
@@ -67,32 +67,24 @@ import java.io.PrintStream;
  *		 represents a ``continuation.''
  *	</ul>
  *
- * @version $Id: Context.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+ * @version $Id: Context.java,v 1.5 1999-04-17 01:18:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Handler
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor
- * @see org.risource.dps.Token */
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Namespace
+ */
 
 public interface Context {
-
-  /************************************************************************
-  ** State accessors:
-  ***********************************************************************/
-
-  /** Obtain the current input. */
-  public Input getInput();
-
-  /** Obtain the current output. */
-  public Output getOutput();
 
   /************************************************************************
   ** Namespaces:
   ************************************************************************/
 
   /** Return a namespace with a given name.  If the name is null, 
-   *	returns the most-locally namespace.
+   *	returns the most-local namespace.
    */
   public Namespace getNamespace(String name);
 
@@ -103,38 +95,32 @@ public interface Context {
   public Context getNameContext();
 
   /************************************************************************
-  ** Entity Bindings:
+  ** Namespace convenience functions:
   ************************************************************************/
-
-  /** Obtain the current Entity bindings. */
-  public EntityTable getEntities();
-
-  /** Set the current Entity bindings. */
-  public void setEntities(EntityTable bindings);
 
   /** Get the value of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveNodeList getEntityValue(String name, boolean local);
+  public ActiveNodeList getValueNodes(String name, boolean local);
 
   /** Set the value of an entity. 
    */
-  public void setEntityValue(String name, ActiveNodeList value, boolean local);
+  public void setValueNodes(String name, ActiveNodeList value, boolean local);
 
-  /** Get the namespace containing an entity, given its name. 
-   * @return <code>null</code> if the entity is undefined.
+  /** Get the namespace containing a given name. 
+   * @return <code>null</code> if the name is undefined.
    */
-  public Namespace locateEntityBinding(String name, boolean local);
+  public Namespace locateBinding(String name, boolean local);
 
   /** Get the binding (Entity node) of an entity, given its name. 
    * @return <code>null</code> if the entity is undefined.
    */
-  public ActiveEntity getEntityBinding(String name, boolean local);
+  public ActiveNode getBinding(String name, boolean local);
 
   /** Set the binding (Entity node) of an entity, given its name. 
    *	Note that the given name may include a namespace part. 
    */
-  public void setEntityBinding(String name, ActiveEntity ent, boolean local);
+  public void setBinding(String name, ActiveNode ent, boolean local);
 
   /************************************************************************
   ** Context Stack:

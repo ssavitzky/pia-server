@@ -1,5 +1,5 @@
 ////// Loader.java: Handler loading and initialization utilities.
-//	$Id: Loader.java,v 1.3 1999-03-12 19:26:00 steve Exp $
+//	$Id: Loader.java,v 1.4 1999-04-17 01:19:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -76,6 +76,12 @@ public class Loader {
     defHandle("parse", new parseHandler());
     defHandle("protect", new protectHandler());
     defHandle("repeat", new repeatHandler());
+    /**/defHandle("foreach", new foreachHandler());
+    /**/defHandle("for", new forHandler());
+    /**/defHandle("while", new whileHandler());
+    /**/defHandle("first", new firstHandler());
+    /**/defHandle("finally", new finallyHandler());
+    /**/defHandle("until", new untilHandler());
     defHandle("set", new setHandler());
     defHandle("status", new statusHandler());
     defHandle("subst", new substHandler());

@@ -1,5 +1,5 @@
 ////// ActiveNode.java: Interface for Nodes with actions.
-//	$Id: ActiveNode.java,v 1.4 1999-04-07 23:20:58 steve Exp $
+//	$Id: ActiveNode.java,v 1.5 1999-04-17 01:18:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,7 +57,7 @@ import org.risource.dps.Context;
  *	returns a Cursor that maps names to values has a name starting with
  *	<code>Map</code>
  *
- * @version $Id: ActiveNode.java,v 1.4 1999-04-07 23:20:58 steve Exp $
+ * @version $Id: ActiveNode.java,v 1.5 1999-04-17 01:18:59 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.Node
  * @see org.risource.dps.Action
@@ -98,6 +98,7 @@ public interface ActiveNode extends Active, Node {
   public ActiveAttrList getAttrList();
   public ActiveNodeList getContent();
   public ActiveNodeList getValueNodes(Context cxt);
+  public void setValueNodes(Context cxt, ActiveNodeList v);
 
   /************************************************************************
   ** Syntax:

@@ -1,5 +1,5 @@
 ////// ProcessorInput.java: ProcessorInput interface
-//	$Id: ProcessorInput.java,v 1.3 1999-03-12 19:25:00 steve Exp $
+//	$Id: ProcessorInput.java,v 1.4 1999-04-17 01:18:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,7 +29,7 @@ package org.risource.dps;
  *	input to.  This permits the ProcessorInput to make use of the
  *	Processor's state, for example its parse stack and Tagset.
  *
- * @version $Id: ProcessorInput.java,v 1.3 1999-03-12 19:25:00 steve Exp $
+ * @version $Id: ProcessorInput.java,v 1.4 1999-04-17 01:18:54 steve Exp $
  * @author steve@rsv.ricoh.com */
 
 public interface ProcessorInput extends Input {
@@ -62,6 +62,4 @@ public interface ProcessorInput extends Input {
    *	table is used for things like <code>&amp;amp;</code>.  */
   public EntityTable getEntities();
 
-  /** Sets the Tagset being used by the ProcessorInput. */
-  public void setEntities(EntityTable anEntityTable);
 }
