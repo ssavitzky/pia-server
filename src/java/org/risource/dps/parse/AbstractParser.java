@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.23 2000-09-23 00:52:39 steve Exp $
+//	$Id: AbstractParser.java,v 1.24 2000-09-30 00:10:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,9 +56,13 @@ import org.risource.dps.tree.TreeText;
  *	and to traverse the resulting Document.  It should probably be called
  *	something more descriptive of what it actually does, like ``Scanner.''
  *
- * <p>
+ * <p>	Eventually, we could probably gain a significant amount of speed by
+ *	reading into a char array instead of a StringBuffer.  It's unfortunate 
+ *	that BufferedReader doesn't have a version of readLine that returns 
+ *	a char array instead of a String.  This would also let us eliminate
+ *	<code>last</code> and allow multiple-character backup.
  *
- * @version $Id: AbstractParser.java,v 1.23 2000-09-23 00:52:39 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.24 2000-09-30 00:10:13 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -79,8 +83,8 @@ public abstract class AbstractParser extends CursorStack implements Parser
    * 
    *<p>	Not every parser implementation requires state information, but it's
    *	essential in some cases.  Note that the state is <em>not</em> saved
-   *	on the parse stack -- it's assumed that the element structure can do
-   *	that.
+   *	on the parse stack -- it's not usually necessary, and a subclass
+   *	can maintain its own stack if it absolutely has to.
    */
   protected int			state		= 0;
 
