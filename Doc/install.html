@@ -66,45 +66,47 @@
 
 <hr/>
 <h1><a name="Quick">Quick Start</a></h1>
+
 <big>
-Change your working directory to be the <var>PIA_HOME</var> directory
+<p>Change your working directory to be the <var>PIA_HOME</var> directory
 (e.g. <code>cd PIA </code>).
-<p>
 
-You can now start the PIA Web server from the command line:<br /> 
-<code>&gt; bin/pia HTML_DOCS</code> <br />
 
-Where <code> HTML_DOCS</code> is the root directory for the files to be served
-by the PIA Web server.  (As explained below, you can also specify a
-configuration file instead of the root directory.)  "<code>bin/pia</code>" is a
-simple wrapper that starts up a java program; you should see some
-initialization messages ending with "Point your
-browswer to <a href=http://localhost:8888/>http://localhost:8888/</a>" which
-indicates that the server is up and running.
+<p>You can now start the PIA Web server from the command line:<br /> 
+<code>&gt; bin/pia Doc</code> <br />
 
-<p>
+Where the directory passed on the command line (<code>Doc</code>, in this
+case) is the root directory for the files to be served by the PIA Web server.
+</p>
 
-<blockquote>
+<blockquote><small>
+(As explained below, you can also specify a configuration file instead of the
+root directory.)  "<code>bin/pia</code>" is a simple wrapper that starts up a
+java program; you should see some initialization messages ending with "Point
+your browswer to <a href=http://localhost:8888/>http://localhost:8888/</a>"
+which indicates that the server is up and running.
+</small></blockquote>
 
-You can also just run <br /> 
-<code>&gt; bin/pia </code> <br /> 
-Which uses a default configuration file <code>_subsite.xcf </code> to serve
-up pages in the <var>PIA_HOME</var>, which includes the PIA documentation and
-example applications.  Running <code> bin/pia </code> and then browsing <a
-href=http://localhost:8888/>http://localhost:8888/</a> is the recommended
-method for getting acquainted with the capabilities of the PIA.
+<p> The PIA is more than just a web server: you can also build complete
+    applications out of active web pages.  To start the PIA with its full
+    complement of standard applications, use the command:
+</p>
+
+<pre>&gt; bin/pia</pre>
+
+<blockquote> You can now browse to <a
+href=http://localhost:8888/>http://localhost:8888/</a> -- thisis the
+recommended method for getting acquainted with the capabilities of the PIA.
 In particular, <code>Agents/Tutorial </code> and <code>Samples</code> (<a
 href=http://localhost:8888/Agents/Tutorial/>http://localhost:8888/Agents/Tutorial/</a>
 <a href=http://localhost:8888/Samples/>http://localhost:8888/Samples/</a>)
 demonstrate the unique properties of the PIA server side markup language.
 
-
 </blockquote>
 
 </big>
+
 <hr />
-
-
 <h1><a name="Setup">Setup Details</a></h1>
 
 <big>
@@ -346,7 +348,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.21 1999-10-23 01:34:56 wolff Exp $</i><br>
+<i>$Id: install.html,v 1.22 1999-10-25 17:57:44 steve Exp $</i><br>
 
 
 </body></html>

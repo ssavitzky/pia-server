@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Quick Starts</title>
+</head><body>
+<h1><a name="Quick">Quick Starts</a></h1>
+
+<p> <strong>This document contains three alternative versions of the ``<a
+    href="install.html#Quick">Quick Start</a>'' section of <a
+    href="install.html"><code>install.html</code></a>
+</strong></p>
+
+<h2>Steve's version</h2>
+
+<big>
+<p> If you are feeling lucky, you can now start the PIA with the command:
+</p>
+
+<pre>./PIA/bin/pia ./PIA/Doc</pre>
+
+<blockquote><small>
+<p> Assuming all went well, you can now click on the following link: <a
+    href="http://localhost:8888/">http://localhost:8888/</a> to point your
+    browser at a PIA-based web server that happens to be serving the PIA's
+    online documentation.
+</small></blockquote>
+
+<p> If that didn't work, try reading the next section on <a
+    href="#Setup">Initial Setup</a>, possibly followed by the section on <a
+    href="using.html#Troubleshooting">Troubleshooting</a> in
+    <a href="using.html">Using the PIA</a>
+</p>
+
+<p> If it <em>did</em> work, you should now try to start the PIA in its
+    <em>default</em> configuration as a platform for web-based applications,
+    with the command:
+</p>
+
+<pre>./PIA/bin/pia</pre>
+
+<p> At this point, you know that the PIA is working.  You can now do one of
+    three things:
+</p>
+
+<ol>
+  <li> Go on to the next section to find out how to set up your environment
+       variables to make the PIA easier to use.
+  <li> Read the online <a href="doclist.html">documentation</a>.
+  <li> Play with the <a href="http://localhost:8888/">PIA</a> some more.
+</ol>
+</big>
+
+<h2>Bill's version</h2>
+
+
+<big>
+<em> As a static Web Server...</em>
+
+<blockquote>
+<p> Do you have access to a directory (let's call it <code>html_dir</code>) with
+     some HTML files in it? (If not, skip to the  <em>"active web
+     server"</em> section following). Start the PIA with the command</p>
+
+<p>  <code>PIA/bin/pia  html_dir</code> </p>
+
+<p> [this command tells the PIA to serve files from <code>html_dir</code>; you
+    should see some initialization messages and a "Point your browswer to..."
+    URL the end.] </p>
+
+<p> Next, view a page file (say <code>my_page.html</code>) by
+    pointing your browser as the PIA suggests, for example </p>
+
+<p> <code>http://penguin.crc.ricoh.com:8888/my_page.html</code> </p>
+
+<p> You should see your page displayed, just as if it were displayed by a
+    regular web server like Apache. </p>
+</blockquote>
+
+
+<em> As an active Web Server...</em>
+
+
+<blockquote>
+
+<p> To serve active pages, all you need is some active pages to serve!  So
+    copy a <code>home.xh</code> file from one of 
+    <code>PIA/Samples/[HelloWorld,FileHandling,Form,PrettyStuff]</code>
+    into <code>html_dir</code> (for example, on Unix <code>cp 
+    PIA/Samples/HelloWorld/home.xh html_dir/home.xh </code>). </p>
+
+<p> Point the browser at one of these new active pages, e.g. </p>
+
+<p> <code>http://penguin.crc.ricoh.com:8888/home.xh</code> </p>
+
+<p> You should see our page displayed, in which case you can you can learn
+    more options for setting up the PIA from the sections below, or you can
+    tinker with it (with help from the <a href="author.html#Quick">Author's
+    guide</a>). </p>
+
+<p> In the long run you will probably want to serve files from a different
+    directory (like the <code>.pia</code> directory described below), and you
+    will probably want to have many different "sub-site" directories of active
+    pages (see the <a href="author.html#Quick">Author's Guide</a>). </p>
+
+
+
+</blockquote>
+</big>
+
+<h2>Greg's Version</h2>
+
+<big>
+Change your working directory to be the <var>PIA_HOME</var> directory
+(e.g. <code>cd PIA </code>).
+<p>
+
+You can now start the PIA Web server from the command line:<br /> 
+<code>&gt; bin/pia HTML_DOCS</code> <br />
+
+Where <code> HTML_DOCS</code> is the root directory for the files to be served
+by the PIA Web server.  (As explained below, you can also specify a
+configuration file instead of the root directory.)  "<code>bin/pia</code>" is a
+simple wrapper that starts up a java program; you should see some
+initialization messages ending with "Point your
+browswer to <a href=http://localhost:8888/>http://localhost:8888/</a>" which
+indicates that the server is up and running.
+
+<p>
+
+<blockquote>
+
+You can also just run <br /> 
+<code>&gt; bin/pia </code> <br /> 
+Which uses a default configuration file <code>_subsite.xcf </code> to serve
+up pages in the <var>PIA_HOME</var>, which includes the PIA documentation and
+example applications.  Running <code> bin/pia </code> and then browsing <a
+href=http://localhost:8888/>http://localhost:8888/</a> is the recommended
+method for getting acquainted with the capabilities of the PIA.
+In particular, <code>Agents/Tutorial </code> and <code>Samples</code> (<a
+href=http://localhost:8888/Agents/Tutorial/>http://localhost:8888/Agents/Tutorial/</a>
+<a href=http://localhost:8888/Samples/>http://localhost:8888/Samples/</a>)
+demonstrate the unique properties of the PIA server side markup language.
+
+
+</blockquote>
+
+</big>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: quick-start.html,v 1.1 1999-10-25 17:57:44 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
