@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.7 1999-03-23 20:37:48 steve Exp $
+# $Id: file.make,v 1.8 1999-03-24 20:46:57 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -34,10 +34,17 @@ LIBDIR=$(PIADIR)/lib/java
 BINDIR=$(PIADIR)/bin
 DOCDIR=$(PIADIR)/Doc/API/javadoc
 
-##javac wrapper should find these  .. specify explicitly if problem
-JAVACLASSES= /usr/local/java/lib/classes.zip
-#JAVACLASSES=
-
+# S is the path separator: it needs to be ";" on Windows machines.
+# F is the file separator: it needs to be "\" on Windows machines.
+S=:
+F=/
+PKGPATH=$(subst .,$F,$(PACKAGE))
+ifeq ($F,/)
+  CDFIX=
+else
+  # On windows, cd is sticky.  This is what we need to fix it.
+  CDFIX=cd $(PKGPATH)
+endif
 
 ## Set this on the command line to see warnings about deprecated API's
 # JAVAFLAGS=-deprecation
@@ -45,20 +52,17 @@ JAVACLASSES= /usr/local/java/lib/classes.zip
 .SUFFIXES: .java .class
 
 ## Rule to compile Java class files.  
-#  Note that either of the two techniques below will work:  
+#  Use one of the two techniques below, depending on $(CLASSPATH):  
 #  1. adding $(CLASSDIR) to $(CLASSPATH)
 #	This works well if $(CLASSPATH) is already set, 
 #	AND it contains the current Java class library.
 #  2. cd'ing to $(CLASSDIR) and not setting $(CLASSPATH). 
 #	This works only if $(CLASSPATH) is not set, OR it contains "."
-#	It will fail miserably on Windows, because cd works differently there. 
 
 ifeq ($(CLASSPATH),)
 .java.class:
-	export dir=`pwd`; cd $(CLASSDIR); javac  -g $(JAVAFLAGS) $$dir/$<;
+	cd $(CLASSDIR); javac  -g $(JAVAFLAGS) $(PKGPATH)/$<; $(CDFIX)
 else
-# S is the path separator: it needs to be ";" on Windows machines.
-S=:
 BUILDCLASSES=$(CLASSDIR)$S$(CLASSPATH)
 .java.class:
 	javac -d $(CLASSDIR) -classpath $(BUILDCLASSES) -g $(JAVAFLAGS) $<;
@@ -73,8 +77,19 @@ all-l:: $(FILES:.java=.class)
 doc:: holes.log lines.log
 	@echo Documenting.
 
+### Javadoc of this package only.  Don't smash existing index files.
+###	Note the awkward $(PKGDIR)/$(DOCDIR) construct due to the fact
+###	that $(DOCDIR) is relative to the current directory.  If it 
+###	turns out not to be (i.e. it was set on the command line) there
+###	will be problems.  Don't do that.
+###
+ifeq ($(CLASSPATH),)
+jdoc::
+	cd $(CLASSDIR); javadoc -d $(PKGDIR)/$(DOCDIR) -noindex -notree $(PACKAGE); $(CDFIX)
+else
 jdoc::
 	javadoc -d $(DOCDIR) -noindex -notree -classpath $(BUILDCLASSES) $(PACKAGE)
+endif
 
 ###
 ### Holes.log: a list of everything that's going to need attention.
