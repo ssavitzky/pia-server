@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>WOAD: Web-Organized Application Development</title>
-</head><body bgcolor="#99ccff"><!--  was ccccff  -->
-<!--  99ccff  from http://www.lars.bbsrc.ac.uk/plantsci/woad.htm  -->
+</head><body bgcolor="#99ccff"><!--    was ccccff    -->
+<!--    99ccff  from http://www.lars.bbsrc.ac.uk/plantsci/woad.htm    -->
 <h1 align="center">WOAD: Web-Organized Application Development</h1>
 <h3 align="center">A Development Environment to Dye For</h3>
 
@@ -31,17 +31,23 @@
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.3">5.3: Developer Community: Centralized</a></font>
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.4">5.4: Customization</a></font>
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-5.5">5.5: Platform</a></font>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-6">6: Implementation Plan</a>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-7">7: Implementation Notes</a>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.1">7.1: Filenames, Extensions, Directories</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.2">7.2: Where It Lives</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.3">7.3: What does a WOAD site look like?</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.4">7.4: Project Structure</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-7.5">7.5: Application Structure</a></font>
- <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-8">8: <a name="alternatives">Alternatives</a></a>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.1">8.1: Alternative Derivations of WOAD</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.2">8.2: Alternative Acronyms</a></font>
-  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.3">8.3: See Also</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-6">6: WOAD Tree Structure</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-6.1">6.1: Keywords</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-6.2">6.2: URL Annotation</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-6.3">6.3: Source Annotation</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-7">7: Implementation Plan</a>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-8">8: Implementation Notes</a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.1">8.1: Filenames, Extensions, Directories</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.2">8.2: Where It Lives</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.3">8.3: What does a WOAD site look like?</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.4">8.4: Project Structure</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.5">8.5: Application Structure</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.6">8.6: File Viewing and Editing</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-8.7">8.7: Demo Trees</a></font>
+ <br />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-9">9: <a name="alternatives">Alternatives</a></a>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-9.1">9.1: Alternative Derivations of WOAD</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-9.2">9.2: Alternative Acronyms</a></font>
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="-1"><a href="#section-9.3">9.3: <a name="see_also">See Also</a></a></font>
   </toc>
 
 <h2> <a name="section-1">1:</a> General Description</h2>
@@ -319,7 +325,174 @@
 </p>
 
 <hr />
-<h2> <a name="section-6">6:</a> Implementation Plan</h2>
+<h2> <a name="section-6">6:</a> WOAD Tree Structure</h2>
+
+<p> There are actually <em>four</em> sets of URL's involved in a
+    Woad-organized application:
+</p>
+
+<ul>
+  <li> The URL's on the <em>target server</em>
+  </li>
+  <li> The URL's for the <em>corresponding annotations</em>
+  </li>
+  <li> The URL's corresponding to the <em>source directories</em>
+  </li>
+  <li> The URL's corresponding to <em>source annotations</em>
+  </li>
+  <li> The URL's corresponding to <em>words</em>.
+  </li>
+</ul>
+
+<p> It is vitally important that the target and annotation URL trees be
+    <em>isomorphic</em>.  This extends as far down as query strings: query
+    strings in the target need to be available on the annotation pages,
+    because annotations may apply to specific queries.
+</p>
+
+<blockquote>
+<p> Note that POST requests present a significant problem here -- there is
+    basically no way to recapture them in most cases.  They <em>can</em> be
+    recaptured if the target server is <em>Woad-aware</em> and has links to
+    Woad on all of its pages.
+</p>
+</blockquote>
+
+<p> Corresponding to the  URL trees above, we have the following offsets.
+    (Note that the current ones are misnamed.)
+</p>
+
+<ul>
+  <li> <code>woadPrefix</code> / <code>prefix=</code> 
+       <p> The location of the root of the WOAD annotation tree relative to the
+           <em>target</em> root, <em>if they are on the same server</em>.
+           (Presently called <em>sourceOffset</em>.)  Note that we rarely need
+           to put this on the command line -- if needed, it's guaranteed to be
+           somewhere in the target server's configuration.
+       </p>
+  </li>
+  <li> <code>docOffset</code> / <code>offset=</code> <br />
+       <p> The location of the document sources relative to the source root.
+           (Presently called <code>targetPrefix</code>.)
+       </p>
+  </li>
+  <li> <code>sourcePrefix</code> / <code>source=</code> <br />
+       <p> The location of the source root relative to the WOAD server root.
+           (Presently fixed at null.)  If a target URL corresponds to a real
+           source document, the latter can be found at
+           <code>woadPrefix+sourcePrefix+docOffset/...</code>
+       </p>
+       <blockquote>
+       <p> <code>sourcePrefix</code> should probably default to
+	   <code>.source</code>.  
+       </p>
+       </blockquote>
+  </li>
+  <li> <code>sourceSuffix</code>
+       <p> Source <em>directories</em> are <em>overlayed by</em> their
+	   annotations.  This makes it possible to distribute annotations
+	   alongside sources.  When it is necessary to annotate individual
+	   source <em>documents</em> (files), the annotation for source file
+	   <code>.../<em>f</em></code> will be found in 
+	   <code>.../sourceSuffix/<em>f</em>/</code>. 
+       </p>
+       <blockquote>
+       <p> <code>sourceSuffix</code> should probably default to
+	   <code>.notes</code>.  
+       </p>
+       </blockquote>
+  </li>
+  <li> <code>wordMap</code> / <code>words=</code> <br />
+       <p> The location of the keyword map relative to the WOAD server root.
+           (Presently undefined.) If a keyword has a map entry, it can be found
+           under <code>woadOffset+wordMap</code>
+       </p>
+  </li>
+</ul>
+
+<dl>
+  <dt> <b>Note:</b> parameter naming conventions
+  </dt>
+  <dd> <code>Prefix</code> - prepended to a target path to make a WOAD path,
+       or the location of a WOAD tree component relative to the WOAD root.
+  </dd>
+  <dd> <code>Suffix</code> - appended to a WOAD path to reach a related
+       component.
+  </dd>
+  <dd> <code>Offset</code> - location of one part of the WOAD tree relative to
+       another.
+  </dd>
+</dl>
+
+<h3><a name="section-6.1">6.1:</a> Keywords</h3>
+
+<p> Keywords are a bit of a problem.  One option is to make them all queries,
+    another is to put them under <code>.Woad/Words</code> or maybe even
+    <code>.w</code>.  One could easily do both using, e.g.,
+    <code>.Woad?id=<em>word</em></code>.
+</p>
+
+<p> Keyword <em>pages</em> can get fairly complex, because a word may be used
+    in several contexts, and these will want <em>separate</em> annotation.
+    This suggests that each word should correspond to a <em>directory</em>.
+    This wins, because it makes it possible to associated arbitrary amounts of
+    information with a word, and there's minimal interference between the
+    different items.
+</p>
+
+<p> It will probably prove necessary to hash words into subdirectories on
+    their first character (or maybe even their first <em>two</em>
+    characters). 
+</p>
+
+<h3><a name="section-6.2">6.2:</a> URL Annotation</h3>
+
+<p> Similarly, it sounds as though the best thing to do for annotation may
+    well be to make a <em>directory</em> for every page being annotated.  This
+    makes it easy to separate annotation files from ``real'' target pages in a
+    listing: the real pages and real subdirectories map into directories; the
+    annotation maps into files.  It also makes it trivial to obtain a specific
+    piece of annotation: simply tack its name onto the URL.
+</p>
+
+<p> We should handle missing documents by passing the requested URL and
+    pathinfo in a query to the listing file in the last valid directory.
+</p>
+
+<h3><a name="section-6.3">6.3:</a> Source Annotation</h3>
+
+<p> Source annotation is a different problem.  Making every source file
+    correspond to an annotation directory would be severe overkill, and would
+    make it impossible to distribute annotation together with sources.  Hence,
+    we will put source annotation in subdirectories (with the name
+    <code>sourceSuffix</code>) of the source tree.
+</p>
+
+<p> Note that things are still fairly simple: the source tree is a
+    <em>virtual</em> subtree of the WOAD root, so the annotation will simply
+    hang off the corresponding <em>real</em> subtree.  Since the source tree
+    retains its structure, it will be trivial to map filenames into URL's, and
+    relative links in source files will still (usually) work.
+</p>
+
+<p> It will be possible to use WOAD as a ``pure'' source browser or directory
+    browser: this simply corresponds to the situation where
+    <code>sourceOffset</code> is null, and there is no target server and no
+    corresponding target annotation tree.  Putting the target URL annotations
+    further down in the tree, e.g. hanging off the source document root, is
+    another possibility (for the future), as is putting source and URL
+    annotations on <em>separate</em> servers.
+</p>
+
+<blockquote>
+<p> The above implies that the current work is by no means wasted:  the
+    situation in the source tree is essentially the same as it is now, only at
+    an offset from the main (target URL annotation) tree.
+</p>
+</blockquote>
+
+<hr />
+<h2> <a name="section-7">7:</a> Implementation Plan</h2>
 
 <ol>
   <li> Sketch out the basic tree-browsing tagset and configuration files. 
@@ -375,9 +548,9 @@
 
 
 <hr />
-<h2> <a name="section-7">7:</a> Implementation Notes</h2>
+<h2> <a name="section-8">8:</a> Implementation Notes</h2>
 
-<h3><a name="section-7.1">7.1:</a> Filenames, Extensions, Directories</h3>
+<h3><a name="section-8.1">8.1:</a> Filenames, Extensions, Directories</h3>
 
 <p> In most cases it will be necessary  to keep WOAD configuration files and
     so on carefully separate from the application's own files.  In particular,
@@ -422,7 +595,7 @@
   </li>
 </ul>
 
-<h3><a name="section-7.2">7.2:</a> Where It Lives</h3>
+<h3><a name="section-8.2">8.2:</a> Where It Lives</h3>
 
 <p> Possibly the most difficult decision will be where to put WOAD's own
     source tree -- or even whether it should have one!  
@@ -447,7 +620,7 @@
     PIA/Apps/Woad, so here we are. 
 </p>
 
-<h3><a name="section-7.3">7.3:</a> What does a WOAD site look like?</h3>
+<h3><a name="section-8.3">8.3:</a> What does a WOAD site look like?</h3>
 
 <p> The flip side of ``where it lives'' is how you navigate around a WOAD
     site.  My guess is that <em>all</em> of the alternatives below will be
@@ -500,7 +673,7 @@
   </li>
 </ul>
 
-<h3><a name="section-7.4">7.4:</a> Project Structure</h3>
+<h3><a name="section-8.4">8.4:</a> Project Structure</h3>
 
 <p> There are three different cases for a project:
 </p>
@@ -529,7 +702,8 @@
     index page of the project's WOAD tree.  This simplifies things.
 </p>
 
-<h3><a name="section-7.5">7.5:</a> Application Structure</h3>
+
+<h3><a name="section-8.5">8.5:</a> Application Structure</h3>
 
 <p> So, now that we know what a WOAD <em>site</em> is supposed to look like,
     how do we structure <code><a href="-">PIA/Apps/Woad</a></code> and the PIA
@@ -553,7 +727,7 @@
        little unclear where the necessary forms, tagsets, and so on should go
        -- we can't very well use <code>/../</code>, so it may be necessary to
        use, for example, <code>/Woad/</code> (possibly something like
-       <code>/--/</code> <code>/.Woad/</code> if we want to make it less
+       <code>/--/</code> or <code>/.Woad/</code> if we want to make it less
        obvious).
   </li>
   <li> As the WOAD tree attached to a PIA-based application.  In that case, we
@@ -603,7 +777,7 @@
   </em>
 </blockquote>
 
-<h3>File Viewing and Editing</h3>
+<h3><a name="section-8.6">8.6:</a> File Viewing and Editing</h3>
 
 <p> The big problem here is that we want to be able to view files in multiple
     formats.  This means that the most obvious thing, just redefining all the
@@ -703,7 +877,7 @@
   </li>
 </ol>
 
-<h3>Demo Trees</h3>
+<h3><a name="section-8.7">8.7:</a> Demo Trees</h3>
 
 <p> The presence of the PIA project wants to be conditional on whether
     PIA_HOME is the virtual root.  Some explicit checking might be in order to
@@ -711,9 +885,9 @@
 </p>
 
 <hr />
-<h2> <a name="section-8">8:</a> <a name="alternatives">Alternatives</a></h2>
+<h2> <a name="section-9">9:</a> <a name="alternatives">Alternatives</a></h2>
 
-<h3><a name="section-8.1">8.1:</a> Alternative Derivations of WOAD</h3>
+<h3><a name="section-9.1">9.1:</a> Alternative Derivations of WOAD</h3>
 <ul>
   <li> Web-Oriented Application Design
   </li>
@@ -723,7 +897,7 @@
   </li>
 </ul>
 
-<h3><a name="section-8.2">8.2:</a> Alternative Acronyms</h3>
+<h3><a name="section-9.2">9.2:</a> Alternative Acronyms</h3>
 
 <ul>
   <li> STEAM: Source Tree Enabled Application Maintenance.  (STEAM driven)
@@ -732,7 +906,7 @@
   </li>
 </ul>
 
-<h3><a name="section-8.3">8.3:</a> <a name="see_also">See Also</a></h3>
+<h3><a name="section-9.3">9.3:</a> <a name="see_also">See Also</a></h3>
 
 <ul>
   <li> <a href="http://www.nyrond.co.uk/filks/fantasy/woadwarr.txt">Woad
@@ -769,6 +943,6 @@
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: about.html,v 1.2 2000-06-09 16:57:32 steve Exp $</b><br />
+<b>$Id: about.html,v 1.3 2000-06-14 17:07:16 steve Exp $</b><br />
 <address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
 </body></html>

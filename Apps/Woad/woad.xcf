@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.5 2000-06-09 16:58:18 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.6 2000-06-14 17:07:17 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -18,6 +18,7 @@
   <sourceOffset><get name="PIA:offset"/></sourceOffset>
 
   <HomeDocumentName>woad-index.wh</HomeDocumentName>
+  <IndexDocumentPath>/.Woad/Tools/woad-listing.xh</IndexDocumentPath>
   <ConfigFileName>_woad.xcf</ConfigFileName>
 
   <Container name=".Woad" virtual="pia:/Apps/Woad">
@@ -28,6 +29,7 @@
 	  properly as source.
     </doc>
     <HomeDocumentName>woad</HomeDocumentName>
+    <IndexDocumentPath></IndexDocumentPath>
     <Ext name="xh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
     <Ext name="html"	type="text/html" tagset="HTML" 			/>
   </Container>
@@ -51,6 +53,8 @@
   <Ext name="jpg"	type="image/jpeg"				/>
   <Ext name="xbm"	type="image/x-xbitmap"				/>
   <Ext name="gif"	type="image/gif"				/>
+
+  <Ext name="/"		type="text/html" tagset="/.Woad/woad-xhtml"	/>
 
   <!-- These are the tagsets used for woad's active documents: -->
   <Ext name="wh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>

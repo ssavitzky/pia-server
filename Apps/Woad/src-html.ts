@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.4 2000-06-08 23:14:39 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.5 2000-06-14 17:07:16 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -52,17 +52,44 @@
 	             result="">&DOC:path;</subst></then>
 	<else>&DOC:path;</else>
     </if></set>
+  <set name="slpath">
+    <if>&SITE:sourceOffset;
+	<then><subst match="^&SITE:sourceOffset;"
+	             result="">&LOC:path;</subst></then>
+	<else>&LOC:path;</else>
+    </if></set>
+
+  <doc> The following crockery is used to compute &amp;decoratedPath;,
+	which is the path of the current directory ``decorated'' with
+	".." links to the directories above "."
+  </doc>
+  <set name="depth">0</set>
+  <set name="split"><subst match="/" result=" ">TOP&slpath;</subst></set>
+  <repeat>
+    <foreach><text split>&split;</text></foreach>
+    <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
+  </repeat>
+  <set name="d">2</set>
+  <set name="decoratedPath"><repeat><hide>
+    </hide><foreach entity="f"><text split>&split;</text></foreach><hide>
+    <set name="dots"><repeat><for start="&d;" stop="&depth;"/>../</repeat></set>
+    <set name="d"><numeric op="sum">1 <get name="d"/></numeric></set>
+    </hide><if> &dots;
+	  <then><a href="&dots;">&f;</a>/</then>
+	  <else><a href="../&f;">&f;</a>/</else>
+  </if></repeat>&DOC:name;</set>
+
   </hide>
   <head><title>&spath; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
     <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
       <tr><th align="left">
-          <h1><code>&spath;</code></h1>
+          <h1><code>&decoratedPath;</code></h1>
           </th>
       </tr>
     </table>
-    <if> &FORM:probe;
+    <if> &FORM:probe;<!-- this is wrong now. -->
 	 <then> <a href="#entities"><b>entities</b></a>
 	 </then>
     </if>
