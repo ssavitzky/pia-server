@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=xhtml parent=basic include="debug HTML" recursive>
-<cvs-id>$Id: xhtml.ts,v 1.2 1999-12-17 23:59:20 bill Exp $</cvs-id>
+<cvs-id>$Id: xhtml.ts,v 1.3 2000-01-31 20:15:10 bill Exp $</cvs-id>
 
 <h1>XHTML Tagset</h1>
 
@@ -83,7 +83,10 @@
   <action><text trim="yes">
     <if>&content;
 	<then>
-           <option>&content;</option>
+	    <if><get name="attributes:selected" /> 
+               <then><option selected="yes">&content;</option></then>
+               <else><option >&content;</option></then>
+            </if>
         </then>
     </if>
   </text></action>
