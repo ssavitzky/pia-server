@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+//	$Id: ServletDoc.java,v 1.3 2000-04-12 00:47:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.2 2000-04-05 18:11:07 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.3 2000-04-12 00:47:33 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -80,6 +80,8 @@ public class ServletDoc extends TopProcessor {
   protected HttpServletRequest	request 	= null;
   protected HttpServletResponse	response 	= null;
   protected HttpServlet		servlet		= null;
+  protected String		servletURL	= null;
+  protected String		serverURL	= null;
 
   /************************************************************************
   ** PIA information:
@@ -117,27 +119,46 @@ public class ServletDoc extends TopProcessor {
    *
    * @see org.risource.dps.process.TopProcessor#initializeEntities
    * @see #initializeNamespaceEntities
-   * @see #initializeLegacyEntities
    * @see #initializeHookEntities
    */
   public void initializeEntities() {
     if (entities == null) super.initializeEntities();
+
+    if (request != null) {
+      serverURL = ("http://" 
+		    + request.getServerName()
+		    + ((request.getServerPort() != 80)
+		       ? ":" + request.getServerPort()
+		       : ""));
+
+      servletURL = serverURL + request.getServletPath();
+
+      define("docURL", serverURL + request.getRequestURI());
+    }
+
     initializeNamespaceEntities();
     if (agent != null) {
       initializeHookEntities();
     }
+
   }
 
   /** Initialize the entities that contain namespaces. */
   public void initializeNamespaceEntities() {
 
     // These are done by super.initializeEntities()
-    // define("LOC", getLocConfig());
-    // define("PROPS", getDocConfig());
-    // define("SITE", getRootConfig());
-    // define("ENV", System.getProperties());
+    //   define("LOC", getLocConfig());
+    //   define("PROPS", getDocConfig());
+    //   define("SITE", getRootConfig());
+    //   define("ENV", System.getProperties());
 
     // === need servlet, context, request, and response namespaces.
+
+    // Fake a PIA namespace:
+    Table pia = new Table();
+    if (request != null) pia.at("url", servletURL);
+    pia.at("servlet", this.getClass().getName());
+    define("PIA", pia);
 
     /* === 
     define("PIA", Pia.instance().properties());

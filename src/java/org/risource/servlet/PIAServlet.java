@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.6 2000-04-05 20:12:44 steve Exp $
+//	$Id: PIAServlet.java,v 1.7 2000-04-12 00:47:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.6 2000-04-05 20:12:44 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.7 2000-04-12 00:47:33 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -66,7 +66,7 @@ public class PIAServlet
 
   /** Cache for the servlet engine context. */
   protected ServletContext context;
-  protected static String version = "$Revision: 1.6 $";
+  protected static String revision = "$Revision: 1.7 $";
 
   /** The configuration of this servlet, including any parameters passed
     * to the servlet.
@@ -135,13 +135,19 @@ public class PIAServlet
     * text and not contain markup. 
     */
   public String getServletInfo() {
-    return "PIAServlet in "
+    return getServletId() + " in "
       + org.risource.Version.SERVER
       + " -- see RiSource.org/PIA for more info.";
   }
 
-  public String getServletVersion() {
-    
+  protected String getServletRevision() {
+    int i = revision.indexOf(" ");
+    int j = revision.lastIndexOf(" ");
+    return revision.substring(i+1, j);
+  }
+
+  protected String getServletId() {
+    return this.getClass().getName() + "/" + getServletRevision();
   }
 
   /** An initialization routine which is called once by the HTTP server
@@ -374,7 +380,12 @@ public class PIAServlet
     */
   protected long getLastModified(HttpServletRequest req)
   {
-    return super.getLastModified(req);
+    Document doc = locateDocument(req);
+    if (doc == null) return -1;
+
+    // === really need better indication of whether the doc. is volatile.
+    if (doc.getTagsetName() != null) return -1;
+    return doc.getLastModified();
   }
 
     /** Receives an HTTP POST request from the protected
@@ -493,10 +504,11 @@ public class PIAServlet
     }
 
     resp.setStatus( 200 ); 
-    resp.setHeader("Servlet", this.getClass().getName() +
-		   " in " + Version.SERVER);
-    resp.setDateHeader("Last-Modified", doc.getLastModified()); 
     resp.setContentType( ctype );
+    resp.setHeader("Servlet", getServletId() +
+		   " in " + Version.SERVER);
+
+    // resp.setDateHeader("Last-Modified", doc.getLastModified()); 
 
     Parser p = ts.createParser();
     Reader in = doc.documentReader();
@@ -520,19 +532,21 @@ public class PIAServlet
    */
   public boolean sendStreamResponse (Document doc, String ctype,
 				     HttpServletRequest req,
-				     HttpServletResponse response )
+				     HttpServletResponse resp )
     throws IOException
   {
-    OutputStream out = response.getOutputStream();
+    OutputStream out = resp.getOutputStream();
     InputStream  in  = doc.documentInputStream();
 
     int block = 2048;
     byte buf[] = new byte[block];
     int n;
 
-    response.setStatus( 200 ); 
-    response.setHeader("Server", Version.SERVER);
-    response.setContentType( ctype );
+    resp.setStatus( 200 ); 
+    resp.setContentType( ctype );
+    resp.setDateHeader("Last-Modified", doc.getLastModified()); 
+    resp.setHeader("Servlet", getServletId() +
+		   " in " + Version.SERVER);
 
     while ((n = in.read(buf)) > 0) { 
       out.write(buf, 0, n);
@@ -577,6 +591,32 @@ public class PIAServlet
     resp.sendRedirect(path /*resp.encodeRedirectURL(path)*/);
 
     return true;
+  }
+
+  public Document locateDocument(HttpServletRequest request) {
+    String path = request.getPathInfo();
+
+    if (path == null) {
+      log("*** path is null");
+      return null;
+    }
+
+    if (site == null) {
+      log("*** site is null");
+      return null;
+    }
+
+    // Perform URL decoding:
+    path = Utilities.urlDecode(path);
+
+    // Locate the resource.  Fail if it can't be found.
+    Resource resource = site.locate(path, false, null);
+    if (resource == null) return null;
+
+    // If the resource is hidden, we're not supposed to show it.
+    if (resource.isHidden()) return null;
+
+    return resource.getDocument();
   }
 
   /**
