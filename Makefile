@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.31 1999-10-04 17:43:58 steve Exp $
+#	$Id: Makefile,v 1.32 1999-10-22 17:35:33 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 7
+MINOR       = 9
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
@@ -68,6 +68,7 @@ CVS_RMT  = /home/cvsroot
 #	Building includes a "cvs checkout"; everything in the release
 #	will come out of the CVS tree, not your working directory.
 #   2. "make prep-checkout" : this updates _and_commits_ Version.java.
+#	It then tags the CVS tree and creates a clean build directory.
 #   3. "make rsync-cvs" (if running under ssh-agent) or DO THIS MANUALLY:  
 # cd /pia1/CvsRoot ; 
 # rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
