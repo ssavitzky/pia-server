@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<titles> User Experience</title>
+<link rev="made" href="mailto:bill@rsv.ricoh.com">
+</head><body>
+<h1>PIA user-experience proposal</h1>
+
+<p> This is Bill Softky's approach to extending and popularizing the
+PIA. It is probably fraught with misconceptions at this stage, so
+should be taken as just the opening statement of an ongoing
+discussion on how to anticipate and surmount potential user-acceptance
+problems with the PIA.
+
+Such issues are listed below.
+
+
+<h5><a name="XML-rep"> The spirit vs. the letter of XML</a></h5>
+
+
+According to a prominent source (Goldfarb, the "G" of SGML), the purpose of XML
+markup is to annotate the content of very narrowly-defined document
+types, explicitly leaving display processing (and implicitly other
+forms of processing) to be done by other files, like stylesheets.
+
+The PIA, on the other hand, uses markup as "verbs" as well as
+"adjectives," and encourages the inclusion of as much
+document-specific processing as possible inside the document to give
+it maximal flexibility.  While this approach is perfectly legal in the
+XML language, it might create some confusion for people steeped in the
+XML philosophy.
+
+
+
+<h5><a name="XML-rep">  "Easy to use" vs. powerful</a></h5>
+
+PIA will express all kinds of dissimilar concepts --annotation of
+content, logical relations, structured procedures, graphical
+properties, references to external data-- in a single language of
+"tags." 
+
+ But those different concepts have traditionally been expressed most
+successfully in different (and often more intuitive) languages:
+logical expressions using nested parentheses with "&" and "|"
+symbols, structured procedures using curly braces and function calls,
+graphical styles using WYSIWYG displays and editing.  So we risk
+alientating users by asking them to depart from familiar conventions,
+and by asking them to use conventions which are often clumsier than
+the ones they are accustomed to (I find even simple loops hard to read
+in PIA).
+
+ <em> <p> I suggest focussing on a user interface which has two parts,
+one for viewing a PIA document directly (using colors and shaded
+regions to clarify structure) and one to show the "results"
+(e.g. graphical outputs) of the document. A language as powerful and
+simple as PIA, if its power is properly used, will naturally lead to
+documents which may be hard to view directly, especially by
+non-programmer office personnel.</em> <p>
+
+<h5><a name="XML-rep">Straight-line  vs. "logical" document styles</a></h5>
+
+The first document/tagset I looked at was the admin-agent one, for
+which the .xh file was a few lines of  wrapper around the <agent-index>
+element, which was defined in the logical tagset order rather than in
+the top-to-bottom order of a more traditional document... as a result,
+I never got to see any text which "looked like" the graphics on my
+browser, so I became rather confused.  
+
+This example seems to me to illuminate a central tension in any kind
+of programming, that between straight-line code (which is often poorly
+structured and redundant but easy to read) and highly modular,
+structured code, which is more elegant and better matched to the
+problem but often difficult to piece together, especially for an
+unfamiliar or inexpert user.  
+
+ <em> <p> I hope that we can get the best of both worlds, first by
+suggesting through our documents and examples that the primary
+document not be overly tag-ified or wrapped, and second by creating
+editors and/or display mechanisms which can somehow unwrap the logical
+structure into a more human-readable form, e.g. by executing and/or
+filling in some of the active tags. </em> <p>
+
+
+<h5><a name="XML-rep">"All-in-one-place" vs modularized documents</a></h5>
+
+One of the biggest appeals of PIA is the ability to contain and edit
+all the relevant aspects of a document in one or two files.  But the
+desire for modularity, reusable tags, and content which is extracted
+or included from elsewhere naturally encourages creating
+general-purpose tags which reside in libraries elsewhere and documents
+which are created from lots of scattered pieces.
+
+As above, these are actually reflections of the strength and power of
+PIA, which if harnessed will make synchronizing batches of
+inter-related documents much easier.  But that power and ease will
+only come about if a naive user can easily understand the live
+document from its separate components.
+
+
+ <em> <p>   As above, I think we should take steps to reduce the number of
+tiers in the hierarchy of tags, and create interfaces which make those
+tiers more transparent or more easily linked together. </em> <p>
+
+
+<h5><a name="XML-rep">Content+processing
+vs. solitary+reusable</a></h5>
+
+My impression of XML is that it tries to enforce a strict separation
+between "content" and "processing" (a.k.a. display style). But PIA
+makes it possible to create content <em> by means of </em> processing
+(via extracting, looping, deciding etc).  If we try to keep to the XML
+approach, we will be forced either to put document-specific stuff into
+a tag-set--thus making it less general-purpose---or to avoid using
+those powerful tags for automatic content creation.
+
+ <em> <p> I think we should avoid that particular XML philosophy, and
+continue to do what we are already doing: placing any worthwhile
+document-specific stuff in the document, and any obviously reusable
+stuff in a tagset... with the proviso that the tagset, because it is
+supposed to be reusable by many different documents, NOT be linked to
+that particular one. </em> <p>
+
+<h5><a name="XML-rep">Downloading a language vs. an application</a></h5>
+
+Far more people want to download a useful application (which they can
+run quickly, without learning anything) than download and learn a
+whole new language.  So PIA would get a huge boost in popularity if it
+could implement a really neat service which lots of people would like.
+
+<p> <em> If we could implement a platform-independent proxie which
+automatically removed ads from a web page--ideally before downloading
+all their graphics!--it might prove to be very popular... and if
+PIA is sufficiently easy to use, it might encourage people to
+tinker with customizing their own proxie and/or ad-nuking algorithms,
+which we could collect and redistribute under the Open Source license.
+Of course, I don't know if we could actually implement such a thing,
+but I can imagine being  heros if we did. </em> <p>
+
+<h5><a name="XML-rep">Who are our first customers?</a></h5>
+
+The ideal customer for PIA is someone who wants to maintain web pages
+without being a web programmer, such as an office admin worker.  But
+those people aren't likely to know or care about open-source
+downloads, or really understand the choices and advantages of
+PIA... in fact, they aren't even likely to be making the decision
+about what language and platform the use (the IT lead will make that
+call). So we need to first target a population of people who understand
+the need, have the need, and are likely to find out about PIA.  
+
+<em> <p> I propose aiming at people who want to produce and easily
+update static web pages (e.g. personal home pages) on off-site
+servers... they can use PIA as a template for creating lists,
+catalogues, and such in static HTML (easily, we hope).  So the second
+application (after the ad-remover above) could be a static-HTML generator.<p>
+
+We can also target people who have control over their own servers and
+thus can run Java on them; they might make use of the active and
+interactive aspects of PIA.  So the third application is an
+active-form server, e.g. for small companies. <p>
+
+Finally, once the bugs have been worked out and PIA gets some
+popularity, we might be ready to introduce it to the ultimate target
+user-group, the office-worker types... but that will require the
+interest and involvement of their managers.  This application could be
+a suite (form servers, web printers, etc) for intranets. <p>
+
+And ultimately, if we can implement the active tags as compiled
+binaries (nice and fast!), we might hope that PIA gets used on higher-traffic servers
+in major applications.  </em> <p>
+
+
+<b>Copyright &copy; 1999 Bill Softky</b><br>
+<b>$Id: experience.html,v 1.1 1999-05-28 00:23:19 bill Exp $</b><br>
+<address> <a href="mailto:bill@rsv.ricoh.com"
+         >bill@rsv.ricoh.com</a>&gt;</address>
+</body></html>
