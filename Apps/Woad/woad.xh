@@ -42,16 +42,16 @@
     </tr>
     <tr><th valign="top" align="right" width="170"> Docs: &nbsp;</th>
         <td valign="top">
-	    <a href="quick">Quick start</a> ||
-	    <a href="about">About
-      		<font face="Helvetica, sans-serif">WOAD</font></a>  ||
+	    <a href="about">About <ss>WOAD</ss></a>	||
+	    <a href="quick">Quick start</a> 		||
+	    <a href="api">API</a>			||
 	    <a href="help">Help</a>	    
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
     <tr> <th> </th>
-        <td valign="top"> <font face="Helvetica, sans-serif">WOAD</font>
-	    (Web-Organized Application Development) provides a web-based view
+        <td valign="top"> <ss>WOAD</ss>
+	    (<ss>Web-Organized Application Development</ss>) provides a web-based view
 	    of an application's documents, configuration files, and source
 	    code.  In addition, it provides for web-based editing and
 	    collaborative annotation.  This page gives you information about
@@ -81,5 +81,5 @@
 
 <include src="app-info.inc"> no application information </include>
 <p>
-<short-footer cvsid="$Id: woad.xh,v 1.7 2000-06-30 00:06:04 steve Exp $" />
+<short-footer cvsid="$Id: woad.xh,v 1.8 2000-07-21 20:27:07 steve Exp $" />
 </p></body></html>
