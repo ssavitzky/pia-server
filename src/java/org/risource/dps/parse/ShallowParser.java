@@ -1,5 +1,5 @@
 ////// ShallowParser.java: perform a ``shallow'' parse of SGML files
-//	$Id: ShallowParser.java,v 1.1 2000-09-21 17:15:05 steve Exp $
+//	$Id: ShallowParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	and end tags are exposed as &lt;tag&gt; and  &lt;etag&gt; elements,
  *	respectively.
  *
- * @version $Id: ShallowParser.java,v 1.1 2000-09-21 17:15:05 steve Exp $
+ * @version $Id: ShallowParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -352,12 +352,24 @@ public class ShallowParser extends AbstractParser {
     return true;
   }
 
-  /** Get text starting with <code>last</code>.  If the text is
-   *	terminated by an entity or tag, the entity or tag ends up in
-   *	<code>next</code>, and the character that terminated
-   *	<em>it</em> is left in <code>last</code>.  
+  /** Get token starting with <code>last</code>.
    *
-   * === This will eventually get split so we can detect space, etc. ===
+   *<p>	Ordinary text in the input is split into a sequence of Text objects, 
+   *	with whitespace, punctuation, identifiers, and newlines in separate 
+   *	Text objects.  Markup is inserted as follows:
+   *
+   *<ul>
+   *	<li> An empty &lt;line&gt; element preceeds each line.
+   *	<li> Language keywords are tagged as &lt;kw&gt;
+   *	<li> Other identifiers are tagged as &lt;id&gt;
+   *	<li> Comments are tagged as &lt;rem&gt;
+   *	<li> Start tags are tagged &lt;tag&gt;
+   *	<li> End tags are tagged with &lt;etag&gt;
+   *	<li> Entities are tagged &lt;ent&gt;
+   *	<li> Attribute lists are tagged &lt;atl&gt;
+   *	<li> Declarations are tagged &lt;decl&gt;
+   *	<li> &lt;&gt;
+   *</ul>
    */
   protected ActiveNode getToken() throws IOException {
 

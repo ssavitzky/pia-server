@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.22 2000-09-21 17:15:04 steve Exp $
+//	$Id: AbstractParser.java,v 1.23 2000-09-23 00:52:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.22 2000-09-21 17:15:04 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.23 2000-09-23 00:52:39 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -74,6 +74,15 @@ public abstract class AbstractParser extends CursorStack implements Parser
   protected LineNumberReader 	in 		= null;
   protected Tagset 		tagset 		= null;
   protected EntityTable 	entities	= null; 
+
+  /** Parser state.  
+   * 
+   *<p>	Not every parser implementation requires state information, but it's
+   *	essential in some cases.  Note that the state is <em>not</em> saved
+   *	on the parse stack -- it's assumed that the element structure can do
+   *	that.
+   */
+  protected int			state		= 0;
 
   //protected int			lineNumber	= 1;
   protected final static int	lf		= '\n';
@@ -150,7 +159,9 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** Non-zero for every character that is part of an identifier. 
    *	This appears to be marginally faster than either a BitSet or
-   *	a boolean array. */
+   *	a boolean array.   We should really use bits to distinguish
+   *	-, ., _, and so on.
+   */
   public static byte idc[] = new byte[Character.MAX_VALUE];
 
   /** True for every character that is whitespace. */
@@ -252,6 +263,23 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   public boolean atEnd() {
     return last < 0;
+  }
+
+  /** Returns true if aString is an initial substring of buf
+   */
+  public final boolean lookingAt(String aString) {
+    int len = aString.length();
+    if (buf.length() < len) return false;
+    for (int i = 0; i < len; ++i)
+      if (buf.charAt(i) != aString.charAt(i)) return false;
+    return true;
+  }
+
+  /** Returns true if aChar is the first character of buf.
+   *	Blindly assumes that buf contains at least one character.
+   */
+  public final boolean lookingAt(char aChar) {
+    return buf.charAt(0) == aChar;
   }
 
   /** Starting at <code>last</code> (or the next available character
@@ -386,7 +414,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatLineUntil(int aCharacter, boolean checkEntities)
        throws IOException {
     if (last == 0) last = in.read();
-    while (last >= 0 && last != aCharacter && last != lf
+    while (last >= 0 && last != aCharacter && last != lf && last != cr
 	   && !(checkEntities && last == entityStart)) {
       buf.append((char)last);
       last = in.read();
@@ -401,12 +429,10 @@ public abstract class AbstractParser extends CursorStack implements Parser
    protected final boolean eatUntil(BitSet aBitSet, boolean checkEntities)
        throws IOException {
     if (last == 0) last = in.read();
-    // if (last == lf) lineNumber++;
     while (last >= 0 && ! aBitSet.get(last)
 	   && !(checkEntities && last == entityStart)) {
       buf.append((char)last);
       last = in.read();
-      // if (last == lf) lineNumber++;
     } 
     return last >= 0;    
   }
@@ -426,7 +452,6 @@ public abstract class AbstractParser extends CursorStack implements Parser
     int nextPosition = aString.indexOf(aCharacter, 1);
 
     if (last == 0) last = in.read();
-    // if (last == lf) lineNumber++;
     while (last >= 0 && !(checkEntities && last == entityStart)) {
 
       /* This could be faster, but it could be a lot slower, too.  We
@@ -495,17 +520,39 @@ public abstract class AbstractParser extends CursorStack implements Parser
     return last >= 0;    
   }
 
+  /** Starting at <code>last</code> (or the next available character
+   *	if <code>last</code> is zero), append spaces to 
+   * <code>buf</code> until a non-blank character or newline is reached.  */
+   protected final boolean eatSpacesInLine() throws IOException {
+    if (last == 0) last = in.read();
+    if (last < 0) return false;
+    while (last >= 0 && last <= ' ' && last != lf && last != cr) {
+      buf.append((char)last);
+      last = in.read();
+    }
+    return last >= 0;    
+  }
+
 
   /************************************************************************
   ** Parsing Utilities:
   ************************************************************************/
 
 
-  /** Holds the next non-text item, usually an Entity or an Element. */
-  protected ActiveNode next;
+  /** Holds the first item in a three-item queue of tokens.  
+   *
+   *<p>	In SGML-like markup languages, this will invariably be a text node.
+   *	In text-like files, this will usually be a start tag to be 
+   *	<em>wrapped around</em> the next text item.
+   */
+  protected ActiveNode first;
 
-  /** Holds the next text item. */
-  protected ActiveNode nextText;
+  /** Holds the second item in a three-item queue of tokens.  
+   *
+   *<p>	In SGML-like markup languages, this will be the start tag or entity
+   *	that terminated the text node in <code>first</code>.
+   */
+  protected ActiveNode next;
 
   /** Holds the next unmatched end tag. */
   protected String nextEnd;
@@ -514,7 +561,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
 
   /** Advance to the next ``token''. 
    *	
-   *<p>	The next ``token'' might be either text, in <code>nextText</code>, 
+   *<p>	The next ``token'' might be either text, in <code>first</code>, 
    *	an ordinary Node, in <code>next</code>, or an end tag, in 
    *	<code>nextEnd</code>.  They are checked in that order.  This allows
    *	getToken one node's worth of lookahead.
@@ -526,16 +573,16 @@ public abstract class AbstractParser extends CursorStack implements Parser
    */
   protected ActiveNode nextToken() {
     ActiveNode n = null;
-    if (nextText == null && next == null && nextEnd == null) try {
+    if (first == null && next == null && nextEnd == null) try {
       buf.setLength(0);
-      nextText = getToken();	// Try to get some text.
+      first = getToken();	// Try to get some text.
     } catch (IOException e) {
       return null;
     }
-    if (nextText != null) {
+    if (first != null) {
       // === here we should check for an implicitly-required paragraph tag.
-      n = nextText;
-      nextText = null;
+      n = first;
+      first = null;
     } else if (next != null) {
       n = next;
       next = null;

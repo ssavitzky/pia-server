@@ -1,5 +1,5 @@
 ////// LineParser.java: parser for text (non-SGML) files
-//	$Id: LineParser.java,v 1.1 2000-09-21 17:15:04 steve Exp $
+//	$Id: LineParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import java.io.IOException;
  *	are not specified, reasonable defaults are used that correspond
  *	roughly to Unix shell-script conventions.
  *
- * @version $Id: LineParser.java,v 1.1 2000-09-21 17:15:04 steve Exp $
+ * @version $Id: LineParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -68,8 +68,8 @@ public class LineParser extends AbstractParser {
   /** Get text starting with <code>last</code>.
    *
    *<p>	We don't have to worry about entities, etc., but we may need to 
-   *	provide line markers.  We do it by abusing nextText and next, with
-   *	the line going into nextText and the line number of the following
+   *	provide line markers.  We do it by abusing first and next, with
+   *	the line going into first and the line number of the following
    *	line going into next.
    */
   protected ActiveNode getToken() throws IOException {

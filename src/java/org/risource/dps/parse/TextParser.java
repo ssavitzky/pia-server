@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.1 2000-09-21 17:15:06 steve Exp $
+//	$Id: TextParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,6 +37,8 @@ import org.risource.dps.tree.TreeComment;
 
 import org.risource.dps.Context;
 
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -57,7 +59,7 @@ import java.io.IOException;
  *	are not specified, reasonable defaults are used that correspond
  *	roughly to Unix shell-script conventions.
  *
- * @version $Id: TextParser.java,v 1.1 2000-09-21 17:15:06 steve Exp $
+ * @version $Id: TextParser.java,v 1.2 2000-09-23 00:52:40 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -65,23 +67,200 @@ import java.io.IOException;
 public class TextParser extends AbstractParser {
 
   /************************************************************************
+  ** State:
+  ************************************************************************/
+
+
+  /** State constant for "code": look for programming-language keywords,
+   *	comments, and strings. 	All code-like states have 1 in the low-order 
+   *	bit.
+   */
+  protected final static int IN_CODE = 1; 
+
+  /** Check to see if we are in a code-like state. */
+  protected final boolean inCode() { return (state & 1) != 0; }
+
+  /** State constant for SGML start tags.  This is basically code-like. */
+  protected final static int IN_TAG = 3;
+
+  /** State constant for "text": keywords become stopwords.
+   *	All text-like states have 0 in the low-order bit.
+   */
+  protected final static int IN_TEXT = 0;
+
+  /** Check to see if we are in a text-like state. */
+  protected final boolean inText() { return (state & 1) == 0; }
+
+  /** Inside a comment that is terminated by EOL.  Text-like state. */
+  protected final static int IN_COMMENT = 2;
+
+  /** Inside a comment that is terminated by "cend".  Text-like state. */
+  protected final static int IN_DELIMITED_COMMENT = 4;
+
+  /** Inside a quoted string.  This is a Text-like state. */
+  protected final static int IN_STRING = 6;
+
+  /** table of programming-language keywords. */
+  protected Table keywords = new Table();
+
+  /** table of English stop-words (i.e. words not to index in text) */
+  protected Table stopwords = new Table();
+
+  protected Table stringDelims = new Table();
+
+  protected String endString  = null;
+
+  /** The string that starts a comment that ends at the end of the line. */
+  protected String comment = "#";	// default to script-like comments.
+  protected int	   clength = 1;
+
+  /** The string that starts a comment that ends with "cend". */
+  protected String cbegin   = null;
+  protected int	   cblength = 0;
+
+  /** The string that ends a comment that started with "cbegin". */
+  protected String cend    = null;
+
+
+  /************************************************************************
+  ** Cross-references:
+  ************************************************************************/
+
+  /** Look up a cross-reference
+   *
+   * @return a URL.
+   */
+  protected String lookupXref(String id) {
+    return null;		// === lookupXref ===
+  }
+
+
+  /************************************************************************
   ** Recognizers:
   ************************************************************************/
 
-  /** Get text starting with <code>last</code>.
+  /** Returns true if aString is an initial substring of buf
+   */
+  public final boolean lookingAt(String aString, int length) {
+    if (buf.length() < length) return false;
+    for (int i = 0; i < length; ++i)
+      if (buf.charAt(i) != aString.charAt(i)) return false;
+    return true;
+  }
+
+  /** Returns true if aString is a substring of buf
+   */
+  public final boolean bufContains(String aString) {
+    int slength = aString.length();
+    int blength = buf.length();
+    if (blength < slength) return false;
+    for (int i = 0; i <= blength - slength; ++i) {
+      boolean x = true;
+      for (int j = 0; j < slength; ++j)
+	if (buf.charAt(i + j) != aString.charAt(j)) {
+	  x = false;
+	  break;
+	}
+      if (x) return true;
+    }
+    return false;
+  }
+
+  /** Get token starting with <code>last</code>.
    *
-   *<p>	We don't have to worry about entities, etc., but we may need to 
-   *	provide line markers.  We do it by abusing nextText and next, with
-   *	the line going into nextText and the line number of the following
-   *	line going into next.
+   *<p>	The input is split into a sequence of Text objects, with whitespace, 
+   *	punctuation, identifiers, and newlines in separate Text objects. 
+   *	Markup is inserted as follows:
    *
-   * === This will eventually get split so we can detect space, etc. ===
+   *<ul>
+   *	<li> An empty &lt;line&gt; element preceeds each line.
+   *	<li> Language keywords are tagged as &lt;kw&gt;
+   *	<li> Other identifiers are tagged as &lt;id&gt;
+   *	<li> Comments are tagged as &lt;rem&gt;
+   *	<li> &lt;&gt;
+   *</ul>
    */
   protected ActiveNode getToken() throws IOException {
-    if (eatLine()) eatEndOfLine();
+    String id = null;
+
+    if (last == 0) last = in.read();
+    if (last < 0) return null;
+
+    if (last == lf || last == cr) { 	// end of line
+      if (state == IN_COMMENT) { 	// ... which ends a comment.
+	nextEnd = "rem";
+	state = IN_CODE;
+	return null;
+      }
+      eatEndOfLine();			// ... normal
+      next = createActiveElement("line", null, true);
+    } else if (last <= ' ') {		// generic whitespace
+      eatSpacesInLine();
+    } else if (0 == idc[last]) { 	// punctuation
+      while (last > ' ' && idc[last] == 0 ) {
+	buf.append((char)last);
+	last = in.read();
+      }
+      // Check for start of comment terminated by EOL. 
+      // === for now, just start comment with # or // as first nonblank.
+      if (state != IN_COMMENT && state != IN_DELIMITED_COMMENT
+	  && clength > 0 && lookingAt(comment, clength) ) {
+	state = IN_COMMENT;
+	next = createActiveText(buf.toString(), false);
+	return createActiveElement("rem", null, false);
+      } else if (state != IN_COMMENT && state != IN_DELIMITED_COMMENT
+	  && cblength > 0 && lookingAt(cbegin, cblength) ) {
+	state = IN_DELIMITED_COMMENT;
+	next = createActiveText(buf.toString(), false);
+	return createActiveElement("rem", null, false);
+      } 
+      // Note that this is not "else if" -- need to handle /**/, etc.
+      if (state == IN_DELIMITED_COMMENT && bufContains(cend) ) {
+	state = IN_CODE;
+	nextEnd = "rem";
+      }
+    } else if (last >= '0' && last <= '9') { // number
+      while (last != 0 && idc[last] != 0) {
+	buf.append((char)last);
+	last = in.read();
+      }
+    } else {				// identifier
+      while (last != 0 && idc[last] != 0) {
+	buf.append((char)last);
+	last = in.read();
+      }
+      // Is this a language keyword, cross-referenced identifier, or other?
+      id = buf.toString();
+      nextEnd = (keywords.at(id) == null)? null : "kw";
+
+      if (nextEnd != null && state == IN_CODE) {
+	next = createActiveText(id, false);
+	return createActiveElement(nextEnd, null, false);
+      } else if (stopwords.at(id.toLowerCase()) != null) {
+	// === It may not be necessary to check stopwords if state == IN_CODE
+
+	// At this point we know that the word is neither a keyword nor a 
+	// stopword, so go ahead and check for cross-references.  
+
+	// === eventually parametrize the kw, id tags and whether we always 
+	// === wrap identifiers even if they don't have an xref.
+
+	// do xref check HERE where we can be efficient. 
+	String xref = lookupXref(id);
+	if (xref != null) {
+	  nextEnd = "id";
+	  next = createActiveText(id, false);
+	  ActiveElement e = createActiveElement(nextEnd, null, false);
+	  e.setAttribute("href", xref);
+	  return e;
+	} else {
+	  nextEnd = null;
+	}
+      }
+    }
     if (buf.length() <= 0) return null;
-    next = createActiveElement("line", null, true);
-    return createActiveText(buf.toString(), false);
+    if (id == null) id = buf.toString();
+    return createActiveText(id, false);
   }
 
 
@@ -90,7 +269,35 @@ public class TextParser extends AbstractParser {
   ************************************************************************/
 
   protected void initialize() {
-    // grab stuff from tagset as needed
+    // grab stuff as needed from the attributes of the tagset. 
+    // We know that a tagset is really an ActiveElement, so cast it.
+    ActiveElement tse = (ActiveElement)tagset;
+
+    String wds = tse.getAttribute("keywords");
+    if (wds == null) 
+      wds = "if else elsif elif while until do for func sub switch case "
+	  + "try catch new self this super and or not define "
+	  + "class interface static public private protected final "
+	  + "int long short byte char void boolean true false null " 
+	  + "return print unless my include require import package";
+    keywords.append(List.split(wds));
+
+    wds = tse.getAttribute("stopwords");
+    if (wds == null) 
+      wds = "a an and are do for either i is me my no nor not of or our so "
+ 	  + "the this they them then to we were what when where who yes ";
+    stopwords.append(List.split(wds));
+
+    comment = tse.getAttribute("comment");
+    cbegin  = tse.getAttribute("cbegin");
+    cend    = tse.getAttribute("cend");
+
+    if (comment == null && cbegin == null) comment="#";
+
+    // Cache delimiter lengths -- we're going to be using them a lot.
+    clength = (comment != null)? comment.length() : 0;
+    cblength = (cbegin != null)? cbegin.length() : 0;
+    
     next = createActiveElement("line", null, true);
     super.initialize();
   }
