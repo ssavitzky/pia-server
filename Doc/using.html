@@ -67,50 +67,109 @@ guide.</a>)
 
 <h2><a name="Running">Running the PIA </a></h2>
 
+<h3>The PIA Start-up Scripts</h3>
 
-<p>On UNIX or Linux, once you have set up the <code><var>PIA_HOME</var></code>
-and <code><var>PIA_ROOT</var></code> environment variables you can launch the
-PIA with the command: ``<code>$PIA_HOME/bin/pia</code>'', or just
-``<code>pia</code>'' if <code>$PIA_HOME/bin</code> is in your search path.  A
-complete list of command-line options can be found by running
-<kbd>$PIA_HOME/bin/pia -help</kbd> at the shell prompt.</p>
+<p> The <code>pia</code> command is actually a start-up script which attempts
+    to locate the PIA's install directory, and to set up some necessary
+    environment variables.
 
-<p>Under Windows 9x and NT, launch the PIA in a DOS window with the command:
-<code><var>PIA_HOME</var>/bin/pia.bat</code> -- this is a batch file that makes
-use of the <code><var>PIA_HOME</var></code> and <code><var>PIA_ROOT</var></code>
-environment variables, and is similar in function to <code>pia_wrapper</code>
-on Unix.</p>
+<ul>
+  <li> On Unix, the start-up script is <code>PIA/bin/pia</code>; it eventually
+       invokes the auxiliary script <code>PIA/bin/pia_wrapper</code>,  which
+       sets up the Java environment.
+  <li> On Windows, the start-up script is <code>PIA/bin/pia.bat</code>
+</ul>
 
-<p>The <code>process</code> command allows the PIA software to be
-used as a unix filter for processing HTML and XML documents.  Under Windows 9x
-and NT the CLASSPATH must be set to <code><var>PIA_HOME</var>/src/java</code>
-in order for <code>process</code> to run.
+<p> It is also possible to start the PIA directly from the Java runtime with
+    the command:
+
+<blockquote><pre>
+java org.risource.pia.Pia <var>option</var>...
+</pre></blockquote>
+
+<h3>The PIA Command Line</h3>
+
+<blockquote>
+<pre>
+pia <em>[option]...</em> <em>[property=value]</em>... <em>filename</em>?
+</pre>
+</blockquote>
+
+<p> The PIA's command-line options are:
+
+<dl>
+  <dt> <code>-version</code></dt>
+  <dd> Print out the PIA's version number and exit. </dd> 
+  <dt> <code>-d</code> </dt>
+  <dd> Run the PIA in ``debugging'' mode. </dd> 
+  <dt> <code>-v</code></dt>
+  <dd> Run the PIA with more verbose messages.</dd> 
+  <dt> <code>-verbosity    <var>number</var></code>  </dt>
+  <dd> Explicitly set the PIA's ``verbosity'' level.  Default is 0.</dd> 
+  <dt> <code>-verb         <var>number</var></code> </dt>
+  <dd> Alias for <code>-verbosity</code></dd> 
+  <dt> <code>-home         <var>directory</var></code> </dt>
+  <dd> Set the PIA's ``home directory'', which is where it looks for tagsets,
+       Java class files, and other defaults.  This should be the directory in
+       which the PIA was installed on your system. </dd> 
+  <dt> <code>-port         <var>number</var></code> </dt>
+  <dd> The port the PIA will listen on.  Default is 8888. </dd> 
+  <dt> <code>-p            <var>number</var></code> </dt>
+  <dd> Alias for <code>-port</code></dd> 
+  <dt> <code>-vport        <var>number</var></code> </dt>
+  <dd> The PIA's <em>virtual port</em>, which it reports to the browser.  This
+       can be different from the <em>real</em> port on which it is listening
+       for requests, which allows another web server such as Apache to
+       redirect selected requests to a PIA.  The default is whatever
+       <code>-port</code> specifies, or 8888. </dd> 
+  <dt> <code>-rport        <var>number</var></code> </dt>
+  <dd> The PIA's <em>real port</em>, on which it listens for requests.  The
+       default is whatever <code>-port</code> specifies, or 8888. </dd> 
+  <dt> <code>-root        <var>directory</var> </code>   </dt>
+  <dd> The PIA's <em>real root directory.</em>  The default is
+       <code>$HOME/.pia</code> on a Unix machine. </dd> 
+  <dt> <code>-vroot        <var>directory</var></code>  </dt>
+  <dd>  The PIA's <em>real root directory.</em>  The default is
+       <code><var>PIA_HOME</var></code>. </dd> 
+  <dt> <code>-host         <var>name</var></code>  </dt>
+  <dd> The PIA's host name. </dd> 
+  <dt> <code>-config       <var>file</var></code>  </dt>
+  <dd> The name of the per-directory configuration file.  The default is
+       <code>_subsite.xcf</code>; setting this to <code>""</code> will prevent
+       the PIA from looking at configuration files. </dd> 
+  <dt> <code>-site         <var>file</var></code>  </dt>
+  <dd> The complete pathname of the PIA's top-level site configuration file.
+       If a site configuration file is specified, the per-directory
+       configuration file in the root (only) will be ignored.
+       </dd> 
+</dl>
+
+<p> The <code><var>filename</var></code> parameter supplied on the command
+    line may specify either an ordinary file, in which case it is used as the
+    name of the site configuration file, or a directory, in which case it is
+    used as the real root, <em>and</em> no virtual root will be used. 
+
+<p> Parameters specified on the command line override anything specified in
+    the PIA's top-level configuration file, which in turn overrides anything
+    specified in the environment variables.
 
 
-<p> <strong>=== this section needs lots more work ===</strong>
+<h3>The PIA's Environment Variables</h3>
 
-<p>The
-<code>-port</code> option can be used to set the port (default is 8888, a
-non-privileged port that allows normal user logins to run the PIA on Unix
-boxes.  You can also set it to most other port numbers (8080, 8001, etc.) in
-the <code>PIA/_subsite.xcf</code> file, as shown in
-<code>Config/Site/sample.xcf</code>. But note that such ports may not be
-accessible by machines everywhere (a browser behind a firewall may not be
-allowed to access these ports)... so if you want to ensure your PIA server is
-completely accessible to the public, try the port-80 trick below.</p>
+<p> The PIA uses the following environment variables:
 
-<p>If you want to use the administrator-priveleged port 80 (accessed by the
-simpler URL <code> http://HOST/ </code> instead of <code>
-http://HOST:8888/</code>), you must either have administrator priveleges when
-running the PIA, or you must run a web server, such as Apache, on port 80 as a
-proxy to the PIA on a different port, and set the PIA's "virtualport"
-variable to 80 so that pages served by the PIA appear to
-come from port 80 rather than from the port the PIA listens to.
-
-<p>The <code>process</code> command allows the PIA software to be
-used as a unix filter for processing HTML and XML documents.  Under Windows 9x
-and NT the CLASSPATH must be set to <code><var>PIA_HOME</var>/src/java</code>
-in order for <code>process</code> to run.
+<dl>
+  <dt> <code>PIA_HOME</code>
+  <dd> Specifies the directory in which the PIA is installed.  The PIA's
+       start-up script attempts to set this based on the pathname with which
+       it is invoked. 
+  <dt> <code>PIA_ROOT</code>
+  <dd> Specifies the real root directory of the PIA.  The PIA's start-up
+       script sets this to <code>$HOME/.pia</code> on a Unix machine.  On
+       Windows, the default directory is
+       <code>c:\PIAUSERS\<var>username</var></code> (if a username is not
+       available <code> nobody</code> is used).
+</dl>
 
 <h2><a name="Using">Using the PIA</a></h2>
 
@@ -123,7 +182,7 @@ in order for <code>process</code> to run.
 </p>
 
 <pre>
-  Point your browser to &lt;URL: http://blackroot.crc.ricoh.com:8001&gt;
+  Point your browser to &lt;URL: http://blackroot.crc.ricoh.com:8888&gt;
 </pre>
 
 <p> after initializing, and you can cut-and-paste the URL on that line into
@@ -138,7 +197,6 @@ in order for <code>process</code> to run.
 
 <p> The list of available applications and their descriptions can be found in
     the <a href="agents.html">Application Guide</a>.
-
 
 <h2><a name="Processing">Processing Documents</a></h2>
 
@@ -189,10 +247,11 @@ directory (which should <em>contain</em> a configuration file).  The PIA will
 look for its top-level configuration file in the following places:</p>
 
 <ol>
-  <li> A file or directory specified on the command line.
-  <li> The environment variable <var>PIA_ROOT</var>
-  <li> A system-specific default root directory (see above)
-  <li> The PIA's ``home directory,'' <var>PIA_HOME</var>
+  <li> The site configuration file specified on the command line.
+  <li> The per-directory configuration file in the PIA's root directory.
+  <li> The ``<em>virtual root</em>'' directory if one is specified.  If not
+       specified, the default virtual root is the PIA's ``home directory,''
+       <var>PIA_HOME</var>
 </ol>
 
 <p>The default configuration file name is <var>_subsite.xcf</var>; this can be
@@ -210,13 +269,14 @@ be found in the directory <a
 href="../Config/Site/"><code>$PIA_HOME/Config/Site/</code></a>.  </p> 
 
 
-<p> If you change any configuration options (such as editing a
+<p> If you change any configuration options (for example, by editing a
     <code>_subsite.xcf</code> file or renaming a tagset file), you should
-    re-start the PIA to ensure the server knows about those changes.  The
-    results may be very confusing otherwise.</p>
+    re-start the PIA to ensure that the server knows about those changes.  The
+    results may be very confusing otherwise.
+</p>
 
 <p> <strong>=== this section needs LOTS more work ===</strong>
-    In particular, it needs a list of configuration and command-line options. 
+    In particular, it needs a list of configuration  options. 
 
 
 <h2><a name="Updating">Updating the PIA</a></h2>
@@ -260,6 +320,6 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: using.html,v 1.3 1999-10-20 17:22:55 bill Exp $</i><br>
+<i>$Id: using.html,v 1.4 1999-10-22 21:52:01 steve Exp $</i><br>
 
 </body></html>
