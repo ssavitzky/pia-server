@@ -315,9 +315,44 @@ tags.</p>
 agency you can choose a custom set of agents as opposed to the
 default set.</p>
 
-<p>Once it is installed, you can start the PIA by executing the
-command <tt>PIA_DIR/bin/pia</tt>, where <tt>PIA_DIR</tt> is the PIA
-home directory.</p>
+<p>Once it is installed, you can start the PIA by executing the command
+<tt><em>PIA_DIR</em>/bin/pia</tt>, where <tt><em>PIA_DIR</em></tt> is the
+PIA's ``home directory'' -- the directory it was installed in.  If the PIA was
+installed normally, this directory will be called PIA.  If you installed it in
+your home directory, for example, the command to run the PIA would be:</p>
+
+<pre>
+  ~/PIA/bin/pia
+</pre>
+
+<p>While the PIA is starting up, you will see a sequence of messages something
+like this:
+</p>
+
+<pre>
+&lt;jaguar:717&gt; ~/PIA/bin/pia
+CLASSPATH is not set and the current directory is not the 
+Java source directory (/home/steve/PIA/bin/../src/java).
+We will try to set an appropriate CLASSPATH, but you may experience problems
+ -- if so try running from /home/steve/PIA/bin/../src/java or setting your 
+CLASSPATH environment variable to include the necessary java classes.
+Loaded properties from /home/steve/.pia/Config/pia.props
+ROOT Loaded tagset 'pia-xhtml' in 5.53 seconds.
+Admin Loaded tagset 'Admin-xhtml' in 1.94 seconds'.
+Initializing Admin from /home/steve/PIA/Agents/Admin/initialize.xh
+Loading XML from '/home/steve/.pia/Agents/Admin/agent-files.xml'
+  loaded /DOFS /Doc /PIA from /home/steve/PIA/Agents/DOFS/AGENTS.xml
+  loaded /Proxie from /home/steve/PIA/Agents/Proxie/AGENT.xml
+  loaded /History from /home/steve/PIA/Agents/Proxie/History/AGENT.xml
+  loaded /Proxie/Toolbar from /home/steve/PIA/Agents/Proxie/Toolbar/AGENT.xml
+  loaded /Proxie/Toolbar/fileTools from /home/steve/PIA/Agents/Proxie/fileTools/AGENT.xml
+  loaded /Proxie/Toolbar/remoteTools from /home/steve/PIA/Agents/Proxie/remoteTools/AGENT.xml
+Loading complete.
+Point your browser to &lt;URL: http://jaguar.crc.ricoh.com:8888&gt;
+</pre>
+
+<p>At this point you can browse to the URL specified on the last line. </p>
+
 
 <h4><a name="viewing"></a>Viewing an Agent's Home Page</h4>
 
