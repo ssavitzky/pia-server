@@ -146,7 +146,14 @@
 <p> The set of documents and subsites bound together at a subsite is called a
     ``<dfn>sheaf</dfn>'' of documents.  A sheaf is distinguished from a
     directory in that it may contain virtual and imaginary entries as well as
-    real ones. 
+    real ones.  Note that a symbolic link doesn't quite capture the idea of a
+    virtual document.
+
+<blockquote><em>
+    We need to take more than a cursory look at WebDAV, since the idea of
+    XML-based metadata and file manipulation is very much the same idea as
+    what we're considering here.
+</em></blockquote>
 
 <p> A directory's <code>subsite.config</code> file contains the following:
 
@@ -179,9 +186,13 @@
        attributes. 
 </ol>
 
+<p> It's not clear whether these variables should be distinguished by name or
+    by putting them in separate namespaces.  It's possible that normal scoping
+    will take care of inheritance. 
+
 <p> It's important to note that if any of the variables associated with a
     virtual subsite is changed, the subsite (and all of its parents) must be
-    realized at that point, in order to have a suitable real directory in
+    realized at that point in order to have a suitable real directory in
     which to store the modified <code>subsite.config</code> file.
 
 <p> Note that information about a subsite is actually contained in three
@@ -192,6 +203,14 @@
   <li> its <em>parent's</em> <code>subsite.conf</code> file
   <li> its parent's <em>directory</em>. 
 </ol>
+
+<p> There are some problems with setting variables: it's not clear exactly
+    when, or even whether, to synchronize an internal cache with the
+    <code>subsite.conf</code> file that contains a subsite's permanent
+    bindings.  Obviously it would be a lot less confusing for users if this
+    happened invisibly.  It may be useful to designate some variables as
+    volatile.
+
 
 <h2>Subsite and Document Types</h2>
 
@@ -288,7 +307,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.9 1999-07-22 01:19:19 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.10 1999-07-22 15:52:11 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
