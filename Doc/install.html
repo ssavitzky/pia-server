@@ -33,7 +33,10 @@ You need the following software to run the PIA:</p>
      <a href = "http://www.javasoft.com">java.sun.com</a></code> (direct links
      to <a
      href="http://www.javasoft.com/products/jdk/1.2/jre/index.html">JRE</a> or
-     <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>)</li>
+     <a href="http://www.javasoft.com/products/jdk/1.2/">JDK</a>) or, for
+     Linux,
+     <a href="http://www.blackdown.org/"><code>www.blackdown.org</code></a>
+</li>
 <li>An operating system that supports sockets and long filenames.<br>We
 have run the PIA software on Linux (Red Hat 4.2 with the <a
      href="http://www.blackdown.org/">blackdown.org</a> JDK), Windows 9X, and
@@ -41,7 +44,8 @@ have run the PIA software on Linux (Red Hat 4.2 with the <a
      because of differences in file handling.</li>
 <li>Utilities for unpacking the files (<code>tar</code> and
      <code>gunzip</code> on unix, <code> winzip </code> on Windows)<br>
- </li></ul>
+ </li>
+</ul>
 
 
 <h2><a name = "Obtaining">Obtaining the Files</a></h2>
@@ -53,7 +57,7 @@ The latest stable releases are maintained in compressed form in the
 directories <code>ftp://ftp.risource.org/PIA/pia_src.tgz</code>.
 </p>
 
-<h2>Uncompressing the Files</h2>
+<h3>Uncompressing the Files</h3>
 <p>
 Before the PIA files can be extracted from the tar file, it must first
 be uncompressed.  For example:
@@ -61,6 +65,19 @@ be uncompressed.  For example:
 <blockquote>
 <code>gunzip pia_src.tgz</code>
 </blockquote>
+
+<h3>Alternative: CVS</h3>
+
+<p> If you are planning to do PIA <em>development</em>, it is better to obtain
+    the files using the CVS version-control system.  More information on this
+    can be obtained from <code><a href="http://www.risource.org/PIA/cvs.shtml"
+    >www.risource.org/PIA/cvs.shtml</a></code>
+</p>
+
+<p> The CVS repository is updated more frequently than the <code>tar</code>
+    archive -- essentially whenever a developer feels that the portion of the
+    PIA they have been working on is stable enough for others to try.
+</p>
 
 <h2><a name = "Installing">Installing the Files</a></h2>
 <p>
