@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.27 1999-06-09 18:33:24 steve Exp $
+#	$Id: Makefile,v 1.28 1999-06-11 23:29:36 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -79,10 +79,10 @@ CVS_RMT  = /home/cvsroot
 ###   1. do_checkout	A complete "cvs checkout" from the PUBLIC SERVER.
 ###   2. build_release 	The resulting directory is built
 ###   3. tar_file	The entire directory is tarred up.
-###   4. copy_src_dir	The directory is copied under /pia1/pia
 
-src-release:: do_checkout build_release tar_file copy_src_dir
+src-release:: do_checkout build_release tar_file
 	echo 'Build complete.  Your next step is "make upload"'
+	echo '"make copy_src_dir" is now optional'
 
 ### Commands:
 

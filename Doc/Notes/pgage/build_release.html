@@ -13,12 +13,23 @@
     release build is done in this directory, not your working directory.
 </p>
 
-<p> The release directory is copied over to <code>/pia/pia1</code> as
-    <code>src_release<em>version_number</em></code>.
-    Old src_release directories can just be deleted.
+<p> Note that the build process is specific to the environment at Ricoh CRC;
+    so far, that's where all releases are made.  The gzipped tar file is
+    generated directly in <code>/pia1/pia/pia_src<em>version</em>.tgz</code>
+    and copied to the <a href="http://www.RiSource.org/">RiSource.org</a>
+    website.  The release directory used to be copied over to
+    <code>/pia1/pia</code> as <code>src_release<em>version</em></code>; this
+    is no longer done by default.  Since the PIA is now open source, binary
+    releases are no longer made, either.  Old src_release directories can just
+    be deleted; <code>.tgz</code> files should be kept around for reference.
 </p>
 
 <h3>The Build Steps</h3>
+
+<blockquote>
+  Note that an abbreviated summary of the build process can be found in the
+  top-level <a href="/PIA/Makefile">Makefile</a>.
+</blockquote>
 
 <ol>
   <li> Before doing the build, update these variables in 
@@ -63,10 +74,13 @@ rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ </
   <li><code>make src-release</code> -- This does the rest of the build. <br />
 
        The following table gives the make targets for the individual build
-       steps in case you need to re-do any of them.  They all operate on the
-       build directory, so you don't have to <code>cd</code> if you don't want
-       to.  The build no longer involves a <code>make&nbsp;clean</code>, so 
-       a minor release can be made without a complete rebuild.
+       steps in case you need to re-do or omit any of them.  They all operate
+       on the build directory, so you don't have to <code>cd</code> if you
+       don't want to.  The build no longer involves a
+       <code>make&nbsp;clean</code>, so a minor release can be made without a
+       complete rebuild.  <code>build_release</code> does make
+       <code>doc</code>, so it is <em>strongly</em> recommended that your
+       machine have at least 128Mb of RAM.
 
      <table>
        <tr><td><code>do_checkout</code></td>
@@ -77,13 +91,11 @@ rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ </
            <td>Make a compressed tar file in /pia1/pia.</td></tr>
        <tr><td><code>&nbsp;</code></td>
            <td>Link the tar file to pia_src.tgz.</td></tr>
-       <tr><td><code>copy_src_dir</code></td>
-           <td>Copy the src_release directory to /pia1/pia.</td></tr>
-       <tr><td><code>&nbsp;</code></td>
-           <td> This may not be strictly necessary, but it lets you check
-		quickly what was in the last release.  <code>rsync</code> is
-		used in case you need to do it again. </td></tr>
      </table>
+
+       <p> <code>make copy_src_dir</code> is now optional; it copies the
+	   src_release directory to /pia1/pia.  It uses up quite a lot of
+	   space, and can lead to directory trees that are hard to delete. 
 
   <li> Check for errors. <br />
 
