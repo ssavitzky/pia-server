@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.17 1999-08-11 20:36:05 bill Exp $
+//	$Id: extractHandler.java,v 1.18 1999-08-31 21:38:26 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.17 1999-08-11 20:36:05 bill Exp $
+ * @version $Id: extractHandler.java,v 1.18 1999-08-31 21:38:26 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -910,7 +910,7 @@ class replaceHandler extends extract_subHandler {
 	     && !(caseSens && name.equals(item.getNodeName())
 		  || !caseSens && name.equalsIgnoreCase(item.getNodeName())))
 	  continue;
-	((ActiveEntity) item).setValueNodes(aContext, content);
+	((ActiveEntityRef) item).setValueNodes(aContext, content);
 	break;
 
       case Node.ELEMENT_NODE:

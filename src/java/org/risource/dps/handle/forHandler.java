@@ -1,5 +1,5 @@
 ////// forHandler.java: <for> sub-element of <repeat> 
-//	$Id: forHandler.java,v 1.1 1999-04-23 00:21:48 steve Exp $
+//	$Id: forHandler.java,v 1.2 1999-08-31 21:38:26 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -104,8 +104,17 @@ class forHandler extends repeat_subHandler {
 
     Association iter = getParameter(cxt, name);
     Association stop = getParameter(cxt, name+"-stop");
+    if (stop == null){
+       	cxt.message(-2,  name + "-stop cannot be found initializig <for>",
+		    0, true);
+	return;
+    }
     Association step = getParameter(cxt, name+"-step");
-
+    if (step == null){
+       	cxt.message(-2,  name + "-step cannot be found initializig <for>",
+		    0, true);
+	return;
+    }
     long iiter;
     long istop;
     long istep;

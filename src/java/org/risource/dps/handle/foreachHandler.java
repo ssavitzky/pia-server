@@ -1,5 +1,5 @@
 ////// foreachHandler.java: <foreach> sub-element of <repeat>
-//	$Id: foreachHandler.java,v 1.1 1999-04-23 00:21:50 steve Exp $
+//	$Id: foreachHandler.java,v 1.2 1999-08-31 21:38:27 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -61,6 +61,10 @@ class foreachHandler extends repeat_subHandler {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     String name = getEntityName(atts, "li");
     ActiveNodeList items = cxt.getValueNodes(name + "-list", true);
+    if ( cxt.getValueNodes(name + "-index", true) == null){
+	cxt.message(-2,  name + "-index cannot be found in <foreach>",0, true);
+	return;
+    }
     String index = cxt.getValueNodes(name + "-index", true).toString();
     long n = MathUtil.getNumeric(index).longValue();
 
