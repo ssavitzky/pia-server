@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.17 1999-10-13 21:46:23 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.18 1999-10-18 15:38:16 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -274,7 +274,7 @@
 	  <set name=pname><agent-home agent="&li;"/></set>
 	  <th align=left> <a href="&pname;">&li;</a> </th>
 	  <td><a href="&pname;/"><get name="pname"/></a> </td>
-	  <td> <a href="/~&li;/.">/~&li;/.</a> </td>
+	  <td> <a href="/~&li;/-">/~&li;/-</a> </td>
 	  <td>
 		<if><status item=exists src="&pname;/DATA" />
 		    <then><a href="&pname;/DATA/">/~&li;/DATA/</a></then>
@@ -401,6 +401,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.17 1999-10-13 21:46:23 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.18 1999-10-18 15:38:16 steve Exp $</b><br />
 </tagset>
 

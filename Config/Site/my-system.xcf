@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: my-system.xcf,v 1.3 1999-10-14 21:44:07 steve Exp $ -->
+<!-- $Id: my-system.xcf,v 1.4 1999-10-18 15:41:03 steve Exp $ -->
 
 <Container file="" virtual="/">
   <doc> This gives you a view of the entire filesystem.
@@ -20,7 +20,7 @@
 	    <body>
 		<h1>This is My Computer!</h1>
 		<p> Note that this is the "home" resource of
-		    <a href="/."><code>/</code></a> (the root)</p>
+		    <a href="/-"><code>/</code></a> (the root)</p>
 	    </body>
 	</html>
       </DOCUMENT>

@@ -91,12 +91,12 @@
   <dd> Usually the application's data directory, if it has one.  This is just
        a convention that may not be universal.
   </dd>
-  <dt> <a href='/~&AGENT:name;/DATA/-'>/~&name;/.</a>
+  <dt> <a href='/~&AGENT:name;/DATA/-'>/~&name;/-</a>
   </dt>
   <dd> A generic listing of the data directory.
        </dd>
 </dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.13 1999-10-15 17:04:19 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.14 1999-10-18 15:38:16 steve Exp $' />
 </body></html>
