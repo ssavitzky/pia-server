@@ -1,5 +1,5 @@
 ////// debugHandler.java: <debug> Handler implementation
-//	$Id: debugHandler.java,v 1.3 1999-03-12 19:26:09 steve Exp $
+//	$Id: debugHandler.java,v 1.4 1999-03-24 01:58:58 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,15 +51,16 @@ import java.lang.StringBuffer;
 /**
  * Handler for &lt;debug&gt; &lt;/&gt;  This tag prints
  * the node, document fragment, or document, that is between
- * debug begin and end tags as a tree.  It also returns the
- * document itself.  
- * <p>	
+ * debug begin and end tags as a tree.
+ * <br>	
  *
- * @version $Id: debugHandler.java,v 1.3 1999-03-12 19:26:09 steve Exp $
+ * @version $Id: debugHandler.java,v 1.4 1999-03-24 01:58:58 pgage Exp $
  * @author steve@rsv.ricoh.com
  */
 
 public class debugHandler extends GenericHandler {
+
+    List printList = null;
 
   /************************************************************************
   ** Semantic Operations:
@@ -73,22 +74,32 @@ public class debugHandler extends GenericHandler {
 
     // Actually do the work. 
     OutputTrace trOut = new OutputTrace(out);
-    // System.out.println("Length of content: " + content.getLength());
     
     NodeEnumerator enum = content.getEnumerator();
+    // Create a "pre" element as a parent node to
+    // preserve indented formatting
+    ActiveNode preNode = new ParseTreeElement("pre");
     for (Node n = enum.getFirst(); n != null; n = enum.getNext()) {
-      // Print the node tree
-      printTree(n, cxt, out, 0);
 
-      // Output the page as well
-      out.putNode(n);
+      // Print the node tree
+      printTree(n, 0, preNode);
     }
+    // Output the pre node
+    out.putNode(preNode);
 
   }
 
-  /** Print the children of a node as a tree.
+  /** Extracts the node type and string and indents appropriately.
+   *  Next, creates a text node to represent each string in the output
+   *  tree and adds the text node as a child of the parent <pre> node,
+   *  which preserves indented formatting.  This function is called
+   *  recursively.
+   *  @param node:  the node to be expanded.
+   *  @param indentNum:  the number of spaces by which each node is indented
+   *  @param parent:  the <pre> element parent node that preserves tree
+   *         formatting.
     */
-  protected void printTree(Node node, Context cxt, Output out, int indentNum) {
+  protected void printTree(Node node, int indentNum, ActiveNode parent) {
     // System.out.println("printTree Node: " + node.toString());
     if(node == null)
       return;
@@ -126,22 +137,27 @@ public class debugHandler extends GenericHandler {
       nContent = ((Attribute)node).getName();
       break;
     default:
-      // DOCUMENT falls here
-      System.out.println("default: " + node.toString());
+	// DOCUMENT falls here
+	// System.out.println("default: " + node.toString());
+	nContent = node.toString();
       break;
     }
 
     String printStr = nType + " " + nContent;
 
     String indStr = indentString(printStr, indentNum);
-    System.out.println(indStr);
+    // System.out.println(indStr);
+    ActiveNode newNode = new ParseTreeText(indStr);
+    
+    // Add each node as a child of the parent <pre> element
+    parent.addChild(newNode);
     int newIndent = indentNum + 3;
     NodeList nl = node.getChildren();
     if(nl == null)
       return;
     NodeEnumerator childEnum = nl.getEnumerator();
     for (Node n = childEnum.getFirst(); n != null; n = childEnum.getNext()) {
-      printTree(n, cxt, out, newIndent);
+      printTree(n, newIndent, parent);
     }
   }
 
@@ -170,13 +186,14 @@ public class debugHandler extends GenericHandler {
     parseElementsInContent = true;	// false	recognize tags?
     parseEntitiesInContent = true;	// false	recognize entities?
     syntaxCode = NORMAL;  		// EMPTY, QUOTED, 0 (check)
+    printList = new List();
   }
 
   debugHandler(ActiveElement e) {
      this();
      // customize for element.
      expandContent = true;
-
+     printList = new List();
   }
 }
 

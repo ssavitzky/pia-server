@@ -638,19 +638,27 @@ first time. Here are some techniques for understanding what is
 happening within your agent.</p>
 
 <ul>
-<li>Use the <tt>&amp;urlQuery</tt>; PIA tag to check the name/value
-pairs that are being posted from one page to another. For example:
+<li>Use the <tt>&amp;urlQuery</tt>; entity to check that the <em>expected</em>
+name/value pairs are being posted from one page to another.  For example if
+<code>&urlQuery;</code> is added to the top of the <code>home.xh</code>
+page for the HelloWorld agent, you should see something like following when 
+you hit the Enter button:
 <code>
-fullname=Master+of+the+Universe&amp;wea=Weather&amp;submission=Submit</code>
-indicates these entries: fullname, Weather checkbox and Submit
-button.</li>
+data=Hello+World</code>.
+</li>
 
 <li>Look at the HTML source that is generated, using <var>
 View/Document Source</var> in the browser menu. This gives a good
 indication of where the code broke down.</li>
 
 <li>Put in print statements and expand variables inside tagset
-elements to check whether they have been set correctly.</li>
+elements to check whether they have been set correctly.  Keep in mind
+that only the last value is returned from an element.</li>
+
+<li>Use the <a href="/Demo/demo_debug.xh">debug handler</a> to print the
+parse tree.  This shows how the document parser interprets the document,
+or document fragment, and sees the relationships between the various nodes.
+</li>
 </ul>
 
 <hr><b>Copyright &copy; 1999 Ricoh Silicon Valley</b>

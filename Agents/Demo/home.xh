@@ -15,6 +15,7 @@
     <tr><th><td> <a href="demo_protect.xh">Protect Markup Examples</a>
     <tr><th><td> <a href="demo_sel.xh">Extract Examples</a>
     <tr><th><td> <a href="demo_test.xh">Test Handler Examples</a>
+    <tr><th><td> <a href="demo_debug.xh">Debug Handler Examples</a>
     <tr><th><td> <a href="hello-world.xh">Hello World Example</a>
     <tr><th><td> <a href="/Doc/tagsets.html">Tagset Manual</a>
 </sub-head>
@@ -28,6 +29,6 @@ formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid="$Id: home.xh,v 1.5 1999-03-23 20:35:04 steve Exp $"></footer>
+<footer cvsid="$Id: home.xh,v 1.6 1999-03-24 01:58:55 pgage Exp $"></footer>
 </body></html>
 

@@ -1,5 +1,5 @@
 ###### test/ds/Makefile:	Data structure tests
-# 	$Id: Makefile,v 1.4 1999-03-22 18:55:37 steve Exp $
+# 	$Id: Makefile,v 1.5 1999-03-24 01:59:02 pgage Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -23,20 +23,12 @@
 PACKAGE=org.risource.test.ds
 TOPDIR=../../../..
 
-FILES = \
-	T_indexPath.java \
-	T_indexLookup.java 
-
+FILES =
 
 include $(TOPDIR)/makefiles/file.make
 #include $(TOPDIR)/makefiles/package.make
 
-CASEFILES = \
-	normalLookup.case \
-	dlLookup.case \
-	makePath_0.case \
-	buildHtml_0.case
-
+CASEFILES =
 
 .SUFFIXES: .case .txt .html .if .out .ok .diff .run .java .class
 
@@ -52,68 +44,5 @@ cases:: $(CASEFILES:.case=.out)
 
 clean::
 	rm -f *.out *.diff *.log
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

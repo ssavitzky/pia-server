@@ -1,12 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><HTML>
-<html> <body> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html> <head> 
+<title>Hello World Demo</title>
+</head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+
 <header> Hello World</header>
+
 <h2> I am the &agentName; agent </h2> 
 
 <if><get name=FORM:data><then> 
 	You entered the greeting:
 	<p>
-	 <font size=+5 color="FF0000"><get name=FORM:data> </font>
+	 <font size="+5" color="#FF0000"><get name=FORM:data> </font>
 	<p>
 </then><else> 
 	<form action="&urlPath;" method="post"> 
@@ -15,7 +20,6 @@
 	<p>
 	<input type="submit" value="Enter"> 
 	A Greeting: <input name="data"> 
-	<p>
 </form> 
 
 </else> 
