@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.10 2000-06-24 00:42:56 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.11 2000-06-27 18:38:18 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -88,7 +88,7 @@
   <!-- These are the tagsets used for woad's active documents: -->
   <Ext name="wh"	type="text/html" tagset="/.Woad/woad-xhtml"	/>
   <Ext name="ww"	type="text/html" tagset="/.Woad/woad-web"	/>
-  <Ext name="wi"	type="text/html" tagset="/.Woad/woad-web"	/>
+  <Ext name="wi"	type="text/html" tagset="/.Woad/woad-index"	/>
 
   <!-- These are the tagsets used for formatting source code: -->
   <Ext name="html"	type="text/html" tagset="/.Woad/src-html"	/>

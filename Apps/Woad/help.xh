@@ -251,6 +251,19 @@
 <hr />
 <h2><a name="woadFiles"><ss>WOAD</ss> Index and Annotation Files</a></h2>
 
+<p> The URL annotation tree and source annotation tree each contain a
+    directory for every URL or file for which annotations exist.  Hence, a
+    URL <code>/.../foo.html</code> will have a <em>directory</em> called
+    <code>/.../foo.html/</code> which contains its url-specific annotations.
+</p>
+
+<p> It would arguably be simpler, and certainly more compact, to use a
+    database with URL and file paths as keys.  However, the use of files and
+    directories makes it much easier to use standard text- and
+    document-processing tools like <code>perl</code> and the PIA to create and
+    maintain the directories. 
+</p>
+
 <h3><a name="urlIndex"><code>urlIndex.wi</code></a></h3>
 
 <p> This index contains all pages at the same level of the target URL tree. 
@@ -260,6 +273,18 @@
     on-the-fly while browsing the URL tree, or by crawling the site with an
     indexing program, possibly started in parallel with the server by the
     <code>woad</code> command.
+</p>
+
+<h3><a name="linksTo"><code>linksTo.wi</code></a></h3>
+
+<p> This index contains references to all pages that contain links <em>to</em>
+    a given page.  These are currently generated on-the-fly while browsing the
+    URL tree. 
+</p>
+
+<h3><a name="pageTitle"><code>pageTitle.wi</code></a></h3>
+
+<p> This ``index'' contains the title of the indexed page. 
 </p>
 
 <h3><a name="dirIndex"><code>dirIndex.wi</code></a></h3>
@@ -320,5 +345,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.8 2000-06-23 23:12:30 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.9 2000-06-27 18:38:17 steve Exp $" />
 </p></body></html>
