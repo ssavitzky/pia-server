@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.11 1999-04-30 23:37:01 steve Exp $
+//	$Id: defineHandler.java,v 1.12 1999-05-28 21:49:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -27,7 +27,9 @@ package org.risource.dps.handle;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+
 import org.risource.dps.tagset.TagsetProcessor;
+import org.risource.dps.tagset.BasicTagset;
 import org.risource.dps.handle.Loader;
 import org.risource.dps.output.ToNamespace;
 import org.risource.dps.tree.TreeNodeList;
@@ -40,7 +42,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.11 1999-04-30 23:37:01 steve Exp $
+ * @version $Id: defineHandler.java,v 1.12 1999-05-28 21:49:24 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -143,10 +145,20 @@ class define_element extends defineHandler {
   /** The actual action routine. */
   public void action(Input in, Context cxt, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
+    // Locate the tagset.  
+    TopContext top = cxt.getTopContext();
+    Tagset      ts = top.getTagset();
+    // If tagset is locked, construct a new one.
+    if (ts.isLocked()) {
+      ts = new BasicTagset("TAGSET", "Copy-of-"+ ts.getName(), null, ts);
+      top.setTagset(ts);
+      if (in instanceof ProcessorInput) 
+	((ProcessorInput)in).setTagset(ts);
+    }
+
     // Analyze the attributes: === could do this in one scan.
     String tagname = atts.getAttribute(attrName);
     String handlerClass = getHandlerClassName(atts, tagname);
-    Tagset ts = cxt.getTopContext().getTagset();
     String parents = atts.getAttribute("parent");
     String notIn   = atts.getAttribute("implicitly-ends");
 
@@ -163,6 +175,7 @@ class define_element extends defineHandler {
     ActiveElement value = getValue(content);
     if (value != null) unimplemented(in, cxt, "element with value");
 
+    // Construct the handler.
     GenericHandler h = null;
     if (action == null && handlerClass == null) {
       // No action, no handler: it's an ordinary non-active Element

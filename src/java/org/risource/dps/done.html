@@ -824,16 +824,22 @@ If 4th node is there, returns "four".
        ProcessorInput).  Should be done in TopContext.subDocument.
        (1999-04-30) <br>
 
-  <li>1999-05-21 <b>Bug</b> Tagset doesn't get switched in subDocument <br>
+  <li> 1999-05-21 <b>Bug</b> Tagset doesn't get switched in subDocument <br>
        For some reason the parser's tagset doesn't get switched when
        TopProcessor.subDocument is called with a tagset.
        (1999-05-21) <br>
+
+  <li> 1999-05-28 <b>Bug</b> Permanent tagsets aren't. <br>
+       Need to copy the tagset when a document includes a &lt;define&gt;.
+       Otherwise the PIA's permanent tagsets get polluted.  We used to have
+       <code>isLocked</code> for this.
+       (1999-03-29) <br>
 
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.15 1999-05-21 21:47:56 steve Exp $</b><br>
+<b>$Id: done.html,v 1.16 1999-05-28 21:49:16 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

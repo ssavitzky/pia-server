@@ -16,6 +16,17 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> allowing text in attr lists preserves formatting <br>
+       It would also allow the use of entities that expand to multiple
+       attributes.
+       (1999-05-25) <br>
+
+  <li> <b>Bug</b> &lt;bind&gt; doesn't build external entities <br>
+       For that matter, &lt;bind&gt; has no way to build <em>any</em> value
+       other than a list of ordinary nodes.  Might actually want to generate
+       &lt;define&gt; for nonstandard bindings.  Or &lt;binding&gt;...
+       (1999-05-25) <br>
+
   <li> <b>Bug</b> Need way to sync an external entity. <br>
        Presumably some version of &lt;connect&gt;, the idea being to write the
        current cached contents of the entity node.  Wanted for, e.g.,
@@ -29,7 +40,7 @@ See also:
 
   <li> <b>Hole</b> Comment and string handling <br>
        Need a way to get information (especially entity expansions) into
-       comments and CDATA sections. 
+       comments and CDATA sections.  
        (1999-05-18) <br>
 
   <li> <b>Hole</b> XML Attribute handling <br>
@@ -45,7 +56,8 @@ See also:
 
   <li> <b>Bug</b> &lt;bind&gt; doesn't build embedded &lt;namespace&gt; <br>
        Because &lt;bind&gt; is quoted and &lt;namespace&gt; doesn't construct
-       a namespace at parse time, this simply won't work.
+       a namespace at parse time, this simply won't work.  Could actually emit
+       a &lt;namespace&gt; tag in this case. 
        (1999-05-14) <br>
 
   <li> <b>Impr</b> Output wants close method. <br>
@@ -168,11 +180,6 @@ See also:
        It's possible that the empty &lt;extract&gt; sub-elements could be
        generalized so that they operate on their content, if present, instead
        of on &amp;list;.
-       (1999-03-29) <br>
-
-  <li> <b>Bug</b> Permanent tagsets aren't. <br>
-       Need to copy the tagset when a document includes a &lt;define&gt;.
-       Otherwise the PIA's permanent tagsets get polluted.
        (1999-03-29) <br>
 
   <li> <b>Impr</b> Really need &lt;action mode=prepend&gt; <br>
@@ -519,7 +526,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.16 1999-05-25 23:09:16 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.17 1999-05-28 21:49:19 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
+//	$Id: tagsetHandler.java,v 1.6 1999-05-28 21:49:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.5 1999-04-07 23:21:27 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.6 1999-05-28 21:49:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -145,9 +145,6 @@ public class tagsetHandler extends GenericHandler {
       : new BasicTagset("TAGSET", name, n.getAttrList(), null);
 
     if (parentTSname != null && ! "HTML".equals(parentTSname)) {
-      // === Strictly speaking we should put the parent in the context,
-      // === rather than including it.  This works, though, and I'm too
-      // === lazy to fix it right now. (steve)
       Tagset parentTS =  org.risource.dps.tagset.Loader.require(parentTSname);
       cxt.debug("Loading tagset=" + parentTSname + 
 		((parentTS == null)? " FAILED" : " OK"));
@@ -215,6 +212,10 @@ public class tagsetHandler extends GenericHandler {
       unimplemented(in, cxt, "using a sub-tagset");
       cxt.subProcess(in, out).processChildren();
     }
+
+    // Lock the new tagset
+
+    newTagset.setLocked(true);
 
     // Restore the top processor's old tagset.
     setParserTagset(top, oldTagset);
