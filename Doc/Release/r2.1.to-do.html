@@ -10,7 +10,8 @@
     encouraged to add their own favorites.</strong>
 
 <p> Items labeled <b>Impr</b> or <b>Wish</b> are lower priority and may not be
-    fixed by 2.1.0, but are considered important enough to mention.
+    fixed by 2.1.0, but are considered important enough to mention.  Some
+    items labeled <b>Hole</b> may also be optional.
 </em></blockquote>
 
 <p> Items are grouped as follows:
@@ -42,7 +43,8 @@ See also:
        or external form.
 
   <li> <b>Bug</b> Correct handling for attribute case <br>
-       Need to case-fold attributes correctly for the tagset. 
+       Need to case-fold attributes correctly for the tagset.  Mixed-case
+       attributes need to work.
 
   <li> <b>Bug</b> Correct handling for character entities. <br>
        Currently they're not defined, which causes several kinds of havoc.
@@ -60,8 +62,18 @@ See also:
        For example, declarations and processing instructions need both a name
        and a type.  nodeBuilder currently doesn't handle them.
 
-  <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
-       with, e.g., a &lt;DOCTYPE&gt; element / documentBuilder handler. 
+  <li> 1999-11-19 <b>Bug</b> &lt;set&gt; of a namespace is broken <br>
+       The &lt;set&gt; (etc.) needs to do something different in order to
+       properly install the nested namespace. 
+
+  <li> 1999-11-22 <b>Bug</b> Replace DOCTYPE's in XML <br>
+       with, e.g., a &lt;DOCTYPE&gt; element / documentBuilder handler. <br>
+       -- &lt;make type=DOCTYPE&gt; works just fine. 
+
+  <li> <b>Bug</b> subst bug <br>
+       seems to substitute for one char to the left of the match.
+
+  <li> <b>Hole</b> Safe version of &lt;define&gt; <br>
 
   <li> <b>Hole</b> Additional file prefixes in Subsite <br>
        Need access to files relative to root, vroot, and home. 
@@ -71,7 +83,7 @@ See also:
        list in the Subsite and uninstall them by object ID.
        <p>
 
-  <li> <b>Bug</b> Entity and Attr must keep value in children <br>
+  <li> <b>Impr</b> Entity and Attr should keep value in children <br>
        This would fix many problems with entities, extract, etc. -- it will
        also break some things.  It's needed for cached entities.  Entities, at
        least, should also know their tagset.  It also brings us back into DOM
@@ -107,12 +119,12 @@ See also:
        Possibly just &lt;connect&gt; with both <code>src</code> and
        <code>dst</code> attributes.
 
+  <li> <b>Hole</b> PUT <br>
+       Need the ability to create documents using PUT requests.
+
   <li> <b>Hole</b> TEXT tagset <br>
        Need a tagset and associated parser that simply treats files as text
        nodes. 
-
-  <li> <b>Hole</b> PUT <br>
-       Need the ability to create documents using PUT requests.
 
   <li> <b>Impr</b> HEAD, <code>IfModifiedSince</code> <br>
        It would be useful if we could support HEAD requests (for everything)
@@ -125,11 +137,11 @@ See also:
     working reasonably well at the moment.
 
 <ol>
-  <li> <b>Impr</b> toString for Element should use ToString <br>
-       i.e. toString for element nodes should just use Copy and
-       ToString -- end of story.  Note that you can get startString by simply
-       doing startNode on a ToString.)  startString is no longer used outside
-       of <code>dps</code>.
+  <li> <b>Impr</b> toString for Element could use ToString <br>
+       i.e. toString for element nodes could just use Copy and
+       ToString -- end of story.  (Note that you can get startString by simply
+       doing startNode on a ToString.  startString is no longer used outside
+       of <code>dps</code>.)
 
   <li> <b>Impr</b> don't use toString in Output. <br>
        Conversion of nodes to external form should be done via a properly-
@@ -183,11 +195,6 @@ See also:
 
   <li> <b>Wish</b> Use <code>process</code> for RiSource.org <br>
        Should be an example of off-line website management with the PIA.
-
-  <li> <b>Note</b> Edit-in-place HTML <br>
-       The right way to implement edit-in-place HTML is to use &lt;div&gt; or
-       &lt;span&gt; with unique id or class attributes to mark the replacable
-       sections such as headers or footers.
 </ol>
 
 <a name="end">(End of list)</a>
@@ -218,5 +225,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.11 1999-11-11 18:34:01 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.12 1999-11-24 22:41:35 steve Exp $</b><br>
 </body></html>
