@@ -20,13 +20,18 @@
     </then>
 </if>
 
+<set name=agentHome><if>&AGENT:home-dir;
+			<then>/&AGENT:home-dir;/</then>
+			<else>/PIA/Agents&AGENT:pathName;</else>
+		    </if></set>
+
 <sub-head page='options'>
     <tr><th></th><td>
         <if><status src='initialize.xh' item='exists' />
             <then><a href='initialize'>[re-initialize]</a></then></if>
         </td></tr>
-    <tr><th></th><td><a href='/PIA/Agents/&agentPath;/'>Agent documents</a>
-	        <a href='/~/Agents/&agentPath;/'>(Customized)</a>
+    <tr><th></th><td><a href='&agentHome;/'>Agent documents</a>
+	        <a href='/~/Agents&AGENT:pathName;/'>(Customized)</a>
   
   <if>&AGENT:criteria;<then>
     <tr><th align='right'> criteria:&nbsp;
@@ -469,5 +474,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.7 1999-05-25 23:05:28 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.8 1999-05-27 01:03:31 steve Exp $' />
 </body></html>
