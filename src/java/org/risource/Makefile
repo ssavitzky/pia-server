@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.6 2000-04-05 18:11:39 steve Exp $
+#	$Id: Makefile,v 1.7 2000-04-28 22:48:10 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -31,8 +31,8 @@ TOPDIR=../..
 PACKAGES = \
 	ds \
 	util \
-	dom \
 	dps \
+	dom \
 	sax \
 	servlet \
 	site \
