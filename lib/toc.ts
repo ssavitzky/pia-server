@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are Copyright (C)       -->
 <!-- 1995-2000.  All Rights Reserved.                                       -->
 <!--                                                                        -->
-<!-- Contributor(s):  steve@rsv.ricoh.com                                   -->
+<!-- Contributor(s):  steve@rii.ricoh.com                                   -->
 <!-- ====================================================================== -->
 
 <tagset name="toc" parent="HTML" tagset="xhtml">
@@ -129,5 +129,5 @@
     </if></action>
 </define>
 
-<em>$Id: toc.ts,v 1.4 2000-07-21 20:22:59 steve Exp $</em>
+<em>$Id: toc.ts,v 1.5 2001-01-11 23:37:01 steve Exp $</em>
 </tagset>

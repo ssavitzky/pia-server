@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.6 1999-11-11 18:32:49 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.7 2001-01-11 23:37:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.6 1999-11-11 18:32:49 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: EntityRefHandler.java,v 1.7 2001-01-11 23:37:15 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor

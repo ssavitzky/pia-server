@@ -1,5 +1,5 @@
 ////// filterHandler.java: <filter> Handler implementation
-//	$Id: filterHandler.java,v 1.3 2000-09-20 00:34:22 steve Exp $
+//	$Id: filterHandler.java,v 1.4 2001-01-11 23:37:19 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import org.risource.dps.tree.TreeComment;
  *	shell attribute is present, it is used as a shell to run the script
  *	specified by the cmd attribute. 
  *
- * @version $Id: filterHandler.java,v 1.3 2000-09-20 00:34:22 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: filterHandler.java,v 1.4 2001-01-11 23:37:19 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class filterHandler extends GenericHandler {

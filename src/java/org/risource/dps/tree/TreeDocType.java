@@ -1,5 +1,5 @@
 ////// TreeDocType.java -- implementation of ActiveDeclaration
-//	$Id: TreeDocType.java,v 1.2 1999-06-04 22:40:36 steve Exp $
+//	$Id: TreeDocType.java,v 1.3 2001-01-11 23:37:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import java.util.StringTokenizer;
  * An implementation of the ActiveDocType interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeDocType.java,v 1.2 1999-06-04 22:40:36 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeDocType.java,v 1.3 2001-01-11 23:37:39 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
 public class TreeDocType extends TreeDecl implements ActiveDocType {

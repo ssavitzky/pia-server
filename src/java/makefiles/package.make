@@ -1,5 +1,5 @@
 ### package.make
-# 	$Id: package.make,v 1.4 1999-03-15 17:19:06 steve Exp $
+# 	$Id: package.make,v 1.5 2001-01-11 23:37:03 steve Exp $
 # 	COPYRIGHT 1997, Ricoh California Research Center
 # 	Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -23,7 +23,7 @@
 #	   (does NOT call javadoc, which is called at the top level)
 # rdoc:	   Call javadoc recursively, which is not usually a good idea.
 
-# <steve@rsv.ricoh.com>
+# note:
 #	The Sun originals require MAKEDIR and DESTDIR to be absolute.
 #	This has serious problems when you're trying to use source control.
 

@@ -1,5 +1,5 @@
 ////// bindHandler.java: <bind> Handler implementation
-//	$Id: bindHandler.java,v 1.2 1999-11-17 18:33:49 steve Exp $
+//	$Id: bindHandler.java,v 1.3 2001-01-11 23:37:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import org.risource.dps.tree.TreeNodeList;
  *	Bind must be an immediate child of a Namespace, and entities are 
  *	not expanded in its attributes.  
  *
- * @version $Id: bindHandler.java,v 1.2 1999-11-17 18:33:49 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: bindHandler.java,v 1.3 2001-01-11 23:37:17 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class bindHandler extends setHandler {

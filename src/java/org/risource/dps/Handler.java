@@ -1,5 +1,5 @@
 ////// Handler.java: Node Handler interface
-//	$Id: Handler.java,v 1.4 1999-04-07 23:20:46 steve Exp $
+//	$Id: Handler.java,v 1.5 2001-01-11 23:37:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ package org.risource.dps;
  *	required during processing.  Their combination in Handler reflects
  *	the fact that the two are almost always tied together.
  *
- * @version $Id: Handler.java,v 1.4 1999-04-07 23:20:46 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Handler.java,v 1.5 2001-01-11 23:37:05 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  */

@@ -1,5 +1,5 @@
 ////// ActivePI.java: Active PI node (parse tree element) interface
-//	$Id: ActivePI.java,v 1.4 1999-04-07 23:20:59 steve Exp $
+//	$Id: ActivePI.java,v 1.5 2001-01-11 23:37:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActivePI.java,v 1.4 1999-04-07 23:20:59 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActivePI.java,v 1.5 2001-01-11 23:37:12 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public interface ActivePI extends ProcessingInstruction, ActiveNode {

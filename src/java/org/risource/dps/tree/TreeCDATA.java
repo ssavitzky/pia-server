@@ -1,5 +1,5 @@
 ////// TreeCDATA.java -- implementation of ActiveCDATA
-//	$Id: TreeCDATA.java,v 1.1 1999-06-25 00:18:00 steve Exp $
+//	$Id: TreeCDATA.java,v 1.2 2001-01-11 23:37:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveCDATA interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeCDATA.java,v 1.1 1999-06-25 00:18:00 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeCDATA.java,v 1.2 2001-01-11 23:37:37 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
 public class TreeCDATA extends TreeText implements ActiveCDATA {

@@ -3,7 +3,7 @@
 ;; Author: Nelson Minar <nelson@santafe.edu>
 ;; Maintainer: Nelson Minar <nelson@santafe.edu>
 ;; Created: 01 Feb 1994
-;; $Id: html-helper-mode.el,v 1.3 2000-02-18 23:00:20 steve Exp $
+;; $Id: html-helper-mode.el,v 1.4 2001-01-11 23:36:44 steve Exp $
 ;; Keywords: HTML major-mode
 
 ;; LCD Archive Entry:
@@ -82,7 +82,7 @@
 
 ;;; Code:
 
-(defconst html-helper-mode-version (substring "$Revision: 1.3 $" 11 15))
+(defconst html-helper-mode-version (substring "$Revision: 1.4 $" 11 15))
 ;;{{{ user variables
 
 ;; Set this to be whatever signature you want on the bottom of your pages.
@@ -457,7 +457,7 @@ appropriate keymap if a key is requested. Format:
    (form    "t"	      "<input"		"Text Field"	          ("<input type=\"TEXT\" name=\"" (p "Name: ") "\" size=\"" (p "Size: ") "\">"))
    (form    "f"	      "<form"           "Form"		          ("<form action=\"" (p "Action: ") "\" method=\"" (p "Method: ") "\">\n</form>\n"))
 
-   ;;lists   ;; steve@rsv.ricoh.com: XHTML compliance
+   ;;lists   ;; steve@rii.ricoh.com: XHTML compliance
    (list    "t"       "<dt>"            "Definition Item"         (& "<dt> " > (p "Term: ") "\n</dt>" > "\n<dd> " > (r "Definition: ") > "\n</dd>"))
    (list    "l"       "<li>"            "List Item"               (& "<li> " > (r "Item: ") "\n</li>" > ))
    (list    "r"	      "<dir>"		"DirectoryList"      	  (& "<dir>" > "\n<li> " > (r "Item: ") "\n</li>" > "\n</dir>" >))
@@ -476,7 +476,7 @@ appropriate keymap if a key is requested. Format:
    (image   "e"       "<img align="     "Aligned Image With Alt. Text"	  ("<img align=\"" (r "Alignment: ") "\" src=\"" (r "Image URL: ") "\" alt=\"" (r "Text URL: ") "\">"))
    (image   "t"       "<img alt="	"Image With Alternate Text"	  ("<img alt=\"" (r "Text URL: ") "\" src=\"" (r "Image URL: ") "\">"))
 
-   ;;text elements   ;; steve@rsv.ricoh.com: XHTML compliance
+   ;;text elements   ;; steve@rii.ricoh.com: XHTML compliance
    (textel  "\C-c="    nil		"Horizontal Line" (& "<hr />\n"))
    (textel  "\C-c\C-m" nil		"Line Break"	  ("<br />\n"))
    (textel  "\e\C-m"  "<p>"		"Paragraph"	  ("<p> " p "\n</p>"))

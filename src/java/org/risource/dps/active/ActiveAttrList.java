@@ -1,5 +1,5 @@
 ////// ActiveAttrList.java: Active Attribute List interface
-//	$Id: ActiveAttrList.java,v 1.4 1999-04-07 23:20:53 steve Exp $
+//	$Id: ActiveAttrList.java,v 1.5 2001-01-11 23:37:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,8 +29,8 @@ import org.w3c.dom.*;
 /**
  * A DOM NamedNodeMap specialized as an attribute list.
  *
- * @version $Id: ActiveAttrList.java,v 1.4 1999-04-07 23:20:53 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveAttrList.java,v 1.5 2001-01-11 23:37:10 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public interface ActiveAttrList extends ActiveNodeMap  {

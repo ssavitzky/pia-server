@@ -1,7 +1,6 @@
 <make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Edit PIA Configuration Settings</title>
-<link rev='made' href='mailto:steve@rsv.ricoh.com' />
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header show-date='yes'>Edit PIA Configuration Settings</header>
 <sub-head page='config' />
@@ -109,5 +108,5 @@
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.6 1999-11-23 18:40:36 steve Exp $' />
+<footer cvsid='$Id: config.xh,v 1.7 2001-01-11 23:36:29 steve Exp $' />
 </body></html>

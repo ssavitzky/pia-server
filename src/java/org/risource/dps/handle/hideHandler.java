@@ -1,5 +1,5 @@
 ////// hideHandler.java: <hide> Handler implementation
-//	$Id: hideHandler.java,v 1.6 1999-06-25 00:41:40 steve Exp $
+//	$Id: hideHandler.java,v 1.7 2001-01-11 23:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,8 +36,8 @@ import org.risource.dps.output.*;
  *
  *	
  *
- * @version $Id: hideHandler.java,v 1.6 1999-06-25 00:41:40 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: hideHandler.java,v 1.7 2001-01-11 23:37:20 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class hideHandler extends GenericHandler {

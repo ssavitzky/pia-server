@@ -41,8 +41,8 @@ import org.w3c.dom.NodeList;
  * <p>	This class is used to construct an Agent, and in particular a
  *	Generic.
  *
- * @version $Id: ToAgent.java,v 1.4 1999-09-22 00:23:15 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToAgent.java,v 1.5 2001-01-11 23:37:47 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.pia.Agent
  * @see org.risource.pia.agent.Generic
  */

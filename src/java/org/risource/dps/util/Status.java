@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.9 2000-10-12 23:12:41 steve Exp $
+//	$Id: Status.java,v 1.10 2001-01-11 23:37:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import java.net.*;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.9 2000-10-12 23:12:41 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Status.java,v 1.10 2001-01-11 23:37:44 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class Status {

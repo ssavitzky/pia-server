@@ -1,5 +1,5 @@
 ////// letHandler.java: <let> Handler implementation
-//	$Id: letHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
+//	$Id: letHandler.java,v 1.3 2001-01-11 23:37:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import org.risource.dps.tree.TreeNodeList;
  *	&lt;bind&gt in that the content is expanded, and from &lt;set&gt;
  *	in that the name is bound in the most-local current namespace.
  *
- * @version $Id: letHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: letHandler.java,v 1.3 2001-01-11 23:37:21 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class letHandler extends setHandler {

@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.10 2000-06-02 23:17:34 steve Exp $
+//	$Id: Site.java,v 1.11 2001-01-11 23:37:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,8 +44,8 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.10 2000-06-02 23:17:34 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Site.java,v 1.11 2001-01-11 23:37:51 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class Site extends Subsite implements Root {

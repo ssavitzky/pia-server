@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com                                    -->
-<!--                 bill@rsv.ricoh.com                                    -->
+<!-- Contributor(s): steve@rii.ricoh.com                                    -->
+<!--                 bill@rii.ricoh.com                                    -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=debug parent=HTML include=basic recursive>
-<cvs-id>$Id: debug.ts,v 1.1 1999-12-14 18:28:32 steve Exp $</cvs-id>
+<cvs-id>$Id: debug.ts,v 1.2 2001-01-11 23:37:00 steve Exp $</cvs-id>
 
 <h1>DEBUG Tagset</h1>
 

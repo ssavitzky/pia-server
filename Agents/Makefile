@@ -1,6 +1,6 @@
 ### Makefile for /Agents
-#	$Id: Makefile,v 1.1 1999-10-14 18:04:14 steve Exp $	
-# 	COPYRIGHT 1999, Ricoh Silicon Valley
+#	$Id: Makefile,v 1.2 2001-01-11 23:36:29 steve Exp $	
+# 	COPYRIGHT 1999, Ricoh Innovations, Inc.
 
 PIADIR=../.
 MF_DIR=$(PIADIR)/Config/makefiles

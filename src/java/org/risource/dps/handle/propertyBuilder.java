@@ -1,5 +1,5 @@
 ////// propertyBuilder.java: <namespace> Handler implementation
-//	$Id: propertyBuilder.java,v 1.2 1999-11-09 01:18:47 steve Exp $
+//	$Id: propertyBuilder.java,v 1.3 2001-01-11 23:37:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import org.risource.dps.output.ToProperties;
  * <p>	Expand the content in a context that contains a new local namespace. 
  *	Return the namespace as the result. 
  *
- * @version $Id: propertyBuilder.java,v 1.2 1999-11-09 01:18:47 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: propertyBuilder.java,v 1.3 2001-01-11 23:37:22 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class propertyBuilder extends GenericHandler {

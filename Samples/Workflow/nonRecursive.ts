@@ -14,14 +14,14 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):   bill softky bill@rsv.ricoh.com                       -->
+<!-- Contributor(s):   bill softky bill@rii.ricoh.com                       -->
 <!-- ---------------------------------------------------------------------- -->
 
 
 <tagset name="nonRecursive" parent="/Tagsets/pia-xhtml" recursive="recursive">
 
 
-<cvs-id>$Id: nonRecursive.ts,v 1.1 2000-02-29 01:12:54 bill Exp $</cvs-id>
+<cvs-id>$Id: nonRecursive.ts,v 1.2 2001-01-11 23:36:58 steve Exp $</cvs-id>
 
 <define element="include">
    <doc> Include does nothing, to prevent recursion</doc>

@@ -50,6 +50,6 @@ location: <a href="&locPath;">&locPath;</a>
 </p>
 
 <hr>
-<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.6 1999-11-23 18:41:48 steve Exp $</b><br>
+<b>Copyright &copy; 1997-1999 Ricoh Innovations, Inc.</b><br>
+<b>$Id: test.xh,v 1.7 2001-01-11 23:36:41 steve Exp $</b><br>
 </body></html>

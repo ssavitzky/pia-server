@@ -1,5 +1,5 @@
 ////// PropertyMap.java: Property Lookup Table interface
-//	$Id: PropertyMap.java,v 1.1 1999-10-04 17:33:41 steve Exp $
+//	$Id: PropertyMap.java,v 1.2 2001-01-11 23:37:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import org.risource.dps.active.*;
  *	with <code>name</code> or <code>ID</code> attributes are stored
  *	in a child Namespace, while others are used directly as bindings.
  *
- * @version $Id: PropertyMap.java,v 1.1 1999-10-04 17:33:41 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: PropertyMap.java,v 1.2 2001-01-11 23:37:07 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.site
  */

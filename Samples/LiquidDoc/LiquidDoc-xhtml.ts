@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):   bill@rsv.ricoh.com                                   -->
+<!-- Contributor(s):   bill@rii.ricoh.com                                   -->
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="LiquidDoc-agent" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: LiquidDoc-xhtml.ts,v 1.2 1999-12-14 18:58:05 steve Exp $</cvs-id>
+<cvs-id>$Id: LiquidDoc-xhtml.ts,v 1.3 2001-01-11 23:36:57 steve Exp $</cvs-id>
 
 <define element="split-query">
    <doc> Take a query and chops it into key=val pairs with spaces </doc>

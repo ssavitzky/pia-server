@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):   bill softky bill@rsv.ricoh.com                       -->
+<!-- Contributor(s):   bill softky bill@rii.ricoh.com                       -->
 <!-- ---------------------------------------------------------------------- -->
 
 <!-- create db of signatures by 
@@ -46,7 +46,7 @@ mysql> select minute(now() ) < minute( when_notified) + 25 from notifications wh
 <?--
 <!-- tagset name="Workflow-template" parent="/Agents/Workflow/Workflow-test.ts"  parent="Workflow-xhtml" recursive="recursive" -->
 --?>
-<cvs-id>$Id: Workflow-template.ts,v 1.1 2000-02-29 01:12:51 bill Exp $</cvs-id>
+<cvs-id>$Id: Workflow-template.ts,v 1.2 2001-01-11 23:36:58 steve Exp $</cvs-id>
 
 <define element="sql" handler="handler">
 

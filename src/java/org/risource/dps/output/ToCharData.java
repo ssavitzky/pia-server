@@ -1,5 +1,5 @@
 ////// ToCharData.java:  Output to Character data
-//	$Id: ToCharData.java,v 1.8 1999-11-12 17:23:15 steve Exp $
+//	$Id: ToCharData.java,v 1.9 2001-01-11 23:37:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import java.util.NoSuchElementException;
 /**
  * Output to a String in <em>internal</em> form. <p>
  *
- * @version $Id: ToCharData.java,v 1.8 1999-11-12 17:23:15 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToCharData.java,v 1.9 2001-01-11 23:37:31 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToString
  */

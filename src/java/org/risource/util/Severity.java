@@ -1,5 +1,5 @@
 ////// Severity.java: Error or debugging message
-//	$Id: Severity.java,v 1.3 1999-03-12 19:31:07 steve Exp $
+//	$Id: Severity.java,v 1.4 2001-01-11 23:37:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,8 +45,8 @@ package org.risource.util;
  *	``Ordinary'' errors, also called ``user'' errors, are those
  *	caused by invalid input. <p>
  *
- * @version $Id: Severity.java,v 1.3 1999-03-12 19:31:07 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Severity.java,v 1.4 2001-01-11 23:37:54 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.util.Report
  * @see org.risource.util.Message

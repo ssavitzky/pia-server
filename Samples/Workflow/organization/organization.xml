@@ -1,5 +1,5 @@
-<department id="RSV"> 
- <description>Ricoh Silicon Valley</description>
+<department id="RII"> 
+ <description>Ricoh Innovations, Inc.</description>
  <authorizer type="president" memberid="peter" />
  <department id="pia">
     <description>PIA</description>
@@ -10,7 +10,7 @@
           <givenname>Greg</givenname> 
     </member>
     <member id="savitsky"> 
-          <surname>Savitsky</surname>
+          <surname>Savitzky</surname>
           <givenname>Steve</givenname> 
     </member>
     <member id="mrbill"> 

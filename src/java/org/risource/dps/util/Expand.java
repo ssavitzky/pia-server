@@ -1,5 +1,5 @@
 ////// Expand.java: Utilities for Expanding nodes.
-//	$Id: Expand.java,v 1.8 1999-07-14 20:21:24 steve Exp $
+//	$Id: Expand.java,v 1.9 2001-01-11 23:37:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,8 +48,8 @@ import org.risource.dps.tree.TreeAttr;
  * @see org.risource.dps.Processor
  * @see org.risource.dps.process.BasicProcessor
  *
- * @version $Id: Expand.java,v 1.8 1999-07-14 20:21:24 steve Exp $
- * @author steve@rsv.ricoh.com */
+ * @version $Id: Expand.java,v 1.9 2001-01-11 23:37:42 steve Exp $
+ * @author steve@rii.ricoh.com */
 
 public class Expand {
 

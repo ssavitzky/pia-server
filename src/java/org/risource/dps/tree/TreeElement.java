@@ -1,5 +1,5 @@
 ////// TreeElement.java -- implementation of ActiveElement
-//	$Id: TreeElement.java,v 1.5 2000-03-07 00:35:21 steve Exp $
+//	$Id: TreeElement.java,v 1.6 2001-01-11 23:37:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import org.risource.dps.Handler;
  * An implementation of the ActiveElement interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeElement.java,v 1.5 2000-03-07 00:35:21 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeElement.java,v 1.6 2001-01-11 23:37:39 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
  */

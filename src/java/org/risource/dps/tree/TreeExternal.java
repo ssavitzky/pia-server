@@ -1,5 +1,5 @@
 ////// TreeExternal.java -- Entity that refers to an external resource
-//	$Id: TreeExternal.java,v 1.5 1999-07-14 20:21:15 steve Exp $
+//	$Id: TreeExternal.java,v 1.6 2001-01-11 23:37:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,8 +44,8 @@ import org.risource.ds.Tabular;
  * An implementation of the ActiveEntity interface that refers to an external
  *	resource, for example, a file.
  *
- * @version $Id: TreeExternal.java,v 1.5 1999-07-14 20:21:15 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeExternal.java,v 1.6 2001-01-11 23:37:40 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
 public class TreeExternal extends TreeEntity {

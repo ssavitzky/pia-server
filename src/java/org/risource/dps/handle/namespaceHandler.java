@@ -1,5 +1,5 @@
 ////// namespaceHandler.java: <namespace> Handler implementation
-//	$Id: namespaceHandler.java,v 1.8 1999-11-09 01:18:47 steve Exp $
+//	$Id: namespaceHandler.java,v 1.9 2001-01-11 23:37:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import org.risource.dps.output.ToNamespace;
  * <p>	Expand the content in a context that contains a new local namespace. 
  *	Return the namespace as the result. 
  *
- * @version $Id: namespaceHandler.java,v 1.8 1999-11-09 01:18:47 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: namespaceHandler.java,v 1.9 2001-01-11 23:37:21 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class namespaceHandler extends GenericHandler {

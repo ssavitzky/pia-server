@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
+//	$Id: testHandler.java,v 1.11 2001-01-11 23:37:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,8 +40,8 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: testHandler.java,v 1.11 2001-01-11 23:37:24 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class testHandler extends GenericHandler {

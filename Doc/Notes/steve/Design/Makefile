@@ -1,6 +1,5 @@
 ### Makefile for Doc/Notes/steve/Design
-#	$Id: Makefile,v 1.1 1999-04-13 18:30:52 steve Exp $	
-# 	COPYRIGHT 1998, Ricoh Silicon Valley
+#	$Id: Makefile,v 1.2 2001-01-11 23:36:53 steve Exp $	
 
 PIADIR=../../../..
 MF_DIR=$(PIADIR)/Config/makefiles

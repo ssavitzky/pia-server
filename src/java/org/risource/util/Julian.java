@@ -1,5 +1,5 @@
 // Julian.java -- Julian date utilities
-// $Id: Julian.java,v 1.1 1999-10-08 16:15:19 steve Exp $
+// $Id: Julian.java,v 1.2 2001-01-11 23:37:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ package org.risource.util;
  *	in the late 1960's in Fortran IV.  Dad died this year, but the code
  *	lives on.
  *
- * @version $Id: Julian.java,v 1.1 1999-10-08 16:15:19 steve Exp $
- * @author Abraham Savitzky, steve@rsv.ricoh.com
+ * @version $Id: Julian.java,v 1.2 2001-01-11 23:37:53 steve Exp $
+ * @author Abraham Savitzky, steve@rii.ricoh.com
  */
 public class Julian {
 

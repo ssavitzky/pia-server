@@ -1,5 +1,5 @@
 ////// ShallowParser.java: perform a ``shallow'' parse of SGML files
-//	$Id: ShallowParser.java,v 1.3 2000-10-20 23:54:54 steve Exp $
+//	$Id: ShallowParser.java,v 1.4 2001-01-11 23:37:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,8 +54,8 @@ import java.io.IOException;
  *	and end tags are exposed as &lt;tag&gt; and  &lt;etag&gt; elements,
  *	respectively.
  *
- * @version $Id: ShallowParser.java,v 1.3 2000-10-20 23:54:54 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ShallowParser.java,v 1.4 2001-01-11 23:37:35 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Parser
  */
 

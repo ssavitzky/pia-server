@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: PiaSite.java,v 1.5 2000-06-02 23:17:27 steve Exp $
+//	$Id: PiaSite.java,v 1.6 2001-01-11 23:37:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,8 +41,8 @@ import java.util.Enumeration;
 /**
  * A specialized Site for use in the PIA.
  *
- * @version $Id: PiaSite.java,v 1.5 2000-06-02 23:17:27 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: PiaSite.java,v 1.6 2001-01-11 23:37:47 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class PiaSite extends Site {

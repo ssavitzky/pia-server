@@ -1,5 +1,5 @@
 ////// ToDocument.java:  Output to Document
-//	$Id: ToDocument.java,v 1.2 2000-06-09 04:06:57 steve Exp $
+//	$Id: ToDocument.java,v 1.3 2001-01-11 23:37:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,8 +36,8 @@ import org.w3c.dom.*;
  *	compatible with the PIA's parse tree implementation.  Hence, we
  *	must use only the DOM interfaces in the construction. 
  *
- * @version $Id: ToDocument.java,v 1.2 2000-06-09 04:06:57 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToDocument.java,v 1.3 2001-01-11 23:37:03 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.w3c.dom
  */

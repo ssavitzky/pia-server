@@ -37,16 +37,16 @@
     <td>
 	||&nbsp;<a href="http://www.RiSource.org/">[www.RiSource.org]</a>
 	 (&nbsp;<a href="http://www.RiSource.org/PIA">/PIA</a> )
-	||&nbsp;<a href="http://pia.rsv.ricoh.com/">[pia.rsv.ricoh.com]</a>
+	||&nbsp;<a href="http://pia.rii.ricoh.com/">[pia.rii.ricoh.com]</a>
     </td>
     <td bgcolor=silver>&nbsp;</td>  
   </tr>
   <tr> <td>&nbsp; </td>
        <td align="right" bgcolor="silver" colspan=2>
        <font size="-3">
-         "$Id: doc-grid.inc,v 1.18 2000-04-19 23:52:24 steve Exp $"</font>
+         "$Id: doc-grid.inc,v 1.19 2001-01-11 23:36:32 steve Exp $"</font>
        </td> 
        <td bgcolor=silver>&nbsp;</td>  
   </tr>
 </table>
-<!--  cvsid="$Id: doc-grid.inc,v 1.18 2000-04-19 23:52:24 steve Exp $"-->
+<!--  cvsid="$Id: doc-grid.inc,v 1.19 2001-01-11 23:36:32 steve Exp $"-->

@@ -1,5 +1,5 @@
 ////// ProcessorInput.java: ProcessorInput interface
-//	$Id: ProcessorInput.java,v 1.4 1999-04-17 01:18:54 steve Exp $
+//	$Id: ProcessorInput.java,v 1.5 2001-01-11 23:37:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -29,8 +29,8 @@ package org.risource.dps;
  *	input to.  This permits the ProcessorInput to make use of the
  *	Processor's state, for example its parse stack and Tagset.
  *
- * @version $Id: ProcessorInput.java,v 1.4 1999-04-17 01:18:54 steve Exp $
- * @author steve@rsv.ricoh.com */
+ * @version $Id: ProcessorInput.java,v 1.5 2001-01-11 23:37:06 steve Exp $
+ * @author steve@rii.ricoh.com */
 
 public interface ProcessorInput extends Input {
 

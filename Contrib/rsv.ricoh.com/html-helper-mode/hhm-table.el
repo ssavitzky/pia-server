@@ -16,7 +16,7 @@
 ;; This code must be called *after* html-helper-mode loads.  It can be
 ;; run nicely from the html-helper-load-hook.
 
-;; === steve@rsv.ricoh.com: use ^c^r because ^t is "title", i.e. header.  
+;; === steve@rii.ricoh.com: use ^c^r because ^t is "title", i.e. header.  
 ;; === this crock is because ^h is help and ^g is bell, not grid.
 
 (html-helper-add-type-to-alist

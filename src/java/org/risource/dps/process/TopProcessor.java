@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.22 2000-10-06 17:46:52 steve Exp $
+//	$Id: TopProcessor.java,v 1.23 2001-01-11 23:37:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,8 +64,8 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.22 2000-10-06 17:46:52 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: TopProcessor.java,v 1.23 2001-01-11 23:37:36 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Context */

@@ -1,5 +1,5 @@
 ////// FilterMarkup: markup-only filter for an Output
-//	$Id: FilterMarkup.java,v 1.4 1999-04-07 23:21:38 steve Exp $
+//	$Id: FilterMarkup.java,v 1.5 2001-01-11 23:37:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,8 +32,8 @@ import java.io.PrintStream;
 /**
  * An Output filter that passes only Markup nodes <p>
  *
- * @version $Id: FilterMarkup.java,v 1.4 1999-04-07 23:21:38 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: FilterMarkup.java,v 1.5 2001-01-11 23:37:30 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class FilterMarkup extends Proxy {

@@ -14,14 +14,14 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml" parser="TextParser"
 	xrefs="SITE:xref" xprefix="/.words/xref/"
         include="src-wrapper src-file" documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.11 2000-10-24 20:55:18 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.12 2001-01-11 23:36:39 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 

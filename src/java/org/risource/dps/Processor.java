@@ -1,5 +1,5 @@
 ////// Processor.java: Document Processor interface
-//	$Id: Processor.java,v 1.6 1999-10-14 21:44:53 steve Exp $
+//	$Id: Processor.java,v 1.7 2001-01-11 23:37:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ package org.risource.dps;
  *  <p>	A TopContext (q.v.) is a specialized Processor with links to its
  *	current Tagset and, possibly, Parser.
  *
- * @version $Id: Processor.java,v 1.6 1999-10-14 21:44:53 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Processor.java,v 1.7 2001-01-11 23:37:06 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input 

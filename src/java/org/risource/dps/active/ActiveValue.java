@@ -1,5 +1,5 @@
 ////// ActiveValue.java: Active Value (parse tree element) interface
-//	$Id: ActiveValue.java,v 1.2 1999-04-17 01:19:01 steve Exp $
+//	$Id: ActiveValue.java,v 1.3 2001-01-11 23:37:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,8 +31,8 @@ import org.risource.dps.Context;
 /**
  * An ActiveNode which has a ``value'' that can be set.
  *
- * @version $Id: ActiveValue.java,v 1.2 1999-04-17 01:19:01 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveValue.java,v 1.3 2001-01-11 23:37:13 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Active
  * @see org.risource.dps.Action
  * @see org.risource.dps.Syntax

@@ -1,5 +1,5 @@
 ////// Create.java: Utilities for Creating nodes.
-//	$Id: Create.java,v 1.6 1999-11-09 01:22:24 steve Exp $
+//	$Id: Create.java,v 1.7 2001-01-11 23:37:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import java.util.Enumeration;
 /**
  * Node Creation utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Create.java,v 1.6 1999-11-09 01:22:24 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Create.java,v 1.7 2001-01-11 23:37:41 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  */
 

@@ -1,5 +1,5 @@
 ////// ActiveNode.java: Interface for Nodes with actions.
-//	$Id: ActiveNode.java,v 1.5 1999-04-17 01:18:59 steve Exp $
+//	$Id: ActiveNode.java,v 1.6 2001-01-11 23:37:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,8 +57,8 @@ import org.risource.dps.Context;
  *	returns a Cursor that maps names to values has a name starting with
  *	<code>Map</code>
  *
- * @version $Id: ActiveNode.java,v 1.5 1999-04-17 01:18:59 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveNode.java,v 1.6 2001-01-11 23:37:12 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.w3c.dom.Node
  * @see org.risource.dps.Action
  * @see org.risource.dps.Active

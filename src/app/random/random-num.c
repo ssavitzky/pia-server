@@ -6,7 +6,7 @@
  * the current time in seconds
  *
  * Marko Balabanovic
- * Ricoh Silicon Valley
+ * Ricoh Innovations, Inc.
  * 21 Sept 1998
  */
 

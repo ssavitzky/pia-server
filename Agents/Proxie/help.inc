@@ -1,5 +1,5 @@
 <!-- This heading is meant to be included using read. -*-html-helper-*- -->
-<!-- Copyright 1997 Ricoh Silicon Valley -->
+<!-- Copyright 1997 Ricoh Innovations, Inc. -->
 <if><test case="insens" match=toolbar>&FORM.topic;</test>
     <then>
 	You got here by clicking the 
@@ -39,4 +39,4 @@
     </then>
 </if>
 
-<!-- $Id: help.inc,v 1.7 2000-04-21 20:51:08 steve Exp $ -->
+<!-- $Id: help.inc,v 1.8 2001-01-11 23:36:30 steve Exp $ -->

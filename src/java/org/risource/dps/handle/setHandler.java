@@ -1,5 +1,5 @@
 ////// setHandler.java: <set> Handler implementation
-//	$Id: setHandler.java,v 1.8 1999-11-17 18:33:50 steve Exp $
+//	$Id: setHandler.java,v 1.9 2001-01-11 23:37:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import org.risource.dps.tree.TreeNodeList;
  * <p>	This is an approximation to the legacy &gt;set&gt;; it lacks many
  *	of the old extraction modifiers, which have moved to &lt;extract&gt;.
  *
- * @version $Id: setHandler.java,v 1.8 1999-11-17 18:33:50 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: setHandler.java,v 1.9 2001-01-11 23:37:23 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class setHandler extends GenericHandler {

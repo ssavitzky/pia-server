@@ -1,5 +1,5 @@
 ////// DiscardOutput
-//	$Id: DiscardOutput.java,v 1.6 1999-11-06 01:08:14 steve Exp $
+//	$Id: DiscardOutput.java,v 1.7 2001-01-11 23:37:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,8 +36,8 @@ import java.io.PrintStream;
  *	Slightly more efficient than a Proxy with no target.  The real
  *	benefit is better documentation of the programmer's intent.
  *
- * @version $Id: DiscardOutput.java,v 1.6 1999-11-06 01:08:14 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: DiscardOutput.java,v 1.7 2001-01-11 23:37:29 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class DiscardOutput implements Output {

@@ -1,5 +1,5 @@
 ////// BasicHandler.java: Node Handler basic implementation
-//	$Id: BasicHandler.java,v 1.8 1999-10-14 21:50:00 steve Exp $
+//	$Id: BasicHandler.java,v 1.9 2001-01-11 23:37:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import org.risource.ds.Table;
  *	making it a good base class for more specialized versions. 
  *	<p>
  *
- * @version $Id: BasicHandler.java,v 1.8 1999-10-14 21:50:00 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: BasicHandler.java,v 1.9 2001-01-11 23:37:14 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor

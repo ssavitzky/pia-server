@@ -1,5 +1,5 @@
 ////// FileResource.java -- Minimal implementation of Resource
-//	$Id: FileResource.java,v 1.4 2000-04-14 23:10:06 steve Exp $
+//	$Id: FileResource.java,v 1.5 2001-01-11 23:37:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,8 +43,8 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileResource.java,v 1.4 2000-04-14 23:10:06 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: FileResource.java,v 1.5 2001-01-11 23:37:50 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

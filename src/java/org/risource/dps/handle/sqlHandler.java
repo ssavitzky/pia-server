@@ -1,5 +1,5 @@
 ////// sqlHandler.java: <sql> Handler implementation
-//	$Id: sqlHandler.java,v 1.3 2000-01-04 17:16:45 steve Exp $
+//	$Id: sqlHandler.java,v 1.4 2001-01-11 23:37:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import java.sql.*;
  *
  * <p>	initial implementation -- ship off string to specified database ...
  * 
- * @version $Id: sqlHandler.java,v 1.3 2000-01-04 17:16:45 steve Exp $
- * @author bill@rsv.ricoh.com
+ * @version $Id: sqlHandler.java,v 1.4 2001-01-11 23:37:24 steve Exp $
+ * @author bill@rii.ricoh.com
  */
 
 public class sqlHandler extends GenericHandler {

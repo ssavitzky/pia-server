@@ -1,5 +1,5 @@
 ### graphics.make
-# $Id: graphics.make,v 1.3 1999-07-14 22:21:00 steve Exp $
+# $Id: graphics.make,v 1.4 2001-01-11 23:36:42 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com
+ # Contributor(s): steve@rii.ricoh.com
  #
 ############################################################################## 
 

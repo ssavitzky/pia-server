@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.11 2000-02-25 23:25:58 steve Exp $
+# $Id: file.make,v 1.12 2001-01-11 23:37:03 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -23,7 +23,7 @@
 #	 or class hierarchy, since these are shared by all packages, but can
 #	 be used to quickly update the documentation for a changed package.
 
-# <steve@rsv.ricoh.com>
+# note:
 #	The Sun originals required MAKEDIR and DESTDIR to be absolute paths.
 #	This has serious problems when you're trying to use source control.
 

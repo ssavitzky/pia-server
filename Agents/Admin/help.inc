@@ -1,5 +1,4 @@
 <!-- This heading is meant to be included using read. -*-html-helper-*- -->
-<!-- Copyright 1997 Ricoh Silicon Valley -->
 The Agency agent is a sort of ``generic control panel'' for
        <if><test exact="yes" case="insens" match='pia'>&user.name;</test>
 		<then>this Information Appliance</then>
@@ -9,4 +8,5 @@ The Agency agent is a sort of ``generic control panel'' for
 You should be able to find links to all of the information you need from the
 Agency's <a href="/Agency">home page</a>.  <p>
 
-<!-- $Id: help.inc,v 1.4 2000-02-25 22:29:41 steve Exp $ -->
+<!-- Copyright 1997 Ricoh Innovations, Inc. -->
+<!-- $Id: help.inc,v 1.5 2001-01-11 23:36:30 steve Exp $ -->

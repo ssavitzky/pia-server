@@ -1,5 +1,5 @@
 ////// elseHandler.java: Node Handler generic implementation
-//	$Id: elseHandler.java,v 1.8 1999-07-14 20:20:17 steve Exp $
+//	$Id: elseHandler.java,v 1.9 2001-01-11 23:37:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: elseHandler.java,v 1.8 1999-07-14 20:20:17 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: elseHandler.java,v 1.9 2001-01-11 23:37:18 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Tagset

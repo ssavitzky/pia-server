@@ -33,7 +33,7 @@
     You can obtain updates and additional open-source software from <a
     href="http://RiSource.org/"><code>RiSource.org</code></a>.  You
     can find a running PIA demonstration server at <a
-    href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>.
+    href="http://pia.rii.ricoh.com"><code>pia.rii.ricoh.com</code></a>.
 </p>
 
 <dl>
@@ -59,4 +59,4 @@
   </else>       
 </if>
 </dl>
-<inc-footer cvsid="$Id: welcome.inc,v 1.18 2000-06-22 07:02:09 steve Exp $" />
+<inc-footer cvsid="$Id: welcome.inc,v 1.19 2001-01-11 23:36:32 steve Exp $" />

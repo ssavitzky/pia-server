@@ -77,10 +77,6 @@ This has the desirable effects of giving the History agent's controls a
 uniform look and feel, and of not inserting <em>anything</em> if the History
 agent isn't running.<p>
 
-For examples of customized &agentType; agents, see <a href='/PIA/Contrib/rsv.ricoh.com/steve/my/Agents'>
-/PIA/Contrib/rsv.ricoh.com/steve/my/Agents</a></p><p>
-
-
 <hr />
 </p><h2>Writing a New &agentType; Agent</h2>
 
@@ -114,5 +110,5 @@ rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.</p><p>
 
 The logo icons used by the <a href='/&agentType;/fileTools'>fileTools</a> and <a href='/&agentType;/remoteTools'>remoteTools</a> are 24 pixels high.
 
-<footer cvsid='$Id: writing.xh,v 1.9 2000-04-21 20:51:09 steve Exp $' />
+<footer cvsid='$Id: writing.xh,v 1.10 2001-01-11 23:36:31 steve Exp $' />
 </p></body></html>

@@ -1,5 +1,5 @@
 ////// AttrIndirect.java -- implementation of ActiveAttr
-//	$Id: AttrIndirect.java,v 1.1 1999-04-30 23:37:07 steve Exp $
+//	$Id: AttrIndirect.java,v 1.2 2001-01-11 23:37:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import org.risource.ds.Tabular;
  *	as needed to allow attribute-like access to arbitrary data on an
  *	associated (extended) Namespace.
  *
- * @version $Id: AttrIndirect.java,v 1.1 1999-04-30 23:37:07 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: AttrIndirect.java,v 1.2 2001-01-11 23:37:27 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  * @see org.risource.dps.namespace.NamespaceWrap
  * @see org.risource.dps.namespace.EntityIndirect

@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com                                    -->
+<!-- Contributor(s): steve@rii.ricoh.com                                    -->
 <!-- ====================================================================== -->
 
 <tagset name="tsdoc" parent="HTML" tagset="xhtml">
@@ -207,7 +207,7 @@
 
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: tsdoc.ts,v 1.4 2000-03-22 17:33:47 steve Exp $</b><br>
+<b>Copyright &copy; 1998 Ricoh Innovations, Inc.</b><br>
+<b>$Id: tsdoc.ts,v 1.5 2001-01-11 23:37:02 steve Exp $</b><br>
 </tagset>
 

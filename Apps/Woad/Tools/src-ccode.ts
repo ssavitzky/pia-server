@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="src-ccode" parent="src-file" tagset="woad-xhtml"
@@ -28,7 +28,7 @@
 		  String return import export package include define"
 >
 
-<cvs-id>$Id: src-ccode.ts,v 1.5 2000-10-13 23:21:46 steve Exp $</cvs-id>
+<cvs-id>$Id: src-ccode.ts,v 1.6 2001-01-11 23:36:39 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for Java, C and C-like languages.</h1>
 

@@ -1,5 +1,5 @@
 ### website.make
-# $Id: website.make,v 1.3 1999-07-14 23:03:39 steve Exp $
+# $Id: website.make,v 1.4 2001-01-11 23:36:42 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  # created by Stephen R. Savitzky are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com steve@theStarport.org
+ # Contributor(s): steve@rii.ricoh.com steve@theStarport.org
  #
 ############################################################################## 
 

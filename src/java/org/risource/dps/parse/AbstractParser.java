@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.25 2000-10-20 23:54:53 steve Exp $
+//	$Id: AbstractParser.java,v 1.26 2001-01-11 23:37:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,8 +62,8 @@ import org.risource.dps.tree.TreeText;
  *	a char array instead of a String.  This would also let us eliminate
  *	<code>last</code> and allow multiple-character backup.
  *
- * @version $Id: AbstractParser.java,v 1.25 2000-10-20 23:54:53 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: AbstractParser.java,v 1.26 2001-01-11 23:37:33 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Parser
  */
 

@@ -1,5 +1,5 @@
 ////// ActiveCDATA.java: Active CDATASection node  interface
-//	$Id: ActiveCDATA.java,v 1.1 1999-06-25 00:17:29 steve Exp $
+//	$Id: ActiveCDATA.java,v 1.2 2001-01-11 23:37:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveCDATA.java,v 1.1 1999-06-25 00:17:29 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveCDATA.java,v 1.2 2001-01-11 23:37:10 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 public interface ActiveCDATA extends CDATASection, ActiveNode {
 }

@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="src-xhtml"  tagset="woad-xhtml" parser="TextParser"
@@ -22,7 +22,7 @@
         include="src-wrapper src-html" documentWrapper="-document-"
 >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.5 2000-10-13 23:21:46 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.6 2001-01-11 23:36:40 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 

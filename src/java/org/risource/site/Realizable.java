@@ -1,5 +1,5 @@
 ////// Realizable.java -- interface for a resource in a site
-//	$Id: Realizable.java,v 1.1 1999-08-31 23:32:10 steve Exp $
+//	$Id: Realizable.java,v 1.2 2001-01-11 23:37:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import java.net.URL;
  *	descends, or can be made to descend, directly from the root of a
  *	site. 
  *
- * @version $Id: Realizable.java,v 1.1 1999-08-31 23:32:10 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Realizable.java,v 1.2 2001-01-11 23:37:51 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

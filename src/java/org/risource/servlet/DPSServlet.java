@@ -1,5 +1,5 @@
 ////// DPSServlet.java: PIA DPS Servlet implementation
-//	$Id: DPSServlet.java,v 1.5 2000-04-14 23:06:22 steve Exp $
+//	$Id: DPSServlet.java,v 1.6 2001-01-11 23:37:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-2000.  All
  * Rights Reserved.
  *
- * Contributor(s): steve@rsv.ricoh.com, paskin@rsv.ricoh.com
+ * Contributor(s): steve@rii.ricoh.com, paskin@rii.ricoh.com
  *
  ***************************************************************************** 
 */
@@ -62,8 +62,8 @@ import javax.servlet.http.*;
  *		of <code><em>ext</em></code>.
  * </ul>
  *
- * @version $Id: DPSServlet.java,v 1.5 2000-04-14 23:06:22 steve Exp $
- * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
+ * @version $Id: DPSServlet.java,v 1.6 2001-01-11 23:37:49 steve Exp $
+ * @author steve@rii.ricoh.com after paskin@rii.ricoh.com
  * @see org.risource.servlet.PIAServlet
  * @see org.risource.dps
  * @see org.risource.site

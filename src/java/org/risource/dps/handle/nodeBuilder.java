@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.8 1999-11-23 18:33:53 steve Exp $
+//	$Id: nodeBuilder.java,v 1.9 2001-01-11 23:37:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,8 +40,8 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.8 1999-11-23 18:33:53 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: nodeBuilder.java,v 1.9 2001-01-11 23:37:21 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class nodeBuilder extends GenericHandler {

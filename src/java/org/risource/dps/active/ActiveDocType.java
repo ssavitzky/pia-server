@@ -1,5 +1,5 @@
 ////// ActiveDocType.java: Active DocumentType interface
-//	$Id: ActiveDocType.java,v 1.1 1999-04-07 23:20:56 steve Exp $
+//	$Id: ActiveDocType.java,v 1.2 2001-01-11 23:37:11 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import org.risource.dps.Handler;
  *	information, making it suitable for use in active documents in
  *	the DPS.
  *
- * @version $Id: ActiveDocType.java,v 1.1 1999-04-07 23:20:56 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveDocType.java,v 1.2 2001-01-11 23:37:11 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public interface ActiveDocType extends DocumentType, ActiveDecl {

@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $
+//	$Id: textHandler.java,v 1.10 2001-01-11 23:37:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,8 +45,8 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version $Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: textHandler.java,v 1.10 2001-01-11 23:37:25 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class textHandler extends GenericHandler {
@@ -438,7 +438,6 @@ class text_join extends textHandler {
 
    <UL><TT>&lt;!doctype html public "-//IETF//DTD HTML//EN//2.0"></TT>
    <BR><TT>&lt;html>&lt;head></TT>
-   <BR><TT>&lt;link rev="made" href="mailto:pgage@rsv.ricoh.com"></TT>
    <BR><TT>&lt;/head>&lt;body></TT>
    <BR><TT>&lt;h1>Test file decode.xh&lt;/h1></TT><TT></TT>
 
@@ -452,7 +451,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.10 2001-01-11 23:37:25 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -616,7 +615,6 @@ class text_decode extends textHandler {
 
    <UL><TT>&lt;!doctype html public "-//IETF//DTD HTML//EN//2.0"></TT>
    <BR><TT>&lt;html>&lt;head></TT>
-   <BR><TT>&lt;link rev="made" href="mailto:pgage@rsv.ricoh.com"></TT>
    <BR><TT>&lt;/head>&lt;body></TT>
    <BR><TT>&lt;h1>Test file encode.xh&lt;/h1></TT><TT></TT>
 
@@ -628,7 +626,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.10 2001-01-11 23:37:25 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */

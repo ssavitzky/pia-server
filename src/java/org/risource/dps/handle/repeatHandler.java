@@ -1,5 +1,5 @@
 ////// repeatHandler.java: <repeat> Handler implementation
-//	$Id: repeatHandler.java,v 1.10 1999-07-14 20:20:26 steve Exp $
+//	$Id: repeatHandler.java,v 1.11 2001-01-11 23:37:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;repeat&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: repeatHandler.java,v 1.10 1999-07-14 20:20:26 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: repeatHandler.java,v 1.11 2001-01-11 23:37:23 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class repeatHandler extends GenericHandler {

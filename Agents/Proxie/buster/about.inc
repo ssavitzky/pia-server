@@ -1,5 +1,5 @@
 <h2>About ``&AGENT:name;''</h2> <!-- -*-html-helper-*- -->
-<!-- Copyright 1997 Ricoh Silicon Valley -->
+<!-- Copyright 1997 Ricoh Innovations, Inc. -->
 
 <p> The ``&AGENT:name;'' agent ``busts'' (blocks) requests that match one of a
     set of patterns, by redirecting them to a transparent 1x1 image stored
@@ -56,4 +56,4 @@
 <pre>  <get name="AGENT:pattern"/></pre>
 </font>
 
-<inc-footer cvsid="$Id: about.inc,v 1.1 1999-12-16 21:29:30 steve Exp $">
+<inc-footer cvsid="$Id: about.inc,v 1.2 2001-01-11 23:36:31 steve Exp $">

@@ -1,5 +1,5 @@
 ### subdir.make -- makefile template for subdirectories
-#   $Id: subdir.make,v 1.6 2000-04-28 16:58:00 steve Exp $
+#   $Id: subdir.make,v 1.7 2001-01-11 23:36:42 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com
+ # Contributor(s): steve@rii.ricoh.com
  #
 ############################################################################## 
 

@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):  steve@rsv.ricoh.com                                   -->
+<!-- Contributor(s):  steve@rii.ricoh.com                                   -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="Admin-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: Admin-xhtml.ts,v 1.23 2000-04-19 23:52:20 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.24 2001-01-11 23:36:29 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -355,7 +355,7 @@
 <set name=myear><subst match="/.* " result=", "><extract>
     &attributes;<name>cvsid<eval/><text split>&list;</text> 3
     </extract> </subst></set>
-<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
+<b>Copyright &copy; <get name="myear"/> Ricoh Innovations, Inc.</b>.
    Open Source at &lt;<b><get name="RiSource.org"/>/<get name="RiSource.org.pia"/></b>&gt;.<br>
 <em><extract><get name="attributes"/><name>cvsid<eval/></extract></em>
 
@@ -363,7 +363,7 @@
 </define>
 
 <hr />
-<b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.23 2000-04-19 23:52:20 steve Exp $</b><br />
+<b>Copyright &copy; 1995-1999 Ricoh Innovations, Inc.</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.24 2001-01-11 23:36:29 steve Exp $</b><br />
 </tagset>
 

@@ -82,9 +82,6 @@
        </li>
 </ul>
 <hr>
-<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.xh,v 1.4 1999-11-23 18:41:14 steve Exp $</b><br>
-<address><a href="http://rsv.ricoh.com/~bill/"
-         ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
-         >bill@rsv.ricoh.com</a>&gt;</address>
+<b>Copyright &copy; 1997-1999 Ricoh Innovations, Inc.</b><br>
+<b>$Id: about.xh,v 1.5 2001-01-11 23:36:33 steve Exp $</b><br>
 </body></html>

@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.11 2000-06-29 01:54:52 steve Exp $
+//	$Id: numericHandler.java,v 1.12 2001-01-11 23:37:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.11 2000-06-29 01:54:52 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: numericHandler.java,v 1.12 2001-01-11 23:37:21 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class numericHandler extends GenericHandler {

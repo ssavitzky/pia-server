@@ -1,5 +1,5 @@
 ////// Root.java -- interface for the topmost resource in a site
-//	$Id: Root.java,v 1.3 1999-09-17 23:39:51 steve Exp $
+//	$Id: Root.java,v 1.4 2001-01-11 23:37:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import java.net.URL;
  *
  * <p> 
  *
- * @version $Id: Root.java,v 1.3 1999-09-17 23:39:51 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Root.java,v 1.4 2001-01-11 23:37:51 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public interface Root extends Resource {

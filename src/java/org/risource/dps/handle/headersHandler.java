@@ -1,5 +1,5 @@
 ////// headersHandler.java: <headers> Handler implementation
-//	$Id: headersHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
+//	$Id: headersHandler.java,v 1.6 2001-01-11 23:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import org.risource.dps.util.*;
  *
  * <p>	
  *
- * @version $Id: headersHandler.java,v 1.5 1999-04-07 23:21:23 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: headersHandler.java,v 1.6 2001-01-11 23:37:20 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class headersHandler extends GenericHandler {

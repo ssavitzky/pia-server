@@ -1,5 +1,5 @@
 ////// actionHandler.java: <action> Handler implementation
-//	$Id: actionHandler.java,v 1.6 1999-07-14 20:20:13 steve Exp $
+//	$Id: actionHandler.java,v 1.7 2001-01-11 23:37:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import org.risource.dps.util.*;
  *
  *	The handler's class is used to recognize the corresponding element.
  *
- * @version $Id: actionHandler.java,v 1.6 1999-07-14 20:20:13 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: actionHandler.java,v 1.7 2001-01-11 23:37:16 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class actionHandler extends GenericHandler {

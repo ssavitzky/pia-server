@@ -1,5 +1,5 @@
 ////// ToExternalForm.java: Output to external form
-//	$Id: ToExternalForm.java,v 1.10 2000-03-07 00:35:16 steve Exp $
+//	$Id: ToExternalForm.java,v 1.11 2001-01-11 23:37:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,8 +53,8 @@ import java.util.NoSuchElementException;
  *	cloning the content of a literal element and putting it into another
  *	context will automagically do the right thing for that context.
  *
- * @version $Id: ToExternalForm.java,v 1.10 2000-03-07 00:35:16 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToExternalForm.java,v 1.11 2001-01-11 23:37:31 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.Processor */
 

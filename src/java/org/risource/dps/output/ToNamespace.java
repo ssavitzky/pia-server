@@ -35,8 +35,8 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Namespace.<p>
  *
- * @version $Id: ToNamespace.java,v 1.5 1999-11-17 18:33:54 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToNamespace.java,v 1.6 2001-01-11 23:37:32 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  */
 public class ToNamespace extends ActiveOutput implements Output {

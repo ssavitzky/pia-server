@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=tsstrip parent=xhtml>
-<cvs-id>$Id: tsstrip.ts,v 1.1 1999-12-14 18:28:34 steve Exp $</cvs-id>
+<cvs-id>$Id: tsstrip.ts,v 1.2 2001-01-11 23:37:02 steve Exp $</cvs-id>
 
 <h1>Tagset Stripping Tagset</h1>
 

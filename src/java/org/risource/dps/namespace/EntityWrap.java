@@ -1,5 +1,5 @@
 ////// EntityWrap.java -- implementation of ActiveEntity
-//	$Id: EntityWrap.java,v 1.2 1999-06-04 22:40:04 steve Exp $
+//	$Id: EntityWrap.java,v 1.3 2001-01-11 23:37:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import org.risource.ds.Tabular;
  * <p> In contrast, NamespaceWrap should use EntityIndirect.
  *	
  *
- * @version $Id: EntityWrap.java,v 1.2 1999-06-04 22:40:04 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: EntityWrap.java,v 1.3 2001-01-11 23:37:28 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  * @see org.risource.dps.namespace.NamespaceWrap
  * @see org.risource.dps.namespace.EntityIndirect

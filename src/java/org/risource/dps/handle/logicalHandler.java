@@ -1,5 +1,5 @@
 ////// logicalHandler.java: <logical> Handler implementation
-//	$Id: logicalHandler.java,v 1.6 1999-05-06 20:39:53 steve Exp $
+//	$Id: logicalHandler.java,v 1.7 2001-01-11 23:37:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,8 +33,8 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;logical&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: logicalHandler.java,v 1.6 1999-05-06 20:39:53 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: logicalHandler.java,v 1.7 2001-01-11 23:37:21 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class logicalHandler extends GenericHandler {

@@ -1,5 +1,5 @@
 ### file.make -- makefile template for ordinary files
-#   $Id: file.make,v 1.7 2000-05-25 17:04:16 steve Exp $
+#   $Id: file.make,v 1.8 2001-01-11 23:36:42 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com
+ # Contributor(s): steve@rii.ricoh.com
  #
 ############################################################################## 
 
@@ -91,7 +91,7 @@ HEADER.html:
 	echo "  </dd> "							>> $@
 	echo "</dl>"							>> $@
 	echo "<hr>"							>> $@
-	echo "<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />"	>> $@
+	echo "<b>Copyright &copy; 2001 Ricoh Innovations, Inc.</b><br />" >> $@
 	echo "<b>$$"Id"$$</b>"						>> $@
 	echo "<a name=\"files\"><hr></a>"				>> $@
 

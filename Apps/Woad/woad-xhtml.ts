@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.31 2000-12-06 02:11:35 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.32 2001-01-11 23:36:38 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -1270,7 +1270,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
+<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Innovations, Inc..</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
 <a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a>
@@ -1300,7 +1300,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
+<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Innovations, Inc.</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
 <if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>
@@ -1341,10 +1341,10 @@ Note that we only need these inside the PIA.
       </set>
     </hide>
 <h6 align="right"><get name="incfn"/> &copy; <get name="myear"/>
-    Ricoh Silicon Valley</h6>
+    Ricoh Innovations, Inc.</h6>
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.31 2000-12-06 02:11:35 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.32 2001-01-11 23:36:38 steve Exp $ -->
 </tagset>
 

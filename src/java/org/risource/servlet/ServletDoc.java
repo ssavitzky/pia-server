@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.7 2000-04-19 00:02:45 steve Exp $
+//	$Id: ServletDoc.java,v 1.8 2001-01-11 23:37:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,8 +63,8 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.7 2000-04-19 00:02:45 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: ServletDoc.java,v 1.8 2001-01-11 23:37:49 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.pia
  * @see org.risource.dps.process.TopProcessor

@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="src-file" tagset="woad-xhtml" parser="CodeParser"
@@ -28,7 +28,7 @@
 		  define open close split join def from try: except:" 
  >
 
-<cvs-id>$Id: src-file.ts,v 1.8 2000-10-27 23:15:55 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.9 2001-01-11 23:36:39 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 

@@ -1,5 +1,5 @@
 ////// ToProcessor: markup-only filter for an Output
-//	$Id: ToProcessor.java,v 1.1 1999-07-14 20:20:49 steve Exp $
+//	$Id: ToProcessor.java,v 1.2 2001-01-11 23:37:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import java.io.PrintStream;
  *	have to be copied without processing.  The decision: collect, proxy,
  *	or quote, is made on the basis of the <code>state</code> variable. 
  *
- * @version $Id: ToProcessor.java,v 1.1 1999-07-14 20:20:49 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToProcessor.java,v 1.2 2001-01-11 23:37:32 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class ToProcessor extends Proxy {

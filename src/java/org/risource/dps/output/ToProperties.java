@@ -36,8 +36,8 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Properties.<p>
  *
- * @version $Id: ToProperties.java,v 1.2 1999-11-17 18:33:54 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToProperties.java,v 1.3 2001-01-11 23:37:33 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  */
 public class ToProperties extends ActiveOutput implements Output {

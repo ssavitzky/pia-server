@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):   bill@rsv.ricoh.com                                   -->
+<!-- Contributor(s):   bill@rii.ricoh.com                                   -->
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="ExtensionDemo-agent" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: ExtensionDemo-xhtml.ts,v 1.2 1999-12-14 18:58:00 steve Exp $</cvs-id>
+<cvs-id>$Id: ExtensionDemo-xhtml.ts,v 1.3 2001-01-11 23:36:56 steve Exp $</cvs-id>
 
 
 <define element="todaytag" >

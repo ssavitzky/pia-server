@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.6 2000-02-25 22:30:38 steve Exp $
+//	$Id: BasicNamespace.java,v 1.7 2001-01-11 23:37:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: BasicNamespace.java,v 1.6 2000-02-25 22:30:38 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: BasicNamespace.java,v 1.7 2001-01-11 23:37:27 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.tree.TreeElement

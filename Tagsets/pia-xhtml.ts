@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.11 2000-08-23 00:02:05 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.12 2001-01-11 23:36:59 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -389,7 +389,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
+<b>Copyright &copy; <get name="myear"/> Ricoh Innovations, Inc.</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
 <view-source><get name="docPath" /></view-source>
@@ -419,7 +419,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
+<b>Copyright &copy; <get name="myear"/> Ricoh Innovations, Inc.</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
 <view-source><get name="docPath" /></view-source>
@@ -458,7 +458,7 @@ Note that we only need these inside the PIA.
       </set>
     </hide>
 <h6 align="right"><get name="incfn"/> &copy; <get name="myear"/>
-    Ricoh Silicon Valley</h6>
+    Ricoh Innovations, Inc.</h6>
   </action>
 </define>
 

@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.8 2000-02-15 01:52:11 steve Exp $
+//	$Id: SiteDoc.java,v 1.9 2001-01-11 23:37:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,8 +60,8 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.8 2000-02-15 01:52:11 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: SiteDoc.java,v 1.9 2001-01-11 23:37:48 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.pia
  * @see org.risource.dps.process.TopProcessor

@@ -23,6 +23,6 @@
 <init-children>/Agents/Proxie</init-children>
 
 <hr/>
-<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.inc,v 1.2 1999-11-23 18:40:55 steve Exp $</b><br/>
+<b>Copyright &copy; 1997-1999 Ricoh Innovations, Inc.</b><br>
+<b>$Id: initialize.inc,v 1.3 2001-01-11 23:36:30 steve Exp $</b><br/>
 </body></html>

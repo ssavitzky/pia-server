@@ -1,5 +1,5 @@
 ###### Makefile for PIA source and binary cd-rom releases
-#	$Id: Makefile.cdrom,v 1.1 2000-06-02 23:33:13 steve Exp $
+#	$Id: Makefile.cdrom,v 1.2 2001-01-11 23:36:28 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -16,8 +16,8 @@
  # created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  # Rights Reserved.
  #
- # Contributor(s): steve@rsv.ricoh.com, pgage@rsv.ricoh.com,
- #		   wolff@rsv.ricoh.com
+ # Contributor(s): steve@rii.ricoh.com, pgage@rii.ricoh.com,
+ #		   wolff@rii.ricoh.com
  #
 ############################################################################## 
 
@@ -33,7 +33,7 @@
 
 CD_ROM_SRC_DIR	= cd_rom_src_dir
 CD_ROM_DEST_DIR	= cd_rom_dest_dir
-CD_ROM_PUB      = Ricoh Silicon Valley
+CD_ROM_PUB      = Ricoh Innovations, Inc.
 
 cd_rom:		$(CD_ROM_SRC_DIR) $(CD_ROM_DEST_DIR) version_id
 	mkisofs -f -R -T \

@@ -1,5 +1,5 @@
 ////// Syntax.java: Node Syntax Handler interface
-//	$Id: Syntax.java,v 1.5 1999-06-04 22:39:26 steve Exp $
+//	$Id: Syntax.java,v 1.6 2001-01-11 23:37:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import org.risource.dps.active.*;
  *	(non-verifying) parser to be built without exposing the gory details
  *	of SGML to the casual programmer. <p>
  *
- * @version $Id: Syntax.java,v 1.5 1999-06-04 22:39:26 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Syntax.java,v 1.6 2001-01-11 23:37:07 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Handler

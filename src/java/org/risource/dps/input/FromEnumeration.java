@@ -1,5 +1,5 @@
 ////// FromEnumeration.java: Input from NodeList
-//	$Id: FromEnumeration.java,v 1.2 1999-06-25 00:41:51 steve Exp $
+//	$Id: FromEnumeration.java,v 1.3 2001-01-11 23:37:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import java.util.NoSuchElementException;
 /**
  * Input from an enumeration of ActiveNodes.<p>
  *
- * @version $Id: FromEnumeration.java,v 1.2 1999-06-25 00:41:51 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: FromEnumeration.java,v 1.3 2001-01-11 23:37:26 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */

@@ -1,7 +1,6 @@
 <make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>t6.xh</title>
-<link rev='made' href='mailto:steve@rsv.ricoh.com' />
 </head><body>
 <h1>InterForm test file t6.if</h1>
 
@@ -286,7 +285,7 @@ Entity used as list for repeat; expanded in attribute:
 <frob froboz='value of froboz'>content of frob</frob>
 
 <hr />
-<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
+<b>Copyright &copy; 1997 Ricoh Innovations, Inc.</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.9 2000-02-25 22:30:42 steve Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.10 2001-01-11 23:37:37 steve Exp $</b><br /></then></if>
 </baz></body></html>

@@ -1,5 +1,5 @@
 ////// TreeNodeList.java: ActiveNodeList implementation
-//	$Id: TreeNodeList.java,v 1.4 2000-02-25 22:34:13 steve Exp $
+//	$Id: TreeNodeList.java,v 1.5 2001-01-11 23:37:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import org.risource.dps.Input;
  *
  *	The contents need not be children of the same Node.
  *
- * @version $Id: TreeNodeList.java,v 1.4 2000-02-25 22:34:13 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeNodeList.java,v 1.5 2001-01-11 23:37:40 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 public class TreeNodeList extends TreeNodeArray {
 

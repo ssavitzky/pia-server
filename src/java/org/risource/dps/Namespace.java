@@ -1,5 +1,5 @@
 ////// Namespace.java: Node Handler Lookup Table interface
-//	$Id: Namespace.java,v 1.6 1999-04-23 00:21:23 steve Exp $
+//	$Id: Namespace.java,v 1.7 2001-01-11 23:37:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import java.util.Enumeration;
  *	colon character.  For that reason a Namespace must have its own
  *	name, since it is not necessarily associated with another Node.
  *
- * @version $Id: Namespace.java,v 1.6 1999-04-23 00:21:23 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Namespace.java,v 1.7 2001-01-11 23:37:06 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Input

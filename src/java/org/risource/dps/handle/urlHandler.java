@@ -1,5 +1,5 @@
 ////// urlHandler.java: <URL> Handler implementation
-//	$Id: urlHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
+//	$Id: urlHandler.java,v 1.5 2001-01-11 23:37:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import org.risource.dps.util.*;
  *
  * This is a data structure object<p>	
  *
- * @version $Id: urlHandler.java,v 1.4 1999-04-07 23:21:28 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: urlHandler.java,v 1.5 2001-01-11 23:37:25 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class urlHandler extends GenericHandler {

@@ -1,5 +1,5 @@
 ////// Listing.java -- simple listing of a container document
-//	$Id: Listing.java,v 1.7 2000-06-14 17:08:02 steve Exp $
+//	$Id: Listing.java,v 1.8 2001-01-11 23:37:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,8 +45,8 @@ import java.net.URL;
  *  <p>	A Listing is a virtual container; this means that one can control
  *	the format of a listing by specifying a sub-document.
  *
- * @version $Id: Listing.java,v 1.7 2000-06-14 17:08:02 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Listing.java,v 1.8 2001-01-11 23:37:51 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

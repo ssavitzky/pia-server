@@ -1,5 +1,5 @@
 ////// AbstractInput.java: Input abstract base class
-//	$Id: ActiveInput.java,v 1.7 1999-09-22 00:31:43 steve Exp $
+//	$Id: ActiveInput.java,v 1.8 2001-01-11 23:37:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import org.risource.dps.active.*;
  *	The assumption that an ActiveInput is restricted to parse trees
  *	makes for a considerable gain in efficiency. <p>
  *
- * @version $Id: ActiveInput.java,v 1.7 1999-09-22 00:31:43 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: ActiveInput.java,v 1.8 2001-01-11 23:37:26 steve Exp $
+ * @author steve@rii.ricoh.com
  * 
  * @see org.risource.dps.Processor
  */

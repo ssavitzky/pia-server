@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.11 1999-11-04 22:33:38 steve Exp $
+//	$Id: Tagset.java,v 1.12 2001-01-11 23:37:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,8 +53,8 @@ import org.w3c.dom.NamedNodeMap;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.11 1999-11-04 22:33:38 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Tagset.java,v 1.12 2001-01-11 23:37:07 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Active

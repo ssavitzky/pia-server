@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s):   bill@rsv.ricoh.com                                   -->
+<!-- Contributor(s):   bill@rii.ricoh.com                                   -->
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="SimpleCalendar-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.13 1999-12-14 18:52:48 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.14 2001-01-11 23:36:33 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing

@@ -1,5 +1,5 @@
 ////// EntityInput.java -- Wrapper for arbitrary input.
-//	$Id: EntityInput.java,v 1.8 2000-10-05 19:09:51 steve Exp $
+//	$Id: EntityInput.java,v 1.9 2001-01-11 23:37:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import org.risource.ds.Tabular;
  *	it is more likely to be used to lazily-evaluate the content of an
  *	active node (i.e. as the value of <code>&amp;content;</code>).
  *
- * @version $Id: EntityInput.java,v 1.8 2000-10-05 19:09:51 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: EntityInput.java,v 1.9 2001-01-11 23:37:42 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
 public class EntityInput extends TreeEntity {

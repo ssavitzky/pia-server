@@ -1,5 +1,5 @@
 ////// TreeEntityRef.java -- implementation of ActiveEntity
-//	$Id: TreeEntityRef.java,v 1.3 1999-06-04 22:40:42 steve Exp $
+//	$Id: TreeEntityRef.java,v 1.4 2001-01-11 23:37:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntityRef.java,v 1.3 1999-06-04 22:40:42 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeEntityRef.java,v 1.4 2001-01-11 23:37:39 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
 public class TreeEntityRef extends TreeNode implements ActiveEntityRef {

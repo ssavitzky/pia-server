@@ -1,5 +1,5 @@
 ////// statusHandler.java: <status> Handler implementation
-//	$Id: statusHandler.java,v 1.8 1999-09-22 00:34:25 steve Exp $
+//	$Id: statusHandler.java,v 1.9 2001-01-11 23:37:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,8 +40,8 @@ import java.net.URL;
  *
  * <p>	Determine the status of a resource. 
  *
- * @version $Id: statusHandler.java,v 1.8 1999-09-22 00:34:25 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: statusHandler.java,v 1.9 2001-01-11 23:37:24 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class statusHandler extends GenericHandler {

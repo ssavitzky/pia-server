@@ -1,5 +1,5 @@
 ////// TreeText.java -- implementation of ActiveText
-//	$Id: TreeText.java,v 1.3 1999-06-25 00:18:04 steve Exp $
+//	$Id: TreeText.java,v 1.4 2001-01-11 23:37:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,8 +33,8 @@ import org.risource.dps.util.*;
  * An implementation of the ActiveText interface, suitable for use in 
  *	DPS parse.
  *
- * @version $Id: TreeText.java,v 1.3 1999-06-25 00:18:04 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeText.java,v 1.4 2001-01-11 23:37:40 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
  */

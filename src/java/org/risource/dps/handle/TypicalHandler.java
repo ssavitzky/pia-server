@@ -1,5 +1,5 @@
 ////// TypicalHandler.java: <typical> Handler implementation
-//	$Id: TypicalHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
+//	$Id: TypicalHandler.java,v 1.6 2001-01-11 23:37:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,8 +33,8 @@ import org.risource.dps.util.*;
  *
  * <p>	
  *
- * @version $Id: TypicalHandler.java,v 1.5 1999-04-07 23:21:21 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: TypicalHandler.java,v 1.6 2001-01-11 23:37:16 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class TypicalHandler extends GenericHandler {

@@ -1,5 +1,5 @@
 ////// prettyHandler.java: <pretty> Handler implementation
-//	$Id: prettyHandler.java,v 1.4 1999-07-15 17:42:03 bill Exp $
+//	$Id: prettyHandler.java,v 1.5 2001-01-11 23:37:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,8 +48,8 @@ import java.lang.StringBuffer;
  * pretty begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: prettyHandler.java,v 1.4 1999-07-15 17:42:03 bill Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: prettyHandler.java,v 1.5 2001-01-11 23:37:22 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class prettyHandler extends GenericHandler {

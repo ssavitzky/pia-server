@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="pia-tags" parent="xxml" recursive="yes">
-<cvs-id>$Id: pia-tags.ts,v 1.2 1999-12-17 22:05:55 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-tags.ts,v 1.3 2001-01-11 23:37:01 steve Exp $</cvs-id>
 
 <h1>PIA Tags</h1>
 

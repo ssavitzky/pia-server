@@ -1,5 +1,5 @@
 ////// SiteContext.java: Top Processor for PIA active documents
-//	$Id: SiteContext.java,v 1.3 1999-09-17 23:39:56 steve Exp $
+//	$Id: SiteContext.java,v 1.4 2001-01-11 23:37:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,8 +57,8 @@ import org.risource.ds.Tabular;
 /**
  * A TopProcessor for processing active documents, typically in a Subsite.
  *
- * @version $Id: SiteContext.java,v 1.3 1999-09-17 23:39:56 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: SiteContext.java,v 1.4 2001-01-11 23:37:53 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps
  * @see org.risource.dps.process.TopProcessor

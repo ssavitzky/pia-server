@@ -1,5 +1,5 @@
 ////// includeHandler.java: <include> Handler implementation
-//	$Id: includeHandler.java,v 1.14 2000-06-07 23:42:41 steve Exp $
+//	$Id: includeHandler.java,v 1.15 2001-01-11 23:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,8 +41,8 @@ import org.risource.dps.tree.TreeComment;
  *
  *	
  *
- * @version $Id: includeHandler.java,v 1.14 2000-06-07 23:42:41 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: includeHandler.java,v 1.15 2001-01-11 23:37:20 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class includeHandler extends GenericHandler {

@@ -57,8 +57,8 @@ import  sun.security.tools.KeyTool;
  * the key store then you should not need the Sun classes and can 
  * remove the generateKeys method.)
  *
- * @version $Id: signHandler.java,v 1.1 2000-01-21 23:11:57 bill Exp $
- * @author wolff@rsv.ricoh.com
+ * @version $Id: signHandler.java,v 1.2 2001-01-11 23:37:24 steve Exp $
+ * @author wolff@rii.ricoh.com
  */
 
 public final class signHandler extends GenericHandler {

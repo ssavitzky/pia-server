@@ -1,5 +1,5 @@
 ////// outputHandler.java: <output> Handler implementation
-//	$Id: outputHandler.java,v 1.8 2000-10-06 17:41:26 steve Exp $
+//	$Id: outputHandler.java,v 1.9 2001-01-11 23:37:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,8 +43,8 @@ import org.risource.dps.tree.TreeComment;
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: outputHandler.java,v 1.8 2000-10-06 17:41:26 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: outputHandler.java,v 1.9 2001-01-11 23:37:22 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class outputHandler extends GenericHandler {

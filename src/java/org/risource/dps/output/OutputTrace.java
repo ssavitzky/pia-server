@@ -1,5 +1,5 @@
 ////// OutputTrace: debugging shim for an Output
-//	$Id: OutputTrace.java,v 1.5 1999-07-14 20:20:40 steve Exp $
+//	$Id: OutputTrace.java,v 1.6 2001-01-11 23:37:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import java.io.PrintStream;
  * A debugging shim for Outputs.  All operations are proxied to a
  *	``real'' target Output, and also logged to a PrintStream. <p>
  *
- * @version $Id: OutputTrace.java,v 1.5 1999-07-14 20:20:40 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: OutputTrace.java,v 1.6 2001-01-11 23:37:30 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public class OutputTrace extends Proxy {

@@ -1,5 +1,5 @@
 ////// EntityIndirect.java -- implementation of ActiveEntity
-//	$Id: EntityIndirect.java,v 1.2 1999-04-30 23:37:09 steve Exp $
+//	$Id: EntityIndirect.java,v 1.3 2001-01-11 23:37:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,8 +42,8 @@ import org.risource.ds.Tabular;
  *	as needed to allow entity-like access to arbitrary data on an
  *	associated (extended) Namespace.
  *
- * @version $Id: EntityIndirect.java,v 1.2 1999-04-30 23:37:09 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: EntityIndirect.java,v 1.3 2001-01-11 23:37:28 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Namespace
  * @see org.risource.dps.namespace.NamespaceWrap
  * @see org.risource.dps.namespace.AttrIndirect

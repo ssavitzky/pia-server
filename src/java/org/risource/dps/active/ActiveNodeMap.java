@@ -1,5 +1,5 @@
 ////// ActiveNodeMap.java: Active Attribute List interface
-//	$Id: ActiveNodeMap.java,v 1.2 1999-04-17 01:19:00 steve Exp $
+//	$Id: ActiveNodeMap.java,v 1.3 2001-01-11 23:37:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,8 +34,8 @@ import java.util.Enumeration;
  * <p>	In addition to the usual functions of a NamedNodeMap, an 
  *	ActiveNodeMap can associate unnamed nodes with arbitrary strings. 
  *
- * @version $Id: ActiveNodeMap.java,v 1.2 1999-04-17 01:19:00 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveNodeMap.java,v 1.3 2001-01-11 23:37:12 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 
 public interface ActiveNodeMap extends NamedNodeMap {

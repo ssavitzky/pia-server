@@ -148,7 +148,7 @@
 	<code>&lt;set name=subCaption&gt;text for bottom line&lt;/set&gt;</code>
     </p>
   </doc>
-  <value>Ricoh Silicon Valley</value>
+  <value>Ricoh Innovations, Inc.</value>
 </define>
 
 <h2>&lt;Slide&gt;</h2>
@@ -334,5 +334,5 @@
 </define>
 --?>
 
-<em>$Id: slides.ts,v 1.3 2000-02-25 23:27:07 steve Exp $</em>
+<em>$Id: slides.ts,v 1.4 2001-01-11 23:37:00 steve Exp $</em>
 </tagset>

@@ -1,5 +1,5 @@
 ////// FromParseTree.java: Input from ParseTree
-//	$Id: FromParseTree.java,v 1.6 1999-06-25 00:41:54 steve Exp $
+//	$Id: FromParseTree.java,v 1.7 2001-01-11 23:37:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,8 +31,8 @@ import org.risource.dps.active.*;
 /**
  * Input from a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: FromParseTree.java,v 1.6 1999-06-25 00:41:54 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: FromParseTree.java,v 1.7 2001-01-11 23:37:27 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */

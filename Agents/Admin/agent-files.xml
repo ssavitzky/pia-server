@@ -1,5 +1,5 @@
 <!-- This file is meant to be included. -*-html-helper-*- -->
-<!-- Copyright 1999 Ricoh Silicon Valley -->
+<!-- Copyright 1999 Ricoh Innovations, Inc. -->
 
 <agent-files>
   <agent-file id="/DOFS" on-start="on">./DOFS/AGENTS.xml</agent-file>
@@ -15,4 +15,4 @@
 </agent-files>
 
 
-<!-- $Id: agent-files.xml,v 1.4 1999-07-19 16:30:42 bill Exp $ -->
+<!-- $Id: agent-files.xml,v 1.5 2001-01-11 23:36:29 steve Exp $ -->

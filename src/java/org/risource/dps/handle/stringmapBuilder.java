@@ -1,5 +1,5 @@
 ////// stringmapBuilder.java: <namespace> Handler implementation
-//	$Id: stringmapBuilder.java,v 1.1 2000-10-19 00:06:11 steve Exp $
+//	$Id: stringmapBuilder.java,v 1.2 2001-01-11 23:37:24 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,8 +41,8 @@ import java.util.Properties;
  * <p>	Expand the content in a context that contains a new local namespace. 
  *	Return the namespace as the result. 
  *
- * @version $Id: stringmapBuilder.java,v 1.1 2000-10-19 00:06:11 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: stringmapBuilder.java,v 1.2 2001-01-11 23:37:24 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class stringmapBuilder extends propertyBuilder {

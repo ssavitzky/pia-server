@@ -1,5 +1,5 @@
 ////// debugHandler.java: <debug> Handler implementation
-//	$Id: debugHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
+//	$Id: debugHandler.java,v 1.6 2001-01-11 23:37:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import java.lang.StringBuffer;
  * debug begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: debugHandler.java,v 1.5 1999-04-07 23:21:22 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: debugHandler.java,v 1.6 2001-01-11 23:37:17 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class debugHandler extends GenericHandler {

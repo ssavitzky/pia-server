@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="tagset" parent="HTML">
 <title>Tagset for Tagset Definition Files</title>
-<cvs-id>$Id: tagset.ts,v 1.1 1999-12-14 18:28:33 steve Exp $</cvs-id>
+<cvs-id>$Id: tagset.ts,v 1.2 2001-01-11 23:37:01 steve Exp $</cvs-id>
 
 <h2>Introduction:</h2>
 
@@ -518,7 +518,7 @@
 </dl>
 
 <hr>
-<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: tagset.ts,v 1.1 1999-12-14 18:28:33 steve Exp $</b><br>
+<b>Copyright &copy; 1998 Ricoh Innovations, Inc.</b><br>
+<b>$Id: tagset.ts,v 1.2 2001-01-11 23:37:01 steve Exp $</b><br>
 </tagset>
 

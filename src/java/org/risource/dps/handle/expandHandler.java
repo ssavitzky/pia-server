@@ -1,5 +1,5 @@
 ////// expandHandler.java: <expand> Handler implementation
-//	$Id: expandHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
+//	$Id: expandHandler.java,v 1.8 2001-01-11 23:37:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import org.risource.dps.input.FromNodeList;
 /**
  * Handler for &lt;expand&gt;  <p>
  *
- * @version $Id: expandHandler.java,v 1.7 2000-10-06 06:28:44 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: expandHandler.java,v 1.8 2001-01-11 23:37:18 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class expandHandler extends GenericHandler {

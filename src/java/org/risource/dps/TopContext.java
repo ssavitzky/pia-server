@@ -1,5 +1,5 @@
 ////// TopContext.java: Top Context interface
-//	$Id: TopContext.java,v 1.7 2000-10-05 19:09:00 steve Exp $
+//	$Id: TopContext.java,v 1.8 2001-01-11 23:37:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,8 +45,8 @@ import java.net.URL;
  *	be done, for example, in order to insert a sub-document into the
  *	processing stream.  Even the ``root'' context may have a parent.
  *
- * @version $Id: TopContext.java,v 1.7 2000-10-05 19:09:00 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: TopContext.java,v 1.8 2001-01-11 23:37:07 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Processor
  * @see org.risource.dps.Context */

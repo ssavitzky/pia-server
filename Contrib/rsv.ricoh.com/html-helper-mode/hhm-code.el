@@ -1,8 +1,8 @@
 ;; PIA Code Elements
 ;; An html-helper-mode module
 
-;; Steve Savitzky <steve@rsv.ricoh.com> 
-;; $Id: hhm-code.el,v 1.1 2000-02-18 23:00:18 steve Exp $
+;; Steve Savitzky <steve@rii.ricoh.com> 
+;; $Id: hhm-code.el,v 1.2 2001-01-11 23:36:43 steve Exp $
 
 ;; This code is distributed under the same terms as html-helper-mode
 ;; itself.  html-helper-mode for Emacs is written and maintained by

@@ -1,5 +1,5 @@
 ////// submitHandler.java: <submit> Handler implementation
-//	$Id: submitHandler.java,v 1.1 1999-09-22 00:21:54 steve Exp $
+//	$Id: submitHandler.java,v 1.2 2001-01-11 23:37:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,8 +47,8 @@ import org.risource.pia.site.SiteMachine;
  *
  * <p> The intent is for this to be equivalent to the old <submit-forms> tag. 
  *
- * @version $Id: submitHandler.java,v 1.1 1999-09-22 00:21:54 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: submitHandler.java,v 1.2 2001-01-11 23:37:47 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class submitHandler extends GenericHandler {

@@ -1,5 +1,5 @@
 ////// TextNodeHandler.java: Text Node Handler implementation
-//	$Id: TextNodeHandler.java,v 1.7 1999-06-25 00:41:24 steve Exp $
+//	$Id: TextNodeHandler.java,v 1.8 2001-01-11 23:37:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,8 +38,8 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: TextNodeHandler.java,v 1.7 1999-06-25 00:41:24 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: TextNodeHandler.java,v 1.8 2001-01-11 23:37:16 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor

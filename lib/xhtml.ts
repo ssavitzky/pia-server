@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com                                    -->
+<!-- Contributor(s): steve@rii.ricoh.com                                    -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=xhtml parent=basic include="debug HTML" recursive>
-<cvs-id>$Id: xhtml.ts,v 1.4 2000-02-04 01:13:37 bill Exp $</cvs-id>
+<cvs-id>$Id: xhtml.ts,v 1.5 2001-01-11 23:37:02 steve Exp $</cvs-id>
 
 <h1>XHTML Tagset</h1>
 

@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.10 2000-09-30 00:12:15 steve Exp $
+//	$Id: Index.java,v 1.11 2001-01-11 23:37:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,8 +41,8 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.10 2000-09-30 00:12:15 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: Index.java,v 1.11 2001-01-11 23:37:42 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  */
 public class Index {

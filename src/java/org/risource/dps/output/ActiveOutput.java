@@ -1,5 +1,5 @@
 ////// ActiveOutput.java:  abstract base class for Output implementations.
-//	$Id: ActiveOutput.java,v 1.7 1999-11-06 01:08:13 steve Exp $
+//	$Id: ActiveOutput.java,v 1.8 2001-01-11 23:37:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,8 +32,8 @@ import org.w3c.dom.*;
  * An abstract base class for implementations of the Output interface
  *	that operate exclusively on ActiveNode's.<p>
  *
- * @version $Id: ActiveOutput.java,v 1.7 1999-11-06 01:08:13 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ActiveOutput.java,v 1.8 2001-01-11 23:37:29 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor

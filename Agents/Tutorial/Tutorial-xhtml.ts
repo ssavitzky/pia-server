@@ -14,13 +14,13 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): paskin@rsv.ricoh.com                                   -->
-<!--                 bill@rsv.ricoh.com                                     -->
+<!-- Contributor(s): paskin@rii.ricoh.com                                   -->
+<!--                 bill@rii.ricoh.com                                     -->
 <!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="Tutorial-agent" parent="xhtml" recursive="yes">
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.9 1999-12-14 18:52:52 steve Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.10 2001-01-11 23:36:34 steve Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>

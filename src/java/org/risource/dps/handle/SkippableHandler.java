@@ -1,5 +1,5 @@
 ////// SkippableHandler.java: Skippable Node Handler implementation
-//	$Id: SkippableHandler.java,v 1.6 1999-06-25 00:41:23 steve Exp $
+//	$Id: SkippableHandler.java,v 1.7 2001-01-11 23:37:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import org.risource.ds.Table;
  *	No processing is done for the node or its children -- they 
  *	just disappear. <p>
  *
- * @version $Id: SkippableHandler.java,v 1.6 1999-06-25 00:41:23 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: SkippableHandler.java,v 1.7 2001-01-11 23:37:15 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
  * @see org.risource.dps.Processor

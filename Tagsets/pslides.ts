@@ -14,7 +14,7 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="slides" parent="HTML" include="xxml" recursive="yes">
@@ -115,7 +115,7 @@
     <p> Usage: <br>
 	<code>&lt;set name=subCaption&gt;text for bottom line&lt;/set&gt;</code>
   </doc>
-  <value>Ricoh Silicon Valley</value>
+  <value>Ricoh Innovations, Inc.</value>
 </define>
 
 <h2>&lt;Slide&gt;</h2>
@@ -243,5 +243,5 @@
 </slide></action>
 </define>
 
-<em>$Id: pslides.ts,v 1.2 2000-03-16 22:11:02 steve Exp $</em>
+<em>$Id: pslides.ts,v 1.3 2001-01-11 23:36:59 steve Exp $</em>
 </tagset>

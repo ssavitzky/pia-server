@@ -1,5 +1,5 @@
 ////// AgentBuilder.java: <namespace> Handler implementation
-//	$Id: AgentBuilder.java,v 1.4 1999-09-22 00:23:14 steve Exp $
+//	$Id: AgentBuilder.java,v 1.5 2001-01-11 23:37:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import org.risource.ds.Tabular;
  * <p>	Expand the content in a context that constructs a new Agent. 
  *	Install the Agent. 
  *
- * @version $Id: AgentBuilder.java,v 1.4 1999-09-22 00:23:14 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: AgentBuilder.java,v 1.5 2001-01-11 23:37:47 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class AgentBuilder extends GenericHandler {

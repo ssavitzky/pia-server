@@ -1,5 +1,5 @@
 ////// parseHandler.java: <parse> Handler implementation
-//	$Id: parseHandler.java,v 1.8 1999-11-04 22:33:44 steve Exp $
+//	$Id: parseHandler.java,v 1.9 2001-01-11 23:37:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,8 +39,8 @@ import java.io.StringReader;
  *
  *	
  *
- * @version $Id: parseHandler.java,v 1.8 1999-11-04 22:33:44 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: parseHandler.java,v 1.9 2001-01-11 23:37:22 steve Exp $
+ * @author steve@rii.ricoh.com
  */
 
 public class parseHandler extends GenericHandler {

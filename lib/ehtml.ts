@@ -14,11 +14,11 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com                                    -->
+<!-- Contributor(s): steve@rii.ricoh.com                                    -->
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=ehtml parent=HTML include="basic debug" recursive>
-<cvs-id>$Id: ehtml.ts,v 1.2 1999-12-17 23:59:19 bill Exp $</cvs-id>
+<cvs-id>$Id: ehtml.ts,v 1.3 2001-01-11 23:37:00 steve Exp $</cvs-id>
 
 <h1>EHTML Tagset</h1>
 

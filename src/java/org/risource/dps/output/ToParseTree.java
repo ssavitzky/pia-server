@@ -1,5 +1,5 @@
 ////// ToParseTree.java:  Output to ParseTree
-//	$Id: ToParseTree.java,v 1.6 1999-07-14 20:20:48 steve Exp $
+//	$Id: ToParseTree.java,v 1.7 2001-01-11 23:37:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,8 @@ import java.util.NoSuchElementException;
 /**
  * Output to a parse tree, comprised entirely of Active nodes.<p>
  *
- * @version $Id: ToParseTree.java,v 1.6 1999-07-14 20:20:48 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToParseTree.java,v 1.7 2001-01-11 23:37:32 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
  */

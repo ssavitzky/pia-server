@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.24 2000-10-12 23:12:45 steve Exp $
+//	$Id: Subsite.java,v 1.25 2001-01-11 23:37:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,8 +54,8 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.24 2000-10-12 23:12:45 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Subsite.java,v 1.25 2001-01-11 23:37:52 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

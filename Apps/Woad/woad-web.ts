@@ -14,12 +14,12 @@
 <!-- Portions created by Ricoh Silicon Valley, Inc. are                     -->
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
-<!-- Contributor(s): steve@rsv.ricoh.com pgage@rsv.ricoh.com                -->
+<!-- Contributor(s): steve@rii.ricoh.com pgage@rii.ricoh.com                -->
 <!-- ====================================================================== -->
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.13 2000-12-15 19:55:48 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.14 2001-01-11 23:36:38 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 

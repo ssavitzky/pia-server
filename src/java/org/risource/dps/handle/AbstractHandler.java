@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.12 2000-08-30 23:01:09 steve Exp $
+//	$Id: AbstractHandler.java,v 1.13 2001-01-11 23:37:13 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,8 +46,8 @@ import java.io.File;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.12 2000-08-30 23:01:09 steve Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: AbstractHandler.java,v 1.13 2001-01-11 23:37:13 steve Exp $
+ * @author steve@rii.ricoh.com
  *
  * @see org.risource.dps.Context
  * @see org.risource.dps.Tagset

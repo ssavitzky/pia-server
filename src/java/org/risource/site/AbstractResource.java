@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.13 2000-06-15 01:24:20 steve Exp $
+//	$Id: AbstractResource.java,v 1.14 2001-01-11 23:37:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,8 +65,8 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.13 2000-06-15 01:24:20 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: AbstractResource.java,v 1.14 2001-01-11 23:37:50 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

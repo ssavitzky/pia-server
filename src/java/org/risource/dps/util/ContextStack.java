@@ -1,5 +1,5 @@
 ////// ContextStack.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.9 1999-07-08 21:39:03 bill Exp $
+//	$Id: ContextStack.java,v 1.10 2001-01-11 23:37:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,8 +41,8 @@ import org.risource.dps.namespace.BasicEntityTable;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.9 1999-07-08 21:39:03 bill Exp $
- * @author steve@rsv.ricoh.com
+ * @version $Id: ContextStack.java,v 1.10 2001-01-11 23:37:41 steve Exp $
+ * @author steve@rii.ricoh.com
  * 
  * @see org.risource.dps.Cursor
  */

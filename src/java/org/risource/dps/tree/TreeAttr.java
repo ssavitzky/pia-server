@@ -1,5 +1,5 @@
 ////// TreeAttr.java -- implementation of ActiveAttr
-//	$Id: TreeAttr.java,v 1.4 1999-10-04 17:37:55 steve Exp $
+//	$Id: TreeAttr.java,v 1.5 2001-01-11 23:37:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,8 +32,8 @@ import org.risource.dps.*;
  * An implementation of the ActiveAttr interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeAttr.java,v 1.4 1999-10-04 17:37:55 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: TreeAttr.java,v 1.5 2001-01-11 23:37:37 steve Exp $
+ * @author steve@rii.ricoh.com 
  */
 public class TreeAttr extends TreeValue implements ActiveAttr {
 

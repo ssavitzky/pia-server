@@ -1,5 +1,5 @@
 ////// Resource.java -- interface for a resource in a site
-//	$Id: Resource.java,v 1.8 2000-06-15 01:24:20 steve Exp $
+//	$Id: Resource.java,v 1.9 2001-01-11 23:37:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -82,8 +82,8 @@ import java.net.URL;
  *	real resource may need different metadata when used in different
  *	applications.
  *
- * @version $Id: Resource.java,v 1.8 2000-06-15 01:24:20 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: Resource.java,v 1.9 2001-01-11 23:37:51 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
  * @see org.risource.dps

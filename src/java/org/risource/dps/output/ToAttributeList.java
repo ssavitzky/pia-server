@@ -1,5 +1,5 @@
 ////// ToAttributeList.java: Output to attribute list
-//	$Id: ToAttributeList.java,v 1.7 1999-07-14 20:20:42 steve Exp $
+//	$Id: ToAttributeList.java,v 1.8 2001-01-11 23:37:31 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,8 +35,8 @@ import org.risource.dps.tree.TreeAttrList;
 /**
  * Output to an AttributeList.<p>
  *
- * @version $Id: ToAttributeList.java,v 1.7 1999-07-14 20:20:42 steve Exp $
- * @author steve@rsv.ricoh.com 
+ * @version $Id: ToAttributeList.java,v 1.8 2001-01-11 23:37:31 steve Exp $
+ * @author steve@rii.ricoh.com 
  * @see org.risource.dps.active.ActiveAttrList
  * @see org.risource.dps.Input
  * @see org.risource.dps.Processor
