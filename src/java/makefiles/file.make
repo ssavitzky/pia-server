@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.8 1999-03-24 20:46:57 steve Exp $
+# $Id: file.make,v 1.9 1999-03-25 00:47:10 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -58,10 +58,14 @@ endif
 #	AND it contains the current Java class library.
 #  2. cd'ing to $(CLASSDIR) and not setting $(CLASSPATH). 
 #	This works only if $(CLASSPATH) is not set, OR it contains "."
+#
+#	Cleverness involving $(PKGPATH) messes up error parsing because
+#	of the relative path.  
 
 ifeq ($(CLASSPATH),)
 .java.class:
-	cd $(CLASSDIR); javac  -g $(JAVAFLAGS) $(PKGPATH)/$<; $(CDFIX)
+	export wd=`pwd`; cd $(CLASSDIR); javac -g $(JAVAFLAGS) $$wd/$<
+#	cd $(CLASSDIR); javac -g $(JAVAFLAGS) $(PKGPATH)/$<; $(CDFIX)
 else
 BUILDCLASSES=$(CLASSDIR)$S$(CLASSPATH)
 .java.class:
@@ -78,14 +82,14 @@ doc:: holes.log lines.log
 	@echo Documenting.
 
 ### Javadoc of this package only.  Don't smash existing index files.
-###	Note the awkward $(PKGDIR)/$(DOCDIR) construct due to the fact
+###	Note the awkward $(PKGPATH)/$(DOCDIR) construct due to the fact
 ###	that $(DOCDIR) is relative to the current directory.  If it 
 ###	turns out not to be (i.e. it was set on the command line) there
 ###	will be problems.  Don't do that.
 ###
 ifeq ($(CLASSPATH),)
 jdoc::
-	cd $(CLASSDIR); javadoc -d $(PKGDIR)/$(DOCDIR) -noindex -notree $(PACKAGE); $(CDFIX)
+	cd $(CLASSDIR); javadoc -d $(PKGPATH)/$(DOCDIR) -noindex -notree $(PACKAGE); $(CDFIX)
 else
 jdoc::
 	javadoc -d $(DOCDIR) -noindex -notree -classpath $(BUILDCLASSES) $(PACKAGE)
