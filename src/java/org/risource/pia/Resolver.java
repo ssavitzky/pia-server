@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.7 1999-04-30 23:37:58 steve Exp $
+// $Id: Resolver.java,v 1.8 1999-06-18 23:48:02 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,6 +43,8 @@ import org.risource.ds.List;
 
 
 
+
+
 /**
  * A Resolver (i.e. an instance of PIA.Resolver) acts like a stack of
  * Transaction objects.  A resolver also has a list of agents which have
@@ -70,6 +72,16 @@ public class Resolver extends Thread {
    * Attribute index - a collection of agents by pathName.
    */
   protected  Table agentsByPathName = new Table();
+
+  /** 
+   * The order in which agents get to act on a transaction
+   * is determined by their order of start-up.  This is not ideal
+   * we should be able to assign a priority to each agent...
+   * Just a temporary fix for now.
+   */
+
+  protected  List agentsInOrder = new List();
+
 
   /**
    * Attribute index - whether to stop running
@@ -157,6 +169,7 @@ public class Resolver extends Thread {
     if ( agent != null && agent.name() != null ){
       agentsByName.put(agent.name(), agent);
       agentsByPathName.put(agent.pathName(), agent);
+      agentsInOrder.push(agent);
     }
     agent.initialize();
   }
@@ -180,6 +193,7 @@ public class Resolver extends Thread {
     if (agent == null) return agent;
     if (agent.name() != null) agentsByName.remove(agent.name());
     agentsByPathName.remove(agent.pathName());
+    agentsInOrder.remove(agent);
     return agent;
   } 
 
@@ -188,7 +202,9 @@ public class Resolver extends Thread {
    * @return Enumeration of all agents
    */
   public Enumeration agents(){
-    return agentsByPathName.elements();
+//    return agentsByPathName.elements();
+    return agentsInOrder.elements();
+    
   }
 
   /** 
