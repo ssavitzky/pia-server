@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.12 1999-05-06 20:39:06 steve Exp $
+//	$Id: extractHandler.java,v 1.13 1999-05-18 20:17:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.12 1999-05-06 20:39:06 steve Exp $
+ * @version $Id: extractHandler.java,v 1.13 1999-05-18 20:17:50 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -668,6 +668,34 @@ class attrHandler extends extract_subHandler {
   attrHandler() { super(true, true); } // text only.
 }
 
+/** &lt;has-attr&gt;<em>n</em>&lt;/&gt; extracts every Element with given attr.
+ */
+class hasAttrHandler extends extract_subHandler {
+  protected void action(Input in, Context aContext, Output out, 
+			ActiveAttrList atts, ActiveNodeList content) {
+    ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
+    String name = content.toString();
+    String value= atts.getAttribute("value");
+    if (name != null) name = name.trim();
+    
+    int len = extracted.getLength();
+    for (int i = 0; i < len; ++i) {
+      ActiveNode item = extracted.activeItem(i);
+      if (item.getNodeType() == Node.ELEMENT_NODE) {
+	ActiveElement e = (ActiveElement)item;
+	if (value == null && e.hasTrueAttribute(name)) out.putNode(item);
+	else if (value != null && value.equals(e.getAttribute(name))) 
+	  out.putNode(item);
+      }
+    }    
+  }
+  hasAttrHandler() { super(true, true); } // text only.
+}
+
 /** &lt;match&gt;<em>re</em>&lt;/&gt; extracts every node matching re. */
 class matchHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
@@ -837,8 +865,23 @@ class replaceHandler extends extract_subHandler {
     }
     String name = atts.getAttribute("name");
     boolean caseSens = atts.hasTrueAttribute("case");
+    boolean wholeNode = atts.hasTrueAttribute("node");
 
     int len = extracted.getLength();
+
+    if (wholeNode) {
+      for (int i = 0; i < len; ++i) {
+	ActiveNode item = extracted.activeItem(i);
+	if (item.getParentNode() != null) {
+	  item.getParentNode().replaceChild(item, content.item(0));
+	  out.putNode(item);
+	} else {
+	  putList(out, content);
+	}
+      }
+      return;
+    }
+
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
       out.putNode(item);

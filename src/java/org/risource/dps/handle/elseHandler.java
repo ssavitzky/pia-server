@@ -1,5 +1,5 @@
 ////// elseHandler.java: Node Handler generic implementation
-//	$Id: elseHandler.java,v 1.4 1999-04-07 23:21:22 steve Exp $
+//	$Id: elseHandler.java,v 1.5 1999-05-18 20:17:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.*;
  *	and more reliable test than comparing tagnames.
  *	<p>
  *
- * @version $Id: elseHandler.java,v 1.4 1999-04-07 23:21:22 steve Exp $
+ * @version $Id: elseHandler.java,v 1.5 1999-05-18 20:17:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -74,5 +74,6 @@ public class elseHandler extends GenericHandler {
   /** Constructor must set instance variables. */
   public elseHandler() {
     expandContent = false;	// true		expand content?
+    syntaxCode = QUOTED;
   }
 }

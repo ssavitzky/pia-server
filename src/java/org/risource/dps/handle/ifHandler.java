@@ -1,5 +1,5 @@
 ////// ifHandler.java: Node Handler generic implementation
-//	$Id: ifHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
+//	$Id: ifHandler.java,v 1.7 1999-05-18 20:17:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.*;
  *	<code>else</code> children.  
  *	<p>
  *
- * @version $Id: ifHandler.java,v 1.6 1999-04-07 23:21:24 steve Exp $
+ * @version $Id: ifHandler.java,v 1.7 1999-05-18 20:17:54 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -58,7 +58,7 @@ public class ifHandler extends GenericHandler {
   ************************************************************************/
 
   public void action(Input in, Context aContext, Output out) {
-    ActiveNodeList content = Expand.getProcessedContent(in, aContext);
+    ActiveNodeList content = Expand.getContent(in, aContext);
     processConditional(in, aContext, out, content);
   }
 
@@ -94,7 +94,7 @@ public class ifHandler extends GenericHandler {
 	    return true;
 	  }
 	} else {
-	  trueCondition = true;
+	  trueCondition = Test.trueValue(child, aContext);
 	}
       } else if (Test.trueValue((ActiveNode)child, aContext)) {
 	trueCondition = true;
@@ -109,6 +109,7 @@ public class ifHandler extends GenericHandler {
 
   /** Constructor must set instance variables. */
   public ifHandler() {
-    expandContent = true;
+    expandContent = false;
+    syntaxCode = QUOTED;
   }
 }
