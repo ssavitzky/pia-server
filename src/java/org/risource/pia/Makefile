@@ -1,5 +1,5 @@
 ###### pia/Makefile:	Platform for Information Appliances
-#	$Id: Makefile,v 1.6 1999-09-22 00:28:57 steve Exp $
+#	$Id: Makefile,v 1.7 1999-10-04 17:38:48 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -47,8 +47,6 @@ FILES = \
 	ContentFactory.java \
 	Logger.java \
 	Pia.java \
-	Setup.java \
-	Piaproperties.java \
 	PiaInitException.java \
 	PiaRuntimeException.java \
 	FormContent.java \
