@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.8 1999-09-22 00:34:26 steve Exp $
+//	$Id: tagsetHandler.java,v 1.9 1999-10-13 18:19:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.8 1999-09-22 00:34:26 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.9 1999-10-13 18:19:53 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -178,7 +178,8 @@ public class tagsetHandler extends GenericHandler {
     if (parserTSname != null) {
       // load the specified parserTagset (TAGSET attribute)
       // Make it the current tagset in the parser.
-      parserTagset = tproc.loadTagset(parserTSname);
+      if (parserTSname.equals("tagset")) parserTagset = new tagset();
+      else parserTagset = tproc.loadTagset(parserTSname);
 	// org.risource.dps.tagset.Loader.require(parserTSname);
       cxt.debug("Loading tagset=" + parserTSname + 
 		   ((parserTagset == null)? " FAILED" : " OK"));
