@@ -15,19 +15,32 @@ See also:
   <li> <a href="#end">Oldest Entry</a> (at end.)
 </ul>
 
-<h2>Cleanup and refactoring</h2>
+<h2>To-Do List</h2>
 <ol>
-  <li> Move Piaproperties to <code>ds</code>; rename.
-  <li> Make a generic Tabular wrapper similar to Piaproperties.  Use for
-       extracting typed data from generic tables, attr lists, etc.  Could be
-       based on Assoc.
-  <li> Rename Tabular to StringMap
-  <li> Use StringMap interface for headers, etc.
-  <li> <b>Hole</b> Simplify the Pia class and initialization.
-</ol>
+  <li> <b>Hole</b> Simplified command line<br>
+       Command line should specify config file (with no option flag) or root
+       directory (with <code>_subsite.xcf</code> file), and optional
+       assignments, e.g. <code>port=8001</code> that override attributes in
+       the outer &lt;Container&gt; element.  No property file.  Everything
+       else should come from the config.  Add <code>pia:</code> to specify
+       directories in the PIA_DIR hierarchy.  Ignore the Java property list
+       except during initialization.
+       (1999-09-23) <br>
 
-<h2>Main List</h2>
-<ol>
+  <li> <b>Hole</b> Use <code>Site</code> to simplify Pia. <br>
+       <em>All</em> of the metadata on Pia should be obtained from the
+       configuration.  Maybe Pia should simply extend Site.  If not, at least
+       it should get its metadata (port, etc.) from the Site.  There does need
+       to be a PIA <em>namespace</em>, but it, too, should be site metadata.
+       (1999-09-10) <br>
+
+  <li> <b>Impr</b> Get rid of Piaproperties <br>
+       It's really not needed.  Possibly define a wrapper for Tabular that
+       does the conversions.  Used only in Pia and ThreadPool (for
+       maxthreads).  It's used as a Properties in HTTPRequest (for
+       proxy authorization) and Setup.
+       (1999-09-23) <br>
+
   <li> <b>Bug</b> need global flag that suppresses agent initialization <br>
        Need to separate the &lt;AGENT&gt; tag's action from the actual
        initialization -- at the very least the whole directory has to be
@@ -43,17 +56,6 @@ See also:
 
   <li> <b>Bug</b> &lt;submit-forms&gt; untested. <br>
        (1999-09-22) <br>
-
-  <li> <b>Bug</b> AGENT needs tagset attr. <br>
-       This avoids the current bogus check for
-       <code><em>name</em>-xhtml</code> in AgentBuilder.
-       (1999-09-16) <br>
-
-  <li> <b>Impr</b> Use <code>Site</code> to simplify Pia. <br>
-       Almost all (perhaps <em>all</em>) the metadata on Pia could be obtained
-       from the configuration.  Maybe Pia should simply extend Site.  If not,
-       at least it should use a Site to avoid the PiaProperties game.
-       (1999-09-10) <br>
 
        <p>
 
@@ -164,7 +166,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.25 1999-09-22 23:51:04 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.26 1999-09-24 00:27:07 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
