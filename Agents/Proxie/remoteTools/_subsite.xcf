@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.7 1999-11-05 01:12:13 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.8 1999-12-06 20:21:08 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -13,13 +13,15 @@
     <action>
       <if><get name="AGENT:hidden"><else>
 <trans-control><!-- from remoteTools agent: -->
+<table border="0" cellpadding="0" cellspacing="0" bgcolor=white><tr><td>
 <a href='&PIA:url;/' target='_top'
 ><img src='&PIA:url;/Icon/logo24.png' height='24' width='24' border='0' /></a>
+</td><td valign='center'><font color=black>
 <include src="../Toolbar/controls.inc"/>
 <include src="/~History/controls.inc"><!-- no History --></include>
 <!--   making this a link is actually useful: it gets you out of a frame.   -->
 <a href='&url;' target='_top'>&lt;-&gt;</a>
-<hr />
+</font></td></tr></table>
 </trans-control>
       </else></if>
       <user-message>&url;</user-message>
