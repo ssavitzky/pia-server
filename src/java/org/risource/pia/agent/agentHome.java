@@ -1,5 +1,5 @@
 ////// agentHome.java:  Handler for <agent-home>
-//	$Id: agentHome.java,v 1.5 1999-04-07 23:22:25 steve Exp $
+//	$Id: agentHome.java,v 1.6 1999-04-13 00:58:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,14 +45,21 @@ public class agentHome extends org.risource.dps.handle.GenericHandler {
       return;
     }
 
-    String name = env.getAgentName(atts.getAttribute("agent"));
-    String type = env.getAgentType(name);
-    boolean link = atts.hasTrueAttribute("link");
+    Agent agent = env.getAgent(atts.getAttribute("agent"));
+    String pname = agent.pathName();
 
-    String home = (type.equals(name))? name : type + "/" + name;
+    boolean link = atts.hasTrueAttribute("link");
+    boolean type = atts.hasTrueAttribute("type");
+
+    String home = pname;
+    if (type) {
+      home = agent.type();
+      if (home.equals(agent.name())) home = "/";
+    }
+
     if (link) {
       ActiveElement t = new TreeElement("a", null, null, null);
-      t.setAttribute("href", "/" + home + "/home");
+      t.setAttribute("href", home + "~/home");
       t.addChild(new TreeText(home));
       out.putNode(t);
     } else {
