@@ -1,5 +1,5 @@
 ////// forHandler.java: <for> sub-element of <repeat> 
-//	$Id: forHandler.java,v 1.2 1999-08-31 21:38:26 bill Exp $
+//	$Id: forHandler.java,v 1.3 2001-03-19 18:30:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -16,7 +16,7 @@
  * created by Ricoh Silicon Valley, Inc. are Copyright (C) 1995-1999.  All
  * Rights Reserved.
  *
- * Contributor(s):
+ * Contributor(s): jeff.taylor@ieee.org
  *
  ***************************************************************************** 
 */
@@ -157,7 +157,7 @@ class forHandler extends repeat_subHandler {
 	iiter += istep;
 	if (iiter > istop) iterationStop(cxt);
       } else if (istep < 0) {
-	iiter -= istep;
+	iiter += istep;		// was -= -- found by jeff.taylor@ieee.org
 	if (iiter < istop) iterationStop(cxt);
       }
       cxt.setValueNodes(name, new TreeNodeList(new TreeText(iiter)), true);
@@ -170,7 +170,7 @@ class forHandler extends repeat_subHandler {
 	fiter += fstep;
 	if (fiter > fstop) iterationStop(cxt);
       } else {
-	fiter -= fstep;
+	fiter += fstep;		// was -= -- found by jeff.taylor@ieee.org
 	if (fiter < fstop) iterationStop(cxt);
       }
       cxt.setValueNodes(name, new TreeNodeList(new TreeText(fiter)), true);
