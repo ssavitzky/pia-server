@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.30 2000-06-09 16:56:02 steve Exp $
+// $Id: Pia.java,v 1.31 2000-07-19 00:49:39 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -71,7 +71,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.30 2000-06-09 16:56:02 steve Exp $
+  * @version $Id: Pia.java,v 1.31 2000-07-19 00:49:39 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -1050,9 +1050,11 @@ public class Pia implements Tabular {
 	pia.setProperty("vroot",  config.otherArguments.at(0).toString());
       } else {
 	System.err.println("Can't figure out what the filename argument" +
-			   "is supposed to be.\n" +
+			   " is supposed to be.\n" +
 			   "   site, root, vroot are already specified." );
-	System.exit(1);
+	//System.exit(1);
+	System.err.println("Ignoring "
+			   + config.otherArguments.at(0).toString());
       }
       break;
     default: 
