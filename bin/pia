@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: pia,v 1.7 1999-10-04 17:05:01 steve Exp $
+#	$Id: pia,v 1.8 1999-10-11 21:54:53 steve Exp $
 # Pia launcher. 
 #	
 #
@@ -56,8 +56,6 @@ if [ -z "$CLASSPATH" ] ; then
 	echo "    We will make a guess at CLASSPATH; if you experience problems"
 	echo "    try running from $PIA_DIR/src/java or setting your "
 	echo "    CLASSPATH environment variable to include the standard java classes."
-     else
-        echo "CLASSPATH not set: making assumptions that may be invalid."
      fi
    fi
 fi
