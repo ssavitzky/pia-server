@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the Sort  demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
    <tr>
        <td>  <form action="tutorial.xh" name="getDemo">
@@ -52,6 +54,7 @@
 	target="_top"> Active-tag table</a> for details.
 
 
-</body>
+    </let>
+  </make>
 </html>  
 

@@ -1,7 +1,10 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title> </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
+
     <table cellspacing="5">
       <tr>
        <td> <a    href="intro.xh"> Introduction </a> </td>
@@ -191,7 +194,7 @@
          </pre>
        <p> This alternate method of looking up an entity's value (<code>
            &amp;entity-name;</code> instead of <code>&lt;get
-           name="entity-name"/></code>) works fine, and is very
+           name="entity-name"/></code>) works fine at the moment, and is very
            convenient... for now, it does exactly the same on-the-fly lookup
            as the <code>&lt;get/> </code> tag when using the PIA
            parser/processor. </p>
@@ -199,9 +202,19 @@
         <p> But such lookups are in violation of strict XML syntax, which
            requires that <code>&amp;entity-name;</code> lookups be done <i>
            before</i> rather than during processing.  So a "normal" XML parser
-           will treat them differently than does the PIA parser/processor.  We
-           are presently creating a truly XML-compliant solution using "node
-           constructors," so watch this space for the final answer.  </p>
+           will treat them differently than does the PIA parser/processor.  So
+           here's the new, approved, strict-XML approach to the same problem,
+           in which all lookup is done by tags rather than by ampersands:
+          </p>
+
+         <pre> <code>
+         Best:         &lt;make name="include">
+                          &lt;let name="src"> 
+                            &lt;get name="FORM:whichFile" />
+                          &lt;/let>
+                       &lt;/make> </code>
+         </pre>
+         <p>  (Yeah, we know it's uglier, but rules are rules....) </p>
 
 
     <b> <a name="troubleshoot"> <b>Troubleshooting </b> </a></b>
@@ -216,7 +229,8 @@
           So anytime you see a tag you didn't write, take that as a hint that
           you probably <i>did</i> create an unmatched tag somewhere before.
           You may want to systematically end every tag (e.g. , use
-          <code>&lt;br/></code>) just to avoid such oddities. </li>
+          <code>&lt;br/></code>, not <code>&lt;br></code>) just to avoid such
+          oddities. </li>
 
       <li>
        In case of confusion about what is occurring, you can try
@@ -317,7 +331,14 @@
             &lt;/define>
             </code></pre>
 	</ul>
-</body>
+
+	<p> You can see how we use this tag ourselves in the <a
+	    href="Tutorial-xhtml.ts">tagset
+	    file</a>; at the very bottom are the special-purpose <a
+	    href="aboutJavascript.xh">Javascript-wrapper</a> tags we define.
+	</p>
+   </let>
+  </make>	
 </html>
 
 

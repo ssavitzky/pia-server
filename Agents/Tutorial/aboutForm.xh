@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the Form demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
         <td>   <form action="tutorial.xh" name="getDemo">
@@ -63,8 +65,8 @@
 	href="aboutSort2.xh">sort demo</a> for sorting).
 
         But if you try changing "instantiate.xh" all bets are off.
+     </let>
+   </make>
 
-
-</body>
 </html>  
 

@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the Javascript-wrapper demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
         <td>   <form action="tutorial.xh" name="getDemo">
@@ -23,7 +25,9 @@
     <p> Custom-defined tags can "wrap"
 	ungainly bits of HTML or Javascript into convenient, small packages.
 	The first tag above, <code>&lt;widgetJavascript/></code>, is defined
-	(elsewhere) to expand into the following Javascript code: </p>
+	(elsewhere, at the very bottom of our <a
+	    href="Tutorial-xhtml.ts">tagset file</a> file) to expand into the
+	    following Javascript code: </p>
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="Tutorial-xhtml.ts" quoted="yes"/></from>
@@ -64,7 +68,8 @@
          <code>min</code> values, and/or making multiple copies of the form.
         </p>
 
+     </let>
+   </make>
 
-</body>
 </html>  
 

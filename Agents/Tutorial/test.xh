@@ -2,23 +2,84 @@
 <html>
 <body>
 
-<!DOCTYPE tagset SYSTEM "tagset.dtd" />
+
+         
+
+<i/>
+             
+             
 
 
-<cvs-id>$Id: test.xh,v 1.4 1999-08-02 22:46:53 bill Exp $</cvs-id>
-blah
-
-
+<h2>
+    Hackable, download-free  demos of the PIA web language
+</h2>
+<p>
+    Active XML tags (like
+    <code>&lt;if&gt;</code>
+    or
+    <code>&lt;include&gt;</code>
+    ) allow web pages to perform their own processing
+    and recursive reference, without the need for separate CGI scripting
+    programs or languages.
+</p>
+<p>
+    
+                                       <i><b>
+        The best way to understand this new approach is to play with
+    it
+    </b></i>
+                                    
+    , by trying a demo and watching how your modifications appear as
+    processed output.
+</p>
 
 <show-errors/>
 
-hmmm
-    <include src="junk.xh" quoted="yes"/>
-ug
-
-<show-errors/>
 
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

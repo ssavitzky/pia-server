@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the Prime-search demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
         <td>   <form action="tutorial.xh" name="getDemo">
@@ -75,7 +77,8 @@
      <p> It's easy to see that this process could go on indefinitely, although
 	 why you would want to do so is anybody's guess. </p>
 
-</body>
+    </let>
+  </make>
 <show-errors/>
 </html>  
 

@@ -1,7 +1,10 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the You-try demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
+
 <table>
        <tr><td>  <form action="tutorial.xh" name="getDemo">
             <input type="hidden" name="demoName" value="editYouTry.xh"/>
@@ -22,6 +25,8 @@
     <p> That number again, <code>pia-demos@risource.org</code>... call before
 	midnight tomorrow!
 
+    </let>
+  </make>
 </body>
 </html>  
 

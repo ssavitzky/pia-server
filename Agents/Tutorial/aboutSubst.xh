@@ -1,7 +1,11 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About substitution  demo </title> </head>
-<body bgcolor="&mybgcolor;">
+
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
+
 <table>
    <tr>
         <td> <form action="tutorial.xh" name="getDemo">
@@ -25,6 +29,7 @@
 	with this tag; it's pretty simple.
 
 
-</body>
+    </let>
+   </make>
 </html>  
 

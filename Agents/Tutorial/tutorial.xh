@@ -5,7 +5,12 @@
 </head>
 <frameset rows='40%,60%'>
   <frame src='instantiate.xh' name='instantiation'/>
-  <frame src='&FORM:demoName;' name='editor-window'/>
+  <make name="frame">
+     <let name="src"><get name="FORM:demoName"/></let>
+     <let name="name">editor-window</let>
+  </make>
 </frameset>
 </html>
 
+
+  <!-- <frame src='&FORM:demoName;' name='editor-window'/> -->

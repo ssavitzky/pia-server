@@ -3,7 +3,9 @@
 <head> 
 <title>Demo menu</title>
 </head>
-  <body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 
 <table cellspacing='5'>
     <tr>
@@ -275,7 +277,8 @@
         </a>
     </tr>
 </table>
-  </body>
+    </let>
+  </make>
 <show-errors/>
 </html>
 <!--

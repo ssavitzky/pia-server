@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the Error-test demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
      <tr><td>  <form action="tutorial.xh" name="getDemo">
             <input type="hidden" name="demoName" value="editErrorTest.xh"/>
@@ -41,8 +43,7 @@
 	<code>&lt;body></code> tags), to ensure that you can get error
 	messages in all the other demos too. </p>
 
-
-
-</body>
+    </let>
+   </make>
 </html>  
 

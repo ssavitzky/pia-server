@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the include-extract demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
        <td>   <form action="tutorial.xh" name="getDemo">
@@ -79,8 +81,8 @@
      code snippet above.  This is how active-XML documents can contain one
      another recursively, in principle to any depth you want.
 
+    </let>
+  </make>
 
-
-</body>
 </html>  
 

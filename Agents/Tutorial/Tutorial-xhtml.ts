@@ -20,7 +20,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.5 1999-08-19 00:18:09 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.6 1999-09-02 00:00:46 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -93,16 +93,26 @@
             <tr><td>Click  <b>Process</b> to see the PIA server process the
             code below and display the results in 
               the frame above. Try out some modifications, or 
-              <b>Restore</b> the original text below.</td></tr>
+              <b>restore</b> the original text below.</td></tr>
 
              <tr>
                <td align='center'>
                 <table cellspacing="5">
                   <tr>
                     <td><input type='submit' value='Process' /></td>
-                   <td><a href='&urlPath;'>Restore</a></td>
-                    <td><a href='&attributes:demo-name;' target="_top">
-                         About this demo</a></td>
+                   <td>
+		      <make name="a">
+			 <let name="href"><get name="urlPath"/></let>
+			 <let name="...">Restore</let>
+		      </make>
+                    </td>
+                    <td>
+		      <make name="a">
+			 <let name="href"><get name="attributes:demo-name"/></let>
+			 <let name="...">About this demo</let>
+			 <let name="target">_top</let>
+		      </make>
+                    </td>
                   </tr>
                  </table> 
                 </td>
@@ -111,7 +121,7 @@
               <textarea name='code-text' rows='15' cols='80' wrap='off'>
 	        <protect markup='markup' result="yes" >&content;</protect>
               </textarea>
-              <input name="whichDemo" type="hidden" value="&;"/>
+              <input name="whichDemo" type="hidden" />
             </td></tr>
           
           </table>
@@ -166,9 +176,16 @@
      How many widgets do you want today?
        (min=&attributes:min; max=&attributes:max;) 
      <INPUT TYPE="text" NAME="quantity"  />
-     <BR/> 
-     <INPUT TYPE="button" VALUE="Enter Order"
-     onClick="validateAndSubmit(this.form, &attributes:min;, &attributes:max;)">
+     <BR/>
+       <make name="input">
+	  <let name="onClick">
+            validateAndSubmit(this.form, <get name="attributes:min"/>,
+            <get name="attributes:max"/> )
+            <get name="attributes:demo-name"/></let>
+	  <let name="type">button</let>
+	  <let name="value">Enter Order</let>
+       </make>
+
      </FORM>
   </action>
 </define>

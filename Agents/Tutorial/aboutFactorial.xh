@@ -1,7 +1,10 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the factorial demo </title> </head>
-<body bgcolor="&mybgcolor;">
+
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
         <td>   <form action="tutorial.xh" name="getDemo">
@@ -65,7 +68,7 @@
 	<p> Try changing the "product" attribute to "sum", "difference,"
 	    "quotient", or even "sort."  See what happens.
 
-	    
-</body>
+     </let>
+    </make>	      
 </html>  
 

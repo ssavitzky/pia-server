@@ -1,8 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the repeat/Hello WWW demo </title> </head>
-<body bgcolor="&mybgcolor;">
-
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
  <table><tr>
          <td><form action="tutorial.xh" name="getDemo">
             <input type="hidden" name="demoName" value="editRepeat.xh"/>
@@ -57,6 +58,8 @@
      <p> The <code>&lt;show-errors></code> tag at the bottom is there to help
 	 you catch (some of) the errors you may make in modifying the code; it
 	 has no other effects.  </p>
-</body>
+   </let>
+  </make>
+
 </html>  
 

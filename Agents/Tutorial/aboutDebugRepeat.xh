@@ -1,7 +1,9 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title>About the debug/display demo </title> </head>
-<body bgcolor="&mybgcolor;">
+    <make name="body">
+     <let name="bgcolor"><get name="mybgcolor"/></let>
+     <let name="...">
 <table>
   <tr>
        <td>   <form action="tutorial.xh" name="getDemo">
@@ -44,6 +46,14 @@
 	source code, as the PIA processor sees it, containing the
 	<code>&lt;get></code> and <code>&lt;repeat></code> tags, but no
 	numbers and only one (not three) "Hello's."
-</body>
+   </let>
+  </make>
 </html>  
+
+
+
+
+
+
+
 
