@@ -16,6 +16,18 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Check</b> use of nodeValue. <br>
+       Should probably be eliminated; used in Util/EntityInput and
+       namespace/EntityWrap. 
+       (2000-02-25) <br>
+
+  <li> <b>Impr</b> Get attribute-list case sens. from tagset <br>
+       Need to case-fold attributes correctly for the tagset.
+
+  <li> <b>Impr</b> <code>syntax="properties"</code> <br />
+       extension for <tag>define</tag>: attributes and sub-elements go into
+       the local (stack frame) namespace. 
+  </li>
   <li> <b>Check</b> TopProcessor may no longer need prefix support. <br>
        should do it via the root.  May still be needed for "process"
        (1999-12-14) <br>
@@ -24,12 +36,6 @@ See also:
        The stuff in HTML_ts needs to be checked against the official DTD.
        (1999-12-03) <br>
        
-  <li> <b>Bug</b> subst bug <br>
-       seems to substitute for one char to the left of the match.
-       (1999-11-23) [barrus] <br>
-       -- substHandler just calls the library, so it may be a regexp bug.
-	  Possibly related to "$" + the tacked-on terminal null.
-
   <li> <b>Bug</b> New attributes of &lt;date&gt; undocumented. <br>
        (1999-11-17) <br>
 
@@ -128,16 +134,10 @@ See also:
        or list of lines. 
        (1999-07-02) [Suggested by Bill] <br>
 
-  <li> <b>Impr</b> Reverse default of <code>case</code> attr <br>
-       Make the default be case sensitive, and require
-       <code>case="insensitive"</code> for insensitivity; this makes more
-       sense given that, in the present regexp package, substitution cannot be
-       made case-insensitive. 
-       (1999-07-02) [Suggested by Bill] <br>
-
   <li> <b>Hole</b> Need split and join attributes on text, etc. <br>
        Anything that processes lists should have "split" and "join"
-       attributes, replacing the old "sep".
+       attributes, replacing the old "sep".  Keep "sep" as synonym for
+       "join", which it is.
        (1999-06-29) <br>
 
   <li> <b>Bug</b> nodeBuilder doesn't support all node types yet <br>
@@ -285,11 +285,6 @@ See also:
        them first. 
        (1999-04-07) <br>
 
-  <li> <b>Impr</b> Timestamps in tagsets <br>
-       Tagsets should have their filename and a timestamp so you can determine
-       whether to reload them.
-       (1999-04-07) <br>
-
   <li> <b>Hole</b> unimplemented DOM components <br>
        CDATASection is unimplemented.  DOMImplementation is unimplemented.
        Large parts of TreeDocument are still unimplemented; in particular
@@ -325,9 +320,6 @@ See also:
        The action should be able to edit the attributes of &amp;element;, but
        the content would then be streamed through.
        (1999-03-11) <br>
-
-  <li> <b>Bug</b> XML attribute names not case-sensitive. <br>
-       (1999-02-24) <br>
 
   <li><b>Bug</b> &lt;value&gt; ignored in &lt;define entity external&gt; <br>
        The value sub-entity is ignored when using the define entity system
@@ -387,11 +379,6 @@ See also:
        and entities recognizing them when their value <em>contains</em> a
        namespace or name.  Would be easier if there was a simple way for the
        parser to construct arbitrary classes for elements.
-       (1998-12-04) <br>
-
-  <li> <b>Impr</b> force tagset reloading <br>
-       Is there a convenient way to force an Agent to reload its tagsets?
-       Checking last-modified dates would also work, but it could get slow.
        (1998-12-04) <br>
 
   <li> <b>Impr</b> Persistent namespaces <br>
@@ -621,5 +608,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.46 1999-12-14 19:16:32 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.47 2000-02-25 22:55:10 steve Exp $</b><br>
 </body></html>

@@ -1147,9 +1147,58 @@ If 4th node is there, returns "four".
        should have been <code>if (newValue == null)</code>
        (2000-02-17) J.L. Taylor<br>
 
+  <li> <b>Impr</b> Timestamps in tagsets <br>
+       Tagsets should have their filename and a timestamp so you can determine
+       whether to reload them.
+       (1999-04-07) <br>
+
+  <li> [dropped] <b>Impr</b> force tagset reloading <br>
+       Is there a convenient way to force an Agent to reload its tagsets?
+       Checking last-modified dates would also work, but it could get slow.
+       (1998-12-04) <br>
+
+  <li> 2000-02-18 <b>Impr</b> index in tsdoc documentation <br>
+       -- turned out to be trivial.
+       
+  <li> 2000-02-22 <b>Bug</b> subst bug <br>
+       seems to substitute for one char to the left of the match.
+       (1999-11-23) [barrus] <br>
+       -- substHandler just calls the library, so it may be a regexp bug.
+	  Possibly related to "$" + the tacked-on terminal null.
+
+  <li> 2000-02-22 <b>Bug</b> XML attribute names not case-sensitive. <br>
+       (1999-02-24) <br>
+
+  <li> 2000-02-22 <b>Bug</b> &lt;date&gt; barfs on null sub-elements <br />
+       throws a bogus null pointer exception.
+  </li>
+
+  <li> 2000-02-25 <b>Impr</b> Reverse default of <code>case</code> attr <br>
+       Make the default be case sensitive, and require
+       <code>case="insensitive"</code> for insensitivity; this makes more
+       sense given that, in the present regexp package, substitution cannot be
+       made case-insensitive. 
+       (1999-07-02) [Suggested by Bill] <br>
+
+  <li> 2000-02-25 <b>Bug</b> entity/attr values must be in children <br />
+       otherwise we are not DOM compliant, and there are some mysterious bugs
+       involving structure-sharing of variables. 
+  </li>
+
+  <li> 2000-02-25 <b>Bug</b> exception getting empty attributes namespace <br />
+       <pre>
+       `<define element="junk">
+         <action>
+          <get name="attributes:" />
+         </action>
+       </define>
+       <junk />
+       </pre><br />
+       -- turned out to be TreeNodeList(enum) with null enum.
+  </li>
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.45 2000-02-18 00:58:31 steve Exp $</b><br>
+<b>$Id: done.html,v 1.46 2000-02-25 22:55:09 steve Exp $</b><br>
 </body></html>
