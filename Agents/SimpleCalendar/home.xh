@@ -1,0 +1,593 @@
+<set name="mybg">white</set>
+
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<HTML>
+<html>
+
+   <body bgcolor="&mybg;">
+
+
+   <hide>  
+       <?-- decide between drop-down selections and typed-in entries -->
+       <if>&FORM:newEventTime2;
+           <then>
+             <set name="FORM:newEventTime">&FORM:newEventTime2;</set>
+           </then>
+       </if>
+       <if>&FORM:newEventPlace2;
+           <then>
+             <set name="FORM:newEventPlace">&FORM:newEventPlace2;</set>
+           </then>
+       </if>
+
+              <?-- get default date as today -->
+	<set name="myYear" >&year;</set>
+	<set name="myMonth" ><numstrip>&month;</numstrip></set>
+	<set name="myDay" ><numstrip>&day;</numstrip></set>
+   </hide>
+
+        <?-- show today as link to editing today -->
+        <show-today />
+
+   <hide>
+        <if>
+           <?-- check if form called this page  -->
+           <test><logical or='or'> 
+	       <get name="FORM:Add" /> 
+	       <get name="FORM:Edit" />
+	       <get name="FORM:ReplaceEvent" />
+	       <get name="FORM:SaveNewEvent" />
+	       <get name="FORM:DeleteEvent" />
+	   </logical></test>
+	   <then>
+              <?-- get date submitted by form -->
+	      <set name="myYear"  >&FORM:newYear;</set>
+	      <set name="myMonth"  >&FORM:newMonth;</set>
+	      <set name="myDay" >&FORM:newDay;</set>
+	   </then>
+	</if>
+
+        <?-- clean up inconsistent repeat info and package the rest -->
+        <set name="oldIntervalEvent"></set>
+        <set name="intervalEntity"></set>
+        <set name="started">
+            <weekday longday="yes">
+                 <date>&myDay;</date><month>&myMonth;</month>
+                 <year>&myYear;</year>
+            </weekday>
+        </set>
+
+        <?-- make sure proper (old) start date is used for editing old stuff-->
+        <if><logical and="yes" >
+             <get name="FORM:startDate" />
+             <get name="FORM:ReplaceEvent" />
+            </logical>
+             <then>
+                <set name="started">
+                   <get name="FORM:startDate" />
+                </set>  
+             </then>
+        </if>
+        <set name="FORM:startDate"> </set>
+
+        <if><test match="None"><get name="FORM:interval" /></test>
+            <then>
+               <set name="FORM:dayInterval"> </set>
+               <set name="FORM:weekInterval"> </set>
+               <set name="FORM:monthInterval"> </set>
+            </then>
+        </if>
+        <if><test match="Days"><get name="FORM:interval" /></test>
+            <then>
+               <set name="FORM:weekInterval"> </set>
+               <set name="FORM:monthInterval"> </set>
+               <set name="intervalEntity">
+                   <interval>
+                      <dayinterval>
+                        <get name="FORM:dayInterval"/>
+                      </dayinterval>
+                      <startday>
+                        <get name="started" />
+                      </startday>
+                   </interval>
+               </set>
+            </then>
+        </if>
+        <if><test match="Weeks"><get name="FORM:interval" /></test>
+            <then>
+               <set name="FORM:dayInterval"> </set>
+               <set name="FORM:monthInterval"> </set>
+               <set name="intervalEntity">
+                   <interval>
+                      <weekinterval>
+                        <get name="FORM:weekInterval"/>
+                      </weekinterval>
+                      <startday>
+                        <get name="started" />
+                      </startday>
+                   </interval>
+               </set>
+            </then>
+        </if>
+        <if><test match="Months"><get name="FORM:interval" /></test>
+            <then>
+               <set name="FORM:dayInterval"> </set>
+               <set name="FORM:weekInterval"> </set>
+               <set name="intervalEntity">
+                   <interval>
+                      <monthinterval>
+                        <get name="FORM:monthInterval"/>
+                      </monthinterval>
+                      <startday>
+                        <get name="started" />
+                      </startday>
+                   </interval>
+               </set>
+            </then>
+        </if>
+
+  </hide>
+
+        <?-- put a navigation bar on here too -->
+        <navbar />
+
+        <?-- make a URL which will pass this date on to other operations -->
+	<set name="shortURL">newDay=<text
+	encode="url">&myDay;</text>&newMonth=<text
+	encode="url">&myMonth;</text>&newYear=<text
+	encode="url">&myYear;</text>&Add=submit</set>
+
+
+       <?-- create new event from form data (empty if deleting) -->
+       <set name="newEventEntity"></set>
+        <if>
+          <logical or="yes">
+             <get name="FORM:ReplaceEvent"/>
+             <get name="FORM:SaveNewEvent"/>
+          </logical>
+          <then>
+	     <set name="newEventEntity">
+		 <event>
+		     <event-name>
+			     &FORM:newEventName;
+		     </event-name>
+		     <start-time>
+			     &FORM:newEventTime;
+		     </start-time>
+		     <place>
+			     &FORM:newEventPlace;
+		     </place>
+		     <description>
+			     &FORM:newEventDesc;
+		     </description>
+                     <get name="intervalEntity" />
+		 </event>
+	      </set>
+
+
+              <?-- if the new entity repeats, wrap it in a "to-add" tag -->
+	      <if><get name="intervalEntity" />
+		  <then>
+                      <set name="newEventEntity">
+                         <interval-evt-to-add>
+                             &newEventEntity;
+                         </interval-evt-to-add>
+                      </set>
+		  </then>
+	      </if>
+
+           </then>
+         </if>
+
+
+       <?-- write new information into directory first, before reading
+            everything out -->
+        <if>
+           <get name="FORM:SaveNewEvent"/>
+	   <then>
+	       <store newYear="&myYear;" newMonth="&myMonth;"
+		     newDay="&myDay;" appendEvent="yes" >&newEventEntity;
+	       </store>
+	   </then>
+        </if>
+
+       
+       <?-- read out day's events (possibly empty) for editing-->
+       <set name="rawfile" >
+	  <lookup newYear="&myYear;"
+		  newMonth="&myMonth;"
+		  newDay="&myDay;" />
+
+       </set>
+
+       <?-- editing or deleting an existing no-repeat event, overwriting -->
+       <if>
+           <logical or="yes">
+              <get name="FORM:ReplaceEvent" />
+              <get name="FORM:DeleteEvent" />
+           </logical>
+           <then>
+
+	       <?-- read out whole day's events prior to overwriting,  -->
+	       <?-- and store in entity "wholeEventList" with modifications.-->
+	       <set name="wholeEventList">
+		   <extract>
+		       <from>
+		           <get name="rawfile" />
+		       </from>
+		       <name>event</name>
+                       <?-- go through events to find one to replace -->
+                       <?-- match most fields (delete if not replacing) -->
+                       <repeat>
+                          <foreach>&list;</foreach>
+                            <if>
+                               <logical and="yes">
+                                  <test match="&FORM:newName;"><text
+                                  trim="yes">
+				     <extract>
+				       <from>&li;</from>
+				       <name all="yes">event-name</name>
+				     </extract>
+                                  </text></test>
+                                  <test match="&FORM:newPlace;"><text
+                                  trim="yes">
+				     <extract>
+				       <from>&li;</from>
+				       <name all="yes">place</name>
+				     </extract>
+                                  </text></test>
+                                  <test match="&FORM:newTime;"><text
+                                  trim="yes">
+				     <extract>
+				       <from>&li;</from>
+				       <name all="yes">start-time</name>
+				     </extract>
+                                  </text></test>
+                               </logical>
+			       <then>
+                                  &newEventEntity;
+                                  <set name="oldIntervalEvent">
+                                     &li;
+                                  </set>
+			       </then>
+                               <else>
+                                    &li;
+                               </else>
+                            </if>
+                       </repeat>
+		   </extract>
+
+                   <if><get name="intervalEntity">
+                      <then>
+                         <interval-evt-to-delete>&oldIntervalEvent;
+                         </interval-evt-to-delete>
+                      </then>
+                   </if>
+	       </set>
+
+               <?-- overwrite the file with the altered whole list -->
+               <store newYear="&myYear;" newMonth="&myMonth;"  newDay="&myDay;"
+		  rewriteEvent="yes" ><get name="wholeEventList" /></store>
+
+
+            </then>
+        </if>
+
+       <?-- done modifying files; now read them, display them, make forms -->
+       <set name="wholeEventList">
+	  <lookup newYear="&myYear;"
+		  newMonth="&myMonth;"
+		  newDay="&myDay;" />
+       </set>
+
+       <?-- encapsulate whole date into a smaller package -->
+       <set name="datepack">
+              <date>&myDay;</date><month>&myMonth;</month><year>&myYear;</year>
+       </set>
+
+       <?-- initialize description variable -->
+       <set name="chosenDesc"></set>
+
+        <?-- show events in a table, and grab selected ones for display elsewhere -->
+	<table bgcolor="lavender" cellpadding="10" border="0">
+
+           <tr>
+              <td bgcolor="&mybg;" colspan="4">
+		  <?-- show title and center date -->
+		  <font size="5"> Events for  <weekday>&datepack;</weekday>,
+		     <a href="grid.xh?&shortURL;"> <weekday monthname="yes">&datepack;</weekday></a>
+		       &myDay;, &myYear;
+		  </font>
+               </td>
+           </tr>
+
+           <if>&wholeEventList;
+               <then>
+		   <tr>
+		      <td bgcolor="&mybg;"><i>Time</i></td>
+		      <td bgcolor="&mybg;"><i>Name</i></td>
+		      <td bgcolor="&mybg;"><i>Place</i></td>
+		      <td bgcolor="&mybg;"><i>Description</i></td>
+		   </tr>
+                </then>
+                <else> 
+		   <tr>
+		      <td bgcolor="&mybg;"><i>
+                          (No events listed for this date)
+                      </i></td>
+		   </tr>
+                </else>
+            </if>
+	    <repeat><foreach>&wholeEventList;</foreach>
+	       <set name="myTime"/>
+	       <set name="myPlace"/>
+	       <set name="myName"/>
+	       <set name="myDesc"/>
+	       <set name="longURL" />
+
+               <?--readoneevent extracts time/place etc from li into my...-->
+               <readoneevent />
+
+               <?-- store chosen event description etc if it matches -->
+               <if>
+                   <logical and="yes">
+                      <get name="FORM:Edit" />
+                      <test match="&myTime;"><get name="FORM:newTime"/></test>
+                      <test match="&myPlace;"><get name="FORM:newPlace"/></test>
+                      <test match="&myName;"><get name="FORM:newName"/></test>
+                   </logical>
+
+                   <then>
+		       <set name="chosenDesc">&myDesc;</set>
+                       <?-- pluckintervals puts interval data into FORM:...-->
+                       <pluckintervals />
+
+                   </then>
+               </if>
+
+	       <tr>
+		   <td><b><get name="myTime" />  </b> </td>
+		   <td><b><get name="myName" />  </b> </td>
+		   <td><get name="myPlace" />   </td>
+		   <td><get name="myDesc" />   </td>
+                   <td bgcolor="&mybg;"><a href="&longURL;">Edit </a></td>
+	       </tr>
+	    </repeat>
+
+            <tr>
+		<td/>            <td/>            <td/>            <td/>
+		<td bgcolor="&mybg;"><a href="home.xh?&shortURL;">Add new
+		event...</a></td>
+            </tr>
+
+	</table>
+
+        <?-- set fields to good (not ugly) default printouts -->
+        <if>
+           <test not="yes"><get name="FORM:newTime"/></test>
+           <then>
+               <set name="FORM:newTime"> </set>
+           </then>
+        </if>
+        <if>
+           <test not="yes"><get name="FORM:newPlace"/></test>
+           <then>
+               <set name="FORM:newPlace"> </set>
+           </then>
+        </if>
+        <if>
+           <test not="yes"><get name="FORM:newName"/></test>
+           <then>
+               <set name="FORM:newName"> </set>
+           </then>
+        </if>
+
+        <?-- show (blank) form for adding new event -->
+        <if><logical or="yes"><get name="FORM:Add"/><get name="FORM:Edit"/></logical>
+            <then>
+
+		<form action="home.xh" method="get">
+                    <input type="hidden" name="newYear" value="&myYear;" />
+                    <input type="hidden" name="newDay"  value="&myDay;" />
+                    <input type="hidden" name="newMonth" value="&myMonth;" />
+                    <input type="hidden" name="newTime" value="&FORM:newTime;" />
+                    <input type="hidden" name="newName" value="&FORM:newName;"/>
+                    <input type="hidden" name="newPlace"
+                    value="&FORM:newPlace;"/>
+                    <input type="hidden" name="startDate"
+                         value="&FORM:startDate;" />
+		    <table bgcolor="mistyrose" border="0" cellspacing="0">
+                       <tr>
+                          <td colspan="2" align="center"><i>Event time</i></td>
+                          <td align="center"><i>Brief Description</i></td>
+                       </tr>
+		       <tr>
+			  <td align="right">
+                              <select name="newEventTime" >
+               			   <option>&FORM:newTime;</option>
+				   <option>08:00</option>
+                                   <option>(other)</option>
+				   <option>08:30</option>
+				   <option>09:00</option>
+				   <option>09:30</option>
+				   <option>10:00</option>
+				   <option>10:30</option>
+				   <option>11:00</option>
+				   <option>11:30</option>
+				   <option>12:00</option>
+				   <option>12:30</option>
+				   <option>13:00</option>
+				   <option>13:30</option>
+				   <option>14:00</option>
+				   <option>14:30</option>
+				   <option>15:00</option>
+				   <option>15:30</option>
+				   <option>16:00</option>
+				   <option>16:30</option>
+				   <option>17:00</option>
+				   <option>17:30</option>
+                              </select>
+                          </td>
+                          <td align="left">
+                              <input name="newEventTime2" size="5"
+                                          value="" /> 
+                          </td>
+			  <td>
+                              <input name="newEventName" size="40" value="&FORM:newName;" />
+                          </td>
+
+                       </tr>
+                       <tr>
+                          <td colspan="2" align="center"><i>Place (hidden)</i> </td> 
+                          <td colspan="2" align="center"><i>Details (hidden)</i></td>
+                       </tr>
+                       <tr>
+			  <td valign="top" align="right">
+                              <select name="newEventPlace" >
+               			   <option>&FORM:newPlace;</option>
+                                  <option>Large conf.</option>
+                                  <option>Small conf.</option>
+                                  <option>Lunchroom</option>
+                                  <option>Frisbee park</option>
+				   <option>(other)</option>
+                              </select>
+                          </td>
+			  <td valign="top" align="left">
+                              <input name="newEventPlace2" size="15" value=""/>
+                          </td>
+
+			  <td colspan="3" rowspan="2">
+                              <textarea name="newEventDesc" rows="3"
+                        cols="40" ><get name="chosenDesc" /></textarea>
+                          </td>
+                          </tr>
+
+		    </table>
+                    <br />
+      		    <table bgcolor="mistyrose" border="0" cellspacing="0">
+                       <tr>
+                          <td align="center" colspan="3"><i>Repeat
+                          interval</i></td>
+                       </tr>
+
+                       <tr>
+                          <td><radio name="interval" value="None">
+                                <test not="yes">
+                                 <logical or="yes">
+                                      <get name="FORM:dayInterval" />
+                                      <get name="FORM:weekInterval" />
+                                      <get name="FORM:monthInterval" />
+                                 </logical>
+                                </test>
+                              </radio>
+                           </td>
+                          <td>None</td>
+                          <td> &nbsp;</td>
+                       </tr>
+                       <tr>
+                          <td><radio name="interval" value="Days">
+                                   <get name="FORM:dayInterval" />
+                              </radio>
+                           </td>
+                          <td>Days</td>
+                          <td>
+                              <select name="dayInterval">
+                                <option>
+                                   <get name="FORM:dayInterval" />
+                                </option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                              </select>
+                          </td>
+                       </tr>
+
+                       <tr>
+                          <td><radio name="interval" value="Weeks">
+                                   <get name="FORM:weekInterval" />
+                              </radio>
+                           </td>
+
+                          <td>Weeks</td>
+                          <td>
+                              <select name="weekInterval">
+                                <option>
+                                   <get name="FORM:weekInterval" />
+                                </option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                              </select>
+                           </td>
+                       </tr>
+                       <tr>
+                          <td><radio name="interval" value="Months">
+                                   <get name="FORM:monthInterval" />
+                              </radio>
+                           </td>
+
+                          <td>Months</td>
+                          <td>
+                              <select name="monthInterval">
+                                <option>
+                                   <get name="FORM:monthInterval" />
+                                </option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>6</option>
+                                <option>12</option>
+                              </select>
+                           </td>
+
+                        </tr>
+                      </table>
+
+                       
+		      <if><get name="FORM:Add"/>
+			  <then>
+			     <td><input type="submit" name="SaveNewEvent"
+					 value="Save new event"/></td>
+			     <td> &nbsp;</td>
+			  </then>
+			  <else>
+			     <td><input type="submit" name="ReplaceEvent"
+					 value="Save changes"/></td>
+			     <td><input type="submit" name="DeleteEvent"
+					 value="Delete event"/> </td>
+			  </else>
+		      </if>
+
+		</form>
+            </then>
+        </if>
+
+  <show-errors />
+</body>
+</html>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

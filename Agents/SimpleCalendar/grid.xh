@@ -1,0 +1,169 @@
+
+
+<HTML>
+<html>
+<body>
+
+<hide> <?-- first create zero-stripped month and day for display
+       <?-- get default date as today -->
+       <set name="myYear" >&year;</set>
+       <set name="myMonth" ><numstrip>&month;</numstrip></set>
+       <set name="myDay" ><numstrip>&day;</numstrip></set>
+
+       <?-- decide whether to show one month or whole year -->
+       <set name="showMonthOnly">yes</set>
+       <if><get name="FORM:wholeYear" />
+         <then>
+             <set name="showMonthOnly"></set>
+         </then>
+       </if>
+</hide>
+       <show-today />
+<hide>
+       <if>
+           <?-- check if form called this page  -->
+           <get name="FORM:Add" /> 
+	   <then>
+              <?-- get date submitted by form, overwriting above values -->
+	      <set name="myYear"  >&FORM:newYear;</set>
+	      <set name="myMonth"  >&FORM:newMonth;</set>
+	      <set name="myDay" >&FORM:newDay;</set>
+	   </then>
+	</if>
+</hide>
+
+       <?-- bar of links to nearby months and years -->
+       <navbar />
+
+       <hide>
+	    <?-- flags and now-empty list for deciding to show events -->
+	    <set name="wholeEventList"> </set>
+        </hide>
+	<table cellspacing="1"  cellpadding="2" border="0">
+
+            <tr>
+               <th><b>---Sunday---</b></th>
+               <th><b>---Monday---</b></th>
+               <th><b>---Tuesday--</b></th>
+               <th><b>--Wednesday--</b></th>
+               <th><b>---Thursday--</b></th>
+               <th><b>---Friday---</b></th>
+               <th><b>--Saturday--</b></th>
+            </tr>
+
+	    <set name="startMonth">&myMonth;</set>
+	    <set name="endMonth">&myMonth;</set>
+            <if><test not="yes">&showMonthOnly;</test>
+                <then>
+                    <set name="startMonth">1</set>
+                    <set name="endMonth">12</set>
+                </then>
+            </if>
+            <?-- show month name, as link to month -->
+            <repeat start="&startMonth;" stop="&endMonth;" entity="thisMonth">
+	       <if><test not="yes">&showMonthOnly;</test>
+                      <then>
+                         <tr><td>&nbsp;</td></tr>
+			 <tr><td>
+                            <a  href="grid.xh?newDay=15&amp;newMonth=&thisMonth;&amp;newYear=&myYear;&amp;Add=submit">
+	       			    <weekday monthname="yes">
+		               	       <date>15</date><month>&thisMonth;</month>
+			               <year>&myYear;</year>
+			            </weekday> 
+                             </a>
+			 </td></tr>
+                      </then>
+                </if>
+                     
+
+	    <set name="offset"><weekday
+	                  startsun="yes">
+                   <date>15</date><month>&thisMonth;</month>
+                   <year>&myYear;</year>
+            </weekday></set>
+	    <set name="lastday"><weekday lastdate="yes">
+                 <date>15</date><month>&thisMonth;</month>
+                 <year>&myYear;</year>
+            </weekday></set>
+
+	    <?-- week loop -->
+	    <repeat start="&offset;" entity="m" stop="&lastday;" step="7">
+           
+	       <set name="stopDay"><numeric sum="sum">&m; 6</numeric></set>
+	       <tr>
+		 <?--  day loop -->
+		   <repeat start="&m;" stop="&stopDay;"><text trim="yes">
+		       <set name="myDay">&n;</set>
+		       <if><logical and="yes">
+                             <test equals="&day;" >&myDay;</test>
+                             <test equals="&month;">&thisMonth;</test>
+                             <test equals="&year;">&myYear;</test>
+                           </logical>
+			   <then>
+			      <set name="daycolor">mistyrose</set>
+			   </then>
+			   <else>
+			   <set name="daycolor">azure</set>
+			   </else>
+		       </if>
+		       <if><daycheck testday="&myDay;" lastday="&lastday;" />
+			   <then>
+			       <set name="wholeEventList">
+				  <lookup newYear="&myYear;"
+					  newMonth="&thisMonth;"
+					  newDay="&myDay;"
+					  readFile="yes" />
+			       </set>
+
+			       <if>&showMonthOnly;
+				   <then>
+				       <td valign="top"  bgcolor="&daycolor;">
+				       <event-table>&wholeEventList;
+				       </event-table></td>
+				   </then>
+				   <else>
+                                      <if>&wholeEventList;
+					  <then>
+					      <td valign="top"  bgcolor="palegreen">
+					      <event-table> </event-table></td>
+					  </then>
+					  <else> 
+					      <td valign="top" bgcolor="&daycolor;">
+					      <event-table> </event-table></td>
+					  </else>
+                                      </if>
+				   </else>
+			       </if>
+			   </then>
+			   <else><td /></else>
+		       </if>
+		   </text></repeat>
+	       </tr>
+	    </repeat>
+            </repeat>
+         </table>
+
+       <show-errors />
+
+
+     </body>
+   </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

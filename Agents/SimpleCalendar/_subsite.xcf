@@ -1,0 +1,18 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-10-07 00:33:23 bill Exp $ -->
+
+<Container>
+
+  <Map ext="xh"		type="text/html"	tagset="SimpleCalendar-xhtml"	/>
+
+  <AGENT name=SimpleCalendar criteria="false" class="org.risource.pia.agent.SimpleCalendar">
+     <initialize><user-message>SimpleCalendar agent initialized</user-message>
+     </initialize>
+     <!-- The content will never be expanded.  This agent exists only as a
+	  marker, so that ~SimpleCalendar works and the
+	  SimpleCalendar-specific tags have a way of security-checking their
+	  directory.
+       -->
+  </AGENT>
+
+</Container>
