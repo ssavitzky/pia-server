@@ -1,5 +1,5 @@
 ////// prettyHandler.java: <pretty> Handler implementation
-//	$Id: prettyHandler.java,v 1.2 1999-07-14 23:42:52 bill Exp $
+//	$Id: prettyHandler.java,v 1.3 1999-07-15 17:09:22 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,6 +34,8 @@ import org.risource.dps.util.*;
 import org.risource.dps.output.*;
 import org.risource.dps.tree.TreeElement;
 import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeFragment;
+import org.risource.dps.tree.TreeCharData;
 
 import java.util.Enumeration;
 import java.lang.String;
@@ -46,7 +48,7 @@ import java.lang.StringBuffer;
  * pretty begin and end tags as a tree.
  * <br>	
  *
- * @version $Id: prettyHandler.java,v 1.2 1999-07-14 23:42:52 bill Exp $
+ * @version $Id: prettyHandler.java,v 1.3 1999-07-15 17:09:22 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -92,21 +94,25 @@ public class prettyHandler extends GenericHandler {
     if (atts.hasTrueAttribute("hide-above-depth") ){
 	hideAboveDepth = MathUtil.getInt(atts, "hide-above-depth", -1);
     }
-    if (atts.hasTrueAttribute("nocolor") ){
+    if (atts.hasTrueAttribute("nomarkup") ){
 	colorize = false;
     }
     	       
     // Create a "pre" element as a parent node to
-    // preserve indented prettyting
-    ActiveNode preNode = new TreeElement("pre");
+    // preserve indented prettyting, but not if the output 
+    // is piped colorless directly to an editor or document
+    ActiveNode preNode;
+    if (colorize)
+	preNode = new TreeElement("pre");
+    else
+        preNode = new TreeElement("");
     for (int i = 0; i < content.getLength(); ++i) {
       // Print the node tree
       printTree(content.activeItem(i), 0, preNode, hideBelowDepth,
 		hideAboveDepth,	hideBelowTag, whitenTag, yellowTag, colorize);
     }
-    // Output the pre node
     out.putNode(preNode);
-
+    // Output the pre node
   }
 
   /** Extracts the node type and string and indents appropriately.
@@ -224,8 +230,10 @@ public class prettyHandler extends GenericHandler {
 	// colorize if desired; otherwise use raw text string
 	if (colorize)
 	    parent.addChild(fontNode);	
-	else
-	    parent.addChild(newNode);	
+	else{
+	    ActiveNode rawNode = new TreeCharData(NodeType.STRING,indStr);
+	    parent.addChild(rawNode);	
+	}
     }    
 
     //    ActiveNodeList nl = node.getContent();
@@ -252,8 +260,10 @@ public class prettyHandler extends GenericHandler {
 	// colorize if desired; otherwise use raw text string
 	if (colorize)
 	    parent.addChild(fontNode2);	
-	else
-	    parent.addChild(newNode2);	
+	else{
+	    ActiveNode rawNode2 = new TreeCharData(NodeType.STRING, indStr2);
+	    parent.addChild(rawNode2);	
+	}
 	// end end-tags
     }
   }
