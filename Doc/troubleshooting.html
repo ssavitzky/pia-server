@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Troubleshooting Guide</title>
+</head><body>
+<h1>Troubleshooting Guide</h1>
+
+
+
+<p> Here are some frequently encountered problems:</p>
+
+<ul>
+  <li>
+<p> <strong>The PIA doesn't seem to pay attention to changes in a file, or
+    doesn't read or write a file where expected.</strong>  This usually
+    occurs because there are two parallel directory trees: <code>PIA/</code>
+    and <code>.pia/</code> (or more formally, <code>$PIA_HOME/</code> and
+    <code>$PIA_ROOT/</code>), and <code>.pia/</code> takes precedence.  So
+    changes made in the <code>PIA/</code> tree may (or may not) be used,
+    depending upon whether there is a corresponding file in the
+    <code>.pia/</code> tree: the server always reads files in
+    <code>.pia/</code> first if it can, and always writes them there. </p>
+    </li>
+
+<li><p>
+     <strong> The PIA doesn't seem to pay attention to newly-written tags,
+	       extensions, or configuration options.</strong> This usually
+	       occurs for one of two reasons.
+     <ol> <li>The PIA was not restarted after a change (and thus did not know
+	       about recent configuration changes).  The solution is to
+	       restart the PIA after every configuration change, i.e. after
+	       changing anything but the contents of <code>.xh</code> or
+	       <code>.ts</code> file.</li>
+	  <li> The PIA was not instructed to use the appropriate tagset or
+	       extension.  While tags defined inside an active page are
+	       automatically used, separate ".ts" tagset files are only used
+	       when the <code>_subsite.xcf</code> file explicitly says
+	       so.  So make sure that the file-extension type and desired
+	       tagsets are explicitly mentioned (look at <code>Agents/</code>,
+	       <code>Samples/</code>, and <code>Config/Site/</code> for
+	       working examples.) </li>
+      </ol>
+     </p></li>
+
+        <li>
+<p> <strong>When testing for equality, the PIA thinks two things (strings,
+    numbers, entities) are different when they should be the same.</strong>
+    The PIA keeps track of <i>everything</i> in an object or entity, including
+    carriage returns and leading/trailing spaces.  Unfortunately, when you
+    follow proper indentation rules, all that invisible stuff becomes part of
+    your object and changes it in subtle ways.  Here's an example of the
+    problem and one way to fix it (you can find other such example solutions
+    in our applications, such as SimpleCalendar):</p>
+	     
+	     <code><pre>
+    Bad:     &lt;set name="hometown">
+	         SiliconValley
+	     &lt;/set>
+             </pre></code>
+
+    <p> In this case, the entity <code>hometown</code> contains leading and
+	trailing carriage returns and spaces, which will register as separate
+	text elements in a list and may disrupt tests like <nobr><code>&lt;test
+	match="SiliconValley">&amp;hometown;&lt;/test></code></nobr>.  Here's the
+	fix, which involves explicity trimming off that invisible stuff: </p>
+
+	     <code><pre>	     
+    Good:    &lt;set name="hometown">&lt;text trim="yes">
+	         SiliconValley
+	     &lt;/text>&lt;/set>
+             </pre></code>
+
+	     
+    </li>
+
+
+	<li>
+<p> <strong> Lots of blank lines appear in the browser's "Page Source" window,
+    and/or lists which should be empty do not test as empty, even after
+    trimming.</strong> You may be using standard HTML-style comments
+    <nobr><code>&lt;!-- like this --&gt;</code></nobr>, which the processor
+    keeps track of (along with all the spaces and carriage returns between
+    them!).  We suggest you instead use our special style of comments
+    <nobr><code>&lt;?-- like this --?&gt;</code></nobr>, which are stripped
+    away before any processing is done.
+
+	     </p> </li>
+
+</ul>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: troubleshooting.html,v 1.1 1999-10-20 17:23:27 bill Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~bill/"
+         ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
+         >bill@rsv.ricoh.com</a>&gt;</address>
+</body></html>
