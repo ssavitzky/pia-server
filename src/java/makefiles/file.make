@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.4 1999-03-12 19:49:52 pgage Exp $
+# $Id: file.make,v 1.5 1999-03-13 15:32:06 wolff Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -34,7 +34,7 @@ LIBDIR=$(PIADIR)/lib/java
 BINDIR=$(PIADIR)/bin
 DOCDIR=$(PIADIR)/Doc/Manuals/Api/JavaDoc
 
-LIBCLASSES= $(LIBDIR)/jigsaw.zip:$(LIBDIR)/pia.zip:$(LIBDIR)/regexp.jar:$(LIBDIR)/jigsaw_subset.jar
+LIBCLASSES= $(LIBDIR)/jigsaw.zip:$(LIBDIR)/pia.zip:$(LIBDIR)/regexp.jar:$(LIBDIR)/jigsaw_s.jar
 
 ##javac wrapper should find these  .. specify explicitly if problem
 JAVACLASSES= /usr/local/java/lib/classes.zip
