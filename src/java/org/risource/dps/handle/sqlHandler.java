@@ -1,5 +1,5 @@
 ////// sqlHandler.java: <sql> Handler implementation
-//	$Id: sqlHandler.java,v 1.1 1999-11-29 23:10:15 wolff Exp $
+//	$Id: sqlHandler.java,v 1.2 1999-12-29 19:15:07 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -22,19 +22,38 @@
 */
 
 
+
 package org.risource.dps.handle;
 
+import java.util.Enumeration;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.util.*;
+import org.risource.dps.tree.*;
+
 import java.sql.*;
+
+/*
+import org.gjt.mm.mysql.Driver;
+import org.gjt.mm.mysql.EscapeTokenizer;
+import org.gjt.mm.mysql.DatabaseMetaData;
+import org.gjt.mm.mysql.Statement;
+import org.gjt.mm.mysql.Buffer;
+import org.gjt.mm.mysql.Debug;
+import org.gjt.mm.mysql.Statement;
+import org.gjt.mm.mysql.Statement;
+import org.gjt.mm.mysql.Statement;
+*/
+import org.gjt.mm.mysql.*;
+import org.gjt.mm.mysql.jdbc1.*;
+import org.gjt.mm.mysql.jdbc2.*;
 
 /**
  * Handler for &lt;sql&gt;....&lt;/&gt;  
  *
  * <p>	
  * initial implementation -- ship off string to specified database ...
- * @version $Id: sqlHandler.java,v 1.1 1999-11-29 23:10:15 wolff Exp $
+ * @version $Id: sqlHandler.java,v 1.2 1999-12-29 19:15:07 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -51,58 +70,98 @@ public class sqlHandler extends GenericHandler {
       String sqlURL = atts.getAttribute("database");
       String user = atts.getAttribute("user");
       String password = atts.getAttribute("password");
-      String columns = atts.getAttribute("columns"); // number of columns to return -- apparently this is not available from the result set
 
-      Connection c = null;
+      // System.out.println("sqlURL=" + sqlURL + " user=" + user );
+      try{
+	  Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+      }catch(Exception e)
+      {
+	  System.out.println("can't register driver");
+	  return;
+      }
+        
+      java.sql.Connection conn = null;
       try {
-	  c = DriverManager.getConnection(sqlURL, 
+	  conn = DriverManager.getConnection(sqlURL, 
 					  user, 
 					  password);
       } catch (java.sql.SQLException X) {
+	  System.out.println( X.getMessage() );
+
 	  reportError(in,cxt,"Cannot open connection to database.");
 	  putText(out,cxt,"ERROR no database connection established");
 	  return;
       }
-      if (verbose)
+      if ( cxt.getVerbosity() > 1)
 	  System.out.println("Opened JDBC bridge to " + sqlURL + " as " + 
 			     user);
       String myquery=content.toString();      
       if(myquery == null) return;
+      myquery = myquery.trim();
 
+      TreeElement result = new TreeElement("SQL:result");
+      
       try {
-	  java.sql.Statement statement = connection.createStatement();
-	  // if we assume only one result set per statement then this Works:
-	  ResultSet r = statement.executeQuery(myquery);
+	  java.sql.Statement statement = conn.createStatement();
 
-	  // if more than one result set is possible, 
-	  // use this statement: boolean r = statement.execute(myquery);
-	  // see statement class documentation...
+	  // executeUpdate if not a select statement; otherwise query
+	  if (myquery.indexOf("SELECT") != 0 &&  
+	      myquery.indexOf("select") != 0 ){
+	      int rowsUpdated = statement.executeUpdate(myquery);
+	      result.setAttribute("update", myquery );
+	      result.setAttribute("rows", String.valueOf( rowsUpdated ) );
+	      result.addChild(new TreeText(String.valueOf( rowsUpdated ) +
+				      " rows updated") );
+	  }
+	  else{
+	      java.sql.ResultSet r = statement.executeQuery(myquery);
+	      java.sql.ResultSetMetaData rsm = r.getMetaData();
 
-          //Build the result using generic nodes of name sql:result, sql:row, sql:col
-	  TreeElement result=TreeElement("SQL:result");
-	  TreeElement row,col;
-	  while(r.next()){
-	      row = TreeElement("SQL:row");
-	      result.addChild(row);
-	      for (int i = 1; i <= columns; i++) {
-	          col = TreeElement("SQL:col");
-		  col.addChild(TreeText(r.getString(i)));
-		  row.addChild(col);
+	      //Build the result using generic nodes of name sql:
+	      //  result, sql:row, sql:col
+	      int colCount = rsm.getColumnCount();
+	      result.setAttribute("select", myquery );
+	      result.setAttribute("rows", String.valueOf( colCount ) );
+
+	      String[] colName = new String[colCount];
+	
+	      for (int thisCol = 1; thisCol <= colCount; thisCol++){
+		  colName[ thisCol-1 ] =  rsm.getColumnName( thisCol) ;
 	      }
+
+	      TreeElement row,col;
+	      int thisRow = 1;
+	      while(r.next()){
+		  row = new TreeElement("SQL:row");
+		  row.setAttribute("row", String.valueOf( thisRow ) );
+		  result.addChild(new TreeText("\n") );
+		  result.addChild( row);
+		  result.addChild(new TreeText("\n"));
+		  for (int i = 1; i <= colCount; i++) {
+		      col = new TreeElement( colName[i-1] );
+		      col.addChild(new TreeText("\n     " + r.getString(i) + "\n   "));
+		      row.addChild(new TreeText("\n   ") );
+		      row.addChild(col);
+		  }
+		  row.addChild(new TreeText("\n") );	
+		  thisRow ++;
+	      }
+
 	  }
       } catch (java.sql.SQLException X) {
-	  reportError(in,cxt, "Cannot execute query through JDBC connection.");
+	  System.out.println( X.getMessage() );
+	  reportError(in,cxt, "SQLException in sqlHandler");
       }
 
       try {
-	  c.close();
+	  conn.close();
       } catch (java.sql.SQLException X) {
 	  reportError(in,cxt, "Cannot close JDBC connection.");
       }
-      if (verbose)
+      if ( cxt.getVerbosity() > 1)
 	  System.out.println("Closed JDBC bridge to " + sqlURL);
 
-      return result;
+      out.putNode( result );
 
   }
 
