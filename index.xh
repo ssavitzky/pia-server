@@ -1,0 +1,72 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+  <title>&piaUSER;'s Agency on &piaHOST;</title>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+
+<set name='piaURL'>http://&piaHOST;:&piaPORT;/</set>
+<set name='ltitle'><if><test exact='exact' match='pia'>&piaUSER;</test>
+		     <then> </then>
+		     <else><a href='/~/'>&piaUSER;'s</a> </else></if></set>
+<header show-date='yes' ltitle='&ltitle;'>
+  <if><test exact='exact' match='pia'>&piaUSER;</test>
+			    <then>An Information Appliance</then>
+	    		    <else>Personal Information Agency</else>
+			</if><br />
+	 &lt;<a href='&piaURL;'>&piaURL;</a>&gt;</header>
+
+<table cellspacing='0' cellpadding='0' border='0'>
+<tr>
+  <th width='170'><img src='/Icon/logo100.gif' height='100' width='111' alt=' ' />
+  </th><td valign='top'>
+    <table cellspacing='0' cellpadding='0' border='0' valign='top'>
+    <tr><th valign='top' align='right' width='170'></th>
+        <td valign='top'></td></tr>
+   <if><agent-running name='Admin'></agent-running><then>
+    <tr><th valign='top' align='right' width='170'>
+	    <a href='/~Admin'><b>Admin:</b></a>&nbsp;
+	</th><td valign='top'>
+	    <a href='/~Admin/list-agents'>list</a> /
+	    <a href='/~Admin/installers'>install</a> / 
+	    <a href='/~Admin/remove-agent'>remove</a> agents.<br />
+	    <if><test exact='exact' match='pia'>&piaUSER;</test>
+	      <then><a href='/~Admin/shutdown'>shut down</a> appliance<br />
+	    </then></if>
+    </td></tr></then></if>
+    <tr><if><test exact='exact' match='pia'>&piaUSER;</test>
+      <then>
+	<th valign='top' align='right'><b>Agent:</b>&nbsp;
+	</th><td valign='top'><!--  need a ``topAgent'' entity.  -->
+	    <if><agent-running name='Photo_Album'></agent-running><then>
+		<a href='/Photo_Album/home'>Photo Album</a></then>
+	    <else><if><agent-running name='CDRW'></agent-running><then>
+		<a href='/CDRW/home'>CDRW</a></then>
+	    <else><if><agent-running name='Printer'></agent-running><then>
+		<a href='/Printer/home'>Printer</a></then>
+	    <else>???</else></if></else></if></else></if></td></then>
+      <else>
+	<th valign='top' align='right' width='170'><a href='/.'><b>Files:</b></a>&nbsp;
+	</th><td valign='top'> <a href='/Agents/'>Agents</a>
+	    <a href='/Agents/'>(custom)</a>
+	    <a href='/Doc/'>Doc</a>
+	    <a href='/src/'>src</a>
+      </td></else></if><br /></tr>
+    <if><agent-running name='History'>
+        </agent-running><then>
+	    <tr><th valign='top' align='right'>
+		    <a href='/~History'><b>History:</b></a>&nbsp;
+		</th><td valign='top'> 
+		    [<a href='/~/History'>All</a> | 
+		     <a href='/~/History/&year;/'>&year;</a>/<a href='/~/History/&year;/&month;/'>&month;</a>/<a href='/~/History/&year;/&month;/&day;.html'>&day;</a>]
+		    <br /></td></tr></then>
+        <else><tr><td>&nbsp;</td><td></td></tr>
+    </else></if>
+    <tr><td width='170'>&nbsp;</td><td></td></tr>
+  </table>
+</td></tr></table>
+<hr />
+<include src='/Agents/ROOT/welcome.inc'> </include>
+<hr />
+<include src='/Agents/ROOT/doc-grid.inc'> </include>
+<p>
+<short-footer cvsid='$Id: index.xh,v 1.1 1999-09-22 00:51:03 steve Exp $' />
+</p></body></html>

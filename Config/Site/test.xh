@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA test file</title>
+</head><body>
+<h1>PIA test file</h1>
+
+<set name=LOC:foo>this is a suitable value for foo</set>
+<ul>
+<repeat><foreach><get name="DOC:"/></foreach>
+        <li> &li; = <protect result markup><get name="DOC:&li;"/> </protect>
+	</li>
+</repeat>
+</ul>	     
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: test.xh,v 1.1 1999-09-22 00:50:06 steve Exp $</b><br>
+</body></html>

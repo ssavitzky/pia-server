@@ -1,0 +1,22 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-09-22 00:51:03 steve Exp $ -->
+
+<Container>
+  <Map ext="html"	type="text/html"				/>
+  <Map ext="htm"	type="text/html"				/>
+  <Map ext="gif"	type="image/gif"				/>
+  <Map ext="jpeg"	type="image/jpeg"				/>
+  <Map ext="jpg"	type="image/jpeg"				/>
+  <Map ext="png"	type="image/png"				/>
+  <Map ext="xbm"	type="image/x-xbitmap"				/>
+  <Map ext="exe"	type="application/octet-stream"			/>
+  <Map ext="tgz"	type="application/octet-stream"			/>
+
+  <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
+
+  <Resource	name="initialize.xh"	hidden="yes" />
+
+  <!-- virtual container (link) -->
+  <Container	name="Icon"	virtual="Agents/ROOT/Icon" />
+
+</Container>

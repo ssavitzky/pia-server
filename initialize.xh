@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>PIA Initialization file</title>
+</head><body>
+<h1>PIA Initialization file</h1>
+
+<p> Note that all we have to do is stat the directories in order to initialize
+    their agents.  Running this again will have no effect, because they will
+    already have been initialized.
+</p>
+
+<user-message>Running initialize.xh in PIA</user-message>
+<user-message>   init:	<status item="path" src="/Agents/Admin" />
+   init:	<status item="path" src="/Agents/Proxie" />
+   init:	<status item="path" src="/Agents/Proxie/Toolbar" />
+   init:	<status item="path" src="/Agents/Proxie/History" />
+</user-message>
+<hr/>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: initialize.xh,v 1.1 1999-09-22 00:51:04 steve Exp $</b><br/>
+</body></html>

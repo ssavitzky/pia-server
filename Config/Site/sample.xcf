@@ -1,0 +1,49 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: sample.xcf,v 1.1 1999-09-22 00:50:06 steve Exp $ -->
+
+<Container>
+  <Map ext="html"	type="text/html"				/>
+  <Map ext="htm"	type="text/html"				/>
+  <Map ext="gif"	type="image/gif"				/>
+  <Map ext="jpeg"	type="image/jpeg"				/>
+  <Map ext="jpg"	type="image/jpeg"				/>
+  <Map ext="png"	type="image/png"				/>
+  <Map ext="xbm"	type="image/x-xbitmap"				/>
+  <Map ext="exe"	type="application/octet-stream"			/>
+  <Map ext="tgz"	type="application/octet-stream"			/>
+
+  <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
+
+  <Resource	name="initialize.xh"	hidden="yes" />
+
+  <!-- external virtual file (absolute path === broken ===) -->
+  <Resource	name="xfile.html" virtual="file:/home/steve/PIA/HEADER.html"/>
+
+  <!-- virtual container (link) -->
+  <Container	name="Icon"	virtual="Agents/ROOT/Icon" />
+
+  <!-- virtual document (link) -->
+  <Resource	name="vdoc.html"
+		virtual="Agents/ROOT/Icon/HEADER.html" />
+
+  <!-- imaginary document (constructed) -->
+  <Resource	name="idoc.xh">
+     <DOCUMENT>
+	<html><head><title>Imaginary</title></head>
+	    <body>
+		<h1>this is an imaginary document</h1>
+		<p> The content is entirely contained inside its parent's
+		    configuration element. </p>
+	    </body>
+	</html>
+     </DOCUMENT>
+  </Resource>
+
+ <if> true <then><!-- This demonstrates that if, etc. work in config files! -->
+  <AGENT criteria="request">
+     <initialize><user-message>report-request agent initialized</user-message>
+     </initialize>
+     <user-message>requesting: &url;</user-message>
+  </AGENT>
+ </then></if>
+</Container>
