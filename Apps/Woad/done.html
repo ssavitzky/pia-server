@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Completed Tasks</title>
+</head><body>
+<h1>Completed Tasks</h1>
+
+See also:
+<ul>
+  <li> <a href="to-do.html">Pending tasks</a><p>
+  <li> <a href="to-do.html#Keywords">Keywords</a>
+  <li> <a href="#end">Most Recent Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> 2000-06-09 <b>Bug</b> can't set targetServer in a subdirectory.<br />
+       Need to match and remove a prefix, let's say maybe
+       <code>SITE:documentOffset</code>. The parameter to set this would then
+       be <code>offset=<em>path</em></code>. 
+       (2000-06-07)
+  </li>
+  <li> 2000-06-07 <b>Hole</b> Do a _subsite.xcf file for standalone Woad <br />
+       i.e. an Apache's document root.  This may be simpler than the PIA
+       version, but will still involve bug fixes to make the top-level
+       <code>/Woad</code> directory work for tagsets and so on.  Of course,
+       could put <code>src-*.ts</code> in <code>PIA/lib</code> for now.
+       (2000-05-30)
+  </li>
+  <li> 2000-06-07 <b>Hole</b> (dps) wrappers, #element, #type in tagsets <br />
+       Need to define wrapper element and default bindings for #element,
+       #comment, etc.  Default element is handled differently from other node
+       types, which have to be rewrapped as elements by the parser.
+       GenericHandler has to operate differently for non-elements.
+       (2000-05-30)<br />
+       -- (element="", documentWrapper, element="#type" 2000-06-05)
+  </li>
+</ol>
+
+<a name="end">End of list.</a>
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: done.html,v 1.1 2000-06-09 18:01:40 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

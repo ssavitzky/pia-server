@@ -5,37 +5,22 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
-  <li> <b>Hole</b> linking of identifiers to annotation <br />
+  <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things:  proper tagging of identifiers in context,
        and figuring out where in the tree to link them.  Generally, each
        identifier gets its own page, Wiki style.  In some cases the context
        requires its own page, i.e. for Java identifiers or XHTML tags.
        (2000-06-07)
   </li>
-  <li> <b>Bug</b> can't set targetServer in a subdirectory.<br />
-       Need to match and remove a prefix, let's say maybe
-       <code>SITE:documentOffset</code>. The parameter to set this would then
-       be <code>offset=<em>path</em></code>. 
-       (2000-06-07)
-  </li>
   <li> <b>Hole</b> annotation tagset. <br />
        
        (2000-06-07)
   </li>
-  <li> 2000-06-07 <b>Hole</b> Do a _subsite.xcf file for standalone Woad <br />
-       i.e. an Apache's document root.  This may be simpler than the PIA
-       version, but will still involve bug fixes to make the top-level
-       <code>/Woad</code> directory work for tagsets and so on.  Of course,
-       could put <code>src-*.ts</code> in <code>PIA/lib</code> for now.
-       (2000-05-30)
-  </li>
-  <li> 2000-06-07 <b>Hole</b> (dps) wrappers, #element, #type in tagsets <br />
-       Need to define wrapper element and default bindings for #element,
-       #comment, etc.  Default element is handled differently from other node
-       types, which have to be rewrapped as elements by the parser.
-       GenericHandler has to operate differently for non-elements.
-       (2000-05-30)<br />
-       -- (element="", documentWrapper, element="#type" 2000-06-05)
+  <li> <b>Hole</b> WOAD directory listings. <br />
+       In order to make WOAD-based directory listings we need to either map -
+       into a web page, or make sure there's a default woad-index.wh in every
+       directory. 
+       (2000-06-09)
   </li>
   <li> <b>Bug</b> (site) <code>file:</code> in <code>.xcf</code> file <br />
        Need to be able to make virtual links to absolute paths.  There
@@ -68,7 +53,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.3 2000-06-07 23:44:38 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.4 2000-06-09 18:01:41 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

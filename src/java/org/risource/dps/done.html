@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Done</title>
-<link rev="made" href="mailto:steve@rsv.ricoh.com">
 </head><body>
 <h1>Done</h1>
 
@@ -1208,9 +1207,17 @@ If 4th node is there, returns "four".
        configureChild checks for <code>class</code> attribute and loads class
        by name.  Requires <code>configure(...)</code> method  on Resource.
   </li>
+  <li> 2000-06-07 <b>Hole</b> (WOAD) wrappers, #element, #type in tagsets <br />
+       Need to define wrapper element and default bindings for #element,
+       #comment, etc.  Default element is handled differently from other node
+       types, which have to be rewrapped as elements by the parser.
+       GenericHandler has to operate differently for non-elements.
+       (2000-05-30)<br />
+       -- (element="", documentWrapper, element="#type" 2000-06-05)
+  </li>
 </ol>
 <a name="end">End of list.</a>
 <hr>
-<b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.48 2000-04-14 23:13:35 steve Exp $</b><br>
+<b>Copyright &copy; 1998-2000 Ricoh Silicon Valley</b><br>
+<b>$Id: done.html,v 1.49 2000-06-09 18:01:47 steve Exp $</b><br>
 </body></html>
