@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Mozilla Enhancements</title>
+<script language="JavaScript"> 
+
+   // From http://developer.netscape.com/docs/manuals/browser/sidebar/
+   // The usual trick of enclosing the script in a comment suppresses
+   // PIA entity substitution.  If needed, you can use a "make" tag.
+
+   function addSidebar() { 
+      if ((typeof window.sidebar == "object")
+          && (typeof window.sidebar.addPanel == "function")) 
+      { 
+         window.sidebar.addPanel (
+           "PIA index", 
+           "&PIA:url;/sidebar.html",""); 
+      }
+      // the "else" clause Netscape had here didn't work.
+   } 
+
+</script> 
+</head>
+<body bgcolor="#ffffff" link='#c40026' vlink='#e40026'>
+<header>Mozilla Enhancements</header>
+
+<p> This page contains PIA ``enhancements'' that only work in the
+    Mozilla/Netscape6 family of browsers.
+</p>
+
+<p><a href="http://home.netscape.com/download/">download Netscape</a></p>
+
+<table>
+  <tr>
+    <td>
+	 <a href="javascript:addSidebar();"><img SRC="http://developer.netscape.com/docs/manuals/browser/sidebar/add-button.gif"
+	 align=left alt="add to sidebar" BORDER=0 height=45 width=100></a>
+    </td>
+    <td> Add the frame version of the PIA's directory index to ``my
+	 sidebar''. -- see
+	 <a href="http://developer.netscape.com/docs/manuals/browser/sidebar/">
+	 http://developer.netscape.com/docs/manuals/browser/sidebar/</a> for
+	 more information.
+    </td>
+  </tr>
+</table>
+
+
+<hr>
+<b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
+<b>$Id: mozilla.xh,v 1.1 2000-04-25 23:59:51 steve Exp $</b><br>
+</body></html>
