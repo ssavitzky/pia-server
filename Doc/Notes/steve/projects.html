@@ -8,6 +8,31 @@
 <p> This is Steve Savitzky's personal list of things that ``it would be nice
     if'' somebody <em>else</em> could do.
 
+<h2>Cleanup</h2>
+
+<h3>XML-isms</h3>
+
+<p> XML is a lot more restrictive than SGML and HTML.  All attribute values
+    must be quoted, for example, and all attributes must have explicit
+    values.  All tags must be closed.
+
+<p> There are really several related projects here:
+
+<ul>
+  <li> Fix the documentation to make it clear that (our version of) XHTML is
+       <em>not</em> HTML with XML syntax, but an extension of HTML with SGML
+       syntax.  Probably, two different tagsets will be required, and two
+       different filename extensions.
+
+  <li> Make sure that the what reaches the browser <em>is</em> acceptable
+       XHTML when called for.  Unfortunately the Web is <em>not</em> moving in
+       the direction of SGML, but away from it toward XML.
+
+  <li> Of course, we still need DTD's.  There needs to be a tagset that
+       transforms a tagset file into a DTD, and tagsets will have to be
+       extended in order to make this possible.
+</ul>
+
 <h2>Ports</h2>
 
 <p> These are covered in more detail in <a

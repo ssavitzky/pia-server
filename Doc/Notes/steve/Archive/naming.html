@@ -214,19 +214,33 @@
   <dt> <b>type</b>
   <dd> An agent from which forms are inherited.
   <dt> <b>path</b>
-  <dd> An agent's mount point in the URL hierarchy.
-  <dt> <b>baseDIR</b>
-  <dd> an agent's mount point in the directory hierarchy.  The path from the
+  <dd> An agent's mount point in the URL hierarchy.  The path from the
        ``base'' (<code>PIA/Agents</code> or <code>~/Agents</code>) to the
        agent's code or user directory is normally equal to
-       <code><em>path</em>/<em>name</em></code><p>
-  <dt> <b>homeDIR</b>
-  <dd> the path to the home <em>directory</em>.  Specifies <em>only</em> the
-       agent's code directory, not the user directory.
+       <code><em>path</em>/<em>name</em></code>; it is probably not necessary
+       to permit the directory and URL paths to differ.
+
+       <p>
+
+  <dt> <b>codeDIR</b>
+  <dd> the <em>full</em> path to the code <em>directory</em>.  Specifies
+       <em>only</em> the agent's code directory, not the user directory.
   <dt> <b>userDIR</b>
   <dd> the path to the user directory.  Probably <em>very</em> rarely used.
   <dt> <b>dataDIR</b>
   <dd> the path to the data directory.
+</dl>
+
+<p> In specifying paths, we should allow the following prefixes:
+
+<dl compact>
+  <dt> <code>~/</code>
+  <dd> The user's home directory (currently the only one allowed)
+  <dt> <code>../</code>
+  <dd> the PIA home directory <code>&amp;piaDIR;</code>, as in
+       <code>../Contrib/...</code> 
+  <dt> <code>/~/</code>
+  <dd> The PIA user directory <code>&amp;usrDIR;</code>
 </dl>
 
 <p> Currently, an agent's ``name'' has to be unique.  Under this scheme, it
