@@ -1,5 +1,5 @@
 ////// PropertyTable.java: Node and String Lookup Table
-//	$Id: PropertyTable.java,v 1.4 1999-10-28 23:03:36 steve Exp $
+//	$Id: PropertyTable.java,v 1.5 1999-11-04 22:33:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.ds.Table;
  *
  * <p>	The 
  *
- * @version $Id: PropertyTable.java,v 1.4 1999-10-28 23:03:36 steve Exp $
+ * @version $Id: PropertyTable.java,v 1.5 1999-11-04 22:33:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.site
@@ -137,13 +137,13 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
     }
   }
 
-  /** Look up a name and return its value as a String. 
+  /** Look up a name and return its value (in internal form) as a String. 
    *
    * @param name the name to look up
    */
   public String	getProperty(String name) {
     ActiveNodeList value = getValueNodes(name);
-    return (value == null)? null : value.toString();
+    return (value == null)? null : TextUtil.getCharData(value);
   }
 
   /** Set a string associated with a name.
@@ -163,7 +163,7 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
    */
   public String getProperty(String name, String dflt){
     ActiveNodeList value = getValueNodes(name);
-    return (value == null)? dflt : value.toString();
+    return (value == null)? dflt : TextUtil.getCharData(value);
   }
 
   /************************************************************************

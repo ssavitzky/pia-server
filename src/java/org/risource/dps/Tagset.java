@@ -1,5 +1,5 @@
 ////// Tagset.java: Node Handler Lookup Table interface
-//	$Id: Tagset.java,v 1.10 1999-08-20 00:00:58 steve Exp $
+//	$Id: Tagset.java,v 1.11 1999-11-04 22:33:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import org.w3c.dom.NamedNodeMap;
  *
  * === 	need encoders/decoders for character entities, URLs, etc.
  *
- * @version $Id: Tagset.java,v 1.10 1999-08-20 00:00:58 steve Exp $
+ * @version $Id: Tagset.java,v 1.11 1999-11-04 22:33:38 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -88,6 +88,14 @@ public interface Tagset  {
 
   /** Get the tagset's name. */
   public String getName();
+
+  /** Get the tagset's attribute list.
+   * 	
+   *<p>	This contains all of the attributes which were assigned to the tagset
+   *	when it was created.  This allows arbitrary string data to be 
+   *	associated with a tagset.
+   */
+  public ActiveAttrList getAttrList();
 
 
   /************************************************************************
@@ -196,6 +204,12 @@ public interface Tagset  {
   /** Creates an ActiveEntity node with name and value.
    */
   public ActiveEntity createActiveEntity(String name, ActiveNodeList value);
+
+  /** Creates an ActiveEntity node with name and value.
+   *	The entity created is passive: it will be not be expanded unless
+   *	it needs to be converted to a string.
+   */
+  public ActiveEntity createPassiveEntity(String name, String value);
 
   /** Creates an ActiveText node.  Otherwise identical to createText.
    */

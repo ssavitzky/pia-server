@@ -1,5 +1,5 @@
 ////// protectHandler.java: <protect> Handler implementation
-//	$Id: protectHandler.java,v 1.6 1999-07-09 22:55:38 steve Exp $
+//	$Id: protectHandler.java,v 1.7 1999-11-04 22:33:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.util.*;
 /**
  * Handler for &lt;protect&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: protectHandler.java,v 1.6 1999-07-09 22:55:38 steve Exp $
+ * @version $Id: protectHandler.java,v 1.7 1999-11-04 22:33:44 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -47,7 +47,7 @@ public class protectHandler extends GenericHandler {
   public void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     if (atts.hasTrueAttribute("markup")) {
-      putText(out, aContext, content.toString());
+      putText(out, aContext, TextUtil.toExternalForm(content));
     } else {
       putList(out, content);
     }

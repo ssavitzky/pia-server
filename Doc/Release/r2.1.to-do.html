@@ -27,24 +27,45 @@ See also:
 <h2><a name="code">Code</a></h2>
 
 <ol>
-  <li> <b>Bug</b> Non-strict HTML parsing needed. <br>
+  <li> 1999-11-02 <b>Bug</b> Non-strict HTML parsing needed. <br>
        Need a "nonstrict" attribute in &lt;tagset&gt;. Distinguish between
        XHTML (XML) and HTMLX (HTML with eXtensions).  Need a more general way
        to get at tagset attributes. 
 
+  <li> <b>Bug</b> Correct handling for attribute case <br>
+       Need to case-fold attributes correctly for the tagset. 
+
   <li> <b>Bug</b> Correct handling for character entities. <br>
        Currently they're not defined, which causes several kinds of havoc.
-       Even defining them, though, doesn't seem to work right.
+       If we define them, need "retain" in many cases (e.g. &amp;nbsp;).
 
-  <li> <b>Bug</b> Conversion of text to <em>internal</em> form broken. <br>
-       The consequence is that STRING nodes and <code>href</code> attributes
-       containing ampersands don't work.
+  <li> 1999-11-04 <b>Bug</b> Conversion of text to internal form broken. <br>
+       The consequence is that STRING nodes and &lt;include&gt; URL's
+       containing ampersands don't work.  It will be <em>absolutely</em>
+       necessary to correctly identify the places where we want the internal
+       or external form.
 
-  <li> <b>Impr</b> printOn instead of toString <br>
+  <li> <b>Impr</b> toString for Element should use ToString <br>
+       i.e. toString for element nodes should just use Copy and
+       ToString -- end of story.  Note that you can get startString by simply
+       doing startNode on a ToString.)  startString is no longer used outside
+       of <code>dps</code>.
+
+  <li> <b>Impr</b> don't use toString in Output. <br>
        Conversion of nodes to external form should be done via a properly-
-       parametrized set of methods that can be called by an Output.
-       <code>toString</code> should return the internal form.  Parameters
-       should include indent, line width, etc.
+       parametrized set of methods that can be called by an Output, or
+       directly in the Output (which is cleaner but makes it impossible to
+       have specialized elements).<br>
+
+       Parameters should include indent, line width, etc.  Possibly give the
+       nodes access to <code>write</code>, etc. in a subclass of Output.
+       Output formatting is a time sink; we don't have to get it exactly right
+       the first time.  The important thing is not to rely on toString for
+       converting NodeList's and AttrList's.
+
+  <li> <b>Impr</b> clean way of putting node lists on outputs. <br>
+       It would be convenient if there was a simple way to put a list onto an
+       Output.  Probably a method on ActiveNodeList would be best.
 
        <p>
 
@@ -59,6 +80,9 @@ See also:
 
   <li> <b>Bug</b> Replace DOCTYPE's in XML <br>
        with, e.g., a &lt;DOCTYPE&gt; element. 
+
+  <li> <b>Hole</b> Additional file prefixes in Subsite <br>
+       Need access to files relative to root, vroot, and home. 
 
        <p>
 
@@ -164,5 +188,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: r2.1.to-do.html,v 1.6 1999-11-02 01:02:48 steve Exp $</b><br>
+<b>$Id: r2.1.to-do.html,v 1.7 1999-11-04 22:33:34 steve Exp $</b><br>
 </body></html>

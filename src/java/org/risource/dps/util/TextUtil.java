@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.10 1999-07-14 20:21:25 steve Exp $
+//	$Id: TextUtil.java,v 1.11 1999-11-04 22:34:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -51,7 +51,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.10 1999-07-14 20:21:25 steve Exp $
+ * @version $Id: TextUtil.java,v 1.11 1999-11-04 22:34:07 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -138,6 +138,28 @@ public class TextUtil {
   public static String getCharData(ActiveNodeList nl) {
     ToCharData out = new ToCharData();
     Copy.copyNodes(nl, new FilterText(out));
+    return out.getString();
+  }
+
+  /** Convert a NodeList to a String in <em>internal</em> form and trim it.
+   *	Character entities are replaced by their equivalent characters;
+   *	all other markup is <em>also</em> converted to equivalent characters. 
+   *    Return null if the NodeList passed is null.
+   */
+  public static String trimCharData(ActiveNodeList nl) {
+    if (nl == null) return null;
+    ToCharData out = new ToCharData();
+    Copy.copyNodes(nl, new FilterText(out));
+    return out.getString().trim();
+  }
+
+  /** Convert a NodeList to a String in <em>external</em> form.
+   *    Return null if the NodeList passed is null.
+   */
+  public static String toExternalForm(ActiveNodeList nl) {
+    if (nl == null) return null;
+    ToString out = new ToString();
+    Copy.copyNodes(nl, out);
     return out.getString();
   }
 
@@ -509,7 +531,7 @@ public class TextUtil {
       ActiveNode n = (nl.activeItem(i)).shallowCopy();
       if(NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
-	String s = tNode.toString();
+	String s = tNode.getNodeValue();
 	String bStr = Utilities.encodeBase64(s.getBytes());
 	tNode.setData(bStr);
 	results.push(tNode);
@@ -535,7 +557,7 @@ public class TextUtil {
       ActiveNode n = (nl.activeItem(i)).shallowCopy();
       if (NodeType.isText(n)) {
 	ActiveText tNode = (ActiveText)n;
-	String s = tNode.toString();
+	String s = tNode.getNodeValue(); // === internal/external form?
 
 	// true means return delimiters as tokens
 	tokenList.append(List.split(s, markupChars, true));

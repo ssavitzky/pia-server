@@ -1,5 +1,5 @@
 ////// Subst.java:  Handler for <subst>
-//	$Id: substHandler.java,v 1.6 1999-04-07 23:21:27 steve Exp $
+//	$Id: substHandler.java,v 1.7 1999-11-04 22:33:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,18 +44,15 @@ public class substHandler extends GenericHandler {
     //if (ii.missing(ia, "match", match)) return;
 
     String repl = atts.getAttribute("result");
-    //System.err.println("*** match = " + match + ", result = " + repl
-    //		         + " in " + atts.toString());
 
     try {
       RegExp re = new RegExp(match);
       text = re.substitute(text + (char)0, repl, true);
       text = text.substring(0, text.length()-1);
     } catch (Exception ex) {
-      //ii.error(ia, "Exception in regexp: "+e.toString());
+      //=== ii.error(ia, "Exception in regexp: "+e.toString());
     }
 
-    //System.err.println("result: " +text);
     out.putNode(new TreeText(text));
   }
 

@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.13 1999-11-01 19:51:34 steve Exp $
+//	$Id: AbstractParser.java,v 1.14 1999-11-04 22:33:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.13 1999-11-01 19:51:34 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.14 1999-11-04 22:33:55 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -101,7 +101,12 @@ public abstract class AbstractParser extends CursorStack implements Parser
   public Tagset getTagset() { return tagset; }
   public void setTagset(Tagset aTagset) {
     tagset = aTagset;
-    if (aTagset != null) caseFoldTagnames = aTagset.caseFoldTagnames();
+    if (aTagset != null) {
+      caseFoldTagnames = aTagset.caseFoldTagnames();
+      ActiveAttrList atts = aTagset.getAttrList();
+      strictEndTags = ((atts == null)
+		       || !atts.hasTrueAttribute("nonstrictEndTags"));
+    }
   }
 
   public EntityTable getEntities() { return entities; }

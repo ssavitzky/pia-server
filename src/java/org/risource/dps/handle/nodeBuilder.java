@@ -1,5 +1,5 @@
 ////// nodeBuilder.java: handler for tags that build nodes.
-//	$Id: nodeBuilder.java,v 1.5 1999-08-31 21:30:30 steve Exp $
+//	$Id: nodeBuilder.java,v 1.6 1999-11-04 22:33:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.dps.input.FromParseTree;
  *
  * <p>	Constructs and then processes a new node, typically an Element. 
  *
- * @version $Id: nodeBuilder.java,v 1.5 1999-08-31 21:30:30 steve Exp $
+ * @version $Id: nodeBuilder.java,v 1.6 1999-11-04 22:33:44 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -95,7 +95,7 @@ public class nodeBuilder extends GenericHandler {
 
     // If there's a binding for ".", that's the name.
     if (ns.getBinding(".") != null) {
-      tagname = ns.getValueNodes(cxt, ".").toString().trim();
+      tagname = TextUtil.getCharData(ns.getValueNodes(cxt, ".")).trim();
       ns.remove(".");
     }
 
@@ -103,13 +103,13 @@ public class nodeBuilder extends GenericHandler {
     if (tagname.startsWith("#")) {
       // === need to use the tagset for this...
       if (tagname.equalsIgnoreCase("#comment")) {
-	return new TreeComment(content.toString());
+	return new TreeComment(TextUtil.getCharData(content));
       } else if (tagname.equalsIgnoreCase("#cdata")) {
-	return null; // new TreeCData(content.toString());
+	return new TreeCDATA(TextUtil.getCharData(content));
       } else if (tagname.equalsIgnoreCase("#text")) {
-	return new TreeText(content.toString());
+	return new TreeText(TextUtil.getCharData(content));
       } else if (tagname.equalsIgnoreCase("#string")) {
-	return new TreeCharData(NodeType.STRING, content.toString());
+	return new TreeCharData(NodeType.STRING, TextUtil.getCharData(content));
       } else {
 	return new TreeComment("** unrecognized type " + tagname);
       }

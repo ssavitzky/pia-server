@@ -1,5 +1,5 @@
 ////// BasicParser.java: minimal implementation of the Parser interface
-//	$Id: BasicParser.java,v 1.9 1999-10-07 18:32:17 steve Exp $
+//	$Id: BasicParser.java,v 1.10 1999-11-04 22:33:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -56,7 +56,7 @@ import java.io.IOException;
  *	syntax offered by the Syntax interface is used. <p>
  *
  *
- * @version $Id: BasicParser.java,v 1.9 1999-10-07 18:32:17 steve Exp $
+ * @version $Id: BasicParser.java,v 1.10 1999-11-04 22:33:56 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -75,13 +75,43 @@ public class BasicParser extends AbstractParser {
    *	Correctly handles <code>&amp;<i>ident</i>=</code>, which is not
    *	an entity reference but part of a query string.
    *
+   * <p> Blindly appends character entities to the buffer.
+   *
    * @param strict if <code>true</code>, <em>require</em> a semicolon.
    * @return false if the next available character does not belong in
    *	an entity name.
    */
   protected boolean getEntity(boolean strict) throws IOException {
     if (last != entityStart) return false;
-    last = 0;
+    last = in.read();
+    if (last == '#') {
+      last = 0;
+      if (!eatIdent()) {
+	buf.append(entityStart); 
+	buf.append("#");
+	return false;
+      } else if (last != entityEnd) {
+	buf.append(entityStart); 
+	buf.append("#");
+	buf.append(ident);
+	return false;
+      } else try {
+	last = 0;
+	// blindly append character entities to the buffer!
+	if (ident.startsWith("x") || ident.startsWith("X")) {
+	  char c = (char)Integer.parseInt(ident, 16);
+	} else {
+	  char c = (char)Integer.parseInt(ident, 10);
+	  buf.append(c);
+	}
+	return false;
+      } catch (NumberFormatException e) {
+	buf.append(entityStart); 
+	buf.append("#");
+	buf.append(ident);
+	return false;
+      }
+    }
     if (!eatIdent()) {
       buf.append(entityStart); 
       return false;

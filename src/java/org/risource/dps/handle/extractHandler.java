@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.21 1999-10-06 23:58:34 bill Exp $
+//	$Id: extractHandler.java,v 1.22 1999-11-04 22:33:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.21 1999-10-06 23:58:34 bill Exp $
+ * @version $Id: extractHandler.java,v 1.22 1999-11-04 22:33:43 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -383,7 +383,8 @@ class inHandler extends extract_subHandler {
     while (items.hasMoreElements()) {
       Node item = (Node) items.nextElement();
       if (item.getNodeType() == Node.TEXT_NODE) {
-        ActiveNode binding = aContext.getBinding(item.toString(), false);
+	String name = item.getNodeValue().trim();
+        ActiveNode binding = aContext.getBinding(name, false);
 	if (binding != null) out.putNode(binding);
       } else {
 	out.putNode(item);
@@ -463,10 +464,7 @@ class nameHandler extends extract_subHandler {
       return;
     }
     String name = null;
-    if (content != null)
-	name = content.toString();
-    if (name != null) name = name.trim();
-
+    if (content != null) name = TextUtil.trimCharData(content);
 
     if (name == null || name.length() == 0) {
       extractNames(extracted, out); 
@@ -507,9 +505,8 @@ class name_recursive extends extract_subHandler {
     }
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
-    String key = content.toString();
+    String key = TextUtil.trimCharData(content);
 
-    if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     if (key != null && key.startsWith("#")) {
       int ntype = NodeType.getType(key.substring(1));
@@ -563,7 +560,7 @@ class sortHandler extends extract_subHandler {
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
     if (extracted == null) {
-      reportError(in, aContext, "No extracted list: possibly not inside < sort >");
+      reportError(in, aContext, "No extracted list: possibly not inside < extract >");
       return;
     }
 
@@ -714,9 +711,8 @@ class sort_recursive extends extract_subHandler {
     }
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
-    String key = content.toString();
+    String key = TextUtil.trimCharData(content);
 
-    if (key != null) key = key.trim();
     if (key != null && !caseSens) key = key.toLowerCase();
     if (key != null && key.startsWith("#")) {
       int ntype = NodeType.getType(key.substring(1));
@@ -773,8 +769,7 @@ class keyHandler extends extract_subHandler {
     }
     boolean caseSens = atts.hasTrueAttribute("case");
     String sep = atts.getAttribute("sep");
-    String key = content.toString();
-    if (key != null) key = key.trim();
+    String key = TextUtil.trimCharData(content);
     if (key != null && !caseSens) key = key.toLowerCase();
 
     int len = extracted.getLength();
@@ -807,8 +802,7 @@ class key_recursive extends extract_subHandler {
     boolean caseSens = atts.hasTrueAttribute("case");
     String  sep = atts.getAttribute("sep");
     boolean all = atts.hasTrueAttribute("all");
-    String  key = content.toString();
-    if (key != null) key = key.trim();
+    String  key = TextUtil.trimCharData(content);
     if (key != null && !caseSens) key = key.toLowerCase();
     extract(extracted, key, caseSens, sep, all, out);
   }
@@ -841,8 +835,7 @@ class idHandler extends extract_subHandler {
       return;
     }
     boolean caseSens = atts.hasTrueAttribute("case");
-    String id = content.toString();
-    if (id != null) id = id.trim();
+    String id = TextUtil.trimCharData(content);
     if (id != null && !caseSens) id = id.toLowerCase();
 
     int len = extracted.getLength();
@@ -874,8 +867,7 @@ class id_recursive extends extract_subHandler {
     }
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
-    String  id = content.toString();
-    if (id != null) id = id.trim();
+    String  id = TextUtil.trimCharData(content);
     if (id != null && !caseSens) id = id.toLowerCase();
     extract(extracted, id, caseSens, all, out);
   }
@@ -909,8 +901,7 @@ class attrHandler extends extract_subHandler {
       return;
     }
     boolean caseSens = atts.hasTrueAttribute("case");
-    String name = content.toString();
-    if (name != null) name = name.trim();
+    String name = TextUtil.trimCharData(content);
     
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
@@ -943,9 +934,8 @@ class hasAttrHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    String name = content.toString();
+    String name = TextUtil.trimCharData(content);
     String value= atts.getAttribute("value");
-    if (name != null) name = name.trim();
     
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
@@ -971,7 +961,7 @@ class matchHandler extends extract_subHandler {
       return;
     }
     boolean caseSens = atts.hasTrueAttribute("case");
-    String match = content.toString();
+    String match = TextUtil.getCharData(content);
     // === WARNING: match is not being trimmed! ===
     if (!caseSens) match = match.toLowerCase();
 

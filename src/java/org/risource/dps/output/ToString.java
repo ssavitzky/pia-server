@@ -1,5 +1,5 @@
 ////// ToString.java: Output to String
-//	$Id: ToString.java,v 1.6 1999-06-04 22:40:16 steve Exp $
+//	$Id: ToString.java,v 1.7 1999-11-04 22:33:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
 /**
  * Output to a String <em>in external form</em>. <p>
  *
- * @version $Id: ToString.java,v 1.6 1999-06-04 22:40:16 steve Exp $
+ * @version $Id: ToString.java,v 1.7 1999-11-04 22:33:52 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Output
  * @see org.risource.dps.output.ToCharData
@@ -49,18 +49,18 @@ public class ToString extends ToExternalForm {
   ** State:
   ************************************************************************/
 
-  protected String destination = "";
+  protected StringBuffer destination = new StringBuffer();
   protected boolean expandEntities = false;
   protected EntityTable entityTable = null;
 
-  public final String getString() { return destination; }
+  public final String getString() { return destination.toString(); }
 
   /************************************************************************
   ** Internal utilities:
   ************************************************************************/
 
   protected final void write(String s) {
-    destination += s;
+    destination.append(s);
   }
 
   /************************************************************************

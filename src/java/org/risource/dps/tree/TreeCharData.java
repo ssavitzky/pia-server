@@ -1,5 +1,5 @@
 ////// TreeCharData.java -- implementation of ActiveCharData
-//	$Id: TreeCharData.java,v 1.4 1999-06-25 00:18:01 steve Exp $
+//	$Id: TreeCharData.java,v 1.5 1999-11-04 22:34:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.dps.util.*;
  *	node cannot be read back in as XML, but is almost essential when
  *	generating non-XML output.
  *
- * @version $Id: TreeCharData.java,v 1.4 1999-06-25 00:18:01 steve Exp $
+ * @version $Id: TreeCharData.java,v 1.5 1999-11-04 22:34:03 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -204,7 +204,7 @@ public class TreeCharData extends TreeNode implements ActiveCharData {
   /** Convert the Node to a String.
    */
   public String toString() {
-    return contentString();
+    return getData();
   }
 
   /************************************************************************

@@ -1,5 +1,5 @@
 ////// AbstractNamespace.java: Node Lookup Table
-//	$Id: AbstractNamespace.java,v 1.4 1999-10-11 21:41:53 steve Exp $
+//	$Id: AbstractNamespace.java,v 1.5 1999-11-04 22:33:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: AbstractNamespace.java,v 1.4 1999-10-11 21:41:53 steve Exp $
+ * @version $Id: AbstractNamespace.java,v 1.5 1999-11-04 22:33:48 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -232,7 +232,7 @@ public abstract class AbstractNamespace extends TreeGeneric
       for (int i = 0; i < attrs.getLength(); ++i) {
 	ActiveAttr at = (ActiveAttr)attrs.asNodeList().activeItem(i);
 	if (!at.getSpecified() || at.getValueNodes() == null) continue;
-	String it = at.toString();
+	String it = at.getNodeValue();
 	if (col + 1 + it.length() < 72) {
 	  s += " " + it;
 	  col += 1 + it.length();

@@ -1,5 +1,5 @@
 ////// defineHandler.java: <define> Handler implementation
-//	$Id: defineHandler.java,v 1.15 1999-10-29 17:17:22 steve Exp $
+//	$Id: defineHandler.java,v 1.16 1999-11-04 22:33:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;define&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: defineHandler.java,v 1.15 1999-10-29 17:17:22 steve Exp $
+ * @version $Id: defineHandler.java,v 1.16 1999-11-04 22:33:43 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -330,6 +330,8 @@ class define_entity extends defineHandler {
       if (newContent != null)
 	ext.setRequestContent(new TreeNodeList(newContent));
       ent = ext;
+    } else if (retain) {
+      ent = ts.createPassiveEntity(nsname, TextUtil.getCharData(newContent));
     } else {
       ent = (ActiveEntity) ts.createActiveNode(Node.ENTITY_NODE, nsname,
 					       newContent);

@@ -1,5 +1,5 @@
 ////// parseHandler.java: <parse> Handler implementation
-//	$Id: parseHandler.java,v 1.7 1999-05-20 20:15:13 steve Exp $
+//	$Id: parseHandler.java,v 1.8 1999-11-04 22:33:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.io.StringReader;
  *
  *	
  *
- * @version $Id: parseHandler.java,v 1.7 1999-05-20 20:15:13 steve Exp $
+ * @version $Id: parseHandler.java,v 1.8 1999-11-04 22:33:44 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -109,7 +109,7 @@ class parse_usenet extends parseHandler {
     TopContext top  = cxt.getTopContext();
     String  tsname  = atts.getAttribute("tagset");
     Tagset      ts  = top.loadTagset(tsname);	// correctly handles null
-    String cstring  = content.toString(); // may not be external form!
+    String cstring  = TextUtil.trimCharData(content);
 
     cstring = TextUtil.addMarkup(cstring);
     parse(in, cxt, out, ts, cstring);

@@ -1,5 +1,5 @@
 ////// EntityRefHandler.java: Entity Reference Node Handler implementation
-//	$Id: EntityRefHandler.java,v 1.4 1999-06-25 00:41:18 steve Exp $
+//	$Id: EntityRefHandler.java,v 1.5 1999-11-04 22:33:42 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import org.risource.ds.Table;
  *
  *	<p>
  *
- * @version $Id: EntityRefHandler.java,v 1.4 1999-06-25 00:41:18 steve Exp $
+ * @version $Id: EntityRefHandler.java,v 1.5 1999-11-04 22:33:42 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.handle.GenericHandler
@@ -87,9 +87,7 @@ public class EntityRefHandler extends AbstractHandler {
   ** Semantic Operations:
   ************************************************************************/
 
-  /** Since we know what has to be done, it's cheaper to actually perform 
-   *	the expansion if the entity is active. 
-   *
+  /** 
    *	=== Eventually should return a code that implies <code>getValue</code>
    */
   public int getActionCode() {
