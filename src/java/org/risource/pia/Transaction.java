@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.11 1999-10-22 00:56:47 steve Exp $
+// $Id: Transaction.java,v 1.12 1999-11-12 17:24:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -591,6 +591,7 @@ public abstract class Transaction
   /** Retrieve an object by name.  */
   public synchronized Object get(String name) {
     if (name.equals("HEADERS")) return headers();
+    else if (name.equals("url")) return url();
     Object o = header(name);
     if (o != null) return o;
     else return getFeature(name);

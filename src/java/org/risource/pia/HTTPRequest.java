@@ -1,5 +1,5 @@
 //  HTTPrequest.java
-// $Id: HTTPRequest.java,v 1.14 1999-10-19 01:04:16 steve Exp $
+// $Id: HTTPRequest.java,v 1.15 1999-11-12 17:24:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -753,6 +753,19 @@ public class  HTTPRequest extends Transaction {
 
     startThread();
   }
+
+  /************************************************************************
+  ** Component access:
+  ************************************************************************/
+
+  /** Set an object by name. */
+  public synchronized void put(String name, Object value) {
+    if (name.equals("url")) 
+      setRequestURL(value.toString());
+    else super.put(name, value);
+  }
+
+
 
   /************************************************************************
   ** Debugging versions:
