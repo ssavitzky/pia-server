@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
@@ -63,7 +63,7 @@ import java.util.NoSuchElementException;
  * @version Message.java,v 1.2 1999/03/01 23:48:26 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.util.Report
+ * @see org.risource.util.Report
  *
  */
 

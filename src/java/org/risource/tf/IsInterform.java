@@ -23,11 +23,11 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
 import java.net.URL;
-import crc.ds.UnaryFunctor;
-import crc.pia.Transaction;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
 
 public final class IsInterform implements UnaryFunctor{
 

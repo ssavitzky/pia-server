@@ -28,7 +28,7 @@
  *      are written to the PIA agent directory/Cache/yyyy/mm/d
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -54,25 +54,25 @@ import java.util.SimpleTimeZone;
 import java.util.Locale;
 
 
-import crc.pia.PiaRuntimeException;
-import crc.pia.GenericAgent;
-import crc.pia.Content;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPResponse;
-import crc.pia.Content;
-import crc.pia.FileAccess;
-import crc.pia.ContentOperationUnavailable;
-import crc.pia.HeaderFactory;
-import crc.pia.Headers;
+import org.risource.pia.PiaRuntimeException;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Content;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Content;
+import org.risource.pia.FileAccess;
+import org.risource.pia.ContentOperationUnavailable;
+import org.risource.pia.HeaderFactory;
+import org.risource.pia.Headers;
 
-import crc.util.Utilities;
-import crc.util.CacheTable;
+import org.risource.util.Utilities;
+import org.risource.util.CacheTable;
 
-import crc.ds.Criterion;
+import org.risource.ds.Criterion;
 
 import w3c.www.http.HTTP;
 
@@ -232,7 +232,7 @@ public class Cache extends GenericAgent {
       System.err.println("IO error: " + e.getMessage());
     }
       
-    Content bs = new crc.content.text.Default(fis);
+    Content bs = new org.risource.content.text.Default(fis);
     
     response = new HTTPResponse(ts, false);
     response.setContentObj( bs );

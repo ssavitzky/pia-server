@@ -28,10 +28,10 @@
  *	feature.
  */
 
-package crc.tf;
+package org.risource.tf;
 
-import crc.pia.Transaction;
-import crc.ds.Features;
+import org.risource.pia.Transaction;
+import org.risource.ds.Features;
 
 public class TFComputer {
 

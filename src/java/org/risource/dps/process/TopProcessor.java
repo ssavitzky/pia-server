@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps.process;
+package org.risource.dps.process;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -40,13 +40,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.MalformedURLException;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dom.NodeList;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dom.NodeList;
 
-import crc.ds.List;
-import crc.ds.Tabular;
+import org.risource.ds.List;
+import org.risource.ds.Tabular;
 
 /**
  * A top-level Processor, implementing the TopContext and Processor
@@ -63,8 +63,8 @@ import crc.ds.Tabular;
  * @version TopProcessor.java,v 1.14 1999/03/01 23:46:44 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Context */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Context */
 
 public class TopProcessor extends BasicProcessor implements TopContext
 {
@@ -328,7 +328,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
    */
   public Tagset loadTagset(String tsname) {
     if (tsname == null) return tagset;
-    else return crc.dps.tagset.Loader.loadTagset(tsname, this);
+    else return org.risource.dps.tagset.Loader.loadTagset(tsname, this);
   }
 
   /** Process a new subdocument. 

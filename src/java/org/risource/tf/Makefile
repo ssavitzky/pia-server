@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.tf
-TOPDIR=../..
+PACKAGE=org.risource.tf
+TOPDIR=../../..
 
 FILES = \
 	 Title.java \

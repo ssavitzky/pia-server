@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
 import java.io.PrintStream;
 import java.io.InputStream;
@@ -46,8 +46,8 @@ import java.net.URL;
  * @version TopContext.java,v 1.4 1999/03/01 23:45:38 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Context */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Context */
 
 public interface TopContext extends Processor {
 

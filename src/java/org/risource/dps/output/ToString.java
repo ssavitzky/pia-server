@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dom.*;
-import crc.dps.NodeType;
-import crc.dps.active.ActiveEntity;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dom.*;
+import org.risource.dps.NodeType;
+import org.risource.dps.active.ActiveEntity;
 
 import java.util.NoSuchElementException;
 
@@ -37,8 +37,8 @@ import java.util.NoSuchElementException;
  *
  * @version ToString.java,v 1.8 1999/03/01 23:46:37 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Output
- * @see crc.dps.output.ToCharData
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.output.ToCharData
  */
 
 public class ToString extends ToExternalForm {

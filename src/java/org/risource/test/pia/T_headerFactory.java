@@ -21,14 +21,14 @@
  ***************************************************************************** 
 */
 
-package crc.test.pia;
+package org.risource.test.pia;
 
 import java.io.InputStream;
-import crc.pia.HeaderFactory;
+import org.risource.pia.HeaderFactory;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import crc.pia.Headers;
-import crc.pia.Pia;
+import org.risource.pia.Headers;
+import org.risource.pia.Pia;
 
 /**  HeaderFactoryTest
  * creates an appropriate header object from a HTTP stream
@@ -38,7 +38,7 @@ public class T_headerFactory
 
   private static void usage(){
     System.out.println("Test the creation of a header.  Use headerstest.txt for input.");
-    System.out.println("java crc.pia.HeaderFactory headerstest.txt");
+    System.out.println("java org.risource.pia.HeaderFactory headerstest.txt");
   }
 
   /**

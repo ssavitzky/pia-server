@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 public interface UnaryFunctor
   {

@@ -22,7 +22,7 @@
 */
 
 
-package crc.pia;
+package org.risource.pia;
 import java.util.Enumeration;
 import java.net.URL;
 import java.io.IOException;
@@ -32,23 +32,23 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.Runnable; // added by Greg
 
-import crc.ds.Features;
-import crc.ds.HasFeatures;
-import crc.ds.Queue;
-import crc.ds.Table;
-import crc.ds.Tabular;
-import crc.ds.List;
-import crc.ds.Criteria;
+import org.risource.ds.Features;
+import org.risource.ds.HasFeatures;
+import org.risource.ds.Queue;
+import org.risource.ds.Table;
+import org.risource.ds.Tabular;
+import org.risource.ds.List;
+import org.risource.ds.Criteria;
 
-import crc.pia.Machine;
-import crc.pia.Content;
-import crc.pia.Resolver;
-import crc.pia.Athread;
+import org.risource.pia.Machine;
+import org.risource.pia.Content;
+import org.risource.pia.Resolver;
+import org.risource.pia.Athread;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
-import crc.tf.Registry;
-import crc.tf.TFComputer;
+import org.risource.tf.Registry;
+import org.risource.tf.TFComputer;
 
 import w3c.www.http.HTTP;
 
@@ -307,7 +307,7 @@ public abstract class Transaction
   public void setHeader(String key, String value){
     if( headers() != null ) {
       headers().setHeader(key, value);
-      crc.pia.Pia.debug(this,"Setting header "+key+" "+value);
+      org.risource.pia.Pia.debug(this,"Setting header "+key+" "+value);
     }
    }
 
@@ -859,7 +859,7 @@ public abstract class Transaction
     } else if (e instanceof IOException) {
       msg = "IO error: " + e.toString() + e.getMessage();
     } else {
-      msg = "<pre>" + crc.util.Utilities.reportString(e) + "</pre>";
+      msg = "<pre>" + org.risource.util.Utilities.reportString(e) + "</pre>";
     }
 
     errorResponse(code, msg);

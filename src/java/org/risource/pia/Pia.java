@@ -23,7 +23,7 @@
 
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,21 +39,21 @@ import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import crc.pia.PiaInitException;
-import crc.pia.Machine;
-import crc.pia.Resolver;
-import crc.pia.Logger;
-import crc.pia.Transaction;
+import org.risource.pia.PiaInitException;
+import org.risource.pia.Machine;
+import org.risource.pia.Resolver;
+import org.risource.pia.Logger;
+import org.risource.pia.Transaction;
 
-import crc.pia.agent.AgentInstallException;
-import crc.pia.agent.Admin;
-import crc.pia.agent.Root;
+import org.risource.pia.agent.AgentInstallException;
+import org.risource.pia.agent.Admin;
+import org.risource.pia.agent.Root;
 
-import crc.ds.Table;
-import crc.ds.Tabular;
-import crc.ds.List;
+import org.risource.ds.Table;
+import org.risource.ds.Tabular;
+import org.risource.ds.List;
 
-import crc.pia.Configuration;
+import org.risource.pia.Configuration;
 
  /**
   * Pia contains the PIA's main program, and serves as a repository
@@ -64,7 +64,7 @@ import crc.pia.Configuration;
   *	<code>properties</code> attribute.  This will change eventually.
   *
   * @version Pia.java,v 1.34 1999/03/01 23:47:41 pgage Exp
-  * @see crc.pia.Setup
+  * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
 
@@ -103,68 +103,68 @@ public class Pia implements Tabular {
   /**
    * Property name of path of pia properties file.
    */
-  public static final String PIA_PROP_PATH = "crc.pia.profile";
+  public static final String PIA_PROP_PATH = "org.risource.pia.profile";
 
   /**
    * Property name of URL of pia doc
    */
-  public static final String PIA_DOCURL = "crc.pia.docurl";
+  public static final String PIA_DOCURL = "org.risource.pia.docurl";
 
   /**
    * Property name of pia's top-level install directory.
    */
-  public static final String PIA_ROOT = "crc.pia.piaroot";
+  public static final String PIA_ROOT = "org.risource.pia.piaroot";
 
   /**
    * Property name of port the PIA is accessed through.
    */
-  public static final String PIA_PORT = "crc.pia.port";
+  public static final String PIA_PORT = "org.risource.pia.port";
 
   /**
    * Property name of port the PIA listens on.  May differ from PIA_PORT
    *	if PIA_PORT is what a proxy server is listening to.
    */
-  public static final String REAL_PORT = "crc.pia.realport";
+  public static final String REAL_PORT = "org.risource.pia.realport";
 
   /**
    * Property name of this host
    */
-  public static final String PIA_HOST = "crc.pia.host";
+  public static final String PIA_HOST = "org.risource.pia.host";
 
   /**
    * Property name of user's pia state directory (normally ~/.pia)
    */
-  public static final String USR_ROOT = "crc.pia.usrroot";
+  public static final String USR_ROOT = "org.risource.pia.usrroot";
 
   /**
    * Property name of debugging flag
    */
-  public static final String PIA_DEBUG = "crc.pia.debug";
+  public static final String PIA_DEBUG = "org.risource.pia.debug";
 
   /**
    * Property name of verbose flag
    */
-  public static final String PIA_VERBOSE = "crc.pia.verbose";
+  public static final String PIA_VERBOSE = "org.risource.pia.verbose";
 
   /**
    * Property name of pia logger class
    */
-  public static final String PIA_LOGGER = "crc.pia.logger";
+  public static final String PIA_LOGGER = "org.risource.pia.logger";
 
   /**
    * Property name of pia request timeout
    */
-  public static final String PIA_REQTIMEOUT = "crc.pia.reqtimeout";
+  public static final String PIA_REQTIMEOUT = "org.risource.pia.reqtimeout";
 
   /**
    * Property name of root agent name
    */
-  public static final String ROOT_AGENT_NAME = "crc.pia.rootagent";
+  public static final String ROOT_AGENT_NAME = "org.risource.pia.rootagent";
 
   /**
    * Property name of admin agent name
    */
-  public static final String ADMIN_AGENT_NAME = "crc.pia.adminagent";
+  public static final String ADMIN_AGENT_NAME = "org.risource.pia.adminagent";
 
 
   /************************************************************************
@@ -214,14 +214,14 @@ public class Pia implements Tabular {
   ************************************************************************/
 
   /** The name of the class that will perform our setup. 
-   *	@see crc.pia.Setup
+   *	@see org.risource.pia.Setup
    */
-  protected String setupClassName 	= "crc.pia.Setup";
+  protected String setupClassName 	= "org.risource.pia.Setup";
 
   /** The name of the class that will perform logging.
-   *	@see crc.pia.Logger
+   *	@see org.risource.pia.Logger
    */
-  protected String loggerClassName 	= "crc.pia.Logger";
+  protected String loggerClassName 	= "org.risource.pia.Logger";
 
   /** The command-line options passed to Java on startup.
    */
@@ -707,7 +707,7 @@ public class Pia implements Tabular {
 	  // The following line replaces one that used the now-deprecated
 	  // getBytes(int, int, byte[], int).  Hopefully it will still work.
 	  byte bytes[] = auth.getBytes() ;
-	  auth = crc.util.Utilities.encodeBase64(bytes);
+	  auth = org.risource.util.Utilities.encodeBase64(bytes);
 	  System.err.println("*** Please edit the your pia.props file"
 			     + " to remove a security hole: ***");
 	  System.err.println("    Replace the line defining "
@@ -851,7 +851,7 @@ public class Pia implements Tabular {
       initializeProperties();
       initializeLogger();
 
-      String fileMap = properties.getProperty("crc.pia.filemap");
+      String fileMap = properties.getProperty("org.risource.pia.filemap");
       loadFileMapping(fileMap);
 
       return true;
@@ -940,7 +940,7 @@ public class Pia implements Tabular {
 
   /** Load the MIME type mappings.  */
   protected Properties loadFileMapping( String where ){
-    if (where == null) where = properties.getProperty("crc.pia.filemap");
+    if (where == null) where = properties.getProperty("org.risource.pia.filemap");
 
     Properties zFileMapping = new Properties();
     File mapFile            = null;
@@ -1015,7 +1015,7 @@ public class Pia implements Tabular {
 
       /** Continue with the initialization if the user requested props. */
 
-      verbose = pia.properties.getBoolean("crc.pia.verbose", false);
+      verbose = pia.properties.getBoolean("org.risource.pia.verbose", false);
       if (verbose) {
 	pia.reportProps(pia.properties, "Properties");
       }

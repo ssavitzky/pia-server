@@ -22,7 +22,7 @@
 */
 
 
-package crc.ds;
+package org.risource.ds;
 
 /** 
  *  Match a feature exactly by value.  Null matches null (missing) features, 

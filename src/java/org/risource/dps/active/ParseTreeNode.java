@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dps.*;
+import org.risource.dps.*;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.NotMyChildException;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.NotMyChildException;
 
 /**
  * Abstract base class for all Nodes used to build parse trees in the
@@ -41,9 +41,9 @@ import crc.dom.NotMyChildException;
  *	that all nodes in the parse tree are subclasses of ParseTreeNode,
  *	and throws a runtime exception when this assumption is violated.  <p>
  *
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
- * @see crc.dps.active.NotActiveNodeException
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
+ * @see org.risource.dps.active.NotActiveNodeException
  */
 public abstract class ParseTreeNode implements ActiveNode, Serializable {
 

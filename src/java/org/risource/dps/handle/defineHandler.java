@@ -22,18 +22,18 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.tagset.TagsetProcessor;
-import crc.dps.handle.Loader;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.tagset.TagsetProcessor;
+import org.risource.dps.handle.Loader;
 
 import java.util.Enumeration;
 
@@ -177,7 +177,7 @@ class define_element extends defineHandler {
 	// Use an existing tagset as a namespace.
 	String tsName = handlerClass.substring(0, nsIndex);
 	handlerClass = handlerClass.substring(nsIndex);
-	Tagset otherTagset = crc.dps.tagset.Loader.loadTagset(tsName);
+	Tagset otherTagset = org.risource.dps.tagset.Loader.loadTagset(tsName);
 	try {
 	  h = (GenericHandler) otherTagset.getHandlerForTag(handlerClass);
 	}  catch (Exception ex) {}

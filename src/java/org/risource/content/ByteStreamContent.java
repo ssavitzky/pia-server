@@ -22,7 +22,7 @@
 */
 
 
-package crc.content;
+package org.risource.content;
 
 import java.io.InputStream;
 import java.io.OutputStream;

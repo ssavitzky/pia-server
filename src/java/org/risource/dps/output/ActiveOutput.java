@@ -22,11 +22,11 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.util.CurrentActive;
-import crc.dps.*;
-import crc.dom.*;
+import org.risource.dps.util.CurrentActive;
+import org.risource.dps.*;
+import org.risource.dom.*;
 
 /**
  * An abstract base class for implementations of the Output interface
@@ -34,9 +34,9 @@ import crc.dom.*;
  *
  * @version ActiveOutput.java,v 1.4 1999/03/01 23:46:31 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Token
- * @see crc.dps.Input
- * @see crc.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.Processor
  */
 
 public abstract class ActiveOutput extends CurrentActive implements Output {

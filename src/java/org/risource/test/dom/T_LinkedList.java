@@ -22,9 +22,9 @@
 */
 
 
-package crc.test.dom;
+package org.risource.test.dom;
 
-import crc.dom.*;
+import org.risource.dom.*;
 
 public class T_LinkedList{
   private static void printusage(){

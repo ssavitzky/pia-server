@@ -22,12 +22,12 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.AttributeList;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.AttributeList;
 
-import crc.dps.active.*;
+import org.risource.dps.active.*;
 
 /**
  * The interface for a Node's Syntax handler. 
@@ -43,10 +43,10 @@ import crc.dps.active.*;
  * @version Syntax.java,v 1.9 1999/03/01 23:45:35 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Token
- * @see crc.dps.Input 
- * @see crc.dom.Node */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node */
 
 public interface Syntax {
 
@@ -83,7 +83,7 @@ public interface Syntax {
    * @param t the Node for which this is the handler, and for which the
    *	ssyntax is being checked.
    * @return <code>true</code> if the Node is an empty Element.
-   * @see crc.dps.Tagset
+   * @see org.risource.dps.Tagset
    */
   public boolean isEmptyElement(Node n);
 
@@ -143,9 +143,9 @@ public interface Syntax {
    *
    * @param t the Token for which the syntax is being checked.
    * @return the correct Handler for the Token.  
-   * @see crc.dps.Tagset
+   * @see org.risource.dps.Tagset
    */
-  public Action getActionForNode(crc.dps.active.ActiveNode n);
+  public Action getActionForNode(org.risource.dps.active.ActiveNode n);
 
 
   /** If <code>true</code>, Element tags are recognized in content.  If 

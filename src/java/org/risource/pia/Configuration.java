@@ -38,7 +38,7 @@
  *	</ol>
  */
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,8 +52,8 @@ import java.net.UnknownHostException;
 import java.util.Properties;
 import java.util.Enumeration;
 
-import crc.ds.List;
-import crc.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Table;
 
 class Configuration {
 

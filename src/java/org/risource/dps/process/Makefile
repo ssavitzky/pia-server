@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.process
-TOPDIR=../../..
+PACKAGE=org.risource.dps.process
+TOPDIR=../../../..
 
 
 FILES = \

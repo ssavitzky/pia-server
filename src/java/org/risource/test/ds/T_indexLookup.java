@@ -21,31 +21,31 @@
  ***************************************************************************** 
 */
 
-package crc.test.ds;
+package org.risource.test.ds;
 
-import crc.ds.List; 
-import crc.ds.Table;
-import crc.sgml.SGML;
-import crc.sgml.Util;
-import crc.sgml.AttrWrap;
-import crc.sgml.Text;
-import crc.sgml.Token;
-import crc.sgml.Tokens;
-import crc.sgml.Element;
+import org.risource.ds.List; 
+import org.risource.ds.Table;
+import org.risource.sgml.SGML;
+import org.risource.sgml.Util;
+import org.risource.sgml.AttrWrap;
+import org.risource.sgml.Text;
+import org.risource.sgml.Token;
+import org.risource.sgml.Tokens;
+import org.risource.sgml.Element;
 
-import crc.sgml.DescriptionList;
+import org.risource.sgml.DescriptionList;
 
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.StringTokenizer;
 
-import crc.pia.Pia;
-import crc.ds.Index;
+import org.risource.pia.Pia;
+import org.risource.ds.Index;
 
 public class T_indexLookup{
   private static void printusage(){
     System.out.println("Needs to know what kind of doc# and path");
-    System.out.println("Here is the command for interactive--> java crc.pia.T_index doc# path");
+    System.out.println("Here is the command for interactive--> java org.risource.pia.T_index doc# path");
   }
 
   public static SGML makeHtml0(){

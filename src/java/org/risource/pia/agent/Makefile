@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.pia.agent
-TOPDIR=../../..
+PACKAGE=org.risource.pia.agent
+TOPDIR=../../../..
 
 
 OTHER = \

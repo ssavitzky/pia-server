@@ -22,16 +22,16 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
-import crc.dom.Attribute;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.Copy;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.Copy;
 
 /**
  * The base class for objects with a current node in a parse tree.
@@ -51,7 +51,7 @@ import crc.dps.util.Copy;
  * @version CurrentActive.java,v 1.11 1999/03/01 23:46:55 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Cursor
+ * @see org.risource.dps.Cursor
  */
 public class CurrentActive implements Cursor {
 
@@ -178,7 +178,7 @@ public class CurrentActive implements Cursor {
   /** This will have to be overridden if the tree is being built on the fly. */
   public boolean hasAttributes() {
     if (element == null) return false;
-    crc.dom.AttributeList atts = element.getAttributes();
+    org.risource.dom.AttributeList atts = element.getAttributes();
     return (atts != null) && (atts.getLength() > 0);
   }
 

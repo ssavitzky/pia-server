@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 import java.util.Enumeration;
 
@@ -36,7 +36,7 @@ import java.util.Enumeration;
  * @version Tabular.java,v 1.4 1999/03/01 23:47:12 pgage Exp
  * @author steve@rsv.ricoh.com
  * @see java.util.HashTable
- * @see crc.ds.Stuff
+ * @see org.risource.ds.Stuff
  */
 public interface Tabular {
   /** Access an individual item by name. */

@@ -22,7 +22,7 @@
 */
 
 
-package crc.test.pia.agent;
+package org.risource.test.pia.agent;
 
 import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
@@ -41,30 +41,30 @@ import java.util.Properties;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import crc.pia.PiaRuntimeException;
-import crc.pia.GenericAgent;
-import crc.pia.FormContent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
-import crc.pia.HTTPResponse;
-import crc.pia.Content;
-import crc.content.ByteStreamContent;
-import crc.ds.Features;
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.pia.PiaRuntimeException;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.FormContent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Content;
+import org.risource.content.ByteStreamContent;
+import org.risource.ds.Features;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 import gnu.regexp.RegExp;
 import gnu.regexp.MatchInfo;
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import w3c.www.http.HTTP;
-import crc.pia.agent.Dofs;
-import crc.pia.agent.Agency;
-import crc.pia.ThreadPool;
+import org.risource.pia.agent.Dofs;
+import org.risource.pia.agent.Agency;
+import org.risource.pia.ThreadPool;
 
 public class T_dofs{
   private static void sleep(int howlong){
@@ -103,10 +103,10 @@ public class T_dofs{
 
  private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, here is the command --> java crc.pia.agent.Dofs -1 dofsagent.txt");
-    System.out.println("For test 2, here is the command --> java crc.pia.agent.Dofs -2 dofsgetdir.txt");
-    System.out.println("For test 3, here is the command --> java crc.pia.agent.Dofs -3 dofsgetfile.txt");
-    System.out.println("For test 4, here is the command --> java crc.pia.agent.Dofs -4 dofsheader.txt");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.agent.Dofs -1 dofsagent.txt");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.agent.Dofs -2 dofsgetdir.txt");
+    System.out.println("For test 3, here is the command --> java org.risource.pia.agent.Dofs -3 dofsgetfile.txt");
+    System.out.println("For test 4, here is the command --> java org.risource.pia.agent.Dofs -4 dofsheader.txt");
   }
 
   /**

@@ -22,11 +22,11 @@
 */
 
 
-package crc.pia;
-import crc.ds.UnaryFunctor;
-import crc.pia.Athread;
+package org.risource.pia;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Athread;
 import java.util.Vector;
-import crc.pia.Piaproperties;
+import org.risource.pia.Piaproperties;
 
 
 public class ThreadPool{
@@ -43,7 +43,7 @@ public class ThreadPool{
   /**
    * max number of threads
    */
-  public final static String MAXTHREADS = "crc.pia.maxthreads";
+  public final static String MAXTHREADS = "org.risource.pia.maxthreads";
 
   int              maxThreads = 50;
 

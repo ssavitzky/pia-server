@@ -22,20 +22,20 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
-import crc.dom.ElementDefinition;
-import crc.dom.NoSuchNodeException;
-import crc.dom.NotMyChildException;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
+import org.risource.dom.ElementDefinition;
+import org.risource.dom.NoSuchNodeException;
+import org.risource.dom.NotMyChildException;
 
-import crc.dps.NodeType;
-import crc.dps.Handler;
+import org.risource.dps.NodeType;
+import org.risource.dps.Handler;
 
 /**
  * An implementation of the ActiveElement interface, suitable for use in 
@@ -43,10 +43,10 @@ import crc.dps.Handler;
  *
  * @version ParseTreeElement.java,v 1.16 1999/03/01 23:45:51 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dom.Element
- * @see crc.dps.Context
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dom.Element
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Processor
  */
 public class ParseTreeElement extends ParseTreeNode implements ActiveElement
 {
@@ -121,7 +121,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
   }
 
   public boolean hasTrueAttribute(String name) {
-    return crc.dps.util.Test.trueValue(getAttribute(name));
+    return org.risource.dps.util.Test.trueValue(getAttribute(name));
   }
 
   public void setAttributeValue(String name, NodeList value) {
@@ -140,7 +140,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
    *	Can be more efficient than setAttribute.
    */
   public void addAttribute(String aname, NodeList value) {
-    crc.dom.Attribute attr = new ParseTreeAttribute(aname, value);
+    org.risource.dom.Attribute attr = new ParseTreeAttribute(aname, value);
     attr.setSpecified(value != null);
     setAttribute(attr);
     //System.err.println("***Added attribute " + attr.toString() 
@@ -275,7 +275,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
   }
 
   /** Construct a ParseTreeElement with given tagname, attributes, and content. 
-   * @see crc.dom.Element
+   * @see org.risource.dom.Element
    */
   public ParseTreeElement( String tag, AttributeList atts, NodeList content ){
     setTagName( tag );
@@ -342,7 +342,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
   }
 
   /** Construct a ParseTreeElement with given tagname and attributes. 
-   * @see crc.dom.Element
+   * @see org.risource.dom.Element
    */
   public ParseTreeElement(String tagname, AttributeList attrs) {
     setTagName(tagname);
@@ -352,7 +352,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
 
   /** Construct a ParseTreeElement with given tagname and syntax,
    *	and a given implicitEnd flag (almost invariably <code>true</code>).
-   * @see crc.dom.Element
+   * @see org.risource.dom.Element
    */
   public ParseTreeElement(String tagname, AttributeList attrs,
 			  boolean implicit)
@@ -364,7 +364,7 @@ public class ParseTreeElement extends ParseTreeNode implements ActiveElement
 
   /** Construct a ParseTreeElement with given tagname, syntax,
    *	and Handler.
-   * @see crc.dom.Element
+   * @see org.risource.dom.Element
    */
   public ParseTreeElement(String tagname, AttributeList attrs, Handler handler)
   {

@@ -22,12 +22,12 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dom.*;
-import crc.dps.Handler;
-import crc.dps.Namespace;
+import org.risource.dom.*;
+import org.risource.dps.Handler;
+import org.risource.dps.Namespace;
 
 /** 
  * Abstract base class for nodes with names, attributes, and a variable 

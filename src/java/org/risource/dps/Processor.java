@@ -22,9 +22,9 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.NodeList;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
 /**
  * The interface for a document Processor. 
@@ -40,10 +40,10 @@ import crc.dom.NodeList;
  * @version Processor.java,v 1.17 1999/03/01 23:45:34 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Context
- * @see crc.dps.Input 
- * @see crc.dps.Output
- * @see crc.dps.TopContext
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Input 
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.TopContext
  */
 
 public interface Processor extends Context {

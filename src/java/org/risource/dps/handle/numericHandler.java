@@ -22,21 +22,21 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
 
-import crc.ds.SortTree;
-import crc.ds.List;
+import org.risource.ds.SortTree;
+import org.risource.ds.List;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
-import crc.ds.Association;
+import org.risource.ds.Association;
 import java.util.Enumeration;
 
 /**

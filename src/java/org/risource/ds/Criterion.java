@@ -22,10 +22,10 @@
 */
 
 
-package crc.ds;
+package org.risource.ds;
 
-import crc.ds.Features;
-import crc.ds.HasFeatures;
+import org.risource.ds.Features;
+import org.risource.ds.HasFeatures;
 
 /**
  *  A Criterion performs a matching operation on a named Feature.
@@ -59,7 +59,7 @@ public class Criterion implements java.io.Serializable {
    *	more than one feature.
    */
   public boolean match(Features features, HasFeatures parent) {
-    // crc.pia.Pia.instance().debug(this, "     feature "+name);
+    // org.risource.pia.Pia.instance().debug(this, "     feature "+name);
     return match(features.getFeature(name, parent));
   }
 

@@ -27,7 +27,7 @@
  * with images.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -40,9 +40,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import crc.pia.*;
+import org.risource.pia.*;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import w3c.www.http.HTTP;
 
@@ -79,7 +79,7 @@ public class Camera extends GenericAgent {
       reply = new HTTPResponse(request, false);
       reply.setStatus(200);
       reply.setContentType("image/gif");
-      reply.setContentObj(new crc.content.ByteStreamContent(s));
+      reply.setContentObj(new org.risource.content.ByteStreamContent(s));
       reply.startThread();	
       return;
     }

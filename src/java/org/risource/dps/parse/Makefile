@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.parse
-TOPDIR=../../..
+PACKAGE=org.risource.dps.parse
+TOPDIR=../../../..
 
 FILES = \
 	AbstractParser.java \

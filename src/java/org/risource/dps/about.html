@@ -6,7 +6,7 @@
 
 <blockquote><em>
   This document contains notes about the PIA's Document Processing System
-  (DPS), as implemented in the Java module <code>crc.dps</code>.
+  (DPS), as implemented in the Java module <code>org.risource.dps</code>.
 </em></blockquote>
 
 <h3>See Also:</h3>
@@ -50,7 +50,7 @@ There are several problems with this:
 As a result, we prefer to view an InterForm as an ActiveDocument composed of
 Nodes (some of) which implement the ActiveNode interface.  <em>Active</em>
 nodes simply expand into more nodes.  The classes whose names start with
-``<code>ParseTree</code>'' in <code>crc.dps.active</code> implement the
+``<code>ParseTree</code>'' in <code>org.risource.dps.active</code> implement the
 <code>ActiveNode</code> interface. <p>
 
 The efficient way to accomplish this kind of processing is to use a parse tree
@@ -196,7 +196,7 @@ active nodes are present:
 </ol>
 
 <p><code>processNodes</code> is actually a method of the interface
-<code>crc.dps.Process</code>.  <code>Process</code> in turn <em>extends</em>
+<code>org.risource.dps.Process</code>.  <code>Process</code> in turn <em>extends</em>
 <code>Context</code>, and has <code>input</code> and <code>output</code> as
 instance variables.  This makes the code as implemented somewhat less clear
 than that given above.  An additional complication is the fact that a node's

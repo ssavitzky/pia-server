@@ -22,22 +22,22 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
 
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.OutputStreamWriter;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.output.ToWriter;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.output.ToWriter;
 
 /**
  * Handler for &lt;output&gt;....&lt;/&gt;  <p>

@@ -21,20 +21,20 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 /** Base class for objects that construct sorted collections of
  *	Association objects.  Once a sort tree has been constructed,
  *	the Sorter can return its Associations or their values in
  *	either ascending or descending order. <p>
  *
- *	@see crc.ds.Association
- *	@see crc.ds.BalancedTree
+ *	@see org.risource.ds.Association
+ *	@see org.risource.ds.BalancedTree
  * 
  *	@see <em>The Art of Computer Programming</em> by Donald Knuth,
  *	Section 6.2.3, Volume III, page 455.  */
 
-import crc.ds.Association;
+import org.risource.ds.Association;
 
 import java.util.Enumeration;
 

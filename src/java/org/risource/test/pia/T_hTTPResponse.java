@@ -27,7 +27,7 @@
  */
 
 
-package crc.test.pia;
+package org.risource.test.pia;
 
 import java.net.URL;
 import java.io.IOException;
@@ -39,18 +39,18 @@ import java.io.OutputStream;
 import java.util.Vector;
 import java.util.StringTokenizer;
 
-import crc.ds.Queue;
-import crc.ds.Features;
-import crc.ds.List;
-import crc.pia.Machine;
-import crc.pia.Content;
-import crc.pia.Transaction;
+import org.risource.ds.Queue;
+import org.risource.ds.Features;
+import org.risource.ds.List;
+import org.risource.pia.Machine;
+import org.risource.pia.Content;
+import org.risource.pia.Transaction;
 
-import crc.tf.Registry;
-import crc.pia.HTTPResponse;
-import crc.content.ByteStreamContent;
-import crc.pia.HTTPRequest;
-import crc.pia.Headers;
+import org.risource.tf.Registry;
+import org.risource.pia.HTTPResponse;
+import org.risource.content.ByteStreamContent;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.Headers;
 
 public class  T_hTTPResponse {
   private static void sleep(int howlong){
@@ -134,7 +134,7 @@ public class  T_hTTPResponse {
     System.out.println("In the run(), processInput() gets called.");
     System.out.println("The request transaction is read from input/get.txt.");
 
-    crc.pia.GenericAgent.DEBUG=true;
+    org.risource.pia.GenericAgent.DEBUG=true;
     try{
       InputStream in = new FileInputStream (filename);
       Machine machine1 = new Machine();
@@ -175,7 +175,7 @@ public class  T_hTTPResponse {
       System.out.println("The request transaction's from and to machine will be switched.");
       System.out.println("Also test setStatus, setReason, and setting headers information.");
 
-      crc.pia.GenericAgent.DEBUG=true;
+      org.risource.pia.GenericAgent.DEBUG=true;
       InputStream in = new FileInputStream (requestfile);
       Machine machine1 = new Machine();
       machine1.setInputStream( in );
@@ -229,7 +229,7 @@ public class  T_hTTPResponse {
       System.out.println("From machine gets its data from input/response.txt file.");
       System.out.println("Also, test transaction's features.");
 
-      crc.pia.GenericAgent.DEBUG=true;
+      org.risource.pia.GenericAgent.DEBUG=true;
       InputStream in = new FileInputStream (requestfile);
       Machine machine1 = new Machine();
       machine1.setInputStream( in );
@@ -285,11 +285,11 @@ public class  T_hTTPResponse {
 
  private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, (const. 1) --> java crc.pia.HTTPResponse -1 response.txt");
-    System.out.println("For test 2, (const. 2) --> java crc.pia.HTTPResponse -2 responsebody.txt");
-    System.out.println("For test 3, (const. 3) --> java crc.pia.HTTPResponse -3 get.txt");
-    System.out.println("For test 4, (const. 4) --> java crc.pia.HTTPResponse -4 get.txt responsebody.txt");
-    System.out.println("For test 5, (trans. features) --> java crc.pia.HTTPResponse -5 post.txt response.txt");
+    System.out.println("For test 1, (const. 1) --> java org.risource.pia.HTTPResponse -1 response.txt");
+    System.out.println("For test 2, (const. 2) --> java org.risource.pia.HTTPResponse -2 responsebody.txt");
+    System.out.println("For test 3, (const. 3) --> java org.risource.pia.HTTPResponse -3 get.txt");
+    System.out.println("For test 4, (const. 4) --> java org.risource.pia.HTTPResponse -4 get.txt responsebody.txt");
+    System.out.println("For test 5, (trans. features) --> java org.risource.pia.HTTPResponse -5 post.txt response.txt");
   }
 
   public static void main(String[] args){

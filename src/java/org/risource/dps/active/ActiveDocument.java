@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.active;
-import crc.dom.Node;
-import crc.dom.Document;
+package org.risource.dps.active;
+import org.risource.dom.Node;
+import org.risource.dom.Document;
 
-import crc.dps.Action;
-import crc.dps.Syntax;
-import crc.dps.Handler;
+import org.risource.dps.Action;
+import org.risource.dps.Syntax;
+import org.risource.dps.Handler;
 
 /**
  * A DOM Document node which includes extra syntactic and semantic
@@ -37,12 +37,12 @@ import crc.dps.Handler;
  *
  * @version ActiveDocument.java,v 1.2 1999/03/01 23:45:40 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Active
- * @see crc.dps.ActiveNode
- * @see crc.dps.Action
- * @see crc.dps.Syntax
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.ActiveNode
+ * @see org.risource.dps.Action
+ * @see org.risource.dps.Syntax
+ * @see org.risource.dps.Processor
  */
 
 public interface ActiveDocument extends Document, ActiveNode {

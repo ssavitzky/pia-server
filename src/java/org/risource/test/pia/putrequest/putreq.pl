@@ -26,13 +26,13 @@ push (@INC,"/usr/local.mnt/lib/perl5.shared/site_perl");
 require LWP::UserAgent;
 
 ($#ARGV == 0) || die "Need to know url.\n
-Example 1:  http://lena.crc.ricoh.com:8888/Buss/testwrite.if/test.txt?name=chunk&you=me\n
-Example 2:  http://lena.crc.ricoh.com:8888/My/Buss/wongfoo.txt: $#ARGV ";
+Example 1:  http://lena.org.risource.ricoh.com:8888/Buss/testwrite.if/test.txt?name=chunk&you=me\n
+Example 2:  http://lena.org.risource.ricoh.com:8888/My/Buss/wongfoo.txt: $#ARGV ";
 
 #input record separator; new line by default
 undef $/;
 
-#$url = "http://lena.crc.ricoh.com:8888/Buss/testwrite.if/test.txt?name=chunk&you=me";
+#$url = "http://lena.org.risource.ricoh.com:8888/Buss/testwrite.if/test.txt?name=chunk&you=me";
 $url = $ARGV[0];
 
 $ua = new LWP::UserAgent;

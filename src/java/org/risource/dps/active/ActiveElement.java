@@ -22,17 +22,17 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.Action;
-import crc.dps.Syntax;
-import crc.dps.Handler;
+import org.risource.dps.Action;
+import org.risource.dps.Syntax;
+import org.risource.dps.Handler;
 
 /**
  * A DOM Element node which includes extra syntactic and semantic
@@ -41,12 +41,12 @@ import crc.dps.Handler;
  *
  * @version ActiveElement.java,v 1.6 1999/03/01 23:45:40 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Active
- * @see crc.dps.ActiveNode
- * @see crc.dps.Action
- * @see crc.dps.Syntax
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.ActiveNode
+ * @see org.risource.dps.Action
+ * @see org.risource.dps.Syntax
+ * @see org.risource.dps.Processor
  */
 
 public interface ActiveElement extends ActiveNode, Element {
@@ -98,7 +98,7 @@ public interface ActiveElement extends ActiveNode, Element {
   ************************************************************************/
 
   /** Returns the Token's definition from the Document's DTD. */
-  public crc.dom.ElementDefinition getDefinition();
+  public org.risource.dom.ElementDefinition getDefinition();
 
   /************************************************************************
   ** Syntax: convenience flags:

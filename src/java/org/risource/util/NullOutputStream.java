@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.util;
+package org.risource.util;
 import java.io.OutputStream;
 
  public class NullOutputStream extends OutputStream{

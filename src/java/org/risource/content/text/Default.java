@@ -22,17 +22,17 @@
 */
 
 
-package crc.content.text;
+package org.risource.content.text;
 
-import crc.content.GenericContent;
-import crc.content.StreamingContent;
+import org.risource.content.GenericContent;
+import org.risource.content.StreamingContent;
 
-import crc.pia.Content;
-import crc.pia.ContentOperationUnavailable;
-import crc.pia.Pia;
+import org.risource.pia.Content;
+import org.risource.pia.ContentOperationUnavailable;
+import org.risource.pia.Pia;
 
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 import java.io.Reader;
 import java.io.IOException;
@@ -575,7 +575,7 @@ public class Default extends StreamingContent {
     *
     *	@param target	the object to be replaced
     *	@param replacement if null, the target is simply removed.
-    * 	@exception crc.pia.ContentOperationUnavailable if the operation
+    * 	@exception org.risource.pia.ContentOperationUnavailable if the operation
     *	cannot be performed by this type of Content.
    */
 

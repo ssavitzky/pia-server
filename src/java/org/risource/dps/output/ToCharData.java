@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dom.*;
-import crc.dps.NodeType;
-import crc.dps.active.ActiveEntity;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dom.*;
+import org.risource.dps.NodeType;
+import org.risource.dps.active.ActiveEntity;
 
 import java.util.NoSuchElementException;
 
@@ -37,8 +37,8 @@ import java.util.NoSuchElementException;
  *
  * @version ToCharData.java,v 1.3 1999/03/01 23:46:34 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Output
- * @see crc.dps.output.ToString
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.output.ToString
  */
 
 public class ToCharData extends ToExternalForm {

@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps.active;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Entity;
+package org.risource.dps.active;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Entity;
 
-import crc.dps.Input;
-import crc.dps.Output;
-import crc.dps.Context;
+import org.risource.dps.Input;
+import org.risource.dps.Output;
+import org.risource.dps.Context;
 
 /**
  * A DOM Entity node which includes extra syntactic and semantic
@@ -38,12 +38,12 @@ import crc.dps.Context;
  *
  * @version ActiveEntity.java,v 1.6 1999/03/01 23:45:41 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Active
- * @see crc.dps.ActiveNode
- * @see crc.dps.Action
- * @see crc.dps.Syntax
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.ActiveNode
+ * @see org.risource.dps.Action
+ * @see org.risource.dps.Syntax
+ * @see org.risource.dps.Processor
  */
 
 public interface ActiveEntity extends Entity, ActiveNode {

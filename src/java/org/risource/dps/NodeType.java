@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
 /** Node types and their names.
  *	
@@ -32,7 +32,7 @@ package crc.dps;
  * @version NodeType.java,v 1.8 1999/03/01 23:45:32 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Token
+ * @see org.risource.dps.Token
  */
 
 public class NodeType {

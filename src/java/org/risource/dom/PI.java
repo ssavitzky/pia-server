@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
  /**
   * A PI node is a "processing instruction". The content of the PI node is the entire

@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.AttributeList;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.AttributeList;
 
 import java.util.Enumeration;
 
-import crc.dps.active.*;
+import org.risource.dps.active.*;
 
 /**
  * The interface for a Tagset -- a lookup table for syntax. <p>
@@ -57,13 +57,13 @@ import crc.dps.active.*;
  * @version Tagset.java,v 1.20 1999/03/01 23:45:36 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Active
- * @see crc.dps.active.ActiveNode
- * @see crc.dps.Input
- * @see crc.dps.Output
- * @see crc.dps.output.ToDocument
- * @see crc.dom.Node */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.active.ActiveNode
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.output.ToDocument
+ * @see org.risource.dom.Node */
 
 public interface Tagset  {
 
@@ -187,7 +187,7 @@ public interface Tagset  {
    *	of <code>ParseTreeElement</code>, but may return an instance of 
    *	a subclass instead. <p>
    *
-   * @see crc.dps.active.ParseTreeElement
+   * @see org.risource.dps.active.ParseTreeElement
    */
   public ActiveElement createActiveElement(String tagname,
 					   AttributeList attributes,

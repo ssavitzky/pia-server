@@ -21,28 +21,28 @@
  ***************************************************************************** 
 */
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.Resolver;
-import crc.pia.Content;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.Resolver;
+import org.risource.pia.Content;
 
 
-import crc.ds.Table;
-import crc.ds.Criteria;
-import crc.ds.Criterion;
-import crc.ds.Registered;
-import crc.ds.Tabular;
+import org.risource.ds.Table;
+import org.risource.ds.Criteria;
+import org.risource.ds.Criterion;
+import org.risource.ds.Registered;
+import org.risource.ds.Tabular;
 
-// import crc.sgml.SGML;
-// import crc.sgml.Attrs;
+// import org.risource.sgml.SGML;
+// import org.risource.sgml.Attrs;
 
-import crc.tf.UnknownNameException;
+import org.risource.tf.UnknownNameException;
 
 /**
  * An agent is an object which maintains state and context and corresponds

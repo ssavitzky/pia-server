@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 import java.util.Hashtable;
 import java.util.Enumeration;

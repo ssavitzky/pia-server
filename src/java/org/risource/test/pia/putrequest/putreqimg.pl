@@ -29,9 +29,9 @@ require LWP::UserAgent;
 undef $/;
 
 ($#ARGV == 1) || die "Need to know url and gif filename.\n
-http://lena.crc.ricoh.com:8888/My/Buss/foo.gif directory.gif";
+http://lena.org.risource.ricoh.com:8888/My/Buss/foo.gif directory.gif";
 
-#$url = "http://lena.crc.ricoh.com:8888/My/Buss/foo.gif";
+#$url = "http://lena.org.risource.ricoh.com:8888/My/Buss/foo.gif";
 $url = $ARGV[0];
 
 $ua = new LWP::UserAgent;

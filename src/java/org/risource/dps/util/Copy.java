@@ -22,20 +22,20 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Entity;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Entity;
 
-import crc.dps.NodeType;
-import crc.dps.active.*;
-import crc.dps.output.*;
-import crc.dps.*;
+import org.risource.dps.NodeType;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
+import org.risource.dps.*;
 
 /**
  * Node-copying utilities (static methods) for a Document Processor. 
@@ -43,8 +43,8 @@ import crc.dps.*;
  * @version Copy.java,v 1.9 1999/03/01 23:46:53 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.util.Expand
- * @see crc.dps.util.Process
+ * @see org.risource.dps.util.Expand
+ * @see org.risource.dps.util.Process
  */
 
 public class Copy {
@@ -115,23 +115,23 @@ public class Copy {
     int nodeType = node.getNodeType();
     switch (nodeType) {
     case NodeType.ELEMENT: 
-      crc.dom.Element e = (crc.dom.Element)node;
+      org.risource.dom.Element e = (org.risource.dom.Element)node;
       return new ParseTreeElement(e.getTagName(), e.getAttributes());
 
     case NodeType.TEXT:
-      crc.dom.Text t = (crc.dom.Text)node;
+      org.risource.dom.Text t = (org.risource.dom.Text)node;
       return new ParseTreeText(t.getData(), t.getIsIgnorableWhitespace());
 
     case NodeType.COMMENT: 
-      crc.dom.Comment c = (crc.dom.Comment)node;
+      org.risource.dom.Comment c = (org.risource.dom.Comment)node;
       return new ParseTreeComment(c.getData());
 
     case NodeType.PI:
-      crc.dom.PI pi = (crc.dom.PI)node;
+      org.risource.dom.PI pi = (org.risource.dom.PI)node;
       return new ParseTreePI(pi.getName(), pi.getData());
 
     case NodeType.ATTRIBUTE: 
-      crc.dom.Attribute attr = (crc.dom.Attribute)node;
+      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)node;
       return new ParseTreeAttribute(attr.getName(), attr.getValue());
 
     default: 
@@ -154,7 +154,7 @@ public class Copy {
    * @param aNode the node to be appended.
    * @param parentNode the node to be appended to.
    * @return <code>parentNode</code>.
-   * @see crc.dps.NodeType */
+   * @see org.risource.dps.NodeType */
   public static Node appendNode(Node aNode, Node parentNode) {
     // No node to append to: do nothing.
     if (parentNode == null) return null;
@@ -171,7 +171,7 @@ public class Copy {
 	aNode = ((ActiveNode)aNode).deepCopy();
       }
       parentNode.insertBefore(aNode, null);
-    } catch (crc.dom.NotMyChildException e) {
+    } catch (org.risource.dom.NotMyChildException e) {
       System.err.println("Cloning failed: ");
       e.printStackTrace(System.err);
       // === not clear what to do here...  shouldn't happen. ===

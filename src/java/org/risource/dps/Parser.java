@@ -22,9 +22,9 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
-import crc.dps.active.*;
+import org.risource.dps.active.*;
 import java.io.Reader;
 
 /**

@@ -1,4 +1,4 @@
-###### dps/aux/Makefile:	DPS auxiliary classes
+###### dps/util/Makefile:	DPS utility classes
 # 	Makefile,v 1.14 1999/03/02 00:46:19 pgage Exp
 
 ############################################################################### 
@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.util
-TOPDIR=../../..
+PACKAGE=org.risource.dps.util
+TOPDIR=../../../..
 
 FILES = $(CLASSES) $(UTILITIES)
 

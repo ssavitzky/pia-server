@@ -22,18 +22,18 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.ActiveDoc;
-import crc.dom.NodeList;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.ActiveDoc;
+import org.risource.dom.NodeList;
 
 /** Handler class for &lt;agent-install&gt tag 
  *  <p> See <a href="../../InterForm/tag_man.html#agent-install">Manual
  *	Entry</a> for syntax and description.
  */
-public class agentRemove extends crc.dps.handle.GenericHandler {
+public class agentRemove extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
@@ -50,9 +50,9 @@ public class agentRemove extends crc.dps.handle.GenericHandler {
       return;
     }
 
-    crc.pia.agent.Admin admin = null;
+    org.risource.pia.agent.Admin admin = null;
     try {
-      admin = (crc.pia.agent.Admin) env.getAgent();
+      admin = (org.risource.pia.agent.Admin) env.getAgent();
     } catch (Exception e) {
       reportError(in, aContext, "only works in the Admin agent");
       return;

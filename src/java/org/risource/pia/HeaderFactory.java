@@ -23,13 +23,13 @@
 
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import crc.pia.Headers;
-import crc.pia.Pia;
+import org.risource.pia.Headers;
+import org.risource.pia.Pia;
 import w3c.www.mime.MimeParserFactory;
 import w3c.www.mime.MimeParser;
 import w3c.www.http.HttpEntityMessage;

@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.output
-TOPDIR=../../..
+PACKAGE=org.risource.dps.output
+TOPDIR=../../../..
 
 # The following Output classes construct trees, so the required state
 # is minimal -- only the current node.

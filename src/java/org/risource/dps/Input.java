@@ -22,11 +22,11 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
-import crc.dom.Node;
-import crc.dom.Attribute;
-import crc.dom.Element;
+import org.risource.dom.Node;
+import org.risource.dom.Attribute;
+import org.risource.dom.Element;
 
 /**
  * The interface for depth-first enumeration of a document or parse tree.
@@ -58,8 +58,8 @@ import crc.dom.Element;
  * @version Input.java,v 1.9 1999/03/01 23:45:30 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Token
- * @see crc.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Processor
  * @see java.util.Enumeration
  * @see java.util.NoSuchElementException */
 

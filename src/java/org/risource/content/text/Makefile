@@ -18,8 +18,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.content.text
-TOPDIR=../../..
+PACKAGE=org.risource.content.text
+TOPDIR=../../../..
 
 
 FILES = \

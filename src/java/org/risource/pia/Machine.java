@@ -31,7 +31,7 @@
  * what kind of browser or server we're talking to, but at the moment
  * we don't do that.  */
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -53,18 +53,18 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.util.Enumeration;
 
-import crc.pia.Content;
-import crc.pia.HTTPResponse;
-import crc.pia.Transaction;
-import crc.pia.Resolver;
-import crc.util.Timer;
+import org.risource.pia.Content;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Transaction;
+import org.risource.pia.Resolver;
+import org.risource.util.Timer;
 
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 import w3c.www.http.HTTP;
 
-import crc.ds.UnaryFunctor;
+import org.risource.ds.UnaryFunctor;
 
 
 public class Machine implements java.io.Serializable {
@@ -584,7 +584,7 @@ bytesRead=c.writeTo(out);
    *	are creating the Content for a response Transaction from an
    *	InputStream (for example a file or the InterForm interpretor).
    * @param anInputStream typically from a Content
-   * @see crc.pia.Content
+   * @see org.risource.pia.Content
    */ 
   public Machine( InputStream anInputStream ){
     this.inputStream = anInputStream;

@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 
  /**This class provides a generic iteration mechanism over an arbitrary collection of

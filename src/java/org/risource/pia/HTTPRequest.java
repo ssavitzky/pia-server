@@ -27,7 +27,7 @@
  */
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -47,17 +47,17 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
 
-import crc.pia.Machine;
-import crc.pia.agent.AgentMachine;
-import crc.pia.Content;
-import crc.pia.Transaction;
-import crc.pia.HTTPResponse;
+import org.risource.pia.Machine;
+import org.risource.pia.agent.AgentMachine;
+import org.risource.pia.Content;
+import org.risource.pia.Transaction;
+import org.risource.pia.HTTPResponse;
 
-import crc.ds.Queue;
-import crc.ds.Features;
-import crc.ds.Table;
-import crc.util.Utilities;
-import crc.tf.Registry;
+import org.risource.ds.Queue;
+import org.risource.ds.Features;
+import org.risource.ds.Table;
+import org.risource.util.Utilities;
+import org.risource.tf.Registry;
 
 
 public class  HTTPRequest extends Transaction {
@@ -316,7 +316,7 @@ public class  HTTPRequest extends Transaction {
 	if (props.getProperty(protocol()+"_proxy-auth-encode") != null) {
 	  byte bytes[] = new byte[auth.length()] ;
 	  auth.getBytes(0, bytes.length, bytes, 0) ;
-	  auth = crc.util.Utilities.encodeBase64(bytes);
+	  auth = org.risource.util.Utilities.encodeBase64(bytes);
 	}
 	Pia.debug(this, "Setting proxy authorization");
 	setHeader("Proxy-Authorization", "Basic " + auth);
@@ -635,7 +635,7 @@ public class  HTTPRequest extends Transaction {
   public void errorResponse(int code, String msg){
     msg = errorMessage(code, msg);
     StringReader inputStream = new StringReader( msg );
-    Content ct = new crc.content.text.html( inputStream, this );
+    Content ct = new org.risource.content.text.html( inputStream, this );
     Transaction response = new HTTPResponse( this, Pia.instance().thisMachine,
 					     ct, false);    
     response.setStatus( code );

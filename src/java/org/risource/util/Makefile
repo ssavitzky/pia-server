@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.util
-TOPDIR=../..
+PACKAGE=org.risource.util
+TOPDIR=../../..
 
 
 FILES = \

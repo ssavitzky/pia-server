@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 /** 
  * The Node object is the primary datatype for the entire Document Object

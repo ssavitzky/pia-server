@@ -27,7 +27,7 @@
  *	for local files.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -45,21 +45,21 @@ import java.util.Properties;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import crc.pia.PiaRuntimeException;
-import crc.pia.GenericAgent;
-import crc.pia.FormContent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.Content;
-import crc.pia.FileAccess;
-import crc.ds.Features;
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.pia.PiaRuntimeException;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.FormContent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.Content;
+import org.risource.pia.FileAccess;
+import org.risource.ds.Features;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import w3c.www.http.HTTP;
 public class Dofs extends GenericAgent {

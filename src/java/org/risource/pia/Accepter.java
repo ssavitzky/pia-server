@@ -27,15 +27,15 @@
  * This object accepts connections on a port.
  */
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.*;
 import java.net.*;
 
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.Pia;
-import crc.pia.HTTPRequest;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.Pia;
+import org.risource.pia.HTTPRequest;
 
 public class Accepter extends Thread {
   /**

@@ -20,8 +20,8 @@
  #
 ############################################################################## 
 
-PACKAGE=crc.test.dom
-TOPDIR=../../..
+PACKAGE=org.risource.test.dom
+TOPDIR=../../../..
 
 PACKAGES = 
 
@@ -65,7 +65,7 @@ CASEFILES = \
 .SUFFIXES: .case .txt .html .if .out .ok .diff .run .java .class
 
 DEBUG=-d
-CLASS=crc.interform.Filter
+CLASS=org.risource.interform.Filter
 
 .case.out:
 

@@ -22,27 +22,27 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
  
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.output.*;
-import crc.dps.input.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
+import org.risource.dps.input.*;
 
-import crc.pia.FileAccess;
+import org.risource.pia.FileAccess;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.ds.Association;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Association;
 
-import crc.util.*;
+import org.risource.util.*;
 
 import java.util.Enumeration;
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import java.io.*;
 

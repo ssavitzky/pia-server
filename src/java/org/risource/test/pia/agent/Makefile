@@ -20,8 +20,8 @@
  #
 ############################################################################## 
 
-PACKAGE=crc.test.pia.agent
-TOPDIR=../../../../..
+PACKAGE=org.risource.test.pia.agent
+TOPDIR=../../../../../..
 
 FILES = \
 	T_agency.java \

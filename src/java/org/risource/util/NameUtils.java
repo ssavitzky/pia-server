@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 
 
 /**

@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.output.DiscardOutput;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.output.DiscardOutput;
 
 /**
  * Generic implementation for an Element Handler. <p>
@@ -44,12 +44,12 @@ import crc.dps.output.DiscardOutput;
  * @version GenericHandler.java,v 1.27 1999/03/01 23:46:02 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.handle.TypicalHandler
- * @see crc.dps.Processor
- * @see crc.dps.Tagset
- * @see crc.dps.BasicTagset
- * @see crc.dps.Input 
- * @see crc.dom.Node */
+ * @see org.risource.dps.handle.TypicalHandler
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Tagset
+ * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node */
 
 public class GenericHandler extends BasicHandler {
 
@@ -143,7 +143,7 @@ public class GenericHandler extends BasicHandler {
    *	 action routine is overridden, and we need the normal functionality in
    *	 a subclass.  <code>extractHandler</code> is a good example.
    *
-   * @see crc.dps.handle.extractHandler
+   * @see org.risource.dps.handle.extractHandler
    */
   protected final void defaultAction(Input in, Context aContext, Output out) {
     ActiveAttrList atts = Expand.getExpandedAttrs(in, aContext);
@@ -223,7 +223,7 @@ public class GenericHandler extends BasicHandler {
       ents.setEntityValue(aContext, "element", new ParseNodeList(element), ts);
       ents.setEntityValue(aContext, "attributes", atts, ts);
       // ... in which to expand this Actor's definition
-      Input def = new crc.dps.input.FromParseTree(this);
+      Input def = new org.risource.dps.input.FromParseTree(this);
       Processor p = aContext.subProcess(def, out, ents);
       // ... Expand the definition in the sub-context
       p.processChildren();
@@ -255,7 +255,7 @@ public class GenericHandler extends BasicHandler {
 
   /** Construct a GenericHandler for a passive element. 
    *
-   * @param syntax see codes in <a href="crc.dps.Syntax.html">Syntax</a>
+   * @param syntax see codes in <a href="org.risource.dps.Syntax.html">Syntax</a>
    * @see #getSyntaxCode
    */
   public GenericHandler(int syntax) {

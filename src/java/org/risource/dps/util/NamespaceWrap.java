@@ -21,23 +21,23 @@
  ***************************************************************************** 
 */
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.active.*;
-import crc.dps.*;
-import crc.dps.Namespace;
+import org.risource.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.Namespace;
 
 import java.util.Enumeration;
 
-import crc.ds.List;
-import crc.ds.Table;
-import crc.ds.Tabular;
+import org.risource.ds.List;
+import org.risource.ds.Table;
+import org.risource.ds.Tabular;
 
 /**
  * Make a Tabular implementation look like a Namespace.
@@ -51,8 +51,8 @@ import crc.ds.Tabular;
  * @version NamespaceWrap.java,v 1.10 1999/03/01 23:47:01 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Namespace
- * @see crc.ds.Tabular
+ * @see org.risource.dps.Namespace
+ * @see org.risource.ds.Tabular
  */
 
 public class NamespaceWrap extends ParseTreeGeneric implements Namespace {

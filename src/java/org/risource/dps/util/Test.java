@@ -22,19 +22,19 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Entity;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Entity;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.output.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
 
 
 /**
@@ -81,7 +81,7 @@ public class Test {
       return aNode.hasChildren();
 
     case NodeType.TEXT:
-      crc.dom.Text t = (crc.dom.Text)aNode;
+      org.risource.dom.Text t = (org.risource.dom.Text)aNode;
       if (t.getIsIgnorableWhitespace()) return false;
       return ! isWhitespace(t.getData());
 
@@ -92,7 +92,7 @@ public class Test {
       return true;
 
     case NodeType.ATTRIBUTE: 
-      crc.dom.Attribute attr = (crc.dom.Attribute)aNode;
+      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)aNode;
       if (! attr.getSpecified()) return true;
       return orValues(attr.getValue());
 
@@ -120,7 +120,7 @@ public class Test {
       return null;
 
     case NodeType.ATTRIBUTE: 
-      crc.dom.Attribute attr = (crc.dom.Attribute)aNode;
+      org.risource.dom.Attribute attr = (org.risource.dom.Attribute)aNode;
       if (! attr.getSpecified()) return v;
       return orValues(attr.getValue())? attr.getValue() : null;
     }

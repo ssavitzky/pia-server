@@ -22,16 +22,16 @@
 */
 
 
-package crc.dps.parse;
+package org.risource.dps.parse;
 
-import crc.dom.NodeList;
-import crc.dom.AttributeList;
+import org.risource.dom.NodeList;
+import org.risource.dom.AttributeList;
 
-import crc.dps.NodeType;
-import crc.dps.Parser;
-import crc.dps.Syntax;
-import crc.dps.active.*;
-import crc.dps.util.Copy;
+import org.risource.dps.NodeType;
+import org.risource.dps.Parser;
+import org.risource.dps.Syntax;
+import org.risource.dps.active.*;
+import org.risource.dps.util.Copy;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -53,7 +53,7 @@ import java.io.IOException;
  *
  * @version BasicParser.java,v 1.18 1999/03/01 23:46:40 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Parser
+ * @see org.risource.dps.Parser
  */
 
 public class BasicParser extends AbstractParser {

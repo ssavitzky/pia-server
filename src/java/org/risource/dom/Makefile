@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dom
-TOPDIR=../..
+PACKAGE=org.risource.dom
+TOPDIR=../../..
 
 PACKAGES =
 

@@ -33,7 +33,7 @@
  *	changes in the setup code will not cause massive recompilation.
  */
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +45,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
-import crc.pia.Pia;
-import crc.pia.Configuration; 
+import org.risource.pia.Pia;
+import org.risource.pia.Configuration; 
 
-import crc.ds.List;
+import org.risource.ds.List;
 
 class Setup extends Configuration {
 
@@ -59,24 +59,24 @@ class Setup extends Configuration {
   protected String[] piaEnvTable = {
     "USER",	"user.name",
     "HOME",	"user.home",
-    "PIA_DIR",	"crc.pia.piaroot",
-    "USR_DIR",	"crc.pia.usrroot",
-    "PIA_PORT",	"crc.pia.port",
-    "REAL_PORT", "crc.pia.realport",
+    "PIA_DIR",	"org.risource.pia.piaroot",
+    "USR_DIR",	"org.risource.pia.usrroot",
+    "PIA_PORT",	"org.risource.pia.port",
+    "REAL_PORT", "org.risource.pia.realport",
   };
 
   /** PIA option table: */
   protected String[] piaOptTable = {
-    "-u",	"crc.pia.usrroot",	"dir",		null,
-    "-p",	"crc.pia.port",		"number",	"8888",
-    "-d",	"crc.pia.debug",	"bool",		null,
-    "-v",	"crc.pia.verbose",	"bool",		null,
-    "-port",	"crc.pia.port",		"number",	"8888",
-    "-real",	"crc.pia.realport", 	"number",	"8888",
-    "-root",	"crc.pia.piaroot",	"dir",		null,
-    "-profile",	"crc.pia.profile",	"file",		null,
-    "-filemap",	"crc.pia.filemap",	"file",		null,
-    "-host",	"crc.pia.host", 	"name",		null,
+    "-u",	"org.risource.pia.usrroot",	"dir",		null,
+    "-p",	"org.risource.pia.port",		"number",	"8888",
+    "-d",	"org.risource.pia.debug",	"bool",		null,
+    "-v",	"org.risource.pia.verbose",	"bool",		null,
+    "-port",	"org.risource.pia.port",		"number",	"8888",
+    "-real",	"org.risource.pia.realport", 	"number",	"8888",
+    "-root",	"org.risource.pia.piaroot",	"dir",		null,
+    "-profile",	"org.risource.pia.profile",	"file",		null,
+    "-filemap",	"org.risource.pia.filemap",	"file",		null,
+    "-host",	"org.risource.pia.host", 	"name",		null,
   };
 
   /* Perl options: ================================================
@@ -143,7 +143,7 @@ class Setup extends Configuration {
 
     /* Merge properties from the profile, if specified. */
 
-    String profile = properties.getProperty("crc.pia.profile");
+    String profile = properties.getProperty("org.risource.pia.profile");
     if (profile != null) {
       if (mergeProperties(profile)) {
 	System.err.println("Loaded properties from "+profile);
@@ -155,7 +155,7 @@ class Setup extends Configuration {
 
     /* Make sure we have a PIA directory */
 
-    String piaRoot = properties.getProperty("crc.pia.piaroot");
+    String piaRoot = properties.getProperty("org.risource.pia.piaroot");
     
     if (piaRoot == null) {
       System.err.println("Cannot locate PIA root (install) directory.\n"
@@ -173,12 +173,12 @@ class Setup extends Configuration {
       System.err.println("Error: "+piaRoot+" is not a directory.\n");
       return true;
     }
-    properties.put("crc.pia.piaroot", piaRoot);
+    properties.put("org.risource.pia.piaroot", piaRoot);
 
     /* Check to see if we have a user directory.  Warn the user if we don't,
      *	but proceed (to possible disaster). */
 
-    String usrRoot = properties.getProperty("crc.pia.usrroot");
+    String usrRoot = properties.getProperty("org.risource.pia.usrroot");
     if (usrRoot == null) {
       if (dirExists(home + filesep + ".pia")) {
 	usrRoot = home + filesep + ".pia";
@@ -202,13 +202,13 @@ class Setup extends Configuration {
 
       if( result ){
 	usrRoot = userRoot.getAbsolutePath();
-	properties.put("crc.pia.usrroot", fixFileName(usrRoot));
+	properties.put("org.risource.pia.usrroot", fixFileName(usrRoot));
       }
       else
 	return true;
 
     } else {
-      properties.put("crc.pia.usrroot", fixFileName(usrRoot));
+      properties.put("org.risource.pia.usrroot", fixFileName(usrRoot));
     }
 
     /* Load the user's default profile if there is one and it hasn't already
@@ -222,7 +222,7 @@ class Setup extends Configuration {
 
     /* Make sure there's a filemap */
 
-    String fileMap = properties.getProperty("crc.pia.filemap");
+    String fileMap = properties.getProperty("org.risource.pia.filemap");
     if (fileMap == null) {
       path = new List();
       if (usrRoot != null) path.push(usrRoot);
@@ -236,7 +236,7 @@ class Setup extends Configuration {
 	return false;
       }
     } else {
-      properties.put("crc.pia.filemap", fixFileName(fileMap));
+      properties.put("org.risource.pia.filemap", fixFileName(fileMap));
     }
 
     return results;

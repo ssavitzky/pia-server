@@ -22,21 +22,21 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Entity;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Entity;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.output.*;
-import crc.dps.input.FromParseNodes;
-import crc.dps.input.FromParseTree;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
+import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.input.FromParseTree;
 
 /**
  * Node-expansion utilities (static methods) for the Document Processor. 
@@ -46,8 +46,8 @@ import crc.dps.input.FromParseTree;
  *	the functionality available in a Processor without requiring an actual
  *	Processor to be instantiated.
  *
- * @see crc.dps.Processor
- * @see crc.dps.process.BasicProcessor
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.process.BasicProcessor
  *
  * @version Expand.java,v 1.13 1999/03/01 23:46:57 pgage Exp
  * @author steve@rsv.ricoh.com 
@@ -146,7 +146,7 @@ public class Expand {
 
   /** Process the children of a Node and return the result. */
   public static void processChildren(ActiveNode aNode, Context c, Output out) {
-    Input in = new crc.dps.input.FromParseTree(aNode);
+    Input in = new org.risource.dps.input.FromParseTree(aNode);
     c.subProcess(in, out).processChildren();
   }
 
@@ -192,7 +192,7 @@ public class Expand {
     for (int i = 0; i < atts.getLength(); i++) { 
       try {
 	expandAttribute(c, (Attribute) atts.item(i), dst);
-      } catch (crc.dom.NoSuchNodeException ex) {}
+      } catch (org.risource.dom.NoSuchNodeException ex) {}
     }
   }
 

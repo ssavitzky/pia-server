@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 public interface CDATASection extends Node {
 

@@ -277,7 +277,7 @@ Results: &lt;pre&gt;cat                                                         
   <li> <b>Bug:</b> Tagsets don't hack resource names correctly. <br>
        Need to decide between Class and ClassLoader conventions.  ClassLoader
        requires slashes; Class prepends module name.  Need the prepend, then
-       change dots to slashes (probably in <code>crc.util.NameUtils</code>).
+       change dots to slashes (probably in <code>org.risource.util.NameUtils</code>).
        (1998-08-12)<br>
 
   <li> <b>Bug:</b> Can't <em>use</em> a tagset. <br>
@@ -300,9 +300,9 @@ Results: &lt;pre&gt;cat                                                         
 	 <li> Use <code>org.w3c.dom</code> for the <em>official</em>
 	      interfaces, of course.
 	 <li> Move <code>Active*</code> interfaces from
-	      <code>crc.dps.active</code> to <code>crc.dom</code>
-	 <li> Move implementation classes to <code>crc.dom.impl</code>
-	 <li> Keep <code>crc.dps.active</code> for DPS-specific classes.
+	      <code>org.risource.dps.active</code> to <code>org.risource.dom</code>
+	 <li> Move implementation classes to <code>org.risource.dom.impl</code>
+	 <li> Keep <code>org.risource.dps.active</code> for DPS-specific classes.
        </ul>
        (1998-08-05)<br>
 
@@ -388,7 +388,7 @@ Results: &lt;pre&gt;cat                                                         
 
   <li> <b>Hole:</b> NamedNodeList wrapping a Table <br>
        Want to be able to wrap a Table as a NamedNodeList.  This will provide
-       the DPS equivalent of <code>crc.sgml.AttrWrap</code>.
+       the DPS equivalent of <code>org.risource.sgml.AttrWrap</code>.
        (1998-06-16) <br>
 
   <li> <b>Impr:</b> <code>Filter</code> parse tree input <br> 

@@ -29,12 +29,12 @@
  *
  */
 
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
-import crc.ds.Table;
-import crc.tf.TFComputer;
-import crc.ds.Features;
+import org.risource.ds.UnaryFunctor;
+import org.risource.ds.Table;
+import org.risource.tf.TFComputer;
+import org.risource.ds.Features;
 
 public class Registry {
   /**
@@ -42,7 +42,7 @@ public class Registry {
    */
   protected static Table calcTable = new Table();
 
-  protected static String packagePrefix = "crc.tf.";
+  protected static String packagePrefix = "org.risource.tf.";
 
   /**
    * Given a feature name, returns the corresponding feature calculator.

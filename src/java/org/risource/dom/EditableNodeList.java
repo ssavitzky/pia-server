@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 /**
  *EditableNodeList is a subtype of NodeList that adds operations that modify the list

@@ -22,7 +22,7 @@
 */
 
 
-package crc.pia;
+package org.risource.pia;
 
 /** Thrown when an unknown MIME type is encountered. */
 public class BadMimeTypeException extends Exception {

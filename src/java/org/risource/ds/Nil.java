@@ -22,7 +22,7 @@
 */
 
 
-package crc.ds;
+package org.risource.ds;
 
 /** Nil is a class used to represent "null" in places where you can't
  *	return a null for some reason.   There is only one instance, 

@@ -22,22 +22,22 @@
 */
 
 
-package crc.pia.handle;
+package org.risource.pia.handle;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.dom.NodeList;
-import crc.pia.Agent;
-import crc.pia.Resolver;
+import org.risource.dom.NodeList;
+import org.risource.pia.Agent;
+import org.risource.pia.Resolver;
 
 import java.util.Enumeration;
-import crc.ds.List;
+import org.risource.ds.List;
 
 /** Handler class for &lt;agent-list&gt tag 
  */
-public class agentList extends crc.dps.handle.GenericHandler {
+public class agentList extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {

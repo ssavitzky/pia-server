@@ -22,11 +22,11 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dom.*;
-import crc.dps.*;
-import crc.dps.util.Log;
+import org.risource.dom.*;
+import org.risource.dps.*;
+import org.risource.dps.util.Log;
 
 import java.io.PrintStream;
 

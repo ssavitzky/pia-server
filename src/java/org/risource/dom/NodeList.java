@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
  /**
   * The NodeList object provides the abstraction of an immutable ordered collection of

@@ -22,7 +22,7 @@
 */
 
 
-package crc.dom;
+package org.risource.dom;
 
 import java.io.*;
 

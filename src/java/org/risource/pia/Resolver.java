@@ -41,7 +41,7 @@
  * to see whether it has any Crontab entries to run. <p>
  */
 
-package crc.pia;
+package org.risource.pia;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -51,13 +51,13 @@ import java.util.Date;
 
 import java.net.URL;
 
-import crc.pia.Agent;
-import crc.pia.Transaction;
-import crc.util.Utilities;
+import org.risource.pia.Agent;
+import org.risource.pia.Transaction;
+import org.risource.util.Utilities;
 
-import crc.ds.Queue;
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.ds.Queue;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 public class Resolver extends Thread {
   /**

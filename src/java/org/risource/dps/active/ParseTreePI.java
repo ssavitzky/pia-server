@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.PI;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.PI;
 
-import crc.dps.*;
-import crc.dps.util.Copy;
+import org.risource.dps.*;
+import org.risource.dps.util.Copy;
 
 /**
  * An implementation of the ActivePI interface, suitable for use in 
@@ -37,8 +37,8 @@ import crc.dps.util.Copy;
  *
  * @version ParseTreePI.java,v 1.7 1999/03/01 23:45:56 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class ParseTreePI extends ParseTreeNamed implements ActivePI {
 

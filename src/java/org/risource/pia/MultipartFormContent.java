@@ -32,15 +32,15 @@
  * The encoding is specified in
  * <A HREF="http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1867.txt">RFC1867</A>
  *
- * @see crc.pia.FormContent
- * @see crc.interform.handle.Submit_forms 
+ * @see org.risource.pia.FormContent
+ * @see org.risource.interform.handle.Submit_forms 
  */
 
-package crc.pia;
+package org.risource.pia;
 
-import crc.pia.Machine;
-import crc.pia.Agent;
-import crc.pia.ContentOperationUnavailable;
+import org.risource.pia.Machine;
+import org.risource.pia.Agent;
+import org.risource.pia.ContentOperationUnavailable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,7 +81,7 @@ public class MultipartFormContent extends Properties implements InputContent
    */
   public void setHeaders( Headers headers ){
     if( headers!= null ) {
-      crc.pia.Pia.debug(this,"New headers "+headers.toString());
+      org.risource.pia.Pia.debug(this,"New headers "+headers.toString());
       this.headers = headers;
     }
   }
@@ -120,7 +120,7 @@ public class MultipartFormContent extends Properties implements InputContent
   /**
    * Set source.
    * param o the source object, which in this case must be an InputStream.
-   * @exception crc.pia.ContentOperationUnavailable if the source is
+   * @exception org.risource.pia.ContentOperationUnavailable if the source is
    *	anything but an InputStream.
    * @see java.io.InputStream
    */
@@ -164,14 +164,14 @@ public class MultipartFormContent extends Properties implements InputContent
    * this method will block until all data is written to output stream.
    * @param outStream the OutputStream to write on.
    * @return the number of items written
-   * @exception crc.pia.ContentOperationUnavailable if the operation
+   * @exception org.risource.pia.ContentOperationUnavailable if the operation
    *	cannot be performed by this type of Content.
    * @exception java.io.IOException if thrown by the OutputStream.
    */
   public int writeTo(OutputStream outStream)
     throws ContentOperationUnavailable, IOException
     {
-      // crc.pia.Pia.debug(this,"Sending body to output stream "+body.toString());
+      // org.risource.pia.Pia.debug(this,"Sending body to output stream "+body.toString());
       ((ByteArrayOutputStream)body).writeTo(outStream);
       return 0;
     }

@@ -23,7 +23,7 @@
 
 
 
-package crc.pia;
+package org.risource.pia;
 
 /**
  * Exception thrown when content object cannot perform requested

@@ -27,14 +27,14 @@
 // Logger.java,v 1.12 1999/03/01 23:47:37 pgage Exp
 // (c) COPYRIGHT Ricoh California Research Center, 1997.
 
-package crc.pia;
+package org.risource.pia;
 
-import crc.pia.Pia;
+import org.risource.pia.Pia;
 import java.io.IOException ;
 import java.util.Date ;
 import java.io.*;
 
-import crc.pia.PiaRuntimeException;
+import org.risource.pia.PiaRuntimeException;
 /**
  * The Logger class logs information into three files trace, log, errlog
  * which presumably locate in a pia subdirectory named log

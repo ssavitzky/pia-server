@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
-import crc.dom.Attribute;
+import org.risource.dom.Attribute;
 
-import crc.dps.*;
+import org.risource.dps.*;
 
 /**
  * An implementation of the ActiveAttribute interface, suitable for use in 
@@ -37,8 +37,8 @@ import crc.dps.*;
  *
  * @version ParseTreeAttribute.java,v 1.8 1999/03/01 23:45:48 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class ParseTreeAttribute extends ParseTreeNamed
 	implements ActiveAttribute

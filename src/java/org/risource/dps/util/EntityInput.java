@@ -22,22 +22,22 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
 import java.io.*;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
-import crc.dom.Entity;
+import org.risource.dom.Entity;
 
-import crc.dps.active.*;
-import crc.dps.*;
-import crc.dps.util.Copy;
-import crc.dps.input.FromParseNodes;
-import crc.dps.output.ToNodeList;
+import org.risource.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.util.Copy;
+import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.output.ToNodeList;
 
-import crc.ds.Tabular;
+import org.risource.ds.Tabular;
 
 /**
  * An implementation of the ActiveEntity interface that wraps an arbitrary 
@@ -47,8 +47,8 @@ import crc.ds.Tabular;
  *
  * @version EntityInput.java,v 1.4 1999/03/01 23:46:56 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class EntityInput extends ParseTreeEntity {
 

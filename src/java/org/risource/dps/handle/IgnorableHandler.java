@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeType;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeType;
 
-import crc.dps.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
 
-import crc.ds.Table;
+import org.risource.ds.Table;
 
 /**
  * Handler for ignorable nodes.  
@@ -41,13 +41,13 @@ import crc.ds.Table;
  * @version IgnorableHandler.java,v 1.5 1999/03/01 23:46:04 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.handle.GenericHandler
- * @see crc.dps.Processor
- * @see crc.dps.Tagset
- * @see crc.dps.BasicTagset
- * @see crc.dps.Input 
- * @see crc.dps.Output
- * @see crc.dom.Node
+ * @see org.risource.dps.handle.GenericHandler
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Tagset
+ * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.Input 
+ * @see org.risource.dps.Output
+ * @see org.risource.dom.Node
  */
 
 public class IgnorableHandler extends AbstractHandler {

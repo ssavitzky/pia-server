@@ -22,11 +22,11 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 import java.io.*;
 import w3c.tools.timers.EventManager;
 import w3c.tools.timers.EventHandler;
-import crc.ds.UnaryFunctor;
+import org.risource.ds.UnaryFunctor;
 
 
 

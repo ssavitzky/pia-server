@@ -22,20 +22,20 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
 import java.io.PrintStream;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Text;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Text;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.BasicProcessor;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.BasicProcessor;
 
 /**
  * A stack frame for a linked-list stack of current nodes. 
@@ -45,7 +45,7 @@ import crc.dps.process.BasicProcessor;
  * @version ContextStack.java,v 1.17 1999/03/01 23:46:52 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Cursor
+ * @see org.risource.dps.Cursor
  */
 public class ContextStack  implements Context {
 
@@ -201,7 +201,7 @@ public class ContextStack  implements Context {
 
   /************************************************************************
   ** Debugging:
-  **	This is a subset of crc.util.Report.
+  **	This is a subset of org.risource.util.Report.
   ************************************************************************/
 
   public int 	getVerbosity() 		{ return verbosity; }

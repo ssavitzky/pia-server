@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
-import crc.dom.Node;
-import crc.dom.Attribute;
-import crc.dom.Element;
+import org.risource.dom.Node;
+import org.risource.dom.Attribute;
+import org.risource.dom.Element;
 
-import crc.dps.active.*;
+import org.risource.dps.active.*;
 
 /**
  * The shared interface for classes that maintain a ``current'' node.
@@ -41,10 +41,10 @@ import crc.dps.active.*;
  * @version Cursor.java,v 1.3 1999/03/01 23:45:26 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Input
- * @see crc.dps.Output
- * @see crc.dps.Active
- * @see crc.dps.Processor
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.Processor
  */
 
 public interface Cursor {

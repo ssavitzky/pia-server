@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dps.active.*;
 
-import crc.dom.Node;
-import crc.dom.Element;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -39,9 +39,9 @@ import java.util.NoSuchElementException;
  *
  * @version ToParseTree.java,v 1.3 1999/03/01 23:46:37 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Token
- * @see crc.dps.Input
- * @see crc.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.Processor
  */
 
 public class ToParseTree extends ActiveOutput implements Output {

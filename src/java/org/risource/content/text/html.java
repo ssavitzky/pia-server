@@ -22,9 +22,9 @@
 */
 
 
-package crc.content.text;
+package org.risource.content.text;
 
-import crc.pia.Transaction;
+import org.risource.pia.Transaction;
 import gnu.regexp.RegExp;
 import gnu.regexp.MatchInfo;
 
@@ -48,7 +48,7 @@ public class html extends Default
       if(additions == null || !additions.has(k)) return ;
 
       String add = (String) additions.at(k);
-    crc.pia.Pia.debug( this," inserting "+add + " at "+  position);
+    org.risource.pia.Pia.debug( this," inserting "+add + " at "+  position);
 
 
       if(position == 0){
@@ -81,19 +81,19 @@ public class html extends Default
 	  if(bend > 0 && hend == bend)  return;
 
 	}catch(Exception e){
-	  crc.pia.Pia.debug( this,"reg exp failed" );     
-	  //if (crc.pia.Pia.debug()) e.printStackTrace();
+	  org.risource.pia.Pia.debug( this,"reg exp failed" );     
+	  //if (org.risource.pia.Pia.debug()) e.printStackTrace();
 	}
 	
 
 	  // if there is no body, assume it is a frame
 	  // specification or something else bad and we should do nothing
 	  if(bend == 0 )  {
-    	    crc.pia.Pia.debug( this," no body tag detected");
+    	    org.risource.pia.Pia.debug( this," no body tag detected");
             return;
 	  }
 	  
-	crc.pia.Pia.debug( this," putting at"+  bend);
+	org.risource.pia.Pia.debug( this," putting at"+  bend);
 	
 	 insert(add,bend);
          // remove this addition
@@ -104,7 +104,7 @@ public class html extends Default
       }
       
       // else
-    crc.pia.Pia.debug(" super insert");
+    org.risource.pia.Pia.debug(" super insert");
       super.insertAddition(position);
     }
 

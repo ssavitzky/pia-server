@@ -23,12 +23,12 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
-import crc.pia.Transaction;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
 
-import crc.tf.TFComputer;
+import org.risource.tf.TFComputer;
 
 public final class IsResponse extends TFComputer {
 

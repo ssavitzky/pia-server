@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.input;
+package org.risource.dps.input;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.Attribute;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dps.active.*;
 
 
 /**
@@ -43,7 +43,7 @@ import crc.dps.active.*;
  * @version ActiveInput.java,v 1.4 1999/03/01 23:46:29 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Processor
+ * @see org.risource.dps.Processor
  */
 
 public abstract class ActiveInput extends CurrentActive implements Input {

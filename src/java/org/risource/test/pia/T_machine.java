@@ -30,7 +30,7 @@
  * don't do that.
  */
 
-package crc.test.pia;
+package org.risource.test.pia;
 
 import java.io.InputStream;
 import java.io.BufferedInputStream;
@@ -51,14 +51,14 @@ import java.net.UnknownHostException;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
 
-import crc.pia.Content;
-import crc.pia.HTTPResponse;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
-import crc.pia.Pia;
-import crc.pia.ThreadPool;
-import crc.pia.Resolver;
+import org.risource.pia.Content;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.Pia;
+import org.risource.pia.ThreadPool;
+import org.risource.pia.Resolver;
 
 public class T_machine {
   /**
@@ -83,7 +83,7 @@ public class T_machine {
 
     try{
       // do not create any request
-      crc.pia.GenericAgent.DEBUG = true;
+      org.risource.pia.GenericAgent.DEBUG = true;
       InputStream in = new FileInputStream (filename);
       Machine machine1 = new Machine(Pia.instance().host(), 8853);
 
@@ -154,9 +154,9 @@ public class T_machine {
 
   private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, here is the command --> java crc.pia.Machine -1 -proxy get_machine.txt");
-    System.out.println("For test 1, here is the command --> java crc.pia.Machine -1 -noproxy get_machine.txt");
-    System.out.println("For test 2, here is the command --> java crc.pia.Machine -2 response.txt");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.Machine -1 -proxy get_machine.txt");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.Machine -1 -noproxy get_machine.txt");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.Machine -2 response.txt");
   }
 
 

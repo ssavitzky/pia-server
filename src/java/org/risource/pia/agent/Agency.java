@@ -29,7 +29,7 @@
  *	determines which agent should handle a request.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -37,17 +37,17 @@ import java.util.Enumeration;
 
 import java.net.URL;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.ds.Criterion;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Criterion;
 
-import crc.pia.GenericAgent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
 
 public class Agency extends Admin {
 

@@ -28,7 +28,7 @@
  * which may not be a good idea.
  */
 
-package crc.test.pia.agent;
+package org.risource.test.pia.agent;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
@@ -37,23 +37,23 @@ import java.util.Enumeration;
 
 import java.net.URL;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.pia.GenericAgent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
 
 import gnu.regexp.RegExp;
 import gnu.regexp.MatchInfo;
 
-import crc.pia.agent.Agency;
+import org.risource.pia.agent.Agency;
 public class T_agency {
  private static void printusage(){
-    System.out.println("Here is the command --> java crc.pia.agent.Agency agency.txt");
+    System.out.println("Here is the command --> java org.risource.pia.agent.Agency agency.txt");
   }
 
   /**

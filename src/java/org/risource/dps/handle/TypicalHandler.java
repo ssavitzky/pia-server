@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.handle;
+package org.risource.dps.handle;
 
-import crc.dom.NodeList;
+import org.risource.dom.NodeList;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
 /**
  * Handler for &lt;typical&gt;....&lt;/&gt;  

@@ -22,16 +22,16 @@
 */
 
 
-package crc.dps.handle;
+package org.risource.dps.handle;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.AttributeList;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
 import gnu.regexp.RegExp;
 

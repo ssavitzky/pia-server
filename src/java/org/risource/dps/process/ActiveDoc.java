@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps.process;
+package org.risource.dps.process;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -36,20 +36,20 @@ import java.io.File;
 
 import java.net.URL;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dom.NodeList;
-import crc.dps.active.ParseNodeList;
-import crc.dps.handle.Loader;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dom.NodeList;
+import org.risource.dps.active.ParseNodeList;
+import org.risource.dps.handle.Loader;
 
-import crc.ds.List;
-import crc.ds.Table;
-import crc.ds.Tabular;
+import org.risource.ds.List;
+import org.risource.ds.Table;
+import org.risource.ds.Tabular;
 
-import crc.pia.Pia;
-import crc.pia.Agent;
-import crc.pia.Transaction;
-import crc.pia.Resolver;
+import org.risource.pia.Pia;
+import org.risource.pia.Agent;
+import org.risource.pia.Transaction;
+import org.risource.pia.Resolver;
 
 /**
  * A TopProcessor for processing InterForm files in the PIA.
@@ -57,10 +57,10 @@ import crc.pia.Resolver;
  * @version ActiveDoc.java,v 1.16 1999/03/01 23:46:42 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.pia
- * @see crc.dps.process.TopProcessor
- * @see crc.dps.Processor
- * @see crc.dps.Context */
+ * @see org.risource.pia
+ * @see org.risource.dps.process.TopProcessor
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Context */
 
 public class ActiveDoc extends TopProcessor {
 
@@ -116,13 +116,13 @@ public class ActiveDoc extends TopProcessor {
 
   static {
     // Preload known handler classes.
-    Loader.defHandle("submit", new crc.dps.handle.submitHandler());
+    Loader.defHandle("submit", new org.risource.dps.handle.submitHandler());
   }
 
   /** Initialize the various entities.  
    *	Done in four separate methods (counting super), for easy customization.
    *
-   * @see crc.dps.process.TopProcessor#initializeEntities
+   * @see org.risource.dps.process.TopProcessor#initializeEntities
    * @see #initializeNamespaceEntities
    * @see #initializeLegacyEntities
    * @see #initializeHookEntities

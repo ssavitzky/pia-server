@@ -22,16 +22,16 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.dom.NodeList;
-import crc.pia.Agent;
-import crc.ds.List;
+import org.risource.dom.NodeList;
+import org.risource.pia.Agent;
+import org.risource.ds.List;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +41,7 @@ import java.io.FileInputStream;
  *  <p> See <a href="../../InterForm/tag_man.html#agent-save">Manual Entry</a> 
  *	for syntax and description.
  */
-public class agentSave extends crc.dps.handle.GenericHandler {
+public class agentSave extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
@@ -92,9 +92,9 @@ public class agentSave extends crc.dps.handle.GenericHandler {
 	  errmsg = "Cannot make parent directory for " + file.getPath();
       }
       if (atts.hasTrueAttribute("append")) {
-	crc.util.Utilities.appendObjectTo(file.getPath(), agents);
+	org.risource.util.Utilities.appendObjectTo(file.getPath(), agents);
       } else {
-	crc.util.Utilities.writeObjectTo(file.getPath(), agents);
+	org.risource.util.Utilities.writeObjectTo(file.getPath(), agents);
       }
       putText(out, aContext, file.getPath());
     } catch (Exception e) {

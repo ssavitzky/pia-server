@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.interform.test
-TOPDIR=../../..
+PACKAGE=org.risource.interform.test
+TOPDIR=../../../..
 
 FILES = \
 	t1.txt \
@@ -35,7 +35,7 @@ FILES = \
 .SUFFIXES: .txt .html .if .xh .xx .out .ok .diff .run
 
 DEBUG =
-CLASS = crc.dps.Filter
+CLASS = org.risource.dps.Filter
 RUN   =	$(BINDIR)/pia_wrapper
 
 .txt.out:
@@ -96,7 +96,7 @@ clean::
 
 BIG_FILE   =../../../../../Doc/Manuals/InterForm/tag_man.html
 SMALL_FILE = t2.html
-OCLASS     = crc.interform.Filter
+OCLASS     = org.risource.interform.Filter
 
 doc::	time.log
 	@echo "timings complete"

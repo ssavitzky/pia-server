@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dom.*;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dom.*;
 
-import crc.pia.Headers;
+import org.risource.pia.Headers;
 
 import java.util.NoSuchElementException;
 import java.io.Writer;
@@ -45,8 +45,8 @@ import java.io.IOException;
  *
  * @version ToHTTPClient.java,v 1.3 1999/03/01 23:46:36 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Output
- * @see crc.dps.Processor
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.Processor
  */
 
 public class ToHTTPClient extends ToExternalForm implements Output {

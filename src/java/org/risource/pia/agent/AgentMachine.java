@@ -29,21 +29,21 @@
  *	other end of the wire.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
 
 import w3c.www.http.HTTP;
 
-import crc.ds.TernFunc; 
+import org.risource.ds.TernFunc; 
 
-import crc.pia.Machine;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Resolver;
-import crc.pia.Transaction;
-import crc.pia.Content;
-import crc.pia.HTTPResponse;
-import crc.pia.PiaRuntimeException;
+import org.risource.pia.Machine;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Resolver;
+import org.risource.pia.Transaction;
+import org.risource.pia.Content;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.PiaRuntimeException;
 
 
 public class AgentMachine extends Machine {

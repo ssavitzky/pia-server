@@ -22,11 +22,11 @@
 */
 
 
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
-import crc.pia.Transaction;
-import crc.pia.Pia;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
+import org.risource.pia.Pia;
 
 
 public final class IsLocal implements UnaryFunctor{

@@ -27,7 +27,7 @@
  */
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.net.URL;
 import java.io.IOException;
@@ -39,13 +39,13 @@ import java.io.OutputStream;
 import java.util.Vector;
 import java.util.StringTokenizer;
 
-import crc.ds.Queue;
-import crc.ds.List;
-import crc.pia.Machine;
-import crc.pia.Content;
-import crc.pia.Transaction;
+import org.risource.ds.Queue;
+import org.risource.ds.List;
+import org.risource.pia.Machine;
+import org.risource.pia.Content;
+import org.risource.pia.Transaction;
 
-import crc.tf.Registry;
+import org.risource.tf.Registry;
 
 public class  HTTPResponse extends Transaction {
   public boolean DEBUG = false;  
@@ -207,7 +207,7 @@ public class  HTTPResponse extends Transaction {
     msg = errorMessage(code, msg);
     StringReader inputStream = new StringReader( msg );
 
-    Content ct = new crc.content.text.html( inputStream, this );
+    Content ct = new org.risource.content.text.html( inputStream, this );
     Transaction response = new HTTPResponse( Pia.instance().thisMachine,
 					     toMachine(), ct, false);
     response.setStatus( code );

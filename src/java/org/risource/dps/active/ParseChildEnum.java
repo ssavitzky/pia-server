@@ -23,10 +23,10 @@
 
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dom.*;
+import org.risource.dom.*;
 
 /** Implementation of the NodeEnumerator interface for ParseChildList.
  *

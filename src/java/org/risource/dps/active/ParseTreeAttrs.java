@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.*;
+import org.risource.dom.*;
 import java.io.*;
 import java.util.Enumeration;
 
-import crc.dps.Namespace;
-import crc.dps.Tagset;
-import crc.dps.Context;
+import org.risource.dps.Namespace;
+import org.risource.dps.Tagset;
+import org.risource.dps.Context;
 
 
 /**
@@ -180,7 +180,7 @@ public class ParseTreeAttrs extends ParseNodeTable
    *	as a boolean
    */
   public boolean hasTrueAttribute(String name) {
-    return crc.dps.util.Test.trueValue(getAttribute(name));
+    return org.risource.dps.util.Test.trueValue(getAttribute(name));
   }
 
   public void setAttributeValue(String aname, NodeList value) {

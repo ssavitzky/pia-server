@@ -23,12 +23,12 @@
 
 
 
-package crc.pia;
-import crc.ds.Table;
+package org.risource.pia;
+import org.risource.ds.Table;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
-import crc.content.ByteStreamContent;
+import org.risource.content.ByteStreamContent;
 import java.net.ContentHandler;
 
 /**  ContentFactory
@@ -40,7 +40,7 @@ import java.net.ContentHandler;
  * the base-mime type of the given mime type.  Thus, "text/html" would lead
  * to a search for html class in text package.  If no base-mime type is 
  * specified, a search for the content class will be done in the 
- * crc.pia.content package 
+ * org.risource.pia.content package 
  */
 public class ContentFactory extends ContentHandler
 {
@@ -54,8 +54,8 @@ public class ContentFactory extends ContentHandler
   public static String APPLICATION_X_JAVA_AGENT          = "application/x-java-agent";
   public static String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
-  protected static String CONTPACKPREFIX = "crc.content";
-  protected static String PIAPREFIX      = "crc.pia";
+  protected static String CONTPACKPREFIX = "org.risource.content";
+  protected static String PIAPREFIX      = "org.risource.pia";
   protected static String TEXTPACKPREFIX = CONTPACKPREFIX + ".text";
   protected static String IMGPACKPREFIX  = CONTPACKPREFIX + ".img";
   protected static String DEFAULT        = "Default";
@@ -179,7 +179,7 @@ public class ContentFactory extends ContentHandler
 	return c;
       }catch(Exception e){
 	//e.printStackTrace();
-	return new crc.content.ByteStreamContent();
+	return new org.risource.content.ByteStreamContent();
       }
     }
   }

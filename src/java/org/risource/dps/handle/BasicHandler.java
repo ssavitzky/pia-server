@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.Copy;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.Copy;
 
-import crc.ds.Table;
+import org.risource.ds.Table;
 
 /**
  * Basic implementation for a Node Handler. <p>
@@ -45,13 +45,13 @@ import crc.ds.Table;
  * @version BasicHandler.java,v 1.19 1999/03/01 23:46:00 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.handle.GenericHandler
- * @see crc.dps.Processor
- * @see crc.dps.Tagset
- * @see crc.dps.BasicTagset
- * @see crc.dps.Input 
- * @see crc.dps.Output
- * @see crc.dom.Node
+ * @see org.risource.dps.handle.GenericHandler
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Tagset
+ * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.Input 
+ * @see org.risource.dps.Output
+ * @see org.risource.dom.Node
  */
 
 public class BasicHandler extends AbstractHandler {
@@ -85,7 +85,7 @@ public class BasicHandler extends AbstractHandler {
 
   /** Set what the Handler knows about a Token's syntax.
    *
-   * @see crc.dps.Syntax
+   * @see org.risource.dps.Syntax
    */
   public void setSyntaxCode(int syntax) {
     syntaxCode = syntax;
@@ -210,7 +210,7 @@ public class BasicHandler extends AbstractHandler {
 
   /** Construct a BasicHandler for a passive element. 
    *
-   * @param syntax see codes in <a href="crc.dps.Syntax.html">Syntax</a>
+   * @param syntax see codes in <a href="org.risource.dps.Syntax.html">Syntax</a>
    * @see #getSyntaxCode
    */
   public BasicHandler(int syntax) {

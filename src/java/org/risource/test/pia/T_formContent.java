@@ -22,9 +22,9 @@
 */
 
 
-package crc.test.pia;
-import crc.pia.FormContent;
-import crc.pia.HeaderFactory;
+package org.risource.test.pia;
+import org.risource.pia.FormContent;
+import org.risource.pia.HeaderFactory;
 import java.io.IOException;
 import java.io.EOFException;
 import java.io.OutputStream;
@@ -37,17 +37,17 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.ByteArrayInputStream;
 
-import crc.pia.Headers;
-import crc.ds.Table;
-import crc.ds.List;
-import crc.util.Utilities;
+import org.risource.pia.Headers;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.util.Utilities;
 
 public class T_formContent{
   private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, here is the command --> java crc.pia.FormContent -1 postno1line.txt");
-    System.out.println("For test 2, here is the command --> java crc.pia.FormContent -2 postno1line.txt");
-    System.out.println("For test 3, here is the command --> java crc.pia.FormContent -3 postbody.txt");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.FormContent -1 postno1line.txt");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.FormContent -2 postno1line.txt");
+    System.out.println("For test 3, here is the command --> java org.risource.pia.FormContent -3 postbody.txt");
   }
 
 

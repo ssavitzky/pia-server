@@ -22,11 +22,11 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.NodeList;
-import crc.dom.Node;
-import crc.dom.NodeEnumerator;
+import org.risource.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeEnumerator;
 
 import java.util.Enumeration;
 
@@ -37,8 +37,8 @@ import java.util.Enumeration;
  *
  * @version ParseNodeList.java,v 1.7 1999/03/01 23:45:46 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Token
- * @see crc.dom.Node
+ * @see org.risource.dps.Token
+ * @see org.risource.dom.Node
  */
 public class ParseNodeList extends ParseNodeArray
   implements ActiveNodeList, java.io.Serializable {
@@ -54,7 +54,7 @@ public class ParseNodeList extends ParseNodeArray
   public ActiveNode activeNodeAt(long index) { 
     try {
       return (ActiveNode)item(index);
-    } catch (crc.dom.NoSuchNodeException e) {
+    } catch (org.risource.dom.NoSuchNodeException e) {
       return null;
     }
   }

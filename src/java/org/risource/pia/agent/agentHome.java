@@ -22,21 +22,21 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.dom.NodeList;
-import crc.pia.Agent;
-import crc.ds.List;
+import org.risource.dom.NodeList;
+import org.risource.pia.Agent;
+import org.risource.ds.List;
 
 /** Handler class for &lt;agent-home&gt tag 
  *  <p> See <a href="../../InterForm/tag_man.html#agent-home">Manual Entry</a> 
  *	for syntax and description.
  */
-public class agentHome extends crc.dps.handle.GenericHandler {
+public class agentHome extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {

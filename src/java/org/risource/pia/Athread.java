@@ -22,10 +22,10 @@
 */
 
 
-package crc.pia;
-import crc.pia.Pia;
+package org.risource.pia;
+import org.risource.pia.Pia;
 import java.io.*;
-import crc.ds.UnaryFunctor;
+import org.risource.ds.UnaryFunctor;
 
 public class Athread implements UnaryFunctor{
   static final int C_IDLE = 0;	// Zombie

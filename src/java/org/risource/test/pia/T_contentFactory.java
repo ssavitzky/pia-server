@@ -22,13 +22,13 @@
 */
 
 
-package crc.test.pia;
+package org.risource.test.pia;
 
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
-import crc.pia.ContentFactory;
-import crc.pia.Content;
+import org.risource.pia.ContentFactory;
+import org.risource.pia.Content;
 
 public class T_contentFactory
 {

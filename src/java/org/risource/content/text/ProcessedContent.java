@@ -22,20 +22,20 @@
 */
 
 
-package crc.content.text;
+package org.risource.content.text;
 
-import crc.content.GenericContent;
-import crc.pia.ContentOperationUnavailable;
-import crc.pia.Agent;
-import crc.pia.Resolver;
-import crc.pia.Transaction;
+import org.risource.content.GenericContent;
+import org.risource.pia.ContentOperationUnavailable;
+import org.risource.pia.Agent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Transaction;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.output.ToWriter;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.ToWriter;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.util.NameUtils;
+import org.risource.util.NameUtils;
 
 import java.io.Reader;
 import java.io.FileReader;
@@ -52,7 +52,7 @@ import java.io.IOException;
  *	This class uses the new Document Processing System (DPS) to process
  *	text.  
  *
- * @see crc.dps
+ * @see org.risource.dps
  */
 public class ProcessedContent extends  GenericContent {
 

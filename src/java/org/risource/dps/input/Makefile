@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.input
-TOPDIR=../../..
+PACKAGE=org.risource.dps.input
+TOPDIR=../../../..
 
 FILES = \
 	ActiveInput.java \

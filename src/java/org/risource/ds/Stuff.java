@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 /** This is the interface for objects in the PIA that have a combination
  *	of indexed list items and named attributes.  It is designed to 

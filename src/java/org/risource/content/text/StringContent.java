@@ -23,10 +23,10 @@
 
 
 
- package crc.content.text;
+ package org.risource.content.text;
 
-import crc.content.GenericContent;
-import crc.pia.ContentOperationUnavailable;
+import org.risource.content.GenericContent;
+import org.risource.pia.ContentOperationUnavailable;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

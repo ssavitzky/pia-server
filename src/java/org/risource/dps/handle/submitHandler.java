@@ -22,27 +22,27 @@
 */
 
 
-package crc.dps.handle;
+package org.risource.dps.handle;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.pia.Agent;
-import crc.pia.agent.AgentMachine;
-import crc.pia.Headers;
-import crc.pia.BadMimeTypeException;
-import crc.pia.FileAccess;
-import crc.pia.InputContent;
-import crc.pia.FormContent;
-import crc.pia.Content;
-import crc.pia.MultipartFormContent;
-import crc.pia.Pia;
+import org.risource.pia.Agent;
+import org.risource.pia.agent.AgentMachine;
+import org.risource.pia.Headers;
+import org.risource.pia.BadMimeTypeException;
+import org.risource.pia.FileAccess;
+import org.risource.pia.InputContent;
+import org.risource.pia.FormContent;
+import org.risource.pia.Content;
+import org.risource.pia.MultipartFormContent;
+import org.risource.pia.Pia;
 
 /**
  * Handler for &lt;submit&gt;....&lt;/&gt;  

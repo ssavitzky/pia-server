@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.content
-TOPDIR=../..
+PACKAGE=org.risource.content
+TOPDIR=../../..
 
 PACKAGES = \
 	text

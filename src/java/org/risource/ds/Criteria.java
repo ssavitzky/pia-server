@@ -22,7 +22,7 @@
 */
 
 
-package crc.ds;
+package org.risource.ds;
 
 /**
  *  A Criteria performs a matching operation on a Features object.
@@ -34,9 +34,9 @@ public class Criteria extends List {
   public boolean match(Features features, HasFeatures parent) {
     for (int i = 0; i < nItems(); ++i) {
       Criterion c = (Criterion)at(i);
-      // crc.pia.Pia.debug(this, "         "+c.toString()+"?");
+      // org.risource.pia.Pia.debug(this, "         "+c.toString()+"?");
       if (! c.match(features, parent)) {
-	// crc.pia.Pia.debug(this, "         failed");
+	// org.risource.pia.Pia.debug(this, "         failed");
 	return false;
       }
     }

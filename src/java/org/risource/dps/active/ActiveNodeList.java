@@ -22,24 +22,24 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dps.active.ActiveNode;
-import crc.dps.active.ActiveNodeList;
+import org.risource.dps.active.ActiveNode;
+import org.risource.dps.active.ActiveNodeList;
 
 /**
  * A list or sequence of ActiveNode objects.  
  *
  *	An ActiveNodeList is not necessarily a NodeList; it might be a Java
- *	Collection or crc.ds.List.  The contents are not necessarily 
+ *	Collection or org.risource.ds.List.  The contents are not necessarily 
  *	from the same level in the parse tree, though this is usual.
  *
  * @version ActiveNodeList.java,v 1.2 1999/03/01 23:45:42 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.ActiveNode
- * @see crc.dom.NodeList
+ * @see org.risource.dps.ActiveNode
+ * @see org.risource.dom.NodeList
  * @see java.util.Collection
- * @see crc.ds.List
+ * @see org.risource.ds.List
  */
 
 public interface ActiveNodeList  {

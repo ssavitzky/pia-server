@@ -22,20 +22,20 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.Text;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
+import org.risource.dom.Node;
+import org.risource.dom.Text;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
 
-import crc.dps.NodeType;
-import crc.dps.active.*;
-import crc.dps.output.*;
+import org.risource.dps.NodeType;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.ds.Association;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Association;
 
 import java.util.Enumeration;
 

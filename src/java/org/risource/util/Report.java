@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
@@ -63,8 +63,8 @@ import java.util.NoSuchElementException;
  * @version Report.java,v 1.2 1999/03/01 23:48:28 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.util.Severity
- * @see crc.util.Message
+ * @see org.risource.util.Severity
+ * @see org.risource.util.Message
  *
  */
 

@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps.parse;
+package org.risource.dps.parse;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.BitSet;
@@ -32,20 +32,20 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.IOException;
 
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.Tagset;
-import crc.dps.Parser;
-import crc.dps.Processor;
-import crc.dps.Handler;
-import crc.dps.NodeType;
-import crc.dps.EntityTable;
+import org.risource.dps.Tagset;
+import org.risource.dps.Parser;
+import org.risource.dps.Processor;
+import org.risource.dps.Handler;
+import org.risource.dps.NodeType;
+import org.risource.dps.EntityTable;
 
-import crc.dps.util.*;
-import crc.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.active.*;
 
 /**
  * An abstract implementation of the Parser interface.  
@@ -59,7 +59,7 @@ import crc.dps.active.*;
  *
  * @version AbstractParser.java,v 1.18 1999/03/01 23:46:38 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Parser
+ * @see org.risource.dps.Parser
  */
 
 public abstract class AbstractParser extends CursorStack implements Parser

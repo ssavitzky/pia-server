@@ -29,25 +29,25 @@
  *	web pages to string constants.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
 import java.io.InputStream;
 import java.util.Enumeration;
 
 import java.net.URL;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.pia.GenericAgent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
-import crc.pia.agent.Agency;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.agent.Agency;
 
-import crc.interform.Run;
+import org.risource.interform.Run;
 
 public class Fallback extends Agency {
   /**
@@ -63,7 +63,7 @@ public class Fallback extends Agency {
   }
 
   public void respond(Transaction request, Resolver res)
-       throws crc.pia.PiaRuntimeException{
+       throws org.risource.pia.PiaRuntimeException{
     if (respondToInterform(request, res)) return;
 
     /* No InterForm found.  See if this a known fallback form. */

@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
 /**
  * The interface for an Input that knows about the Processor it is providing

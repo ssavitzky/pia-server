@@ -22,11 +22,11 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dps.*;
-import crc.dom.*;
+import org.risource.dps.*;
+import org.risource.dom.*;
 
 /**
  * Implementation of ActiveNodeList for the common special case where

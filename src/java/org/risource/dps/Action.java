@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.AttributeList;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.AttributeList;
 
-import crc.dps.active.*;
+import org.risource.dps.active.*;
 
 /**
  * The interface for a Node's ``Action'' (semantic handler). 
@@ -40,9 +40,9 @@ import crc.dps.active.*;
  * @version Action.java,v 1.14 1999/03/01 23:45:23 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Input 
- * @see crc.dom.Node */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node */
 
 public interface Action {
 

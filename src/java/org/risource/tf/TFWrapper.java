@@ -27,13 +27,13 @@
  *	This is an interim hack. 
  */
 
-package crc.tf;
+package org.risource.tf;
 
-import crc.pia.Transaction;
-import crc.ds.Features;
-import crc.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
+import org.risource.ds.Features;
+import org.risource.ds.UnaryFunctor;
 
-import crc.tf.TFComputer;
+import org.risource.tf.TFComputer;
 
 public class TFWrapper extends TFComputer {
 

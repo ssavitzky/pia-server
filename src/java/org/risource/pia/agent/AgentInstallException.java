@@ -22,7 +22,7 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
 /** The only use of this appears to be when the agent name is missing */
 public class AgentInstallException extends Exception {

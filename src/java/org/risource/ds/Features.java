@@ -40,13 +40,13 @@
  *	however, make use of feature values.  In particular, 'agent'
  *	binds to the name of the agent at which a request is directed.  */
 
-package crc.ds;
+package org.risource.ds;
 
 import java.util.Hashtable;
 import java.lang.String;
 
-import crc.ds.HasFeatures;
-import crc.ds.Criterion;
+import org.risource.ds.HasFeatures;
+import org.risource.ds.Criterion;
 
 public class Features implements java.io.Serializable {
 
@@ -151,7 +151,7 @@ public class Features implements java.io.Serializable {
 
   public static final Boolean True       = new Boolean(true);
   public static final Boolean False      = new Boolean(false);
-  public static final Object  Nil        = crc.ds.Nil.value;
+  public static final Object  Nil        = org.risource.ds.Nil.value;
   public static final String  NullString = "";
 
   /** Convert name to cannonical form. */

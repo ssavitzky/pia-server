@@ -23,9 +23,9 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
+import org.risource.ds.UnaryFunctor;
 
 public final class IsLclSrc implements UnaryFunctor{
 

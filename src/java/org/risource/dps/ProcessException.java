@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dps;
+package org.risource.dps;
 
 /** Runtime Exception in the Document Processing System. 
  */

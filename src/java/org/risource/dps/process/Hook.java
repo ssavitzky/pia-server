@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps.process;
+package org.risource.dps.process;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -33,15 +33,15 @@ import java.io.PrintStream;
 
 import java.net.URL;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dom.NodeList;
-import crc.ds.List;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dom.NodeList;
+import org.risource.ds.List;
 
-import crc.pia.Pia;
-import crc.pia.Agent;
-import crc.pia.Transaction;
-import crc.pia.Resolver;
+import org.risource.pia.Pia;
+import org.risource.pia.Agent;
+import org.risource.pia.Transaction;
+import org.risource.pia.Resolver;
 
 /**
  * A TopProcessor for processing actOn hooks in PIA agents.
@@ -49,10 +49,10 @@ import crc.pia.Resolver;
  * @version Hook.java,v 1.8 1999/03/01 23:46:43 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.pia
- * @see crc.dps.process.TopProcessor
- * @see crc.dps.Processor
- * @see crc.dps.Context */
+ * @see org.risource.pia
+ * @see org.risource.dps.process.TopProcessor
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Context */
 
 public class Hook extends ActiveDoc {
 

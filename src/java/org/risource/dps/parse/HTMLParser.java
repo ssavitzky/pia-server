@@ -22,10 +22,10 @@
 */
 
 
-package crc.dps.parse;
+package org.risource.dps.parse;
 
-import crc.dps.NodeType;
-import crc.dps.Parser;
+import org.risource.dps.NodeType;
+import org.risource.dps.Parser;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -47,7 +47,7 @@ import java.io.IOException;
  *
  * @version HTMLParser.java,v 1.3 1999/03/01 23:46:41 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Parser
+ * @see org.risource.dps.Parser
 
  */
 

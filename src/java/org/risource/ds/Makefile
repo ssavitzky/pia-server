@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.ds
-TOPDIR=../..
+PACKAGE=org.risource.ds
+TOPDIR=../../..
 
 FILES = \
 	Association.java \

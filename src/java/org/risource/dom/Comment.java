@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
  /**
   * Represents the content of a comment, i.e. all the characters between the starting

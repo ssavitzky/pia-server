@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 
 /**
  * A message to the user.
@@ -34,7 +34,7 @@ package crc.util;
  * @version Msg.java,v 1.3 1999/03/01 23:48:27 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.util.Report
+ * @see org.risource.util.Report
  */
 
 public class Msg extends Severity implements Message {

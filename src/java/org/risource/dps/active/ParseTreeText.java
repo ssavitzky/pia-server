@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Text;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Text;
 
-import crc.dps.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
 
 /**
  * An implementation of the ActiveText interface, suitable for use in 
@@ -38,9 +38,9 @@ import crc.dps.util.*;
  *
  * @version ParseTreeText.java,v 1.11 1999/03/01 23:45:57 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Context
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Processor
  */
 public class ParseTreeText extends ParseTreeNode implements ActiveText {
 

@@ -22,15 +22,15 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.dom.NodeList;
-import crc.pia.Agent;
-import crc.ds.List;
+import org.risource.dom.NodeList;
+import org.risource.pia.Agent;
+import org.risource.ds.List;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +39,7 @@ import java.io.FileInputStream;
  * <p>See <a href="../../InterForm/tag_man.html#agent-restore">Manual Entry</a> 
  *	for syntax and description.
  */
-public class agentRestore extends crc.dps.handle.GenericHandler {
+public class agentRestore extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
@@ -78,7 +78,7 @@ public class agentRestore extends crc.dps.handle.GenericHandler {
 
     try {
       FileInputStream stm = new FileInputStream(file);
-      List list = crc.util.Utilities.readObjectsFrom(stm);
+      List list = org.risource.util.Utilities.readObjectsFrom(stm);
       for (int i = 0; i < list.nItems(); ++i) {
 	if (list.at(i) instanceof Agent) {
 	  putText(out, aContext, ((Agent)list.at(i)).name());

@@ -22,9 +22,9 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.*;
+import org.risource.dom.*;
 
 import java.io.*;
 import java.util.Vector;
@@ -183,7 +183,7 @@ public class ParseNodeArray implements EditableNodeList, Serializable {
    */
   public void append(NodeList aNodeList) {
     if (aNodeList == null) return;
-    crc.dom.NodeEnumerator e = aNodeList.getEnumerator();
+    org.risource.dom.NodeEnumerator e = aNodeList.getEnumerator();
     for (Node node = e.getFirst(); node != null; node = e.getNext()) {
       append(node);
     }

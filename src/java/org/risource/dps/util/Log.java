@@ -22,19 +22,19 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
 import java.io.PrintStream;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Text;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Text;
 
-import crc.dps.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
 
 /**
  * Logging utilities (static methods) for a Document Processor. 
@@ -45,19 +45,19 @@ import crc.dps.active.*;
  * @version Log.java,v 1.3 1999/03/01 23:47:00 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Context
+ * @see org.risource.dps.Context
  */
 public class Log {
   public static String node(Node aNode) {
     switch (aNode.getNodeType()) {
-    case crc.dom.NodeType.ELEMENT:
+    case org.risource.dom.NodeType.ELEMENT:
       Element e = (Element)aNode;
       AttributeList atts = e.getAttributes();
       return "<" + e.getTagName()
 	+ ((atts != null && atts.getLength() > 0)? " " + atts.toString() : "")
 	+ ">" + (e.hasChildren()? "..." : "");
 
-    case crc.dom.NodeType.TEXT: 
+    case org.risource.dom.NodeType.TEXT: 
       Text t = (Text)aNode;
       return t.getIsIgnorableWhitespace()
 	? "ignorable" : Test.isWhitespace(t.getData()) ? "whitespace"

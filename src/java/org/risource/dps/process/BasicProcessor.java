@@ -22,19 +22,19 @@
 */
 
 
-package crc.dps.process;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
-import crc.dom.Entity;
-import crc.dom.Text;
+package org.risource.dps.process;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
+import org.risource.dom.Entity;
+import org.risource.dom.Text;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dps.active.*;
-import crc.dps.output.ToNodeList;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.ToNodeList;
 
 /**
  * A minimal implementation for a document Processor. <p>
@@ -42,9 +42,9 @@ import crc.dps.output.ToNodeList;
  * @version BasicProcessor.java,v 1.8 1999/03/01 23:46:43 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Output
- * @see crc.dps.Input 
- * @see crc.dps.Action
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.Input 
+ * @see org.risource.dps.Action
  */
 
 public class BasicProcessor extends ContextStack implements Processor {
@@ -225,7 +225,7 @@ public class BasicProcessor extends ContextStack implements Processor {
   }
 
   public void expandNodes(NodeList nl, Output dst) {
-    crc.dom.NodeEnumerator e = nl.getEnumerator();
+    org.risource.dom.NodeEnumerator e = nl.getEnumerator();
     for (Node n = e.getFirst(); n != null; n = e.getNext()) {
       if (n.getNodeType() == NodeType.ENTITY) {
 	expandEntity((Entity) n, dst);

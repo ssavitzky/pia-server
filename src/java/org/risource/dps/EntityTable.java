@@ -21,15 +21,15 @@
  ***************************************************************************** 
 */
 
-package crc.dps;
+package org.risource.dps;
 
-import crc.dps.active.ActiveEntity;
+import org.risource.dps.active.ActiveEntity;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
 import java.util.Enumeration;
 
@@ -41,9 +41,9 @@ import java.util.Enumeration;
  * @version EntityTable.java,v 1.9 1999/03/01 23:45:26 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dom.Entity
- * @see crc.dps.active.ActiveEntity
- * @see crc.dps.util.BasicEntityTable
+ * @see org.risource.dom.Entity
+ * @see org.risource.dps.active.ActiveEntity
+ * @see org.risource.dps.util.BasicEntityTable
  */
 
 public interface EntityTable extends Namespace {

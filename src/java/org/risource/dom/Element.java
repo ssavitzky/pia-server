@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 /**
  * By far the vast majority (apart from text) of node types that authors will

@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 /** This is the interface for objects in the PIA that are ``registered'' 
  *	in a hash table or some other kind of registry object. <p>

@@ -22,16 +22,16 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dps.Active;
-import crc.dps.Action;
-import crc.dps.Handler;
-import crc.dps.Syntax;
-import crc.dps.Namespace;
+import org.risource.dps.Active;
+import org.risource.dps.Action;
+import org.risource.dps.Handler;
+import org.risource.dps.Syntax;
+import org.risource.dps.Namespace;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
 /**
  * Interface for parse tree Nodes. <p>
@@ -48,11 +48,11 @@ import crc.dom.NodeList;
  *
  * @version ActiveNode.java,v 1.6 1999/03/01 23:45:42 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Action
- * @see crc.dps.Active
- * @see crc.dps.Context
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Action
+ * @see org.risource.dps.Active
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Processor
  */
 
 public interface ActiveNode extends Active, Node {

@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.active
-TOPDIR=../../..
+PACKAGE=org.risource.dps.active
+TOPDIR=../../../..
 
 INTERFACES = \
 	ActiveNode.java \

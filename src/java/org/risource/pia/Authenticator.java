@@ -21,16 +21,16 @@
  ***************************************************************************** 
 */
 
-package crc.pia;
+package org.risource.pia;
 
-import crc.pia.GenericAgent;
-import crc.pia.Transaction;
-import crc.pia.HTTPRequest;
-import crc.pia.HTTPResponse;
-import crc.pia.Machine;
-import crc.ds.Table;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Transaction;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Machine;
+import org.risource.ds.Table;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 import java.io.Reader;
 import java.io.FileReader;
 import java.io.LineNumberReader;

@@ -22,18 +22,18 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.Element;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.Element;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.tagset.*;
-import crc.dps.output.DiscardOutput;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.tagset.*;
+import org.risource.dps.output.DiscardOutput;
 
 import java.util.StringTokenizer;
 
@@ -168,7 +168,7 @@ public class tagsetHandler extends GenericHandler {
       // === Strictly speaking we should put the parent in the context,
       // === rather than including it.  This works, though, and I'm too
       // === lazy to fix it right now. (steve)
-      Tagset parentTS =  crc.dps.tagset.Loader.require(parentTSname);
+      Tagset parentTS =  org.risource.dps.tagset.Loader.require(parentTSname);
       cxt.debug("Loading tagset=" + parentTSname + 
 		((parentTS == null)? " FAILED" : " OK"));
       if (parentTS == null) {
@@ -184,7 +184,7 @@ public class tagsetHandler extends GenericHandler {
       StringTokenizer inames = new StringTokenizer(inclusions);
       while (inames.hasMoreElements()) {
 	String incN  = inames.nextElement().toString();
-	Tagset incTS = crc.dps.tagset.Loader.require(incN);
+	Tagset incTS = org.risource.dps.tagset.Loader.require(incN);
 	cxt.debug("Loading tagset=" + incN + 
 		   ((incTS == null)? " FAILED" : " OK"));
 	if (incTS == null) {
@@ -199,7 +199,7 @@ public class tagsetHandler extends GenericHandler {
     if (parserTSname != null) {
       // load the specified parserTagset (TAGSET attribute)
       // Make it the current tagset in the parser.
-      parserTagset = crc.dps.tagset.Loader.require(parserTSname);
+      parserTagset = org.risource.dps.tagset.Loader.require(parserTSname);
       cxt.debug("Loading tagset=" + parserTSname + 
 		   ((parserTagset == null)? " FAILED" : " OK"));
       if (parserTagset == null) {

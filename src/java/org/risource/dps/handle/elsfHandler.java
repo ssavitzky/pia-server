@@ -22,17 +22,17 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.Element;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.Element;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
 /**
  * Handler for &lt;elsf&gt;. <p>
@@ -45,11 +45,11 @@ import crc.dps.util.*;
  * @version elsfHandler.java,v 1.6 1999/03/01 23:46:10 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Tagset
- * @see crc.dps.BasicTagset
- * @see crc.dps.Input 
- * @see crc.dom.Node
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Tagset
+ * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node
  */
 
 public class elsfHandler extends GenericHandler {

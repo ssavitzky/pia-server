@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 public class NotActiveNodeException extends RuntimeException {
   public NotActiveNodeException(String msg){

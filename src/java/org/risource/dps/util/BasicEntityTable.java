@@ -21,21 +21,21 @@
  ***************************************************************************** 
 */
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.active.*;
-import crc.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.*;
 
 import java.util.Enumeration;
 
-import crc.ds.List;
-import crc.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Table;
 
 /**
  * The basic implementation for a EntityTable -- a lookup table for entities. 
@@ -46,11 +46,11 @@ import crc.ds.Table;
  * @version BasicEntityTable.java,v 1.10 1999/03/01 23:46:50 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Token
- * @see crc.dps.Input 
- * @see crc.dom.Node 
- * @see crc.dom.Attribute
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node 
+ * @see org.risource.dom.Attribute
  */
 
 public class BasicEntityTable extends BasicNamespace implements EntityTable {

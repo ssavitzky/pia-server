@@ -22,12 +22,12 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
 
-import crc.dps.active.ActiveEntity;
+import org.risource.dps.active.ActiveEntity;
 
 import java.io.PrintStream;
 
@@ -72,10 +72,10 @@ import java.io.PrintStream;
  * @version Context.java,v 1.13 1999/03/01 23:45:25 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Handler
- * @see crc.dps.Output
- * @see crc.dps.Processor
- * @see crc.dps.Token */
+ * @see org.risource.dps.Handler
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Token */
 
 public interface Context {
 

@@ -22,7 +22,7 @@
 */
 
 
-package crc.pia ;
+package org.risource.pia ;
 
 /**
  * PIA runtime exception.

@@ -22,26 +22,26 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dps.*;
-import crc.dps.util.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.util.*;
+import org.risource.dps.active.*;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
 /**
  * Output to an AttributeList.<p>
  *
  * @version ToAttributeList.java,v 1.5 1999/03/01 23:46:34 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Token
- * @see crc.dps.Input
- * @see crc.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input
+ * @see org.risource.dps.Processor
  */
 
 public class ToAttributeList extends ActiveOutput implements Output {

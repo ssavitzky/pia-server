@@ -22,17 +22,17 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Entity;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Entity;
 
-import crc.dps.active.*;
-import crc.dps.*;
-import crc.dps.util.Copy;
+import org.risource.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.util.Copy;
 
-import crc.ds.Tabular;
+import org.risource.ds.Tabular;
 
 /**
  * An implementation of the ActiveEntity interface that wraps an arbitrary 
@@ -40,8 +40,8 @@ import crc.ds.Tabular;
  *
  * @version EntityWrap.java,v 1.3 1999/03/01 23:46:57 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class EntityWrap extends ParseTreeEntity {
 

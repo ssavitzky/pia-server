@@ -22,9 +22,9 @@
 */
 
 
-package crc.dps;
-import crc.dom.Node;
-import crc.dom.NodeList;
+package org.risource.dps;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
 /**
  * The interface for a Node's Handler. 
@@ -42,10 +42,10 @@ import crc.dom.NodeList;
  * @version Handler.java,v 1.12 1999/03/01 23:45:28 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Token
- * @see crc.dps.Input 
- * @see crc.dom.Node */
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Token
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node */
 
 public interface Handler extends Action, Syntax {
 

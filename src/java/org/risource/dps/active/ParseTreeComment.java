@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
-import crc.dom.Comment;
+import org.risource.dom.Comment;
 
-import crc.dps.*;
-import crc.dps.util.Copy;
+import org.risource.dps.*;
+import org.risource.dps.util.Copy;
 
 /**
  * An implementation of the ActiveComment interface, suitable for use in 
@@ -38,8 +38,8 @@ import crc.dps.util.Copy;
  *
  * @version ParseTreeComment.java,v 1.9 1999/03/01 23:45:50 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class ParseTreeComment extends ParseTreeNode implements ActiveComment {
 

@@ -22,16 +22,16 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dom.NodeList;
+import org.risource.dom.NodeList;
 
-import crc.dps.Handler;
-import crc.dps.Namespace;
-import crc.dps.Input;
-import crc.dps.Context;
-import crc.dps.input.FromParseNodes;
+import org.risource.dps.Handler;
+import org.risource.dps.Namespace;
+import org.risource.dps.Input;
+import org.risource.dps.Context;
+import org.risource.dps.input.FromParseNodes;
 
 /** 
  * Abstract base class for nodes with names and values. 

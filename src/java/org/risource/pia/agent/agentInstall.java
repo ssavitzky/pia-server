@@ -22,18 +22,18 @@
 */
 
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.process.ActiveDoc;
-import crc.dom.NodeList;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.process.ActiveDoc;
+import org.risource.dom.NodeList;
 
 /** Handler class for &lt;agent-install&gt tag 
  *  <p> See <a href="../../InterForm/tag_man.html#agent-install">Manual
  *	Entry</a> for syntax and description.
  */
-public class agentInstall extends crc.dps.handle.GenericHandler {
+public class agentInstall extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
@@ -47,25 +47,25 @@ public class agentInstall extends crc.dps.handle.GenericHandler {
     //if (content != null) 
     //  notify(in, aContext, "Bug: agent options in content not implemented.");
 
-    crc.pia.Transaction trans = env.getTransaction();
-    crc.pia.Transaction req = trans.requestTran();
-    crc.ds.Table form = req.getParameters();
+    org.risource.pia.Transaction trans = env.getTransaction();
+    org.risource.pia.Transaction req = trans.requestTran();
+    org.risource.ds.Table form = req.getParameters();
     if (form == null) return;
 
     String name = form.has("agent")? form.at("agent").toString() : null;
     if (name == null) 
       name = form.has("name")? form.at("name").toString() : null;
 
-    crc.pia.agent.Admin admin = null;
+    org.risource.pia.agent.Admin admin = null;
     try {
-      admin = (crc.pia.agent.Admin) env.getAgent();
+      admin = (org.risource.pia.agent.Admin) env.getAgent();
     } catch (Exception e) {
       reportError(in, aContext, "only works in the Admin agent");
       return;
     }
     try {
       admin.install(form); 
-    } catch (crc.pia.agent.AgentInstallException e) {
+    } catch (org.risource.pia.agent.AgentInstallException e) {
       reportError(in, aContext, "Install exception: " + e.getMessage());
       return;
     } 

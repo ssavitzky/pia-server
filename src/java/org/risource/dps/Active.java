@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
 /**
  * Interface for objects that have an Action. <p>
@@ -32,10 +32,10 @@ package crc.dps;
  *
  * @version Active.java,v 1.2 1999/03/01 23:45:24 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.Action
- * @see crc.dps.Context
- * @see crc.dps.Processor
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.Action
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Processor
  */
 
 public interface Active {

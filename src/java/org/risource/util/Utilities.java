@@ -27,7 +27,7 @@
  *	utilities, mainly file-handling and data-format conversion.
  */
 
-package crc.util;
+package org.risource.util;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.InvalidClassException;
@@ -52,9 +52,9 @@ import java.lang.ClassNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-import crc.ds.List;
-import crc.ds.Registered;
-import crc.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Registered;
+import org.risource.ds.Table;
 
 public class Utilities {
 
@@ -241,7 +241,7 @@ public class Utilities {
    */
     /*
   public static synchronized void substFile( File src, File dst,
-					     crc.sgml.Attrs subst, char beg, char end)
+					     org.risource.sgml.Attrs subst, char beg, char end)
        throws IOException
   {
 
@@ -309,8 +309,8 @@ public class Utilities {
    *	interface it is registered.  If the object is a List, every object
    *	on the list is registered if necessary.
    *
-   *	@see crc.ds.List
-   *	@see crc.ds.Registered
+   *	@see org.risource.ds.List
+   *	@see org.risource.ds.Registered
    */
   public static synchronized Object readObjectFrom( String fileName )
        throws NullPointerException, FileNotFoundException, IOException
@@ -351,8 +351,8 @@ public class Utilities {
    *	interface it is registered.  If the object is a List, every object
    *	on the list is registered if necessary.
    *
-   *	@see crc.ds.List
-   *	@see crc.ds.Registered
+   *	@see org.risource.ds.List
+   *	@see org.risource.ds.Registered
    */
   public static synchronized Object readObjectFrom( InputStream f )
        throws NullPointerException, IOException
@@ -389,8 +389,8 @@ public class Utilities {
    *	Registered interface are registered.  Lists in the input file are
    *	quietly appended.
    *
-   *	@see crc.ds.List
-   *	@see crc.ds.Registered
+   *	@see org.risource.ds.List
+   *	@see org.risource.ds.Registered
    */
   public static synchronized List readObjectsFrom( String fileName )
        throws NullPointerException, FileNotFoundException, IOException
@@ -610,14 +610,14 @@ public class Utilities {
    */
   public static synchronized String unescape (String s) {
 
-    crc.pia.Pia.debug( "The input string-->"+s);
+    org.risource.pia.Pia.debug( "The input string-->"+s);
 
 	StringBuffer digitBuf = null;
 	int hb = -1;
 	int lb = -1;
 	StringBuffer sbuf = new StringBuffer () ;
 	int len  = s.length() ;
-	crc.pia.Pia.debug( "The string len is-->"+ Integer.toString( len ));
+	org.risource.pia.Pia.debug( "The string len is-->"+ Integer.toString( len ));
 	int ch = -1 ;
 
 	for (int i = 0 ; i < len ; i++) {
@@ -648,7 +648,7 @@ public class Utilities {
 	    sbuf.append ((char) ch) ;
 	  }
 	}
-	crc.pia.Pia.debug( "The out string-->"+sbuf.toString());
+	org.risource.pia.Pia.debug( "The out string-->"+sbuf.toString());
 	return sbuf.toString() ;
   }
 

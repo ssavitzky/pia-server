@@ -27,7 +27,7 @@
  */
 
 
-package crc.test.pia;
+package org.risource.test.pia;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -45,23 +45,23 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
 
-import crc.pia.Pia;
-import crc.pia.Machine;
-import crc.pia.agent.AgentMachine;
-import crc.pia.Content;
-import crc.content.ByteStreamContent;
-import crc.pia.Transaction;
-import crc.pia.HTTPResponse;
+import org.risource.pia.Pia;
+import org.risource.pia.Machine;
+import org.risource.pia.agent.AgentMachine;
+import org.risource.pia.Content;
+import org.risource.content.ByteStreamContent;
+import org.risource.pia.Transaction;
+import org.risource.pia.HTTPResponse;
 
-import crc.ds.Queue;
-import crc.ds.Features;
-import crc.ds.Table;
-import crc.util.Utilities;
-import crc.tf.Registry;
+import org.risource.ds.Queue;
+import org.risource.ds.Features;
+import org.risource.ds.Table;
+import org.risource.util.Utilities;
+import org.risource.tf.Registry;
 
-import crc.pia.HTTPRequest;
-import crc.pia.FormContent;
-import crc.pia.Headers;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.FormContent;
+import org.risource.pia.Headers;
 public class  T_hTTPRequest {
 
 
@@ -79,7 +79,7 @@ public class  T_hTTPRequest {
     System.out.println("Input is read from post.txt and set as machine's source.");
 
     try{
-      crc.pia.GenericAgent.DEBUG = true;
+      org.risource.pia.GenericAgent.DEBUG = true;
       //Pia.debug( true );
       InputStream in = new FileInputStream (filename);
       Machine machine1 = new Machine(Pia.instance().host(), 8222);
@@ -113,7 +113,7 @@ public class  T_hTTPRequest {
     System.out.println("Content is set to data from requestbody.");
 
     try{
-      crc.pia.GenericAgent.DEBUG = true;
+      org.risource.pia.GenericAgent.DEBUG = true;
       Machine machine = new Machine();
       FormContent c = new FormContent();
 
@@ -149,12 +149,12 @@ public class  T_hTTPRequest {
   private static void test3( ){
     System.out.println("Testing request w/ from machine, content, and header as argument.");
 
-    crc.pia.GenericAgent.DEBUG = true;
+    org.risource.pia.GenericAgent.DEBUG = true;
     Machine machine = new Machine();
     Headers h = null;
     try{
       h = new Headers();
-      h.setHeader("Host", "napa.crc.ricoh.com:9999");
+      h.setHeader("Host", "napa.org.risource.ricoh.com:9999");
       h.setContentType("text/html");
       h.setContentLength( 555 );
       h.setHeader("Content-Type", "image/gif");
@@ -181,12 +181,12 @@ public class  T_hTTPRequest {
     System.out.println("Testing request w/ from machine, content, and header as argument.");
     System.out.println("Also, test transaction features.");
 
-    crc.pia.GenericAgent.DEBUG = true;
+    org.risource.pia.GenericAgent.DEBUG = true;
     Machine machine = new Machine();
     Headers h = null;
     try{
       h = new Headers();
-      h.setHeader("Host", "napa.crc.ricoh.com:9999");
+      h.setHeader("Host", "napa.org.risource.ricoh.com:9999");
       h.setContentType("text/html");
       h.setContentLength( 555 );
       h.setHeader("Content-Type", "image/gif");
@@ -234,10 +234,10 @@ public class  T_hTTPRequest {
 
   private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, here is the command --> java crc.pia.HTTPRequest -1 post.txt");
-    System.out.println("For test 2, here is the command --> java crc.pia.HTTPRequest -2 requestbody.txt");
-    System.out.println("For test 3, here is the command --> java crc.pia.HTTPRequest -3");
-    System.out.println("For test 4, here is the command --> java crc.pia.HTTPRequest -4");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.HTTPRequest -1 post.txt");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.HTTPRequest -2 requestbody.txt");
+    System.out.println("For test 3, here is the command --> java org.risource.pia.HTTPRequest -3");
+    System.out.println("For test 4, here is the command --> java org.risource.pia.HTTPRequest -4");
   }
  /**
   * For testing.

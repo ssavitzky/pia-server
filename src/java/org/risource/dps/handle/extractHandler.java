@@ -22,24 +22,24 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Element;
-import crc.dom.Entity;
-import crc.dom.Text;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Element;
+import org.risource.dom.Entity;
+import org.risource.dom.Text;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
-import crc.dps.output.ToNodeList;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
+import org.risource.dps.output.ToNodeList;
 
-import crc.ds.Association;
-import crc.ds.List;
-import crc.ds.SortTree;
+import org.risource.ds.Association;
+import org.risource.ds.List;
+import org.risource.ds.SortTree;
 
 import gnu.regexp.RegExp;
 import gnu.regexp.MatchInfo;

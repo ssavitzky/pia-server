@@ -26,7 +26,7 @@
  *	POST transaction.
  */
 
-package crc.pia;
+package org.risource.pia;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Enumeration;
@@ -46,12 +46,12 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.ByteArrayInputStream;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
-import crc.pia.Headers;
-import crc.pia.HttpBuffer;
-import crc.ds.Table;
-import crc.ds.List;
+import org.risource.pia.Headers;
+import org.risource.pia.HttpBuffer;
+import org.risource.ds.Table;
+import org.risource.ds.List;
 
 public class FormContent extends Properties implements InputContent {
  
@@ -186,7 +186,7 @@ public class FormContent extends Properties implements InputContent {
   /**
    * Set source.
    * param o the source object, which in this case must be an InputStream.
-   * @exception crc.pia.ContentOperationUnavailable if the source is
+   * @exception org.risource.pia.ContentOperationUnavailable if the source is
    *	anything but an InputStream.
    * @see java.io.InputStream
    */
@@ -401,7 +401,7 @@ public class FormContent extends Properties implements InputContent {
   ************************************************************/
   /** 
    * Tap the input stream.
-   *   @exception crc.pia.ContentOperationUnavailable is <em>always</em>
+   *   @exception org.risource.pia.ContentOperationUnavailable is <em>always</em>
    *	thrown, because a FormContent can't be tapped.
    */
   public void tapIn(OutputStream tap) throws ContentOperationUnavailable{
@@ -410,7 +410,7 @@ public class FormContent extends Properties implements InputContent {
 
   /** 
    * Tap the output stream.
-   *   @exception crc.pia.ContentOperationUnavailable is <em>always</em>
+   *   @exception org.risource.pia.ContentOperationUnavailable is <em>always</em>
    *	thrown, because a FormContent can't be tapped.
    */
   public void tapOut(OutputStream tap) throws ContentOperationUnavailable{
@@ -421,7 +421,7 @@ public class FormContent extends Properties implements InputContent {
   /**  
    * Specify an agent to be notified when a condition is satisfy  
    * for example the object is complete
-   *   @exception crc.pia.ContentOperationUnavailable is <em>always</em>
+   *   @exception org.risource.pia.ContentOperationUnavailable is <em>always</em>
    *	thrown, because a FormConten can't notify.
    */
   public void notifyWhen(Agent interested, String state, Object condition)
@@ -623,7 +623,7 @@ public class FormContent extends Properties implements InputContent {
 	Pia.debug(this, "a param1-->"+ param);
 
 	// 2/17/99 need a good substitute for this--pg
-	// value = crc.sgml.Token.empty;
+	// value = org.risource.sgml.Token.empty;
 	value = eparam;
 	// The SGML convention is that 
 	//    a `boolean' attribute's value is its name (steve)
@@ -718,7 +718,7 @@ public class FormContent extends Properties implements InputContent {
 
   /**
    * Add an object to the content.
-   *   @exception crc.pia.ContentOperationUnavailable is <em>always</em>
+   *   @exception org.risource.pia.ContentOperationUnavailable is <em>always</em>
    *	thrown, because a FormContent can't be edited in the usual way.
    */
    public void add(Object moreContent, int where)

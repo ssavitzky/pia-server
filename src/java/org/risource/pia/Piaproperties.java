@@ -23,11 +23,11 @@
 
 // Please first read the full copyright statement in file COPYRIGHT.html
 
-package crc.pia;
+package org.risource.pia;
 
 import java.util.*;
 import java.io.File;
-import crc.ds.Tabular;
+import org.risource.ds.Tabular;
 
 /**
  * This class extends the basic properties class of Java, by providing
@@ -40,7 +40,7 @@ public class Piaproperties extends Properties implements Tabular {
    * @param name The name of the property to assign.
    * @param value The new value for this property, or <strong>null</strong>
    *    if the property setting is to be cancelled.
-   * @see crc.ds.Tabular
+   * @see org.risource.ds.Tabular
    */
   public synchronized void put(String name, Object value) {
     if (value == null) super.remove(name);
@@ -49,7 +49,7 @@ public class Piaproperties extends Properties implements Tabular {
 
   /** Get value associated with a name.  (From Tabular interface).
    * @param name The name of the property to assign.
-   * @see crc.ds.Tabular
+   * @see org.risource.ds.Tabular
    */
   public synchronized Object get(String name) {
     return getProperty(name, null);

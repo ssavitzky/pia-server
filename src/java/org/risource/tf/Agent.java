@@ -22,14 +22,14 @@
 */
 
 
-package crc.tf;
+package org.risource.tf;
 
 import java.net.URL;
 
-import crc.pia.Transaction;
-import crc.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Pia;
 
-import crc.tf.TFComputer;
+import org.risource.tf.TFComputer;
 
 public final class Agent extends TFComputer {
 
@@ -51,7 +51,7 @@ public final class Agent extends TFComputer {
     String path = url.getFile();
     if( path == null ) return "";
       
-    crc.pia.Agent agent = Pia.instance().resolver().agentFromPath(path);
+    org.risource.pia.Agent agent = Pia.instance().resolver().agentFromPath(path);
 
     if (agent != null) 
       trans.assert("agent-type", agent.type());

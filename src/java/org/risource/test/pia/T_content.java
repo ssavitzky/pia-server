@@ -22,12 +22,12 @@
 */
 
 
-package crc.test.pia;
-import crc.pia.Content;
-import crc.pia.ContentOperationUnavailable;
-import crc.content.*;
-import crc.content.text.*;
-import crc.pia.HeaderFactory;
+package org.risource.test.pia;
+import org.risource.pia.Content;
+import org.risource.pia.ContentOperationUnavailable;
+import org.risource.content.*;
+import org.risource.content.text.*;
+import org.risource.pia.HeaderFactory;
 import java.io.IOException;
 import java.io.EOFException;
 import java.io.OutputStream;
@@ -40,18 +40,18 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.ByteArrayInputStream;
 
-import crc.pia.Headers;
-import crc.ds.Table;
-import crc.ds.List;
-import crc.util.Utilities;
+import org.risource.pia.Headers;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.util.Utilities;
 
 public class T_content{
   private static void printusage(){
     System.out.println("Needs to know what kind of test");
-    System.out.println("For test 1, here is the command --> java crc.pia.T_content -1 postno1line.txt");
-    System.out.println("For test 2, here is the command --> java crc.pia.T_content -2 textString");
-    System.out.println("For test 3, here is the command --> java crc.pia.T_content CONTENT_CLASS_ID FILE_NAME");
-    System.out.println("For test 2, here is the command --> java crc.pia.T_content originalString targetString replacementString");
+    System.out.println("For test 1, here is the command --> java org.risource.pia.T_content -1 postno1line.txt");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.T_content -2 textString");
+    System.out.println("For test 3, here is the command --> java org.risource.pia.T_content CONTENT_CLASS_ID FILE_NAME");
+    System.out.println("For test 2, here is the command --> java org.risource.pia.T_content originalString targetString replacementString");
 
   }
 

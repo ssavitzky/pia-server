@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.pia;
+package org.risource.pia;
 
 /** Registry for timed operations.
  *	The Crontab gets its name from the Unix <code>crontab</code> table,
@@ -32,13 +32,13 @@ package crc.pia;
  *	an Agent's Crontab will be checkpointed along with it.<p>
  */
 
-import crc.pia.Transaction;
-import crc.pia.Agent;
-import crc.pia.Resolver;
+import org.risource.pia.Transaction;
+import org.risource.pia.Agent;
+import org.risource.pia.Resolver;
 
-import crc.ds.Registered;
-import crc.ds.Tabular;
-import crc.ds.List;
+import org.risource.ds.Registered;
+import org.risource.ds.Tabular;
+import org.risource.ds.List;
 
 import java.io.Serializable;
 import java.io.ByteArrayOutputStream;
@@ -78,7 +78,7 @@ public class Crontab extends List implements Serializable {
    *	@param queryString (optional) -- content for a POST request.
    *	@param times  a Tabular containing the timing information
    *
-   *	@see crc.pia.CrontabEntry
+   *	@see org.risource.pia.CrontabEntry
    */
   public void makeEntry(Agent agent, String method, String url,
 			String queryString, Tabular times) {
@@ -99,7 +99,7 @@ public class Crontab extends List implements Serializable {
    *	@param contentType MIME type for the request content.
    *	@param times  a Tabular containing the timing information
    *
-   *	@see crc.pia.CrontabEntry
+   *	@see org.risource.pia.CrontabEntry
    */
   public void makeEntry(Agent agent, String method, String url,
 			String queryString, String contentType, Tabular times) {

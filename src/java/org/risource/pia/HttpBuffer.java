@@ -23,7 +23,7 @@
 
 // Please first read the full copyright statement in file COPYRIGHT.html
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.*;
 

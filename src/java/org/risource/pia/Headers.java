@@ -22,19 +22,19 @@
 */
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
-import crc.ds.Table;
+import org.risource.ds.Table;
 import w3c.www.http.HttpEntityMessage;
 import w3c.www.http.HttpMessage;
 import w3c.www.mime.MimeType;
 
 import w3c.www.mime.MimeTypeFormatException;
 
-import crc.pia.BadMimeTypeException;
+import org.risource.pia.BadMimeTypeException;
 
 public class Headers {
   /**
@@ -77,7 +77,7 @@ public class Headers {
   /**
    * Set content type.
    *	@param type the MIME type (e.g. <code>text/html</code>).
-   *	@exception crc.pia.BadMimeTypeException if type cannot be parsed as
+   *	@exception org.risource.pia.BadMimeTypeException if type cannot be parsed as
    *	 a valid MIME type.
    */
   public void setContentType(String type) throws BadMimeTypeException{
@@ -85,7 +85,7 @@ public class Headers {
       try{
 	MimeType mt = new MimeType( type );
 	zheaders.setContentType( mt );
-	crc.pia.Pia.debug(this,"Content type set to "+type);
+	org.risource.pia.Pia.debug(this,"Content type set to "+type);
       }catch( MimeTypeFormatException e ){
 	throw new BadMimeTypeException("Bad mime type.");
       }
@@ -100,7 +100,7 @@ public class Headers {
     {
       if (zheaders != null) {
 	zheaders.setContentType(type);
-	crc.pia.Pia.debug(this,"Content type set to "+type.toString());
+	org.risource.pia.Pia.debug(this,"Content type set to "+type.toString());
       }
     }
 

@@ -22,7 +22,7 @@
 */
 
 
-package crc.dps;
+package org.risource.dps;
 
 import java.io.File;
 import java.io.InputStream;
@@ -36,17 +36,17 @@ import java.io.FileNotFoundException;
 import java.io.OutputStreamWriter;
 import java.io.ObjectOutputStream;
 
-import crc.dps.Parser;
-import crc.dps.Input;
-import crc.dps.Processor;
-import crc.dps.Tagset;
+import org.risource.dps.Parser;
+import org.risource.dps.Input;
+import org.risource.dps.Processor;
+import org.risource.dps.Tagset;
 
-import crc.dps.process.TopProcessor;
-import crc.dps.tagset.TagsetProcessor;
+import org.risource.dps.process.TopProcessor;
+import org.risource.dps.tagset.TagsetProcessor;
 
-import crc.dps.output.*;
-import crc.dps.active.*;
-import crc.dps.handle.GenericHandler;
+import org.risource.dps.output.*;
+import org.risource.dps.active.*;
+import org.risource.dps.handle.GenericHandler;
 
 /**
  * Filter an input stream or file with the DPS.
@@ -118,11 +118,11 @@ public class Filter {
 
     /* Start by getting a Tagset. */
 
-    crc.dps.tagset.Loader.setVerbosity(verbosity);
+    org.risource.dps.tagset.Loader.setVerbosity(verbosity);
     if (tsname.equals("tagset")) loadTagset = true;
     if (tsname.equals("BOOT")) loadTagset = true;
 
-    Tagset ts = crc.dps.tagset.Loader.getTagset(tsname);
+    Tagset ts = org.risource.dps.tagset.Loader.getTagset(tsname);
     if (ts == null) {
       System.err.println("Unable to load Tagset " + tsname);
       System.exit(-1);
@@ -165,7 +165,7 @@ public class Filter {
       java.util.Enumeration names = ii.getEntities().getNames();
       while (names.hasMoreElements()) {
 	String name = names.nextElement().toString();
-	crc.dom.NodeList v = ii.getEntityValue(name, false);
+	org.risource.dom.NodeList v = ii.getEntityValue(name, false);
 	System.err.println(" " + name + "=" + v);
       }
       System.err.print("\n");
@@ -174,11 +174,11 @@ public class Filter {
     ToParseTree outputTree = null;
     Output output = null;
     if (loadTagset) {
-      output = new crc.dps.output.DiscardOutput();
+      output = new org.risource.dps.output.DiscardOutput();
     } else if (parsing) {
-      outputTree = new crc.dps.output.ToParseTree();
+      outputTree = new org.risource.dps.output.ToParseTree();
       // === root should be an ActiveDocument ===
-      outputTree.setRoot(new crc.dps.active.ParseTreeElement("Document", null));
+      outputTree.setRoot(new org.risource.dps.active.ParseTreeElement("Document", null));
       output = outputTree;
     } else {
       output = new ToWriter(out);
@@ -231,7 +231,7 @@ public class Filter {
       if (gh != null) {
 	name += gh.getSyntaxCode() < 0? "E" : h.expandContent()? "X" : "Q";
 	String cname = gh.getClass().getName();
-	if (cname.equals("crc.dps.handle.GenericHandler")) name += "U";
+	if (cname.equals("org.risource.dps.handle.GenericHandler")) name += "U";
       }
       System.err.print(" " + name + " " + ((gh != null)? gh.toString() : ""));
     }
@@ -243,7 +243,7 @@ public class Filter {
   public static void usage() {
     PrintStream o = System.err ;
 
-    o.println("Usage: java crc.dps.Filter [option]... [infile]");
+    o.println("Usage: java org.risource.dps.Filter [option]... [infile]");
     o.println("    options:");
     o.println("        -e	no entities");
     o.println("        -h	print help string");

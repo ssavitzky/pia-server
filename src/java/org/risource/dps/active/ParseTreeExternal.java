@@ -22,26 +22,26 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
 
-import crc.dom.Entity;
+import org.risource.dom.Entity;
 
-import crc.dps.*;
-import crc.dps.Active.*;
-import crc.dps.util.Copy;
-import crc.dps.util.Status;
-import crc.dps.input.FromParseNodes;
-import crc.dps.output.ToNodeList;
-import crc.dps.output.ToWriter;
+import org.risource.dps.*;
+import org.risource.dps.Active.*;
+import org.risource.dps.util.Copy;
+import org.risource.dps.util.Status;
+import org.risource.dps.input.FromParseNodes;
+import org.risource.dps.output.ToNodeList;
+import org.risource.dps.output.ToWriter;
 
-import crc.ds.Tabular;
+import org.risource.ds.Tabular;
 
 /**
  * An implementation of the ActiveEntity interface that refers to an external
@@ -49,8 +49,8 @@ import crc.ds.Tabular;
  *
  * @version ParseTreeExternal.java,v 1.7 1999/03/01 23:45:54 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dom.Node
- * @see crc.dps.active.ActiveNode
+ * @see org.risource.dom.Node
+ * @see org.risource.dps.active.ActiveNode
  */
 public class ParseTreeExternal extends ParseTreeEntity {
 

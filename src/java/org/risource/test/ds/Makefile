@@ -20,8 +20,8 @@
  #
 ############################################################################## 
 
-PACKAGE=crc.test.ds
-TOPDIR=../../..
+PACKAGE=org.risource.test.ds
+TOPDIR=../../../..
 
 FILES = \
 	T_indexPath.java \
@@ -41,7 +41,7 @@ CASEFILES = \
 .SUFFIXES: .case .txt .html .if .out .ok .diff .run .java .class
 
 DEBUG=-d
-CLASS=crc.interform.Filter
+CLASS=org.risource.interform.Filter
 
 .case.out:
 	$< > $@ 2>$*.log

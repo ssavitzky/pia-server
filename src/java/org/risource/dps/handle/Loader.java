@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.handle;
+package org.risource.dps.handle;
 
-import crc.dps.Handler;
-import crc.ds.Table;
-import crc.util.NameUtils;
+import org.risource.dps.Handler;
+import org.risource.ds.Table;
+import org.risource.util.NameUtils;
 
 /** Loader for Handler classes. 
  *
- *	Note that because this class is in the <code>crc.dps.handle</code>
+ *	Note that because this class is in the <code>org.risource.dps.handle</code>
  *	package, it can load the non-public handler classes that are declared
  *	in the same files as top-level handlers, which typically handle
  *	elements specialized by one of their attributes.
@@ -115,9 +115,9 @@ public class Loader {
     if (h != null && syntax != 0) h.setSyntaxCode(syntax);
     if (h != null) return h;
 
-    Class c = NameUtils.loadClass(cname, "crc.dps.handle.");
+    Class c = NameUtils.loadClass(cname, "org.risource.dps.handle.");
     if (c == null) {
-      c = NameUtils.loadClass(cname+"Handler", "crc.dps.handle.");
+      c = NameUtils.loadClass(cname+"Handler", "org.risource.dps.handle.");
     }
     try {
       if (c != null) h = (BasicHandler)c.newInstance();

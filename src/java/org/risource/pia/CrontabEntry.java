@@ -21,27 +21,27 @@
  ***************************************************************************** 
 */
 
-package crc.pia;
+package org.risource.pia;
 
 /** Crontab table entry for timed operations.
  *	The Crontab gets its name from the Unix <code>crontab</code> table,
  *	and has similar capabilities.
  */
 
-import crc.pia.Transaction;
-import crc.pia.Agent;
-import crc.pia.Resolver;
+import org.risource.pia.Transaction;
+import org.risource.pia.Agent;
+import org.risource.pia.Resolver;
 
-import crc.ds.Registered;
-import crc.ds.List;
-import crc.ds.Tabular;
+import org.risource.ds.Registered;
+import org.risource.ds.List;
+import org.risource.ds.Tabular;
 
-// import crc.sgml.SGML;
-// import crc.sgml.Element;
-// import crc.sgml.Attrs;
-// import crc.sgml.Util;
+// import org.risource.sgml.SGML;
+// import org.risource.sgml.Element;
+// import org.risource.sgml.Attrs;
+// import org.risource.sgml.Util;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import java.io.Serializable;
 import java.io.OutputStream;

@@ -22,10 +22,10 @@
 */
 
 
-package crc.dps.active;
+package org.risource.dps.active;
 
 import java.io.*;
-import crc.dom.*;
+import org.risource.dom.*;
 
 /**
  * Implementing NamedNodeList, which associates <em>named</em> nodes with

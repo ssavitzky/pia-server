@@ -23,10 +23,10 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
-import crc.pia.Transaction;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
 
 public final class IsClientNetscape implements UnaryFunctor{
 

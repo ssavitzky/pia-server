@@ -22,14 +22,14 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.output.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.output.*;
 
 import java.io.File;
 import java.io.IOException;

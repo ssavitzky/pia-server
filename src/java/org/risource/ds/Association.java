@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 /** Association between a String or number and an arbitrary object.
  *	Associations are often used to permit arbitrary objects to be

@@ -21,15 +21,15 @@
  ***************************************************************************** 
 */
 
-package crc.dps;
+package org.risource.dps;
 
-import crc.dps.active.ActiveNode;
+import org.risource.dps.active.ActiveNode;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.NodeEnumerator;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.NodeEnumerator;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
 import java.util.Enumeration;
 
@@ -50,10 +50,10 @@ import java.util.Enumeration;
  * @version Namespace.java,v 1.6 1999/03/01 23:45:31 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Processor
- * @see crc.dps.Input 
- * @see crc.dom.Node 
- * @see crc.dom.Attribute
+ * @see org.risource.dps.Processor
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node 
+ * @see org.risource.dom.Attribute
  */
 
 public interface Namespace {

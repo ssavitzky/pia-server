@@ -22,7 +22,7 @@
 */
 
 
-package crc.pia;
+package org.risource.pia;
 
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -49,18 +49,18 @@ import java.text.SimpleDateFormat;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import crc.ds.Sorter;
-import crc.ds.SortTree;
-import crc.ds.Association;
-import crc.ds.List;
+import org.risource.ds.Sorter;
+import org.risource.ds.SortTree;
+import org.risource.ds.Association;
+import org.risource.ds.List;
 
-// import crc.sgml.Tokens;
+// import org.risource.sgml.Tokens;
 
-import crc.content.ByteStreamContent;
+import org.risource.content.ByteStreamContent;
 
 import gnu.regexp.RegExp;
 import gnu.regexp.MatchInfo;
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import java.util.Properties;
 import w3c.www.http.HTTP;
@@ -199,7 +199,7 @@ public class FileAccess {
 	+ "<h4><a href=\"file:" + path + "\">file:" + path + "</a></h4>"
 	+ "<UL>" + allurls + "</UL>" + "</BODY>\n</HTML>\n";
 	  
-      Content bs = new crc.content.text.Default(new StringReader(html));
+      Content bs = new org.risource.content.text.Default(new StringReader(html));
       
       response = new HTTPResponse( request, false);
       response.setContentObj( bs );
@@ -275,7 +275,7 @@ public class FileAccess {
 
 	  } else if (! FIX_BASE ) {
 	    FileReader newdata = new FileReader(filename);
-	    Content finalContent = new crc.content.text.html( newdata );
+	    Content finalContent = new org.risource.content.text.html( newdata );
 	    
 	    reply.setContentType( contentType );
 	    reply.setContentObj( finalContent );
@@ -319,7 +319,7 @@ public class FileAccess {
 	    Pia.instance().debug(agent, "before creating reply" );
 	    String ts = new String(tmp);
 	    Reader newdata  = new StringReader( ts );
-	    Content finalContent = new crc.content.text.html( newdata );
+	    Content finalContent = new org.risource.content.text.html( newdata );
 	    
 	    reply.setContentType( contentType );
 	    reply.setContentObj( finalContent );
@@ -378,7 +378,7 @@ public class FileAccess {
 
     Pia.debug(msg);
 
-    Content ct = new crc.content.text.html( new StringReader(msg) );
+    Content ct = new org.risource.content.text.html( new StringReader(msg) );
     Transaction response = new HTTPResponse( Pia.instance().thisMachine,
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
@@ -462,7 +462,7 @@ public class FileAccess {
     reply.setReason( reason );
     reply.setHeader( "Version", agent.version() );
     Content c =
-      new crc.content.text.StringContent("Your file has been written.");
+      new org.risource.content.text.StringContent("Your file has been written.");
     reply.setContentType( "text/plain" );
     reply.setContentObj( c );
     reply.startThread();
@@ -509,7 +509,7 @@ public class FileAccess {
 	e.printStackTrace();
 	String msg = e.getMessage();
 	throw new PiaRuntimeException (agent, "writeFile", msg) ;
-      }catch(crc.pia.ContentOperationUnavailable ee){
+      }catch(org.risource.pia.ContentOperationUnavailable ee){
 	ee.printStackTrace();
 	String msg = ee.getMessage();
 	throw new PiaRuntimeException (agent, "writeFile", msg) ;

@@ -21,9 +21,9 @@
  ***************************************************************************** 
 */
 
-package crc.pia;
+package org.risource.pia;
 
-import crc.tf.UnknownNameException;
+import org.risource.tf.UnknownNameException;
 import java.io.File;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
@@ -38,43 +38,43 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import crc.pia.Agent;
-import crc.pia.agent.AgentMachine;
-import crc.pia.Transaction;
-import crc.pia.HTTPRequest;
-import crc.pia.HTTPResponse;
-import crc.pia.Machine;
-import crc.pia.Resolver;
-import crc.pia.Content;
-import crc.content.ByteStreamContent;
-import crc.content.text.ProcessedContent;
-import crc.pia.Authenticator;
-import crc.pia.Pia;
-import crc.pia.ContentOperationUnavailable;
+import org.risource.pia.Agent;
+import org.risource.pia.agent.AgentMachine;
+import org.risource.pia.Transaction;
+import org.risource.pia.HTTPRequest;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Machine;
+import org.risource.pia.Resolver;
+import org.risource.pia.Content;
+import org.risource.content.ByteStreamContent;
+import org.risource.content.text.ProcessedContent;
+import org.risource.pia.Authenticator;
+import org.risource.pia.Pia;
+import org.risource.pia.ContentOperationUnavailable;
 
-import crc.ds.Features;
-import crc.ds.Table;
-import crc.ds.List;
-import crc.ds.Criteria;
-import crc.ds.Tabular;
-import crc.ds.Registered;
+import org.risource.ds.Features;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Criteria;
+import org.risource.ds.Tabular;
+import org.risource.ds.Registered;
 
-import crc.dps.Tagset;
-import crc.dps.tagset.Loader;
-import crc.dps.process.ActiveDoc;
+import org.risource.dps.Tagset;
+import org.risource.dps.tagset.Loader;
+import org.risource.dps.process.ActiveDoc;
 
-import crc.dom.NodeList;
+import org.risource.dom.NodeList;
 
-// import crc.sgml.SGML;
-import crc.util.NullOutputStream;
+// import org.risource.sgml.SGML;
+import org.risource.util.NullOutputStream;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import java.util.Enumeration;
 import java.util.Properties;
 import java.io.Serializable;
 
-// import crc.interform.Run;
+// import org.risource.interform.Run;
 import w3c.www.http.HTTP;
 
 /** The minimum concrete implementation of the Agent interface.  A
@@ -82,7 +82,7 @@ import w3c.www.http.HTTP;
  *	an agent; it also serves as the base class for all known Agent
  *	implementations.
  *
- *	@see crc.pia.Agent
+ *	@see org.risource.pia.Agent
  */
 public class GenericAgent implements Agent, Registered, Serializable {
   
@@ -317,9 +317,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
 	  // make a new processor if we haven't done so already
 	  proc = makeDPSProcessor(req, res);
 	}
-	crc.dps.Parser p = proc.getTagset().createParser();
+	org.risource.dps.Parser p = proc.getTagset().createParser();
 	p.setReader(new FileReader(fn));
-	proc.setOutput(new crc.dps.output.DiscardOutput());
+	proc.setOutput(new org.risource.dps.output.DiscardOutput());
 	proc.setInput(p);
 	proc.define("filePath", fn);
 	proc.run();
@@ -419,7 +419,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
     InputContent c;
     if (contentType == null) contentType = DefaultFormSubmissionContentType;
     if (contentType.startsWith("multipart/form-data")) {
-      crc.pia.Pia.debug(this,"Making new MultipartFormContent");
+      org.risource.pia.Pia.debug(this,"Making new MultipartFormContent");
 
       c = new MultipartFormContent(Utilities.StringToByteArrayOutputStream(queryString));
     } else {
@@ -758,8 +758,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
   * this is the callback method for that notification.
   * AgentMachines also use this as the default callback for sending a response.
   *
-  * @see crc.pia.Content 
-  * @see crc.pia.agent.AgentMachine
+  * @see org.risource.pia.Content 
+  * @see org.risource.pia.agent.AgentMachine
   */
   public void updateContent(Content c, String state, Object arg)
   {
@@ -857,8 +857,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
   public void runDPSHook (NodeList hook, Transaction trans, Resolver res ) {
     if (hook == null || hook.getLength() == 0) return;
     ActiveDoc proc = makeDPSProcessor(trans, res);
-    proc.setInput(new crc.dps.input.FromParseNodes(hook));
-    proc.setOutput(new crc.dps.output.DiscardOutput());
+    proc.setInput(new org.risource.dps.input.FromParseNodes(hook));
+    proc.setOutput(new org.risource.dps.output.DiscardOutput());
     proc.run();
   }
 
@@ -888,7 +888,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
   public void respond(Transaction trans, Resolver res)
        throws PiaRuntimeException{
 
-    crc.pia.Pia.debug(this, "Running interform...");
+    org.risource.pia.Pia.debug(this, "Running interform...");
     if (! respondToInterform( trans, res ) ){
       respondNotFound( trans, trans.requestURL() );
     }
@@ -1011,7 +1011,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
     Pia.debug(this, msg);
 
-    Content ct = new crc.content.text.html( new StringReader(msg) );
+    Content ct = new org.risource.content.text.html( new StringReader(msg) );
     Transaction response = new HTTPResponse( Pia.instance().thisMachine,
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
@@ -1367,7 +1367,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
    */
   public void sendStreamResponse ( Transaction trans, InputStream in ) {
 
-    Content c = new crc.content.text.html( in );
+    Content c = new org.risource.content.text.html( in );
 
     Transaction response = new HTTPResponse( trans, false );
     response.setStatus( 200 ); 
@@ -1424,7 +1424,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
      else 
        response.setStatus( 401 ); 
     authPolicy.setResponseHeaders(response, this);
-    Content c = new crc.content.text.StringContent(
+    Content c = new org.risource.content.text.StringContent(
 		   "Authorization required for access to agent "+ name());
     response.setContentType( "text/plain" );
     response.setContentObj( c );
@@ -1545,7 +1545,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
     } else if (isDPSType(file)) {
       sendProcessedResponse(file, destFileName, request, res);
     } else {
-      crc.pia.FileAccess.retrieveFile(file, request, this);
+      org.risource.pia.FileAccess.retrieveFile(file, request, this);
     }
     return true;
     }

@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.pia.handle
-TOPDIR=../../..
+PACKAGE=org.risource.pia.handle
+TOPDIR=../../../..
 
 HANDLERS = \
 	agentList.java \

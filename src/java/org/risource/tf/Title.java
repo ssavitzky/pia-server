@@ -23,14 +23,14 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
 import java.net.URL;
-import crc.ds.UnaryFunctor;
-import crc.pia.Transaction;
-import crc.pia.Content;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Transaction;
+import org.risource.pia.Content;
 
-import crc.tf.TFComputer;
+import org.risource.tf.TFComputer;
 
 public final class Title extends TFComputer {
   private String getPage(Transaction trans){

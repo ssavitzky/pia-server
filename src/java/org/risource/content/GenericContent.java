@@ -23,12 +23,12 @@
 
 
 
-package crc.content;
-import crc.pia.Pia;
-import crc.pia.Machine;
-import crc.pia.Agent;
-import crc.pia.Headers;
-import crc.ds.Table;
+package org.risource.content;
+import org.risource.pia.Pia;
+import org.risource.pia.Machine;
+import org.risource.pia.Agent;
+import org.risource.pia.Headers;
+import org.risource.ds.Table;
 
 
 import java.io.IOException;
@@ -37,10 +37,10 @@ import java.io.OutputStream;
 import java.io.Reader;
 
 
-import crc.pia.Content;
+import org.risource.pia.Content;
 
-import crc.pia.ContentOperationUnavailable;
-import crc.ds.List;
+import org.risource.pia.ContentOperationUnavailable;
+import org.risource.ds.List;
 
 import java.util.Enumeration;
 /** GenericContent
@@ -48,7 +48,7 @@ import java.util.Enumeration;
  * methods for most of the agent interactions.  Such as tapping, and
  * notification on state changes. 
  */
-public abstract  class  GenericContent implements crc.pia.Content {
+public abstract  class  GenericContent implements org.risource.pia.Content {
   /**
    *  States  keep track of the status of the content.
    * Useful for notifying agents
@@ -312,7 +312,7 @@ public abstract  class  GenericContent implements crc.pia.Content {
 	 Object[] ao = (Object[]) lists.nextElement();
 	 Agent agent = (Agent) ao[0];
 	 Object arg = ao[1];
-	 agent.updateContent( (crc.pia.Content) this,state,arg);
+	 agent.updateContent( (org.risource.pia.Content) this,state,arg);
        }
      }
    }

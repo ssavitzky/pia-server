@@ -26,11 +26,11 @@
  *	object. <p>
  */
 
-package crc.ds;
+package org.risource.ds;
 
 
-import crc.ds.Features;
-import crc.ds.Criteria;
+import org.risource.ds.Features;
+import org.risource.ds.Criteria;
 
 public interface HasFeatures {
 

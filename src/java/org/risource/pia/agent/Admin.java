@@ -28,7 +28,7 @@
  *	code that installs and removes agents.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -36,17 +36,17 @@ import java.util.Enumeration;
 
 import java.net.URL;
 
-import crc.ds.Table;
-import crc.ds.List;
-import crc.ds.Criterion;
+import org.risource.ds.Table;
+import org.risource.ds.List;
+import org.risource.ds.Criterion;
 
-import crc.pia.GenericAgent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPRequest;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPRequest;
 
 public class Admin extends GenericAgent {
   /**
@@ -67,7 +67,7 @@ public class Admin extends GenericAgent {
    * Create and install a named agent.
    *	Automatically loads the class if necessary.
    *	@param ht initial options.
-   *	@exception crc.pia.agent.AgentInstallException if problems are
+   *	@exception org.risource.pia.agent.AgentInstallException if problems are
    *	  found, for example a null table or missing parameter.
    */
   public void install(Table ht)
@@ -95,9 +95,9 @@ public class Admin extends GenericAgent {
       //	=== should use interform.Util.javaName ===
       String zname = (new String( foo )).toUpperCase();
       if (type.length() > 1) zname += type.substring(1).toLowerCase();
-      className = "crc.pia.agent." + zname; 
+      className = "org.risource.pia.agent." + zname; 
     } else if (className.length() > 0 && className.indexOf('.') < 0) {
-      className = "crc.pia.agent." + className; 
+      className = "org.risource.pia.agent." + className; 
     }
 
     /* Load the class, if it exists. */

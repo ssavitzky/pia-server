@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 /**
  * Represents a collection of Attribute objects, indexed by attribute name. 

@@ -21,20 +21,20 @@
  ***************************************************************************** 
 */
 
-package crc.ds;
+package org.risource.ds;
 
 /** A BalancedTree is a tree of Association objects; it is used primarily for
  *	performing a lexicographic or numeric insertion sort of arbitrary 
  *	objects.   Note that an empty BalancedTree is used as a header.<p>
  *
- *	@see crc.ds.Association
+ *	@see org.risource.ds.Association
  * 
  *	@see <em>The Art of Computer Programming</em> by Donald Knuth,
  *	Section 6.2.3, Volume III, page 455.
  */
 
-import crc.ds.Association;
-import crc.ds.Sorter;
+import org.risource.ds.Association;
+import org.risource.ds.Sorter;
 
 public class BalancedTree extends Sorter {
 

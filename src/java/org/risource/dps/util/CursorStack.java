@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.util;
+package org.risource.dps.util;
 
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Element;
-import crc.dom.Attribute;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Element;
+import org.risource.dom.Attribute;
 
-import crc.dps.*;
-import crc.dps.active.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
 
 /**
  * A stack frame for a linked-list stack of current nodes. 
@@ -40,7 +40,7 @@ import crc.dps.active.*;
  * @version CursorStack.java,v 1.8 1999/03/01 23:46:56 pgage Exp
  * @author steve@rsv.ricoh.com
  * 
- * @see crc.dps.Cursor
+ * @see org.risource.dps.Cursor
  */
 
 public class CursorStack implements Cursor {
@@ -249,7 +249,7 @@ public class CursorStack implements Cursor {
   /** This will have to be overridden if the tree is being built on the fly. */
   public boolean hasAttributes() {
     if (element == null) return false;
-    crc.dom.AttributeList atts = element.getAttributes();
+    org.risource.dom.AttributeList atts = element.getAttributes();
     return (atts != null) && (atts.getLength() > 0);
   }
 

@@ -59,18 +59,18 @@ See also:
           expanding an input file.
 
   <li> 1998-06-16 <b>Hole:</b> get/set)IndexValue  <br>
-       Should do this using utils in <code>crc.dps.aux.Index</code>.
+       Should do this using utils in <code>org.risource.dps.aux.Index</code>.
 
-  <li> 1998-06-17 <b>Hole:</b> <code>crc.dps.active</code> as DOM <br>
+  <li> 1998-06-17 <b>Hole:</b> <code>org.risource.dps.active</code> as DOM <br>
        Fairly soon we will want to expand ParseTree* to a full DOM
        implementation, and make it completely independent from the
-       implementations in <code>crc.dom</code>. <br>
+       implementations in <code>org.risource.dom</code>. <br>
        -- completed 6/17 with some bugs remaining, and no impl. of Document.
 
   <li> 1998-06-17 <b>Impr:</b> <code>AbstractActiveNode</code> deepCopy <br>
        <code>deepCopy</code> should use a method in the abstract parent to
        copy the children.  The reason it doesn't now is that the existing
-       method meant for that purpose is in <code>crc.dom.AbstractNode</code>,
+       method meant for that purpose is in <code>org.risource.dom.AbstractNode</code>,
        and doesn't constructive active nodes.  It uses <code>clone</code>, and
        it's broken. <br>
        -- fixed with the re-parenting of the <code>ParseTree</code> classes.
@@ -119,7 +119,7 @@ See also:
        (1998-06-19) <br>
 
   <li> 1998-06-22 <b>Impr:</b> Define syntax flags in
-       <code>crc.dps.Syntax</code> <br> 
+       <code>org.risource.dps.Syntax</code> <br> 
        (They are currently defined in BasicTagset, which makes them mostly
        inaccessible.)
        (1998-06-18) <br>
@@ -206,7 +206,7 @@ See also:
        (1998-06-18) <br>
 
   <li> 1998-07-08 <b>Hole:</b> PIA Content in push mode. <br>
-       <code>crc.pia.Content</code> currently operates in pull mode, expecting
+       <code>org.risource.pia.Content</code> currently operates in pull mode, expecting
        to read from an input stream.  For the DPS it needs to run in push
        mode, giving the DPS a suitable output stream and letting it run.
        (1998-06-18) <br>
@@ -221,7 +221,7 @@ See also:
 
   <li> 1998-07-17 <b>Impr:</b> Move Processor implementations to subdir. <br>
        (1998-07-08) <br>
-       -- moved to <code>crc.dps.process</code>
+       -- moved to <code>org.risource.dps.process</code>
       
   <li> 1998-07-20 <b>Bug?:</b> XML PI's need to end in `<code>?&gt;</code>' <br>
        present parser ends them with `<code>&gt;</code>'.
@@ -311,7 +311,7 @@ See also:
        NamedNodeList we're cool (except that in fact AttributeList doesn't).
        (1998-08-12)<br>
        -- The code is written, but may be flaky.
-	  <code>crc.dps.Namespace</code> needed for clean implementation.
+	  <code>org.risource.dps.Namespace</code> needed for clean implementation.
 
   <li> 1998-08-13 <b>Hole:</b> Must define tags at parse time to cache trees. <br>
        In order to parse correctly, you have to have the whole DTD in advance.
@@ -490,7 +490,7 @@ See also:
        It turns out submit_forms was not defined as a legacy handler.  A new
        tag has been put into the <code>pia-xhtml</code> tagset (in
        <code>./tagset/pia-xhtml.ts</code>), and a 
-       handler class created in <code>crc.dps.handle</code>.
+       handler class created in <code>org.risource.dps.handle</code>.
        (1998-11-09) <br>
 
   <li> 1998-11-17 <b>Hole</b> findInterform with suffixes, forWriting <br>
@@ -501,8 +501,8 @@ See also:
        <br>
        <pre>java.lang.NullPointerException
           at java.util.Hashtable.put(Hashtable.java)
-          at crc.ds.Table.put(Table.java:107)
-          at crc.pia.GenericAgent.put(GenericAgent.java:901)</pre>
+          at org.risource.ds.Table.put(Table.java:107)
+          at org.risource.pia.GenericAgent.put(GenericAgent.java:901)</pre>
        (1998-11-17) <br>
 
   <li> 1998-11-23 <b>Bug:</b> tsdoc fails when loaded from
@@ -526,7 +526,7 @@ See also:
        -- -&gt; output
 
   <li> 1998-12-11 <b>Note</b> External Entities. <br>
-       <code>crc.dps.active.ParseTreeExternal</code> is supposed to correspond
+       <code>org.risource.dps.active.ParseTreeExternal</code> is supposed to correspond
        to an external entity.  &lt;define entity=<em>foo</em>
        system=<em>url</em>&amp;... should define one.  See
        <code>basic.ts</code> for the relevant attributes: <code>mode</code>,
@@ -569,7 +569,7 @@ See also:
 	  files. 
        
   <li> 1998-12-16 <b>Impr</b> move agent-specific tag handlers.  <br>
-       moved to <code>crc.pia.agent</code> directory, with the agent classes. 
+       moved to <code>org.risource.pia.agent</code> directory, with the agent classes. 
        (1998-12-16) <br>
        
   <li> 1998-12-18 <b>Hole:</b> Some &lt;select&gt; subs unimplemented. <br>

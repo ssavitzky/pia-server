@@ -22,15 +22,15 @@
 */
 
 
-package crc.dps.handle;
-import crc.dom.Node;
-import crc.dom.NodeList;
-import crc.dom.Attribute;
-import crc.dom.AttributeList;
+package org.risource.dps.handle;
+import org.risource.dom.Node;
+import org.risource.dom.NodeList;
+import org.risource.dom.Attribute;
+import org.risource.dom.AttributeList;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
 import java.util.Enumeration;
 
@@ -46,11 +46,11 @@ import java.util.Enumeration;
  * @version AbstractHandler.java,v 1.27 1999/03/01 23:45:58 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.dps.Context
- * @see crc.dps.Tagset
- * @see crc.dps.BasicTagset
- * @see crc.dps.Input 
- * @see crc.dom.Node
+ * @see org.risource.dps.Context
+ * @see org.risource.dps.Tagset
+ * @see org.risource.dps.BasicTagset
+ * @see org.risource.dps.Input 
+ * @see org.risource.dom.Node
  */
 
 public abstract class AbstractHandler extends ParseTreeGeneric
@@ -101,13 +101,13 @@ implements Handler {
 
   /** What the Handler knows about a Token's syntax without looking at it.
    *
-   * @see crc.dps.Syntax
+   * @see org.risource.dps.Syntax
    */
   public int getSyntaxCode() { return syntaxCode; }
 
   /** Set what the Handler knows about a Token's syntax.
    *
-   * @see crc.dps.Syntax
+   * @see org.risource.dps.Syntax
    */
   public void setSyntaxCode(int syntax) {
     syntaxCode = syntax;
@@ -121,7 +121,7 @@ implements Handler {
    * @param t the Token for which this is the handler, and for which the
    *	ssyntax is being checked.
    * @return <code>true</code> if the Token is an empty Element.
-   * @see crc.dps.Tagset
+   * @see org.risource.dps.Tagset
    */
   public boolean isEmptyElement(Node n) {
     if (syntaxCode != 0) return (syntaxCode & Syntax.EMPTY) != 0;

@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 /**
  * The Text object contains the non-markup portion of a document. For XML documents,

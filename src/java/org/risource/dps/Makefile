@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps
-TOPDIR=../..
+PACKAGE=org.risource.dps
+TOPDIR=../../..
 
 PACKAGES = \
 	active \

@@ -21,7 +21,7 @@
  ***************************************************************************** 
 */
 
-package crc.dom;
+package org.risource.dom;
 
 public class NotMyChildException extends Exception {
   public NotMyChildException(String msg){

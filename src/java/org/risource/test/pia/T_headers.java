@@ -22,9 +22,9 @@
 */
 
 
-package crc.test.pia;
+package org.risource.test.pia;
 
-import crc.pia.Headers;
+import org.risource.pia.Headers;
 
 public class T_headers {
   public static void main(String[] args){
@@ -34,7 +34,7 @@ public class T_headers {
 
     try{
       Headers h = new Headers();
-      h.setHeader("Host", "napa.crc.ricoh.com:9999");
+      h.setHeader("Host", "napa.org.risource.ricoh.com:9999");
       h.setContentType("text/html");
       h.setContentLength( 555 );
       h.setHeader("Content-Type", "image/gif");

@@ -23,11 +23,11 @@
 
 
  
-package crc.tf;
+package org.risource.tf;
 
-import crc.ds.UnaryFunctor;
-import crc.pia.Pia;
-import crc.pia.Transaction;
+import org.risource.ds.UnaryFunctor;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
 import java.net.URL;
 
 public final class IsProxyRequest implements UnaryFunctor{

@@ -30,7 +30,7 @@
  *	slightly-simplified version of the original PERL code.
  */
 
-package crc.pia.agent;
+package org.risource.pia.agent;
 import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -43,19 +43,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import crc.pia.PiaRuntimeException;
-import crc.pia.GenericAgent;
-import crc.pia.FormContent;
-import crc.pia.Resolver;
-import crc.pia.Agent;
-import crc.pia.Pia;
-import crc.pia.Transaction;
-import crc.pia.Machine;
-import crc.pia.HTTPResponse;
-import crc.pia.Content;
-import crc.pia.FileAccess;
+import org.risource.pia.PiaRuntimeException;
+import org.risource.pia.GenericAgent;
+import org.risource.pia.FormContent;
+import org.risource.pia.Resolver;
+import org.risource.pia.Agent;
+import org.risource.pia.Pia;
+import org.risource.pia.Transaction;
+import org.risource.pia.Machine;
+import org.risource.pia.HTTPResponse;
+import org.risource.pia.Content;
+import org.risource.pia.FileAccess;
 
-import crc.util.Utilities;
+import org.risource.util.Utilities;
 
 import w3c.www.http.HTTP;
 
@@ -89,7 +89,7 @@ public class Logo extends GenericAgent {
 
       String redirUrlString = "http://gelion:8001"+path;
       String msg = "Extreme kludge: see "+redirUrlString;
-      Content ct = new crc.content.text.StringContent(msg);
+      Content ct = new org.risource.content.text.StringContent(msg);
       Transaction response = new HTTPResponse( Pia.instance().thisMachine(),
 					       request.fromMachine(),
 					       ct, false);

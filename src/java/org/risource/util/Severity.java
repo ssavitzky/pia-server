@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 
 /**
  * Message severity levels for error reporting.
@@ -48,8 +48,8 @@ package crc.util;
  * @version Severity.java,v 1.2 1999/03/01 23:48:29 pgage Exp
  * @author steve@rsv.ricoh.com
  *
- * @see crc.util.Report
- * @see crc.util.Message
+ * @see org.risource.util.Report
+ * @see org.risource.util.Message
  *
  */
 

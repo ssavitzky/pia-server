@@ -22,7 +22,7 @@
 */
 
 
-package crc.util;
+package org.risource.util;
 
 import java.util.Hashtable;
 import java.io.File;

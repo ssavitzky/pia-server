@@ -7,7 +7,7 @@
 
 <blockquote><em>
   This document contains notes about Handlers in the PIA's Document Processing
-  System (DPS), as implemented in the Java module <code>crc.dps.handle</code>.
+  System (DPS), as implemented in the Java module <code>org.risource.dps.handle</code>.
 </em></blockquote>
 
 <h3>See Also:</h3>
@@ -18,10 +18,10 @@
 
 <h2>What a Handler Does</h2>
 
-<p> The <a href="../Handler.java"><code>crc.dps.Handler</code></a> interface is
+<p> The <a href="../Handler.java"><code>org.risource.dps.Handler</code></a> interface is
     actually a composite of two other interfaces:  
-    <a href="../Syntax.java"><code>crc.dps.Syntax</code></a> and
-    <a href="../Action.java"><code>crc.dps.Action</code></a>.
+    <a href="../Syntax.java"><code>org.risource.dps.Syntax</code></a> and
+    <a href="../Action.java"><code>org.risource.dps.Action</code></a>.
 
 <p> Every <a href="../active/ActiveNode"><code>ActiveNode</code></a> actually
     points to two (potentially different) handlers, accessible through the
@@ -60,7 +60,7 @@
 
 <p> An ActiveNode's associated <code>Action</code> handler is called from a
     Processor (or from processing utilities in <a
-    href="../aux/Expand.java"><code>crc.dps.aux.Expand</code></a>, although
+    href="../aux/Expand.java"><code>org.risource.dps.aux.Expand</code></a>, although
     in practice these almost invariably construct a sub-processor).
 
 <p> The relevant code in <code>BasicProcessor is:</code>

@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE=crc.dps.handle
-TOPDIR=../../..
+PACKAGE=org.risource.dps.handle
+TOPDIR=../../../..
 
 ### Base classes and generic node-class handlers:
 BASE_CLASSES = \

@@ -22,13 +22,13 @@
 */
 
 
-package crc.dps.output;
+package org.risource.dps.output;
 
-import crc.dom.*;
+import org.risource.dom.*;
 
-import crc.dps.*;
-import crc.dps.active.*;
-import crc.dps.util.*;
+import org.risource.dps.*;
+import org.risource.dps.active.*;
+import org.risource.dps.util.*;
 
 import java.util.NoSuchElementException;
 
@@ -54,8 +54,8 @@ import java.util.NoSuchElementException;
  *
  * @version ToExternalForm.java,v 1.5 1999/03/01 23:46:35 pgage Exp
  * @author steve@rsv.ricoh.com 
- * @see crc.dps.Output
- * @see crc.dps.Processor */
+ * @see org.risource.dps.Output
+ * @see org.risource.dps.Processor */
 
 public abstract class ToExternalForm extends CursorStack implements Output {
 
@@ -80,9 +80,9 @@ public abstract class ToExternalForm extends CursorStack implements Output {
 
   /** Write a node out as the content of a literal. */
   protected void writeLiteralData(Node aNode) {
-    if (aNode.getNodeType() == crc.dps.NodeType.TEXT) {
+    if (aNode.getNodeType() == org.risource.dps.NodeType.TEXT) {
       write(((Text)aNode).getData());
-    } else if (aNode.getNodeType() == crc.dps.NodeType.ENTITY) {
+    } else if (aNode.getNodeType() == org.risource.dps.NodeType.ENTITY) {
       // Convert character entities back to characters.
       Entity e = (Entity)aNode;
       NodeList value = defaultEntityTable.getEntityValue(null, e.getName());

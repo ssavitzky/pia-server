@@ -1,4 +1,4 @@
-###### crc/Makefile:	Ricoh California Research Center's Java classes.
+###### org/risource/Makefile:	RiSource.org's Java classes.
 #	Makefile,v 1.20 1999/03/02 00:46:09 pgage Exp
 
 ############################################################################### 
@@ -21,8 +21,8 @@
 ############################################################################## 
 
 
-PACKAGE="crc"
-TOPDIR=..
+PACKAGE="org.risource"
+TOPDIR=../..
 
 ### These are the packages to be built.  
 ###	Only the top-level directories are needed; 
