@@ -28,7 +28,7 @@
 		  define open close split join def from try: except:" 
  >
 
-<cvs-id>$Id: src-file.ts,v 1.7 2000-10-13 23:21:46 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.8 2000-10-27 23:15:55 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
@@ -120,6 +120,16 @@
     </hide></action>
 </define>
 
+<define element="comment">
+  <action><font color="red"><i>&content;</i></font><hide>
+    </hide></action>
+</define>
+
+<define element="decl">
+  <action><font color="green"><b>&content;</b></font><hide>
+    </hide></action>
+</define>
+
 <define element="rem">
   <action><font color="red">&content;</font><hide>
     </hide></action>
@@ -127,6 +137,11 @@
 
 <define element="#pi" syntax="quoted">
   <action><font color="red">&lt;?&name; &value;?&gt;</font><hide>
+    </hide></action>
+</define>
+
+<define element="pi">
+  <action><font color="red">&content;</font><hide>
     </hide></action>
 </define>
 
