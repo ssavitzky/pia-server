@@ -112,25 +112,25 @@ if necessary to make two digits. </td>
 if necessary to make two digits. </td>
 </tr>
 <tr>
-<td><b><a name = "e-piaDIR">piaDIR</a></b></td>
+<td><b><a name = "e-piaDIR">PIA:home</a></b></td>
 <td>Full pathname of the directory in which the PIA is installed.
-       Normally accessed inside the PIA as <code><a href = "/PIA/">/PIA/</a></code></td>
 </tr>
 <tr>
-<td><b><a name = "e-piaHOME">piaHOME</a></b></td>
-<td>Home directory of the user executing the PIA </td>
-</tr>
-<tr>
-<td><b><a name = "e-piaHOST">piaHOST</a></b></td>
+<td><b><a name = "e-piaHOST">PIA:host</a></b></td>
 <td>Fully-qualified domain name of the host on which the PIA is
        executing. </td>
 </tr>
 <tr>
-<td><b><a name = "e-piaPORT">piaPORT</a></b></td>
-<td>Number of the port on which the PIA is listening for connections.</td>
+<td><b><a name = "e-piaPORT">PIA:port</a></b></td>
+<td>Number of the port on which the PIA is <em>ostensibly</em> listening for
+connections.</td> 
+</tr>
+<td><b><a name = "e-piaPORT">PIA:realport</a></b></td>
+<td>Number of the port on which the PIA is <em>really</em> listening for
+connections.</td> 
 </tr>
 <tr>
-<td><b><a name = "e-piaUSER">piaUSER</a></b></td>
+<td><b><a name = "e-user.name">user.name</a></b></td>
 <td>Login name of the user executing the PIA. </td>
 </tr>
 <tr>
@@ -165,9 +165,9 @@ is directed, or which generated the current response transaction. </td>
 <td>Query string of the current transaction's URL. </td>
 </tr>
 <tr>
-<td><b><a name = "e-usrDIR">usrDIR</a></b></td>
+<td><b><a name = "e-usrDIR">PIA:root</a></b></td>
 <td>Full pathname of the directory that contains the user's personal PIA
-state. Normally accessed inside the PIA as <code><a href = "/My/">/&Root;/</a></code></td>
+state.  This is the root of the PIA's URL tree.</td>
 </tr>
 <tr>
 <td><b><a name = "e-weekday">weekday</a></b></td>
