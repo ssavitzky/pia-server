@@ -1,5 +1,5 @@
 ////// Listing.java -- simple listing of a container document
-//	$Id: Listing.java,v 1.5 1999-10-15 17:15:42 steve Exp $
+//	$Id: Listing.java,v 1.6 2000-04-14 23:06:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.net.URL;
  *  <p>	A Listing is a virtual container; this means that one can control
  *	the format of a listing by specifying a sub-document.
  *
- * @version $Id: Listing.java,v 1.5 1999-10-15 17:15:42 steve Exp $
+ * @version $Id: Listing.java,v 1.6 2000-04-14 23:06:59 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -177,6 +177,10 @@ public class Listing extends FileResource implements Document {
     return "<a href=\"" + name + "\">" + name + "</a>";
   }
 
+  protected String ralink(String name, String path) {
+    return "<a href=\"" + name + "\">" + name + "</a>";
+  }
+
   protected String alink(String name, String path) {
     if (! path.endsWith("/")) path += "/";
     return "<a href=\"" + path + name + "\">" + name + "</a>";
@@ -233,8 +237,8 @@ public class Listing extends FileResource implements Document {
 
 	if (all || !ignoreFile(name, zres)) {
 	  entry = "<li> " + ((zres.isContainer())
-			     ? alink(name + "/", mypath)
-			     : alink(name, mypath));
+			     ? ralink(name + "/", mypath)
+			     : ralink(name, mypath)) + "</li>";
 	  entries.insert(Association.associate(entry, name));
 	}
       }
@@ -242,7 +246,9 @@ public class Listing extends FileResource implements Document {
       // Java doesn't list "..", so include it here. 
 
       if (!mypath.equals("/")) {
-	entry = "<li> " + alink("../", mypath);
+	entry = "<li> " + (ralink("../", mypath)
+			   + " [" + ralink("../-", mypath) + "]"
+			   ) + "</li>";
 	entries.insert(Association.associate(entry, ".."));
       }
 
@@ -257,7 +263,7 @@ public class Listing extends FileResource implements Document {
       return "\n" + "<html>\n<head>"
 	+ "<title>Listing for " + mypath + "</title>"
 	+ "</head>\n<body>" + head + "\n"
-	+ "<h3>Listing for " + rlink(mypath) + "</h3>\n"
+	+ "<h3>Listing for " + mypath + "</h3>\n"
 	+ "<ul>" + allurls + "</ul>\n"
 	+ paths + "\n"
 	+ "</body>\n</html>\n";
