@@ -18,6 +18,20 @@ See also:
 
 <h2>To-Do List</h2>
 <ol>
+  <li> <b>Hole</b> Need permissions as well as authentication. <br>
+       Need to be able to authorize, e.g., selected users for writing, and let
+       everyone read.  
+       (1999-10-05) <br>
+
+  <li> <b>Bug</b> Authorization must use Site for passwds. <br>
+       Currently Authenticator uses a raw File to get the passwords; this
+       works for the moment but really ought to use the site stuff.
+       (1999-10-05) <br>
+
+  <li> <b>Impr</b> Register agents in PiaSite <br>
+       It's no longer necessary or desirable for Resolver to do this.
+       (1999-10-05) <br>
+
   <li> <b>Hole</b> PUT still missing <br>
        see old GenericAgent and FileAccess.  Probably very easy now.
        (1999-10-04) <br>
@@ -37,11 +51,6 @@ See also:
        Really need to standardize the multiple versions of report, message,
        etc.; create a small number of log streams (server, error, message).
        (1999-09-28) <br>
-
-  <li> <b>Bug</b> redirect <code>~name</code> to home directory <br>
-       Otherwise links to, e.g., ``<code>..</code>'' won't work.  Might want
-       this to be selectable, perhaps with <code>AGENT:noredirect</code>.
-       (1999-09-27) <br>
 
   <li> <b>Bug</b> problems with AGENT: namespace<br>
        You can't get at the actual agent and its content.  May need a new
@@ -195,7 +204,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.28 1999-10-05 15:08:43 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.29 1999-10-06 17:25:25 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

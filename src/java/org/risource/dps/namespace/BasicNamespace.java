@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.1 1999-04-23 00:17:08 steve Exp $
+//	$Id: BasicNamespace.java,v 1.2 1999-10-06 17:25:21 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: BasicNamespace.java,v 1.1 1999-04-23 00:17:08 steve Exp $
+ * @version $Id: BasicNamespace.java,v 1.2 1999-10-06 17:25:21 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -76,7 +76,7 @@ public class BasicNamespace extends AbstractNamespace {
   protected void addBinding(String name, ActiveNode binding) {
     bindings.setBinding(name, binding);
     itemNames.push(name);
-    addChild(binding);
+    if (binding.getParentNode() != null) addChild(binding);
     if (binding.asNamespace() != null) namespaceItems ++;
   }
 
@@ -84,14 +84,22 @@ public class BasicNamespace extends AbstractNamespace {
   protected void removeBinding(String name, ActiveNode binding) {
     bindings.removeNamedItem(name); // ... hash table
     itemNames.remove(name);	// ... name list
-    removeChild(binding);	// ... children
+    if (binding.getParentNode() == this) removeChild(binding);	// ... children
   }
 
   /** Replace an existing binding. */
   protected void replaceBinding(String name, ActiveNode old,
 				ActiveNode binding) {
     bindings.setBinding(name, binding); // ... in hash table.  Name stays.
-    replaceChild(old, binding);         // ... in children
+    if (old.getParentNode() == this) {  // ... in children
+      if (binding.getParentNode() != null) {
+	removeChild(binding);
+      } else {
+	replaceChild(old, binding); 
+      }
+    } else if (binding.getParentNode() != null) {
+      addChild(binding);
+    }    
     // adjust namespaceItems if necessary:
     if (old.asNamespace() != null) {
       if (binding == null || !(binding.asNamespace() != null))
