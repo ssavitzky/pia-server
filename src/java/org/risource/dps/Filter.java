@@ -1,5 +1,5 @@
 ////// Filter.java: the Document Processing System used stand-alone as a filter
-//	$Id: Filter.java,v 1.10 1999-08-20 00:02:15 steve Exp $
+//	$Id: Filter.java,v 1.11 1999-12-14 18:50:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,6 @@ public class Filter {
   static boolean parsing = false;
   static int verbosity = 0;
   static boolean noaction = false;
-  static boolean loadTagset = false;
   static boolean writeTagset = false;
 
   /** Main program.
@@ -120,8 +119,6 @@ public class Filter {
     /* Start by getting a Tagset. */
 
     org.risource.dps.tagset.Loader.setVerbosity(verbosity);
-    if (tsname.equals("tagset")) loadTagset = true;
-    if (tsname.equals("BOOT")) loadTagset = true;
 
     Tagset ts = org.risource.dps.tagset.Loader.loadTagset(tsname);
     if (ts == null) {
@@ -143,10 +140,6 @@ public class Filter {
       System.exit(0);
     }
 
-    if (verbose && loadTagset) {
-      System.err.println("We appear to be defining a tagset. ");
-    }
-
     if (debug) {
       dumpTagset(ts);
     } else if (verbose) {
@@ -161,7 +154,7 @@ public class Filter {
     p.setReader(new InputStreamReader(in));
 
     /* Finally, create a Processor and set it up. */
-    TopContext ii = loadTagset? new TagsetProcessor() : new TopProcessor();
+    TopContext ii = new TopProcessor();
     ii.setInput(p);
     ii.setTagset(ts);
 
@@ -181,9 +174,7 @@ public class Filter {
     ToParseTree outputTree = null;
     Output output = null;
     ToWriter writeout = null;
-    if (loadTagset) {
-      output = new org.risource.dps.output.DiscardOutput();
-    } else if (parsing) {
+    if (parsing) {
       outputTree = new org.risource.dps.output.ToParseTree(ts);
       // === root should be an ActiveDocument ===
       outputTree.setRoot(new TreeElement("Document", (ActiveAttrList)null));
@@ -200,20 +191,13 @@ public class Filter {
     if (noaction) ii.copy();
     else ii.run();
 
-    if (loadTagset && verbose) {
-      dumpTagset(((TagsetProcessor)ii).getNewTagset());
-    }
-
     if (parsing) { 
       if (debug) {
 	System.err.println("\n\n========= parse tree: ==========\n");
 	if (outputTree != null) System.err.println(outputTree.getRoot());
       } 
       try {
-	Object oo = loadTagset
-	  ? ((TagsetProcessor)ii).getNewTagset()
-	  : outputTree.getRoot();
-	if (loadTagset && debug) dumpTagset((Tagset)oo);
+	Object oo = outputTree.getRoot();
 	ObjectOutputStream destination = new ObjectOutputStream(outs);
 	destination.writeObject( oo );
 	destination.flush();
