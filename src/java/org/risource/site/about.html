@@ -106,6 +106,61 @@
     easily reconstructed from a combination of filesystem information and
     the configuration information cached by their parent Subsite.
 
+<h2>Location</h2>
+
+<p> A Resource has a ``real'' location in the filesystem, which is a direct
+    descendent of the directory that corresponds to the Root resource.  A
+    container resource may also have a ``virtual search path'' of directories
+    in which to look for default children.  All writing is done in the real
+    location. 
+
+<p> Typically the virtual search path of a resource has only two elements: a
+    ``prototype'' directory under the source-controlled PIA directory, and a
+    ``defaults'' directory that provides a fallback for documents like
+    <code>home.xh</code> which most directories are expected to have.  The
+    prototype directory corresponds roughly to <code>PIA/Agents</code>, and
+    most or all actual agents will have their prototype directories
+    <em>in</em> <code>PIA/Agents</code>.  The prototype for the standard,
+    out-of-the-box configuration ought to be <code>PIA</code> itself.
+
+<p> The real location of the PIA's root corresponds rather closely to the
+    current <code>.pia</code> directory.  It is created in the first place by
+    specifying a ``configuration document'' for the Site (see below) and then
+    ``realizing'' it.  A command-line utility will be provided for this
+    purpose.
+
+<p> There will be multiple sample configuration files in the standard
+    distribution, corresponding to, e.g., an appliance server, a personal
+    proxy, and so on.  A distribution of the PIA could ship with a real,
+    non-CVS-controlled <code>Site</code> directory created by realizing a
+    default configuration as part of the release process.  It might be best if
+    this were a <em>sibling</em> of the <code>PIA</code> directory rather than
+    a child; another possibility is to create it on installation (which would
+    allow the user to select their preferred configuration).  Most Unix users
+    will, of course, want to use <code>~/.pia</code> as the real location of
+    their personal PIA.
+
+<h2>Configuration</h2>
+
+<p> A Resource's ``configuration'' is specified using an XML element with node
+    type ``<code>Resource</code>''.  Attributes specify all of the String,
+    boolean, and integer fields of the underlying object (of class Subsite or
+    Document.  XML metadata is contained in <code>namespace</code> elements in
+    the content.
+
+<p> The configuration of a Container resource may also contain
+    <code>Resource</code> sub-elements in its content, corresponding to
+    documents and virtual containers that have no corresponding configuration
+    file.  A Subsite will normally have its configuration loaded from a file
+    called, by default, ``<code>_subsite.xcf</code>''.
+
+<dl>
+  <dt> <b>Note:</b>
+  <dd> <em>Although hooks are in place for XML configuration information, the
+       loading and saving of this information is presently unimplemented.</em> 
+</dl>
+
+
 <h2>Agents</h2>
 
 <p> One objective of the <code>site</code> package is to provide the machinery
@@ -119,11 +174,30 @@
     that need web-accessible user interfaces.  Similarly, nothing prevents a
     Resource from being the home of several agents, as long as some mechanism
     exists for sorting them out.  One way of doing this might be to make an
-    Agent's ``home Resource'' a document rather than a container.
+    Agent's ``home Resource'' a document rather than a container, but this may
+    complicate things unnecessarily.  For the moment we can ignore the
+    problem, and simply make sure that every agent has its own home.
+
+<p> In the new PIA, then, agents will be considerably simpler than in the old
+    scheme, because they will no longer have anything to do with interpreting
+    URL's or processing documents.  Essentially, an agent will be nothing but
+    an XML namespace with a binding for <code>action</code> or
+    <code>act-on</code> that provides the hook.  An agent will correspond very
+    directly to the document resource its state is kept in (the
+    <code>AGENT.xml</code> file.
+
+<p> Note that an agent's state document is <em>contained in</em> its home
+    resource, along with all the other forms that manipulate the agent.  We
+    might want to have a specialized kind of Document for agents in order to
+    make state-saving more efficient; a better alternative might be to
+    classify the Agent's state as metadata -- there are already hooks in place
+    to save metadata.  We also ought to change the filename extension to take
+    advantage of the extension-to-tagset mapping.  An alternative would be to
+    put the tagset in the configuration.
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.4 1999-08-21 01:07:07 steve Exp $</b><br>
+<b>$Id: about.html,v 1.5 1999-08-23 21:50:58 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
