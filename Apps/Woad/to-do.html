@@ -5,21 +5,26 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Bug</b> directories in URL-space cause havoc <br />
+       The mapping from url to various local paths is badly broken.  In
+       particular, because you can't reliably tell if the last component is a
+       directory, you can't reliably identify the base for fixing up relative
+       references.  An "isDirectory" flag in the annotations will help.  Be
+       nice if you could get redirects from the server.  Can also look in the
+       sources -- that's totally reliable if a corresponding source directory
+       exists.
+       (2000-06-23)
+  </li>
   <li> <b>Bug</b> fix command-line decoding <br />
        Check for presence of target, sources; set <code>vroot</code>
        appropriately.  It may be feasible to do it in <code>woad.xcf</code>.
-       (2000-06-23)
-  </li>
-  <li> <b>Bug</b> listing an empty dir. blows up if indexed. <br />
-       cgi-bin blows up; CVS doesn't.  The difference is that there's a
-       dirIndex for cgi-bin; the blowup happens in extract. 
        (2000-06-23)
   </li>
   <li> <b>Bug</b> (site) defining namespace in config file loses <br />
        Ends up with <code>.source</code> non-existant.  Weird.
        (2000-06-23)
   </li>
-  <li> <b>Hole</b> site indexing; links TO pages <br />
+  <li> 2000-06-26 <b>Hole</b> site indexing; links TO pages <br />
        There are two ways to do it: incrementally while browsing the URL tree,
        and offline using a crawler (similar to woad-index.pl).  It's going to
        be slow unless we use a namespace.  (Maybe SITE:siteMap.)  Note that
@@ -124,7 +129,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.10 2000-06-24 00:41:41 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.11 2000-06-27 01:16:11 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -22,6 +22,12 @@
 		        <then>/<get name="PATH_INFO"/></then>
 		        <else><get name="PATH_INFO"/></else>
   </if></set>
+  <if> <logical op="and">
+	 <get name="tail" />
+	 <test not="not" match="^\/"><get name="tail"/></test>
+       </logical>
+       <then><set name="tail">/<get name="tail"/></set></then>
+  </if>
 </hide>
 <title>&spath;&tail; : Woad source listing</title>
 </head><body bgcolor="#ffffff">
@@ -252,6 +258,10 @@
   <else-if>&dirIndex;
     <then> 
 	<table bgcolor="white" border="3">
+	  <tr>
+	    <th bgcolor="#cccccc"> filename </th>
+	    <th bgcolor="#cccccc"> title/<em>description</em> </th>
+	  </tr>
 	  &dirIndex;
 	</table>
     </then>
@@ -322,5 +332,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.8 2000-06-24 06:21:43 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.9 2000-06-27 01:16:14 steve Exp $" />
 </body></html>

@@ -22,6 +22,12 @@
 		        <then>/<get name="PATH_INFO"/></then>
 		        <else><get name="PATH_INFO"/></else>
   </if></set>
+  <if> <logical op="and">
+	 <get name="tail" />
+	 <test not="not" match="^\/"><get name="tail"/></test>
+       </logical>
+       <then><set name="tail">/<get name="tail"/></set></then>
+  </if>
 </hide>
 <title>&npath;&tail; : Woad annotations</title>
 </head><body bgcolor="#99ccff">
@@ -37,10 +43,25 @@
   </doc>
   <set name="tpath"><mapNoteToTarget>&npath;&tail;</mapNoteToTarget></set>
   <set name="spath"><mapNoteToSource>&npath;&tail;</mapNoteToSource></set>
-  <set name="xloc"><subst match="/[^/]*$" result="">&npath;&tail;</subst></set>
+<!-- if page is a directory, xloc = &npath;&tail;  -->
+<!-- === The test for directoryness is bogus.  negotiation will lose! -->
+<!-- === should test for presence of source directory. -->
+  <if> <test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
+       <then>
+	 <set name="xloc">&npath;&tail;</set>
+       </then>
+       <else>
+	 <set name="xloc">
+	    <subst match="/[^/]*$" result="">&npath;&tail;</subst></set>
+       </else>
+  </if>
   <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
 </hide>
-
+<!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
+    xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
+    tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
+    title="&pageTitle;"<br />
+-->
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr> <td>
 	     <table><!-- the nested table shrink-wraps its contents     -->
@@ -181,6 +202,17 @@
 </doc>
 
 <hide>
+<define element="sort-unique">
+  <doc> Sort the contents and eliminate duplicates </doc>
+  <action>
+    <let name="prev"></let>
+    <repeat><foreach><text op="sort">&content;</text></foreach>
+	<if><test exact match="&prev;">&li;</test>
+	    <else><let name="prev">&li;</let>&li;</else>
+	</if>
+    </repeat>
+  </action>
+</define>
   <set name="serverPage">
     <if>&SITE:notesPrefix;
 	<then><include src="&PIA:url;&tpath;" tagset="/.Woad/src-html"
@@ -190,6 +222,37 @@
 	</else>
     </if>
   </set>
+  <set name="pageTitle">
+    <extract><from>&serverPage;</from>
+	     <name all="all">title</name>
+	     <content />
+    </extract>
+  </set>
+  <set name="linksInPage">
+    <sort-unique>
+      <repeat>
+	<foreach>
+	  <extract><from>&serverPage;</from>
+			      <name all>a</name>
+			      <attr>href</attr> 
+			      <eval />
+	  </extract>
+	</foreach>
+	<subst match="\#.*$" result="">&li;</subst>
+      </repeat>
+    </sort-unique>
+  </set>
+  <set name="linksToPage">
+    <sort-unique><text split="split">
+	<include quoted src="&LOC:path;&tail;/linksTo.wi"> </include>
+    </text></sort-unique>
+  </set>
+  <!-- === really ought to rewrite linksTo after sorting === -->
+  <if> &pageTitle;
+       <then><output dst="&LOC:path;&tail;/pageTitle.wi">&pageTitle;
+	     </output>
+       </then>
+  </if>
 </hide>
 
 <index-bar name="Links">Notes Links Images Source Listing</index-bar>
@@ -202,21 +265,19 @@
   </tr>
   <repeat>
     <foreach><text op="sort" unique="unique">
-      <extract><from><!-- === faked &serverPage; --></from>
-    			    <name all>a</name>
-  			    <attr>href</attr> 
-  			    <eval />
-      </extract></text></foreach><!-- FAKED!!!!! -->
+      <extract>&linksToPage;</foreach>
       <let name="absPath">
   	<fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
-      <let name="absLink">
-  	<fixRelativePath path="&LOC:path;">&li;</fixRelativePath></let>
       <if> &absPath;
   	   <then>
+  	      <let name="absLink"><get name="SITE:notesPrefix" />&absPath;</let>
+  	      <let name="title">
+		   	<include src="&absLink;/pageTitle.wi"> </include>
+	      </let>
 	      <tr>
 		 <td> <a href="&absLink;">&absPath;</a> </td>
 		 <td> &nbsp;
-			   <!-- for descriptions, need full path. -->
+			 <get name="title" />
 		 </td>   
 	      </tr>
 	   </then>
@@ -227,18 +288,33 @@
     <th bgcolor="#cccccc">links IN this page</th>
     <th bgcolor="#cccccc"> page title </th>
   </tr>
-  <repeat><foreach><text op="sort" unique="unique">
-	    <extract><from>&serverPage;</from>
-    			    <name all>a</name>
-  			    <attr>href</attr> 
-  			    <eval />
-    	    </extract></text></foreach>
-            <tr><!-- may need to remap absolute links to annotation loc's -->
-	      <td> <a href="&li;">&li;</a> </td>
-	      <td> &nbsp;
-		   <!-- for descriptions, need full path in any case. -->
-	      </td>   
-	    </tr>
+  <repeat><foreach>&linksInPage;</foreach>
+    <tr><!-- may need to remap absolute links to annotation loc's -->
+	   <let name="absPath">
+	     <fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
+    <if> <get name="absPath" />
+         <then>
+      	    <let name="absPath">
+      		<subst match="\#.*$" result="">&absPath;</subst></let>
+            <let name="absLink"><get name="SITE:notesPrefix" />&absPath;</let>
+            <let name="title">
+      		<include src="&absLink;/pageTitle.wi">
+      		      <em> (<a href="&absPath;">&absPath;</a> not indexed)</em>
+	        </include> 
+      	    </let>
+  	    <output append="append" dst="&absLink;/linksTo.wi">&npath;&tail;
+</output>
+        </then>
+        <else>
+            <let name="title"><em>(off site -- not indexed)</em></let>
+        </else>
+      </if>
+      <td> <a href="&absLink;">&li;</a> </td>
+      <td> &nbsp;
+		   <get name="title" />
+<!-- for descriptions, need full path in any case. -->
+      </td>   
+    </tr>
   </repeat>
 </table>
 </blockquote>
@@ -342,5 +418,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.7 2000-06-24 06:21:43 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.8 2000-06-27 01:16:14 steve Exp $" />
 </body></html>
