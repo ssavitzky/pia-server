@@ -202,6 +202,15 @@
 </p>
 
 <dl>
+  <dt> <code>xref</code> (cross-referenced)
+  </dt>
+  <dd> In this mode, the source is processed using a special parser and
+       tagset.  It presents a verbatim view of the file, color-coded and
+       font-coded according to syntax, with identifiers cross-referenced to
+       their definitions.  Note that links in the cross-referenced view do
+       <em>not</em> point directly to their target, but to a cross-reference
+       file.  This may be confusing. 
+  </dd>
   <dt> <code>processed</code>
   </dt>
   <dd> In this mode, the source is processed using a special tagset in which
@@ -228,11 +237,6 @@
   <dt> <code>raw</code>
   </dt>
   <dd> The source code is presented as-is, with no processing whatever. 
-  </dd>
-  <dt> <code>retagged</code> [currently unimplemented]
-  </dt>
-  <dd> The source code is parsed and tagged with a different tagset that is
-       essentially language-independent.  
   </dd>
   <dt> <code>documented</code>
   </dt>
@@ -400,5 +404,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.15 2000-09-26 23:11:12 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.16 2000-10-06 17:46:13 steve Exp $" />
 </p></body></html>

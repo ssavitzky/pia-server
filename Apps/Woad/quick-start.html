@@ -76,6 +76,20 @@
   </dd>
 </dl>
 
+<p> For another example, here (slightly cleaned up) are the commands we use to
+    view and index a local Apache-based application:
+</p>
+
+<pre>
+    ~/PIA/src/app/tools/woad-index.pl \
+         source=/mnt/lena/localdisk/home/web/apache-conf \
+         target=lena:80 offset=/php -root .woad.lena -x
+
+    woad source=/mnt/lena/localdisk/home/web/apache-conf \
+         target=lena:80 offset=/php -root .woad.lena \
+         aliases="/cgi-bin,/icons" offsets="/cgi-bin,/icons"
+</pre>
+
 <hr />
 <h2><a name="why">Why Blue?  Why Woad?</a></h2>
 
@@ -115,5 +129,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: quick-start.html,v 1.5 2000-10-04 22:05:26 steve Exp $</b><br>
+<b>$Id: quick-start.html,v 1.6 2000-10-06 17:46:13 steve Exp $</b><br>
 </body></html>
