@@ -1,5 +1,5 @@
 ////// Input.java: Depth-first enumerator for parse trees
-//	$Id: Input.java,v 1.6 1999-07-14 20:19:53 steve Exp $
+//	$Id: Input.java,v 1.7 1999-09-22 00:32:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import org.w3c.dom.Node;
  *	have to ``look ahead'' to ensure that <code>hasMoreElements</code>
  *	can return an accurate result. <p>
  *
- * @version $Id: Input.java,v 1.6 1999-07-14 20:19:53 steve Exp $
+ * @version $Id: Input.java,v 1.7 1999-09-22 00:32:12 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Processor
@@ -170,4 +170,8 @@ public interface Input extends Cursor {
    */
   public Action getAction();
 
+  /** Close the input source, if any. */
+  public void close();
+
 }
+
