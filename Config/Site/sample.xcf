@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.2 1999-09-24 00:24:23 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.3 1999-10-06 17:24:28 steve Exp $ -->
 
 <Container>
   <!-- You can include arbitrary XXML in a configuration file, but you have to
@@ -37,14 +37,40 @@
      </DOCUMENT>
   </Resource>
 
+  <!-- You can set many of the PIA's ``properties'' this way.
+	They are currently disabled and are only included to show the options
+	available.  Enable the ones you need to change by moving them outside
+	the if tag.
+    -->
+
+  <if> <then>
+    <verbosity>0</verbosity><!-- verbosity of message output -->
+    <req_timeout>60000</req_timeout><!-- timeout in milliseconds -->
+    <realport>8888</realport><!-- the port the PIA listens on -->
+    <port>8888</port><!-- the port the PIA reports to the browser -->
+    <host>localhost</host><!-- the host the PIA reports -->
+    <initialize>initialize</initialize><!-- initialization file -->
+    <configfile>_subsite.xcf</configfile><!-- per-directory config file -->
+    <http_proxy>http://gateway:80</http_proxy>
+    <no_proxy>localhost www.nytimes.com</no_proxy>
+  </then></if>
+
+  <!-- If /etc/passwd exists, use it (and hence your Unix password) to
+	authenticate access to the Admin agent.  Disable this if you're using
+	shadow passwords!
+    -->
+  <if><status item="exists" src="file:/etc/passwd"/>
+      <then><authenticate>/etc/passwd</authenticate></then>
+  </if>
+
  <if> true <then><!-- This demonstrates that if, etc. work in config files! -->
-  <AGENT criteria="request">
+   <AGENT criteria="request">
      <initialize><user-message>report-request agent initialized</user-message>
 		 <!-- This agent has no name attribute, so it does not get
 		      registered as ~whatever at the top level.
 		   -->
      </initialize>
      <user-message>requesting: &url;</user-message>
-  </AGENT>
+   </AGENT>
  </then></if>
 </Container>
