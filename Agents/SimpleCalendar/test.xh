@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title></title>
+</head><body>
+<h1></h1>
+
+<repeat start="1" stop="31" entity="day" >
+   day=&day; <br/>
+   longday=<weekday longday="yes">
+             <date>&day;</date>
+             <month>10</month>
+             <year>1999</year>
+           </weekday>
+
+</repeat>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: test.xh,v 1.1 1999-10-11 16:02:17 bill Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~bill/"
+         ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
+         >bill@rsv.ricoh.com</a>&gt;</address>
+</body></html>
