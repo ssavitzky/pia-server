@@ -3,7 +3,6 @@
 <title>Generic Help Page for &AGENT:name;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header show-date='yes'>Help</header>
-<set name='subs'><agent-list subs='subs' type='&agentType;'/></set>
 <sub-head page='help'>
 </sub-head>
 
@@ -46,5 +45,5 @@ links to the documentation and to many useful forms and active documents, can be
 found on the <a href='/Admin/'>Admin Agent's home page</a>.
 
 <hr />
-<footer cvsid='$Id: help.xh,v 1.7 2000-04-18 21:33:41 steve Exp $' />
+<footer cvsid='$Id: help.xh,v 1.8 2000-04-21 20:51:20 steve Exp $' />
 </body></html>

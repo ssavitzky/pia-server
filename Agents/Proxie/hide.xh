@@ -6,21 +6,16 @@
 <!--  Note: this has to be in Proxie for the moment because the Tool agents  -->
 <!--        inherit from Proxie instead of Toolbar, as they should.          -->
 
-<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<set name="agentType"><get name="AGENT:type">Proxie</get></set>
 <sub-head page='hide'>
-    <tr><th align='right'>&blue-dot;
+    <tr><th align='right'><expand>&blue-dot;</expand>
 	</th><td>Hide/Show toolbar
 		<a href='initialize'>initialize</a>
 
-    </td></tr><tr><th align='right'>
-           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
-	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
-                <else>&agentType; agents: </else></if>
-        </th><td><repeat list='&subs;'>
-               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
-           </repeat>
-    </td></tr><tr><th></th><td> <a href='using'>Using  &agentType; Agents</a>
-    </td></tr><tr><th></th><td> <a href='writing'>Writing &amp; Customizing
+    </td></tr>
+    <tr><th></th><td> <a href='using'>Using &agentType; Agents</a>
+    </td></tr>
+    <tr><th></th><td> <a href='writing'>Writing &amp; Customizing
 		    		      &agentType; Agents</a>
 </td></tr></sub-head>
 <hr />
@@ -62,5 +57,5 @@
 </form>
 </else></if>
 
-<footer cvsid='$Id: hide.xh,v 1.6 2000-02-25 22:29:48 steve Exp $' />
+<footer cvsid='$Id: hide.xh,v 1.7 2000-04-21 20:51:08 steve Exp $' />
 </body></html>

@@ -51,9 +51,7 @@
   </td></tr></else></if>
   <if>&subs;<then>
     <tr><th align='right'>
-           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
-	        <then><a href='&agentType;/home'>&agentType;/</a></then>
-                <else>&agentPath;/</else></if>
+           &agentPath;/
         </th><td><repeat list='&subs;'>
                <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat></td></tr></then>
@@ -436,11 +434,6 @@
 <hr />
 <set entity='entity' name='title'>Options Page</set>
 
-<if><test exact='exact' match='&amp;agentType'>&agentName;</test>
-    <then><set name='agentPath'>&agentName;</set></then>
-    <else><set name='agentPath'>&agentType;/&agentName;</set></else>
-</if>
-
 <h2><a name="urls">URL's for this Agent</a></h2>
 
 <p>
@@ -478,5 +471,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.5 2000-04-18 21:33:41 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.6 2000-04-21 20:51:20 steve Exp $' />
 </body></html>

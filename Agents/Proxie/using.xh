@@ -1,8 +1,9 @@
 <make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
-<title>Using &AGENT:type; Agents</title>
+<set name="agentType"><get name="AGENT:type">Proxie</get></set>
+<title>Using &agentType; Agents</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
-<header>Using &AGENT:type; Agents</header>
+<header>Using &agentType; Agents</header>
 
 <set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
 <sub-head page='using'>
@@ -121,5 +122,5 @@ The toolbar normally also refers to the following items in the <a href='/History
   </dt><dd> <a href='/History/~/last.html'>/History/~/last.html</a>
 </dd></dl>
 
-<footer cvsid='$Id: using.xh,v 1.10 2000-04-18 21:33:26 steve Exp $' />
+<footer cvsid='$Id: using.xh,v 1.11 2000-04-21 20:51:09 steve Exp $' />
 </p></body></html>

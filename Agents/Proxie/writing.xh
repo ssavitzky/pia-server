@@ -1,5 +1,6 @@
 <make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
+<set name="agentType"><get name="AGENT:type">Proxie</get></set>
 <title>Writing &amp; Customizing &agentType; Agents</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Writing &amp; Customizing &agentType; Agents</header>
@@ -113,5 +114,5 @@ rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.</p><p>
 
 The logo icons used by the <a href='/&agentType;/fileTools'>fileTools</a> and <a href='/&agentType;/remoteTools'>remoteTools</a> are 24 pixels high.
 
-<footer cvsid='$Id: writing.xh,v 1.8 1999-11-23 18:40:56 steve Exp $' />
+<footer cvsid='$Id: writing.xh,v 1.9 2000-04-21 20:51:09 steve Exp $' />
 </p></body></html>
