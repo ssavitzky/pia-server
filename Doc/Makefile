@@ -20,13 +20,13 @@
  #
 ############################################################################## 
 
- 
+
 PIADIR=..
 MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=Doc
 MYPATH=Doc
 
-SUBDIRS=Graphics Manuals Notes Papers
+SUBDIRS=Manuals Notes
 
 include $(MF_DIR)/file.make
 include $(MF_DIR)/subdir.make 
