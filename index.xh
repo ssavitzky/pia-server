@@ -48,7 +48,7 @@
             <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
               <do name="a"><set name="href">/~<get name="foo"/>/</set>
 		  <get name="foo"/></do>
-            </repeat><br>
+            </repeat><br />
         </td></tr>
     </then>
   </if>
@@ -88,5 +88,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.18 2000-04-25 23:43:25 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.19 2000-06-02 23:34:55 steve Exp $" />
 </p></body></html>
