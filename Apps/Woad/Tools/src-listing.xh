@@ -1,7 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>&LOC:path; : Woad source listing</title>
-</head><body>
 <hide>
   <set name="spath">
     <if>&SITE:sourcePrefix;
@@ -9,6 +7,10 @@
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
+</hide>
+<title>&spath; : Woad source listing</title>
+</head><body>
+<hide>
   <set name="VAR:format"><if> &FORM:all; <then>complete</then>
     <else-if>&FORM:detail;<then>detail</then></else-if>
     <else>filtered</else>
@@ -84,7 +86,62 @@
 
 <index-bar name="Notes">Notes Files HEADER</index-bar>
 
-<!-- look for notes -->
+<doc> Look for notes.
+</doc>
+
+<define element="rejectNote">
+  <doc> decide whether to omit a note from the listing
+  </doc>
+  <action>
+    <logical op="and">
+	<test not="not" match="\.ww$">&content;</test>
+	<test not="not" match="\.wi$">&content;</test>
+    </logical>
+  </action>
+</define>
+
+<define element="extract-title">
+  <action>
+    <extract><from><include src="&content;" /></from>
+	     <name all="all">title</name> <content /></extract>
+  </action>
+</define>
+
+<define element="describeNote">
+  <doc> come up with a good description for a note.
+  </doc>
+  <action>
+    <if> <test match="\.wi$">&content;</test>
+	 <then><ss>WOAD</ss> <subst match="\.wi$" result="">&content;</subst>
+		file
+	 </then>
+	 <else> <logical op="or">
+		  <extract-title>&attributes:src;/&content;</extract-title>
+	 	  <ss>WOAD</ss> note (untitled)
+	 	</logical>
+	 </else>
+    </if>
+  </action>
+</define>
+
+
+<table bgcolor="white">
+<repeat>
+  <foreach entity="f">
+     <text sort>
+  	<status item="files" src="&LOC:path;&tail;" />
+     </text>
+  </foreach>
+  <if><rejectNote>&f;</rejectNote>
+      <else>
+  	<tr><th align="left"><a href="&f;">&f;</a></td>
+	    <td> <describeNote src="&LOC:path;&tail;">&f;</describeNote>
+	    </td>
+	</tr>
+      </else>
+  </if>	  
+</repeat>
+</table>
 
 <form action="/.Woad/src-note" method="post">
   <input type="hidden" name="path" value="&LOC:path;" />
@@ -102,6 +159,25 @@
 
 <index-bar name="Files">Notes Files HEADER</index-bar>
 
+<define element="File">
+  <doc> This is cheating.  We really need to make the index a namespace, and
+	look up the actual files in it.  Unfortunately, this doesn't work.
+	The problem with the cheat is that if the index gets out of date,
+	we're hosed.  We could compare dates...
+  </doc>
+  <action>
+    <tr> <td> <a href="&attributes:name;"><code>&attributes:name;</code></a>
+	 </td>
+	 <td> <logical op="or">
+	        <get name="attributes:title"/>
+	        <get name="attributes:dscr"/>
+	        <get name="attributes:tdscr"/>
+	 </td>
+    </tr>
+</define>
+
+<set name="dirIndex"><include src="&LOC:path;/dirIndex.wi"/></set>
+
 <define element="rejectFile">
   <doc> decide whether to omit a file from the listing
   </doc>
@@ -111,11 +187,13 @@
         <else><test match="~$">&content;</test>
               <test match=".bak$">&content;</test>
               <test match="^[.]">&content;</test>
+              <test exact="yes" match="CVS">&content;</test>
 	</else>
     </if>
   </action>
 </define>
-
+<set name="cvs-controlled"></set>
+  
 <if>&tail;
     <then>
 	<h3>Invalid source path <code>&spath;&tail;</code>.</h3>
@@ -123,6 +201,13 @@
 	    <code><a href="&LOC:path;/">&spath;/</a></code> 
 	</p>
     </then>
+  <else-if>&dirIndex;
+    <then> 
+	<table bgcolor="white">
+	  &dirIndex;
+	</table>
+    <then>
+  </else-if>
     <else>
 	<table bgcolor="white">
 	<repeat>
@@ -132,13 +217,30 @@
 	  <if><rejectFile>&f;</rejectFile>
 	      <else>
 		<tr><td align="left"><a href="&f;"><code>&f;</code></a></td>
+		    <td> <if> &dirIndex;
+			      <then><xget name="dirIndex:&f;:tdscr"/>
+			      </then>
+			 </if>
+		    </td>
 		</tr>
 	      </else>
-	  </if>	  
+	  </if>
+	  <if><test exact="yes" match="CVS">&f;</test>
+	      <then><set name="cvs-controlled">yes</set></then>
+	  </if>
 	</repeat>
 	</table>
     </else>
 </if>
+<hide>
+<ul></ul><!-- correct indentation -->
+</hide>
+
+<if> <get name="cvs-controlled"/>
+     <then> Note: this source directory is under CVS control.
+     </then>
+</if>
+
 
 <if> <status item="exists" src="&LOC:path;/HEADER.html" />
      <then>
@@ -163,5 +265,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.4 2000-06-18 17:40:51 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.5 2000-06-21 01:07:22 steve Exp $" />
 </body></html>

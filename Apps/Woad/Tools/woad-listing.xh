@@ -1,7 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>&LOC:path; : Woad annotations</title>
-</head><body bgcolor="#99ccff">
 <hide>
   <set name="npath">
     <if>&SITE:notesPrefix;
@@ -12,7 +10,10 @@
   <set name="tail"><if><get name="PATH_INFO"/>
 		       <then>/<get name="PATH_INFO"/></then>
   </if></set>
-
+</hide>
+<title>&npath;&tail; : Woad annotations</title>
+</head><body bgcolor="#99ccff">
+<hide>
   <doc> The following crockery is used to compute &amp;decoratedPath;,
 	which is the path of the current directory ``decorated'' with
 	".." links to the directories above "."
@@ -79,32 +80,47 @@
     </tr>
 </table>
 
-<define element="rejectNote">
-  <doc> decide whether to omit a file from the listing
-  </doc>
-  <action>
-    <if> &FORM:all;
-	<then><test match="~$">&content;</test>
-              <test match="logs">&content;</test><!-- bogus: check hidden -->
-              <test match=".bak$">&content;</test>
-              <test match="^[.]">&content;</test>
-	 </then>
-        <else><logical op="and">
-		<test not="not" match="\.ww$">&content;</test>
-		<test match="\.">&content;</test>
-	      </logical>
-              <test match="logs">&content;</test><!-- bogus: check hidden -->
-	</else>
-    </if>
-  </action>
-</define>
-
 <index-bar name="Notes">Notes Links Images Source</index-bar>
 
 <blockquote>
 <p> The following is a list of notes available at this location. 
 </p>
 </blockquote>
+
+<define element="rejectNote">
+  <doc> decide whether to omit a note from the listing
+  </doc>
+  <action>
+    <logical op="and">
+	<test not="not" match="\.ww$">&content;</test>
+	<test not="not" match="\.wi$">&content;</test>
+    </logical>
+  </action>
+</define>
+
+<define element="extract-title">
+  <action>
+    <extract><from><include src="&content;" /></from>
+	     <name all="all">title</name> <content /></extract>
+  </action>
+</define>
+
+<define element="describeNote">
+  <doc> come up with a good description for a note.
+  </doc>
+  <action>
+    <if> <test match="\.wi$">&content;</test>
+	 <then> <ss>WOAD</ss> <subst match="\.wi$" result="">&content;</subst>
+		file 
+	 </then>
+	 <else> <logical op="or">
+		  <extract-title>&attributes:src;/&content;</extract-title>
+	 	  <ss>WOAD</ss> note (untitled)
+	 	</logical>
+	 </else>
+    </if>
+  </action>
+</define>
 
 <table bgcolor="white">
 <repeat>
@@ -114,6 +130,8 @@
   <if><rejectNote>&f;</rejectNote>
       <else>
   	<tr><td align="left"><a href="&f;"><code>&f;</code></a></td>
+	    <td> <describeNote src="&LOC:path;&tail;">&f;</describeNote>
+	    </td>
 	</tr>
       </else>
   </if>	  
@@ -243,5 +261,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.3 2000-06-18 17:40:52 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.4 2000-06-21 01:07:22 steve Exp $" />
 </body></html>
