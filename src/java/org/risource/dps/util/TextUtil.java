@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.3 1999-03-12 19:28:30 steve Exp $
+//	$Id: TextUtil.java,v 1.4 1999-04-02 22:05:43 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.3 1999-03-12 19:28:30 steve Exp $
+ * @version $Id: TextUtil.java,v 1.4 1999-04-02 22:05:43 pgage Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -535,8 +535,9 @@ public class TextUtil {
 	tokenList.append(List.split(s, markupChars, true));
       }
       else {
-	// push other node type unchanged
-	tokenList.push(n);
+	  // push other node type unchanged.  Not clear what to do
+	  // for non-string elements
+	  //tokenList.push(n);
       }
     }
     // Convert each string token to the correct node type
