@@ -1,5 +1,5 @@
 ### Makefile for Doc/API
-#	$Id: Makefile,v 1.2 1999-03-23 20:35:39 steve Exp $	
+#	$Id: Makefile,v 1.3 2000-02-25 23:31:18 steve Exp $	
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -25,6 +25,10 @@ MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=API
 MYPATH=Doc/API
 include $(MF_DIR)/file.make
-include $(MF_DIR)/graphics.make
-include $(MF_DIR)/text.make
+#include $(MF_DIR)/graphics.make
+#include $(MF_DIR)/text.make
+include $(MF_DIR)/subdir.make
+
+SUBDIRS= javadoc
+
 
