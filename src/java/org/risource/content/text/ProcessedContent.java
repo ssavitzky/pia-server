@@ -1,5 +1,5 @@
 //   ProcessedContent.java
-// $Id: ProcessedContent.java,v 1.6 1999-07-08 21:38:19 bill Exp $
+// $Id: ProcessedContent.java,v 1.7 1999-09-22 00:43:51 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.pia.Transaction;
 import org.risource.dps.*;
 import org.risource.dps.active.*;
 import org.risource.dps.output.ToWriter;
-import org.risource.dps.process.ActiveDoc;
+import org.risource.dps.process.TopProcessor;
 
 import org.risource.util.NameUtils;
 
@@ -67,11 +67,8 @@ public class ProcessedContent extends  GenericContent {
   /** An input filename */
   String inputFileName = null;
 
-  /** A path extension stripped from the input URL */
-  String pathExtension = null;
-
   /** The TopProcessor that actually does the work. */
-  ActiveDoc processor;
+  TopProcessor processor;
 
   /**
    * hold the tagset -- most editing operations affect this
@@ -114,31 +111,6 @@ public class ProcessedContent extends  GenericContent {
   void setAgent(Agent a){
     agent = a;
   }
-
-  /************************************************************
-  ** constructors
-  ************************************************************/
-
-  public ProcessedContent(){
-  }
-
-
-  public ProcessedContent(Agent a, String file, String path, ActiveDoc p,
-			  Transaction req, Transaction resp, Resolver res) {
-
-    inputFileName = file;
-    pathExtension = path;
-
-    processor = p;
-    tagset = processor.getTagset();
-
-    // === fileName and filePath are probably the wrong entities to define
-    // inputFileName is the full pathname, and pathExtension goes past it.
-    p.define("filePath", file);
-    p.define("fileName", NameUtils.filenamePart(file));
-    p.define("pathExt", path);
-  }
-
 
   /************************************************************
   ** Content interface implementation:
@@ -204,7 +176,7 @@ public class ProcessedContent extends  GenericContent {
    *	so that the constructor can throw an exception if it fails. */
   protected void beginProcessing(){
 
-    if (source == null && inputFileName != null) {
+    if (source == null && reader == null && inputFileName != null) {
       // === here we can handle caching! ===
       try {
 	reader = new FileReader(inputFileName);
@@ -278,6 +250,29 @@ public class ProcessedContent extends  GenericContent {
      // === create a actor which matches body tags and pushes s onto its content
   }
 
+
+  /************************************************************
+  ** constructors
+  ************************************************************/
+
+  public ProcessedContent(){
+  }
+
+
+  public ProcessedContent(String file, Reader r, TopProcessor p) {
+
+    inputFileName = file;
+
+    processor = p;
+    tagset = processor.getTagset();
+
+    reader = r;
+
+    // === fileName and filePath are probably the wrong entities to define
+    // inputFileName is the full pathname, and pathExtension goes past it.
+    p.define("filePath", file);
+    p.define("fileName", NameUtils.filenamePart(file));
+  }
 
 }
 
