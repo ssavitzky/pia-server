@@ -43,13 +43,13 @@ node bold1.
 document parse tree.  The first example extracts a child by specifying its position in the tree;
 the second example specifies the element type.
 <p>
-<b> Input:  </b>&lt;extract from='from'>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>0&lt;/child>&lt;/extract>
+<b> Input:  </b>&lt;extract> &lt;from>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>0&lt;/child>&lt;/extract>
 </p><p>
-<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i></from><child>0</child></extract>
+<b> Result: </b><extract> <from><i><b>bold1</b><strong>strong1</strong></i></from><child>0</child></extract>
 </p><p>
-<b> Input: </b>&lt;extract from='from'>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>b&lt;/child>&lt;/extract>
+<b> Input: </b>&lt;extract&gt; &lt;from>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>b&lt;/child>&lt;/extract>
 </p><p>
-<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i></from><child>b</child></extract>
+<b> Result: </b><extract> &lt;from><i><b>bold1</b><strong>strong1</strong></i></from><child>b</child></extract>
 </p><p>
 <hr />
 
@@ -57,9 +57,9 @@ the second example specifies the element type.
 <b> Description:</b>Use the "all" node type.  As the name suggests, it extracts all nodes, regardless
 of type. 
 <p>
-<b> Input: </b>&lt;extract from='from'>&lt;U>&lt;i>italic1&lt;/i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>plain1&lt;/U>&lt;/from>#all&lt;/extract>
+<b> Input: </b>&lt;extract> &lt;from>&lt;U>&lt;i>italic1&lt;/i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>plain1&lt;/U>&lt;/from>#all&lt;/extract>
 </p><p>
-<b> Result:  </b><extract from='from'><U><i>italic1</i><b>bold1</b><strong>strong1</strong>plain1</U></from>#all</extract>
+<b> Result:  </b><extract> <from><U><i>italic1</i><b>bold1</b><strong>strong1</strong>plain1</U></from>#all</extract>
 </p><p>
 <hr />
 
@@ -86,7 +86,7 @@ variable.
 </p><p>
 </p><p>
 
-<footer cvsid='$Id: demo_sel.xh,v 1.7 1999-04-13 19:53:54 pgage Exp $' />
+<footer cvsid='$Id: demo_sel.xh,v 1.8 1999-04-13 22:13:37 pgage Exp $' />
 
 </p></body></html>
 
