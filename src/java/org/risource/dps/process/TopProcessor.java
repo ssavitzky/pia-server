@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.3 1999-03-12 19:27:25 steve Exp $
+//	$Id: TopProcessor.java,v 1.4 1999-03-23 23:32:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -60,7 +60,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.3 1999-03-12 19:27:25 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.4 1999-03-23 23:32:04 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -124,8 +124,8 @@ public class TopProcessor extends BasicProcessor implements TopContext
     ActiveEntity ent = (entities == null)
       ? null : entities.getEntityBinding(name);
     if (ent == null && tagset != null) ent = tagset.getEntityBinding(name);
-    if (debug() && ent != null)
-      debug("Binding found for " + name + " " + ent.getClass().getName());
+    //if (debug() && ent != null)
+    //debug("Binding found for " + name + " " + ent.getClass().getName());
     return (local || ent != null || nameContext == null)
       ? ent : nameContext.getEntityBinding(name, local);
   }

@@ -1,5 +1,5 @@
 ###### pia/agent/Makefile:	Agent handlers and related classes
-#	$Id: Makefile,v 1.3 1999-03-12 19:29:56 steve Exp $
+#	$Id: Makefile,v 1.4 1999-03-23 23:32:42 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -65,8 +65,6 @@ AgentMachine.java:  ../Agent.java ../GenericAgent.java ../Resolver.java \
 
 Dofs.java: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java 
-
-Fallback.class: Agency.java
 
 Logo.java: ../Agent.java ../GenericAgent.java ../Resolver.java ../Pia.java \
 	../Transaction.java ../Machine.java ../HTTPResponse.java

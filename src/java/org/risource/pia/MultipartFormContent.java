@@ -33,7 +33,7 @@
  * <A HREF="http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1867.txt">RFC1867</A>
  *
  * @see org.risource.pia.FormContent
- * @see org.risource.interform.handle.Submit_forms 
+ * @see org.risource.dps.handle.submitHandler
  */
 
 package org.risource.pia;

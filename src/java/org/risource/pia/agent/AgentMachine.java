@@ -1,5 +1,5 @@
 // AgentMachine.java
-// $Id: AgentMachine.java,v 1.4 1999-03-12 19:50:00 pgage Exp $
+// $Id: AgentMachine.java,v 1.5 1999-03-23 23:32:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -119,7 +119,7 @@ public class AgentMachine extends Machine {
 	 
   /**
    * Handle a direct request to an agent.
-   * Normally done by running an InterForm, but the agent can 
+   * Normally done by running an active document, but the agent can 
    * perform special processing first.
    */
   public void getRequest(Transaction request, Resolver resolver)

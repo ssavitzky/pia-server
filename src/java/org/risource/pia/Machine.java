@@ -1,5 +1,5 @@
 // Machine.java
-// $Id: Machine.java,v 1.4 1999-03-12 19:49:58 pgage Exp $
+// $Id: Machine.java,v 1.5 1999-03-23 23:32:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -582,7 +582,7 @@ bytesRead=c.writeTo(out);
   /** 
    * Construct from an InputStream.  This constructor is used when we 
    *	are creating the Content for a response Transaction from an
-   *	InputStream (for example a file or the InterForm interpretor).
+   *	InputStream (for example a file or the DPS).
    * @param anInputStream typically from a Content
    * @see org.risource.pia.Content
    */ 

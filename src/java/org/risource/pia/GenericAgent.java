@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.4 1999-03-12 19:49:54 pgage Exp $
+// $Id: GenericAgent.java,v 1.5 1999-03-23 23:32:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,11 +46,13 @@ import org.risource.pia.HTTPResponse;
 import org.risource.pia.Machine;
 import org.risource.pia.Resolver;
 import org.risource.pia.Content;
-import org.risource.content.ByteStreamContent;
-import org.risource.content.text.ProcessedContent;
 import org.risource.pia.Authenticator;
 import org.risource.pia.Pia;
 import org.risource.pia.ContentOperationUnavailable;
+import org.risource.pia.FileAccess;
+
+import org.risource.content.ByteStreamContent;
+import org.risource.content.text.ProcessedContent;
 
 import org.risource.ds.Features;
 import org.risource.ds.Table;
@@ -65,16 +67,14 @@ import org.risource.dps.process.ActiveDoc;
 
 import org.risource.dom.NodeList;
 
-// import org.risource.sgml.SGML;
 import org.risource.util.NullOutputStream;
-
+import org.risource.util.NameUtils;
 import org.risource.util.Utilities;
 
 import java.util.Enumeration;
 import java.util.Properties;
 import java.io.Serializable;
 
-// import org.risource.interform.Run;
 import org.w3c.www.http.HTTP;
 
 /** The minimum concrete implementation of the Agent interface.  A
@@ -88,9 +88,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
   
   /** Standard option (entity) names. */
 
-  public static String agent_code_dir_name = "agentDIR";
-  public static String agent_data_dir_name = "userDIR";
-  public static String user_code_dir_name = "userAgentDIR";
+  public static String home_doc_dir_name = "home-dir";
+  public static String user_doc_dir_name = "user-dir";
+  public static String data_dir_name = "data-dir";
 
   /** Extensions of executable files.
    *	Everything with <code><em>index</em>&gt;=firstDPSType</code> is
@@ -116,13 +116,10 @@ public class GenericAgent implements Agent, Registered, Serializable {
     "html", "xml", "htm", "txt", 
   };
 
-  private String filesep = System.getProperty("file.separator");
-  public static boolean DEBUG = false;  
-
-  /** Suffix appended to the agent's name to get to its 'home InterForm' */
+  /** Suffix appended to the agent's name to get to its 'home page' */
   public String homePathSuffix = "/home";
 
-  /** Suffix appended to the agent's name to get to its 'index InterForm' */
+  /** Suffix appended to the agent's name to get to its 'index page' */
   public String indexPathSuffix = "index";
 
   /** If true, run the request for <code>initialize.??</code> through the 
@@ -146,20 +143,26 @@ public class GenericAgent implements Agent, Registered, Serializable {
   protected String agenttype;
 
   /**
-   * Attribute index - type of this agent
+   * Attribute index - path to this agent
    */
-  protected String version;
+  protected String path;
 
   /**
-   * Attribute index - directory that this agent can write to
-   */
-  protected Table dirTable;
-
-  /**
-   * Attribute index - files that this agent can write to
+   * Attribute index - files that correspond to agent options.
    */
   protected Table fileTable;
 
+  /** File object that refers to data directory. */
+  protected File dataDirFile;
+
+  /** File object that refers to home directory. */
+  protected File homeDirFile;
+
+  /** File object that refers to user directory. */
+  protected File userDirFile;
+
+  /** List of File objects for document lookup path. */
+  protected List documentFileList;
 
   /**
    * A list of match criteria.  These are matched against the
@@ -174,14 +177,14 @@ public class GenericAgent implements Agent, Registered, Serializable {
   protected AgentMachine virtualMachine;
 
   /**
-   * Act-on Hook.  A pre-parsed piece of InterForm code that is run when 
+   * Act-on Hook.  A pre-parsed piece of active document code that is run when 
    *	a transaction is matched by the agent.  Initialized by setting the 
    *	agent's <code>act-on</code> or <code>_act_on</code> attribute.
    */
   protected Object actOnHook;	
 
   /**
-   * Handle Hook.  A pre-parsed piece of InterForm code that is run when 
+   * Handle Hook.  A pre-parsed piece of active document code that is run when 
    *	a transaction is being satisfied by the agent.  Initialized by 
    *	setting the agent's <code>handle</code> or <code>_handle</code> 
    *	attribute.
@@ -280,24 +283,18 @@ public class GenericAgent implements Agent, Registered, Serializable {
     put("name", n);
     put("type", t);
 
-    String url = "/" + n + "/" + "initialize";
+    String url = "/" + n + "/" + "initialize.xh";
     if (! n.equals(t)) url = "/" + t + url;
 
     // Fake a request for the initialization file. 
     //    We might not need it, in which case this is a waste.
     Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
 
-    if( DEBUG ) {
-      System.out.println("[GenericAgent]-->"+"Hi, I am in debugging mode." +
-			 "No interform request is put onto the resolver.");
-      return;
-    }
-
     ActiveDoc   proc = null;
     Resolver    res = Pia.instance().resolver();
 
     // Force tagsets to load if necessary. 
-    if (piaXHTMLtagset == null || findInterform(name()+"-xhtml") != null) {
+    if (piaXHTMLtagset == null || findDocument(name()+"-xhtml") != null) {
       System.err.println(name() + " Loading tagset(s).");
       proc = makeDPSProcessor(req, res);
     }
@@ -306,11 +303,15 @@ public class GenericAgent implements Agent, Registered, Serializable {
      * agents are initialized in the correct order and that no requests
      * are made on partially-initialized agents.
      */
-    String    fn = findInterform("initialize");
+    String    fn = findDocument("initialize");
+
+    // At this point, we have all our options and files. 
+    /* if (Pia.debug()) */ dumpDebugInformation();
+
     if (fn != null) try {
       if (RESOLVE_INITIALIZE) {	
 	// We can force initialization to use the resolver if necessary.
-	createRequest("GET", url, null, null );
+	createRequest("GET", url, (String)null, null );
       } else {
 	// Run an XHTML initialization file.
 	if (proc == null) {
@@ -331,6 +332,22 @@ public class GenericAgent implements Agent, Registered, Serializable {
       System.err.println("PIA recovering; " + name() + " incomplete.");
     }
     initialized = true;
+  }
+
+  protected void dumpDebugInformation() {
+    PrintStream stm = System.err;
+    String s = "Agent " + pathName() + " name=" + name() + " type=" + type();
+    s += "\n      home=" + homeDirectory();
+    s += "\n      user=" + userDirectory();
+    s += "\n      data=" + dataDirectory();
+
+    Enumeration e = keys();
+    while (e.hasMoreElements()) {
+      String key = e.nextElement().toString();
+      String value = getObjectString(key);
+      s += "\n      " + name() + ":" + key + "=" + value;
+    }
+    stm.println(s);
   }
 
   /************************************************************************
@@ -369,31 +386,15 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
   /**
    * Given a url string and content create a request transaction.
-   *	@param m the Machine to which the response is to be sent.
    *	@param method (typically "GET", "PUT", or "POST").
    *	@param url the destination URL.
    *	@param queryString content for a POST request.
    *	@param contentType defaults to DefaultFormSubmissionContentType
    */
-  public void createRequest(Machine m, String method, String url,
-			    String queryString, String contentType) {
-    if (contentType == null) contentType = DefaultFormSubmissionContentType;
-    makeRequest(m, method, url, queryString, contentType).startThread();
-  }
-
-
-  /**
-   * Given a url string and content create a request transaction.
-   *	@param m the Machine to which the response is to be sent.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString content for a POST request.
-   *	@param contentType defaults to DefaultFormSubmissionContentType
-   */
-  public void createRequest(Machine m, String method, String url,
+  public void createRequest(String method, String url,
 			    InputContent content, String contentType) {
     if (contentType == null) contentType = DefaultFormSubmissionContentType;
-    makeRequest(m, method, url, content, contentType).startThread();
+    makeRequest(machine(), method, url, content, contentType).startThread();
   }
 
 
@@ -451,10 +452,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
     // create the request but don't start processing
     request = new HTTPRequest( m, content, false );
 
-    // Changed "Version" to "User-Agent", not sure why
-    // it was version in the first place as it gets assigned
-    // to PIA/{agent name} 
-    request.setHeader("User-Agent", version());
+    // Changed "Version" to "User-Agent"
+    request.setHeader("User-Agent", "PIA/" + pathName());
     //request.setHeader("User-Agent", "Mozilla/4.5b1 [en] (Win95; I)");
 
     request.setContentType(contentType);
@@ -515,224 +514,131 @@ public class GenericAgent implements Agent, Registered, Serializable {
     this.agenttype = type;
   }
 
-  /**
-   * @return version
+  /** 
+   * Return the agent's parent in the agent type hierarchy. 
    */
-  public String version(){
-    if(version ==null){
-      StringBuffer v = new StringBuffer( "PIA/" );
-      if( !type().equalsIgnoreCase( name() ) )
-	v.append( type() + "/" );
-      v.append( name() );
-      return new String( v );
-    }
-    else
-      return version;
+  public Agent typeAgent() {
+    // Handle the anomalous (legacy) situation where type == name
+    if (type() != null && type().equals(name())) return null;
+    return (type() == null)? null : Pia.instance().resolver().agent(type());
   }
 
   /**
-   * set version
+   * Return the agent's ``mount point'' in the PIA's URL hierarchy. 
+   *	If never set, this will be "/".
+   *
+   * @return agent's mount point in URL hierarchy.
    */
-  public void version(String version){
-    if( version != null)
-      this.version = version;
+  public String path(){
+    if (path == null) {
+      path = getObjectString("path");
+      if (path == null) path = "/";
+      else if (! path.startsWith("/")) path = "/" + path;
+      if (! path.endsWith("/")) path += "/";
+    }
+    return path;
+  }
+
+  /**
+   * set path
+   */
+  public void path(String path){
+    if (path == null) path = "/";
+    else if (! path.startsWith("/")) path = "/" + path;
+    if (! path.endsWith("/")) path += "/";
+    this.path = path;
+  }
+
+  /** Return the complete ``pathname'' of this agent: the agent's root URL.
+   *
+   * @return agent's root URL.
+   */
+  public String pathName(){
+    return path() + name();
   }
 
   /************************************************************************
   ** File attributes:
   ************************************************************************/
 
-  // === file attributes: used only in Dofs (for root) ===
-  // === ... should really use the regular attributes.
-
-  /**
-   * set a file attribute
-   *
-   */
-  public void fileAttribute(String key, List value){
-    fileTable.put( key, value ); 
-  }
-
-  /**
-   * Get an attribute that contains a file name.  
+  /** Get an attribute that contains a file name.  
    *
    *	<p> Replaces leading "~" with the user's home directory.
    */
-  public List fileAttribute(String key){
-    String v = null;
-    List res = null;
-
+  public File fileAttribute(String key){
     if( fileTable.containsKey( key ) )
-      res = (List)fileTable.get(key);
-    if( res == null ){
-      v = getObjectString( key );
-      if ( v!=null && v.startsWith("~/") ){
-	  StringBuffer value = null;
-	  String home = System.getProperty("user.home");
-	  value = new StringBuffer( v.substring(1) );
-	  value.insert(0,home);
-	  v = new String( value );
-	  res = new List();
-	  res.push( v );
-	  fileTable.put( key, res );
-      } else if( v != null){
-	res = new List();
-	res.push( v );
-	fileTable.put( key, res );
-      }
-      
-    }
+      return (File)fileTable.get(key);
+
+    String v = getObjectString( key );
+    if (v == null) return null;
+
+    File res = new File(FileAccess.systemFileName(v));
+    fileTable.put( key, res );
     
     return res;
   }
 
-  /**
-   * set a directory attribute
-   *
-   */
-  public void dirAttribute(String key, List value){
-    dirTable.put( key, value ); 
+  /** Return the system path to the agent's files relative to a given base. */
+  public String agentPath(String base) {
+    return NameUtils.systemPath(base, pathName());
   }
 
-  /**
-   * Retrieve an attribute that contains a directory or search path. 
+  /** The agent's <em>home</em> directory: where its documents come from.
    *
-   * <p> Makes sure that each directory name ends in a file separator 
-   *	 character, and replaces leading "~" with the user's home directory. 
+   * <p> The default home directory is the PIA agent root + pathName();
+   *
+   * @return full path to the agent's home directory.
    */
-  public List dirAttribute(String key){
-    String v = null;
-    List res = null;
-
-    if (dirTable.containsKey(key))
-      res = (List)dirTable.get(key);
-    if (res == null) {
-      v = getObjectString(key);
-      if (v == null) return null;
-      if (!v.endsWith(filesep)) { v = v + filesep; }
-      if (v.startsWith("~"+filesep)) {
-	  StringBuffer value = null;
-	  String home = System.getProperty("user.home");
-	  value = new StringBuffer( v.substring(1) );
-	  value.insert(0,home);
-	  v = new String( value );
-	  if(!v.endsWith(filesep) ) { v = v + filesep; }
-	  res = new List();
-	  res.push( v );
-	  dirTable.put( key, res );
-      } else {
-	res = new List();
-	res.push( v );
-	dirTable.put( key, res );
-      }
+  public String homeDirectory() {
+    if (homeDirFile == null) {
+      homeDirFile = fileAttribute(home_doc_dir_name);
+      if (homeDirFile == null) 
+	homeDirFile = new File(agentPath(Pia.instance().piaAgents()));
     }
-
-    return res;
+    return homeDirFile.exists()? homeDirFile.getPath() : null;
   }
 
-  /**
-   *  Returns a path to a directory that we can write data into.
-   *  <p> Searches for a writeable directory in the following order:
-   *  <ol>
-   *    <li> usrRoot/agentName/
-   *    <li> usrRoot/agentType/
-   *    <li> /tmp/agentName/  
-   *  </ol>
-   *  A directory is created if none of the above exist.
+  /** The agent's <em>user</em> (customization) document directory.
    *
-   * <p> === This needs to use agent-specific and global defaults.
-   *	 === should probably try usrRoot/agentType/agentName first.
-   *
-   * @return the first qualified directory out of the possible three above.
+   *	Documents in the user directory override those in the home directory,
+   *	allowing an individual user to customize documents belonging to a
+   *	shared agent.
+   *	
+   * @return full path to the agent's user directory.
    */
-  public String agentDirectory(){
-    List directories = dirAttribute(agent_data_dir_name);
-    if( directories!=null && directories.nItems() > 0)
-      return (String)directories.at(0);
-
-    String name = name();
-    String type = type();
-    String root = Pia.instance().usrRoot();
-
-    String[] possibilities = { root + filesep + name() + filesep,
-			       root + filesep + type() + filesep,
-			       filesep + "tmp" + filesep + name() + filesep };
-
-    for(int i = 0; i < possibilities.length; i++){
-      String dir = possibilities[i];
-
-      File myFileDir = new File( dir );
-      if( myFileDir.exists() || myFileDir.mkdir() ){
-	if( myFileDir.isDirectory() && myFileDir.canWrite() ){
-	  List dirs = new List();
-	  dirs.push( dir );
-	  dirAttribute( agent_data_dir_name, dirs );
-	  return dir;
-	}
-      }
+  public String userDirectory() {
+    if (userDirFile == null) {
+      userDirFile = fileAttribute(user_doc_dir_name);
+      if (userDirFile == null) 
+	userDirFile = new File(agentPath(Pia.instance().usrAgents()));
     }
+    return userDirFile.exists()? userDirFile.getPath() : null;
+  }
 
-    Pia.errLog( name()+ "could not find appropriate, writable directory");
+  /** The agent's <em>data</em> directory.
+   *
+   *  Attempts to create the directory if it does not exist.
+   * @return path to a writeable data directory, or null.
+   */
+  public String dataDirectory(){
+    if (dataDirFile == null) {
+      dataDirFile = fileAttribute(data_dir_name);
+      if (dataDirFile == null) 
+	dataDirFile = new File(agentPath(Pia.instance().usrRoot()));
+    }
+    return dataDirFile.getPath();
+
+    /* It is probably not appropriate to create the data directory here
+    if (dataDirFile.exists() || dataDirFile.mkdir()) {
+      if (dataDirFile.isDirectory() && dataDirFile.canWrite())
+	return dataDirFile.getPath();
+    }
+    Pia.errLog( name() + "could not find appropriate, writable directory");
     return null;
+    */
   }
 
 
-  /**
-   *  Returns a path to a directory that we can write InterForms into.
-   *  Creates one if necessary, starting with the following directory in order:
-   *  usrRoot/Agents/agentName/,
-   *  usrRoot/Agents/agentType/,
-   *  /tmp/Agents/agentName
-   * @return the first qualified directory out of the possible three above.
-   * A directory is qualified if it can be writen into.
-   */
-  public String agentIfDir(){
-    List directories = dirAttribute(user_code_dir_name);
-    if( directories!=null && directories.nItems() > 0)
-      return (String)directories.at(0);
-
-    String name = name();
-    String type = type();
-    String root = Pia.instance().usrRoot();
-    root += filesep + "Agents";
-
-    String[] possibilities = { root + filesep + name() + filesep,
-			       root + filesep + type() + filesep,
-			       filesep + "tmp" + filesep + name() + filesep };
-
-    for(int i = 0; i < possibilities.length; i++){
-      String dir = possibilities[i];
-
-      File myFileDir = new File( dir );
-      if( myFileDir.exists() || myFileDir.mkdir() ){
-	if( myFileDir.isDirectory() && myFileDir.canWrite() ){
-	  List dirs = new List();
-	  dirs.push( dir );
-	  dirAttribute( user_code_dir_name, dirs );
-	  return dir;
-	}
-      }
-    }
-
-    Pia.errLog( name()+ "could not find appropriate, writable directory");
-    return null;
-  }
-
-
-
-  /**
-   * returns the base url (as string) for this agent
-   * optional path argument just for convenience--
-   * returns full url for accessing that file
-   */
-  public String agentUrl(String path){
-    String url = Pia.instance().url() + "/" + name() + "/";
-
-    if( path!= null )
-      url += path;
-
-    return url;
-  }
 
   /************************************************************************
   ** Matching Features:
@@ -785,7 +691,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
    * Each Agent is associated with a virtual machine which is an
    * interface for actually getting and sending transactions.  Posts
    * explicitly to an agent get sent to the agent's machine (then to
-   * the agent's interform_request method). Other requests can be
+   * the agent's <code>respond</code> method). Other requests can be
    * handled implicitly by the agent.  If one does not exist,
    * create a pia.agent.Machine
    * @return virtual machine
@@ -888,9 +794,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
   public void respond(Transaction trans, Resolver res)
        throws PiaRuntimeException{
 
-    org.risource.pia.Pia.debug(this, "Running interform...");
-    if (! respondToInterform( trans, res ) ){
-      respondNotFound( trans, trans.requestURL() );
+    org.risource.pia.Pia.debug(this, "Running active doc...");
+    if (! respondWithDocument( trans, res ) ){
+      respondNotFound( trans, trans.requestURL().getFile() );
     }
   }
 
@@ -985,7 +891,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /************************************************************************
-  ** Finding and Executing InterForms:
+  ** Finding and Executing Documents:
   ************************************************************************/
 
   /**
@@ -1024,45 +930,37 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /**
-   * Test whether an InterForm request is a redirection.
+   * Test whether a request is a redirection.
    * @return true if the request has been handled.
    */
   protected boolean isRedirection( Transaction req, String path ) {
-    String originalPath = null;
-    URL redirUrl = null;
-    String redirUrlString = null;
-    URL url = req.requestURL();
-
     if ( path == null ) return false;
 
+    String originalPath = path;
+    String pname = pathName();
+    String name = "/" + name();
+
     Pia.debug(this, "  path on entry -->"+ path);
-    // === path, name, and typed were all getting lowercased.  Wrong!
 
-    String myname = name();
-    String mytype = type();
-
-    // default to index.if
-
-    originalPath = path;
-
-    if (path.equals("/" + myname) || path.equals("/" + myname + HOME)
-	|| path.equals("/" + mytype)    
-	|| path.equals("/" + mytype + "/" + myname) 
-	|| path.equals("/" + mytype + "/" + myname + HOME) ) {
+    if (path.equals(pname) || path.equals(pname + HOME)) {
       if (homePathSuffix != null) path += homePathSuffix;
-    } else if (path.equals("/" + myname + "/")
-	       || path.equals("/" + myname + HOME + "/")
-	       || path.equals("/"+ mytype + "/")
-	       || path.equals("/" + mytype + "/" + myname + "/") 
-	       || path.equals("/" + mytype + "/" + myname + HOME + "/") ) {
+    } else if (path.equals(pname + "/") || path.equals(pname + HOME + "/")) {
       if (indexPathSuffix != null) path += indexPathSuffix;
     }
 
-    if( originalPath == path ) // we don't have redirection
-      return false;
+    // Handle /name instead of /path/name
+    if (path.equals(name) || path.equals(name + HOME)) {
+      if (homePathSuffix != null) path += homePathSuffix;
+    } else if (path.equals(name + "/") || path.equals(name + HOME + "/")) {
+      if (indexPathSuffix != null) path += indexPathSuffix;
+    }
 
-    // check for existence
-    String wholePath = findInterform( path );
+    // If the original path is unchanged, we don't have redirection.
+    //	  Return false and the caller will handle it.
+    if (originalPath == path) return false;
+
+    // Redirect, so check for existence (no point if the file doesn't exist).
+    String wholePath = findDocument( path );
     if( wholePath == null ){
       respondNotFound(req, path);
     } else {
@@ -1072,164 +970,82 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /** 
-   * Return a suitable path list for InterForm search.
-   *  The path puts any  defined if_root first 
-   *   (if_root/myname, if_root/mytype/myname if_root/mytype, if_root),
-   *  If the above is not defined, it will try:
-   *    .../name, .../type/name, .../type
-   *    relative to each of (usrAgentsStr, piaAgentsStr)
-   *
-   * and finally  (usrAgentsStr, piaAgentsStr)
+   * Return a list of File objects refering to directories in which 
+   *	an agent's documents might be found.
    */
-  public List interformSearchPath() {
-    List path = dirAttribute("if_path");
-    if (path != null) return path;
+  public List documentSearchPath() {
 
-    /* The path attribute wasn't defined, so do it now. */
+    /* If we have already found the list, just return it. */
+    if (documentFileList != null) return documentFileList;
 
-    path = new List();
+    List path = new List();
 
-    /* Tails: type/name, name, type 
-     *	 Check type/name first because it's the most specific.  That way,
-     *	 sub-agents don't interfere with top-level agents with the same name.
+    /* This used to be a complex process: we would check for 
+     *	type/name, name, and type under both usrAgents and piaAgents.
+     *  Things are simpler now.
      */
 
-    String myname = name();
-    String mytype = type();
-
-    List tails = new List();
-
-    if (!myname.equals(mytype)) tails.push(mytype + filesep + myname + filesep);
-    tails.push(myname + filesep);
-    if (!myname.equals(mytype)) tails.push(mytype + filesep);
-
-    /* Roots: if_root, ~/.pia/Agents, pia/Agents */
-
-    List roots = dirAttribute( agent_code_dir_name );
-    if (roots == null) roots = new List();
-
-    for (int i = 0; i < roots.nItems(); ++i) {
-      int fslength = filesep.length();
-
-      // handle a user-defined root first:  Trim a trailing /name or /type
-      // because it gets automatically added below.
-	
-      String root = (String)roots.at(i);
-      if ( !root.endsWith( filesep ) ) { root = root + filesep; }
-      if ( root.endsWith( filesep + myname + filesep )) {
-	root = root.substring(0, root.length() - myname.length() - fslength);
-      } else if ( root.endsWith( filesep + mytype + filesep )) {
-	root = root.substring(0, root.length() - mytype.length() - fslength);
-      }
-
-      roots.at(i, root);
-    }	
-
-    roots.push(Pia.instance().usrAgents());
-    roots.push(Pia.instance().piaAgents());
-
-    /* Make sure all the roots end in filesep */
-
-    for (int i = 0; i < roots.nItems(); ++i) {
-      String root = (String)roots.at(i);
-      if ( !root.endsWith(filesep) ) { roots.at(i, root + filesep); }
-    }	
-
-    /* Now combine the roots and tails
-     *	Do all the roots for each tail so that , for example, 
-     *	usr/name/x will override pia/type/x
+    /* These days, all we have to search are userDIR, homeDIR, and
+     *	the documentSearchPath of the type agent.
      */
 
-    for (int i = 0; i < tails.nItems(); ++i) 
-      for (int j = 0; j < roots.nItems(); ++j) {
-	String dirname = roots.at(j).toString() + tails.at(i).toString();
-	File dir = new File(dirname);
-	if (dir.isDirectory()) path.push(dirname);
-      }
-    
-    /* Finally, try just the roots */
+    if (userDirectory() != null) path.push(userDiFile);
+    if (homeDirectory() != null) path.push(homeDirFile);
 
-    for (int j = 0; j < roots.nItems(); ++j)
-      path.push(roots.at(j).toString());
+    if (typeAgent() != null) path.append(typeAgent().documentSearchPath());
+    else {
+      path.push(Pia.instance().usrAgentsDir());
+      path.push(Pia.instance().piaAgentsDir());
+    }
 
-    if(DEBUG )
-      for(int i=0; i < path.nItems(); i++){
-	String onePath = path.at(i).toString();
-	System.out.println("GenericAgent findInterform-->"+(String)onePath );
-      }
-
-    // Now cache the lookup path list as a dirAttribute
-
-    dirAttribute("if_path", path );
+    documentFileList = path;
     return path;
   }
 
   /** 
-   * Return a suitable path list for a writable InterForm.
+   * Return a suitable path list for a data file
    */
-  public List writeSearchPath() {
-    // === bogus for now. ===
+  public List dataSearchPath() {
     List path = new List();
-
-    /* Tails: type/name, name, type 
-     *	 Check type/name first because it's the most specific.  That way,
-     *	 sub-agents don't interfere with top-level agents with the same name.
-     */
-
-    String myname = name();
-    String mytype = type();
-
-    List tails = new List();
-
-    if (!myname.equals(mytype)) tails.push(mytype + filesep + myname + filesep);
-    tails.push(myname + filesep);
-    if (!myname.equals(mytype)) tails.push(mytype + filesep);
-
-    List roots = new List();
-    roots.push(Pia.instance().usrAgents());
-    /* Make sure all the roots end in filesep */
-
-    for (int i = 0; i < roots.nItems(); ++i) {
-      String root = (String)roots.at(i);
-      if ( !root.endsWith(filesep) ) { roots.at(i, root + filesep); }
-    }	
-
-    /* Now combine the roots and tails
-     *	Do all the roots for each tail so that , for example, 
-     *	usr/name/x will override pia/type/x
-     */
-
-    for (int i = 0; i < tails.nItems(); ++i) 
-      for (int j = 0; j < roots.nItems(); ++j) {
-	String dirname = roots.at(j).toString() + tails.at(i).toString();
-	File dir = new File(dirname);
-	// allow non-existant dir: if (dir.isDirectory()) path.push(dirname);
-      }
-
+    if (userDirectory() != null) path.push(userDirFile);
+    path.push(dataDirectory());
     return path;
   }
 
   /**
    * Find a filename relative to this Agent.
    */
-  public String findInterform(String path){
+  public String findDocument(String path){
     if ( path == null ) return null;
-    return findInterform(path, name(), type(), interformSearchPath(), null);
+
+    // Really ought to handle leading /~/ here to give correct search path ===
+
+    return findDocument(path, pathName(), documentSearchPath(), null);
+  }
+
+  /**
+   * Find a data file. 
+   */
+  public String findDataFile(String path, String suffixPath[],
+			     boolean forWriting) {
+    // === should be similar to findDocument below, but with data dir
+    
+    return NameUtils.systemPath(dataDirectory(), path);
   }
 
   /**
    * Find a filename relative to this Agent.
    */
-  public String findInterform(String path, String suffixPath[],
-			      boolean forWriting){
+  public String findDocument(String path, String suffixPath[],
+			     boolean forWriting) {
     if ( path == null ) return null;
-    List if_path = forWriting? writeSearchPath(): interformSearchPath();
-    String found =  findInterform(path, name(), type(), if_path, suffixPath);
+    List if_path = forWriting? dataSearchPath(): documentSearchPath();
+    String found =  findDocument(path, pathName(), if_path, suffixPath);
     if (found != null) return found;
-    // Didn't find anything, but it may be ok to create it.
-    if (forWriting) {
-      // === this will fail for files with a leading path ===
-      return agentDirectory() + path;       
+    if (forWriting) { // Didn't find anything, but it may be ok to create it.
+      // === this will fail for files with a leading pathName or /~/ ===
+      // === should really return systemPath(userDirFile.getPath(), path)
+      return NameUtils.systemPath(dataDirectory(), path);       
     }
     return null;
   }
@@ -1239,38 +1055,38 @@ public class GenericAgent implements Agent, Registered, Serializable {
    *	Note that the path separator <em>must</em> be ``<code>/</code>'',
    *	i.e. the path must follow the conventions for a URL.
    */
-  public String findInterform(String path, String myname, String mytype,
+  public String findDocument(String path, String mypath,
 			      List if_path, String suffixPath[]){
     if ( path == null ) return null;
     Pia.debug(this, "  path on entry -->"+ path);
 
     boolean hadName = false;	// these might be useful someday.
-    boolean hadType = false;
     boolean wasData = false;
 
-    /* Remove a leading /~ from the path and replace it with /
-     *	This indicates the agent's data directory.
-     */
-    if (path.startsWith("/~")) {
+    // Remove a leading /~, indicating the data directory, from the path
+    //	This indicates the agent's data directory.
+
+    if (path.startsWith("/~/")) {
+      path = path.substring(2);
+      wasData = true;
+    } else  if (path.startsWith("/~")) {
       path = "/" + path.substring(2);
       wasData = true;
     }
 
-    /* Remove a leading /type or /name or /type/name from the path. */
-    // === Should really handle an arbitrary prefix (mount point) ===
-    if (! myname.equals(mytype) && path.startsWith("/" + mytype)) {
-      path = path.substring(mytype.length() + 1);
-      hadType = true;
-    }
-    
-    if (path.startsWith("/" + myname)) {
-      path = path.substring(myname.length() + 1);
+    // Remove agent's pathName from the given path.
+    //	=== For the moment accept a path starting with just name()
+    if (path.startsWith(mypath) || path.startsWith("/" + name())) {
+      if (path.startsWith(mypath))
+	path = path.substring(mypath.length() + 1);
+      else
+	path = path.substring(name().length() + 1);
       hadName = true;
-      if (path.startsWith(HOME)) {
-	path = path.substring(HOME.length());
-      }
-    } 
-    
+    }
+
+    if (path.startsWith(HOME)) {
+      path = path.substring(HOME.length());
+    }
     if (path.startsWith("/" + DATA )) {
       path = path.substring(DATA.length() + 1);
       wasData = true;
@@ -1278,58 +1094,12 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
     if (wasData) {
       if_path = new List();
-      if_path.push(agentDirectory());
+      if_path.push(dataDirectory());
     }
     
     if (suffixPath == null) suffixPath = wasData? dataSearch : codeSearch;
     
-    return findFile(path, if_path, suffixPath);
-  }
-
-  /** Find a file given a search-path of directories and a search-path of
-   *	suffixes.
-   */
-  public String findFile(String path, List dirPath, String suffixPath[]){
-    // Remove leading "/" because every directory name in the search path
-    // ends with it. 
-    if( path.startsWith("/") )	path = path.substring(1);
-    Pia.debug(this, "Looking for -->"+ path);
-
-    int lastDot = path.lastIndexOf(".");
-    int lastSlash = path.lastIndexOf("/");
-    boolean hasSuffix = lastDot >= 0 && lastDot > lastSlash;
-
-    // === The following code fails miserably if fileSep is not "/".
-    // === It also needs to handle missing suffix (use xxxSearch)
-    // === Needs to handle file/extra_path_info
-    // === We should be caching File objects because lookup is so elaborate.
-    File f;
-    Enumeration e = dirPath.elements();
-    if (hasSuffix) {
-      while( e.hasMoreElements() ){
-	String zpath = e.nextElement().toString();
-	String wholepath = zpath + path;
-	Pia.debug(this, "  Trying -->"+ wholepath);
-	f = new File( wholepath );
-	if( f.exists() ) return wholepath;
-      }
-    } else {
-      while( e.hasMoreElements() ){
-	String zpath = e.nextElement().toString();
-	String wholepath = zpath + path;
-	Pia.debug(this, "  Trying -->"+ wholepath);
-	f = new File( wholepath );
-	if( f.exists() ) return wholepath;
-	wholepath += ".";
-	for (int i = 0; i < suffixPath.length; ++i) {
-	  String xpath = wholepath + suffixPath[i];
-	  Pia.debug(this, "  Trying -->"+ xpath);
-	  f = new File( xpath );
-	  if (f.exists()) return xpath;
-	}
-      }
-    }
-    return null;
+    return FileAccess.findFile(path, if_path, suffixPath);
   }
 
   /** 
@@ -1344,18 +1114,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /**
-   * Send error message for not found interform file
-   */
-  public void respondNotFound( Transaction req, URL url){
-    String msg = "No InterForm file found for <code>" +
-      url.getFile() + "</code>.  "
-      + "See this agent's <a href=\"/" + name() + "/\">index page</a> "
-      + "for a more information.";
-    sendErrorResponse(req, HTTP.NOT_FOUND, msg);
-  }
-
-  /**
-   * Send error message for not found interform file
+   * Send error message for document not found
    */
   public void respondNotFound( Transaction req, String path){
     String msg = "File <code>" + path + "</code> not found. "
@@ -1434,27 +1193,33 @@ public class GenericAgent implements Agent, Registered, Serializable {
  }
 
   /**
-   * Respond to a request directed at one of an agent's interforms.
+   * Respond to a request directed at one of an agent's documents.
    *
    * @return false if the file cannot be found.  This allows the caller
-   *	to check for an InterForm first, then do something different with
+   *	to check for a document first, then do something different with
    *	other requests.
    */
-  public boolean respondToInterform(Transaction request, Resolver res){
+  public boolean respondWithDocument(Transaction request, Resolver res){
 
     URL url = request.requestURL();
     if (url == null) return false;
 
-    return respondToInterform(request, url.getFile(), res);
+    return respondWithDocument(request, url.getFile(), res);
   }
 
   /**
-   * Strip off destination file name for put
-   * @return path with interform or cgi
-   * Store destination file name in destFileName === not string safe!
+   * Strip off destination file name for put.
+   *
+   * <p> In order for this to work, the URL must contain an explicit 
+   *	 filename extension.  The part <em>after</em> this extension is
+   *	 returned in agent.destFileName === not thread safe! ===.
+   *	 === What it should really return is the index of the / that 
+   *	 === separates the active document from the path extension!
+   *
+   * @return path with document or cgi
    */
   protected String stripDestFile(String path){
-    // If there is a destination file name after the interform file, strip it
+    // If there is a destination file name after the active doc, strip it
     destFileName = null;
 
     for (int i = 0; i < executableTypes.length; ++i) {
@@ -1492,17 +1257,17 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /** Perform any necessary rewriting on the given path. */
-  protected String rewriteInterformPath(Transaction request, String path) {
+  protected String rewritePath(Transaction request, String path) {
     return path;
   }
 
   /**
-   * Respond to a request directed at one of an agent's interforms, 
+   * Respond to a request directed at one of an agent's documents, 
    * with a (possibly-modified) path.
    *
    * @return false if the file cannot be found.
    */
-  public boolean respondToInterform(Transaction request, String path,
+  public boolean respondWithDocument(Transaction request, String path,
 				    Resolver res){
 
     // If the path includes a query string, remove it now
@@ -1512,23 +1277,22 @@ public class GenericAgent implements Agent, Registered, Serializable {
     // Perform URL decoding:
     path = Utilities.urlDecode(path);
 
-    // If there is a destination file name after the interform file, strip it
+    // If there is a destination file name after the active doc's URL, strip it
+    // === really should return index of the separating "/".
     path = stripDestFile( path );
 
     // If the request needs to be redirected, do so now.
     if (isRedirection( request, path )) return true;
 
     // Rewrite the path if necessary.
-    path = rewriteInterformPath(request, path);
+    path = rewritePath(request, path);
 
     // Find the file.  If not found, return false.
-    String file = findInterform( path );
+    String file = findDocument( path );
     if( file == null ) return false;
       
     if( file != null )
-      Pia.debug(this, "The path of interform is -->"+file);
-
-    String interformOutput = null;
+      Pia.debug(this, "The document path is -->"+file);
 
     // authenticate the requester if necessary;
     // internal requests are not authenticated currently--eg. virtual machines
@@ -1581,7 +1345,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
       
     }catch(IOException ee){
       String msg = "can not exec :"+file;
-      throw new PiaRuntimeException (this, "respondToInterform", msg) ;
+      throw new PiaRuntimeException (this, "respondWithDocument", msg) ;
     }
   }
 
@@ -1623,14 +1387,12 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
   /* name and type should be set latter */
   public GenericAgent(){
-    dirTable = new Table();
     fileTable = new Table();
     name("GenericAgent");
     type("GenericAgent");
   }
 
   public GenericAgent(String name, String type){
-    dirTable = new Table();
     fileTable = new Table();
 
     if( name != null ) this.name( name );

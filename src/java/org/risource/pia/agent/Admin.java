@@ -1,5 +1,5 @@
 // Admin.java
-// $Id: Admin.java,v 1.3 1999-03-12 19:29:45 steve Exp $
+// $Id: Admin.java,v 1.4 1999-03-23 23:32:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -92,7 +92,7 @@ public class Admin extends GenericAgent {
 
       // Capitalize name.  
       //	=== Should preserve case in rest of agent name ===
-      //	=== should use interform.Util.javaName ===
+      //	=== should use Util.javaName ===
       String zname = (new String( foo )).toUpperCase();
       if (type.length() > 1) zname += type.substring(1).toLowerCase();
       className = "org.risource.pia.agent." + zname; 

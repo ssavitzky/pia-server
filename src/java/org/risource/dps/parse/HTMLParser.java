@@ -1,5 +1,5 @@
 ////// HTMLParser.java: HTML-specific Parser interface
-//	$Id: HTMLParser.java,v 1.3 1999-03-12 19:27:17 steve Exp $
+//	$Id: HTMLParser.java,v 1.4 1999-03-23 23:31:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,17 +35,17 @@ import java.io.Reader;
 import java.io.IOException;
 
 /**
- * A Parser specialized for HTML and HTML extended with InterForm and
+ * A Parser specialized for HTML and HTML extended with SGML and
  *	XML constructs. <p>
  *
  *	HTMLParser does not expect the document it is parsing to have a valid
- *	DTD; it is assumed to be HTML, possibly with InterForm and/or XML
+ *	DTD; it is assumed to be HTML, possibly with active document and/or XML
  *	extensions.  At early stages of the implementation it will use
  *	hard-coded information about content models; it is hoped that
  *	eventually HTMLParser will use the DTD for everything. <p>
  *
  *
- * @version $Id: HTMLParser.java,v 1.3 1999-03-12 19:27:17 steve Exp $
+ * @version $Id: HTMLParser.java,v 1.4 1999-03-23 23:31:57 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
 

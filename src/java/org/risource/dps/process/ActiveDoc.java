@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.3 1999-03-12 19:27:18 steve Exp $
+//	$Id: ActiveDoc.java,v 1.4 1999-03-23 23:32:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,9 +52,9 @@ import org.risource.pia.Transaction;
 import org.risource.pia.Resolver;
 
 /**
- * A TopProcessor for processing InterForm files in the PIA.
+ * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.3 1999-03-12 19:27:18 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.4 1999-03-23 23:32:01 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -241,7 +241,7 @@ public class ActiveDoc extends TopProcessor {
     }
     if (path.startsWith("/")) {
       // Path starting with "/" is relative to document root
-      path = agent.findInterform(path, resourceSearch, forWriting);
+      path = agent.findDocument(path, resourceSearch, forWriting);
       return (path == null)? null : new File(path);
     } else if (path.indexOf(":") >= 0) {
       // URL: fail.
@@ -250,7 +250,7 @@ public class ActiveDoc extends TopProcessor {
       // Path not starting with "/" is relative to documentBase.
       if (path.startsWith("./")) path = path.substring(2);
       if (documentBase != null) path = documentBase + path;
-      path = agent.findInterform(path, resourceSearch, forWriting);
+      path = agent.findDocument(path, resourceSearch, forWriting);
       return (path == null)? null : new File(path);
     }
   }
@@ -302,7 +302,8 @@ public class ActiveDoc extends TopProcessor {
   ** Handler Utilities:
   ************************************************************************/
 
-  public static ActiveDoc getInterFormContext(Context cxt) {
+  /** Return the current top context as an ActiveDoc object. */
+  public static ActiveDoc getActiveDoc(Context cxt) {
     TopContext top = cxt.getTopContext();
     return (top instanceof ActiveDoc)? (ActiveDoc)top : null;
   }

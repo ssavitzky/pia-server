@@ -1,5 +1,5 @@
 ////// agentSave.java:  Handler for <agent-save>
-//	$Id: agentSave.java,v 1.3 1999-03-12 19:30:01 steve Exp $
+//	$Id: agentSave.java,v 1.4 1999-03-23 23:32:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,14 +38,12 @@ import java.io.FileInputStream;
 
 
 /** Handler class for &lt;agent-save&gt tag 
- *  <p> See <a href="../../InterForm/tag_man.html#agent-save">Manual Entry</a> 
- *	for syntax and description.
  */
 public class agentSave extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
-    ActiveDoc env = ActiveDoc.getInterFormContext(aContext);
+    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;

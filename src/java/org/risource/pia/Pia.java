@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.5 1999-03-12 19:29:29 steve Exp $
+// $Id: Pia.java,v 1.6 1999-03-23 23:32:25 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.5 1999-03-12 19:29:29 steve Exp $
+  * @version $Id: Pia.java,v 1.6 1999-03-23 23:32:25 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -355,21 +355,21 @@ public class Pia implements Tabular {
   }  
 
   /**
-   * @return the root directory path-- i.e /pia
+   * @return the root directory path-- i.e ~/PIA
    */
   public String piaRoot(){
     return piaRootStr;
   }  
 
   /**
-   * @return the user directory path -- i.e ~/pia
+   * @return the user directory path -- i.e ~/.pia
    */
   public String usrRoot(){
     return usrRootStr;
   }  
 
   /**
-   * @return a File object for the user directory path -- i.e ~/pia
+   * @return a File object for the user directory path -- i.e ~/.pia
    */
   public File usrRootDir(){
     return usrRootDir;
@@ -784,7 +784,7 @@ public class Pia implements Tabular {
       throw new PiaInitException("Cannot locate PIA's root directory.");
     }
     
-    //  we are at /pia/Agents -- this is for interform
+    //  /pia/Agents -- the root for Agent directories
     piaAgentsStr = piaRootStr + filesep + "Agents";
     piaAgentsDir = new File( piaAgentsStr );
 
@@ -833,7 +833,7 @@ public class Pia implements Tabular {
 
     // Create the Root agent, and make its data directory the USR_ROOT
     rootAgent = new Root(rootAgentName, null);
-    rootAgent.put(Root.agent_data_dir_name, usrRootStr);
+    rootAgent.put(Root.data_dir_name, usrRootStr);
 
     adminAgent = new Admin(adminAgentName, null);
 

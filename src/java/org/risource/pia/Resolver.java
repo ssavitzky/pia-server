@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.3 1999-03-12 19:29:35 steve Exp $
+// $Id: Resolver.java,v 1.4 1999-03-23 23:32:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -250,40 +250,42 @@ public class Resolver extends Thread {
       return agent(Pia.instance().rootAgentName());
     }
 
+    // Remove leading "/" from the path. 
+    if (path.startsWith("/")) path = path.substring(1);
+
     // Check for ~/ (ROOT)
 
-    if (path.startsWith("/")) path = path.substring(1);
     if (path.equals("~") || path.startsWith("~/"))
       return agent(Pia.instance().rootAgentName());
 
     // Ignore leading ~ in ~Agent
 
     if (path.startsWith("~")) path = path.substring(1);
- 
-    /* Now check for either /name/ or /type/name */
 
+    // Split path on "/"
     List pathList = new List(new java.util.StringTokenizer(path, "/"));
+    Agent agent = null;
 
-    Agent a = null;
-
-    // Check for /type/name (possibly with trailing ~)
-    if (pathList.nItems() > 1) {
-      String name = pathList.at(1).toString();
-      String type = pathList.at(0).toString();
-      if (name.endsWith("~"))
-	name = name.substring(0, name.lastIndexOf("~"));
-      Pia.debug(this, "Looking for agent :" + name);
-      a = agent(name);
-      if (a != null && type.equals(a.type())) {
-	return a;
+    // Go through all the agents looking for the one
+    // 	  whose pathName is the longest prefix of the path.
+    path =  "/" + path;
+    int max = 0;
+    Enumeration e = agents();
+    while( e.hasMoreElements() ){
+      Agent   a = (Agent) e.nextElement();
+      String pn = a.pathName();
+      if (path.startsWith(pn) && pn.length() > max) {
+	agent = a;
+	max = pn.length();
       }
     }
+    if (agent != null) return agent;
 
     // Handle /name (possibly with trailing ~)
     String name = pathList.at(0).toString();
     if (name.endsWith("~")) name = name.substring(0, name.lastIndexOf("~"));
-    a = agent(name);
-    return a;
+    agent = agent(name);
+    return agent;
   }
 
   /** Run through the agentCollection and tell each Agent to run its

@@ -1,5 +1,5 @@
 // NameUtils.java
-// $Id: NameUtils.java,v 1.3 1999-03-12 19:31:04 steve Exp $
+// $Id: NameUtils.java,v 1.4 1999-03-23 23:32:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,13 @@ package org.risource.util;
  *	strings.
  */
 public class NameUtils {
+
+  /************************************************************************
+  ** String constants:
+  ************************************************************************/
+
+  public static String filesep = System.getProperty("file.separator");
+  public static String home     = System.getProperty("user.home");
 
   /************************************************************************
   ** Generic name utilities:
@@ -84,15 +91,12 @@ public class NameUtils {
   ** File name utilities:
   ************************************************************************/
 
-  private static String home     = System.getProperty("user.home");
-  private static String fileSep  = System.getProperty("file.separator");
-
   /** Make a path from a directory and a filename.   */
   public static String makePath(String directory, String filename) {
-    if (! directory.endsWith(fileSep) && ! directory.equals(""))
-      directory += fileSep;
-    if (filename.startsWith(fileSep) && ! directory.equals(""))
-      filename = filename.substring(fileSep.length());
+    if (! directory.endsWith(filesep) && ! directory.equals(""))
+      directory += filesep;
+    if (filename.startsWith(filesep) && ! directory.equals(""))
+      filename = filename.substring(filesep.length());
     return directory + filename;
   }
 
@@ -101,6 +105,18 @@ public class NameUtils {
     char sep = System.getProperty("file.separator", "/").charAt(0);
     int i = path.lastIndexOf(sep);
     return (i < 0)? path : path.substring(i+1);
+  }
+
+  /** Make a URL path (separated by "/") into a system path. */
+  public static String systemPath(String base, String urlPath) {
+    String s = (base == null)? "" : base;
+    if (base != null && !base.endsWith(filesep)
+	&& !urlPath.startsWith("/")) s += filesep;
+    for (int i = 0; i < urlPath.length(); ++i) {
+      char c = urlPath.charAt(i);
+      if (c == '/') s += filesep; else s += c;
+    }
+    return s;
   }
 
   /************************************************************************

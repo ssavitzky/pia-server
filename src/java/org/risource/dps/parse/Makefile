@@ -1,5 +1,5 @@
-###### dps/parse/Makefile:	InterForm parsers
-# 	$Id: Makefile,v 1.3 1999-03-12 19:27:17 steve Exp $
+###### dps/parse/Makefile:	Active document parsers
+# 	$Id: Makefile,v 1.4 1999-03-23 23:31:58 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

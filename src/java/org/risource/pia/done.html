@@ -71,11 +71,34 @@ See also:
 
   <li> 1999-02-22 <b>Hole</b> remove legacy tagset <br>
 
+  <li> 1999-03-19 <b>Bug</b> need per-agent document and data directories <br>
+       This would have two good effects: avoid searching in the obsolete
+       <code>src/Agents</code>, and allow agents to be anywhere.  Actually the
+       InterForm search path should be a real path; data is just a single
+       dir.  Should have the following attributes on Agent:
+       <ul>
+	 <li> <code>codeDir</code> the code directory.  Default is
+	      <code>Agents/<em>path</em></code>.  
+	 <li> <code>userDir</code> user's overrides
+	 <li> <code>dataDir</code> the data; <em>always</em> using
+	      <code>~</code> 
+       </ul>
+       Note that currently the <code>if_root</code> attribute preceeds the
+       default paths, but does not override them.  Similarly, many possible
+       roots and paths are currently searched. 
+       (1998-12-17) <br>
+       -- Note that as of 1999-02-09 this is mostly, if not completely, done
+       
+  <li> 1999-03-19 <b>Impr</b> InterForm lookup should be in a utility class <br>
+       Possibly both FileAccess and the InterForm stuff should be in a "util"
+       sub-package. 
+       (1998-11-02)<br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.2 1999-03-12 19:29:43 steve Exp $</b><br>
+<b>$Id: done.html,v 1.3 1999-03-23 23:32:29 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
-###### dps/input/Makefile:	InterForm Token input sources
-# 	$Id: Makefile,v 1.3 1999-03-12 19:27:02 steve Exp $
+###### dps/input/Makefile:	Implementations of Output interface
+# 	$Id: Makefile,v 1.4 1999-03-23 23:31:54 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

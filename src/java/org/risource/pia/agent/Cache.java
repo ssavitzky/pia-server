@@ -1,5 +1,5 @@
 // Cache.java
-// $Id: Cache.java,v 1.4 1999-03-12 19:50:01 pgage Exp $
+// $Id: Cache.java,v 1.5 1999-03-23 23:32:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -298,7 +298,7 @@ public class Cache extends GenericAgent {
     subdirs[2]	  = today.get(Calendar.DAY_OF_MONTH);
 
     String sep = System.getProperty("file.separator");
-    String cachePath = agentDirectory();
+    String cachePath = dataDirectory();
     if(cachePath == null) {
       // Message will have been written to log
       return null;

@@ -1,5 +1,5 @@
 // Dofs.java
-// $Id: Dofs.java,v 1.4 1999-03-12 19:50:02 pgage Exp $
+// $Id: Dofs.java,v 1.5 1999-03-23 23:32:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import org.w3c.www.http.HTTP;
 public class Dofs extends GenericAgent {
   /**
    * Respond to a DOFS request. 
-   * 	Figure out whether it's for a file or an interform, and whether it's
+   * 	Figure out whether it's for a file or an active doc, and whether it's
    * 	to a sub-agent or to /DOFS/ itself.
    */
   public void respond(Transaction request, Resolver res)
@@ -81,29 +81,27 @@ public class Dofs extends GenericAgent {
     if( url == null )
       return;
 
-    String path   = url.getFile();
     String myname = name();
     String mytype = type();
-    Agent agnt	  = this;
 
-    Pia.debug(this, "path-->"+path);
+    String upath  = url.getFile();
+    String mypath = pathName();
+
+    Pia.debug(this, "path-->"+upath);
     Pia.debug(this, "myname-->"+myname);
     Pia.debug(this, "mytype-->"+mytype);
 
     /*
      * Examine the path to see what we have:
-     *	 myname/path   -- this is a real file request.
-     *	 myname        -- redirect to myname/index.html if it exists.
-     *	 mytype/myname -- Interforms for myname
-     *	 mytype/path   -- Interforms for DOFS
+     *	 /pathName/   -- this is a real file request.
+     *	 /pathName    -- redirect to pathName/ (possibly a mistake)
+     *	 otherwise it's an agent document.
      */
 
     if (!myname.equals(mytype)
-	&& (path.equals("/"+myname) || path.startsWith("/"+myname+"/"))) {
-      // (need to make sure that the name isn't a prefix of something)
-      Pia.debug(this, ".../"+myname+"... -- file.");
-      if (path.equals("/"+myname)) {
-	redirectTo( request, path+"/" );
+	&& (upath.equals(mypath) || upath.startsWith(mypath+"/"))) {
+      if (upath.equals("/"+myname)) {
+	redirectTo( request, upath+"/" );
 	return;
       }
       try {
@@ -115,8 +113,8 @@ public class Dofs extends GenericAgent {
 	throw e;
       }
     } else {
-      if (!respondToInterform(request, res))
-	  respondNotFound(request, url);
+      if (!respondWithDocument(request, res))
+	  respondNotFound(request, url.getFile());
     }
   }
     
@@ -142,18 +140,25 @@ public class Dofs extends GenericAgent {
   ** Attribute access:
   ************************************************************************/
 
+  protected File rootDirFile = null;
+
   /**
    * @return the path to the DOFS's root directory.
    */
   public String root(){
-    List f = fileAttribute("root");
-    if( f != null && f.nItems() > 0 ){
-      String zroot = (String)f.at(0);
-      Pia.debug(this, "the root is--->" + zroot);
-      return zroot;
+    if (rootDirFile == null) {
+      rootDirFile = fileAttribute("root");
+      if (rootDirFile == null) {
+	System.err.println("DOFS agent " + pathName() + " has no root attr!");
+      }
     }
-    else{
-      Pia.debug(this, "can not find root path");
+    if( rootDirFile != null && rootDirFile.exists() ){
+      return rootDirFile.getPath();
+    } else {
+      if (rootDirFile != null)
+	System.err.println("can not find root path " + rootDirFile.getPath());
+      else
+	System.err.println("root is null");
       return null;
     }
   }
@@ -167,9 +172,9 @@ public class Dofs extends GenericAgent {
    *Transaction handling.
    * === We need to be able to handle CGI scripts and plain HTML
    *     eventually.  We need this for the DOFS, in particular.
-   * === URL-to-filetype mappings, whether interforms are permitted,
-   *     local interforms, and similar annotations belong in the
-   *     interform directory that corresponds to the DOFS agent.
+   * === URL-to-filetype mappings, whether active docs are permitted,
+   *     local active docs, and similar annotations belong in the
+   *     Document directory that corresponds to the DOFS agent.
    */
 
   /**
@@ -182,18 +187,23 @@ public class Dofs extends GenericAgent {
     if( url == null ) return null;
 
     String myroot = root();
-    if( myroot == null ) return null;
+    String upath = url.getFile();
+    String prefix = pathName();
+
+    if( myroot == null ) {
+      System.err.println("DOFS agent " + prefix + " has no root!");
+      return null;
+    }
 
     if( myroot.endsWith("/") )
       myroot = myroot.substring(0, myroot.length()-1);
-    String mypath = url.getFile();
-    String prefix = "/" + name();
 
-    if( !mypath.startsWith( prefix ) )
+    if( !upath.startsWith( prefix ) ) {
+      System.err.println("DOFS agent " + prefix + " given bad path " + upath);
       return null;
+    }
 
-    String myfilename = myroot + mypath.substring( prefix.length() );
-    return myfilename;
+    return myroot + upath.substring( prefix.length() );
   }
 
 

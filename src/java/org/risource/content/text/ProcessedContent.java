@@ -1,5 +1,5 @@
 //   ProcessedContent.java
-// $Id: ProcessedContent.java,v 1.3 1999-03-12 19:24:15 steve Exp $
+// $Id: ProcessedContent.java,v 1.4 1999-03-23 23:31:35 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -100,7 +100,7 @@ public class ProcessedContent extends  GenericContent {
 
 
   /**
-   * interform has an agent context
+   * The agent context in which to process the document
    */
   Agent agent;
 

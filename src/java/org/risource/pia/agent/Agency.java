@@ -1,5 +1,5 @@
 // Agency.java
-// $Id: Agency.java,v 1.3 1999-03-12 19:29:47 steve Exp $
+// $Id: Agency.java,v 1.4 1999-03-23 23:32:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -89,7 +89,7 @@ public class Agency extends Admin {
   protected boolean isValidRootPath(String path) {
     // First see if it's a possibility.
     if (!isPossibleRootPath(path)) return false;
-    return null != findInterform(rewriteRootPath(path));
+    return null != findDocument(rewriteRootPath(path));
   }
 
   /** Test path to see whether it is a possible root path. 
@@ -112,7 +112,7 @@ public class Agency extends Admin {
   protected String rewriteRootPath(String path) {
     if (path.equals("/")) {
       // root index directory -- might be ROOTindex
-      if (findInterform("ROOTindex") != null) return "/ROOTindex";
+      if (findDocument("ROOTindex") != null) return "/ROOTindex";
       return "/" + rootPrefix + "/index";
     } else {
       return "/" + rootPrefix + path;
@@ -120,7 +120,7 @@ public class Agency extends Admin {
   }
 
   /** Perform any necessary rewriting on the given path. */
-  protected String rewriteInterformPath(Transaction request, String path) {
+  protected String rewritePath(Transaction request, String path) {
     if (isPossibleRootPath(path)) {
       return rewriteRootPath(path);
     } else {

@@ -22,17 +22,21 @@ interfaces. <p>
 <h2>Processor Classes</h2>
 
 <dl>
-  <dt> <a href="ActivePage.java">ActivePage</a>
-  <dd> Process an active web page in the PIA.
-  <dt> <a href="Filter.java">Filter</a>
-  <dd> Process a document as a stand-alone filter.
-  <dt> <a href="Hook.java">Hook</a>
-  <dd> Process a Transaction hook in the PIA.
+  <dt> <a href="ActiveDoc.java">ActiveDoc</a>
+  <dd> TopContext for an active document (either a web page or a hook) in the
+       PIA (as opposed to stand-alone).
+  <dt> <a href="BasicProcessor.java">BasicProcessor</a>
+  <dd> The basic implementation of the Processor interface
+  <dt> <a href="TopProcessor.java">TopProcessor</a>
+  <dd> The basic implementation of the TopContext interface.
+  <dt> <a href="../Filter.java">../Filter</a>
+  <dd> Process a document as a stand-alone filter.  This is not currently an
+       implementation of Processor, but it probably ought to be.
 </dl>
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.3 1999-03-12 19:27:22 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.4 1999-03-23 23:32:03 steve Exp $</b>
 <a name="files"><hr></a>
 
 

@@ -54,13 +54,21 @@
        name: <input name="agent" value="Proxie">
        </form></if>
        <dl>
+	 <dt> <a name="Proxie">Proxie agent</a>
+	      <if><agent-running name=Proxie>
+	      <then><em>installed</em></then><else>
+	 <dd> <form action="/Admin/install-agent" method="POST">
+	      <input type="submit" value="Install">
+	      name: <input name="agent" value="Proxie">
+	      </form></if>
+
 	 <dt> <a name="History">History agent</a>
 	      <if><agent-running name=History>
 	      <then><em>installed</em></then><else>
-	 <dd> <form action="/&AGENT:name;/install-agent" method="POST">
+	 <dd> <form action="/Admin/install-agent" method="POST">
 	      <input type="submit" value="Install">
 	      name: <input name="agent" value="History">
-	      type: <input name="type" value="Proxie">
+	      home: <input name="home-dir" value="./Proxie/History">
 	      </form></if>
 	 <dt> <a name="Toolbar">Toolbar agent</a>
 	      <if><agent-running name=Toolbar>
@@ -105,7 +113,7 @@
 	      </form> </if>
        </dl>
 
-  <dt> <a name="Demo">Demo: InterForm Demonstration and Test agent</a>
+  <dt> <a name="Demo">Demo: Active Document Demonstration and Test agent</a>
        <if><agent-running name="Demo"><then><em>installed</em></then><else>
   <dd> <FORM ACTION="/&AGENT:name;/install-agent" METHOD="POST">
        <input type="submit" value="Install">
@@ -201,5 +209,5 @@ Provides basic file browsing capabilities.
        form.
 </dl>
 
-<footer cvsid="$Id: installers.xh,v 1.5 1999-03-15 23:12:43 steve Exp $">
+<footer cvsid="$Id: installers.xh,v 1.6 1999-03-23 23:31:23 steve Exp $">
 </body></html>

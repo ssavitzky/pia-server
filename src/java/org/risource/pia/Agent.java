@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.3 1999-03-12 19:28:55 steve Exp $
+// $Id: Agent.java,v 1.4 1999-03-23 23:32:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,13 +34,10 @@ import org.risource.pia.Content;
 
 
 import org.risource.ds.Table;
+import org.risource.ds.List;
 import org.risource.ds.Criteria;
 import org.risource.ds.Criterion;
-import org.risource.ds.Registered;
 import org.risource.ds.Tabular;
-
-// import org.risource.sgml.SGML;
-// import org.risource.sgml.Attrs;
 
 import org.risource.tf.UnknownNameException;
 
@@ -48,15 +45,19 @@ import org.risource.tf.UnknownNameException;
  * An agent is an object which maintains state and context and corresponds
  *	to a URL in the PIA server. 
  *
- * <p> Agents can receive requests directly (http://pia/AGENT_NAME/...);
+ * <p> Agents can receive requests directly (http://pia/AGENT:pathName/...);
  *	they can also operate on other transactions.  Direct requests are
  *	handled by the <code>respond</code> methods.  To operate on other
  *	transactions, Agents register with the resolver a set of criteria for
  *	transactions they are interested in.  When the resolver finds a
- *	matching transaction, the agents act_on method is called (and the
- *	agent can modify the transaction.  The agent can completely handle a
- *	transaction by putting itself on the transaction's list of handlers --
- *	which results in a call back to the agents handle method.
+ *	matching transaction, the agent's actOn method is called.
+ *
+ * <p> An agent can completely handle a transaction by putting itself on the
+ *	transaction's list of handlers -- which results in a call back to the
+ *	agent's <code>handle</code> method.
+ *
+ * <p> Agent extends the <code>Tabular</code> interface, and all of its 
+ *	attributes are also accessible through this interface.
  */
 public interface Agent extends Tabular {
 
@@ -65,7 +66,16 @@ public interface Agent extends Tabular {
    */
   public void initialize();
 
+
+  /************************************************************
+  ** Access to attributes:
+  ************************************************************/
+
   /**
+   * Return the name of the Agent.  
+   *
+   *	The agent's name is the last component in the Agent's root URL.
+   *
    * @return name of agent
    */
   public String name();
@@ -76,6 +86,9 @@ public interface Agent extends Tabular {
   public void name(String name);
 
   /**
+   * Return the Agent's ``type'': the pathname of an agent from which 
+   *	files are inherited.
+   *
    * @return type of agent
    */
   public String type();
@@ -85,18 +98,37 @@ public interface Agent extends Tabular {
    */
   public void type(String type);
 
-  /**
-   * @return version
+  /** 
+   * Return the agent's parent in the agent type hierarchy.  This is, 
+   *	by definition, the agent whose pathName is <code>type()</code>.
    */
-  public String version();
+  public Agent typeAgent();
 
   /**
-   * set version
+   * Return the agent's ``mount point'' in the PIA's URL hierarchy. 
+   *	If never set, this will be "/".
+   *
+   * @return agent's mount point in URL hierarchy.
    */
-  public void version(String version);
+  public String path();
+
+  /**
+   * set path
+   */
+  public void path(String path);
+
+  /** Return the complete ``pathname'' of this agent: the file part of the
+   *	agent's root URL.
+   *
+   * <p> By definition, this is path + name, and is provided for convenience.
+   *
+   * @return agent's root URL.
+   */
+  public String pathName();
+
 
   /************************************************************
-  ** operations for working with resolver
+  ** operations for working with resolver:
   ************************************************************/
 
   /**
@@ -109,8 +141,8 @@ public interface Agent extends Tabular {
   /**
    * Agents are associated with a virtual machine which is an
    * interface for actually getting and sending transactionss.  Posts
-   * explicitly to an agent get sent to the agent's machine (then to
-   * the agent's interform_request method). Other requests can be
+   * explicitly to an agent get sent to the agent's machine (then  on to
+   * the agent for processing). Other requests can be
    * handled implicitly by the agent.  If one does not exist,
    * create a pia.agent.Machine
    * @return virtual machine
@@ -143,61 +175,69 @@ public interface Agent extends Tabular {
   public void parseOptions(Table hash);
 
   /************************************************************
-  ** interform specific operations
-  ** these probably should move to generic agent, since agents
-  ** can be based on things other than interforms
+  ** Directories:
   ************************************************************/
 
-
-  /**
-   *  returns a path to a directory that we can write data into.
-   *  Creates one if necessary, starting with agent_directory,
-   *  then if_root, USR_ROOT/$name, PIA_ROOT/$name, /tmp/$name
+  /** The agent's <em>home</em> directory: where its documents come from.
+   *	
+   * @return full path to the agent's home directory.
    */
-  public String agentDirectory();
+  public String homeDirectory();
 
-
-  /**
-   * returns a path to a directory that we can write InterForms into
-   * Creates one if necessary, starting with
-   * USR_ROOT/Agents/name, PIA_ROOT/Agents/type, /tmp/Agents/name
+  /** The agent's <em>user</em> (customization) document directory.
+   *
+   *	Documents in the user directory override those in the home directory,
+   *	allowing an individual user to customize documents belonging to a
+   *	shared agent.
+   *	
+   * @return full path to the agent's user directory.
    */
+  public String userDirectory();
 
-  public String agentIfDir();
-
-  /**
-   * Find an interform, using a simple search path which allows for user
-   *	overrides of standard InterForms, and a crude kind of inheritance.  
+  /** The agent's <em>data</em> directory.
+   *
+   *	Specifies the path to the directory used for the agent's data files.
+   *	This directory must be writable, and is created if necessary.
+   *	
+   * @return full path to the agent's user directory.
    */
-  public String findInterform( String path );
+  public String dataDirectory();
+
+
+  /** The agent's document directory search path. 
+   *
+   * @return a list of File objects refering to directories to search.
+   */
+  public List documentSearchPath();
+
 
   /**
-   * Find an interform, using an optional suffix search list and adjusting
+   * Find a document, using a simple search path which allows for user
+   *	overrides of an agent's documents, and a crude kind of inheritance.  
+   */
+  public String findDocument( String path );
+
+  /**
+   * Find an document, using an optional suffix search list and adjusting
    *	the directory search path according to whether writing is required.
    */
-  public String findInterform( String path, String suffixSearch[], 
+  public String findDocument( String path, String suffixSearch[], 
 			       boolean forWriting );
 
   /**
-   * Respond to a request directed at one of an agent's interforms.
-   *
-   * @return false if file not found.
+   * Find a data file using an optional suffix search list. 
    */
-  public boolean respondToInterform(Transaction t, Resolver res);
+  public String findDataFile( String path, String suffixSearch[], 
+			      boolean forWriting );
 
 
-  /**
-   * Respond to a request directed at one of an agent's interforms,
-   *	with a (possibly-modified) path.
-   *
-   * @return false if file not found.
-   */
-  public boolean respondToInterform(Transaction t, String path, Resolver res);
-
+  /************************************************************
+  ** Responding to direct requests:
+  ************************************************************/
 
   /**
    * Respond to a request directed at an agent.
-   * The InterForm's url may be passed separately, since the agent may
+   * The document's url may be passed separately, since the agent may
    * need to modify the URL in the request.  It can pass either a full
    * URL or a path.
    */
@@ -206,6 +246,11 @@ public interface Agent extends Tabular {
   /**
    * Given a url string and content create a request transaction.
    *       The results are discarded.
+   *
+   * <p> This method is primarily used in initialization and in other cases
+   *	where a request is being made for its side effects rather than its
+   *	results.
+   *
    *	@param method (typically "GET", "PUT", or "POST").
    *	@param url the destination URL.
    *	@param queryString (optional) -- content for a POST request.
@@ -216,29 +261,19 @@ public interface Agent extends Tabular {
 
   /**
    * Given a url string and content create a request transaction.
-   *	@param m the Machine to which the response is to be sent.
    *	@param method (typically "GET", "PUT", or "POST").
    *	@param url the destination URL.
    *	@param content content object for a POST or PUT request.
    *	@param contentType (optional) content type for a POST or PUT request.
    */
-  public void createRequest(Machine m, String method, String url,
+  public void createRequest(String method, String url,
 			    InputContent content, String contentType);
 
   /**
-   * Given a url string and content create a request transaction.
-   *	@param m the Machine to which the response is to be sent.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
-   *	@param contentType (optional) -- content type for a POST request.
-   */
-  public void createRequest(Machine m, String method, String url,
-			    String queryString, String contentType);
-
-  /**
-   * Given a url string and content create a request transaction.
+   * Given a url string and content, create a request transaction.
    *       The results are discarded.
+   *
+
    *	@param method (typically "GET", "PUT", or "POST").
    *	@param url the destination URL.
    *	@param queryString (optional) -- content for a POST request.
@@ -250,7 +285,14 @@ public interface Agent extends Tabular {
 
 
   /** 
-   * Handle timed requests.
+   * Handle timed requests.  
+   *
+   * <p> This method is called periodically from the Resolver to handle any 
+   *	 timed requests that may have been registered with createTimedRequest.
+   *
+   * @param time the current time 
+   * @see org.risource.pia.Agent#createTimedRequest
+   * @see org.risource.pia.Resolver
    */
   public void handleTimedRequests(long time);
 
@@ -260,12 +302,7 @@ public interface Agent extends Tabular {
   public void sendErrorResponse( Transaction req, int code, String msg );
 
   /**
-   * Send error message for not found interform file
-   */
-  public void respondNotFound( Transaction req, URL url);
-
-  /**
-   * Send error message for not found interform file
+   * Send error message for "document not found"
    */
   public void respondNotFound( Transaction req, String path);
 
@@ -275,7 +312,7 @@ public interface Agent extends Tabular {
   public void sendStreamResponse ( Transaction trans, InputStream in );
 
   /************************************************************
-  ** interface to content objects
+  ** Interface to content objects:
   ************************************************************/
   /**
    * Agents can register interest in content objects using

@@ -1,5 +1,5 @@
 ////// agentRunning.java:  Handler for <agent-home>
-//	$Id: agentRunning.java,v 1.3 1999-03-12 19:30:05 steve Exp $
+//	$Id: agentRunning.java,v 1.4 1999-03-23 23:32:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ public class agentRunning extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
-    ActiveDoc env = ActiveDoc.getInterFormContext(aContext);
+    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;

@@ -61,35 +61,12 @@ See also:
        </ul>
        (1998-12-22) <br>
 
-  <li> <b>Bug</b> need per-agent InterForm and data directories <br>
-       This would have two good effects: avoid searching in the obsolete
-       <code>src/Agents</code>, and allow agents to be anywhere.  Actually the
-       InterForm search path should be a real path; data is just a single
-       dir.  Should have the following attributes on Agent:
-       <ul>
-	 <li> <code>codeDir</code> the code directory.  Default is
-	      <code>Agents/<em>path</em></code>.  
-	 <li> <code>userDir</code> user's overrides
-	 <li> <code>dataDir</code> the data; <em>always</em> using
-	      <code>~</code> 
-       </ul>
-       Note that currently the <code>if_root</code> attribute preceeds the
-       default paths, but does not override them.  Similarly, many possible
-       roots and paths are currently searched. 
-       (1998-12-17) <br>
-       -- Note that as of 1999-02-09 this is mostly, if not completely, done
-       
   <li> <b>Bug</b> Header parsing exception handling <br>
        In a response, parseInitializationString should set defaults instead of
        throwing an exception, so that the browser at least gets the page.
        Ideally it should insert a suitable error message at the top of the
        page.
        (1998-11-16) <br>
-
-  <li> <b>Impr</b> InterForm lookup should be in a utility class <br>
-       Possibly both FileAccess and the InterForm stuff should be in a "util"
-       sub-package. 
-       (1998-11-02)<br>
 
   <li> <b>Hole</b> Namespaces needed: PIA, ENV, LOG, AGENTS <br>
        PIA: PiaProperties; basically everything on the Pia class.
@@ -147,7 +124,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.5 1999-03-15 23:13:04 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.6 1999-03-23 23:32:30 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

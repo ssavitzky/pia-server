@@ -1,5 +1,5 @@
 ////// Subst.java:  Handler for <subst>
-//	$Id: substHandler.java,v 1.4 1999-03-12 19:26:37 steve Exp $
+//	$Id: substHandler.java,v 1.5 1999-03-23 23:31:48 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,8 +37,6 @@ import JP.ac.osaka_u.ender.util.regex.RegExp;
 
 
 /** Handler class for &lt;subst&gt tag 
- *  <p> See <a href="../../InterForm/tag_man.html#subst">Manual
- *	Entry</a> for syntax and description.
  */
 public class substHandler extends GenericHandler {
  

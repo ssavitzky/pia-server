@@ -6,7 +6,7 @@
 
 <user-message>Initializing &agentName; from &filePath;</user-message>
 
-<set name="AGENT:controls"><protect><!-- Generic Toolbarcontrols: -->
+<set name="AGENT:controls"><protect><!-- Generic Toolbar controls: -->
 <set name=pia>http://&piaHOST;:&piaPORT;</set>
 <a href="&pia;/~/" target="_top">[~]</a>
 <a href="&pia;&agentPath;/hide?hide=true" target="_top">[X]</a>
@@ -14,5 +14,5 @@
 </protect></set>
 
 
-<short-footer cvsid="$Id: initialize.xh,v 1.2 1999-03-12 19:22:36 steve Exp $">
+<short-footer cvsid="$Id: initialize.xh,v 1.3 1999-03-23 23:31:27 steve Exp $">
 </body></html>

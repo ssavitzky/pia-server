@@ -1,5 +1,5 @@
 // Logo.java
-// $Id: Logo.java,v 1.4 1999-03-12 19:50:02 pgage Exp $
+// $Id: Logo.java,v 1.5 1999-03-23 23:32:41 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.w3c.www.http.HTTP;
 public class Logo extends GenericAgent {
   /**
    * Respond to a request. 
-   * 	Figure out whether it's for an image or an interform.
+   * 	Figure out whether it's for an image or an active document.
    */
   public void respond(Transaction request, Resolver res)
        throws PiaRuntimeException{
@@ -74,14 +74,14 @@ public class Logo extends GenericAgent {
     URL url = request.requestURL();
     if( url == null ) return;
 
-    /* First try an InterForm.  If one exists, we're done. */
-    if (respondToInterform( request, res ) ) return;
+    /* First try a document.  If one exists, we're done. */
+    if (respondWithDocument( request, res ) ) return;
 
     String path   = url.getFile();
 
     if (true) {
       /* === extreme hack!! call a PERL program! === */
-      String cgi = findInterform("Logo.cgi");
+      String cgi = findDocument("Logo.cgi");
       execProgram(request, "perl " + cgi+" -cgi "+path);
       
     } else {

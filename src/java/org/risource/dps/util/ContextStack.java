@@ -1,5 +1,5 @@
 ////// BasicContext.java: A linked-list stack of current nodes.
-//	$Id: ContextStack.java,v 1.3 1999-03-12 19:28:06 steve Exp $
+//	$Id: ContextStack.java,v 1.4 1999-03-23 23:32:10 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.dps.process.BasicProcessor;
  *	It is designed to be used for saving state in a Cursor that is
  *	not operating on a real parse tree.
  *
- * @version $Id: ContextStack.java,v 1.3 1999-03-12 19:28:06 steve Exp $
+ * @version $Id: ContextStack.java,v 1.4 1999-03-23 23:32:10 steve Exp $
  * @author steve@rsv.ricoh.com
  * 
  * @see org.risource.dps.Cursor
@@ -168,8 +168,8 @@ public class ContextStack  implements Context {
   public ActiveEntity getEntityBinding(String name, boolean local) {
     ActiveEntity ent = (entities == null)
       ? null : entities.getEntityBinding(name);
-    if (debug() && ent != null) 
-      debug("Binding found for " + name + " " + ent.getClass().getName());
+    //if (debug() && ent != null) 
+    //  debug("Binding found for " + name + " " + ent.getClass().getName());
     return (local || ent != null || nameContext == null)
       ? ent : nameContext.getEntityBinding(name, local);
   }

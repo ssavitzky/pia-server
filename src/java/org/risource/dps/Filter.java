@@ -1,5 +1,5 @@
-////// Filter.java: the Interform Interpretor used as a filter
-//	$Id: Filter.java,v 1.3 1999-03-12 19:24:50 steve Exp $
+////// Filter.java: the Document Processing System used stand-alone as a filter
+//	$Id: Filter.java,v 1.4 1999-03-23 23:31:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

@@ -1,5 +1,5 @@
 ////// submitHandler.java: <submit> Handler implementation
-//	$Id: submitHandler.java,v 1.3 1999-03-12 19:26:35 steve Exp $
+//	$Id: submitHandler.java,v 1.4 1999-03-23 23:31:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -34,7 +34,6 @@ import org.risource.dps.util.*;
 import org.risource.dps.process.ActiveDoc;
 
 import org.risource.pia.Agent;
-import org.risource.pia.agent.AgentMachine;
 import org.risource.pia.Headers;
 import org.risource.pia.BadMimeTypeException;
 import org.risource.pia.FileAccess;
@@ -49,7 +48,7 @@ import org.risource.pia.Pia;
  *
  * <p> The intent is for this to be equivalent to the old <submit-forms> tag. 
  *
- * @version $Id: submitHandler.java,v 1.3 1999-03-12 19:26:35 steve Exp $
+ * @version $Id: submitHandler.java,v 1.4 1999-03-23 23:31:47 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -128,13 +127,10 @@ public class submitHandler extends GenericHandler {
 	return;
       }
 
-      // Make a machine to handle the request
-      AgentMachine m = new AgentMachine(a);
-
       // Create the HTTP request
       if (times == null) {
 	Pia.debug(this,"Making request "+method+" "+url+" "+contentType);
-	a.createRequest(m,method, url, formToEncoding(form,encType), contentType);
+	a.createRequest(method, url, formToEncoding(form,encType), contentType);
       } else { 
 	a.createTimedRequest(method, url,
 			     formToEncoding(form,encType).toString(),
@@ -143,17 +139,9 @@ public class submitHandler extends GenericHandler {
 
     } else if (form.hasTrueAttribute("href")) {
 
-      // Make a machine to handle the request
-      AgentMachine m = new AgentMachine(a);
-
-      // Uncomment line below for debugging, it
-      // will output to stdout everything returned
-      // from the server which hosts the form
-      // m.setCallback(new EchoCallback());
-
       String url = form.getAttributeString("href");
       if (times == null) 
-	a.createRequest(m,"GET", url, (String) null, null);
+	a.createRequest("GET", url, (String) null, null);
       else {
 	a.createTimedRequest("GET", url, (String) null, null,
 			     Forms.getTimes(times));

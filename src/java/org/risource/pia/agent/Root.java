@@ -1,5 +1,5 @@
 // Root.java
-// $Id: Root.java,v 1.3 1999-03-12 19:29:56 steve Exp $
+// $Id: Root.java,v 1.4 1999-03-23 23:32:43 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -143,7 +143,7 @@ public class Root extends GenericAgent {
     if (!isPossibleRootPath(path)) return false;
     if (path.startsWith("/~")
 	|| path.startsWith("/%7e") || path.startsWith("/%7E")) return true;
-    return null != findInterform(rewriteRootPath(path));
+    return null != findDocument(rewriteRootPath(path));
   }
 
   /** Test path to see whether it is a possible root path. 
@@ -171,7 +171,7 @@ public class Root extends GenericAgent {
   }
 
   /** Perform any necessary rewriting on the given path. */
-  protected String rewriteInterformPath(Transaction request, String path) {
+  protected String rewritePath(Transaction request, String path) {
     if (isPossibleRootPath(path)) {
       return rewriteRootPath(path);
     } else {

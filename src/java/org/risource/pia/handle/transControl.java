@@ -1,5 +1,5 @@
 ////// transControl.java:  Handler for <trans-control>
-//	$Id: transControl.java,v 1.3 1999-03-12 19:30:06 steve Exp $
+//	$Id: transControl.java,v 1.4 1999-03-23 23:32:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ public class transControl extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
-    ActiveDoc env = ActiveDoc.getInterFormContext(aContext);
+    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;

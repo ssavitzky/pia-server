@@ -1,5 +1,5 @@
-###### dps/handle/Makefile:	InterForm tag handlers
-# 	$Id: Makefile,v 1.3 1999-03-12 19:27:24 steve Exp $
+###### dps/handle/Makefile:	Active document tag handlers
+# 	$Id: Makefile,v 1.4 1999-03-23 23:32:03 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,8 +28,7 @@ TOPDIR=../../../..
 FILES = \
 	BasicProcessor.java \
 	TopProcessor.java \
-	ActiveDoc.java \
-	Hook.java
+	ActiveDoc.java 
 
 include $(TOPDIR)/makefiles/file.make
 
@@ -39,4 +38,6 @@ include $(TOPDIR)/makefiles/file.make
 BasicProcessor.class: ../Processor.java ../Context.java \
 	../util/ContextStack.java
 TopProcessor.class: BasicProcessor.java ../TopContext.java \
+	../Processor.java ../Context.java ../util/ContextStack.java
+ActiveDoc.class: BasicProcessor.java  TopProcessor.java ../TopContext.java\
 	../Processor.java ../Context.java ../util/ContextStack.java

@@ -1,5 +1,5 @@
 // Camera.java
-// $Id: Camera.java,v 1.4 1999-03-12 19:50:01 pgage Exp $
+// $Id: Camera.java,v 1.5 1999-03-23 23:32:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,7 +49,7 @@ import org.w3c.www.http.HTTP;
 public class Camera extends GenericAgent {
   /**
    * Respond to a request. 
-   * 	Figure out whether it's for an image or an interform.
+   * 	Figure out whether it's for an image or an active document
    */
   public void respond(Transaction request, Resolver res)
        throws PiaRuntimeException{
@@ -65,7 +65,7 @@ public class Camera extends GenericAgent {
     FileInputStream s = null;
 
      if (path.endsWith(".gif")) {
-      String fn = findInterform(path);
+      String fn = findDocument(path);
       if (fn == null) {
 	sendErrorResponse(request, HTTP.NOT_FOUND, "Missing .gif file");
 	return;
@@ -84,8 +84,8 @@ public class Camera extends GenericAgent {
       return;
     }
     
-    /* Then try an InterForm.  If one exists, we're done. */
-    if (respondToInterform( request, res ) ) return;
+    /* Then try a active doc.  If one exists, we're done. */
+    if (respondWithDocument( request, res ) ) return;
     sendErrorResponse(request, HTTP.NOT_FOUND, "Cannot find " + path);
 
   }

@@ -1,5 +1,5 @@
 ////// agentRestore.java:  Handler for <agent-restore>
-//	$Id: agentRestore.java,v 1.3 1999-03-12 19:30:00 steve Exp $
+//	$Id: agentRestore.java,v 1.4 1999-03-23 23:32:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,14 +36,12 @@ import java.io.File;
 import java.io.FileInputStream;
 
 /** Handler class for &lt;agent-restore&gt tag 
- * <p>See <a href="../../InterForm/tag_man.html#agent-restore">Manual Entry</a> 
- *	for syntax and description.
  */
 public class agentRestore extends org.risource.dps.handle.GenericHandler {
 
   public void action(Input in, Context aContext, Output out,
 		     ActiveAttrList atts, NodeList content) {
-    ActiveDoc env = ActiveDoc.getInterFormContext(aContext);
+    ActiveDoc env = ActiveDoc.getActiveDoc(aContext);
     if (env == null) {
       reportError(in, aContext, "PIA not running.");
       return;

@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.5 1999-03-12 19:49:53 pgage Exp $
+// $Id: FileAccess.java,v 1.6 1999-03-23 23:32:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,37 +49,142 @@ import java.text.SimpleDateFormat;
 import java.net.URL;
 import java.net.MalformedURLException;
 
+import org.risource.pia.Pia;
+
 import org.risource.ds.Sorter;
 import org.risource.ds.SortTree;
 import org.risource.ds.Association;
 import org.risource.ds.List;
 
-// import org.risource.sgml.Tokens;
+import org.risource.util.Utilities;
+import org.risource.util.NameUtils;
 
 import org.risource.content.ByteStreamContent;
 
 import JP.ac.osaka_u.ender.util.regex.RegExp;
 import JP.ac.osaka_u.ender.util.regex.MatchInfo;
-import org.risource.util.Utilities;
 
 import java.util.Properties;
 import org.w3c.www.http.HTTP;
 
 /** File-handling utilities.  
- *	All methods in this class are static. 
+ *	All methods in this class are static.  They are used by Agents to 
+ *	locate and retrieve files. 
  */
 public class FileAccess {
+
+  /************************************************************************
+  ** Constants and flags:
+  ************************************************************************/
 
   /** If this flag is true, fix &lt;BASE&gt; tags in HTML files.  Expensive. */
 
   public static boolean FIX_BASE = false;
 
-  private static String filesep = System.getProperty("file.separator");
+  public static String filesep = System.getProperty("file.separator");
+
+  /************************************************************************
+  ** Name manipulation:
+  ************************************************************************/
+  
+  /** 
+   * Convert a filename in PIA internal format into a system filename.
+   *
+   * <p> The following prefixes are accepted:
+   *<dl compact>
+   *  <dt> <code>~/</code>
+   *  <dd> The user's home directory (currently the only one allowed)
+   *  <dt> <code>./</code>
+   *  <dd> (or any relative path) the PIA agent directory
+   *  <dt> <code>../</code>
+   *  <dd> the PIA home directory <code>&amp;piaDIR;</code>, as in
+   *       <code>../Contrib/...</code> 
+   *  <dt> <code>/~/</code>
+   *  <dd> The PIA user directory <code>&amp;usrDIR;</code>
+   *  <dt> <code>/</code>
+   *  <dd> An absolute path in URL format.  Slashes are converted to the 
+   *	   current system file separator.
+   *  <dt> <code>file:</code>
+   *  <dd> An absolute path in system format.
+   *</dl>
+   */
+  public static String systemFileName(String fname) {
+    if (fname == null) return null;
+    if (fname.startsWith("~/") ) {
+      String home = System.getProperty("user.home");
+      return NameUtils.systemPath(home, fname.substring(1));
+    }
+    if (fname.startsWith("./")) {
+      return NameUtils.systemPath(Pia.instance().piaAgents(), fname.substring(1));
+    }
+    if (fname.startsWith("../")) {
+      return NameUtils.systemPath(Pia.instance().piaRoot(), fname.substring(2));
+    }
+    if (fname.startsWith("/~/")) {
+      return NameUtils.systemPath(Pia.instance().usrRoot(), fname.substring(2));
+    }
+    if (fname.startsWith("/")) {
+      return NameUtils.systemPath(null, fname);
+    }
+    if (fname.startsWith("file:") || fname.startsWith("FILE:")) {
+      return fname.substring(5);
+    }
+    // Default: must be relative, since we took care of "/" above.
+    return NameUtils.systemPath(Pia.instance().piaAgents(), fname);
+  }
+
+  /** Find a file given a search-path of directories and a search-path of
+   *	suffixes.
+   */
+  public static String findFile(String path, List dirPath, String suffixPath[]){
+    // Remove leading "/" because every directory name in the search path
+    // ends with it. 
+    if( path.startsWith("/") )	path = path.substring(1);
+    Pia.debug("Looking for -->"+ path);
+
+    int lastDot = path.lastIndexOf(".");
+    int lastSlash = path.lastIndexOf("/");
+    boolean hasSuffix = lastDot >= 0 && lastDot > lastSlash;
+
+    // Convert the URL path to a system path.
+    path = NameUtils.systemPath(null, path);
+
+    // === Needs to handle file/extra_path_info
+    // === We should be caching File objects because lookup is so elaborate.
+    File f;
+    Object fn;
+    Enumeration e = dirPath.elements();
+    if (hasSuffix) {
+      while( e.hasMoreElements() ){
+	fn = e.nextElement();
+	if (fn instanceof File) f = new File((File)fn, path);
+	else f = new File(fn.toString(), path);
+	Pia.debug("     trying -->"+ f.getPath());
+	if( f.exists() ) return f.getPath();
+      }
+    } else {
+      while( e.hasMoreElements() ){
+	fn = e.nextElement();
+	if (fn instanceof File) f = new File((File)fn, path);
+	else f = new File(fn.toString(), path);
+	Pia.debug("    trying -->"+ f.getPath());
+	if( f.exists() ) return f.getPath();
+
+	String wholepath = path+".";
+	for (int i = 0; i < suffixPath.length; ++i) {
+	  String xpath = wholepath + suffixPath[i];
+	  if (fn instanceof File) f = new File((File)fn, xpath);
+	  else f = new File(fn.toString(), xpath);
+	  Pia.debug("    trying -->"+ f.getPath());
+	  if( f.exists() ) return f.getPath();
+	}
+      }
+    }
+    return null;
+  }
 
   /************************************************************************
   ** File handling:
-  **	These utilities are static, and really belong in their own class.
-  **	They can be used by other agents for retrieving non-interform files.
   ************************************************************************/
 
   /**
@@ -208,7 +313,7 @@ public class FileAccess {
       response.setHeader( "Last-Modified", toGMTString(mDate) ); 
       response.setContentType("text/html");
       //response.setContentLength( html.length() );
-      response.setHeader("Version", agent.version());
+      response.setHeader("X-Agent", agent.pathName()); // === server?
       response.startThread();
     }
 
@@ -256,7 +361,7 @@ public class FileAccess {
 	reply = new HTTPResponse( request, false );
 	reply.setStatus( 200 );
 	reply.setReason( "OK" );
-	reply.setHeader( "Version", agent.version() );
+	reply.setHeader("X-Agent", agent.pathName()); // === server?
 	Date mDate = new Date(zfile.lastModified());
 	reply.setHeader( "Last-Modified", toGMTString(mDate) ); 
 	
@@ -460,7 +565,7 @@ public class FileAccess {
     reply = new HTTPResponse( request, false );
     reply.setStatus( code );
     reply.setReason( reason );
-    reply.setHeader( "Version", agent.version() );
+    reply.setHeader( "X-Agent", agent.pathName() );
     Content c =
       new org.risource.content.text.StringContent("Your file has been written.");
     reply.setContentType( "text/plain" );
