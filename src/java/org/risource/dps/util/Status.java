@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.5 1999-04-17 01:20:02 steve Exp $
+//	$Id: Status.java,v 1.6 1999-09-22 00:42:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,8 @@ import org.risource.dps.tree.TreeText;
 import org.risource.dps.tree.TreeAttrList;
 import org.risource.dps.tree.TreeExternal;
 
+import org.risource.site.*;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -42,7 +44,7 @@ import java.net.HttpURLConnection;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.5 1999-04-17 01:20:02 steve Exp $
+ * @version $Id: Status.java,v 1.6 1999-09-22 00:42:33 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -71,6 +73,65 @@ public class Status {
       nl.append(new TreeText(v[i]));
     return nl;
   }
+
+  /************************************************************************
+  ** Status of Files:
+  ************************************************************************/
+
+  /** Get the value of a named status item for a file.
+   *	Returns all values if the name is null.
+   */
+  public static ActiveNodeList getStatusItem(Resource res, String name) {
+    if (res == null) return null;
+    if (name == null) return getStatusItems(res).asNodeList();
+    name = name.toLowerCase();
+
+    if (name.equals("local")) return nodes(true);
+
+    if (name.equals("path")) return nodes(res.getPath()); 
+    if (name.equals("name")) return nodes(res.getName()); 
+    //if (name.equals("absolute-path")) return nodes(res.getAbsolutePath());
+    //if (name.equals("cannonical-path")) return nodes(res.getCanonicalPath());
+    if (name.equals("parent"))
+      return nodes((res.getContainer()==null)
+		   ? "" : res.getContainer().getPath());
+    if (name.equals("exists")) return nodes(res.exists());
+    //if (name.equals("writeable")) return nodes(res.canWrite());
+    //if (name.equals("readable")) return nodes(res.canRead());
+    //if (name.equals("file")) return nodes(res.isFile());
+    if (name.equals("directory")) return nodes(res.isContainer());
+    //if (name.equals("last-modified")) return nodes(res.lastModified());
+    //if (name.equals("length")) return nodes(res.length());
+    if (name.equals("files"))
+      return res.isContainer()? nodes(res.listNames()) : null;
+
+    return null;
+  }
+
+  /** Return an attribute list containing all non-null status items
+   *	for a File. 
+   */
+  public static ActiveAttrList getStatusItems(Resource res) {
+    return getStatusItems(res, fileItems);
+  }
+
+  /** Return an attribute list containing the specified status items
+   *	for a File.
+   */
+  public static ActiveAttrList getStatusItems(Resource res, String items[]) {
+    TreeAttrList list = new TreeAttrList();
+    for (int i = 0; i < items.length; ++i) {
+      ActiveNodeList v = getStatusItem(res, items[i]);
+      if (v != null) list.setAttributeValue(items[i], v);
+    }
+    return list;
+  }
+
+  public static String resourceItems[] = {
+    "local", "name", "path", "absolute-path", "canonical-path", "parent", 
+    "exists", "writeable", "readable", "file", "directory", "last-modified",
+    "length", "files",
+  };
 
   /************************************************************************
   ** Status of Files:
