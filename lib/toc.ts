@@ -57,12 +57,11 @@
     <set name="VAR:toc"> </set>
     <set name="VAR:h2">0</set>
     <set name="VAR:h3">0</set>
-    <expand>&content;</expand>
+    <expand>&content;</expand><!-- compute the table of contents -->
     <set name="VAR:h2">0</set>
     <set name="VAR:h3">0</set>
-    </hide>
-    <expand>&content;</expand>
-</action>
+    </hide><expand>&content;</expand><hide>
+  </hide></action>
 </define>
 
 <define element="h2">
@@ -112,5 +111,5 @@
     </if></action>
 </define>
 
-<em>$Id: toc.ts,v 1.1 2000-04-25 23:22:46 steve Exp $</em>
+<em>$Id: toc.ts,v 1.2 2000-05-23 21:47:07 steve Exp $</em>
 </tagset>
