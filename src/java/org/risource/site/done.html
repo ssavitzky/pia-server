@@ -62,17 +62,47 @@ See also:
        -- Pilot error: <code>-config</code> sets the config file name;
 	  <code>-site</code> sets the site configuration file path.
 
-  <li> <b>Bug</b> pia-tagset not found if a virtual resource <br>
+  <li> 1999-09-28 <b>Bug</b> pia-tagset not found if a virtual resource <br>
        The java-resource version is loaded, so it doesn't have a proper
        timestamp and is not reloaded if changed.  The problem is that
        locateChildFile is used instead of locateChild.
        (1999-09-26) <br>
 
+  <li> <b>Hole</b> Unknown config sub-elts should become props. <br>
+       Any unknown element in the configuration should be appended to a
+       property entity with that name.  Maybe the known ones, too.
+       (1999-09-09) <br>
+
+  <li> 1999-10-12 <b>Bug</b> Namespace properties don't work <br>
+       (1999-10-08) <br>
+
+  <li> 1999-10-12 <b>Bug</b> Failure opening unreadable directory. <br>
+       null pointer exception  at locateChildren(Subsite.java:482)
+       (1999-10-12) <br>
+       -- turns out <code>File.list()</code> can return null.
+
+  <li> 1999-10-12 <b>Bug</b> Extension map seems to be broken. <br>
+       Can't seem to override tagsets or document types, and it seems to
+       default to the old <code><em>Agent</em>-xhtml</code> convention.  This
+       is recent. 
+       (1999-10-12) <br>
+       -- pilot error:  the files were in regions controlled by their own
+	  _subsite.xcf files!  (urk!)
+
+  <li> 1999-10-12 <b>Bug</b> Doesn't work too well when virtual root != PIA <br>
+       Can't load tagsets, and gets a default extension map anyway.
+       Root has a real directory even though <code>real="none"</code>.
+       (1999-10-12) <br>
+
+  <li> 1999-10-12 <b>Bug</b> Home document name must be settable. <br>
+       Right now it's hard-wired, which loses if you need to change it.
+       (1999-10-12) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.5 1999-09-24 22:05:37 steve Exp $</b><br>
+<b>$Id: done.html,v 1.6 1999-10-13 18:23:29 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

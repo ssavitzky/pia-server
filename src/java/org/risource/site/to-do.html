@@ -16,12 +16,13 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> DOCUMENT isn't quoted. <br>
+       Contents get processed while reading config, which is always wrong.
+       (1999-10-12) <br>
+
   <li> <b>Bug</b> Do not keep config nodelist around <br>
        Process the nodes on the fly instead of collecting them; probably want
        a ToResource output to handle them with.
-       (1999-10-08) <br>
-
-  <li> <b>Bug</b> Namespace properties don't work <br>
        (1999-10-08) <br>
 
   <li> <b>Bug</b> Need access to namespaces of ancestor containers <br>
@@ -91,11 +92,6 @@ See also:
        (1999-09-09) <br>
 
   <li> <b>Impr</b> Want a way of getting at an overridden doc. <br>
-       (1999-09-09) <br>
-
-  <li> <b>Hole</b> Unknown config sub-elts should become props. <br>
-       Any unknown element in the configuration should be appended to a
-       property entity with that name.  Maybe the known ones, too.
        (1999-09-09) <br>
 
   <li> <b>Bug</b> pure-virtual document gives null pointer exc. <br>
@@ -269,5 +265,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.12 1999-10-09 00:15:39 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.13 1999-10-13 18:23:29 steve Exp $</b><br>
 </body></html>

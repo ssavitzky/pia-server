@@ -1,5 +1,5 @@
 ////// SiteDocument.java -- implementation for a document resource
-//	$Id: SiteDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
+//	$Id: SiteDocument.java,v 1.6 1999-10-13 18:23:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.net.URL;
  * <p> Some of a SiteDocument's configuration information may be
  *	derived from its parent, which is necessarily a Subsite. 
  *
- * @version $Id: SiteDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
+ * @version $Id: SiteDocument.java,v 1.6 1999-10-13 18:23:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -261,12 +261,12 @@ public class SiteDocument extends ConfiguredResource implements Document {
   ** Construction:
   ************************************************************************/
 
-  public SiteDocument(String name, ConfiguredResource parent, File file, 
+  public SiteDocument(String name, Subsite parent, File file, 
 		      boolean real, ActiveElement config) {
     super(name, parent, false, real, file, config, null);
   }
 
-  public SiteDocument(ConfiguredResource parent, ActiveElement config) {
+  public SiteDocument(Subsite parent, ActiveElement config) {
     super(null, parent, false, false, null, config, null);
   }
 }

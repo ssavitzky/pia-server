@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.6 1999-10-04 17:42:37 steve Exp $
+//	$Id: Site.java,v 1.7 1999-10-13 18:23:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.6 1999-10-04 17:42:37 steve Exp $
+ * @version $Id: Site.java,v 1.7 1999-10-13 18:23:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -210,6 +210,29 @@ public class Site extends Subsite implements Root {
     if (configFileName != null) this.configFileName = configFileName;
   }
 
+  protected boolean configAttrs(ActiveElement config) {
+    String v;
+
+    // Handle any attributes not handled by the parent. 
+
+    v = config.getAttribute("configfile");
+    if (v != null) {
+      setConfigFileName(v);
+    }
+
+    // Call on the parent to finish the job
+    return super.configAttrs(config);
+  }
+
+  protected void configItem(String tag, ActiveElement item) {
+    // <ConfigFileName>
+    if (tag.equals("ConfigFileName")) {
+      setConfigFileName(item.contentString());
+    }    
+
+    // let ConfiguredResource (super) handle it
+    else super.configItem(tag, item);
+  }
   /************************************************************************
   ** Construction:
   ************************************************************************/

@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.12 1999-10-04 17:42:37 steve Exp $
+//	$Id: Subsite.java,v 1.13 1999-10-13 18:23:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.12 1999-10-04 17:42:37 steve Exp $
+ * @version $Id: Subsite.java,v 1.13 1999-10-13 18:23:29 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -64,6 +64,9 @@ public class Subsite extends ConfiguredResource implements Resource {
   /************************************************************************
   ** State:
   ************************************************************************/
+  
+  /** Name of the directory's home document. */
+  protected String homeDocumentName = null;
 
   /** Table that maps filename suffix into tagset.  
    *
@@ -189,7 +192,9 @@ public class Subsite extends ConfiguredResource implements Resource {
   }
 
   public void loadConfig() {
-    configFile = locateChildFile(getConfigFileName());
+    String fn = getConfigFileName();
+    if (fn == null || fn.length() == 0) return;
+    configFile = locateChildFile(fn);
     if (configFile != null) loadConfigFile(configFile);
   }
 
@@ -197,6 +202,11 @@ public class Subsite extends ConfiguredResource implements Resource {
     String v;
 
     // Handle any attributes not handled by the parent. 
+
+    v = config.getAttribute("file");
+    if (v != null) {
+      file = (v.length() == 0)? null : new File(v);
+    }
 
     v = config.getAttribute("virtual");
     if (v != null) {
@@ -233,6 +243,11 @@ public class Subsite extends ConfiguredResource implements Resource {
 	tag.equals("Document") || tag.equals("Container")) {
       configChildItem(tag, item);
     }    
+
+    // <HomeDocumentName>
+    else if (tag.equals("HomeDocumentName")) {
+      homeDocumentName = item.contentString();
+    }
 
     // <Ext>
     else if (tag.equals("Ext")) configExtItem(tag, item);
@@ -325,11 +340,25 @@ public class Subsite extends ConfiguredResource implements Resource {
   ** Document Access:
   ************************************************************************/
 
-  /** Returns the Document associated with the Resource. */ 
+  /** Returns the Document associated with the Resource.
+   *
+   *<p> The home document name can be set as the value of the 
+   *	<code>HomeDocumentName</code> property.  If not set in the 
+   *	configuration file it is inherited from the parent; if never
+   *	set it defaults to <code>home</code>.
+   *
+   *<p> Sensibly check to make sure the home ``document'' isn't a container. 
+   *	This can happen if there is a subdirectory called <code>home</code>,
+   *	for example.
+   *
+   * @return document matching <code>homeDocumentName</code>, or a listing.
+   */ 
   public Document getDocument() {
-    Resource doc = locate("home", false, null);	// === getDocument bogus
-    if (doc == null)  doc = locate("index", false, null); // === getDocument
-    return (doc != null)
+    Resource doc = locate(homeDocumentName, false, null);
+    if (homeDocumentName == null) {
+      homeDocumentName = (base != null)? base.homeDocumentName : "home";
+    }
+    return (doc != null && ! doc.isContainer())
       ? doc.getDocument()
       : new Listing(getName(), this, file);
   }
@@ -479,7 +508,7 @@ public class Subsite extends ConfiguredResource implements Resource {
 	if (virtualSearchPath[j] == null 
 	    || !virtualSearchPath[j].isDirectory()) continue;
 	list = virtualSearchPath[j].list();
-	for (int i = 0; i < list.length; ++i) {
+	for (int i = 0; list != null && i < list.length; ++i) {
 	  if (list[i].equals(".") || list[i].equals("..")) continue;
 	  if (t.at(list[i]) == null) {
 	    t.at(list[i], virtualSearchPath[j]);
@@ -544,6 +573,9 @@ public class Subsite extends ConfiguredResource implements Resource {
 
   /** Returns a Resource that refers to a named child. */
   public Resource getChild(String name) {
+    // Return null if the name is null.
+    if (name == null || name.length() == 0) return null;
+
     // If we haven't yet located all the children, just find this one.
     if (childLocationCache == null) return locateChild(name);
 
@@ -626,6 +658,9 @@ public class Subsite extends ConfiguredResource implements Resource {
   /** Load a tagset. */
   public Tagset loadTagset(String name) {
     // === Probably should check the tagset name for signs of being a path 
+    if (name == null) {
+      throw new RuntimeException("Null name passed to loadTagset");
+    }
 
     // First look in the cache
     Tagset ts = (tagsetCache == null)? null : (Tagset) tagsetCache.at(name);
@@ -640,11 +675,16 @@ public class Subsite extends ConfiguredResource implements Resource {
       start = time();
       if (tsLoader == null) tsLoader = new SiteContext(this, null);
       ts = Loader.loadTagset(tsfile, tsLoader);
-      getRoot().report(0, getPath() + " Loaded tagset '" + name 
-		       + "' in " + timing(start) + " seconds.", 2, false);
-      if (tagsetCache == null) tagsetCache = new Table();
-      tagsetCache.at(name, ts);
-      return ts;
+      if (ts == null) {
+	getRoot().report(-2, "*** " + getPath() + " failed to load tagset '"
+			 + name, 0, false);
+      } else {
+	getRoot().report(0, getPath() + " Loaded tagset '" + name 
+			 + "' in " + timing(start) + " seconds.", 2, false);
+	if (tagsetCache == null) tagsetCache = new Table();
+	tagsetCache.at(name, ts);
+	return ts;
+      }
     }
 
     // Finally, fall back on the parent
@@ -742,7 +782,7 @@ public class Subsite extends ConfiguredResource implements Resource {
    *	virtual search path in order to load the configuration file,
    *	but the configuration might override the virtual search path.
    */
-  public Subsite(String name, ConfiguredResource parent,
+  public Subsite(String name, Subsite parent,
 		 File file, File vfile, ActiveElement config) {
     super(name, parent, true, (file == null), file, config, null);
     if (file != null && file.exists()) real = true;

@@ -1,5 +1,5 @@
 ////// ConfiguredResource.java -- Minimal implementation of Resource
-//	$Id: ConfiguredResource.java,v 1.8 1999-10-04 17:42:36 steve Exp $
+//	$Id: ConfiguredResource.java,v 1.9 1999-10-13 18:23:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	has an explicit configuration element.  We assume that all parents
  *	of a ConfiguredResource are also configured. 
  *
- * @version $Id: ConfiguredResource.java,v 1.8 1999-10-04 17:42:36 steve Exp $
+ * @version $Id: ConfiguredResource.java,v 1.9 1999-10-13 18:23:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -68,8 +68,11 @@ public abstract class ConfiguredResource extends AbstractResource
   protected boolean suspect = false;
   protected boolean real = false;
 
-  /** The parent, which we assume is also a ConfiguredResource. */
-  protected ConfiguredResource base = null; // === Subsite? ===
+  /** The parent, which we assume is a Subsite. 
+   *	This implies that Subsite is the only valid implementation of a
+   *	container that descends from ConfiguredResource.
+   */
+  protected Subsite base = null;
 
   /** The associated real file or directory, if any. */
   protected File file;
@@ -380,7 +383,7 @@ public abstract class ConfiguredResource extends AbstractResource
   ** Construction and Initialization:
   ************************************************************************/
 
-  public ConfiguredResource(String name, ConfiguredResource parent, 
+  public ConfiguredResource(String name, Subsite parent, 
 			    boolean container, boolean real, File file, 
 			    ActiveElement config, PropertyTable props) {
     this.base = parent;

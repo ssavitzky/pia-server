@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.6 1999-10-04 17:42:36 steve Exp $
+//	$Id: AbstractResource.java,v 1.7 1999-10-13 18:23:28 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.6 1999-10-04 17:42:36 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.7 1999-10-13 18:23:28 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -350,6 +350,8 @@ public abstract class AbstractResource implements Resource {
    *	with a slash) the root of the resource tree.
    */
   public Resource getRelative(String path) {
+    if (path == null || path.length() == 0) return null;
+
     if (! isContainer()) { return getContainer().getRelative(path); }
     if (path == null) return this;
     if (path.startsWith("./")) {
@@ -366,10 +368,12 @@ public abstract class AbstractResource implements Resource {
       return getChild(path);
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.length() == 0) return getRoot();
       return getRoot().getRelative(path);
     } else if (path.startsWith("../")) {
       path = path.substring(3);
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.length() == 0) return getContainer();
       return getContainer().getRelative(path);
     } else {			// Somewhere underneath.
       Resource child = getChild(path.substring(0, si-1));
@@ -395,6 +399,8 @@ public abstract class AbstractResource implements Resource {
    *	list will be used. 
    */
   public Resource locate(String path, boolean create, List extensions) {
+    if (path == null || path.length() == 0) return null;
+
     if (! isContainer()) { 
       return getContainer().locate(path, create, extensions); }
 
@@ -425,10 +431,12 @@ public abstract class AbstractResource implements Resource {
       return child;
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.length() == 0) return getRoot();
       return getRoot().locate(path, create, extensions);
     } else if (path.startsWith("../")) {
       path = path.substring(3);
       while (path.startsWith("/")) { path = path.substring(1); }
+      if (path.length() == 0) return getContainer();
       return getContainer().locate(path, create, extensions);
     } else {			// Somewhere underneath.
       Resource child = getChild(path.substring(0, si));
