@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.5 2000-10-06 01:19:06 steve Exp $
+//	$Id: TextParser.java,v 1.6 2000-10-06 17:42:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a variety of ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.5 2000-10-06 01:19:06 steve Exp $
+ * @version $Id: TextParser.java,v 1.6 2000-10-06 17:42:47 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -182,8 +182,9 @@ public class TextParser extends AbstractParser {
     if (xrefs == null && xrefsName != null) {
       if (top == null) top = getProcessor().getTopContext();
       ActiveNode n = Index.getBinding(getProcessor(), xrefsName);
-      if (n == null) top.message(-2, "no binding for "+xrefsName, 0, true);
-      else xrefs = n.asNamespace();
+      if (n == null) {
+	//top.message(-2, "no binding for "+xrefsName, 0, true);
+      }else xrefs = n.asNamespace();
       if (xrefs == null) {
 	if (n != null)
 	  top.message(-2, ("binding exists but not a namespace "
