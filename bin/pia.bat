@@ -66,7 +66,7 @@ REM else use username of nobody
 SET UHOME="%UHOME%\nobody"
 :ENDHOME
 echo using %UHOME% as user directory for data files
-echo (set environment variable %PIA_ROOT% to override)
+echo (set environment variable PIA_ROOT to override)
 
 :ENDUSRDIR
 
