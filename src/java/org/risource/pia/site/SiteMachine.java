@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.9 2000-02-25 22:35:22 steve Exp $
+// $Id: SiteMachine.java,v 1.10 2000-03-29 16:37:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -247,24 +247,6 @@ public class SiteMachine extends Machine {
       = new SimpleDateFormat("d MMM yyyy HH:mm:ss 'GMT'", Locale.US);
     formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
     return formatter.format(date);
-  }
-
-  public SiteDoc getProcessor(Document doc) {
-    if (doc == null) return null;
-
-    String tsname = doc.getTagsetName();
-    SiteDoc proc = new SiteDoc(doc, null, null, null, Pia.resolver());
-    proc.setVerbosity((Pia.verbose()? 1 : 0) + (Pia.debug()? 2 : 0));
-
-    Tagset ts  = doc.loadTagset(tsname);
-    proc.setTagset(ts);
-    Reader reader =  doc.documentReader();
-
-    Parser p = ts.createParser();
-    p.setReader(reader);
-    proc.setInput(p);
-
-    return proc;
   }
 
   /**
