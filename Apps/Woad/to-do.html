@@ -5,6 +5,30 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Goal</b> useable release by 9/30. <br />
+       <ul>
+	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
+	      actual directories.  This would be trivial if done in the
+	      <code>.xcf</code> file, but we also have to tell the indexer.
+	 </li>
+	 <li> Tagged source listings for non-SGML code files [either by
+	      shallow parsing, external taggers, or both]
+	 </li>
+	 <li> Cross-reference and chronological (newest-first) indices of
+	      notes 
+	 </li>
+       </ul>
+  </li>
+  <li> <b>Impr</b> use WOAD server as proxy <br />
+       needs an agent to add a toolbar to pages from the target server.
+  </li>
+  <li> <b>Wish</b> incremental <code>woad-index.pl</code> <br />
+       Could do this by building the word indices from per-directory indices
+       in the source tree.  No need to re-index a source directory if it
+       hasn't changed.  (Need a switch to override if indexing process has
+       changed.)
+       (2000-08-30)
+  </li>
   <li> <b>Impr</b> Navigation buttons in index files <br />
        Implement as part of the wrapper element.  See, e.g., the <a
        href="http://www.tuxedo.org/~esr/jargon/">Jargon File</a>.
@@ -267,5 +291,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.18 2000-08-30 23:22:09 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.19 2000-09-20 00:39:38 steve Exp $</b><br>
 </body></html>
