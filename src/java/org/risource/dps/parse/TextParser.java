@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.4 2000-10-06 00:30:46 steve Exp $
+//	$Id: TextParser.java,v 1.5 2000-10-06 01:19:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a variety of ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.4 2000-10-06 00:30:46 steve Exp $
+ * @version $Id: TextParser.java,v 1.5 2000-10-06 01:19:06 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -269,45 +269,60 @@ public class TextParser extends AbstractParser {
       next = createActiveElement("line", null, true);
     } else if (last <= ' ') {		// generic whitespace
       eatSpacesInLine();
-    } else if (false && state == IN_TEXT && last == '<') { // tag
-
-      // === BUGGY! === falsed out for the moment. 
-
+    } else if (state == IN_TEXT && last == '<') { // tag
       // we skip over the "<" for the moment and look at the next char:
       last = in.read();
       if (last < 0) {		// unexpected EOF
 	buf.append('<');
       } else if (last == '/') {	// end tag.
+	last = in.read();
 	if (eatIdent()) {
-	  
+	  if (last == '>') {
+	    last = 0;
+	    next = createActiveText("/" + ident, false);
+	    nextEnd = "tag";
+	    return createActiveElement("tag", null, false);
+	  } else {
+	    buf.append("</" + ident);
+	  }
+	} else {
+	  buf.append("</");
 	}
-
       } else if (last == '?') {	// processing instruction
-	buf.append("<?"); 
+	buf.append("<?");	// ===temp
 	last = 0;
 	markup("?>", "pi");
 	
       } else if (last == '!') {	// declaration or comment
-	buf.append(last);
 	last = in.read();
 	if (last == '-') {
 	  last = in.read();
 	  if (last == '-') {
+	    last = 0;
 	    markup("-->", "comment");
+	    buf.append("<!--");	// === temp.
 	  } else {
-	    buf.append("-");
+	    buf.append("<!-");
 	  }
 	} else {
 	  markup(">", "decl");
+	  buf.append("<!");	// === temp.
 	}
 
       } else if (idc[last] == 0) { // stray '<'
 	buf.append('<');
       } else {
-	markup(">", "tag");
-	//state = IN_TAG;
+	state = IN_TAG;
+	eatIdent();		// === look up tagname for style
+	next = createActiveText(ident, false); // === tagname should be xref
+	return createActiveElement("tag", null, false);
       }
-    }  else if (state == IN_CODE && stringDelim(last) != null) {
+    } else if (state == IN_TAG && last == '>') {
+      last = 0; 
+      state = IN_TEXT;
+      nextEnd = "tag";
+      return null;
+    } else if (state == IN_CODE && stringDelim(last) != null) {
       String delims = stringDelim(last);
       currentStringDelim = delims.charAt(0);
       currentStringEscape= (delims.length() > 1)? delims.charAt(1) : 0;
@@ -336,7 +351,8 @@ public class TextParser extends AbstractParser {
       }
     } else if (0 == idc[last]) { 	// other punctuation ================
       while (last > ' ' && idc[last] == 0 
-	     && (state != IN_CODE || stringDelim(last) == null)) {
+	     && (state != IN_CODE || stringDelim(last) == null)
+	     && (state != IN_TAG || last != '>')) {
 	buf.append((char)last);
 	last = in.read();
       }
