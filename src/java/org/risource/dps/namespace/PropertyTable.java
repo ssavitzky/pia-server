@@ -1,5 +1,5 @@
 ////// PropertyTable.java: Node and String Lookup Table
-//	$Id: PropertyTable.java,v 1.2 1999-10-11 21:42:38 steve Exp $
+//	$Id: PropertyTable.java,v 1.3 1999-10-14 21:48:46 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.ds.Table;
  *
  * <p>	The 
  *
- * @version $Id: PropertyTable.java,v 1.2 1999-10-11 21:42:38 steve Exp $
+ * @version $Id: PropertyTable.java,v 1.3 1999-10-14 21:48:46 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.site
@@ -61,10 +61,14 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
    */
   public ActiveNodeList getValueNodes(String name) {
     ActiveNode binding = getBinding(name);
-    if (binding instanceof Namespace) {
+    if (binding == null) {
+      binding = getActiveAttr(name);
+    }
+    if (binding == null) return null;
+    else if (binding instanceof Namespace) {
       return new TreeNodeList(((Namespace)binding).getBindings());
     } else {
-      return (binding != null)? binding.getContent() : null;
+      return binding.getContent();
     }
   }
 
@@ -167,8 +171,16 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
     super("Properties", name); 
   }
 
+  public PropertyTable(String tag, String name) {
+    super(tag, name); 
+  }
+
+  public PropertyTable(String name, ActiveAttrList attrs) {
+    super("Properties", name, attrs); 
+  }
+
   public PropertyTable(String name, java.util.Properties props) {
-    super("Properties", name); 
+    super("#Properties", name); 
     Enumeration e =  props.propertyNames();
     while( e.hasMoreElements() ){
 	String k = (String) e.nextElement();
