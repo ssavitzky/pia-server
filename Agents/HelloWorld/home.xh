@@ -16,7 +16,7 @@
 </p></then><else> 
 	<form action='&urlPath;' method='post'> 
 	My mission impossible is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
-	My owner, &piaUSER;, may decide.
+	My owner, &user.name;, may decide.
 	<p>
 	<input type='submit' value='Enter' /> 
 	A Greeting: <input name='data' /> 

@@ -1,11 +1,11 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-24 00:23:24 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-10-04 17:07:49 steve Exp $ -->
 
 
 <Container>
   <AGENT name="remoteTools" criteria="response proxy-response html">
     <initialize><user-message>remoteTools agent initializing</user-message>
-	<set name="AGENT:pia">http://&piaHOST;:&piaPORT;</set>
+	<set name="AGENT:pia">http://&PIA:host;:&PIA:port;</set>
     </initialize>
     <action>
       <if><get name="AGENT:hidden"><else>

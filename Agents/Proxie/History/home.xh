@@ -76,7 +76,7 @@ lets you define a key that inserts a link to the last page you visited:
 (defun generic-insert-last-link ()
   "Insert a link to the last page visited into the buffer"
   (interactive)
-  (insert-file-contents "&usrDIR;/Agents/Proxie/History/DATA/last.link") )
+  (insert-file-contents "&PIA:root;/Agents/Proxie/History/DATA/last.link") )
 </pre></blockquote>
 
 </p><h3>Directory Format</h3>
@@ -115,5 +115,5 @@ sorting files by date very easy.  <p>
 <pre><protect result='result' markup='markup'>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid='$Id: home.xh,v 1.8 1999-09-24 22:08:38 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.9 1999-10-04 17:07:40 steve Exp $' />
 </body></html>

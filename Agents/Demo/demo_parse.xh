@@ -22,18 +22,13 @@ This example does not work.<br /><br />
 <br />
 <br />
 
-<b>URL:</b>
-&lt;<a href='http://&piaHOST;:&piaPORT;/'>http://&piaHOST;:&piaPORT;/</a>&gt;
-<b>User:</b> &piaUSER;
-
-
 <hr />
 <b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
 <b>Source:</b> <a href='/PIA/Agents/&agentName;/&fileName;'>&fileName;</a>
 <b>File:</b> <a href='/Root/&filePath;'>&filePath;</a>
 <hr />
 <b>Copyright &copy; 1997 Ricoh California Research Center</b><br />
-<b>$Id: demo_parse.xh,v 1.4 1999-03-27 02:29:30 pgage Exp $</b><br />
+<b>$Id: demo_parse.xh,v 1.5 1999-10-04 17:07:33 steve Exp $</b><br />
 
 </body></html>
 

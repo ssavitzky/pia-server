@@ -34,9 +34,9 @@
 	            <a href='/&agentType;/&agentName;'>&agentName;</a>
 	      </then><else><a href='/&agentName;/home'>&agentName;</a>
        </else></if> agent of
-       <if><test exact='exact' match='pia'>&piaUSER;</test>
+       <if><test exact='exact' match='pia'>&user.name;</test>
 		<then>An Information Appliance</then>
-		<else><a href='/~/'>&piaUSER;'s</a>
+		<else><a href='/~/'>&user.name;'s</a>
        			Personal Information Agency</else>
        </if>
 <if>&referer;<then>       
@@ -61,5 +61,5 @@ links to the documentation and to many useful forms and active documents, can be
 found on the <a href='/Admin'>Admin Agent's home page</a>.
 
 <hr />
-<footer cvsid='$Id: help.xh,v 1.1 1999-09-22 23:43:47 steve Exp $' />
+<footer cvsid='$Id: help.xh,v 1.2 1999-10-04 17:08:04 steve Exp $' />
 </body></html>

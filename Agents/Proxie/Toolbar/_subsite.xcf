@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-24 00:23:20 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-10-04 17:07:43 steve Exp $ -->
 
 <Container>
   <!-- Toolbar doesn't need any agents; it's just a bundle of documents. -->
@@ -8,7 +8,7 @@
          document, albeit an imaginary one.  
       -->
     <DOCUMENT> <!-- Generic Toolbar controls: -->
-<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+<set name='pia'>http://&PIA:host;:&PIA:port;</set>
 <a href='&pia;/&AGENT:path;/' target='_top'>[~]</a>
 <a href='&pia;&AGENT:path;/hide?hide=true' target='_top'>[X]</a>
 <a href='&pia;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a>

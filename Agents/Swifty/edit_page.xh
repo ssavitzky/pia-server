@@ -60,10 +60,10 @@ Enter the name that will appear in the title of your home page.
 <input type='submit' name='submission' value='Submit' /> 
 <input type='reset' value='Reset' /> 
 </p></form> 
-<footer cvsid='$Id: edit_page.xh,v 1.6 1999-03-29 18:22:50 pgage Exp $'></footer>
+<footer cvsid='$Id: edit_page.xh,v 1.7 1999-10-04 17:07:53 steve Exp $'></footer>
 
 <p>
-<code><A href='file:&piaDIR;/Agents/Swifty/edit_page.txt' target='_blank'>View source code</A></code>
+<code><A href='file:&PIA:dir;/Agents/Swifty/edit_page.txt' target='_blank'>View source code</A></code>
 
 </p></body></html>
 
