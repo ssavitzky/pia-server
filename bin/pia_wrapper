@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.6 1999-03-13 16:44:45 wolff Exp $
+#	$Id: pia_wrapper,v 1.7 1999-03-26 01:41:53 steve Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -96,14 +96,9 @@ done
 
 # The pia class library.
 PIA_CLASSES=${PIA_CLASSES-$PIA_DIR/lib/java/pia.zip}
-REGEXP_CLASSES=${REGEXP_CLASSES-$PIA_DIR/lib/java/regexp.jar}
-
-# where zjigsaw lives, ya
-JIGSAW_HOME=${JIGSAW_HOME-$PIA_DIR/lib/java}
-JIGSAW_CLASSES=${JIGSAW_CLASSES-$JIGSAW_HOME/jigsaw_s.jar}
 
 [ -z "$CLASSPATH" ] || CLASSPATH=":$CLASSPATH"
-CLASSPATH=$PIA_CLASSES:$JIGSAW_CLASSES:$REGEXP_CLASSES$CLASSPATH
+CLASSPATH=$PIA_CLASSES$CLASSPATH
 
 # The pia source directory.  (Later we will test for their existance)
 PIA_SRC=${PIA_SRC-$PIA_DIR/src}
