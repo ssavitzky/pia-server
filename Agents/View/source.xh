@@ -6,10 +6,15 @@
   <head><title>&URL;</title></head>
   <body>
     <h2>Source code for &URL;</h2>
-    <pre><protect result='result' markup='markup'>
-<include src='&URL;' tagset='pia-xhtml' quoted='quoted' />
-         </protect>
-    </pre>
+    <if>&FORM:pretty;
+        <then><pretty><include src='&URL;' tagset='pia-xhtml' quoted='quoted' />
+              </pretty>
+	</then>
+	<else><pre><protect result='result' markup='markup'>
+<include src='&URL;' tagset='pia-xhtml' quoted='quoted' /> </protect>
+	     </pre>
+	</else>
+    </if>
   </body>
 </html>
 </then>
@@ -17,10 +22,10 @@
 <html><head>
 <title>View source</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
-<header>View</header>
+<header>XML Source</header>
 <sub-head page='source'>
-    <tr><th align='right'><xopt page='&attributes:page;' pages='view slides'>&blue-dot;</xopt>
-        </th><td> <b>view</b>
+    <tr><th align='right'>view:
+        </th><td>
 	     <xa href='view' page='&attributes:page;'>page</xa>
 	     <xa href='slides' page='&attributes:page;'>slides</xa>
 	     <xa href='source' page='&attributes:page;'>source</xa>
@@ -28,19 +33,35 @@
 <hr />
 
 <form method='GET' action='source'>
-<input type='submit' value='View source' />
-<input type='hidden' name='tagset' value='HTML' />
-<b>URL:</b> <input name='url' size='55' maxlength='200' value='&PIA:url;/PIA/Agents' />
+  <input type='hidden' name='tagset' value='HTML' />
+  <table>
+    <tr><td> <input type='submit' value='View source' /> </td>
+        <th align="right">URL:</th>
+        <td><input name='url' size='50' maxlength='200'
+    			value='/Agents/View/source.xh' /></td>
+    </tr>
+    <tr><th align="right" colspan="2">Formatting: </th>
+        <td> <select>
+		<option selected>as-is</option>
+		<option>pretty</option>
+	    </select>
+        </td>
+    </tr>
+  </table>
 </form>
 
 <dl>
-  <dt> <b>Note:</b>
-  </dt><dd> The page being viewed is parsed using the <code>pia-xhtml</code>
+  <dt> To view PIA source code </dt>
+  <dd> use a <em>file path</em> rather than a full URL -- this specifies a
+       path relative to the PIA's root and shows you the file without any
+       processing.  </dd>
+  <dt> <b>Note:</b>  </dt>
+  <dd> The page being viewed is parsed using the <code>pia-xhtml</code>
        tagset.  Odd things may happen if it contains empty elements that are
-       not defined in this tagset.
-</dd></dl>
+       not defined in this tagset.</dd>
+</dl>
 
-<footer cvsid='$Id: source.xh,v 1.6 1999-10-20 16:21:53 steve Exp $' />
+<footer cvsid='$Id: source.xh,v 1.7 1999-10-25 16:39:30 steve Exp $' />
 </body></html>
 </else>
 </if>

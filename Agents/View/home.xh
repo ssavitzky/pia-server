@@ -1,9 +1,9 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>Generic Home Page for &AGENT:name;</title>
+<title>View application</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
-<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<set name='subs'> </set>
 <sub-head page='home'>
     <tr><th align='right'><xopt page='&attributes:page;' pages='view slides'>&blue-dot;</xopt>
         </th><td> <b>view</b>
@@ -25,5 +25,5 @@
 </repeat>
 
 <p>
-<footer cvsid='$Id: home.xh,v 1.4 1999-03-27 02:29:47 pgage Exp $' />
+<footer cvsid='$Id: home.xh,v 1.5 1999-10-25 16:39:29 steve Exp $' />
 </p></body></html>
