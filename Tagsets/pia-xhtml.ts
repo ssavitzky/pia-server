@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.5 2000-04-18 21:33:49 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.6 2000-04-20 23:10:32 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -296,7 +296,8 @@ Note that we only need these inside the PIA.
 	    <td><br /></td>
 	</tr>
 	<tr><th align=right>
-	      <xopt pages="home index help options"><get name="blue-dot"/></xopt>
+	      <xopt pages="home index help options">
+	  	<expand><get name="blue-dot"/></expand></xopt>
 	    <td><xa href="home">Home</xa>
 		<xa href="-">Index</xa>
 		<if><status item="exists" src="help.xh" />
