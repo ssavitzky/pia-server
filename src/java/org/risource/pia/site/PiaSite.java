@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: PiaSite.java,v 1.4 1999-12-14 18:40:10 steve Exp $
+//	$Id: PiaSite.java,v 1.5 2000-06-02 23:17:27 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ import java.util.Enumeration;
 /**
  * A specialized Site for use in the PIA.
  *
- * @version $Id: PiaSite.java,v 1.4 1999-12-14 18:40:10 steve Exp $
+ * @version $Id: PiaSite.java,v 1.5 2000-06-02 23:17:27 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -64,7 +64,15 @@ public class PiaSite extends Site {
       while (path.startsWith("/")) { path = path.substring(1); }
       File home = Pia.getHomeDir();
       if (home == null) return null;
+      if (! path.equals("")) {
+	home = new File(home, path);
+	if (! home.exists()) return null;
+      }
+      return new FileDocument("pia:", null, home);
+      /* === for some reason this seems to work in Site but not here
+      if (path.equals("")) return new FileDocument("pia:", null, home);
       return new FileDocument("pia:", null, home).getRelative(path);
+      */
     } else {
       return super.getPrefixedResource(path, prefix); 
     }
@@ -76,8 +84,12 @@ public class PiaSite extends Site {
       while (path.startsWith("/")) { path = path.substring(1); }
       File home = Pia.getHomeDir();
       if (home == null) return null;
-      return new FileDocument("pia:", null, home).locate(path, create,
-							 extensions);
+      if (path.equals("")) return new FileDocument("pia:", null, home);
+      if (! path.equals("")) {
+	home = new File(home, path);
+	if (! home.exists()) return null;
+      }
+      return new FileDocument(home.getName(), null, home);
     } else {
       return super.locatePrefixedResource(path, prefix, create, extensions); 
     }

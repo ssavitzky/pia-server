@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
+//	$Id: FileDocument.java,v 1.6 2000-06-02 23:17:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
+ * @version $Id: FileDocument.java,v 1.6 2000-06-02 23:17:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -94,7 +94,9 @@ public class FileDocument extends FileResource implements Document {
   /** Returns a Resource that refers to a named child.
    * @return <code>null</code> because documents have no children.
    */
-  public Resource getChild(String name) { return null; }
+  public Resource getChild(String name) {
+    File f = new File(file, name);
+    return f.exists()? new FileDocument(name, this, f) : null; }
 
   /************************************************************************
   ** Document Access:

@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
+//	$Id: AbstractResource.java,v 1.12 2000-06-02 23:17:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.11 2000-04-14 23:10:06 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.12 2000-06-02 23:17:33 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -332,7 +332,7 @@ public abstract class AbstractResource implements Resource {
 
   /** Return the initial colon-delimited prefix of the given path. */
   protected final static String getPrefix(String path) {
-    return path.substring(0, path.indexOf(":"));
+    return path.substring(0, path.indexOf(":") + 1);
   }
 
   /** Get a resource that has a path starting with a colon-delimited
@@ -466,7 +466,7 @@ public abstract class AbstractResource implements Resource {
     int si = path.indexOf('/');	// Look for a slash.
     int ci = path.indexOf(':');	// look for a colon (delimiting a prefix)
 
-    if (si < 0) {		// No slash: it's a child, .,  or ..
+    if (si < 0 && ci < 0) {	// No slash, no prefix: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
       //if (path.equals(".")) return this;
       Resource child = locateChild(path, extensions);

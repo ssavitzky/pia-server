@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.20 2000-04-19 23:54:32 steve Exp $
+//	$Id: Subsite.java,v 1.21 2000-06-02 23:17:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -52,7 +52,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.20 2000-04-19 23:54:32 steve Exp $
+ * @version $Id: Subsite.java,v 1.21 2000-06-02 23:17:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -207,6 +207,7 @@ public class Subsite extends ConfiguredResource implements Resource {
   }
 
   public void loadConfig() {
+    if (isSuspect()) return;
     String fn = getConfigFileName();
     if (fn == null || fn.length() == 0) return;
     configFile = locateChildFile(fn);
@@ -468,6 +469,13 @@ public class Subsite extends ConfiguredResource implements Resource {
    *	attribute. 
    */
   protected File locateVirtual(String path) {
+    if (path.indexOf(":") > 0) {
+      AbstractResource r = 
+	(AbstractResource)getPrefixedResource(stripPrefix(path),
+						 getPrefix(path));
+      if (r == null) System.err.println("cannot locate " + path);
+      return (r == null)? null : r.documentFile();
+    }
     // === for now just go relative ===
     // === needs lots of configuration stuff.
     File loc = getVirtualLoc();
@@ -854,7 +862,10 @@ public class Subsite extends ConfiguredResource implements Resource {
    */
   public Subsite(String name, Subsite parent,
 		 File file, File vfile, ActiveElement config) {
-    super(name, parent, true, (file == null), file, config, null);
+    super(name, parent, true, (file == null), file, null, null);
+    // explicit setConfig here because instance variables 
+    // in this class get set _after_ initializing super.
+    if (config != null) setConfig(config);
     if (file != null && file.exists()) real = true;
     if (virtualSearchPath == null && (base != null || vfile != null)) 
       virtualSearchPath = new File[2];
