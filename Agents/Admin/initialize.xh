@@ -10,8 +10,9 @@
     <then>
 	<user-message>Submitting forms in '<status src="START-UP.html"
 				            item='path' />'</user-message>
+        <submit-forms><include src="START-UP.html"></submit-forms>
     </then>
-    <else-if><status src='agent-files.xml' item='exists' />
+<else-if><status src='agent-files.xml' item='exists' />
     <then><user-message>Loading XML from '<status src='agent-files.xml'
 				           item='path' />'</user-message>
 	  <load-agent-files><include src='agent-files.xml' /></load-agent-files>
@@ -36,5 +37,5 @@
     in (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code
     into it. </p>
 
-<short-footer cvsid='$Id: initialize.xh,v 1.8 1999-05-18 20:12:54 steve Exp $' />
+<short-footer cvsid='$Id: initialize.xh,v 1.9 1999-05-21 00:27:11 steve Exp $' />
 </p></body></html>
