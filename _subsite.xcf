@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.24 2000-10-06 00:33:04 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.25 2000-10-06 17:39:35 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -32,9 +32,9 @@
   <!-- robots.txt keeps the spiders out -->
   <Resource	name="robots.txt"	virtual="Agents/ROOT/robots.txt" />
 
-  <Resource	name="test.xh" virtual="Config/Site/test.xh">
+  <!-- Resource	name="test.xh" virtual="Config/Site/test.xh">
 	<doc> This is a server test document. </doc>
-  </Resource>
+  </Resource -->
 
 <!-- Properties -->
   <!-- You can set most of the PIA's ``properties'' this way -->
@@ -61,6 +61,8 @@
 <!-- Woad Annotation Tree -->
 
   <notesPrefix>/.notes</notesPrefix>
+  <sourceSuffix>/<get name="PIA:suffix">.notes</get></sourceSuffix>
+
   <Container name=".notes" suspect="true">
     <HomeDocumentName>woad-index.wh</HomeDocumentName>
     <IndexDocumentPath>/.Woad/Tools/woad-listing.xh</IndexDocumentPath>
