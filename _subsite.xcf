@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.9 1999-10-26 17:42:33 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.10 1999-11-09 01:21:13 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -7,8 +7,8 @@
 
   <doc> This is the standard default configuration that you get if no
 	configuration file or root directory is specified on the pia command
-	line, or if no configuration file is found in the specified root.  The
-	real root will be $PIA_ROOT, if it exists.
+	line, or if no configuration file is found in the specified real root.
+	The real root will be $PIA_ROOT, if it exists.
   </doc>
 
   <note> For a better set of examples, see the sample configuration files in
