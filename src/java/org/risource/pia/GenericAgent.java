@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.6 1999-03-24 17:32:00 steve Exp $
+// $Id: GenericAgent.java,v 1.7 1999-03-24 20:48:23 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -282,6 +282,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
     String t = type();
     put("name", n);
     put("type", t);
+    put("path", path());
+    put("pathName", pathName());
 
     String url = "/" + n + "/" + "initialize.xh";
     if (! n.equals(t)) url = "/" + t + url;
@@ -550,6 +552,8 @@ public class GenericAgent implements Agent, Registered, Serializable {
     else if (! path.startsWith("/")) path = "/" + path;
     if (! path.endsWith("/")) path += "/";
     this.path = path;
+    put("path", path);
+    put("pathName", pathName());
   }
 
   /** Return the complete ``pathname'' of this agent: the agent's root URL.
