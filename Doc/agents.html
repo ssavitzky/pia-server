@@ -17,7 +17,7 @@ PIA. PIA agents fall into three categories:</p>
 <li><a href="#Standard">Standard agents</a> that are automatically
 installed when the PIA is set up.</li>
 
-<li><a href="#OptionalAgents">Optional agents</a> that ship with
+<li><a href="#Optional">Optional agents</a> that ship with
 the PIA and can be installed at the user's discretion.</li>
 
 <li><a href="#Contributed">Contributed agents</a> made available by
@@ -30,91 +30,164 @@ the PIA developer community.</li>
 <p>The agents currently available are:</p>
 
 <ul>
-<li><a href="#Admin">Admin</a></li>
-
-<li><a href="#PIA">PIA and ROOT</a></li>
-
-<li><a href="#fbi">Toolbar</a></li>
-
-<li><a href="#History">History</a></li>
+  <li> <a href="#ROOT">ROOT</a>
+  <li><a href="#Admin">Admin</a></li>
+  <li> <a href="#DOFS">DOFS</a>
+     <ul>
+       <li> <a href="#Doc">Doc</a>
+       <li><a href="#PIA">PIA</a></li>
+     </ul>
+  <li><a href="#Proxie">Proxie</a></li>
+       <ul>
+	 <li> <a href="#Toolbar">Toolbar</a>
+	 <li> <a href="#History">History</a></li>
+	 <li> <a href="#Cache">Cache</a></li>
+       </ul>
 </ul>
 
-<h3><a name="Admin"></a>Admin</h3>
+<h3><a name="ROOT">ROOT</h3>
 
-<p>The Admin agent is the main agent. It manages all the other
-agents that make up the PIA Agency.</p>
+<p> The ROOT agent is the main agent: it serves pages from the root directory
+    of the URL directory tree.  It is also responsible for directing requests
+    to the appropriate agents (any URL that doesn't start with the name of an
+    agent must be for ROOT).
+</p>
 
-<h3><a name="PIA"></a>PIA and ROOT</h3>
+<p> Like all agents, the ROOT agent has a data directory that appears as a
+    ``virtual subdirectory'' called ``<code>~/</code>''.  Since the ROOT
+    agent's URL is ``<code>/</code>'', its data directory is addressed by the
+    URL ``<code>/~/</code>''.  The ROOT agent's data directory is the PIA's
+    ``user-data directory,'' usually referred to as
+    <code><em>USER_DIR</em></code> because that is the name of the environment
+    variable that points to it.  On Unix systems, the default user directory
+    is <code>.pia</code> in your home directory.
 
-<p>These two agents serve the files that are in the <code><var>
-PIA_DIR</var></code> and the <code><var>PIA_HOME</var></code>
-directories respectively. The PIA and ROOT agents are of type
-Document-Oriented File System (DOFS).</p>
 
-<h3><a name="fbi"></a>The Toolbar Agents</h3>
+<h3><a name="Admin">Admin</a></h3>
 
-<p>There are two Toolbar agents. The fileTools agent adds a control
-menu to pages proxied by the PIA agency.</p>
+<p> The Admin agent is the ``server administration'' or ``control panel''
+    agent.  It manages all the other agents that make up the PIA Agency.</p>
 
-<p>The remoteTools agent adds a control menu to pages proxied through
-your agency</p>
+<h3><a name="DOFS">DOFS</a></h3>
 
-<h3><a name="History"></a>History Agent</h3>
+<p> The DOFS (Document-Oriented File System) agent is the ``type'' (generic)
+    agent for the specialized agents that serve local files.  Requests
+    starting with the name of a DOFS agent are served by appending the
+    remainder of the URL to the ``root'' directory of the DOFS agent. 
 
-<p>The History agent tracks all web pages that you visit from any
-browser, allowing you to search those URLs by date. To make best
-use of the History agent, set your browsers to use your local
-Information Agency as your proxy (this setting is usually found
-under the Network options available under edit/preferences,
-options/network, or some similar menu. You need to specify both the
-host name and port--8888 by default-- where your agency is
-running.)</p>
+<h4><a name="Doc">Doc</a></h4>
 
-<p>Once you set your Information Agency as your proxy, browse to a
-few external web pages, then visit the <a href="/History/home.xh">
-History agent's home page</a>. You should see a link to today's
-date (e.g. <tt>My/History / 1997 / 08 /04</tt>) When you jump to
-this link you will see a list of the pages you visited.</p>
+<p> Doc is the most important DOFS agent, and is one of two that are started
+    by default: its ``root'' directory is <code><em>PIA_DIR</em>/Doc</code>,
+    the PIA's top-level documentation directory.
 
-<h2>Optional Agents</h2>
+<h4><a name="PIA">PIA</a></h4>
 
-<p>The PIA provides a simple form for installing agents. Look for
-it in <code>Admin/install_agent</code>. The <a name=
-"OptionalAgents">optional agents</a> currently shipping with the
-PIA include:</p>
+<p> PIA is the other standard DOFS agent; its root directory is
+    <code><em>PIA_DIR</em></code>, the directory the PIA is installed in.  On
+    most Unix systems this will be a subdirectory of your home directory,
+    especially if you are doing software development on the PIA.  At sites
+    where many users are using the PIA but not doing much development, this
+    may be a shared directory.  On a special-purpose ``appliance'', the PIA's
+    files are typically in the home directory of a ``user'' with the login
+    name ``<code>pia</code>''.
+
+<p> One may well ask why <code>Doc</code> and <code>PIA</code> are separate
+    agents, since the documentation is also accessible as
+    <code>/PIA/Doc</code>.  The answer is that it may be desirable to limit
+    access to the main PIA directory, or to move the documentation (which is
+    bulky) to a directory -- or even a separate web server -- that all users
+    can share. 
+
+<h3><a name="Proxie">The Proxie Agents</a></h3>
+
+<p> Proxie is the main agent in a group of related agents that operate when
+    the PIA is used as a proxy for web browsing.   The Proxie family of agents
+    combine to make the PIA a powerful ``web browser's assistant,'' which was
+    the original goal when the PIA was designed.
+
+<p> To use these agents, set your browsers to use your PIA (sometimes referred
+    to as your Personal Information Agency when it's being used in this way)
+    as your proxy.  This setting is usually found under the Network options
+    available under edit/preferences, options/network, or some similar
+    menu. You need to specify both the host name and port--8888 by default--
+    where your agency is running.
+
+<h4><a name="Toolbar">Toolbar</a></h4>
+
+<p> The Toolbar agent is the ``type'' agent for agents that put a ``toolbar''
+    of links at the top of a page.  
+
+<p> There are two Toolbar agents. The fileTools agent adds a toolbar to pages
+    served from local files by DOFS agents in the PIA agency. The remoteTools
+    agent adds a toolbar to remote pages proxied through your agency.
+
+<p> The <code>remoteTools</code> agent is also the agent responsible for
+    displaying the URL of every HTML page you visit as the output of the
+    <code>pia</code> command.
+
+<h4><a name="History">History Agent</a></h4>
+
+<p> The History agent tracks all web pages that you visit from any
+browser, allowing you to search those URLs by date.
+
+<p> Once you set your Information Agency as your proxy, browse to a few
+    external web pages, then visit the <a href="/History/home.xh"> History
+    agent's home page</a>. You should see a link to today's date
+    (e.g. <tt>[Hist: / 1998 / 08 / 04]</tt>) The last component, the day, is
+    a list of links to all the pages you visited on that day.  The month and
+    year are directories corresponding to that month and year.
+</p>
+
+<h4><a name="Cache">Cache Agent</a></h4>
+
+<blockquote><em>
+  (The Cache agent may not be functional in versions of the PIA prior to
+  release 2.1; it's still experimental.)
+</em></blockquote>
+
+<p> Unlike the History agent, which saves only URL's, the Cache agent saves
+    <em>entire pages</em>.  This can take up a lot of space, but it can speed
+    things up if you go back to a page you've visited recently.  Eventually we
+    want to be able to display the differences if a page has changed since the
+    last time you visited it.
+
+<h2><a name="Optional">Optional Agents</a></h2>
+
+<p>The PIA provides a simple form for installing agents. Look for it in
+<code>Admin/install_agent</code>. The optional
+agents currently shipping with the PIA include:</p>
 
 <ul>
-<li>Swifty</li>
-
-<li>HelloWorld</li>
-
-<li>View</li>
-
-<li>demo</li>
+  <li>Swifty</li>
+  <li>HelloWorld</li>
+  <li>View</li>
+  <li>Demo</li>
 </ul>
 
 <h3>Swifty</h3>
 
-<p>The Swifty agent allows you to easily customize your PIA home
+<p>The Swifty agent lets you  easily customize your PIA home
 page. It offers the option of adding useful links, provides a
-custom page title and a decorative image</p>
+custom page title and a decorative image.</p>
 
 <h3>HelloWorld</h3>
 
-<p>The HelloWorld agent allows the user to choose a custom
-greeting. This agent provides a simple example of form use for PIA
+<p>The HelloWorld agent lets you choose a custom
+greeting.  This agent provides a simple example of form use for PIA
 developers.</p>
 
 <h3>View</h3>
 
-<p>The View agent allows you to view documents after those document
-are processed with a tagset or script.</p>
+<p>The View agent lets you view documents after those document are processed
+with a tagset or script.  Three of the ``views'' provided are as raw text, as a
+``slide'' presentation, and as the documentation for a ``tagset''.</p>
 
-<h3>demo</h3>
+<h3>Demo</h3>
 
-<p>This agent serves as both a demonstration and testbed for the
-PIA's markup language and its formatter/interpreter. Its home page
-provides links to tag use examples.</p>
+<p>This agent serves as both a demonstration and testbed for the PIA's
+extended HTML markup language and its formatter/interpreter. Its home page
+provides links to pages that show examples of tag usage.</p>
 
 <h2>Contributed Agents</h2>
 
@@ -124,7 +197,7 @@ Contrib/&lt;host.name&gt;/Agents</code> Install these agents much
 as you would any of the optional agents provided by Ricoh.</p>
 
 <p>Users can place a copy of their agent directories in <code>
-Contrib/HOST.NAME/</code> and submit them to the PIA group for
+Contrib/<em>HOST.NAME</em>/</code> and submit them to the PIA group for
 inclusion in the general release. Before attempting to install a
 contributed agent, copy its directory and files to <code><var>
 USR_DIR</var>/Agents</code> or <code><var>
