@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.21 2000-10-04 22:06:31 steve Exp $
+//	$Id: TopProcessor.java,v 1.22 2000-10-06 17:46:52 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.21 2000-10-04 22:06:31 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.22 2000-10-06 17:46:52 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -297,6 +297,7 @@ public class TopProcessor extends BasicProcessor implements TopContext
 					    boolean createIfAbsent,
 					    boolean doNotOverwrite)
     throws IOException {
+    if (path == null) return null;
     if (isSpecialPath(path)) {
       return writeSpecialResource(path, append, createIfAbsent, doNotOverwrite);
     } else if (isRemotePath(path)) {
@@ -306,6 +307,10 @@ public class TopProcessor extends BasicProcessor implements TopContext
       }
     } else if (document != null) {
       Resource r = document.locate(path, true, null);
+      if (r == null) {
+	message(-2, "Cannot locate " + path + " for writing", 0, true);
+	return null;
+      }
       Document d = r.getDocument();
       // === worry about createIfAbsent/doNotOverwrite
       return d.documentOutputStream(append);
