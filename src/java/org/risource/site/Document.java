@@ -1,5 +1,5 @@
 ////// Document.java -- interface for a document resource
-//	$Id: Document.java,v 1.2 1999-09-09 21:47:03 steve Exp $
+//	$Id: Document.java,v 1.3 1999-09-22 00:17:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.net.URL;
  *	is the preferred access method.  Note that all the contents of a
  *	container need not have the same preferred access method.
  *
- * @version $Id: Document.java,v 1.2 1999-09-09 21:47:03 steve Exp $
+ * @version $Id: Document.java,v 1.3 1999-09-22 00:17:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -90,11 +90,11 @@ public interface Document extends Resource {
 
   /** @return an <code>OutputStream</code> for writing the document.
    */
-  public OutputStream documentOutputStream();
+  public OutputStream documentOutputStream(boolean append);
 
   /** @return a <code>Writer</code> for writing the document.
    */
-  public Writer documentWriter();
+  public Writer documentWriter(boolean append);
 
   /** Returns a DPS <code>Input</code> object suitable for traversing
    *	the document associated with the Resource. 
@@ -110,7 +110,7 @@ public interface Document extends Resource {
    * @return an <code>Output</code> for (re)writing the document.
    *	Returns <code>null</code> if the resource is not writable.
    */
-  public Output documentOutput();
+  public Output documentOutput(boolean append);
 
   /************************************************************************
   ** Resource Manipulation:

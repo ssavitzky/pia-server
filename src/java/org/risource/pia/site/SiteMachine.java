@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.2 1999-09-17 23:39:47 steve Exp $
+// $Id: SiteMachine.java,v 1.3 1999-09-22 00:17:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,14 +26,7 @@ package org.risource.pia.site;
 
 import org.w3c.www.http.HTTP;
 
-import org.risource.pia.Machine;
-import org.risource.pia.Agent;
-import org.risource.pia.Pia;
-import org.risource.pia.Resolver;
-import org.risource.pia.Transaction;
-import org.risource.pia.Content;
-import org.risource.pia.HTTPResponse;
-import org.risource.pia.PiaRuntimeException;
+import org.risource.pia.*;
 
 import org.risource.content.text.ProcessedContent;
 import org.risource.content.*;
@@ -75,6 +68,99 @@ public class SiteMachine extends Machine {
    * Site root
    */
   protected Site site;
+
+  /************************************************************************
+  ** Submitting Requests:
+  ************************************************************************/
+
+  /**
+   * Default content type for form submissions
+   */
+  protected final static String DefaultFormSubmissionContentType
+    = "application/x-www-form-urlencoded";
+
+  /**
+   * Given a url string and content create a request transaction.
+   *       The results are discarded.
+   *	@param method (typically "GET", "PUT", or "POST").
+   *	@param url the destination URL.
+   *	@param queryString (optional) -- content for a POST request.
+   */
+  public void createRequest(String method, String url,
+			    String queryString, String contentType){
+    makeRequest(method, url, queryString, contentType).startThread();
+  }
+
+
+  /**
+   * Given a url string and content create a request transaction.
+   *	@param method (typically "GET", "PUT", or "POST").
+   *	@param url the destination URL.
+   *	@param queryString content for a POST request.
+   *	@param contentType defaults to DefaultFormSubmissionContentType
+   */
+  public void createRequest(String method, String url,
+			    InputContent content, String contentType) {
+    makeRequest(method, url, content, contentType).startThread();
+  }
+
+  /** Make a new request Transaction on this agent. */
+  public Transaction makeRequest(String method, String url, 
+				 String queryString, String contentType) {
+    InputContent c;
+    if (contentType == null) contentType = DefaultFormSubmissionContentType;
+    if (contentType.startsWith("multipart/form-data")) {
+      org.risource.pia.Pia.debug(this,"Making new MultipartFormContent");
+
+      c = new MultipartFormContent(Utilities.StringToByteArrayOutputStream(queryString));
+    } else {
+      // Convert stream to String, taking care of nulls
+      if (queryString == null) {
+	// Make sure correct constructor of FormContent is called
+	c = new FormContent((String)null);
+      } else {
+	c = new FormContent( queryString );
+      }
+    }
+
+    return makeRequest(method, url, c, contentType);
+  }
+
+  /** Make a new request Transaction on this agent. */
+  public Transaction makeRequest(String method, String url, 
+				 InputContent content, String contentType) {
+    if (contentType == null) contentType = DefaultFormSubmissionContentType;
+
+    Pia.debug(this, "makeRequest -->"+method+" "+url);
+    Pia.debug(this, "Content type "+contentType);
+
+    Transaction request;
+
+    // create things normally gotten from header
+    String initString = "HTTP/1.0 "+ method +" "+url;
+
+    // create the request but don't start processing
+    request = new HTTPRequest( this, content, false );
+
+    // Changed "Version" to "User-Agent"
+    request.setHeader("User-Agent", "PIA" );
+    //request.setHeader("User-Agent", "Mozilla/4.5b1 [en] (Win95; I)");
+
+    request.setContentType(contentType);
+    try {
+      request.setContentLength(content.getCurrentContentLength());
+    } catch (ContentOperationUnavailable e) {
+      // If we cannot find content length, do not set header
+    }
+    request.setHeader("Accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
+
+    //    request.setContentLength( queryString.length() );
+
+    request.setMethod( method );
+    request.setRequestURL( url );
+    return request;
+  }
+ 
 
   /************************************************************************
   ** Responding to Requests:
@@ -263,7 +349,11 @@ public class SiteMachine extends Machine {
 
     // If the path includes a query string, remove it now
     int end = path.indexOf('?');
-    if(end > 0) path = path.substring(0, end);
+    String query = null;
+    if(end > 0) {
+      query = path.substring(end+1);
+      path = path.substring(0, end);
+    }
 
     // Perform URL decoding:
     path = Utilities.urlDecode(path);
@@ -272,9 +362,13 @@ public class SiteMachine extends Machine {
     Resource resource = site.locate(path, false, null);
     if (resource == null) return false;
 
+    // If the resource is hidden, we're not supposed to show it.
+    if (resource.isHidden()) return false;
+
     // If the request needs to be redirected, do so now.
-    if (resource.isContainer() && !path.endsWith("/")) 
+    if (resource.isContainer() && !path.endsWith("/")) {
       return sendRedirection(request, path + "/");
+    }
 
     /* === worry about authentication ===
 

@@ -1,5 +1,5 @@
 ////// AbstractResource.java -- Minimal implementation of Resource
-//	$Id: AbstractResource.java,v 1.4 1999-09-17 23:39:51 steve Exp $
+//	$Id: AbstractResource.java,v 1.5 1999-09-22 00:17:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,7 @@ import java.net.URL;
  *
  * <p> <strong>Therefore, configuration information is separate.</strong>
  *
- * @version $Id: AbstractResource.java,v 1.4 1999-09-17 23:39:51 steve Exp $
+ * @version $Id: AbstractResource.java,v 1.5 1999-09-22 00:17:16 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -362,7 +362,7 @@ public abstract class AbstractResource implements Resource {
     int si = path.indexOf('/');	// Look for a slash.
     if (si < 0) {		// No slash: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
-      if (path.equals(".")) return this;
+      //if (path.equals(".")) return this;
       return getChild(path);
     } else if (si == 0) {	// Starts with slash: relative to root
       while (path.startsWith("/")) { path = path.substring(1); }
@@ -413,11 +413,14 @@ public abstract class AbstractResource implements Resource {
     int si = path.indexOf('/');	// Look for a slash.
     if (si < 0) {		// No slash: it's a child, .,  or ..
       if (path.equals("..")) return getContainer();
-      if (path.equals(".")) return this;
+      //if (path.equals(".")) return this;
       Resource child = locateChild(path, extensions);
       if (child == null && create) {
 	// Try to create a virtual resource for the child. 
 	child = create(path, false, true, null);
+	if (child == null)
+	  getRoot().report(-2, getPath() + " failed to create child " + path,
+			   0, false);
       }
       return child;
     } else if (si == 0) {	// Starts with slash: relative to root
@@ -432,6 +435,9 @@ public abstract class AbstractResource implements Resource {
       if (child == null && create) {
 	// Try to create a virtual container for the child. 
 	child = create(path.substring(0, si), true, true, null);
+	if (child == null)
+	  getRoot().report(-2, getPath() + " failed to create directory " 
+			   + path.substring(0, si), 0, false);
       }
       if (child == null) return null;
       path = path.substring(si+1);

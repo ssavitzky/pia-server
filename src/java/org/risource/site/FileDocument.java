@@ -1,5 +1,5 @@
 ////// FileDocument.java -- implementation for a document resource
-//	$Id: FileDocument.java,v 1.4 1999-09-17 23:39:51 steve Exp $
+//	$Id: FileDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.net.URL;
  * <p> As much of a FileDocument's configuration information as possible
  *	is derived from its corresponding File. 
  *
- * @version $Id: FileDocument.java,v 1.4 1999-09-17 23:39:51 steve Exp $
+ * @version $Id: FileDocument.java,v 1.5 1999-09-22 00:17:17 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -131,9 +131,10 @@ public class FileDocument extends FileResource implements Document {
 
   /** @return an <code>OutputStream</code> for writing the document.
    */
-  public OutputStream documentOutputStream() {
+  public OutputStream documentOutputStream(boolean append) {
     try {
-      return new FileOutputStream(file);
+      return append? new FileOutputStream(file.getPath(), append)
+	           : new FileOutputStream(file);
     } catch (IOException e) {
       getRoot().reportException(e, "opening " + getPath());
       return null;
@@ -142,9 +143,10 @@ public class FileDocument extends FileResource implements Document {
 
   /** @return a <code>Writer</code> for writing the document.
    */
-  public Writer documentWriter() {
+  public Writer documentWriter(boolean append) {
     try {
-      return new FileWriter(file);
+      return append? new FileWriter(file.getPath(), append)
+	           : new FileWriter(file);
     } catch (IOException e) {
       getRoot().reportException(e, "opening " + getPath());
       return null;
@@ -171,8 +173,8 @@ public class FileDocument extends FileResource implements Document {
    * @return an <code>Output</code> for (re)writing the document.
    *	Returns <code>null</code> if the resource is not writable.
    */
-  public Output documentOutput() {
-    return new org.risource.dps.output.ToWriter(documentWriter());
+  public Output documentOutput(boolean append) {
+    return new org.risource.dps.output.ToWriter(documentWriter(append));
   }
 
   /** Load a tagset. */

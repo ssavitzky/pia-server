@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.7 1999-09-17 23:39:52 steve Exp $
+//	$Id: Subsite.java,v 1.8 1999-09-22 00:17:18 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.7 1999-09-17 23:39:52 steve Exp $
+ * @version $Id: Subsite.java,v 1.8 1999-09-22 00:17:18 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -347,6 +347,14 @@ public class Subsite extends ConfiguredResource implements Resource {
     Resource child = (Resource)subsiteCache.at(name);
     if (child != null) return child;
 
+    if (name.equals(".")) {
+      if (childConfigCache != null) {
+	ActiveElement cfg = (ActiveElement) childConfigCache.at(name);
+	if (cfg != null) return configureChild(name, cfg);
+      } 
+      return new Listing(getName(), this, file);
+    }
+
     File f = null;
     if (file != null && file.exists()) {
       f = new File(file, name);
@@ -435,6 +443,7 @@ public class Subsite extends ConfiguredResource implements Resource {
     if (file != null && file.isDirectory()) {
       list = file.list();
       for (int i = 0; i < list.length; ++i) {
+	if (list[i].equals(".") || list[i].equals("..")) continue;
 	t.at(list[i], file);
 	count ++;
       }
@@ -448,6 +457,7 @@ public class Subsite extends ConfiguredResource implements Resource {
 	    || !virtualSearchPath[j].isDirectory()) continue;
 	list = virtualSearchPath[j].list();
 	for (int i = 0; i < list.length; ++i) {
+	  if (list[i].equals(".") || list[i].equals("..")) continue;
 	  if (t.at(list[i]) == null) {
 	    t.at(list[i], virtualSearchPath[j]);
 	    count ++;
@@ -520,7 +530,9 @@ public class Subsite extends ConfiguredResource implements Resource {
     ActiveElement cfg = null;
     Resource result = null;
     Object loc = childLocationCache.at(name);
-    if (loc == null) {			  	// No location -- it's a dud.
+    if (name.equals(".") && (loc == null || !(loc instanceof ActiveElement))) {
+      return new Listing(getName(), this, file);
+    } else if (loc == null) {			// No location -- it's a dud.
       return null;
     } else if (loc instanceof Resource) { 	// location is a resource.
       return (Resource) loc;
@@ -647,10 +659,31 @@ public class Subsite extends ConfiguredResource implements Resource {
     return false;		// === rename unimplemented
   }
 
-
   public Resource create(String name, boolean container,
 			 boolean virtual, Element config) {
-    return null;		// === create unimplemented
+    if (!isReal() && !realize()) {
+      getRoot().report(-2, "Cannot realize " + getPath(), 0, false);
+      return null;
+    } 
+    File rfile = new File(file, name);
+    File vfile = (getVirtualLoc() == null)
+      ? null : new File(getVirtualLoc(), name);
+    if (container) {
+      rfile.mkdirs();
+      if (!rfile.exists() && !rfile.isDirectory()) {
+	getRoot().report(-2, "Cannot create directory " + name 
+			 + " in " + getPath(), 0, false);
+	return null;
+      } 
+      return new Subsite(name, this, rfile, vfile, null);
+    } else {
+      if (rfile.exists() && rfile.isDirectory()) {
+	getRoot().report(-2, "Creating " + name + " in " + getPath()
+			 + " would overlay existing directory", 0, false);
+	return null;
+      } 
+      return new SiteDocument(name, this, rfile, true, null);
+    }
   }
 
   /** Make the associated resource real. 

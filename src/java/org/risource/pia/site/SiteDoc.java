@@ -1,5 +1,5 @@
 ////// SiteDoc.java: Top Processor for PIA active documents
-//	$Id: SiteDoc.java,v 1.2 1999-09-17 23:39:47 steve Exp $
+//	$Id: SiteDoc.java,v 1.3 1999-09-22 00:17:12 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -59,7 +59,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: SiteDoc.java,v 1.2 1999-09-17 23:39:47 steve Exp $
+ * @version $Id: SiteDoc.java,v 1.3 1999-09-22 00:17:12 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -132,6 +132,7 @@ public class SiteDoc extends TopProcessor {
    */
   public void initializeEntities() {
     if (entities == null) super.initializeEntities();
+    if (resolver == null) resolver = Pia.resolver();
     initializeNamespaceEntities();
     initializeLegacyEntities();
     if (agent != null) {
@@ -174,7 +175,9 @@ public class SiteDoc extends TopProcessor {
       URL url = transaction.requestURL();
       if (url != null) {
 	define("url", transaction.requestURL().toString());
-	define("urlPath", transaction.requestURL().getFile());
+	String path = transaction.requestURL().getFile();
+	define("urlPath", path);
+	if (agent == null) agent = resolver.agentFromPath(path);
       }
       // form parameters might be either query string or POST data
       if (req != null && req.hasQueryString()){
@@ -184,28 +187,6 @@ public class SiteDoc extends TopProcessor {
 	define("FORM", new Table());
       }
       // if no parameters this is an empty table
-
-      if (transaction.test("agent-request") ||
-	   transaction.test("agent-response")) {
-
-	String pname = transaction.getFeatureString("agent");
-	Agent  agent = resolver.agent(pname);
-
-	String aname = transaction.getFeatureString("agent-name");
-	String apath = transaction.getFeatureString("agent-path");
-	String atype = transaction.getFeatureString("agent-type");
-
-	define("TRANS-AGENT", (ActiveNode)agent);
-	define("transAgentName", aname);
-	define("transAgentType", atype);
-	define("transAgentPath", apath);
-	define("transAgentPathName", pname);
-      } else {
-	define("transAgentName", (Object)null);
-	define("transAgentType", (Object)null);
-	define("transAgentPath", (Object)null);
-	define("transAgent", (Object)null);
-      }
     }
 
     Pia pia = Pia.instance();
@@ -224,8 +205,9 @@ public class SiteDoc extends TopProcessor {
   public void initializeHookEntities() {
     // Set these even if we retrieved an entity table from the 
     // transaction -- the agent is (necessarily) different      
+    if (agent == null) return;
 
-    define("AGENT", (ActiveNode)agent);
+    define("AGENT", (agent == null)? null : (Namespace)((ActiveNode)agent).getAttrList());
     define("agentName", agent.name());
     define("agentHome", agent.getHome().getPath());
 
@@ -346,11 +328,11 @@ public class SiteDoc extends TopProcessor {
     super();
   }
 
-  public SiteDoc(Document doc) {
+  public SiteDoc(Resource doc) {
     super(doc);
   }
 
-  public SiteDoc(Document doc,
+  public SiteDoc(Resource doc,
 		 Agent a, Transaction req, Transaction resp, Resolver res) {
     super(doc);
     agent = a;
@@ -359,7 +341,7 @@ public class SiteDoc extends TopProcessor {
     resolver = res;
   }
 
-  public SiteDoc(Input in, Context cxt, Output out, Tagset ts, Document doc,
+  public SiteDoc(Input in, Context cxt, Output out, Tagset ts, Resource doc,
 		 Agent a, Transaction req, Transaction resp, Resolver res) {
     super(in, cxt, out, ts, doc);
     agent = a;
