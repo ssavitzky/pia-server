@@ -57,5 +57,6 @@
        potential security problem.
   </dd>
   </else>       
+</if>
 </dl>
-<inc-footer cvsid="$Id: welcome.inc,v 1.17 2000-04-19 23:52:24 steve Exp $" />
+<inc-footer cvsid="$Id: welcome.inc,v 1.18 2000-06-22 07:02:09 steve Exp $" />
