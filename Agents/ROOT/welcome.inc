@@ -17,7 +17,7 @@
 <p> This is the home page of your personal PIA.  It is running as a process
     under your own user name (if you're on Unix), and is accessible through
     the URL 
-&lt;<a href="http://&piaHOST;:&piaPORT;/">http://&piaHOST;:&piaPORT;/</a>&gt;.
+&lt;<a href="http://&PIA:host;:&PIA:port;/">http://&PIA:host;:&PIA:port;/</a>&gt;.
     Of course, if you're looking at this page in a web browser you already
     know that.
 
@@ -37,4 +37,4 @@
     You can find a running PIA  demonstration  server at <a
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>.
 </p>
-<!-- $Id: welcome.inc,v 1.12 1999-09-30 23:51:09 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.13 1999-10-04 17:25:58 steve Exp $ -->

@@ -1,14 +1,14 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-  <title>&piaUSER;'s Agency on &piaHOST;</title>
+  <title>&user.name;'s Agency on &PIA:host;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
-<set name='piaURL'>http://&piaHOST;:&piaPORT;/</set>
-<set name='ltitle'><if><test exact='exact' match='pia'>&piaUSER;</test>
+<set name='piaURL'>http://&PIA:host;:&PIA:port;/</set>
+<set name='ltitle'><if><test exact='exact' match='pia'>&user.name;</test>
 		     <then> </then>
-		     <else><a href='/~/'>&piaUSER;'s</a> </else></if></set>
+		     <else><a href='/~/'>&user.name;'s</a> </else></if></set>
 <header show-date='yes' ltitle='&ltitle;'>
-  <if><test exact='exact' match='pia'>&piaUSER;</test>
+  <if><test exact='exact' match='pia'>&user.name;</test>
 			    <then>An Information Appliance</then>
 	    		    <else>Personal Information Agency</else>
 			</if><br />
@@ -25,10 +25,10 @@
 	    <a href='/Admin/list-agents'>list</a> /
 	    <a href='/Admin/installers'>install</a> / 
 	    <a href='/Admin/remove-agent'>remove</a> agents.<br />
-	    <if><test exact='exact' match='pia'>&piaUSER;</test>
+	    <if><test exact='exact' match='pia'>&user.name;</test>
 	      <then><a href='/Admin/shutdown'>shut down</a> appliance<br />
 	    </then></if>
-    </td></tr><tr><if><test exact='exact' match='pia'>&piaUSER;</test>
+    </td></tr><tr><if><test exact='exact' match='pia'>&user.name;</test>
       <then>
 	<th valign='top' align='right'><b>Agent:</b>&nbsp;
 	</th><td valign='top'><!--  need a ``topAgent'' entity.  -->
@@ -64,5 +64,5 @@
 <hr />
 <include src='/ROOT/doc-grid.inc'> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.6 1999-03-27 02:29:44 pgage Exp $' />
+<short-footer cvsid='$Id: index.xh,v 1.7 1999-10-04 17:25:58 steve Exp $' />
 </p></body></html>
