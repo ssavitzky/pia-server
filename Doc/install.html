@@ -79,6 +79,12 @@ Where the directory passed on the command line (<code>Doc</code>, in this
 case) is the root directory for the files to be served by the PIA Web server.
 </p>
 
+<p> If that didn't work, try reading the next section on <a
+    href="#Setup">Initial Setup</a>, possibly followed by the section on <a
+    href="using.html#Troubleshooting">Troubleshooting</a> in
+    <a href="using.html">Using the PIA</a>
+</p>
+
 <blockquote><small>
 (As explained below, you can also specify a configuration file instead of the
 root directory.)  "<code>bin/pia</code>" is a simple wrapper that starts up a
@@ -95,7 +101,7 @@ which indicates that the server is up and running.
 <pre>&gt; bin/pia</pre>
 
 <blockquote> You can now browse to <a
-href=http://localhost:8888/>http://localhost:8888/</a> -- thisis the
+href=http://localhost:8888/>http://localhost:8888/</a> -- this is the
 recommended method for getting acquainted with the capabilities of the PIA.
 In particular, <code>Agents/Tutorial </code> and <code>Samples</code> (<a
 href=http://localhost:8888/Agents/Tutorial/>http://localhost:8888/Agents/Tutorial/</a>
@@ -118,16 +124,18 @@ demonstrate the unique properties of the PIA server side markup language.
   <li> A Java Virtual Machine (JVM) must be installed.  The PIA startup
        scripts expect that the <code>java </code> program is accessible
        through your <code>PATH </code> environment variable.
-  <li> The PIA's class files must be accessible.  The startup scripts expect
+  <li> The PIA's class files and other files distributed with the PIA must be
+       accessible.  The startup scripts expect 
        to find the class files in the <code>src/java</code> subdirectory of
-       the <var>PIA_HOME</var> directory.  Note that in the default
+       the PIA's ``home directory'' (<var>PIA_HOME</var> -- the directory in
+       which the PIA was installed).  Note that in the default
        configuration, <var>PIA_HOME</var> is also used as the <i>"virtual
        root"</i> directory for the server.  (See below for an explanation of
        virtual roots.)
-  <li> A root directory where pages are served from and where applications can write
-       data files. This is called the PIA's
-       ``<em>root</em>'' directory, or <var>PIA_ROOT</var>.  Note that in the
-       default configuration, this is a specified as <code>~/.pia </code>
+  <li> A ``root directory'' where pages are served from and where applications
+       can write data files. This is called the PIA's ``<em>root</em>''
+       directory, or <var>PIA_ROOT</var>.  Note that in the default
+       configuration, this is a specified as <code>~/.pia </code>
 </ol>
 
 <blockquote><small>
@@ -159,22 +167,22 @@ demonstrate the unique properties of the PIA server side markup language.
     be on CD-ROM because the PIA
     <em>never</em> tries to write files there!).
 
-<p><em>Experts only:</em> The directory <var>PIA_HOME</var>, as described
+<p> <em>Experts only:</em> The directory <var>PIA_HOME</var>, as described
 above, actually refers to two funtionally different locations, which can be
 addressed separately.  One is where the java classes and executables live;
 that is always and forever <var>PIA_HOME</var>.  The other location---the
 <em>"virtual root,"</em>, is where the PIA looks for applications it can't find
 in <var>PIA_ROOT</var>---can in principle be any directory.  You can set the <em> virtual root</em> to be some third directory
 by using the <code>-vroot</code> command-line option when starting the PIA,
-but we don't recommend it for beginners.... not only is it confusing, but your
+but we don't recommend it for beginners... not only is it confusing, but your
 PIA server would no longer have access to cvs-updated applications in the
 <code>Agents, Samples</code>, and <code>Contrib</code> directories. </p>
 
 <p> In summary,  the PIA look for its java class files under
-    <code>PIA_HOME</code>, and the web server looks first for  applications/pages in
+    <code>PIA_HOME</code>, and the web server looks first for
+    applications/pages in 
     <code>PIA_ROOT</code> then in the <em>virtual
     root</em>. </p>
-
 
 </small></blockquote>
 
@@ -183,8 +191,9 @@ PIA server would no longer have access to cvs-updated applications in the
 <p> As a consequence of this arrangement, <strong> we recommend you don't edit
     <i>anything</i> in <var>PIA_HOME</var>, which is automatically
     updated/overwritten by CVS, unless you are actively working on the PIA
-    codebase or improving the sample applications.</strong> Instead, write everything under <var>PIA_ROOT</var>
-    (e.g. <kbd>~/.pia</kbd>). </p>
+    codebase or improving the sample applications.</strong> Instead, write
+    everything under <var>PIA_ROOT</var> (e.g. <kbd>~/.pia</kbd>).
+</p>
 
 <blockquote><small>
   <p> Most people will develop applications by making a new subdirectory
@@ -348,7 +357,7 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.22 1999-10-25 17:57:44 steve Exp $</i><br>
+<i>$Id: install.html,v 1.23 1999-10-26 17:16:26 steve Exp $</i><br>
 
 
 </body></html>
