@@ -43,13 +43,13 @@ node bold1.
 document parse tree.  The first example extracts a child by specifying its position in the tree;
 the second example specifies the element type.
 <p>
-<b> Input:  </b>&lt;extract from&gt;&lt;i&gt;&lt;b&gt;bold1&lt;/b&gt;&lt;strong&gt;strong1&lt;/strong&gt;&lt;/i&gt;&lt;/from&gt;&lt;child&gt;0&lt;/child&gt;&lt;/extract&gt;
+<b> Input:  </b>&lt;extract from='from'>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>0&lt;/child>&lt;/extract>
 </p><p>
-<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i><i></i><child>0</child></extract>
+<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i></from><child>0</child></extract>
 </p><p>
-<b> Input: </b>&lt;extract from&gt;&lt;i&gt;&lt;b&gt;bold1&lt;/b&gt;&lt;strong&gt;strong1&lt;/strong&gt;&lt;/i&gt;&lt;/from&gt;&lt;child&gt;b&lt;/child&gt;&lt;/extract&gt;
+<b> Input: </b>&lt;extract from='from'>&lt;i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>&lt;/i>&lt;/from>&lt;child>b&lt;/child>&lt;/extract>
 </p><p>
-<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i><i></i><child>b</child></extract>
+<b> Result: </b><extract from='from'><i><b>bold1</b><strong>strong1</strong></i></from><child>b</child></extract>
 </p><p>
 <hr />
 
@@ -57,9 +57,9 @@ the second example specifies the element type.
 <b> Description:</b>Use the "all" node type.  As the name suggests, it extracts all nodes, regardless
 of type. 
 <p>
-<b> Input: </b> &lt;extract from&gt;&lt;U&gt;&lt;i&gt;italic1 &lt;/i&gt;&lt;b&gt;bold1 &lt;/b&gt;&lt;strong&gt;strong1 &lt;/strong&gt; plain1 &lt;/U&gt;&lt;/from&gt;#all&lt;/extract&gt;
+<b> Input: </b>&lt;extract from='from'>&lt;U>&lt;i>italic1&lt;/i>&lt;b>bold1&lt;/b>&lt;strong>strong1&lt;/strong>plain1&lt;/U>&lt;/from>#all&lt;/extract>
 </p><p>
-<b> Result:  </b><extract from='from'><U><i>italic1 </i><b>bold1 </b><strong>strong1 </strong> plain1 </U><U>#all</U></extract>
+<b> Result:  </b><extract from='from'><U><i>italic1</i><b>bold1</b><strong>strong1</strong>plain1</U></from>#all</extract>
 </p><p>
 <hr />
 
@@ -86,7 +86,7 @@ variable.
 </p><p>
 </p><p>
 
-<footer cvsid='$Id: demo_sel.xh,v 1.5 1999-03-29 18:21:44 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_sel.xh,v 1.6 1999-04-13 19:40:51 pgage Exp $'></footer>
 
 </p></body></html>
 
