@@ -10,5 +10,5 @@ FILES = \
 	DateThread.java
 
 include $(TOPDIR)/makefiles/file.make
-include $(TOPDIR)/makefiles/package.make
+
 
