@@ -1,64 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Hide/Show &AGENT:name; toolbar</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
 
-<set name="subs"><agent-list subs type="&agentType;"></set>
-<sub-head page=hide>
-    <tr><th align=right>&blue-dot;
-	<td>Hide/Show toolbar
-		<a href="initialize">initialize</a>
+<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<sub-head page='hide'>
+    <tr><th align='right'>&blue-dot;
+	</th><td>Hide/Show toolbar
+		<a href='initialize'>initialize</a>
 
-    <tr><th align=right>
-           <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;</a>/</then>
+    </td></tr><tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
                 <else>&agentType; agents: </else></if>
-        <td><repeat list="&subs;">
-               <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a>
+        </th><td><repeat list='&subs;'>
+               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat>
-    <tr><th><td> <a href="using">Using  &agentType; Agents</a>
-    <tr><th><td> <a href="writing">Writing &amp; Customizing
+    </td></tr><tr><th></th><td> <a href='using'>Using  &agentType; Agents</a>
+    </td></tr><tr><th></th><td> <a href='writing'>Writing &amp; Customizing
 		    		      &agentType; Agents</a>
-</sub-head>
-<hr>
-<a href="/">PIA</a> || <a href="/Admin">Admin</a> ||
-<if><test not exact match="&agentType">&agentName;</test>
-    <then><a href="/&agentType;">/&agentType;</a>
-          <a href="/&agentType;/">/</a></then></if>
-<a href="home">&agentName;</a>
-<a href="home">/</a>
-<a href="options">options</a> 
-// <repeat list="&subs;">
-   <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a></repeat>
-<hr>
+</td></tr></sub-head>
+<hr />
+<a href='/'>PIA</a> || <a href='/Admin'>Admin</a> ||
+<if><test not='not' exact='exact' match='&amp;agentType'>&agentName;</test>
+    <then><a href='/&agentType;'>/&agentType;</a>
+          <a href='/&agentType;/'>/</a></then></if>
+<a href='home'>&agentName;</a>
+<a href='home'>/</a>
+<a href='options'>options</a> 
+// <repeat list='&subs;'>
+   <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a></repeat>
+<hr />
 
-<if><test match=false><get name=FORM:hide /></test>
-    <then><set agent name=hidden></set>
-<else><if><get name=FORM:hide />
-    <then><set name=AGENT:hidden>true</set>
-<else><if><get name=FORM:show />
-    <then><set name=AGENT:hidden> </set>
-<else><if><get name=FORM:hidden />
-    <then><set name=AGENT:hidden><get name=FORM:hidden /></set>
-</if></if></if></if>
+<if><test match='false'><get name='FORM:hide' /></test>
+    <then><set agent='agent' name='hidden'></set>
+</then><else><if><get name='FORM:hide' />
+    <then><set name='AGENT:hidden'>true</set>
+</then><else><if><get name='FORM:show' />
+    <then><set name='AGENT:hidden'> </set>
+</then><else><if><get name='FORM:hidden' />
+    <then><set name='AGENT:hidden'><get name='FORM:hidden' /></set>
+</then></if></else></if></else></if></else></if>
 
 <h3>&AGENT:name; controls <em>
-<if><get name=AGENT:hidden /><then>Hidden<else>Shown</if></em>
+<if><get name='AGENT:hidden' /><then>Hidden</then><else>Shown</else></if></em>
 </h3>
 
-<if><get name=AGENT:hidden />
+<if><get name='AGENT:hidden' />
 <then>
-<form action="hide">
-  <input type=hidden name=show value=true>
-  <input type=submit value=SHOW>
+<form action='hide'>
+  <input type='hidden' name='show' value='true' />
+  <input type='submit' value='SHOW' />
 </form>
-<else>
-<form action="hide">
-  <input type=hidden name=hidden value=true>
-  <input type=submit value=HIDE>
+</then><else>
+<form action='hide'>
+  <input type='hidden' name='hidden' value='true' />
+  <input type='submit' value='HIDE' />
 </form>
-</if>
+</else></if>
 
-<footer cvsid="$Id: hide.xh,v 1.3 1999-03-27 01:35:29 steve Exp $">
+<footer cvsid='$Id: hide.xh,v 1.4 1999-03-27 02:29:40 pgage Exp $' />
 </body></html>

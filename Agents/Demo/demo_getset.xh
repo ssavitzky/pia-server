@@ -1,40 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
 <title>Get and Set Handler Demo</title>
 </head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Get and Set Handler Demo</header>
 
 <h2>Get and Set Handler Demo</h2>
 
-The <a name="getset_demo">get and set handlers demo</a> shows how set a variable and
+The <a name='getset_demo'>get and set handlers demo</a> shows how set a variable and
 subsequently extract its value.
 <p>
 
 
-<h3> Set a Variable, then Retrieve It </h3>
+</p><h3> Set a Variable, then Retrieve It </h3>
 <b> Description:</b> Create a variable "today" and set it to the value "Friday".  Retrieve
 this value using the get handler.
 <p>
 <b> Input: </b>&lt;set name=today&gt;Friday&lt;/set&gt;
-<set name=today>Friday</set>
-<p>
+<set name='today'>Friday</set>
+</p><p>
 <b> Input: </b>&lt;get name=today /&gt;&lt;/get&gt;
-<p>
-<b> Result: </b> <get name=today /></get>
-<p>
-<hr>
+</p><p>
+<b> Result: </b> <get name='today' /></p><p>
+</p><p>
+<hr />
 
-<h3> Get a Nonexistent Value </h3>
+</p><h3> Get a Nonexistent Value </h3>
 <b> Description:</b> Attempt to "get" a value from a variable that has not been set.
 Returns nothing.
 <p>
 <b> Input: </b>&lt;get name=whatever /&gt;&lt;/get&gt;
-<p>
-<b> Result: </b> <get name=whatever /></get>
-<p>
+</p><p>
+<b> Result: </b> <get name='whatever' /></p><p>
+</p><p>
 <footer />
 
 
-</body></html>
+</p></body></html>

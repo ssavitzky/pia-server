@@ -1,33 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Remove Agent</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<if><get name=FORM:agent />
-    <then><!-- do this before the sub-head, which lists agents -->
-	  <!-- === unfortunately, they're not computed dynamically === -->
-      <set name=removed><agent-remove name="&FORM:agent;"></set>
-</if>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<if><get name='FORM:agent' />
+    <then><!--  do this before the sub-head, which lists agents  -->
+	  <!--  === unfortunately, they're not computed dynamically ===  -->
+      <set name='removed'><agent-remove name='&FORM:agent;'></agent-remove></set>
+</then></if>
 
 <header>Remove Agent</header>
-<if>&removed; <else><sub-head page=remove_agent / ></if>
+<if>&removed; <else><sub-head page='remove_agent' /></else></if>
 
-<hr>
+<hr />
 
-<if><get name=FORM:agen /t>
+<if><get name='FORM:agen' t='t' />
 <then>
   <h3>&removed; removed<h3>
-</then><else>
+</h3></h3></then><else>
   <h2> Agent removal form</h2>
 </else></if>
 
-<form action="remove-agent" method="POST">
-Name:<select name="agent">
-   <repeat list="&agentNames;" ><if><test not exact match="&AGENT:name;">&li;</test>
+<form action='remove-agent' method='POST'>
+Name:<select name='agent'>
+   <repeat list='&agentNames;'><if><test not='not' exact='exact' match='&AGENT:name;'>&li;</test>
      <then><option>&li;</option></then></if></repeat>
      </select>
-<input type="submit" value="Remove Agent">
+<input type='submit' value='Remove Agent' />
 </form>
 
 
-<footer cvsid="$Id: remove-agent.xh,v 1.3 1999-03-27 01:35:07 steve Exp $">
+<footer cvsid='$Id: remove-agent.xh,v 1.4 1999-03-27 02:29:25 pgage Exp $' />
 </body></html>

@@ -1,32 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>
-</head>
+</header></body></head>
 
 <h2>Subst Handler Demo</h2>
-The <a name="subst_demo">subst demo</a> performs text substitution on node content.
+The <a name='subst_demo'>subst demo</a> performs text substitution on node content.
 <p>
+</p><h3> Substitute a Pattern with Text </h3>
+
+<b> Description: </b> Match on "10" and replace with "12". <br />
+<br />
+<b>Input: </b> &lt;subst match=10 result=12&gt;Columbus Day is October 10, 1998&lt;/subst&gt;<br />
+<br />
+<b> Result:</b> <subst match='10' result='12'>Columbus Day is October 10, 1998</subst>
+
+<hr />
 <h3> Substitute a Pattern with Text </h3>
 
-<b> Description: </b> Match on "10" and replace with "12". <br>
-<br>
-<b>Input: </b> &lt;subst match=10 result=12&gt;Columbus Day is October 10, 1998&lt;/subst&gt;<br>
-<br>
-<b> Result:</b> <subst match=10 result=12>Columbus Day is October 10, 1998</subst>
-
-<hr>
-<h3> Substitute a Pattern with Text </h3>
-
-<b> Description: </b>Match on "argu" and replace with "agre". <br>
-<br>
-<b>Input: </b> &lt;subst match=argu result=agre&gt;Argument between parties which argue&lt;/subst&gt;<br>
-<br>
-<b> Result:</b> <subst match=argu result=agre>Argument between parties which argue</subst>
+<b> Description: </b>Match on "argu" and replace with "agre". <br />
+<br />
+<b>Input: </b> &lt;subst match=argu result=agre&gt;Argument between parties which argue&lt;/subst&gt;<br />
+<br />
+<b> Result:</b> <subst match='argu' result='agre'>Argument between parties which argue</subst>
 <p>
-<footer>
+<footer />
 
-</body></html>
+
+
+</p></html>
 
 

@@ -1,34 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Initialize the external toolbar agent</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <h1>Initialize remoteTools</h1>
 
 <user-message>Initializing &agentName; from &filePath;</user-message>
-<set name=AGENT:criteria>response agent-response- html</set>
+<set name='AGENT:criteria'>response agent-response- html</set>
 <user-message>&agentName; criteria: &AGENT:criteria;</user-message>
 
-<set name="AGENT:act-on"><!-- this is remoteTools' act-on hook -->
+<set name='AGENT:act-on'><!--  this is remoteTools' act-on hook  -->
 <protect><if>&AGENT:hidden;<else>
 <trans-control>
-<set entity name=pia>http://&piaHOST;:&piaPORT;</set>
-<a href="&pia;/" target="_top"><img src="&pia;/Icon/pent24.gif"
-			 	    height=24 width=24 border=0></a>
+<set entity='entity' name='pia'>http://&piaHOST;:&piaPORT;</set>
+<a href='&pia;/' target='_top'><img src='&pia;/Icon/pent24.gif' height='24' width='24' border='0' /></a>
 <expand>&AGENT:Toolbar:controls;</expand>
-<expand><get name=AGENT:History:controls /></expand>
-<!-- making this a link is actually useful: it gets you out of a frame. -->
-<a href="&url;" target="_top">&lt;URL:&url;&gt;</a>
-<hr>
-</trans-control></if>
+<expand><get name='AGENT:History:controls' /></expand>
+<!--  making this a link is actually useful: it gets you out of a frame.  -->
+<a href='&url;' target='_top'>&lt;URL:&url;&gt;</a>
+<hr />
+</trans-control></else></if>
 <user-message>&url;</user-message>
 </protect></set>
 
 <dl>
   <dt> Criteria:
-  <dd> &AGENT:criteria;
-  <dt> Act-on:
-  <dd> <pre><protect markup result>&AGENT:act-on;</protect></pre>
-</dl>
+  </dt><dd> &AGENT:criteria;
+  </dd><dt> Act-on:
+  </dt><dd> <pre><protect markup='markup' result='result'>&AGENT:act-on;</protect></pre>
+</dd></dl>
 
-<footer cvsid="$Id: initialize.xh,v 1.4 1999-03-27 01:35:38 steve Exp $">
+<footer cvsid='$Id: initialize.xh,v 1.5 1999-03-27 02:29:44 pgage Exp $' />
 </body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Initialize the &agentName; agent</title>
 </head><body>
@@ -6,13 +6,13 @@
 
 <user-message>Initializing &agentName; from &filePath;</user-message>
 
-<set name="AGENT:controls"><protect><!-- Generic Toolbar controls: -->
-<set name=pia>http://&piaHOST;:&piaPORT;</set>
-<a href="&pia;/~/" target="_top">[~]</a>
-<a href="&pia;&agentPath;/hide?hide=true" target="_top">[X]</a>
-<a href="&pia;&agentPath;/help?topic=toolbar" target="_top">[help]</a>
+<set name='AGENT:controls'><protect><!--  Generic Toolbar controls:  -->
+<set name='pia'>http://&piaHOST;:&piaPORT;</set>
+<a href='&pia;/~/' target='_top'>[~]</a>
+<a href='&pia;&agentPath;/hide?hide=true' target='_top'>[X]</a>
+<a href='&pia;&agentPath;/help?topic=toolbar' target='_top'>[help]</a>
 </protect></set>
 
 
-<short-footer cvsid="$Id: initialize.xh,v 1.2 1999-03-12 19:22:26 steve Exp $">
+<short-footer cvsid='$Id: initialize.xh,v 1.3 1999-03-27 02:29:36 pgage Exp $' />
 </body></html>

@@ -1,39 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Parse Handler Demo</title>
 </head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Parse Handler Demo</header>
 
 <h2>Parse Handler Examples:</h2>
-The <b><a name="parse_demo">parse demo</a></b> shows how to use the parse handler.
+The <b><a name='parse_demo'>parse demo</a></b> shows how to use the parse handler.
 <p>
 
-<h3> Parse Usenet Markup</h3>
+</p><h3> Parse Usenet Markup</h3>
 
-This example does not work.<br><br>
+This example does not work.<br /><br />
 
-<parse usenet>*bold* _italics_</parse>
+<parse usenet='usenet'>*bold* _italics_</parse>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <b>URL:</b>
-&lt;<a href="http://&piaHOST;:&piaPORT;/">http://&piaHOST;:&piaPORT;/</a>&gt;
+&lt;<a href='http://&piaHOST;:&piaPORT;/'>http://&piaHOST;:&piaPORT;/</a>&gt;
 <b>User:</b> &piaUSER;
 
 
-<hr>
-<b>URL:</b> &lt;<a href="&url;">&url;</a>&gt;<br>
-<b>Source:</b> <a href="/PIA/Agents/&agentName;/&fileName;">&fileName;</a>
-<b>File:</b> <a href="/Root/&filePath;">&filePath;</a>
-<hr>
-<b>Copyright &copy; 1997 Ricoh California Research Center</b><br>
-<b>$Id: demo_parse.xh,v 1.3 1999-03-12 23:15:50 pgage Exp $</b><br>
+<hr />
+<b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
+<b>Source:</b> <a href='/PIA/Agents/&agentName;/&fileName;'>&fileName;</a>
+<b>File:</b> <a href='/Root/&filePath;'>&filePath;</a>
+<hr />
+<b>Copyright &copy; 1997 Ricoh California Research Center</b><br />
+<b>$Id: demo_parse.xh,v 1.4 1999-03-27 02:29:30 pgage Exp $</b><br />
 
 </body></html>
 

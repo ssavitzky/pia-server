@@ -1,71 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Generic Index for &agentName;</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header show-date=yes>Index Page</header>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header show-date='yes'>Index Page</header>
 
-<set name=agentPath>&agentPath;&agentName;</set>
-<if><test exact match="&agentType;">&agentName;</test>
-    <then><set name="subs"><agent-list type="&agentPath;"></set>
+<set name='agentPath'>&agentPath;&agentName;</set>
+<if><test exact='exact' match='&agentType;'>&agentName;</test>
+    <then><set name='subs'><agent-list type='&agentPath;'></agent-list></set>
     </then>
-    <else><set name="subs"><agent-list type="&agentType;"></set>
+    <else><set name='subs'><agent-list type='&agentType;'></agent-list></set>
     </else>
 </if>
 
-<sub-head page=index>
-  <if>=== <!-- ~/ doesn't work yet  -->
-      <status src="~/initialize.xh" item=exists />
+<sub-head page='index'>
+  <if>=== <!--  ~/ doesn't work yet   -->
+      <status src='~/initialize.xh' item='exists' />
   <then>
-    <tr><th><td><a href="options">Options</a>
-	    	      <a href="initialize">[re-initialize]</a></then></if>
-    <tr><th><td><a href="/PIA/Agents/&agentPath;/">Agent documents</a>
-	        <a href="/~/Agents/&agentPath;/">(Customized)</a>
-  </if>
+    <tr><th></th><td><a href='options'>Options</a>
+	    	      <a href='initialize'>[re-initialize]</a></td></tr></then></if>
+    <tr><th></th><td><a href='/PIA/Agents/&agentPath;/'>Agent documents</a>
+	        <a href='/~/Agents/&agentPath;/'>(Customized)</a>
+  
+  
   <if>&AGENT:criteria;<then>
-    <tr><th align=right> criteria:&nbsp;
-        <td>&AGENT:criteria;
-  </if>
+    <tr><th align='right'> criteria:&nbsp;
+        </th><td>&AGENT:criteria;
+  </td></tr></then></if>
   <if>&AGENT:do-not-remove;<then></then><else>
-    <tr><th align=right>
-        <td><form action="/Admin/remove-agent" method="POST">
-              <input name="agent" value="&agentName;" type=hidden>
-              <input type="submit" value="Remove &agentName;">
+    <tr><th align='right'>
+        </th><td><form action='/Admin/remove-agent' method='POST'>
+              <input name='agent' value='&agentName;' type='hidden' />
+              <input type='submit' value='Remove &agentName;' />
             </form>
-  </if>
+  </td></tr></else></if>
   <if>&subs;<then>
-    <tr><th align=right>
-           <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="&agentType;/home">&agentType;/</a></then>
+    <tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='&agentType;/home'>&agentType;/</a></then>
                 <else>&agentPath;/</else></if>
-        <td><repeat list="&subs;">
-               <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a>
-           </repeat></then>
+        </th><td><repeat list='&subs;'>
+               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
+           </repeat></td></tr></then>
   </if>
-    <tr><th valign=top align=right><b>Agents:</b>
-        <td valign=top> <repeat list="&agentNames;" entity="foo">
-          <a href="/&foo;">&foo;</a> <a href="/&foo;/"><b> / </b></a>
-       </repeat><br>
-</sub-head>
+    </td></tr><tr><th valign='top' align='right'><b>Agents:</b>
+        </th><td valign='top'> <repeat list='&agentNames;' entity='foo'>
+          <a href='/&foo;'>&foo;</a> <a href='/&foo;/'><b> / </b></a>
+       </repeat><br />
+</td></tr></sub-head>
 
-<if><get name=AGENT:do-not-remove /><then>
-<hr>
+<if><get name='AGENT:do-not-remove' /><then>
+<hr />
 <dl>
   <dt> Note:
-  <dd> This page does not have an option for removing the
-       <a href="home">&agentName;</a> agent.  It is required for the proper
-       functioning of this <if><test exact match=pia>&piaUSER;</test>
-       <then>appliance<else>Personal Information Agency</if>.
-</dl>
-</if>
-<hr>
-<nav-bar/>
-<hr>
+  </dt><dd> This page does not have an option for removing the
+       <a href='home'>&agentName;</a> agent.  It is required for the proper
+       functioning of this <if><test exact='exact' match='pia'>&piaUSER;</test>
+       <then>appliance</then><else>Personal Information Agency</else></if>.
+</dd></dl>
+</then></if>
+<hr />
+<nav-bar />
+<hr />
 
-<!-- See whether there's an "about" file for this agent. -->
-<include src="about.inc"> </include>
+<!--  See whether there's an "about" file for this agent.  -->
+<include src='about.inc'> </include>
 
-<if><get name=AGENT:criteria /><then>
-<hr>
+<if><get name='AGENT:criteria' /><then>
+<hr />
 <h3>&AGENT:name; Agent Match Criteria</h3>
 
 <blockquote><em>
@@ -76,38 +77,35 @@
   match and its ``Act-on'' hook (below) to be executed.
 </em></blockquote>
 
-<pre><protect result markup>&AGENT:criteria;</protect></pre>
+<pre><protect result='result' markup='markup'>&AGENT:criteria;</protect></pre>
 
-</if>
+</then></if>
 
-<if><get name=AGENT:act-on /><then>
+<if><get name='AGENT:act-on' /><then>
 <h3>&agentName; Agent Act-On Hook</h3>
 
-<if><test exact match="&AGENT:name;">&AGENT:type;</test>
-    <then><set name=agentPath>/&AGENT:name;</set>
-    <else><set name=agentPath>/&AGENT:type;/&AGENT:name;</set>
-</if>
+<if><test exact='exact' match='&AGENT:name;'>&AGENT:type;</test>
+    <then><set name='agentPath'>/&AGENT:name;</set>
+    </then><else><set name='agentPath'>/&AGENT:type;/&AGENT:name;</set>
+</else></if>
 
 <blockquote><em>
-  This is the code that is executed whenever the  <a
-  href="/&AGENT:type;/&AGENT:name;">&AGENT:name;</a> agent's criteria match
+  This is the code that is executed whenever the  <a href='/&AGENT:type;/&AGENT:name;'>&AGENT:name;</a> agent's criteria match
   a transaction's feature set.
   It can be customized by making an edited copy of the Agent's
   initialization file,
-  <code><a href="/PIA/Agents/&agentPath;/initialize"
-  >/PIA/Agents/&agentPath;/initialize.??</a></code>,
+  <code><a href='/PIA/Agents/&agentPath;/initialize'>/PIA/Agents/&agentPath;/initialize.??</a></code>,
   and putting it in your personal Agents directory,
-  <code><a href="/~/Agents/&agentPath;/"
-  >~/.pia/Agents/&agentPath;/</a></code>
+  <code><a href='/~/Agents/&agentPath;/'>~/.pia/Agents/&agentPath;/</a></code>
   (Replace <code>??</code> in the names above with the current one of
    <code>xh</code> (new) or <code>if</code> (old).)
 </em></blockquote>
 
-<pre><protect result markup><parse tagset=HTML>&AGENT:act-on;</protect>
+<pre><protect result='result' markup='markup'><parse tagset='HTML'>&AGENT:act-on;</parse></protect>
 </pre>
 </then></if>
 
 
-<footer cvsid="$Id: index.xh,v 1.5 1999-03-27 01:34:59 steve Exp $">
+<footer cvsid='$Id: index.xh,v 1.6 1999-03-27 02:29:14 pgage Exp $' />
 </body></html>
 

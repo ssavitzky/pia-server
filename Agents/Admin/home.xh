@@ -1,80 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>&piaUSER;'s &AGENT:name;: Home Page</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
-<set entity name=title>Server administration agent</set>
-<header show-date=yes>&title;</header>
-<sub-head page=home />
+<set entity='entity' name='title'>Server administration agent</set>
+<header show-date='yes'>&title;</header>
+<sub-head page='home' />
 
-<hr>
+<hr />
 This is the home page for the ``<strong>&agentName;</strong>'' agent.  It is
 used for controlling the other agents running on this PIA.  An agent name
 without a final slash leads to the agent's <em>home page</em>.  With the slash
-you get a generic <em><a href="index">index</a></em> page.
-<hr>
-<table><tr><td width=340 valign=top>
+you get a generic <em><a href='index'>index</a></em> page.
+<hr />
+<table><tr><td width='340' valign='top'>
 <h3>Useful Documents and Forms:</h3>
 <ul>
-  <li> <a href=/&AGENT:name;/list-agents>list running agents</a>
-  <li> <a href="/&AGENT:name;/installers">install new agents</a>
-  <li> <a href=/&AGENT:name;/options>view/change options</a>
-<if><test not exact match='pia'>&piaUSER;</test><then>
-  <li> <a href=/&AGENT:name;/debug>control debugging</a>(currently
-       <if><test zero><get name="PIA:debugging" /></test>
+  <li> <a href='/&AGENT:name;/list-agents'>list running agents</a>
+  </li><li> <a href='/&AGENT:name;/installers'>install new agents</a>
+  </li><li> <a href='/&AGENT:name;/options'>view/change options</a>
+<if><test not='not' exact='exact' match='pia'>&piaUSER;</test><then>
+  <li> <a href='/&AGENT:name;/debug'>control debugging</a>(currently
+       <if><test zero='zero'><get name='PIA:debugging' /></test>
            <then>off</then><else>on</else></if>)
-  <li> <a href=/&AGENT:name;/remove-agent> remove agent</a>
-</then><else>
-<!-- was a link to shutdown.if -->
+  </li><li> <a href='/&AGENT:name;/remove-agent'> remove agent</a>
+</li></then><else>
+<!--  was a link to shutdown.if  -->
 </else></if>       
-</ul>
-<td valign=top>
+</li></ul>
+</td><td valign='top'>
 <h3>Other Information:</h3>
 <ul>
-  <li> <a href="/Doc/"><b>Documentation</b> </a>
-       <if><agent-running name=PIA><then></then>
-       <else><a href="/&AGENT:name;/installers#PIA"><em>install needed!</em></a>
+  <li> <a href='/Doc/'><b>Documentation</b> </a>
+       <if><agent-running name='PIA'></agent-running><then></then>
+       <else><a href='/&AGENT:name;/installers#PIA'><em>install needed!</em></a>
        </else></if>
        <ul>
-	 <li> <a href="/Doc/doclist.html">Complete list</a>
-	 <li> <a href="/Doc/Release">Release Notes</a>
-	 <li> <a href="/Doc/Notes">Notes</a>
-       </ul>
-  <li> <a href="/&AGENT:name;/programming">Programming information</a>
-  <li> <a href="/&AGENT:name;/help">Online Help</a>
-</ul>
-</table>
-<hr>
-<h2><a name="naming">Naming Conventions:</a></h2>
-<set name=name><em>Agent</em></set>
+	 <li> <a href='/Doc/doclist.html'>Complete list</a>
+	 </li><li> <a href='/Doc/Release'>Release Notes</a>
+	 </li><li> <a href='/Doc/Notes'>Notes</a>
+       </li></ul>
+  </li><li> <a href='/&AGENT:name;/programming'>Programming information</a>
+  </li><li> <a href='/&AGENT:name;/help'>Online Help</a>
+</li></ul>
+</td></tr></table>
+<hr />
+<h2><a name='naming'>Naming Conventions:</a></h2>
+<set name='name'><em>Agent</em></set>
 
 <p> An Agent name without a final slash is redirected to the Agent's
 ``home page'' (usually <code>home.xh</code>).  With a final
 slash you will always go to a more-or-less generic index page.  A name of
-the form <a href="/&AGENT:name;~">/&name;~</a> (i.e. appending a tilde to the
+the form <a href='/&AGENT:name;~'>/&name;~</a> (i.e. appending a tilde to the
 Agent's name) will take you to the Agent's ``home page.''  In the 1-line index
 above, this link is 
 represented by the ``<code>~/</code>'' in front of the DOFS agent's name.  The
 generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
 
 <dl>
-  <dt> <a href="/&AGENT:name;">/&name;</a>
-  <dd> Usually, the &name; agent's home page;, except that some agents may
+  <dt> <a href='/&AGENT:name;'>/&name;</a>
+  </dt><dd> Usually, the &name; agent's home page;, except that some agents may
        redirect this (for example, to their data directory).
-  <dt> <a href="/&AGENT:name;~">/&name;~</a>
-  <dd> The &name; agent's home page: <code>home.xh</code> in the agent's code
+  </dd><dt> <a href='/&AGENT:name;~'>/&name;~</a>
+  </dt><dd> The &name; agent's home page: <code>home.xh</code> in the agent's code
        directory.
-  <dt> <a href="/&AGENT:name;~/">/&name;~/</a>
-  <dd> The &name; agent's ``generic'' index page.  Usually not very
+  </dd><dt> <a href='/&AGENT:name;~/'>/&name;~/</a>
+  </dt><dd> The &name; agent's ``generic'' index page.  Usually not very
        interesting, but occasionally useful if there are things the home page
        leaves out.
-  <dt> <a href="/~&AGENT:name;">/~&name;</a>
-  <dd> The home page of the &name; agent's data directory, (typically
+  </dd><dt> <a href='/~&AGENT:name;'>/~&name;</a>
+  </dt><dd> The home page of the &name; agent's data directory, (typically
        <code>index.html</code>) or a generic directory listing.
-  <dt> <a href="/~&AGENT:name;/">/~&name;/</a>
-  <dd> A generic listing of the &name; agent's data directory.
-</dl>
+  </dd><dt> <a href='/~&AGENT:name;/'>/~&name;/</a>
+  </dt><dd> A generic listing of the &name; agent's data directory.
+</dd></dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.6 1999-03-27 01:35:04 steve Exp $'>
-</body></html>
+<footer cvsid='$Id: home.xh,v 1.7 1999-03-27 02:29:20 pgage Exp $' />
+</p></body></html>

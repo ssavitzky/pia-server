@@ -1,122 +1,121 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>DOFS<if><test not exact match="&agentName;">&agentType;</test>
+<title>DOFS<if><test not='not' exact='exact' match='&agentName;'>&agentType;</test>
        <then>/&agentName;</then></if> home page</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header><if><test exact match="&agentName;">&agentType;</test>
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header><if><test exact='exact' match='&agentName;'>&agentType;</test>
         <then>(Document-Oriented Filing System) Home page</then>
         <else>&agentType; agent</else>
-    </if></set>
-</header>
-<set entity name="dofsNames"><agent-list subs type="&agentType;"></set>
-<set entity name="subs"><agent-list subs type="&agentType;"></set>
-<sub-head page=home>
-    <tr><th align=right>Files: <td>
-	<if><test exact match="&agentName;">&agentType;</test>
+    </if><if>
+</if></header>
+<set entity='entity' name='dofsNames'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<set entity='entity' name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<sub-head page='home'>
+    <tr><th align='right'>Files: </th><td>
+	<if><test exact='exact' match='&agentName;'>&agentType;</test>
             <then><em>the &agentName; agent itself has no files.</em></then>
-            <else><a href="/&agentName;">/&agentName;</a> (home page) |
-		  <a href="/&agentName;/">/&agentName;/</a> (index)
+            <else><a href='/&agentName;'>/&agentName;</a> (home page) |
+		  <a href='/&agentName;/'>/&agentName;/</a> (index)
 	    </else>
 	</if>
     <if>&subs;<then>
-    <tr><th align=right>
-           <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;</a></then>
+    <tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a></then>
                 <else>&agentType;</else></if>
-        <td><repeat list="&subs;">
-		<a href="/&agentType;/&li;">~/</a><a
-		   href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a> |
-           </repeat></then></if>
-    <tr><th><td> <a href="#naming">Naming conventions</a>
+        </th><td><repeat list='&subs;'>
+		<a href='/&agentType;/&li;'>~/</a><a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a> |
+           </repeat></td></tr></then></if>
+    </td></tr><tr><th></th><td> <a href='#naming'>Naming conventions</a>
 
-</sub-head>
+</td></tr></sub-head>
 
 
-<hr>
-<!-- set up a name to use in the following explanation: -->
-<if><test exact match="&agentName;">&agentType;</test>
-    <then><set entity name=name>PIA</set></then>
-    <else><set entity name=name>&agentName;</set></else>
+<hr />
+<!--  set up a name to use in the following explanation:  -->
+<if><test exact='exact' match='&agentName;'>&agentType;</test>
+    <then><set entity='entity' name='name'>PIA</set></then>
+    <else><set entity='entity' name='name'>&agentName;</set></else>
 </if>
 
 This is the home page for the 
-<if><test exact match="&agentName;">&agentType;</test>
+<if><test exact='exact' match='&agentName;'>&agentType;</test>
     <then>``Document-Oriented Filing System'' agent, the agent that controls
 	  all of the agents that access local files on this machine.
     </then>
     <else><strong>&agentName;</strong> agent, a sub-agent of the
-	  <a href="/DOFS">DOFS</a> agent.
+	  <a href='/DOFS'>DOFS</a> agent.
     </else>
 </if>
 
-<hr>
+<hr />
 <h2>Install a new DOFS:</h2>
-       <form action="/Admin/install-agent.if" method="POST">
-           <input name="type" value="DOFS" type=hidden>
-           name:<input name="agent" value="" size=10> 
-           root:<input name="root" value="" size=30>
-           <input type="submit" value="install_DOFS"><br>
+       <form action='/Admin/install-agent.if' method='POST'>
+           <input name='type' value='DOFS' type='hidden' />
+           name:<input name='agent' value='' size='10' /> 
+           root:<input name='root' value='' size='30' />
+           <input type='submit' value='install_DOFS' /><br />
        </form>
 <h2>Current options:</h2>
-       <set entity name=opts><agent-options></set>
-       <form method=POST action="options"><table>
-         <repeat list="&opts;" entity=opt><tr>
-           <th align=right>&opt;:</th>
-           <td><set entity name=v><get agent name="&opt;" /></set>
-           <input name="&opt;" value="&v;" size=50></td><p></tr>
+       <set entity='entity' name='opts'><agent-options></agent-options></set>
+       <form method='POST' action='options'><table>
+         <repeat list='&opts;' entity='opt'><tr>
+           <th align='right'>&opt;:</th>
+           <td><set entity='entity' name='v'><get agent='agent' name='&opt;' /></set>
+           <input name='&opt;' value='&v;' size='50' /></td><p></p></tr>
          </repeat>
-         <tr> <th><input type=submit value="Change Options"></th></tr>
+         <tr> <th><input type='submit' value='Change Options' /></th></tr>
        </table></form>
-</ul>
-<hr>
-<a href="/">PIA</a> | <a href="/Admin">Admin</a> ||
-<if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;</a></then>
-                <else>&agentType;</else></if>
-<repeat list="&subs;"><a href="/&agentType;/&li;">~/</a><a
-		         href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a> |
-</repeat>
-<hr>
 
-<h2><a name="naming">Naming Conventions:</a></h2>
+
+<hr />
+<a href='/'>PIA</a> | <a href='/Admin'>Admin</a> ||
+<if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a></then>
+                <else>&agentType;</else></if>
+<repeat list='&subs;'><a href='/&agentType;/&li;'>~/</a><a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a> |
+</repeat>
+<hr />
+
+<h2><a name='naming'>Naming Conventions:</a></h2>
 
 <p> A directory name without a final slash is redirected to the directory's
 ``home page'' (usually <code>index.html</code>) if there is one.  With a final
 slash the DOFS agent will always present you with a generic index.  A name of
-the form <a href="/&agentName;~">/&name;~</a> (i.e. appending a tilde to the
+the form <a href='/&agentName;~'>/&name;~</a> (i.e. appending a tilde to the
 Agent's name) will take you to the Agent's ``home page.''  In the 1-line index
 above, this link is 
 represented by the ``<code>~/</code>'' in front of the DOFS agent's name.  The
 generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
 
 <dl>
-  <dt> <a href="/&agentType;">/&agentType;</a>
-  <dd> The DOFS agent's home page.
-  <dt> <a href="/&agentType;/">/&agentType;/</a>
-  <dd> The DOFS agent's generic index.
-  <dt> <a href="/&name;~">/&name;~</a>
-  <dd> The &name; agent's home page, giving its options.
-  <dt> <a href="/&name;~/">/&agentType;/&name;/</a>
-  <dd> The &name; agent's index page, usually not very interesting.
-  <dt> <a href="/&name;">/&name;</a>
-  <dd> The &name; agent's top-level directory, or <code>index.html</code> in
+  <dt> <a href='/&agentType;'>/&agentType;</a>
+  </dt><dd> The DOFS agent's home page.
+  </dd><dt> <a href='/&agentType;/'>/&agentType;/</a>
+  </dt><dd> The DOFS agent's generic index.
+  </dd><dt> <a href='/&name;~'>/&name;~</a>
+  </dt><dd> The &name; agent's home page, giving its options.
+  </dd><dt> <a href='/&name;~/'>/&agentType;/&name;/</a>
+  </dt><dd> The &name; agent's index page, usually not very interesting.
+  </dd><dt> <a href='/&name;'>/&name;</a>
+  </dt><dd> The &name; agent's top-level directory, or <code>index.html</code> in
        that directory if present.
-  <dt> <a href="/&name;/">/&name;/</a>
-  <dd> A generic listing of the &name; agent's top-level directory.
-</dl>
+  </dd><dt> <a href='/&name;/'>/&name;/</a>
+  </dt><dd> A generic listing of the &name; agent's top-level directory.
+</dd></dl>
 
-<h3>Note:  Document-Oriented Filing System</h3>
+</p><h3>Note:  Document-Oriented Filing System</h3>
 
 One might well ask why a simple file-server is called by the grandiose title
 of ``Document-Oriented Filing System''.  Several extensions are planned,
 including:
 <ul>
   <li> treating entire directory trees as compound documents, 
-  <li> splitting a single file into multiple sub-documents
-  <li> mapping URL's to filenames  in ways not supported by the underlying OS
-  <li> keeping track of versions
-  <li> ``mounting'' a CGI program or remote server as a directory.
-</ul>
+  </li><li> splitting a single file into multiple sub-documents
+  </li><li> mapping URL's to filenames  in ways not supported by the underlying OS
+  </li><li> keeping track of versions
+  </li><li> ``mounting'' a CGI program or remote server as a directory.
+</li></ul>
 
 The result will be something that resembles an operating-system-independent
 file system rather than a simple server.
@@ -128,5 +127,5 @@ There is some debate as to how ``DOFS'' should be pronounced.  ``Doffs'' means
 ``takes off'' (usually applied to an article of clothing), whereas ``doofus''
 means a foolish or incompetent person.  Neither is particularly appropriate.
 
-<footer cvsid="$Id: home.xh,v 1.4 1999-03-27 01:35:10 steve Exp $">
+<footer cvsid='$Id: home.xh,v 1.5 1999-03-27 02:29:26 pgage Exp $' />
 </body></html>

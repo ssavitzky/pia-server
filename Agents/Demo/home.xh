@@ -1,34 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>The &AGENT:name; agent home page</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
-<sub-head page=home >
-    <tr><th><td> <a href="demo_define.xh">Define Element and Attribute Examples</a>
-    <tr><th><td> <a href="demo_text.xh">Text Examples</a>
-    <tr><th><td> <a href="demo_num.xh">Numeric Examples</a>
-    <tr><th><td> <a href="demo_if.xh">If and Sub-component Examples</a>
-    <tr><th><td> <a href="demo_logic.xh">Logical And/Or Examples</a>
-    <tr><th><td> <a href="demo_subst.xh">Substitute Examples</a>
-    <tr><th><td> <a href="demo_rep.xh">Repeat Examples</a>
-    <tr><th><td> <a href="demo_getset.xh">Get and Set Variable Examples</a>
-    <tr><th><td> <a href="demo_protect.xh">Protect Markup Examples</a>
-    <tr><th><td> <a href="demo_sel.xh">Extract Examples</a>
-    <tr><th><td> <a href="demo_test.xh">Test Handler Examples</a>
-    <tr><th><td> <a href="demo_debug.xh">Debug Handler Examples</a>
-    <tr><th><td> <a href="hello-world.xh">Hello World Example</a>
-    <tr><th><td> <a href="/Doc/tagsets.html">Tagset Manual</a>
-</sub-head>
+<sub-head page='home'>
+    <tr><th></th><td> <a href='demo_define.xh'>Define Element and Attribute Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_text.xh'>Text Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_num.xh'>Numeric Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_if.xh'>If and Sub-component Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_logic.xh'>Logical And/Or Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_subst.xh'>Substitute Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_rep.xh'>Repeat Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_getset.xh'>Get and Set Variable Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_protect.xh'>Protect Markup Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_sel.xh'>Extract Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_test.xh'>Test Handler Examples</a>
+    </td></tr><tr><th></th><td> <a href='demo_debug.xh'>Debug Handler Examples</a>
+    </td></tr><tr><th></th><td> <a href='hello-world.xh'>Hello World Example</a>
+    </td></tr><tr><th></th><td> <a href='/Doc/tagsets.html'>Tagset Manual</a>
+</td></tr></sub-head>
 
 
 <h2>About This Agent:</h2>
 
-The <b><a href="/&agentName;/">&agentName;</a></b> agent is intended as a
+The <b><a href='/&agentName;/'>&agentName;</a></b> agent is intended as a
 demonstration and testbed for the PIA's active document markup language and its
 formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid="$Id: home.xh,v 1.6 1999-03-24 01:58:55 pgage Exp $"></footer>
-</body></html>
+<footer cvsid='$Id: home.xh,v 1.7 1999-03-27 02:29:34 pgage Exp $' /></p><p>
+</p></body></html>
 

@@ -1,77 +1,75 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Using &AGENT:type; Agents</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Using &AGENT:type; Agents</header>
 
-<set name="subs"><agent-list subs type="&agentType;"></set>
-<sub-head page=using>
-    <tr><th align=right> <xopt page="&page;" pages="using">&blue-dot;</xopt>
-	<td> <xa page="&page;" href="using">Using  &agentType; Agents</xa>
-    <tr><th align=right> <xopt page="&page;" pages="writing">&blue-dot;</xopt>
-	<td> <xa page="&page;" href="writing">Writing &amp; Customizing
+<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<sub-head page='using'>
+    <tr><th align='right'> <xopt page='&page;' pages='using'>&blue-dot;</xopt>
+	</th><td> <xa page='&page;' href='using'>Using  &agentType; Agents</xa>
+    </td></tr><tr><th align='right'> <xopt page='&page;' pages='writing'>&blue-dot;</xopt>
+	</th><td> <xa page='&page;' href='writing'>Writing &amp; Customizing
 		    		      &agentType; Agents</xa>
-    <tr><th align=right>
-           <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;</a>/</then>
+    </td></tr><tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
                 <else>&agentType; agents: </else></if>
-        <td><repeat list="&subs;">
-               <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a>
+        </th><td><repeat list='&subs;'>
+               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat>
-</sub-head>
-<hr>
-<nav-bar/>
-<hr>
+</td></tr></sub-head>
+<hr />
+<nav-bar />
+<hr />
 
-<p>Once a <a href="&agentType;">&agentType;</a> agent is installed it requires
+<p>Once a <a href='&agentType;'>&agentType;</a> agent is installed it requires
 little attention; it will simply look ``over your shoulder'' at some subset of
 your HTTP transactions and report its findings to you by attaching
 information, in the form of a ``toolbar,'' to the top or bottom of each page.
 
 
-<h2>About Toolbars</h2>
+</p><h2>About Toolbars</h2>
 
-<p>Most <a href="&agentType;">&agentType;</a> agents put a ``toolbar'' on top of
-certain pages retrieved from the agency.  <p>
+<p>Most <a href='&agentType;'>&agentType;</a> agents put a ``toolbar'' on top of
+certain pages retrieved from the agency.  </p><p>
 
-<p>The toolbar usually starts out with a distinctive logo that indicates where
-the page came from.  For example, the <a href="/&agentType;/remote">fbi</a>
+</p><p>The toolbar usually starts out with a distinctive logo that indicates where
+the page came from.  For example, the <a href='/&agentType;/remote'>fbi</a>
 agent, which puts toolbars on pages that come from <em>outside the PIA</em>,
-attaches a pentagon logo (<img src="/Icon/pent24.gif" height=24 width=43>)
-which is a link to the PIA's home page.<p>
+attaches a logo (<img src='/Icon/pent24.gif' height='24' width='43' />)
+which is a link to the PIA's home page.</p><p>
 
-This is usually followed by a link to your personal PIA data directory (<a
-href="/~">/~</a>), that looks like this: 
+This is usually followed by a link to your personal PIA data directory (<a href='/~'>/~</a>), that looks like this: 
 
 <dl>
-  <dt> <a href="/~">[~]</a>
-  <dd> (The tilde is the usual shorthand for one's
+  <dt> <a href='/~'>[~]</a>
+  </dt><dd> (The tilde is the usual shorthand for one's
        ``home directory'' on a Unix system, or a user's home page on a Web
        server.)
-</dl>
+</dd></dl>
 
-The toolbar normally also refers to the following items in the <a
-href="/History">History</a> agent's data directory:
+The toolbar normally also refers to the following items in the <a href='/History'>History</a> agent's data directory:
 
 <dl>
-  <dt> [ <a href="/History">Hist:</a> 
-  <dd> <a href="/History">/History</a> -- the History agent's home page
-  <dt> <a href="/History/~">*</a> 
-  <dd> <a href="/History/~">/History/~</a> -- the History agent's data
+  <dt> [ <a href='/History'>Hist:</a> 
+  </dt><dd> <a href='/History'>/History</a> -- the History agent's home page
+  </dd><dt> <a href='/History/~'>*</a> 
+  </dt><dd> <a href='/History/~'>/History/~</a> -- the History agent's data
        directory. 
-  <dt> <a href="/History/~/&year;">&year;</a> /
-  <dd> <a href="/History/~/&year;">/History/~/&year;</a> --
+  </dd><dt> <a href='/History/~/&year;'>&year;</a> /
+  </dt><dd> <a href='/History/~/&year;'>/History/~/&year;</a> --
        the history for the current year
-  <dt> <a href="/History/~/&year;/&month;">&month;</a> /
-  <dd> <a href="/History/~/&year;/&month;">/History/~/&year;/&month;</a> --
+  </dd><dt> <a href='/History/~/&year;/&month;'>&month;</a> /
+  </dt><dd> <a href='/History/~/&year;/&month;'>/History/~/&year;/&month;</a> --
        the history for the current month
-  <dt> <a href="/History/~/&year;/&month;/&day;.html">&day;</a>
-  <dd> <a href="/History/~/&year;/&month;/&day;.html">
+  </dd><dt> <a href='/History/~/&year;/&month;/&day;.html'>&day;</a>
+  </dt><dd> <a href='/History/~/&year;/&month;/&day;.html'>
        /History/~/&year;/&month;/&day;.html</a> --
        the history for today
-  <dt> <a href="/History/~/last.html">&hour;:&minute;</a>] --
-  <dd> <a href="/History/~/last.html">/History/~/last.html</a>
-</dl>
+  </dd><dt> <a href='/History/~/last.html'>&hour;:&minute;</a>] --
+  </dt><dd> <a href='/History/~/last.html'>/History/~/last.html</a>
+</dd></dl>
 
-<footer cvsid="$Id: using.xh,v 1.3 1999-03-27 01:35:33 steve Exp $">
-</body></html>
+<footer cvsid='$Id: using.xh,v 1.4 1999-03-27 02:29:42 pgage Exp $' />
+</p></body></html>

@@ -1,38 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Initialize PIA</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <h1>The &AGENT:name; agent initialization document</h1>
 
 <user-message>Initializing &AGENT:name; from &filePath;</user-message>
 
-<if><status src="checkpoint.dat" item=exists />
+<if><status src='checkpoint.dat' item='exists' />
     <then>
-	<if><agent-restore file=checkpoint.dat>
-	    <then>
+	<if><agent-restore file='checkpoint.dat'>
+	    </agent-restore><then>
 		<user-message>Restored from checkpoint.dat</user-message>
-            <else>
- 		<set agent name=do-not-remove>true</set>
+            </then><else>
+ 		<set agent='agent' name='do-not-remove'>true</set>
 		<user-message>Restore failed because of Java class updates.
 Loading start-up file.</user-message>
-		<submit-forms><include src="/&AGENT:name;/START-UP.html" /></submit-forms>
+		<submit-forms><include src='/&AGENT:name;/START-UP.html' /></submit-forms>
 	    </else></if>
     </then>
     <else>
-	<set agent name=do-not-remove>true</set>
+	<set agent='agent' name='do-not-remove'>true</set>
 	<user-message>Loading startup file</user-message> 
-	<submit-forms><include src="/&AGENT:name;/START-UP.html" /></submit-forms>
+	<submit-forms><include src='/&AGENT:name;/START-UP.html' /></submit-forms>
     </else>
 </if>
 
-<hr>
-This form gets requested by the agency at start-up.  It looks for a <a
-href=START-UP.html>START-UP.html</a> file and submits each of the forms
+<hr />
+This form gets requested by the agency at start-up.  It looks for a <a href='START-UP.html'>START-UP.html</a> file and submits each of the forms
 found in that file in turn.
 <p>
 
 It is also possible to override <em>this</em> file with your own version, in
 (<code>/~/Agents/Admin/initialize.xh</code>) and put arbitrary code into it.
 
-<short-footer cvsid="$Id: initialize.xh,v 1.4 1999-03-27 01:35:05 steve Exp $">
-</body></html>
+<short-footer cvsid='$Id: initialize.xh,v 1.5 1999-03-27 02:29:22 pgage Exp $' />
+</p></body></html>

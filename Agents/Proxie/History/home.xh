@@ -1,74 +1,73 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>The &AGENT:name; agent home page</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
-<sub-head page=home >
-    <tr><th><td><a href="/History/~">/History/~</a> /
-		<a href="/History/~/&year;">&year;</a> /
-		<a href="/History/~/&year;/&month;">&month;</a> /
-		<a href="/History/~/&year;/&month;/&day;.html">&day;</a>
-</sub-head>
+<sub-head page='home'>
+    <tr><th></th><td><a href='/History/~'>/History/~</a> /
+		<a href='/History/~/&year;'>&year;</a> /
+		<a href='/History/~/&year;/&month;'>&month;</a> /
+		<a href='/History/~/&year;/&month;/&day;.html'>&day;</a>
+</td></tr></sub-head>
 
-<if><agent-running name=History>
-  <else>see the <a href="/Admin/installers#History">installation page</a>
-        or <br>
-        <form method=POST action="/Admin/install-agent">
-		<input name="agent" value="History" size=30>
-		<input type="submit" value="Install Now">
+<if><agent-running name='History'>
+  </agent-running><else>see the <a href='/Admin/installers#History'>installation page</a>
+        or <br />
+        <form method='POST' action='/Admin/install-agent'>
+		<input name='agent' value='History' size='30' />
+		<input type='submit' value='Install Now' />
         </form>
   </else>
 </if>
 <p>
 
-<hr>
-<a href="/">PIA</a> | <a href="/Admin">Admin</a> |
-<a href="/Toolbar">Toolbar</a> | <a href="/History">History</a> |
-<a href="/History/~/">/History/~</a>
-		<a href="/History/~/&year;">&year;</a> /
-		<a href="/History/~/&year;/&month;">&month;</a> /
-		<a href="/History/~/&year;/&month;/&day;.html">&day;</a>
-<hr>
+<hr />
+<a href='/'>PIA</a> | <a href='/Admin'>Admin</a> |
+<a href='/Toolbar'>Toolbar</a> | <a href='/History'>History</a> |
+<a href='/History/~/'>/History/~</a>
+		<a href='/History/~/&year;'>&year;</a> /
+		<a href='/History/~/&year;/&month;'>&month;</a> /
+		<a href='/History/~/&year;/&month;/&day;.html'>&day;</a>
+<hr />
 
-<p>The <code>&agentName;</code> agent puts information into the history
-database, which is located in <a href="/History/~">/History/~</a>, the History
-agent's data directory.  Most <a href="/Toolbar/">Toolbar</a> agents put a
+</p><p>The <code>&agentName;</code> agent puts information into the history
+database, which is located in <a href='/History/~'>/History/~</a>, the History
+agent's data directory.  Most <a href='/Toolbar/'>Toolbar</a> agents put a
 small control bar at the top of each page that refers to the history database.
 
-<p>The History control bar looks like this:<br>
+</p><p>The History control bar looks like this:<br />
 <dl>
-  <dt> <expand><get agent=History name=controls /></expand>
-  <dd> 
-       <dl compact>
+  <dt> <expand><get agent='History' name='controls' /></expand>
+  </dt><dd> 
+       <dl compact='compact'>
 	 <dt> Hist
-	 <dd> -&gt; <a href="/History">/History</a>, the History Agent's home
+	 </dt><dd> -&gt; <a href='/History'>/History</a>, the History Agent's home
 	      page  
-	 <dt> *
-	 <dd> -&gt; <a href="/History/~">/History/~</a>, the History Agent's
+	 </dd><dt> *
+	 </dt><dd> -&gt; <a href='/History/~'>/History/~</a>, the History Agent's
 	      data directory.
-	 <dt> &year; / &month; /
-	 <dd> -&gt; the directories for this year and month.
-	 <dt> &day;
-	 <dd> -&gt; <a href="/History/~/&year;/&month;/&day;.html"
-	      >/History/~/&year;/&month;/&day;.html</a>, the history file for
+	 </dd><dt> &year; / &month; /
+	 </dt><dd> -&gt; the directories for this year and month.
+	 </dd><dt> &day;
+	 </dt><dd> -&gt; <a href='/History/~/&year;/&month;/&day;.html'>/History/~/&year;/&month;/&day;.html</a>, the history file for
 	      today. 
-	 <dt> &time;
-	 <dd> -&gt; <a href="/History/~/last.html">/History/~/last.html</a>, the
+	 </dd><dt> &time;
+	 </dt><dd> -&gt; <a href='/History/~/last.html'>/History/~/last.html</a>, the
 	      headers and other information for the most-recently-viewed page.
-       </dl>
-</dl>
+       </dd></dl>
+</dd></dl>
 
-<h3>Files:</h3>
+</p><h3>Files:</h3>
 <ul>
-  <li>History directory: <a href="/History/~">/History/~</a>
-  <li>Page info: <a href="/History/~/last.html">/History/~/last.html</a>
-  <li>Last link: <a  href="/History/~/last.link">/History/~/last.link</a>
-</ul>
+  <li>History directory: <a href='/History/~'>/History/~</a>
+  </li><li>Page info: <a href='/History/~/last.html'>/History/~/last.html</a>
+  </li><li>Last link: <a href='/History/~/last.link'>/History/~/last.link</a>
+</li></ul>
 
 <p>The ``last link'' file is particularly useful; the following Emacs code
 lets you define a key that inserts a link to the last page you visited:
 
-<blockquote><pre><!-- listing doesn't work for some reason -->
+<blockquote><pre><!--  listing doesn't work for some reason  -->
 (global-set-key "\C-Cy"   'generic-insert-last-link)
 (defun generic-insert-last-link ()
   "Insert a link to the last page visited into the buffer"
@@ -79,41 +78,41 @@ lets you define a key that inserts a link to the last page you visited:
 (Windows users will have to change the file in the last line to
  <code>&usrDIR;/History/last.link</code>).
 
-<h3>Directory Format</h3>
+</p><h3>Directory Format</h3>
 
 The History agent uses a directory hierarchy of the form:
 
 <dl>
   <dt> yyyy/
-  <dd> 
+  </dt><dd> 
        <dl>
 	 <dt> mm/
-	 <dd> 
+	 </dt><dd> 
 	      <dl>
 		<dt> dd.html
-		<dd> 
-	      </dl>
-       </dl>
-</dl>
+		</dt><dd> 
+	      </dd></dl>
+       </dd></dl>
+</dd></dl>
 
 The year is always four digits; month and day are always two.  This makes
 sorting files by date very easy.  <p>
 
-<h3>Agent Act-On Hook</h3>
+</p><h3>Agent Act-On Hook</h3>
 
 <blockquote><em>
   This is the source code for the hook that writes data into the history
   files.  It is slightly contorted due to the desire not to write extra
-  newlines or spaces into the file.<p>
+  newlines or spaces into the file.</em><p>
 
   It can be customized by making an edited copy of the &agentName;
-  initialization document, <a href="/PIA/Agents/&agentName;/initialize.xh"
-  >/PIA/Agents/&agentName/initialize.xh</a>, and putting it in your personal
+  initialization document, <a href='/PIA/Agents/&agentName;/initialize.xh'>/PIA/Agents/&amp;agentName/initialize.xh</a>, and putting it in your personal
   Agents directory as <code>~/.pia/Agents/&agentName;/initialize.xh</code>
-</em></blockquote>
 
-<pre><protect result markup>&AGENT:act-on;</protect>
+</p></blockquote>
+
+<pre><protect result='result' markup='markup'>&AGENT:act-on;</protect>
 </pre>
 
-<footer cvsid="$Id: home.xh,v 1.4 1999-03-27 01:35:26 steve Exp $">
+<footer cvsid='$Id: home.xh,v 1.5 1999-03-27 02:29:38 pgage Exp $' />
 </body></html>

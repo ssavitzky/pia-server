@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
 <title>Test Handler Demo</title>
 </head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
 <header>Test Handler Demo</header>
 
@@ -15,138 +15,137 @@ tested condition is true, the test element expands to 1,
 otherwise it expands to nothing at all.  Test is mainly used
 inside control-flow operations for computing conditions.
 
-The <a name="test_demo">test handler demo</a> shows how to use the
-test handler to test for: <a href="#zero"> zero</a>, <a href="#pos"> a
-positive number</a>, <a href="#neg"> a negative number</a>, <a
-href="#match"> a matching string </a>, <a href="#null"> null content
-</a>, <a href="#num"> a number</a>, <a href="#sorted"> or a sorted
-list </a>, and how to <a href="#notnum">negate a test with not</a>.  
+The <a name='test_demo'>test handler demo</a> shows how to use the
+test handler to test for: <a href='#zero'> zero</a>, <a href='#pos'> a
+positive number</a>, <a href='#neg'> a negative number</a>, <a href='#match'> a matching string </a>, <a href='#null'> null content
+</a>, <a href='#num'> a number</a>, <a href='#sorted'> or a sorted
+list </a>, and how to <a href='#notnum'>negate a test with not</a>.  
 <p>
 
-<h3><a name="zero">Test for Zero</a></h3>
+</p><h3><a name='zero'>Test for Zero</a></h3>
 <b> Description:</b>Test zero returns true when passed whitespace or 0; false when handed a text string or a number other than zero.
 <p>
 <b> Input:      </b>&lt;test zero&gt;0&lt;/test&gt;
-<p>
-<b> Result:     </b><test zero>0</test>
-<p>
+</p><p>
+<b> Result:     </b><test zero='zero'>0</test>
+</p><p>
 <b> Input:      </b>&lt;test zero&gt; &lt;/test&gt;
-<p>
-<b> Result:     </b><test zero> </test>
-<p>
+</p><p>
+<b> Result:     </b><test zero='zero'> </test>
+</p><p>
 <b> Input:      </b>&lt;test zero&gt;-1&lt;/test&gt;
-<p>
-<b> Result:     </b><test zero>-1</test>
-<p>
+</p><p>
+<b> Result:     </b><test zero='zero'>-1</test>
+</p><p>
 <b> Input:      </b>&lt;test zero&gt;text string&lt;/test&gt;
-<p>
-<b> Result:     </b><test zero>text string</test>
-<p>
+</p><p>
+<b> Result:     </b><test zero='zero'>text string</test>
+</p><p>
 
-<hr>
+<hr />
 
-<h3><a name="pos">Test for a Positive Number</a></h3>
+</p><h3><a name='pos'>Test for a Positive Number</a></h3>
 <b> Description:</b>The following examples test for a positive number.
 <p>
 <b> Input:      </b>&lt;test positive&gt;-1&lt;/test&gt;
-<p>
-<b> Result:     </b><test positive>-1</test>
+</p><p>
+<b> Result:     </b><test positive='positive'>-1</test>
 
-<p>
+</p><p>
 <b> Input:      </b>&lt;test positive&gt;1&lt;/test&gt;
-<p>
-<b> Result:     </b><test positive>1</test>
-<hr>
+</p><p>
+<b> Result:     </b><test positive='positive'>1</test>
+<hr />
 
 
-<h3><a name="neg">Test for a Negative Number</a></h3>
+</p><h3><a name='neg'>Test for a Negative Number</a></h3>
 <b> Description:</b>The following examples test for a negative number.
 <p>
 <b> Input:      </b>&lt;test negative&gt;-1&lt;/test&gt;
-<p>
-<b> Result:     </b><test negative>-1</test>
+</p><p>
+<b> Result:     </b><test negative='negative'>-1</test>
 
-<p>
+</p><p>
 <b> Input:      </b>&lt;test negative&gt;0&lt;/test&gt;
-<p>
-<b> Result:     </b><test negative>0</test>
-<hr>
+</p><p>
+<b> Result:     </b><test negative='negative'>0</test>
+<hr />
 
 
-<h3><a name="match">Test for a Match on a String</a></h3>
+</p><h3><a name='match'>Test for a Match on a String</a></h3>
 <b> Description:</b>The following examples test for exact and case insensitive matches on text strings.
 <p>
 <b> Input:      </b> &lt;test match="cat"&gt;Match the Category&lt;/test&gt;
-<p>
-<b> Result:     </b><test match="cat">Match the Category</test>
-<p>
+</p><p>
+<b> Result:     </b><test match='cat'>Match the Category</test>
+</p><p>
 <b> Input:      </b> &lt;test case match="cat"&gt;Match the Category&lt;/test&gt;
-<p>
-<b> Result:     </b><test case match="cat">Match the Category</test>
-<hr>
+</p><p>
+<b> Result:     </b><test case='case' match='cat'>Match the Category</test>
+<hr />
 
-<h3><a name="null">Test for null Content</a></h3>
+</p><h3><a name='null'>Test for null Content</a></h3>
 <b> Description:</b> The following examples test for null on an empty node (one without text or whitespace) and on a node containing whitespace.
 <p>
 <b> Input:      </b>&lt;test null&gt;&lt;/test&gt;
-<p>
-<b> Result:     </b><test null></test>
-<p>
+</p><p>
+<b> Result:     </b><test null='null'></test>
+</p><p>
 <b> Input:      </b>&lt;test null&gt; &lt;/test&gt;
-<p>
-<b> Result:     </b><test null> </test>
-<hr>
+</p><p>
+<b> Result:     </b><test null='null'> </test>
+<hr />
 
 
-<h3><a name="num">Test for a Number</a></h3>
+</p><h3><a name='num'>Test for a Number</a></h3>
 <b> Description:</b>  The following examples test for numeric content.
 <p>
 <b> Input:      </b>&lt;test numeric&gt;999&lt;/test&gt;
-<p>
-<b> Result:     </b><test numeric>999</test>
-<p>
+</p><p>
+<b> Result:     </b><test numeric='numeric'>999</test>
+</p><p>
 <b> Input:      </b>&lt;test numeric&gt;one&lt;/test&gt;
-<p>
-<b> Result:     </b><test numeric>one</test>
-<hr>
+</p><p>
+<b> Result:     </b><test numeric='numeric'>one</test>
+<hr />
 
 
-<h3><a name="notnum">Test for Not a Number</a></h3>
+</p><h3><a name='notnum'>Test for Not a Number</a></h3>
 <b> Description:</b>  This example shows the use of not.  While this test should
 fail, if it is negated, it will return true.
 <p>
 <b> Input:      </b>&lt;test not numeric&gt;one&lt;/test&gt;
-<p>
-<b> Result:     </b><test not numeric>one</test>
-<hr>
+</p><p>
+<b> Result:     </b><test not='not' numeric='numeric'>one</test>
+<hr />
 
 
-<h3><a name="sorted">Test a Sorted List</a></h3>
+</p><h3><a name='sorted'>Test a Sorted List</a></h3>
 <b> Description:</b>Test that a sorted list is sorted.  Should return true.
 <p>
 <b> Input:      </b>&lt;test sorted&gt;Ants Bats Toads&lt;/test&gt;
-<p>
-<b> Result:     </b><test sorted>Ants Bats Toads</test>
-<hr>
-<h3>Test an Unsorted List</h3>
+</p><p>
+<b> Result:     </b><test sorted='sorted'>Ants Bats Toads</test>
+<hr />
+</p><h3>Test an Unsorted List</h3>
 <b> Description:</b>Test that an unsorted list is sorted.  Should return false.
 If it returns true, it is a bug.
 <p>
 <b> Input:      </b>&lt;test sorted&gt;bats ants toads&lt;/test&gt;
-<p>
-<b> Result:     </b><test sorted>bats ants toads</test>
-<p>
-<hr>
-<h3>Case Sensitive Test on a Sorted List</h3>
+</p><p>
+<b> Result:     </b><test sorted='sorted'>bats ants toads</test>
+</p><p>
+<hr />
+</p><h3>Case Sensitive Test on a Sorted List</h3>
 <b> Description:</b>Do a case sensitive test on a sorted list.  Should return true.
 <p>
 <b> Input:      </b>&lt;test case sorted&gt;Bats ants toads&lt;/test&gt;
-<p>
-<b> Result:     </b><test case sorted>Bats ants toads</test>
-<p>
+</p><p>
+<b> Result:     </b><test case='case' sorted='sorted'>Bats ants toads</test>
+</p><p>
 <footer />
 
-</body></html>
+</p></body></html>
 
 
 

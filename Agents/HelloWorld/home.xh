@@ -1,26 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html> <head> 
 <title>Hello World Demo</title>
 </head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
 <header> Hello World</header>
 
 <h2> I am the &agentName; agent </h2> 
 
-<if><get name=FORM:data /><then> 
+<if><get name='FORM:data' /><then> 
 	You entered the greeting:
 	<p>
-	 <font size="+5" color="#FF0000"><get name=FORM:data /> </font>
-	<p>
-</then><else> 
-	<form action="&urlPath;" method="post"> 
+	 <font size='+5' color='#FF0000'><get name='FORM:data' /> </font>
+	</p><p>
+</p></then><else> 
+	<form action='&urlPath;' method='post'> 
 	My mission is to display a greeting.  "Hello World!" is customary, but I am very flexible.  
 	My owner, &piaUSER;, may decide.
 	<p>
-	<input type="submit" value="Enter"> 
-	A Greeting: <input name="data"> 
-</form> 
+	<input type='submit' value='Enter' /> 
+	A Greeting: <input name='data' /> 
+</p></form> 
 
 </else> 
 </if> 

@@ -1,30 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Generic Home Page for &AGENT:name;</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Home Page</header>
-<set name="subs"><agent-list subs type="&agentType;"></set>
-<sub-head page=home>
+<set name='subs'><agent-list subs='subs' type='&agentType;'></agent-list></set>
+<sub-head page='home'>
 <if>&subs;
   <then>
-    <tr><th align=right>
-           <if><test not exact match="&agentType;">&agentName;</test>
-	        <then><a href="/&agentType;/home">&agentType;</a>/</then>
+    <tr><th align='right'>
+           <if><test not='not' exact='exact' match='&agentType;'>&agentName;</test>
+	        <then><a href='/&agentType;/home'>&agentType;</a>/</then>
                 <else>&agentType; agents: </else></if>
-        <td><repeat list="&subs;">
-               <a href="/&li;">&li;</a> <a href="/&li;/"><b> / </b></a>
+        </th><td><repeat list='&subs;'>
+               <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a>
            </repeat>
-</if>
+</td></tr></then></if>
 </sub-head>
 
-<if><test exact match="&agentType">&agentName;</test>
-    <then><set name=agentPath>&agentName;</set></then>
-    <else><set name=agentPath>&agentType;/&agentName;</set></else>
+<if><test exact='exact' match='&amp;agentType'>&agentName;</test>
+    <then><set name='agentPath'>&agentName;</set></then>
+    <else><set name='agentPath'>&agentType;/&agentName;</set></else>
 </if>
-<hr>
+<hr />
 
-<!-- See whether there's an "about" file for this agent. -->
-<include src="about.inc"> </include>
+<!--  See whether there's an "about" file for this agent.  -->
+<include src='about.inc'> </include>
 <p>
-<footer cvsid="$Id: home.xh,v 1.3 1999-03-27 01:34:58 steve Exp $">
-</body></html>
+<footer cvsid='$Id: home.xh,v 1.4 1999-03-27 02:29:13 pgage Exp $' />
+</p></body></html>

@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Agent Index</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Agent Index</header>
-<sub-head page=agents />
+<sub-head page='agents' />
 <p>
-<agent-index/>
-<footer cvsid="$Id: list-agents.xh,v 1.2 1999-03-12 19:22:02 steve Exp $">
-</body></html>
+<agent-index />
+<footer cvsid='$Id: list-agents.xh,v 1.3 1999-03-27 02:29:24 pgage Exp $' />
+</p></body></html>

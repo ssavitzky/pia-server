@@ -1,21 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Define Elements and Entities Demo</title>
 </head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 <header>Define Elements and Entities</header>
 
 <h2>Define Elements and Entities Demo</h2>
-The <a name="define_demo">define element handler</a> shows how to define some elements and
+The <a name='define_demo'>define element handler</a> shows how to define some elements and
 a simple entity.
 <p>
 
-<h3> Define and Use an Element </h3>
+</p><h3> Define and Use an Element </h3>
 <b> Description:</b> Create an element called co_name whose action prints a company name in full
 between two horizontal rules.
 <p>
 <b>Definition: </b> 
-<pre>
+</p><pre>
 &lt;define element=co_name&gt;
   &lt;action&gt;
 	&lt;hr&gt;
@@ -26,31 +26,31 @@ between two horizontal rules.
 </pre>
 <p>
 
-<!-- Actual definition does not print -->
-<define element=co_name>
+<!--   Actual definition does not print   -->
+<define element='co_name'>
   <action>
-	<hr>
-	<text pad align center width=80>Ricoh Silicon Valley, Inc.</text>
-	<hr>
+	<hr />
+	<text pad='pad' align='align' center='center' width='80'>Ricoh Silicon Valley, Inc.</text>
+	<hr />
   </action>
 </define>
-<p>
+</p><p>
 
 <b>Input: </b>&lt;co_name/&gt;
-<p>
-<b>Result: </b><co_name/>
-<p>
+</p><p>
+<b>Result: </b><co_name />
+</p><p>
 
-<hr>
+<hr />
 
-<h3> Using Namespace Entities</h3>
+</p><h3> Using Namespace Entities</h3>
 
 <b>Description: </b> The example below shows how to set an attribute and how use some of the 
 entities that are available within the extract namespace.  This example takes a list of space-separated
 words and formats them into a numbered list.  The attribute lstring takes a string as an argument.
 <p>
 <b>Definition: </b> 
-<pre>
+</p><pre>
 &lt;define element=ordered-list empty&gt;
   &lt;doc&gt; Converts a series of space-separated words into a numbered list.
   &lt;/doc&gt;
@@ -68,54 +68,55 @@ words and formats them into a numbered list.  The attribute lstring takes a stri
   &lt;/action&gt;
 &lt;/define&gt;
 
-<p>
+</pre><p>
 <b>Input: </b> 
 
 &lt;ordered-list lstring="one two"&gt;&lt;/ordered-list&gt;
-</pre>
-<p>
+
+
+</p><p>
 
 <b>Result: </b> 
-<define element=ordered-list empty>
+<define element='ordered-list' empty='empty'>
   <doc> Converts a series of space-separated words into a numbered list.
   </doc>
-  <define attribute=lstring>
+  <define attribute='lstring'>
     <doc> String that is converted to an ordered list.
     </doc>
   </define>
   <action>
     <ol>
-	<extract><from>&attributes;<name>lstring<eval/>
+	<extract><from>&attributes;</from><name>lstring</name><eval />
 		<repeat><foreach>&list;</foreach><li>&li;
-	   </repeat>
+	   </li></repeat>
 	</extract>
     </ol>
   </action>
 </define>
 
-<ordered-list lstring="one two"></ordered-list>
+<ordered-list lstring='one two'></ordered-list>
 
 
 
-<h3> Define and Use an Entity </h3>
+</p><h3> Define and Use an Entity </h3>
 <b> Description:</b> Define the entity "tomorrow", and set it to the value "Saturday".  Show
 how it may be used in an XML document.
 <p>
 <b> Definition: </b>&lt;define entity=tomorrow&gt;&lt;value&gt;Saturday&lt;/define&gt;
-<!-- Result is unseen -->
-<define entity=tomorrow><value>Saturday</define>
-<p>
+<!--   Result is unseen   -->
+<define entity='tomorrow'><value>Saturday</value></define>
+</p><p>
 <b> Input: </b>Tomorrow is: &amp;tomorrow;
-<p>
+</p><p>
 <b> Result:</b>Tomorrow is: &tomorrow;
-<p>
+</p><p>
 
-<br>
-<br>
-<br>
+<br />
+<br />
+<br />
 
-<footer cvsid="$Id: demo_define.xh,v 1.4 1999-03-12 23:15:47 pgage Exp $">
-</body></html>
+<footer cvsid='$Id: demo_define.xh,v 1.5 1999-03-27 02:29:28 pgage Exp $' />
+</p></body></html>
 
 
 

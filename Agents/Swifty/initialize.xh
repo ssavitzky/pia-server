@@ -1,21 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Initialize the &agentName; agent</title>
 </head><body>
 <h1>Initialize the &agentName; agent</h1>
 
-<!-- =================================================================== -->
-<!-- This is the first file that is loaded by PIA for an agent.  Here,
+<!--  ===================================================================  -->
+<!--  This is the first file that is loaded by PIA for an agent.  Here,
 <!-- it is used to initialize the entity variables used by Swifty to
 <!-- reasonable initial values.
-<!-- =================================================================== -->
+<!-- ===================================================================  -->
 <user-message>Initializing &agentName; from &filePath;</user-message>
 
-<set name="AGENT:fname">&piaUSER;</set>
-<set name="AGENT:links">No links selected yet</set>
-<set name="AGENT:ynews">No news initialized</set>
+<set name='AGENT:fname'>&piaUSER;</set>
+<set name='AGENT:links'>No links selected yet</set>
+<set name='AGENT:ynews'>No news initialized</set>
 
-<hr>
-<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.xh,v 1.2 1999-03-12 19:22:52 steve Exp $</b><br>
+<hr />
+<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
+<b>$Id: initialize.xh,v 1.3 1999-03-27 02:29:46 pgage Exp $</b><br />
 </body></html>
