@@ -1,5 +1,5 @@
 ////// ServletDoc.java: Top Processor for PIA active documents
-//	$Id: ServletDoc.java,v 1.6 2000-04-18 19:02:14 steve Exp $
+//	$Id: ServletDoc.java,v 1.7 2000-04-19 00:02:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import org.risource.site.*;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ServletDoc.java,v 1.6 2000-04-18 19:02:14 steve Exp $
+ * @version $Id: ServletDoc.java,v 1.7 2000-04-19 00:02:45 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -173,7 +173,8 @@ public class ServletDoc extends TopProcessor {
     Table pia = new Table();
     pia.at("url", servletURL.substring(0, servletURL.length()-1));
     pia.at("rootPath", rootPath);
-    pia.at("servlet", this.getClass().getName());
+    pia.at("servlet", servlet.getClass().getName());
+    // not in 1.1 pia.at("servletName", servlet.getServletName());
     pia.at("host", host);
     pia.at("port", "" + port);
 
@@ -185,6 +186,19 @@ public class ServletDoc extends TopProcessor {
     }
 
     define("PIA", pia);
+
+    String query = request.getQueryString();
+    String method = request.getMethod();
+
+    if (query != null) {
+      define("queryString", query);
+      define("FORM", new Table(HttpUtils.parseQueryString(query)));
+    }
+    if (method.equalsIgnoreCase("POST")) try {
+      define("FORM",
+	     new Table(HttpUtils.parsePostData(request.getContentLength(),
+					       request.getInputStream())));
+    } catch (Exception e) {}
 
     /* === 
     define("PIA", Pia.instance().properties());

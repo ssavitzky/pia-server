@@ -50,10 +50,6 @@
 <h2>To-Do list</h2>
 
 <ul>
-  <li> <b>Bug</b> Doesn't handle queries. <br />
-       This one's serious.
-       (2000-04-18)
-  </li>
   <li> <b>Impr</b> URL space for include, etc. still rooted at / <br />
        ... instead of PIA:rootPath, which might be more consistent.  Right now
        paths used for tagsets and include files that start with "/" are
@@ -70,6 +66,12 @@
 
 <h3>done</h3>
 <ul>
+  <li> 2000-04-12 <b>Bug</b> DPSServlet has no tagset mapping.<br />
+       Should take <code>tagset.<em>ext</em>=<em>tsname</em></code> and
+       <code>type.<em>ext</em>=<em>mime-type</em></code> initialization
+       parameters. 
+       (2000-04-05)
+  </li>
   <li> 2000-04-13 <b>Bug</b> No PIA namespace in PIAServlet<br />
        (2000-04-05)
   </li>
@@ -78,11 +80,9 @@
        to <code>/PIA/xxx</code>. 
        (2000-04-05)
   </li>
-  <li> 2000-04-12 <b>Bug</b> DPSServlet has no tagset mapping.<br />
-       Should take <code>tagset.<em>ext</em>=<em>tsname</em></code> and
-       <code>type.<em>ext</em>=<em>mime-type</em></code> initialization
-       parameters. 
-       (2000-04-05)
+  <li>2000-04-18 <b>Bug</b> Doesn't handle queries. <br />
+       This one's serious.
+       (2000-04-18)
   </li>
        
 </ul>
@@ -90,5 +90,5 @@
 
 <hr />
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
-<i>$Id: about.html,v 1.5 2000-04-18 22:10:22 steve Exp $</i><br />
+<i>$Id: about.html,v 1.6 2000-04-19 00:02:46 steve Exp $</i><br />
 </body></html>

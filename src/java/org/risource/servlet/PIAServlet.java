@@ -1,5 +1,5 @@
 ////// PIAServlet.java: PIA Servlet implementation
-//	$Id: PIAServlet.java,v 1.7 2000-04-12 00:47:33 steve Exp $
+//	$Id: PIAServlet.java,v 1.8 2000-04-19 00:02:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -53,7 +53,7 @@ import javax.servlet.http.*;
  *	package and a subset of the Agent functionality as well as the 
  *	DPS (Document Processing System).
  *
- * @version $Id: PIAServlet.java,v 1.7 2000-04-12 00:47:33 steve Exp $
+ * @version $Id: PIAServlet.java,v 1.8 2000-04-19 00:02:45 steve Exp $
  * @author steve@rsv.ricoh.com after paskin@rsv.ricoh.com
  * @see org.risource.servlet.DPSServlet
  * @see org.risource.dps
@@ -66,7 +66,7 @@ public class PIAServlet
 
   /** Cache for the servlet engine context. */
   protected ServletContext context;
-  protected static String revision = "$Revision: 1.7 $";
+  protected static String revision = "$Revision: 1.8 $";
 
   /** The configuration of this servlet, including any parameters passed
     * to the servlet.
@@ -587,6 +587,7 @@ public class PIAServlet
 				    HttpServletResponse resp)
     throws IOException
   {
+    if (path == null) path = "";
     path = req.getServletPath() + "/" +  path;
     resp.sendRedirect(path /*resp.encodeRedirectURL(path)*/);
 
@@ -597,8 +598,7 @@ public class PIAServlet
     String path = request.getPathInfo();
 
     if (path == null) {
-      log("*** path is null");
-      return null;
+      path = "/";
     }
 
     if (site == null) {
@@ -630,14 +630,13 @@ public class PIAServlet
 				     HttpServletResponse resp)
     throws IOException
   {
+    // Redirect empty path (actually just the servlet's URL) to "/"
+    if (path == null) return sendRedirection(request, null, resp);
 
     // Perform URL decoding:
     path = Utilities.urlDecode(path);
 
-    if (path == null) {
-      return sendErrorResponse(resp, 500, "path is null");
-    }
-
+    // Sanity checking.
     if (site == null) {
       return sendErrorResponse(resp, 500, "site is null");
     }
