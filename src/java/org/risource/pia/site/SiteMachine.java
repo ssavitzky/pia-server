@@ -1,5 +1,5 @@
 // SiteMachine.java
-// $Id: SiteMachine.java,v 1.12 2000-09-20 00:34:26 steve Exp $
+// $Id: SiteMachine.java,v 1.13 2000-10-06 00:31:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -287,8 +287,8 @@ public class SiteMachine extends Machine {
 
     // TEMPORARY!!! hack to prevent active pages from being cached. ===
     // BAD JUJU with back button on form submissions!  TEMPORARY!!! ===
-    response.setHeader("Date", toGMTString(now));
-    response.setHeader("Expires", toGMTString(now));
+    //response.setHeader("Date", toGMTString(now));
+    //response.setHeader("Expires", toGMTString(now));
 
     response.setContentType( ctype );
     response.setContentObj( c );
