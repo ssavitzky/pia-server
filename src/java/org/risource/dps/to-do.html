@@ -16,6 +16,11 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Delete TreeExternal.close*put. <br>
+       ConnectHandler should just close the Input or Output.  Requires a
+       check. 
+       (1999-11-04) <br>
+
   <li> <b>Bug</b> parent tagsets not loaded by site. <br>
        Not finding a parent tagset in a parent subsite.  Even "../tagset"
        fails.  Probably Loader or tagsetHandler is sidestepping the site
@@ -52,10 +57,6 @@ See also:
 
   <li> <b>Impr</b> &lt;bind type="namespace"&gt; <br>
        Would make it possible to set up sub-namespaces at load time.
-       (1999-07-15) <br>
-
-  <li> <b>Impr</b> Parser should use a LineNumberReader <br>
-       Should also have optional filename, both for use in error messages.
        (1999-07-15) <br>
 
   <li> <b>Bug</b> &lt;include src="file:..."&gt; fails for directories<br>
@@ -185,10 +186,6 @@ See also:
        a namespace at parse time, this simply won't work.  Could actually emit
        a &lt;namespace&gt; tag in this case. 
        (1999-05-14) <br>
-
-  <li> <b>Impr</b> Output wants close method. <br>
-       This would simplify closing streams, writers, etc. when we're done.
-       (1999-05-10) <br>
 
   <li> <b>Impr</b> Drop support for serialized objects <br>
        It turns out that loading XML is faster, at least for stripped tagsets.
@@ -631,5 +628,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.37 1999-11-04 22:46:52 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.38 1999-11-06 01:09:06 steve Exp $</b><br>
 </body></html>
