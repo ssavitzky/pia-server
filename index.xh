@@ -6,7 +6,7 @@
 <set name="piaURL">http://&piaHOST;:&piaPORT;/</set>
 <set name="ltitle"><if><test exact="exact" match="pia">&piaUSER;</test>
 		     <then> </then>
-		     <else><a href="/~/">&piaUSER;"s</a> </else></if></set>
+		     <else><a href="/~/">&piaUSER;'s</a> </else></if></set>
 <header show-date="yes" ltitle="&ltitle;">
   <if><test exact="exact" match="pia">&piaUSER;</test>
 			    <then>An Information Appliance</then>
@@ -25,17 +25,18 @@
     <tr><th valign="top" align="right" width="170">
 	    <a href="/~Admin"><b>Admin:</b></a>&nbsp;
 	</th><td valign="top">
-	    <a href="/~Admin/list-agents">list</a> /
+	    <a href="/~Admin/list-agents">list</a> <if> <then>/
 	    <a href="/~Admin/installers">install</a> / 
-	    <a href="/~Admin/remove-agent">remove</a> agents.<br />
+	    <a href="/~Admin/remove-agent">remove</a> </then></if> agents.<br />
 	    <if><test exact="exact" match="pia">&piaUSER;</test>
 	      <then><a href="/~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
     </td></tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
+    <!-- It is no longer necessary, since the config file can do it.    -->
     <tr><th valign="top" align="right" width="170"><a href="/."><b>Files:</b></a>&nbsp;
 	</th><td valign="top"> <a href="/Agents/">Agents</a>
-	    <a href="/Doc/">Documentation</a>
+	    <a href="/Doc/doclist.html">Documentation</a>
 	    <a href="/src/">source code</a>
       </td></tr>
     <if><agent-running name="History"/><then>
@@ -54,9 +55,9 @@
   </table>
 </td></tr></table>
 <hr />
-<include src="/Agents/ROOT/welcome.inc"> </include>
+<include src="/Agents/ROOT/welcome.inc"/>
 <hr />
-<include src="/Agents/ROOT/doc-grid.inc"> </include>
+<include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.4 1999-09-24 23:12:40 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.5 1999-09-30 15:29:12 steve Exp $" />
 </p></body></html>

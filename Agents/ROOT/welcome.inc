@@ -15,9 +15,10 @@
 </dl>
 
 <p> This is the home page of your personal PIA.  It is running as a process
-    under your own user name, and is accessible through the URL
+    under your own user name (if you're on Unix), and is accessible through
+    the URL 
 &lt;<a href="http://&piaHOST;:&piaPORT;/">http://&piaHOST;:&piaPORT;/</a>&gt;.
-    Of course, if you're looking at this page in a web browser, you already
+    Of course, if you're looking at this page in a web browser you already
     know that.
 
 <p> You can find out more about this <em>particular</em> PIA server from the
@@ -33,8 +34,7 @@
     href="http://www.RiSource.org/PIA"><code>/www.RiSource.org/PIA</code></a>.
     You can obtain updates and additional open-source software from <a
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
-    Eventually we will have a working demonstration PIA server at <a
-    href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
-    may not be running yet.
+    You can find a running PIA  working demonstration  server at <a
+    href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>.
 </p>
-<!-- $Id: welcome.inc,v 1.10 1999-09-24 23:07:06 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.11 1999-09-30 15:29:13 steve Exp $ -->
