@@ -10,44 +10,90 @@
 <h1>PIA Application Author's Guide</h1>
 </center>
 
-<p> This document provides an overview of agent and application writing in the
+<p> This document provides an overview of  application writing in the
     PIA system. In particular it describes:
 </p>
 
+<font color="red" size="+4"> Steve-- assume anything outside a blockquote has
+been messed with and potentially screwed up.  </font>
+
+
 <ul>
-<li><a href="#Naming">Agent naming</a></li>
+<li><a href="#Quick">Quick Start</a></li>
 
-<li><a href="#Types">Agent types</a></li>
+<li><a href="#Naming">Application naming</a></li>
 
-<li><a href="#Files">Agent files</a></li>
+<li><a href="#Types">Application types</a></li>
 
-<li><a href="#Code">Agent data structures and code</a></li>
+<li><a href="#Files">Application files</a></li>
 
-<li><a href="#Tips">Tips on agent creation</a></li>
+<li><a href="#Code">Application data structures and code</a></li>
+
+<li><a href="#Tips">Tips on application creation</a></li>
 </ul>
 
-<p>The extended HTML tags needed to create agents are described in
-the <a href="Tagsets/tsdoc/pia-xhtml.html">PIA XHTML
-Manual</a>.</p>
 
-<p>Source code for sample agents is in the <a href='../PIA/Agents'>
-Agents</a> directory at the top-level of the PIA's installation
-tree. Feel free to use these files as a source of ideas and
-examples, and as a basis for creating new agents.</p>
+<p>Active pages for sample applications are in the <code>/PIA/Agents/</code>
+and <code>PIA/Samples/</code> directories. Feel free to use these files as a
+source of ideas and examples, and as a basis for creating new applications.</p>
 
-<h2><a name="Naming"></a>Agent Naming and Directories</h2>
+<h2><a name="Quick"></a>Quick Start</h2>
+
+<ul>
+<li><p>
+ Browse to  the subsites in the <code>Samples/</code> directory.  Find one
+ upon which you might like to build, and copy that directory and its contents
+into the <code>.pia/</code> (or <code>$PIA_ROOT/</code>) directory, under a
+new name (e.g. <code>cp -r ~/PIA/Samples/HelloWorld/ ~/.pia/MyApps/MyFirstPage
+</code> ).  Now any changes you make will not be confused with files in the
+original source-tree, nor overwritten upon updating via CVS.  And any files
+your active pages write or read will appear in (or relative to) this new
+directory.</p> </li>
+
+<li><p> In this new directory, change every occurrence of the original name
+(<code>HelloWorld</code>) to the new one (<code>MyFirstPage</code>), both
+filenames and file content. This ensures that you don't have any stray
+references to the original application, and that any proper configurations and
+tagsets are used.
+</p></li>
+
+          
+<li><p> Add some text to the copied <code>home.xh</code> file, and aim your
+    browser at the new page
+    (e.g.<code> http://myHost:8888/MyApps/MyFirstPage/home.xh </code>)... you
+    should see the text.  
+</p></li>
+
+<li><p> Define a new tag at the very top of <code>home.xh</code> (as happens
+   at the top of <code>HelloWorld/home.xh</code>), and use the tag in the
+   body.  Refresh the broswer page (<code>shift-Reload</code>) to see the
+   effects.  If you expect to create many such tags, or to use them in other
+   pages, you should move them into a tagset file (see--or copy!-- the
+   <code>TagsetDemo/</code> sample to see how). </p></li>
+
+<li><p> Add a <code>&lt;show-errors /&gt;</code> tag to your page to indicate
+any errors which may occur.  Try the <code>&lt;pretty /&gt;</code> tag to see
+the structure of your XML.  Check out the <a
+	 href="http://pia.rsv.ricoh.com/Tutorial/home.xh"> hackable tutorials
+	 </a> for more explanation of how such tags work. Play around!</p></li>
+
+</ul>
+
+
+<blockquote>
+<h2><a name="Naming"></a>Application Naming and Directories</h2>
+
 
 <strong>=== THIS SECTION IS ENTIRELY WRONG!===</strong>
 
-
-<p> Every agent has a <em>name</em> and a <em>path</em>.  The file portion of
-    the agent's URL consists of the path and name concatenated together; the
+<p> Every application has a <em>name</em> and a <em>path</em>.  The file portion of
+    the application's URL consists of the path and name concatenated together; the
     path always begins and ends with the slash (<code>/</code>) character (and
     may consist of only one slash, and nothing else).  The combination of path
-    and name is called the agent's <em>pathname</em>. 
+    and name is called the application's <em>pathname</em>. 
 </p>
 
-<p> An agent's pathname can be combined with the tilde (<code>~</code>)
+<p> An application's pathname can be combined with the tilde (<code>~</code>)
     character in various ways to address its four directories:  root, home,
     user, and data.  (In most cases the root and home directories are the
     same.)
@@ -133,6 +179,54 @@ examples, and as a basis for creating new agents.</p>
 </p>
 
 
+
+</blockquote>
+<font color="red">
+Bill's proposal here
+
+<p> Every application (or "subsite") lives in a directory. In the simplest
+    case, the directory has the same name as the application and is located
+    under <var>PIA_ROOT/</var>.  For instance, the example in the Quick-start
+    section above creates the <code>MyFirstPage</code> application in the
+    directory <var>.pia/MyApps/MyFirstPage</var>.  Also, the applications we
+    provide are in same-named directories under <var>PIA/Agents</var> and
+    <var>PIA/Samples</var>. Various configuration files
+    (<var>_subsite.xcf</var>) could tell the processor to look for the
+    application in other directories instead. </p>
+
+    <p>But in all cases, the application's URL always <i>looks</i> as if the
+    application resides directly under the URL's root (the "slash" after the
+    port number). So, for example, the <code>MyFirstPage</code> URL would be
+    <var>http://piaHOST:8888/MyApps/MyFirstPage</var>, and the
+    <code>HelloWorld</code> URL would be
+    <var>http://piaHOST:8888/Samples/HelloWorld</var>, with no indication that
+    one lives under <var>.pia/</var> and the other under <var>PIA/</var>. </p>
+
+    <p> The procesor has internal rules for deciding where to look for files
+	belonging to given a URL (in this example, the rule is "look in
+	<var>.pia/</var> before looking in <var>PIA/</var>").  But you can add
+	more rules via the configuration files, so that an application's
+	active pages, tagsets, subdirectories and so forth can reside
+	<i>anywhere</i>; you just need to make sure that a (real)
+	<var>_subsite.xcf</var> file under <var>PIA_ROOT</var> or
+	<var>PIA_HOME</var> tells the processor where the "anywhere" is. </p>
+
+
+<p> Even the base directories <var>PIA_HOME</var> and <var>PIA_ROOT</var> can
+    be set on the <code>pia</code> command line or in the corresponding
+    environment variables.  They are normally the root of the PIA directory
+    tree (called PIA and located wherever the PIA is installed in your system)
+    and  a directory called <code>.pia</code> in your home directory.
+</p>
+
+</font>
+
+
+
+<blockquote>
+
+============= This section is questionable ================
+
 <h2><a name="Types">Agent Types</a></h2>
 
 <p>Every agent also has a <em>type</em>, which can be 
@@ -158,6 +252,40 @@ others are "sub-agents."</p>
 <blockquote><code>&lt;test exact
 match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
 
+</blockquote>
+
+
+
+
+<font color="red">
+bill's proposal here
+
+<h2><a name="Types">Application Types</a></h2>
+
+<p> There are roughly two kinds of applications: passive and active.  Passive
+    applications "just sit there," doing nothing until a request for a page
+    comes in... at which point the processor finds the right page, processes
+    the appropriate <var>.xh</var> file, and sends back the processed
+    results. This is like a traditional static web-page or CGI script.</p>
+
+  <p>Active applications, on the other hand, are more like "Agents" in the
+  traditional sense: they are background processes, always on, which eavesdrop
+  on and potentially modify all the port's traffic.  For example, the
+  <var>History</var> application (under <var>Agents/</var>) keeps track of
+  every URL visited, and the <var>Proxie</var> application modifies incoming
+  HTML according to the user's customization rules.  This is like a
+  traditional proxy-browser or proxy-server. </p>
+
+   <p> The prototype applications in <var>Samples/</var> are of the passive
+       type; it is best to get accustomed to using these before tinkering with
+       the more subtle and complex active ones.  Once you are ready, look at
+       <var>PIA/Agents/Proxie</var> as a prototype active appliation. </p>
+
+</font>
+
+<blockquote>
+
+============== This section is questionable ================
 
 <h2><a name="Files"></a>Agent Files</h2>
 
@@ -332,6 +460,187 @@ Those files, listed below, are "inherited" from the root directory
      default, but it can be omitted if it is not needed.</li>
 </ul>
 
+</blockquote>
+
+
+<font color="red">
+bills' proposal here
+
+<h2><a name="Files"></a>Application Files</h2>
+
+<p>This section describes the files that make up an application.</p>
+
+<h3>File Name Suffixes</h3>
+
+<p> Unlike most web servers, the PIA does not require filename extensions
+    (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
+    possible to refer to a document without revealing to the user whether it
+    is an ordinary HTML file or is created on-the-fly from an active document.
+    It also makes URL's shorter (and hence easier to remember). 
+</p>
+
+<p> Documents in an application's home directory and subdirectories are looked up
+    with a different (larger) set of suffixes.  A file's extension, as usual,
+    determines its MIME type.  Here are some examples: 
+</p>
+
+<table>
+  <tr><th> &nbsp; </th>
+      <th> tagset </th>
+      <th> meaning </th>
+  </tr>
+  <tr><th> .xh </th> <td> xhtml </td>
+      <td> Extended HTML </td>
+  </tr>
+  <tr><th> .xx </th> <td> xxml </td>
+      <td> Extended XML </td>
+  </tr>
+  <tr><th> .html </th> <td> html </td>
+      <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .htm </th> <td> html </td>
+      <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .xml </th> <td> <em>none</em> </td>
+      <td> Ordinary XML </td>
+  </tr>
+
+  <tr><th colspan=2>&nbsp;</th><th>&nbsp;</th></tr>
+
+  <tr><th colspan=2>&nbsp;</th>
+      <th> (used internally) </th>
+  </tr>
+
+  <tr><th> .inc </th> <td> xhtml </td>
+      <td> ``include'' files </td>
+  </tr>
+  <tr><th> .ts </th> <td> tagset </td>
+      <td> tagset files </td>
+  </tr>
+  <tr><th> .xml </th> <td> depends on usage. </td>
+      <td> Ordinary XML </td>
+  </tr>
+</table>
+
+
+<p>But the processor not only needs to know what is in the file, but also what
+    rules to apply in processing that file type...so the PIA uses special
+    extension-mapping files (like <code>extensions.xci</code>) to tell the
+    processor which tagset to use in processing which file.  Usually, these
+    mappings are straightforward (like "use the local tagset on all
+    <var>.xh</var> files"), but may also be much more flexible and powerful
+    (see the <var>Samples/ExtensionDemo</var> application, which assigns the
+    local tagset to any file with the <var>.foo</var> suffix). </p>
+
+<h3>File Name Locations</h3>
+
+<p> Where is the "current working directory" for an active page?  If an active
+    page tries to read the file <var>../Agents/Foo</var>, where will the
+    processor look?  If it tries to write that file, where will it write?
+</p>
+
+<p> In fact, reading and writing are somewhat different.  <strong>All</strong>
+    file-writing takes place in the <var>PIA_ROOT</var> directory
+    (e.g. <var>.pia</var>) or where its configuration files point,
+    automatically creating the whole stack of intervening directories if
+    necessary.  And the current directory is wherever the calling page
+    (e.g. <code>home.xh</code>) lives, as decided by the processor's
+    interpretation of the various configuration files (<var>
+    _subsite.xcf</var>, as outlined above).  </p>
+
+  <p> File-reading, as mentioned before, tries at first to act like
+      file-writing (looking under <var>PIA_ROOT</var> either for the file or
+      for a configuration file pointing to it), and uses the same "current
+      working directory" as file-writing.  But (unlike in the writing case),
+      if the processor fails to find the desired file in that fashion, it
+      falls back to looking under <var>PIA_HOME</var>, and searches <i> there
+      </i> for the file or for configuration pointers. </p>
+
+  <p><strong> This process can sometimes lead to confusion; be aware that
+  files may not be written or read where you first expect. </strong>  The
+  least confusing approach is to create and modify all files directly under
+  <var>PIA_ROOT</var>; then everything will be read and written in the same
+  place, and path names will be transparent. </p>
+
+<h3> File formats </h3>
+
+<p> There are further rules for the format of filenames and URLs, when dealing
+    with attributes that designate system resources, like ``<code>src</code>''
+    in the &lt;include&gt;, &lt;connect&gt;, and &lt;status&gt; elements, and
+    the ``system names'' of entities. 
+</p>
+
+
+<p>?????????  Steve- does initialization still make a difference here? ???</p>
+
+<p> When the <code>file:</code> prefix is not present, paths are in ``URL
+    format'':  slash characters are converted, if necessary, to the
+    operating system's file separator.  So <var>../MyApp/home.xh</var> will be
+    converted (on DOS/Windows) to <var>..\MyApp\home.xh</var>. One the other
+    hand,  <var>file:../MyApp/home.xh</var> will not be converted.
+</p>
+
+
+<p> In elements that may access URL's as well as files, for example an
+    additional prefix of <code>pia:</code> 
+is used to distinguish between normal file lookup, as above, and application-based
+    lookup, which is the default.  In application-based lookup, extensions and paths
+    are handled according to the application's naming rules, above.  In other words,
+    anything that looks like the file part of a URL is treated as if it was:
+</p>
+
+<p>?????????  Steve- better check this table... ???</p>
+
+<table>
+  <tr><td> <code>pia:~/</code></td>
+      <td> The user's home directory </td>
+  <tr><td> <code>pia:./</code></td>
+      <td> (or any relative path) the current application directory</td>
+  <tr><td> <code>pia:../</code></td>
+      <td> one level above the current application directory</td>
+  <tr><td> <code>pia:/~/</code></td>
+      <td> The PIA-user directory <code>PIA_ROOT</code></td>
+  <tr><td> <code>pia:/</code></td>
+      <td> (same as above)</td>
+  <tr><td> <code>file:</code></td>
+      <td> An absolute path in system format, relative to / (Unix) or (say) C:\
+	   (Windows)</td>
+</table>
+
+<h3>Standard Files</h3>
+
+<p>A PIA Application consists of little more than a collection of
+extended HTML (XHTML) files organized in a directory.
+Applications require a set of standard files.
+Those files, listed below, are "inherited" from the root directory
+(PIA_HOME/Agents) if they are not found in the application's home directory.</p>
+
+<ul>
+
+<li> <code>index.xh</code> <br>
+     
+     The page returned from a request for <code>/ApplicationName/</code>. Note
+     the trailing slash that distinguishes this page from the home page.
+     It gives a standardized listing of the application's default pages, sub-applications,
+     and so on.  Typically, it needs no customization. </li>
+
+<li> <code>_subsite.xcf</code><br>
+     This XML file sets all the configuration options, such as assigning
+     tagsets to files, pointing to directories elsewhere, even determining
+     which port the PIA will listen to. </li>
+
+<li> <code>initialize.xh</code><br> This XHTML file is invoked automatically
+     when the application is first called. ??????????It defines default values for
+     any options and sets the "match criteria" for transactions that the application
+     acts on.?????????????? This file does <em>not</em> have a default, but it
+     can be omitted if it is not needed.</li>
+</ul>
+</font>
+
+
+<blockquote>
+
+================= This section is questionable; is it really necessary? ===
 
 <h2><a name="Code">Agent Data Structures and Code</a></h2>
 
@@ -364,28 +673,32 @@ not all of its libraries or extensions are available on all systems.</p>
     scripts in PERL are more likely to be portable.
 </p>
 
+</blockquote>
+
+
 <h2><a name="Tips"></a>Tips on Agent Creation</h2>
 
-<p>PIA agents and active documents  are so new that few conventions
+<p>PIA applications and active documents  are so new that few conventions
 have become established for their use and there is considerable
 room for experimentation. A few rules of thumb have become
-clear:</p>
+clear, both for web-page appearance in general and for active-page
+style in particular: </p>
 
 <h3>Uniform Look and Feel</h3>
 
-<p>Use tagsets to give a family of related agents a similar appearance. The
+<p>Use tagsets to give a family of related applications a similar appearance. The
 PIA uses <code>&lt;header&gt;</code>, <code>&lt;subhead&gt;</code>, and
-<code>&lt;footer&gt;</code> in this way; almost every agent XHTML page
+<code>&lt;footer&gt;</code> in this way; almost every application XHTML page
 includes the code which expands into a standardized heading.</p>
 
-<p> Use ``include'' files and agent-specific entities to customze inherited
+<p> Use ``include'' files and application-specific entities to customize inherited
     pages.  The standard <code>include</code> files currently available
     are:
 </p>
 
 <ul>
   <li><code>about.inc</code> <br>
-       Information "about" an agent. This information is similar to what
+       Information "about" an application. This information is similar to what
        you might see on the "about" menu item on a Windows or Macintosh
        application. This is displayed by the default <code>home.xh</code>
        file just underneath the quick reference generated by the
@@ -394,30 +707,30 @@ includes the code which expands into a standardized heading.</p>
   <li><code>insert.inc</code> <br>
        An image or set of links "inserted" in the normally-empty space to
        the left of the quick reference. On an application, this is often a
-       link to the agent that serves as a control panel.</li>
+       link to the application that serves as a control panel.</li>
 </ul>
 
 <p> The other files that are frequently modified are: </p>
 
 <ul>
   <li> <code>home.xh</code><br>
-       Almost every agent will benefit from a customized home page.
-       Agent-specific information is often put into the home page's 
+       Almost every application will benefit from a customized home page.
+       Application-specific information is often put into the home page's 
        <code>&lt;subhead&gt;</code> element, for example. 
 
-  <li> <code><em>Agent</em>-xhtml.ts</code><br>
-       An agent-specific tagset file.  This allows modified versions of tags
+  <li> <code><em>Application</em>-xhtml.ts</code><br>
+       An application-specific tagset file.  This allows modified versions of tags
        such as <code>&lt;header&gt;</code> and <code>&lt;subhead&gt;</code> to
        be defined (redefining <code>&lt;subhead&gt;</code> is not uncommon),
-       as well as tags that are unique to the agent. </li> 
+       as well as tags that are unique to the application. </li> 
 </ul>
 
 <h3>Quick Reference Up Front</h3>
 
-<p>An agent's home page is the easiest to access. Additionally,
+<p>An application's home page is the easiest to access. Additionally,
 many users have browsers with small screens. Therefore it makes
 sense to put the most-commonly-used functions, and links to the
-most-commonly-used pages, as close to the top of an agent's home
+most-commonly-used pages, as close to the top of an application's home
 page as possible.</p>
 
 <p>There are two common formats for this. The first uses a single
@@ -432,19 +745,22 @@ columns of icons, or of mixed icons and text.</p>
 
 <h3>No Nasty Surprises</h3>
 
-<p>It is perfectly possible to put a query string into a link, and
-so have an ordinary-looking link or icon that is equivalent to
-submitting a form. In a PIA this can have drastic effects -- some of our
-prototype appliances included a form for shutting down the system!</p>
+<p>It is perfectly possible to put a query string into a link, and so have an
+ordinary-looking link or icon that is equivalent to submitting a form (our
+SimpleCalendar and Tutorial applications both do this).  But be careful,
+because forms can carry very general instructions to the PIA server-- some of
+our prototype appliances included a form for shutting down the system!</p>
 
-<p>Many users experiment, clicking links at random. You may also want to use a
-robot to build an index of your PIA, or to identify broken links.  It's a good
+<p>Many users experiment, clicking links at random.   It's a good
 idea to make any irreversible actions the result of submitting a form, rather
 than just following a link.  This also gives you a chance to ask the user for
 confirmation.</p>
 
+<p>You may also want to use a robot to build an index of your PIA, or to
+identify broken links.</p>
+
 <blockquote>Eventually it will be possible to use standard HTTP
-authentication to keep unauthorized users away from agents or forms
+authentication to keep unauthorized users away from applications or forms
 you do not want them to use.</blockquote>
 
 <h3>Active Documentation</h3>
@@ -455,14 +771,14 @@ function such as a link to a useful page or a form, but to provide
 the thing itself and invite the reader to try it out on the
 spot.</p>
 
-<p>Wherever possible, an agent should be self-documenting,
+<p>Wherever possible, an application should be self-documenting,
 including links to whatever documents a user may need. This
 includes tips on customization as well as advice on how to set the
 options. A <code>HEADER.html</code> or <code>index.html</code> file
-in the agent's home directory may be useful, since it can provide
-documentation that the user sees while browsing the agent's source
+in the application's home directory may be useful, since it can provide
+documentation that the user sees while browsing the application's source
 code directory <em>before</em> installation. It should include an
-installation form, especially if an agent has many options.</p>
+installation form, especially if an application has many options.</p>
 
 <h3>Readable Source</h3>
 
@@ -472,7 +788,25 @@ should the input--the author's view.</p>
 
 <p>Appropriate indentation makes for easier-to-read code. Indent
 the content of elements such as lists and control structures.
-Comment the file as appropriate.</p>
+Comment the file as appropriate, using one of the two types of comment
+available in the PIA:</p>
+<ul>
+
+<li><p> The ordinary HTML comment <code>&lt;!-- like this --&gt;</code> is
+passed on by the PIA processor to the browser, so it can appear in the
+browser's "Page Source" window.  Unfortunately, this kind of comment can
+affect the processing of active tags (because it still exists, even if
+invisibly, during processing), and can lead to very puzzling errors (for
+example, you may be testing whether a list is empty, and finding that it is
+not empty because it contains such a comment).</p> </li>
+
+<li><p> The other type of comment is more like a traditional "programming
+    comment", and is ideal for describing what happens in an active page.  It
+    looks <code>&lt;?-- like this --?&gt;</code>; any such comments are
+    removed at the very first PIA processing step, and thus have no side
+    effects at all.  We encourage copious use of this style comment to clarify
+    your active pages, just as programmers comment their code. </p></li>
+</ul>
 
 <p>Keep a to-do list. Document your design decisions, including
 things you tried that turned out to be mistakes.</p>
@@ -481,9 +815,9 @@ things you tried that turned out to be mistakes.</p>
 well-supported, and well-suited for projects with multiple
 developers).</p>
 
-<p>Remember, an agent's XHTML files are read not only by their
+<p>Remember, an application's XHTML files are read not only by their
 author, but by any users who want to customize or extend them. If
-the agent is complicated, consider writing an ``implementation
+the application is complicated, consider writing an ``implementation
 details'' document.</p>
 
 <p> The conventional names for documentation files in the PIA are: </p>
@@ -502,258 +836,51 @@ details'' document.</p>
 
 <h4><a name="Directory">Directory Structure</a></h4>
 
-<p>Your Information Agency makes use of two directories:</p>
+<p>Your Information Agency makes use of two paralles directory trees:</p>
 
 <ul>
-  <li> <var>PIA_HOME</var> contains the code, documentation, agents and
-       other files released by the PIA group.</li>
+  <li> <var>PIA_HOME</var> contains the code, documentation, applications and
+       other files released by the PIA group.  This directory can be
+       overwritten by <code>cvs update </code>, and may be shared by many
+       users on a common filesystem (e.g. in <var>/usr/local/</var>).</li>
 
-  <li> <var>PIA_ROOT</var> (typically <tt>~/.pia</tt> on Unix) stores agent
-       data and customized active documents.</li>
+  <li> <var>PIA_ROOT</var> (typically <tt>~/.pia</tt> on Unix) stores application
+       data and customized active documents.  This directory is always the
+       <i>first</i> place the PIA processor looks for files; it only checks
+       <var>PIA_HOME</var> if it can't find them here.</li>
 </ul>
 
-<p>By default, agents read and write their data files into <var>
-PIA_ROOT/AGENT_NAME</var> (where <var>AGENT_NAME</var> is the name
-of the agent. For example, the <var>History</var> agent keeps lists
-of visited URLs in <tt>~/.pia/History/</tt>)</p>
+<p>By default, an application <var>MyApp</var> in the directory
+<var>AllApps</var> will read and write its data files into <var>
+PIA_ROOT/AllApps/MyApp</var> directory. </p>
 
-<p>In seeking their documents, agents look first in <code><var>
-PIA_ROOT/Agents/AGENT_NAME</var></code>, where <var>
-AGENT_NAME</var> is the name of the agent in question. If that
-search fails, the agent then checks <var><code>
-PIA_HOME/Agents/AGENT_NAME</code></var>. Thus the <var>History</var>
-agent searches for its files in <kbd>~/.pia/Agents/History</kbd>
+
+????????????Steve-- are these corrections  true????????????
+
+<p>When the PIA processor looks for documents for (say) the URL
+<nobr><code>PIAhost:8888/MyApps/Foo</code></nobr>, it will first look in
+<code><var>PIA_ROOT/MyApps/Foo</var></code>.  If that
+search fails, the application then checks <var><code>
+PIA_HOME/MyApps/Foo</code></var>. Thus the <var>History</var>
+application searches for its files in <kbd>~/.pia/Agents/History</kbd>
 and then in <kbd>/usr/local/bin/pia/Agents/History</kbd>.</p>
 
-<p>This makes it easy to customize your agents by simply putting
-new documents in <code><var>
-PIA_ROOT/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a
-customized form, <tt>foo.xh</tt> for the <var>History</var> agent
-would go in <tt>~/.pia/Agents/History/foo.xh</tt>.)</p>
+<p>This makes it easy to customize applications we have prototyped; you simply
+put your  newly-improved documents in <code><var>
+PIA_ROOT/Agents/AGENT_NAME/FILENAME.xh</var></code>. For example, a customized
+form, <tt>foo.xh</tt> for the <var>History</var> application would go in
+<tt>~/.pia/Agents/History/foo.xh</tt>, and would not risk being overwritten by
+subsequent History-application updates from RiSource.org. </p>
 
-<h4><a name="Customizing">Customizing an Existing Agent</a></h4>
 
-<p>This section shows how to add a new function to the <var>
-History</var> agent. The new feature allows you to see a display of
-all web pages visited on the current day.</p>
-
-<p>In the example that follows, assume that <var>PIA_ROOT</var> has
-the value <code>~/.pia</code>.</p>
-
-<ol>
-<li>Create a file, <tt>~/.pia/Agents/History/today.xh</tt>.</li>
-
-<li>Add the following content:
-<br>
-<tt>&lt;html&gt;&lt;body&gt;</tt>
-<br>
-<tt>&lt;h2&gt; Web pages visited Today&lt;/h2&gt;</tt>
-<br>
-<tt>&lt;include src="~/&amp;year;/&amp;month;/&amp;day;.html" /&gt;</tt>
-<br>
-<tt>&lt;/body&gt;&lt;/html&gt;</tt></li>
-
-<li>Save the file <code>today.xh</code>.</li>
-
-<li>Use your browser to view the URL <code><a href= 
-"/History/today.xh">/History/today.xh</a></code> If you have been
-using your agency as a proxy to view external documents, you should
-get a listing of all places you visited today.</li>
-</ol>
-
-<h5>What Is Going On?</h5>
-
-<p>To understand the workings of this document, it is necessary to
-understand both the <var>History</var> agent and the specifics of
-this particular active document.</p>
-
-<p>The <var>History</var> agent stores information on URLs visited
-in files organized by date. For example, the file <tt>
-~/.pia/History/1997/07/11.html</tt> stores all the URLs visited on
-July 11, 1997. The document <var>today.xh</var> exploits this
-fact.</p>
-
-<p>The document shown above contains the standard HTML tags <code>
-&lt;html&gt;</code>, <code>&lt;body&gt;</code>, <code>
-&lt;h2&gt;</code> and one non-standard tag <code>
-&lt;include&gt;</code>. The power of the code comes from this
-special tag.</p>
-
-<p>The code also makes use of three entities, <var>
-&amp;year;</var>, <var>&amp;month;</var> and <var>&amp;day;</var>.
-By assigning the value of the <var>file</var> attribute to these
-entities, rather than a hard-coded date, the document always refers to
-the current day's date.</p>
-
-<p>Putting it all together, the tag <tt>&lt;include
-src="~/&amp;year;/&amp;month;/&amp;day;.html"&gt;</tt> tells the
-<var>History</var> agent to read the specified file (starting with the agent's
-data directory, as indicated by the <tt>~/</tt>) and insert the
-contents at this location. The entities are resolved and if there
-is a file for the current day it is displayed. If not, the <code>
-&lt;read&gt;</code> tag results in no new text being inserted.</p>
-
-<p>The <a href="Tagsets/basic.html">Basic Tagset Manual</a> provides
-further details on each interform tag and entity.</p>
-
-<h3><a name="Creating"></a>Creating a New Agent</h3>
-
-<p>This section describes how to build an agent from scratch. It
-describes how to create an agent named <var>HelloWorld</var>.</p>
-
-<ol>
-<li>Begin by creating a directory for the agent's interforms.
-<br>
-Create the directory, <tt>~/.pia/Agents/HelloWorld</tt>.</li>
-
-<li>Create a home page for your agent, <tt>
-~/.pia/Agents/HelloWorld/home.xh</tt> with the following content:
-
-<pre>
-&lt;!doctype html public "-//IETF//DTD HTML//EN//2.0"&gt;
-&lt;HTML&gt; &lt;html&gt; &lt;body&gt;
-<br>
-&lt;header&gt; Hello World&lt;/header&gt;
-<br>
-&lt;h2&gt;
-I am the  agent &lt;/h2&gt;
-<br>
-&lt;if&gt;&lt;get name="FORM:data" /&gt;
-<br>
-&lt;then&gt;You
-entered the greeting:
-<br>
-  &lt;p&gt;&lt;font size=+5 color="FF0000"&gt;
-<br>
- 
-  &lt;get name="FORM:data" /&gt; &lt;/font&gt; &lt;/p&gt;
-<br>
-&lt;/then&gt;
-<br>
-&lt;else&gt;
-
-<br>
-  &lt;form action="" method="post"&gt;
-<br>
-  My mission is to
-display a greeting.
-<br>
-  "Hello World!" is customary, but I am very
-flexible.
-<br>
-  My owner, , may decide. &lt;p&gt; 
-   &lt;input type="submit" value="Enter"&gt;
-<br>
-   A Greeting: &lt;input
-name="data"&gt;  &lt;p&gt; &lt;/form&gt;
-<br>
-&lt;/else&gt;
-<br>
-&lt;/if&gt;
-<br>
-&lt;footer
-/&gt;&lt;/body&gt;&lt;/html&gt;  
-</pre>
-</li>
-
-<li>Install your agent using the <a href="/Admin/create-agent.xh">
-/<code>Admin/create-agent.xh</code></a> form.</li>
-
-<li>Go to that page, enter <tt>HelloWorld</tt> as the name of your
-agent and click on the ``<strong>Create</strong>'' button.</li>
-</ol>
-
-<p>You should now the able to see and interact with your <var>HelloWorld</var>
-agent.</p> 
-
-<h5>What's Going On?</h5>
-
-<p>The <var>HelloWorld</var> agent uses many standard HTML tags.
-These include <code>&lt;html&gt;</code>, <code>&lt;h2&gt;</code>,
-<code>&lt;if&gt;</code>). The interform extensions employed are
-explained below. Additional information can be found in the <a
-href="entities.html">Entities Manual</a>.</p>
-
-<p><var>HelloWorld</var> uses three entities.</p>
-
-<table border="1" frame="border">
-<tbody>
-<tr align="left">
-<th>Entity</th>
-<th align="left">Explanation</th>
-</tr>
-
-<tr>
-<td align="left"><code>&amp;agentName;</code></td>
-<td align="left">Specifies current agent's name</td>
-</tr>
-
-<tr>
-<td align="left"><code>&amp;user.name;</code></td>
-<td align="left">Specifies user ID this agency is running
-under</td>
-</tr>
-
-<tr>
-<td><code>&amp;urlPath;</code></td>
-<td>Specifies that this form should be submitted to the same URL as
-the current document</td>
-</tr>
-</tbody>
-</table>
-
-<p><var>HelloWorld</var> uses a number of custom tags.</p>
-
-<table border="1" frame="border">
-<tbody>
-<tr align="left">
-<th>Interform</th>
-<th>Example</th>
-<th align="left">Explanation</th>
-</tr>
-
-<tr>
-<td><code>&lt;header&gt;</code></td>
-<td align="left"><code>&lt;header&gt;Hello
-World&lt;/header&gt;</code></td>
-<td align="left">Puts a standard agent header at the top of the
-page. This includes the PIA logo, that lets you navigate back to
-the Agency home page.</td>
-</tr>
-
-<tr>
-<td><code>&lt;get&gt;</code></td>
-<td align="left"><code>&lt;get name="FORM:data" /&gt;</code></td>
-<td align="left">Retrieves the value, if any, of the <tt>data</tt>
-field of the form (query string or POST) submitted as part of the request for
-this document.</td>
-</tr>
-
-<tr>
-<td><code>&lt;input&gt;</code></td>
-<td><code>&lt;input type="submit" value="Enter"&gt;</code></td>
-<td>Specifies the nature of the input the value.</td>
-</tr>
-
-<tr>
-<td><code>&lt;footer&gt;</code></td>
-<td align="left"><code>&lt;footer /&gt;</code></td>
-<td align="left">Provides the navigation bar at the bottom of the
-screen, along with a copyright notice.</td>
-</tr>
-</tbody>
-</table>
-
-<p>The <var>HelloWorld</var> interform checks to see if the user
-has submitted a form. If so, the form data is processed and the
-results displayed. If no form has been submitted, the form is
-presented for the user to fill out.</p>
-
-<h3><a name="Tips"></a>Tips on Agent Creation</h3>
-
-<p>The following section contains tips on creating agents.
+<p>The following section contains tips on creating applications.
 Additional ideas and inspiration might come from a close look at
-the interforms of agents that ship with the PIA.</p>
+the interforms of applications that ship with the PIA.</p>
+
+
+<blockquote>
+
+========== this section is questionable ===============
 
 <h4><a name="installing">Installing Agents</a></h4>
 
@@ -810,43 +937,70 @@ registered criteria, (requests for documents are considered
 documents in their own right), that agent is given a chance to
 process the document before sending it on to its destination.</p>
 
-<h3><a name="Debugging"></a>Debugging Tag-Based Agents</h3>
+</blockquote>
 
-<p>As with any code, agent code may not always work correctly the
+
+<h3><a name="Debugging"></a>Debugging Tag-Based Applications</h3>
+
+<p>As with any code, application code may not always work correctly the
 first time. Here are some techniques for understanding what is
-happening within your agent.</p>
+happening within your application.</p>
+
 
 <ul>
-<li>Use the <tt>&amp;urlQuery</tt>; entity to check that the <em>expected</em>
-name/value pairs are being posted from one page to another.  For example if
-<code>&urlQuery;</code> is added to the top of the <code>home.xh</code>
-page for the HelloWorld agent, you should see something like following when 
-you hit the Enter button:
-<code>
-data=Hello+World</code>.
-</li>
+  <li>  Use the &lt;show-errors /> tag, which will produce bright red error
+	messages for common problems like missing or misplaced end-tags,
+	attempts to read nonexistent files, and so forth. </li>
 
-<li>Look at the HTML source that is generated, using <var>
-View/Document Source</var> in the browser menu. This gives a good
-indication of where the code broke down.  Some elements, such as
-&lt;include&gt;, insert comments into the output document when an error
-occurs. </li>
+  <li> Use the &lt;pretty> tag (and/or nested &lt;pretty>&lt;protect> tags) to
+       view the document as the processor sees it, and disentangle possible
+       confusion in indentation and nesting.  See its<a
+         href="http://pia.rsv.ricoh.com/Tutorial/aboutPrettyRepeat.xh">tutorial
+         </a>   page for details. </li>
 
-<li>Put in print statements and expand variables inside tagset
-elements to check whether they have been set correctly.  Keep in mind
-that only the last value is returned from an element.</li>
+<li>Use the <a
+href="http://pia.rsv.ricoh.com/Tutorial/aboutDebugRepeat.xh">debug tag</a> to
+print the parse tree.  This shows how the document parser interprets the
+document, or document fragment, and sees the relationships between the various
+nodes.  </li>
 
-<li>Use the <a href="/Demo/demo_debug.xh">debug handler</a> to print the
-parse tree.  This shows how the document parser interprets the document,
-or document fragment, and sees the relationships between the various nodes.
-</li>
 
-<li> Run the pia with the <code>-d</code> (debug) option.  This will produce
-     voluminous output about what the pia thinks it's doing.  Adding the
+<li>Look at the HTML source that is generated, using <var> View/Document
+Source</var> or <var>View/Page Source</var> (via right-clicking) in the
+browser menu. This gives a good indication of where the code broke down.  Some
+elements, such as &lt;include&gt;, insert comments into the output document
+when an error occurs. </li>
+
+  <li>Use the <tt>&amp;urlQuery</tt>; entity to check that the
+<em>expected</em> name/value pairs are being posted from one page to another.
+For example, <code>&urlQuery;</code> appears in the
+<code>home.xh</code> page for the <code>Samples/Form</code> application, so
+you can  see something like following after submitting the form: <code>
+data=hi+there</code>.  </li>
+     
+  <li> Look at the PIA server console (where you ran <code>PIA/bin/pia</code>,
+       and where you subsequently re-run it whenever you change
+       configurations). Sometimes useful  messages appear there. </li>
+       
+  <li> Use the <nobr><code>&lt;user-message>
+       &amp;myValues;&lt;user-message></code></nobr> tag to print out the
+       contents of <code>myValues</code> into the command console running the
+       PIA; this allows you to view all kinds of intermediate variables
+       without having to change the expansion/output properties of the tags or
+       active sections you are investigating. </li>
+
+       <li> Run the pia with the <code>-d</code> (debug) option
+     (e.g. <code>PIA/bin/pia -d </code>).  This will produce
+     voluminous output about what the PIA thinks it's doing.  Adding the
      <code>-v</code> (verbose) flag will produce even more output, tracing the
      progress of the document processing system. </li>
      
 </ul>
+
+<p>The extended HTML tags needed to create applications are described in
+the <a href="Tagsets/tsdoc/pia-xhtml.html">PIA XHTML
+Manual</a>.</p>
+
 
 <hr><b>Copyright &copy; 1999 Ricoh Silicon Valley</b>
 <br>
