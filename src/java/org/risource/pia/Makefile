@@ -1,5 +1,5 @@
 ###### pia/Makefile:	Platform for Information Appliances
-#	$Id: Makefile,v 1.3 1999-03-12 19:29:28 steve Exp $
+#	$Id: Makefile,v 1.4 1999-03-12 22:58:13 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -66,3 +66,4 @@ include $(TOPDIR)/makefiles/package.make
 ### Dependencies:
 
 GenericAgent.class: Agent.java
+Pia.class: ../Version.java
