@@ -10,7 +10,11 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="Icon/warrior.jpg" alt="WOAD Warrior" width=170 />
+  <th width="170">
+    <img src="http://www.dandelion.com/images/ww.jpg" width=190 /><br />
+    <font size="-2">From: <a href="http://www.dandelion.com/catalog/ww.html">
+  	www.dandelion.com</a></font>
+  <hide><img src="Icon/warrior.jpg" alt="WOAD Warrior" width=170 /></hide>
   </th>
   <td valign="top"><form method="PUT" action="ww-detail">
     <table cellspacing="0" cellpadding="0" border="0" valign="top">
@@ -31,34 +35,16 @@
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
-    <tr><th align="right" valign="top"> Projects:&nbsp; </th>
-        <td valign="top">
-	    These are the projects currently registered in Woad Warrior:
-        </td>
-    </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
-    <tr><th> </th>
-        <td> <table>
-	  	<tr> <th> Project </th>
-		     <th> tree </th>
-			  <td>&nbsp;&nbsp;&nbsp;</td>
-		     <th> Project </th>
-		     <th> tree </th>
-	        </tr>
-	  	<tr bgcolor=white>
-		     <th align="right"> ThisPIA </th>
-		     <td> [tree] </td>
-	        </tr>
-	     </table>
-	</td>
-    </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
     <tr><th align="right" valign="top">
             <input type="submit" name="op" value="Add" />
         </th>
-        <td valign="top"> This form lets you add a new project.  The input
-	    box is for the short name by which the project will be known
-	    in lists like the one above.
+        <td valign="top"> Eventually, a form on this page will let you easily
+            add new WOAD trees to a list of projects you are working on.
+            Another page will let you easily define new WOAD projects, and
+            will create the appropriate command lines for indexing the project
+            and starting the server.
         </td>
     </tr>
     <tr><th align="right">  &nbsp; </th>
@@ -74,5 +60,5 @@
 <include src="ww-trees.inc" />
 
 <p>
-<short-footer cvsid="$Id: warrior.xh,v 1.1 2000-06-02 23:48:35 steve Exp $" />
+<short-footer cvsid="$Id: warrior.xh,v 1.2 2000-10-21 01:07:59 steve Exp $" />
 </p></body></html>
