@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.5 2000-08-26 00:38:01 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.6 2000-08-30 23:22:25 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -72,7 +72,7 @@
 	      			<else>file</else>
 	      		   </if>
 	      	    </then>
-	      	    <else>(title/description not in this index)</else>
+	      	    <else>(unknown: description not in this index)</else>
 	        </if></em>
 	      </logical>
 	 </td>
