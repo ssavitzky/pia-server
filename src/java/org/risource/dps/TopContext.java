@@ -1,5 +1,5 @@
 ////// TopContext.java: Top Context interface
-//	$Id: TopContext.java,v 1.4 1999-03-27 01:35:56 steve Exp $
+//	$Id: TopContext.java,v 1.5 1999-05-20 20:26:03 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import java.net.URL;
  *	be done, for example, in order to insert a sub-document into the
  *	processing stream.  Even the ``root'' context may have a parent.
  *
- * @version $Id: TopContext.java,v 1.4 1999-03-27 01:35:56 steve Exp $
+ * @version $Id: TopContext.java,v 1.5 1999-05-20 20:26:03 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -158,6 +158,11 @@ public interface TopContext extends Processor {
    * @param ts the tagset.  If null, the current tagset is used.
    */
   public TopContext subDocument(Input in, Context cxt, Output out, Tagset ts);
+
+  /** Called on a parent document when a subDocument is finished.
+   *	The parser's tagset is put back to its original value.
+   */
+  public void subDocumentEnd();
 
   /************************************************************************
   ** Message Reporting:
