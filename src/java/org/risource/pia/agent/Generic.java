@@ -1,5 +1,5 @@
 // Generic.java
-// $Id: Generic.java,v 1.4 1999-11-04 22:46:59 steve Exp $
+// $Id: Generic.java,v 1.5 1999-12-14 18:37:16 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -65,7 +65,6 @@ import org.risource.site.*;
 
 import org.risource.util.NullOutputStream;
 import org.risource.util.NameUtils;
-import org.risource.util.Utilities;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -185,7 +184,7 @@ public class Generic extends TreeElement
       if (tagsetName == null) {
 	tagsetName = getAttribute("tagset");
 	if (tagsetName == null || tagsetName.length() == 0)
-	  tagsetName = "pia-xhtml";
+	  tagsetName = "pia-xxml";
       }
       Tagset ts = agentHome.loadTagset(tagsetName);
       if (ts == null) {
