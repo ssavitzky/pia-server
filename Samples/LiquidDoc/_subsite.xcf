@@ -1,0 +1,16 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-11-11 19:55:06 bill Exp $ -->
+
+<Container>
+ 
+  <!-- this line says to use the LiquidDoc tagset for all files with
+       ".xh" extensions -->
+  <Ext name="xh" 	type="text/html"	tagset="LiquidDoc-xhtml" />
+
+
+  <AGENT name=LiquidDoc criteria="false">
+     <initialize><user-message>LiquidDoc agent initialized</user-message>
+     </initialize>
+  </AGENT>
+
+</Container>
