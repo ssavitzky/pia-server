@@ -1,5 +1,5 @@
 ###### site/Makefile:	Site Structure package.
-# 	$Id: Makefile,v 1.6 1999-10-27 00:10:51 steve Exp $
+# 	$Id: Makefile,v 1.7 1999-10-27 00:13:34 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -23,6 +23,7 @@
 
 PACKAGE=org.risource.site
 TOPDIR=../../..
+REL_DIR = $(PIADIR)/Doc/Release
 
 PACKAGES = \
 	util
