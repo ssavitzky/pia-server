@@ -36,46 +36,27 @@
     <tr height=6><td><img src="/Icon/rule.gif" height=6 width=469></td></tr>
   </table>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr><th align=left>&nbsp;
+    <tr><th align=left>
+	  <table>  <!-- bar of links to nearby years -->
+ 	   <yearRow>&myYear;</yearRow>
+	  </table>
 	</th>
         <td align="right">
-       <a href="home">Today</a> is 
-          <weekday>&todaypack;</weekday>,
-       <a href="month"><weekday monthname="yes">&todaypack;</weekday>
-           &day;, &year;</a>
+	  <a href="home">Today</a> is 
+            <weekday>&todaypack;</weekday>,
+	  <a href="month"><weekday monthname="yes">&todaypack;</weekday>
+            &day;, &year;</a>
         </td>
     </tr>
     <tr><td colspan=2>&nbsp;</td></tr>
   </table>
   <?-- bar of links to nearby months and years --?>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr>
-       <repeat entity="mth" start="1" stop="12"><text trim="yes">
-	 <hide>
-           <set name="align"><if><test equals="1">&mth;</test>
-				 <then>left</then>
-			     <else-if><test equals="12">&mth;</test>
-				 <then>right</then>
-			     <else>center</else></if></set>
-	   <set name="mthname"><text trim>
-	       <weekday monthname="yes">
-		  <date>15</date><month>&mth;</month><year>&myYear;</year>
-	       </weekday>
-	   </text></set>
-	 </hide>
-	   <if><test equals="&myMonth;">&mth;</test>
-	     <then>
-	       <th valign="middle" align="&align;"><font size="+2">&mthname;</font></th>
-	     </then>
-	     <else>
-	         <td valign="middle" align="&align;"><a  href="month.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;</a> </td>
-	     </else>
-	   </if>
-       </text></repeat>
-    </tr>
-  <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
-  <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
-
+    <monthRow>&myYear;</monthRow>
+    <hide>  
+	<set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
+	<set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
+    </hide>
     <tr><td align="left">
           <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
 		&lastYear;</a>
@@ -172,6 +153,6 @@
 
        <show-errors />
 
-    <short-footer cvsid="$Id: month.xh,v 1.4 1999-10-12 00:51:45 steve Exp $"/>
+    <short-footer cvsid="$Id: month.xh,v 1.5 1999-10-12 06:10:48 steve Exp $"/>
   </body>
 </html>

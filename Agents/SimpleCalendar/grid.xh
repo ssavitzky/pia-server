@@ -15,7 +15,7 @@
 
        <if>
            <?-- check if form called this page  --?>
-           <get name="FORM:Add" /> 
+           <get name="FORM:newYear" /> 
 	   <then>
               <?-- get date submitted by form, overwriting above values --?>
 	      <set name="myYear"  >&FORM:newYear;</set>
@@ -25,19 +25,18 @@
 	</if>
 </hide>
   <head>
-    <title>Calendar for &myYear;-&myMonth;</title>
+    <title>Calendar for <month-name>&myMonth;</month-name>, &myYear;</title>
   </head>
   <body>
-
        <show-today />
 
        <?-- bar of links to nearby months and years --?>
-       <navbar />
+       <navbar mpage="grid"/>
 
        <hide>
 	    <?-- flags and now-empty list for deciding to show events --?>
 	    <set name="wholeEventList"> </set>
-        </hide>
+       </hide>
 	<table cellspacing="1"  cellpadding="2" border="0">
 
             <tr>
@@ -64,7 +63,7 @@
                       <then>
                          <tr><td>&nbsp;</td></tr>
 			 <tr><td>
-                            <a  href="grid.xh?newDay=15&amp;newMonth=&thisMonth;&amp;newYear=&myYear;&amp;Add=submit">
+                            <a href="grid.xh?newDay=15&amp;newMonth=&thisMonth;&amp;newYear=&myYear;">
 	       			    <weekday monthname="yes">
 		               	       <date>15</date><month>&thisMonth;</month>
 			               <year>&myYear;</year>
@@ -75,8 +74,7 @@
                 </if>
                      
 
-	    <set name="offset"><weekday
-	                  startsun="yes">
+	    <set name="offset"><weekday startsun="yes">
                    <date>15</date><month>&thisMonth;</month>
                    <year>&myYear;</year>
             </weekday></set>

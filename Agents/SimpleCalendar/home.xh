@@ -129,7 +129,7 @@
   </hide>
 
         <?-- put a navigation bar on here too --?>
-        <navbar />
+        <navbar mpage="grid" />
 
         <?-- make a URL which will pass this date on to other operations --?>
 	<set name="shortURL">newDay=<text

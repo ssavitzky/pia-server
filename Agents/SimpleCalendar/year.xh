@@ -7,12 +7,14 @@
               <?-- get date submitted by form, overwriting above values --?>
 	      <set name="myYear"  >&FORM:newYear;</set>
 	      <set name="myMonth"  >&FORM:newMonth;</set>
+	      <set name="mpage"><get name="FORM:mpage"/></set>
 	   </then>
 	   <else>
 	      <set name="myYear" >&year;</set>
 	      <set name="myMonth" ><numstrip>&month;</numstrip></set>
 	   </else>
 	</if>
+    <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
     <set name="todaypack">
          <date>&day;</date><month>&month;</month><year>&year;</year>
     </set>
@@ -34,50 +36,23 @@
     </tr>
   </table>
   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
-    <tr><th align=left>&nbsp;
+    <tr><th align=left>
+	  <table>  <!-- bar of links to nearby years -->
+ 	   <yearRow mpage="&mpage;">&myYear;</yearRow>
+	  </table>
 	</th>
         <td align="right">
        <a href="home">Today</a> is 
           <weekday>&todaypack;</weekday>,
-       <a href="month"><weekday monthname="yes">&todaypack;</weekday>
+       <a href="&mpage;"><weekday monthname="yes">&todaypack;</weekday>
            &day;, &year; </a>
         </td>
     </tr>
     <tr><td colspan=2>&nbsp;</td></tr>
   </table>
 
-  <?-- bar of links to nearby years --?>
-  <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
-  <set name="llastYear"><numeric op="diff">&myYear; 2</numeric></set>
-  <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
-  <set name="nnextYear"><numeric op="sum" >&myYear; 2</numeric></set>
-  <table>
-    <tr><td align="left">
-          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&llastYear;">
-		&llastYear;</a>
-        </td>
-        <td align="left">
-          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
-		&lastYear;</a>
-        </td>
-        <th align="center" colspan=10>
-		<font size="+2">
-          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;">
-		&myYear;</a>
-	  </font>
-	</th>
-        <td align="right">
-          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;">
-		&nextYear;</a>
-        </td>
-        <td align="right">
-          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nnextYear;">
-		&nnextYear;</a>
-        </td>
-    </tr>
-  </table>
   <set name="thisMonth">0</set>
-    <repeat><for  start="1" stop="4" entity="row"/>
+  <repeat><for  start="1" stop="4" entity="row"/>
       <table cellspacing="4" cellpadding="2" border="0">
        <tr>
 	  <repeat><for start="1" stop="3" entity="col"/>
@@ -85,7 +60,7 @@
           <td valign="top">
 	  <table cellspacing="2"  cellpadding="2" border="0">
 	    <tr><th colspan="7">
-		<a href="month.xh?newDay=1&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">	  <weekday monthname=yes><month>&thisMonth;</month>
+		<a href="&mpage;.xh?newDay=1&newMonth=&thisMonth;&newYear=&myYear;&Add=submit">	  <weekday monthname=yes><month>&thisMonth;</month>
 					 <day>15</day><year>&myYear;</year>
 		  </weekday> </a>
 		</th>
@@ -140,13 +115,12 @@
 		   </text></repeat>
 	       </tr>
 	    </repeat>
-	    <tr><th colspan="7">&nbsp;</th></tr>
          </table>
        </td>
      </repeat></tr></table>
     </repeat>
     <show-errors />
 
-    <short-footer cvsid="$Id: year.xh,v 1.2 1999-10-12 00:51:57 steve Exp $"/>
+    <short-footer cvsid="$Id: year.xh,v 1.4 1999-10-12 06:14:59 steve Exp $"/>
   </body>
 </html>

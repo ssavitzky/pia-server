@@ -19,7 +19,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.4 1999-10-11 22:04:26 bill Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.5 1999-10-12 06:10:46 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
@@ -150,6 +150,15 @@
    </action>
 </define>
 
+<define element="month-name">
+  <doc> Convert the content, a number between 1 and 12 inclusive, into the
+	name of the corresponding month
+  </doc>
+  <action><weekday monthname="yes">
+		  <date>15</date><month>&content;</month><year>&myYear;</year>
+  </weekday></action>
+</define>
+
 
 <define element="show-today" >
     <doc> Show today's date as a link to editing that day </doc>
@@ -168,66 +177,131 @@
     </action>
 </define>
 
+<define entity="month-name-list">
+  <value>
+    <li>January</li>
+    <li>February</li>
+    <li>March</li>
+    <li>April</li>
+    <li>May</li>
+    <li>June</li>
+    <li>July</li>
+    <li>August</li>
+    <li>September</li>
+    <li>October</li>
+    <li>November</li>
+    <li>December</li>
+  </value>
+</define>
 
-<define element="navbar">
-    <action>
-
-      <hr />
-     <hide>
-       <set name="startyr"><numeric difference="yes">&myYear; 1</numeric></set>
-	<set name="stopyr"><numeric sum="yes">&myYear; 1</numeric></set>
-     </hide>
-
-     <table border="0" cellpadding="0" cellspacing="0" >
-        <tr>
-
+<define element="monthRow">
+  <doc> Expand into a row of month names, each a link to a month in the
+	current year (<code>&amp;myYear;</code>).
+  </doc>
+  <define attribute="mpage">
+    <doc> If present, use this as the page to use for the month display.
+    </doc>
+  </define>	 
+  <action>
+    <set name="mpage"><get name="attributes:mpage"/></set>
+    <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
+    <tr>
        <repeat entity="mth" start="1" stop="12"><text trim="yes">
-	   <set name="mthname">
-	       <weekday monthname="yes">
-		  <date>15</date><month>&mth;</month><year>&myYear;</year>
-	       </weekday>
-	   </set>
-	   <if><logical and="yes">
-                 <test equals="&myMonth;">&mth;</test>
-                 <get name="showMonthOnly"/>
-               </logical>
+	 <hide>
+           <set name="align"><if><test equals="1">&mth;</test>
+				 <then>left</then>
+			     <else-if><test equals="12">&mth;</test>
+				 <then>right</then>
+			         <else>center</else></if></set>
+	   <set name="mthname"><month-name>&mth;</month-name></set>
+	 </hide>
+	   <if><test equals="&myMonth;">&mth;</test>
 	     <then>
-	       <td valign="middle"><font  size="6">&mthname;</font> &nbsp;</td>
+	       <th align="&align;"><font size="+2">&mthname;</font></th>
 	     </then>
 	     <else>
-	         <td valign="middle"><a  href="grid.xh?newDay=15&newMonth=&mth;&newYear=&myYear;&Add=submit">&mthname;
-	         </a> &nbsp; </td>
+	         <td align="&align;"><a  href="&mpage;.xh?newDay=15&newMonth=&mth;&newYear=&myYear;">&mthname;</a> </td>
 	     </else>
 	   </if>
        </text></repeat>
+    </tr>
+  </action>
+</define>
 
+<define element="yearRow">
+  <doc> Expand into a row of year names, each a link to the full-page display
+	of the year in question. 
+  </doc>
+  <define attribute="mpage">
+    <doc> If present, use this as the page to use for the month display.
+    </doc>
+  </define>	 
+  <action><hide>	 
+    <set name="mpage"><get name="attributes:mpage"/></set>
+    <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
+    <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
+    <set name="llastYear"><numeric op="diff">&myYear; 2</numeric></set>
+    <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
+    <set name="nnextYear"><numeric op="sum" >&myYear; 2</numeric></set></hide>
+    <tr><td align="left" >
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&llastYear;&mpage=&mpage;">
+		&llastYear;</a>
+        </td>
+        <td align="left">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;&mpage=&mpage;">
+		&lastYear;</a>
+        </td>
+        <th align="center" colspan=10>
+		<font size="+2">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;&mpage=&mpage;">
+		&myYear;</a>
+	  </font>
+	</th>
+        <td align="right">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;&mpage=&mpage;">
+		&nextYear;</a>
+        </td>
+        <td align="right">
+          <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nnextYear;&mpage=&mpage;">
+		&nnextYear;</a>
+        </td>
+    </tr>
+  </action>
+</define>
 
-        </tr>
-        <tr>
-	       <td valign="middle" ><a href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&startyr;&Add=submit"><small>&startyr;</small>  </a>  &nbsp;</td>
-
-	       <td align="center" valign="middle" colspan="10" >
-                  <font size="5">&myYear;</font>
- 	       </td>
-               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&stopyr;&Add=submit"><small>&stopyr;</small>  </a>  </td>
-
-         </tr>
-        <tr>
-	       <td valign="middle" ><a href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&startyr;&Add=submit&wholeYear=yes"><small>all</small>  </a>  &nbsp;</td>
-
-	       <td align="center" valign="middle" colspan="10" >
-		   <a
-		   href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&myYear;&Add=submit&wholeYear=yes"><font
-		   size="5">all</font>
-		   </a>
- 	       </td>
-               <td valign="middle" >&nbsp; <a  href="grid.xh?newDay=15&newMonth=&myMonth;&newYear=&stopyr;&Add=submit&wholeYear=yes"><small>all</small>  </a>  </td>
-
-         </tr>
-      </table>
-
-      <hr />
-    </action>
+<define element="navbar">
+  <define attribute="mpage">
+    <doc> If present, use this as the page to use for the month display.
+    </doc>
+  </define>	 
+  <action>
+     <hr />
+     <set name="mpage"><get name="attributes:mpage"/></set>
+     <if><get name="mpage"/><else><set name=mpage>month</set></else></if>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<monthRow mpage="&mpage;"/>
+       <hide>  
+	   <set name="lastYear"><numeric op="diff">&myYear; 1</numeric></set>
+	   <set name="nextYear"><numeric op="sum" >&myYear; 1</numeric></set>
+       </hide>
+       <tr><td align="left">
+	     <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;&mpage=&mpage;">
+		   &lastYear;</a>
+	   </td>
+	   <th align="center" colspan=10>
+		   <font size="+2">
+	     <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&lastYear;&mpage=&mpage;">
+		   &myYear;</a>
+	     </font>
+	   </th>
+	   <td align="right">
+	     <a href="year.xh?newDay=15&newMonth=&myMonth;&newYear=&nextYear;&mpage=&mpage;">
+		   &nextYear;</a>
+	   </td>
+       </tr>
+    </table>
+    <hr />
+  </action>
 </define>
 
      <define element="event-table">
