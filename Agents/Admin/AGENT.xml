@@ -1,0 +1,23 @@
+
+
+<AGENT name='Admin' path='/' type='Admin'
+        class='org.risource.pia.agent.Admin' pathName='/Admin'>
+  <bind name='criteria'></bind>
+  <bind name='agent-files'><!DOCTYPE agent-files SYSTEM "Admin-xhtml"><agent-files>
+  <agent-file id='/DOFS' on-start='on'>./DOFS/AGENTS.xml</agent-file>
+  <agent-file id='/Proxie' on-start='on'>./Proxie/AGENT.xml</agent-file>
+  <agent-file id='/History' on-start='on'>./Proxie/History/AGENT.xml</agent-file>
+  <agent-file id='/Proxie/Toolbar' on-start='on'>./Proxie/Toolbar/AGENT.xml</agent-file>
+  <agent-file id='/Proxie/Toolbar/fileTools' on-start='on'>./Proxie/fileTools/AGENT.xml</agent-file>
+  <agent-file id='/Proxie/Toolbar/remoteTools' on-start='on'>./Proxie/remoteTools/AGENT.xml</agent-file>
+  <agent-file id='/Demo' on-start=''>./Demo/AGENT.xml</agent-file>
+  <agent-file id='/View' on-start=''>./View/AGENT.xml</agent-file>
+  <agent-file id='/Home' on-start='on'>./Home/AGENT.xml</agent-file>
+</agent-files></bind>
+
+  <bind name='initialize'>
+    <user-message>Loading XML from '<status src='agent-files.xml'
+				             item='path' />'</user-message>
+    <load-agent-files><include src='agent-files.xml' /></load-agent-files>
+  </bind>
+</AGENT>
