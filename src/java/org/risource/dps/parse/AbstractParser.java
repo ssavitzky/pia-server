@@ -1,5 +1,5 @@
 ////// AbstractParser.java: abstract implementation of the Parser interface
-//	$Id: AbstractParser.java,v 1.12 1999-09-22 00:32:26 steve Exp $
+//	$Id: AbstractParser.java,v 1.13 1999-11-01 19:51:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -58,7 +58,7 @@ import org.risource.dps.tree.TreeText;
  *
  * <p>
  *
- * @version $Id: AbstractParser.java,v 1.12 1999-09-22 00:32:26 steve Exp $
+ * @version $Id: AbstractParser.java,v 1.13 1999-11-01 19:51:34 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  */
@@ -312,7 +312,7 @@ public abstract class AbstractParser extends CursorStack implements Parser
     int nextPosition = aString.indexOf(aCharacter, 1);
 
     if (last == 0) last = in.read();
-    while (last >= 0 && last != entityStart) {
+    while (last >= 0 && !(checkEntities && last == entityStart)) {
 
       /* This could be faster, but it could be a lot slower, too.  We
        * append to buf while looking for aCharacter, the first character in
