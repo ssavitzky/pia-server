@@ -174,8 +174,10 @@
 <hr>
 <h2>DOM</h2>
 
+<p> Also see <code><a href="Design/dom.html">Design/dom.html</a></code>.
+
 <p> As of Release 2.0.2 the PIA's Document Object Model (as defined in the
-    <code>org.risource.dom</code> package) conforms to an earlier draft of the
+    <code>org.risource.dom</code> package) conformd to an earlier draft of the
     W3C's Document Object Model specification, not the recommendation as
     finally approved.  Unfortunately, some classes on which we relied
     heavily (e.g. TreeIterator) disappeared in the interim, and a number of
@@ -188,33 +190,31 @@
     to deal with documents that do not fit in memory all at once, nor to deal
     with applications that want to move nodes between documents.  
 
-<p> We intend to deal with the situation as follows:
+<p> The following steps are being taken:
 
 <ol>
-  <li> Update our code to use the DOM Level 1 core interfaces defined in <a
+  <li> Our code has been updated to extend the DOM Level 1 core interfaces
+       defined in <a
        href="http://www.w3.org/TR/1998/REC-DOM-Level-1-19981001/"
        >www.w3.org/TR/1998/REC-DOM-Level-1-19981001/</a>, as soon as possible.
-       This will permit the PIA to use <em>any</em> DOM implementation as a
-       drop-in replacement.
+       In theory this would permit the PIA to use (by extension) <em>any</em>
+       DOM implementation as a drop-in replacement.  In practice it can't,
+       because we still rely on some behavior that contradicts the spec.
 
-  <li> Create <em>two implementations</em> of our ``<code>ActiveNode</code>''
-       interface: one a direct implementation, the other a set of ``wrappers''
-       for a generic DOM implementation.  Our direct implementation will
-       conform to the DOM <em>interface specification</em> (with our
-       extensions), but <em>not</em> to the DOM <em>behavioral
-       specification</em>, which we will relax to the point where an efficient
-       implementation becomes possible.
+  <li> Revise the <code>Cursor</code> and Output interfaces so that they do
+       not expose the current Node -- all components of the underlying Node
+       would then be accessible exclusively through the Cursor, with
+       appropriate <code>Input</code> and <code>Output</code> objects returned
+       where necessary instead of <code>Nodelist</code>'s and so on.
+
+  <li> Add implementations of <code>Input</code> and <code>Output</code> that
+       traverse and build DOM trees explicitly.
+
+  <li> Replace the current parse tree implementation (the <code>active</code>
+       and <code>tree</code> packages under <code>org.risource.dps</code>)
+       with a vastly simplified scheme that does not extend the DOM, making
+       them completely self-contained.
 </ol>
-
-<p> It may be desirable to keep the <code>ActiveNode</code> interfaces as
-    self-contained as possible, rather than making them extensions of
-    corresponding DOM interfaces.  This would eventually make it easier to
-    offer our interfaces as an alternative to the DOM for general SGML
-    document-processing applications.
-
-<p> Stand-alone interfaces would represent a significant change from the
-    present scheme, but might actually simplify the transition away from the
-    old DOM interfaces now in use, which will require major changes anyway.
 
 <p> That said, I expect that the <em>near-term</em> plan should be a
     mixed strategy: try to stay independent at the interface level, but base
@@ -260,7 +260,7 @@
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: standards.html,v 1.2 1999-03-18 01:34:54 steve Exp $</b><br>
+<b>$Id: standards.html,v 1.3 1999-10-09 00:14:33 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -9,7 +9,7 @@
 <h2>Architectural Notes</h2>
 
 <blockquote>
-  World <em>dom</em>ination.
+  World <strong>dom</strong>ination.
   <br>--<em>Linus Torvalds (emphasis added)</em>
 </blockquote>
 
@@ -45,8 +45,8 @@
 
 <ul>
   <li> Live NodeList's are notoriously hard to implement efficiently. 
-  <li> DOM Level 2's Iterator interface is defined as throwing an exception
-       when the structure it is iterating over is modified.
+  <li> There is currently no defined way to create a DOM Level 2 Iterator from
+       a NodeList or NamedNodeMap.
   <li> The obvious representation as doubly-linked trees has quite a lot of
        storage and processing overhead. 
   <li> There is simply no way to move a node from one document to another, or
@@ -60,18 +60,23 @@
 
 <p> Also, there is no place in the DOM for the kind of metadata (e.g.,
     handlers) that the DPS needs in order to do its job.  This by itself is
-    enough to require the PIA to have its own implementation of the DOM.
+    enough to require the PIA to have its own implementation of the DOM,
+    although it's not totally impossible that metadata might not end up in
+    some future level of the DOM.
 
 <h4>Cursors</h4>
 
-<p> The DPS notion of a Cursor evolved out the (subsequently abandoned) DOM
-    interface TreeIterator.  The basic idea is that a Cursor allows the DPS to
-    <em>traverse</em> a DOM tree, or what <em>appears to be</em> a DOM tree,
-    without actually looking at the DOM nodes themselves.
+<p> The DPS notion of a Cursor evolved out the (subsequently abandoned, now
+    back in Level 2) DOM interface TreeIterator.  The basic idea is that a
+    Cursor allows the DPS to <em>traverse</em> a DOM tree, or what <em>appears
+    to be</em> a DOM tree, without actually looking at the DOM nodes
+    themselves.
 
 <p> Presently there is a lot of leakage between the DOM and the DPS, and the
     current version of Cursor actually <em>does</em> allow (and in fact
-    require) access to the DOM node.  This can be fixed, however.
+    require) access to the DOM node.  This can be fixed, however.  The goal is
+    for the Cursor to allow complete access to all of a Node's attributes
+    without allowing access to the Node itself.
 
 <p> The result would be a purely ``cursorial'' interface to documents,
     <em>completely</em> independent of the DOM's ``arboreal'' interfaces.
@@ -234,7 +239,7 @@ A split model, DOM + Cursors, would have several advantages:
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: dom.html,v 1.3 1999-06-09 18:36:15 steve Exp $</b><br>
+<b>$Id: dom.html,v 1.4 1999-10-09 00:14:36 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
