@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: my-system.xcf,v 1.2 1999-10-13 18:19:04 steve Exp $ -->
+<!-- $Id: my-system.xcf,v 1.3 1999-10-14 21:44:07 steve Exp $ -->
 
 <Container file="" virtual="/">
   <doc> This gives you a view of the entire filesystem.
@@ -15,7 +15,7 @@
 
   <Container name="home">
     <Resource name="HEADER.html">
-      <DOCUMENT><protect>
+      <DOCUMENT>
 	<html><head><title>File System View</title></head>
 	    <body>
 		<h1>This is My Computer!</h1>
@@ -23,12 +23,12 @@
 		    <a href="/."><code>/</code></a> (the root)</p>
 	    </body>
 	</html>
-      </protect></DOCUMENT>
+      </DOCUMENT>
     </Resource>
   </Container>
 
    <Resource name="HEADER.html">
-      <DOCUMENT><protect>
+      <DOCUMENT>
 	<html><head><title>File System View</title></head>
 	    <body>
 		<h1>This is My Computer!</h1>
@@ -39,7 +39,7 @@
 		</p>
 	    </body>
 	</html>
-      </protect></DOCUMENT>
+      </DOCUMENT>
     </Resource>
 
 </Container>

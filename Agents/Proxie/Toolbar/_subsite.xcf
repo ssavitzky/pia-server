@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.4 1999-10-13 18:17:53 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.5 1999-10-14 21:43:06 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -9,11 +9,11 @@
     <!-- This used to be an entity in the AGENT namespace.  Now it's just a
          document, albeit an imaginary one.  
       -->
-    <DOCUMENT><protect> <!-- Generic Toolbar controls: -->
+    <DOCUMENT> <!-- Generic Toolbar controls: -->
 <set name='pia'>http://&PIA:host;:&PIA:port;</set>
 <a href='&pia;/&AGENT:path;/' target='_top'>[~]</a>
 <a href='&pia;&AGENT:path;/hide?hide=true' target='_top'>[X]</a>
-<a href='&pia;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a></protect>
+<a href='&pia;&AGENT:path;/help?topic=toolbar' target='_top'>[help]</a>
     </DOCUMENT>
   </Resource>
 </Container>
