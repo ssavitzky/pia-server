@@ -1,5 +1,5 @@
-###### interform/test/Makefile:	InterForm Interpretor tests
-# 	$Id: Makefile,v 1.3 1999-03-12 19:30:22 steve Exp $
+###### test/ds/Makefile:	Data structure tests
+# 	$Id: Makefile,v 1.4 1999-03-22 18:55:37 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,6 @@ CASEFILES = \
 .SUFFIXES: .case .txt .html .if .out .ok .diff .run .java .class
 
 DEBUG=-d
-CLASS=org.risource.interform.Filter
 
 .case.out:
 	$< > $@ 2>$*.log

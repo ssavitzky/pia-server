@@ -1,5 +1,5 @@
-###### interform/test/Makefile:	InterForm Interpretor tests
-# 	$Id: Makefile,v 1.3 1999-03-12 19:30:38 steve Exp $
+###### test/pia/agent/Makefile:	Agent tests
+# 	$Id: Makefile,v 1.4 1999-03-22 18:55:43 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public

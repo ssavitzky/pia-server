@@ -1,5 +1,5 @@
 // T_agency.java
-// $Id: T_agency.java,v 1.4 1999-03-12 19:30:39 steve Exp $
+// $Id: T_agency.java,v 1.5 1999-03-22 18:55:44 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -86,9 +86,8 @@ public class T_agency {
     System.out.println("Option for type: "+pentagon.attr("type"));
     System.out.println("Version " + pentagon.version());
     String path = null;
-    System.out.println("Agent url: " + pentagon.agentUrl( path ));
     pentagon.attr("agent_directory", "~/pia/pentagon");
-    System.out.println("Agent directory: " + pentagon.agentDirectory());
+    System.out.println("Agent directory: " + pentagon.dataDirectory());
     pentagon.attr("agent_file", "~/pia/pentagon/foobar.txt");
     List files = pentagon.fileAttribute("agent_file");
     System.out.println("Agent file: " + (String)files.at(0));
@@ -123,7 +122,6 @@ public class T_agency {
       pentagon.actOn( trans1, Pia.instance().resolver() );
       pentagon.attr("if_root", "~/pia/pentagon");
       // looking for an home.if in ~/pia/pentagon
-      //not working      System.out.println("Find interform: " + pentagon.findInterform( trans1.requestURL().path ));
       System.exit( 0 );
       /*
       System.out.println("\n\n------>>>>>>> Installing a Dofs agent <<<<<-----------");

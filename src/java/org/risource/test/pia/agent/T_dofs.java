@@ -1,5 +1,5 @@
 // T_dofs.java
-// $Id: T_dofs.java,v 1.5 1999-03-12 19:50:03 pgage Exp $
+// $Id: T_dofs.java,v 1.6 1999-03-22 18:55:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -86,9 +86,8 @@ public class T_dofs{
     System.out.println("Option for type: "+pentagon.attr("type"));
     System.out.println("Version " + pentagon.version());
     String path = null;
-    System.out.println("Agent url: " + pentagon.agentUrl( path ));
     pentagon.attr("agent_directory", "~/pia/pentagon");
-    System.out.println("Agent directory: " + pentagon.agentDirectory());
+    System.out.println("Agent directory: " + pentagon.dataDirectory());
     pentagon.attr("agent_file", "~/pia/pentagon/foobar.txt");
     List files = pentagon.fileAttribute("agent_file");
     System.out.println("Agent file: " + (String)files.at(0));
