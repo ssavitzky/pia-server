@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.2 1999-10-20 00:09:47 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.3 1999-12-14 18:55:42 steve Exp $ -->
 
 <Container>
   <AGENT name="Proxie" criteria="false">
@@ -7,7 +7,7 @@
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
 	  marker, so that ~Proxie works, and so that &AGENT:name; works in all
-	  sub-agents, which may be getting their defaults from here.
+	  sub-applications, which may be getting their defaults from here.
        -->
   </AGENT>
 
