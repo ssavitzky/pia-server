@@ -16,6 +16,12 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> problems when directory tree changes <br />
+       Deleting a directory out from under a running PIA causes a null pointer
+       exception.  Adding a real one doesn't hurt, but it isn't seen, either.
+       Really need to check timestamps up the parent chain when real or virtual
+       directory is null.
+  </li>
   <li> <b>Bug</b> pia: broken for config files and tagsets <br />
        Can't specify a tagset relative to pia:, for example.  For
        <code>include</code>in config files, at least, it's because they're not
@@ -225,5 +231,5 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.22 2000-06-02 23:26:53 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.23 2000-08-23 00:03:35 steve Exp $</b><br>
 </body></html>
