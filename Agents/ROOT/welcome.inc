@@ -9,9 +9,8 @@
 
        <a href="/src/java/org/risource/site/about">About the Site Resource
        Package</a>,
-       <a href="/src/java/org/risource/site/about">About the PIA</a>,
-       <a href="/Doc/Notes/steve/naming">Steve's notes</a>.
-
+       <a href="/src/java/org/risource/pia/about">About the PIA</a>,
+       and <a href="/Doc/Notes/steve/naming">Steve's notes</a>.
 </dl>
 
 <p> This is the home page of your personal PIA.  It is running as a process
@@ -37,4 +36,4 @@
     href="http://pia.rsv.ricoh.com"><code>pia.rsv.ricoh.com</code></a>, but it
     may not be running yet.
 <p>
-<!-- $Id: welcome.inc,v 1.8 1999-09-24 22:59:30 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.9 1999-09-24 23:03:12 steve Exp $ -->
