@@ -19,9 +19,16 @@
 
 <tagset name="src-file" tagset="woad-xhtml" parser="TextParser"
 	xrefs="SITE:xref"
-	include="src-wrapper" documentWrapper="-document-" >
+	include="src-wrapper" documentWrapper="-document-"
+	keywords="if else else: elsif elif while until for func sub switch case
+		  try catch throws throw implements instanceof new this self
+		  super class interface static public private protected final 
+		  int long short byte float char void boolean true false null  
+		  String return print unless my import export package include
+		  define open close split join def from try: except:" 
+ >
 
-<cvs-id>$Id: src-file.ts,v 1.4 2000-10-02 23:13:05 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.5 2000-10-05 19:01:30 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
@@ -45,6 +52,11 @@
 	appropriate color. 
   </doc>
   <action><tag>&content;</tag></action>
+</define>
+
+<define element="str">
+  <doc> String with quotes in content. </doc>
+  <action><font color="#999999">&content;</font></action>
 </define>
 
 <define element="qs">

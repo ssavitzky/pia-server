@@ -25,10 +25,10 @@
 		  try catch throws implements instanceof new this super
 		  class interface static public private protected final 
 		  int long short byte float char void boolean true false null  
-		  String return import package include define"
+		  String return import export package include define"
 >
 
-<cvs-id>$Id: src-ccode.ts,v 1.2 2000-09-30 00:09:03 steve Exp $</cvs-id>
+<cvs-id>$Id: src-ccode.ts,v 1.3 2000-10-05 19:01:30 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for Java, C and C-like languages.</h1>
 
