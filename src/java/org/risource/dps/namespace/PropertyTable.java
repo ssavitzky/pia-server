@@ -1,5 +1,5 @@
 ////// PropertyTable.java: Node and String Lookup Table
-//	$Id: PropertyTable.java,v 1.3 1999-10-14 21:48:46 steve Exp $
+//	$Id: PropertyTable.java,v 1.4 1999-10-28 23:03:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import org.risource.ds.Table;
  *
  * <p>	The 
  *
- * @version $Id: PropertyTable.java,v 1.3 1999-10-14 21:48:46 steve Exp $
+ * @version $Id: PropertyTable.java,v 1.4 1999-10-28 23:03:36 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.site
@@ -59,7 +59,7 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
    * @return the list of nodes associated with the name.  If the binding
    *	is an Element (the typical case) its children are returned.
    */
-  public ActiveNodeList getValueNodes(String name) {
+  public ActiveNodeList getValueNodes(Context c, String name) {
     ActiveNode binding = getBinding(name);
     if (binding == null) {
       binding = getActiveAttr(name);
@@ -68,8 +68,12 @@ public class PropertyTable extends BasicNamespace implements PropertyMap {
     else if (binding instanceof Namespace) {
       return new TreeNodeList(((Namespace)binding).getBindings());
     } else {
-      return binding.getContent();
+      return binding.getValueNodes(c);
     }
+  }
+
+  public ActiveNodeList getValueNodes(String name) {
+    return getValueNodes(null, name);
   }
 
   /** Set the value of a name.
