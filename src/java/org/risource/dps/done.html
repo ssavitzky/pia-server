@@ -740,11 +740,48 @@ See also:
        (1999-04-27) <br>
        -- AttrIndirect and some hacks in EntityAttr so the entity namespace
 	  can include the attrs. 
+
+  <li>1999-05-03 <b>Impr</b> Move get, set to basic.ts. <br>
+       Also update <a href="/Doc/Tagsets/basic.html">basic.html</a>.
+       (1999-05-03) <br>
+       -- Move done 5/3.
+
+  <li>1999-05-04 <b>Bug</b> Trim buggy. <br>
+       (1999-04-??) <br>
+       -- TextUtil.trimListItems was <em>really</em> buggy.  Simplified and
+	  fixed. 
+
+  <li> 1999-05-05 <b>Bug</b> Logical handler.  A space can change the result.
+       For example: 
+	<pre>
+This version returns 1
+&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt;&lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
+
+This version returns 0
+&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt; &lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
+        </pre> 
+	(1998-10-19)<br>
+
+  <li> 1999-05-05 <b>Bug</b> Logical and.  Does not return correct (or
+       consistent) values. With two nodes, returns false; with 3 it returns
+	the last item.  With 4 nodes (and 4th empty) returns nothing. If a
+	fourth node is given, returns it.  Some examples:
+       <pre>
+Returns three
+&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;/logical&gt;
+
+Returns nothing
+&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;em&gt;&lt;/em&gt;&lt;/logical&gt;
+
+If 4th node is there, returns "four".
+        </pre>
+	(1998-10-19)<br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.9 1999-04-30 23:36:46 steve Exp $</b><br>
+<b>$Id: done.html,v 1.10 1999-05-06 20:49:24 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

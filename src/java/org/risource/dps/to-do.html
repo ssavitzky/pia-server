@@ -16,6 +16,22 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Impr</b> Namespace attribute in get, set. <br>
+       This would allow the name to be literally any text.  Would require
+       minor fixes in Index to allow ``:'' in namespace arg, not name.
+       (1999-05-03) <br>
+
+  <li> <b>Impr</b> xxml additional constructs. <br>
+       Eventually <code>xxml</code> should include stuff for, e.g., reading
+       objects and building data structures.  
+       (1999-05-03) <br>
+
+  <li> <b>Hole</b> Need actions for PI's and Decl's <br>
+       In particular, an action on &lt;!DOCTYPE....&gt; would allow
+       <em>both</em> runtime selection of tagset, and<em></em> separate
+       specification of the output document type.
+       (1999-05-03) <br>
+
   <li> <b>Hole</b> Need a way to change tagset in context. <br>
        e.g. when defining an Agent or Tagset: need to switch tagsets for the
        content.  Whether this is done by hacking the parser or interposing a
@@ -25,7 +41,8 @@ See also:
 
   <li> <b>Impr</b> Output to Writer, not String. <br>
        Something like writeNode(Writer); writeStart, writeContent, writeEnd
-       ops for ActiveElement.
+       ops for ActiveElement.  ActiveNode.toString can just use it.  The
+       start, content, end versions would have parameters (e.g. indent). 
        (1999-04-29) <br>
 
   <li> <b>Impr</b> NamespaceWrap may need to use EntityIndirect. <br>
@@ -244,30 +261,6 @@ See also:
        equivalent to test but with current item in content.
        (1998-10-21) <br>
  
-  <li> <b>Bug</b> Logical handler.  A space can change the result.  For example:
-	<pre>
-This version returns 1
-&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt;&lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
-
-This version returns 0
-&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt; &lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
-        </pre> 
-	(1998-10-19)<br>
-
-  <li> <b>Bug</b> Logical and.  Does not return correct (or consistent) values. With two 
-	nodes, returns false; with 3 it returns the last item.  With 4 nodes (and 4th empty)
-	returns nothing. If a fourth node is given, returns it.  Some examples:
-	<pre>
-Returns three
-&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;/logical&gt;
-
-Returns nothing
-&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;em&gt;&lt;/em&gt;&lt;/logical&gt;
-
-If 4th node is there, returns "four".
-        </pre>
-	(1998-10-19)<br>
-
   <li> <b>Bug</b> Test sorted.  Returns true on an unsorted list.  For example:
 	<pre>
 Input: &lt;test sorted&gt;bats ants toads&lt;/test&gt; 
@@ -491,7 +484,7 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.10 1999-04-30 23:36:50 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.11 1999-05-06 20:49:28 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
