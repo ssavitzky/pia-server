@@ -1,5 +1,5 @@
 ###### dps/util/Makefile:	DPS utility classes
-# 	$Id: Makefile,v 1.1 1999-08-18 18:06:30 steve Exp $
+# 	$Id: Makefile,v 1.2 1999-09-02 00:32:00 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -39,3 +39,5 @@ include $(TOPDIR)/makefiles/file.make
 
 ### Dependencies
 
+Inspect.class: ../Site.java ../Subsite.java ../ConfiguredResource.java \
+	../AbstractResource.java ../Resource.java ../Root.java
