@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.4 2000-06-08 23:14:40 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.5 2000-06-09 00:00:31 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -407,7 +407,9 @@ Note that we only need these inside the PIA.
     <td valign=bottom>
       <table>
 	<tr><th valign=bottom align=left><expand>&WOAD-LOGO;</expand>: 
-	       Web-Organized Application Development</th></tr>
+	       <ss>Web-Organized Application Development</ss>
+	    </th>
+	</tr>
 	<tr height=6><td><img src="&LOC:path;/Icon/rule.png" height=6 width=469></td></tr>
       </table>
     </td>
