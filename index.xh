@@ -129,6 +129,22 @@
 <include src="welcome.inc"><include src="/Agents/ROOT/welcome.inc"/></include>
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
-<p>
-<short-footer cvsid="$Id: index.xh,v 1.24 2000-10-16 17:32:47 steve Exp $" />
-</p></body></html>
+<hr />
+<table width="100%">
+  <tr><th><tt>&nbsp;&nbsp;</tt></th>
+    <th align="left" valign="center"><tt>
+&lt;cPIA&gt; XML macro processing in C &lt;/cPIA&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;/|\&nbsp;&nbsp;<a href="http://sourceforge.net/">a SourceForge</a> <a href="http://sourceforge.net/projects/cpia/">project</a>&nbsp;&nbsp;/|\</tt>
+    </th>
+    <td valign="center" bgcolor="yellow">Now under construction --
+       <a href="http://sourceforge.net/projects/cpia/">join the fun!</a></td>
+    <td align="right" valign="center">
+        <A href="http://sourceforge.net"> <IMG align="right"
+           src="http://sourceforge.net/sflogo.php?group_id=23532"
+           width="88" height="31" border="0" alt="SourceForge
+           Logo"></A>
+    </td>
+  </tr>
+</table>
+<short-footer cvsid="$Id: index.xh,v 1.25 2001-04-03 18:41:27 steve Exp $" />
+</body></html>
