@@ -1,5 +1,5 @@
 //  Httprequest.java
-// $Id: HTTPRequest.java,v 1.7 1999-05-20 20:18:07 steve Exp $
+// $Id: HTTPRequest.java,v 1.8 1999-06-23 23:42:43 wolff Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -560,10 +560,11 @@ public class  HTTPRequest extends Transaction {
       fc.setParameters( qs );
     }else {
       if( mymethod.equalsIgnoreCase( "POST" )  )
-	// sucks actual parameters from body of content
 	fc.setParameters(null);
     }
+    
   }
+  
 
 
   /**
@@ -810,6 +811,8 @@ public class  HTTPRequest extends Transaction {
 	
 	  long delay = 1000;
 
+          //POSTs should be already completed before the transaction
+          //is resolved...
 	  if( method().equalsIgnoreCase( "POST" ) ){
 	      if(!contentObj.processInput()) {
 		  try{
@@ -822,7 +825,16 @@ public class  HTTPRequest extends Transaction {
 	      }catch(InterruptedException ex){;}
 	  }
       }
-      // resolved, so now satisfy self
+      
+      // resolved, finish up an form content
+      if( method().equalsIgnoreCase( "POST" ) ){
+	   while(contentObj.processInput()) {
+	     //keep processing until done with posted vars
+           }
+      }
+      
+	
+      // now satisfy self
       satisfy( resolver);
       
       // cleanup?
