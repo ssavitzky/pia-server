@@ -151,11 +151,29 @@ See also:
        from restart (file in user directory).
        (1999-04-07) <br>
 
+  <li> 1999-05-06 <b>Bug</b> Rename install -> create <br>
+       Now that there are two ways to install agents (load and create),
+       ``install'' is inaccurate in most places.
+       (1999-05-05) <br>
+
+  <li> 1999-05-06 <b>Impr</b> Install agent from arbitrary directory. <br>
+       When loading an agent from an arbitrary directory, need special hack to
+       override the "home-dir" attribute in the XML file.  Possibly the name
+       as well.  Things get even more complicated if the XML is accessed from
+       a web server.
+       (1999-04-30) <br>
+
+  <li> 1999-05-06 <b>Hole</b> Admin must save and restore Agents as XML. <br>
+       Admin agent needs to keep track of where they are.  Possibly by having
+       the agent submit a form.  Be nice if type agents could optionally
+       manage their own subs. 
+       (1999-04-07) <br>
+
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.5 1999-04-30 23:38:01 steve Exp $</b><br>
+<b>$Id: done.html,v 1.6 1999-05-06 20:44:57 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

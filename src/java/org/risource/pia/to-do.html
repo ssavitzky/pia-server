@@ -18,8 +18,9 @@ See also:
 <h2>Cleanup and refactoring</h2>
 <ol>
   <li> Move Piaproperties to <code>ds</code>; rename.
-  <li> Make a generic Tabular wrapper similar to Piaproperties.  Use for,
-       e.g., attribute lists.
+  <li> Make a generic Tabular wrapper similar to Piaproperties.  Use for
+       extracting typed data from generic tables, attr lists, etc.  Could be
+       based on Assoc.
   <li> Rename Tabular to StringMap
   <li> Use StringMap interface for headers, etc.
   <li> <b>Hole</b> Simplify the Pia class and initialization.
@@ -27,13 +28,30 @@ See also:
 
 <h2>Main List</h2>
 <ol>
+  <li> <b>Hole</b> Admin must keep track AGENT.xml files. <br>
+       Probably by having an agent submit a form when it was modified.  Be
+       nice if type agents could optionally manage their own subs. 
+       (1999-05-06) <br>
+
+  <li> <b>Hole</b> ProcessedContent should wait for first text. <br>
+       ProcessedContent should wait for the first non-blank text before
+       sending anything to the client.  This would allow the .xh file to
+       modify the Transaction and headers, e.g. for error messages. 
+       (1999-04-30) <br>
+
+  <li> <b>Hole</b> AgentBuilder should re-init. if necessary. <br>
+       Needs to check and see if the agent ``under construction'' actually
+       exists.  In that case, it needs to <em>re</em>-initialize instead of
+       blowing away the whole structure.
+       (1999-05-03) <br>
+
   <li> <b>Impr</b> Need per-agent mapping of extension to tagset. <br>
        It really needs to be possible to fully specify the mapping of file
        extension to tagset.  The present technique is kludgy.  In some cases
        the mapping needs to include access method (GET/PUT/POST).
        (1999-03-11) <br>
 
-  <li> <b>Hole</b> Regexp and Jigsaw must go! (<b>critical</b>) <br>
+  <li> <b>Hole</b> Regexp and Jigsaw must go! <br>
        (1999-02-09) <br>
        -- Jigsaw has been pared down to only what we need; RegExp is still a
 	  problem.
@@ -51,6 +69,7 @@ See also:
        LOG: User messages.  names include "debug", "message", "verbose", ...
        AGENTS: Resolver's agent table.  Initialize an agent with
        <code>&lt;set name=AGENTS:foo&gt;options&lt;/&gt;</code>.
+       Need version info in PIA namespace.
        (1998-11-02)<br>
        -- PIA (1999-03), AGENTS (1999-04-27)
        
@@ -93,7 +112,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.8 1999-04-30 23:38:02 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.9 1999-05-06 20:44:59 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
