@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.22 1999-11-04 22:33:43 steve Exp $
+//	$Id: extractHandler.java,v 1.23 1999-11-09 23:18:04 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.22 1999-11-04 22:33:43 steve Exp $
+ * @version $Id: extractHandler.java,v 1.23 1999-11-09 23:18:04 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -66,15 +66,14 @@ public class extractHandler extends GenericHandler {
     String tag = in.getTagName();
 
     BasicEntityTable ents = new BasicEntityTable(tag);
+
+    // Add a new entity for "list" -- the current list of extracted items.
     TreeEntity extracted = new TreeEntity("list");
     ents.setBinding("list", extracted);
 
-    /** new addition for tm_like tag */
+    // Add a template entity for tm-like
     TreeEntity template = new TreeEntity("likelist");
     ents.setBinding("likelist", template);
-
-    // put the below stuff into sub-method which  uses an alraedy-filled list
-
     
     ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
     String sep = (atts == null)? null : atts.getAttribute("sep");
@@ -87,18 +86,14 @@ public class extractHandler extends GenericHandler {
     putList(out, extracted.getValueNodes(cxt), sep);
   }
 
-  /************************************************************************
-  ** Core loop after initializing list
-  ************************************************************************/
-  public void extractLoop(TreeEntity extracted, Input in, 
-		     Context cxt,  ActiveAttrList atts,
-	  //		     Context cxt, Output out, ActiveAttrList atts,
-			   String sep, BasicEntityTable ents) {
+  /* Main loop of extract.
+   *	Takes an already-initialized entity.
+   */
+  protected void extractLoop(TreeEntity extracted, Input in, 
+			     Context cxt,  ActiveAttrList atts,
+			     String sep, BasicEntityTable ents) {
 
-
-    // put the below stuff into sub-method which  uses an alraedy-filled list
-
-
+     // This used to be in "action", but has been moved out for code sharing.
 
       //    ActiveAttrList atts = Expand.getExpandedAttrs(in, cxt);
       //    String sep = (atts == null)? null : atts.getAttribute("sep");
@@ -115,9 +110,11 @@ public class extractHandler extends GenericHandler {
 
     // cut  here
     do {
-      if (terminateExtract) continue;
       ActiveNode item = in.getActive();
       if (item == null) break;
+
+      // if (terminateExtract) continue; === doesn't terminate properly ===
+      // === exits without properly eating the rest of the input. 
 
       switch (item.getNodeType()) {
       case Node.COMMENT_NODE:
@@ -152,6 +149,7 @@ public class extractHandler extends GenericHandler {
       }
     } while (in.toNext());
 
+    
   }
 
 
