@@ -39,10 +39,13 @@ source of ideas and examples, and as a basis for creating new applications.</p>
  upon which you might like to build, and copy that directory and its contents
 into the <code>.pia/</code> (or <code>$PIA_ROOT/</code>) directory, under a
 new name (e.g. <code>cp -r ~/PIA/Samples/HelloWorld/ ~/.pia/MyApps/MyFirstPage
-</code> ).  Now any changes you make will not be confused with files in the
-original source-tree, nor overwritten upon updating via CVS.  And any files
-your active pages write or read will appear in (or relative to) this new
-directory.</p> </li>
+</code> ). </p> 
+
+     <p>Empty and remove all the <var>CVS</var> directories and
+     sub-directories. Now any changes you make will not be confused with files
+     in the original source-tree, nor overwritten upon updating via CVS.  And
+     any files your active pages write or read will appear in (or relative to)
+     this new directory.</p> </li>
 
 <li><p> In this new directory, change every occurrence of the original name
 (<code>HelloWorld</code>) to the new one (<code>MyFirstPage</code>), both
@@ -126,6 +129,7 @@ tagsets are used.
 </p>
 
 <blockquote>
+
     <p> Some history here:  originally, <em>all</em> applications in the PIA
 	were associated with agents, and all of their ``home directories''
 	were accessible at the top level.  This persists in the terminology:
@@ -222,9 +226,7 @@ tagsets are used.
     its <em>implementations</em>, in a language (Java) in which interfaces and
     implementations have to have different names.
 </p>
-
-
-<h3>Files and Directories</h3>
+</blockquote>
 
 <font color="red">
  This section needs a little work.
@@ -274,6 +276,7 @@ tagsets are used.
 </p>
 
 
+
 <p> In fact, reading and writing are somewhat different.  <strong>All</strong>
     file-writing takes place in the <var>PIA_ROOT</var> directory
     (e.g. <var>.pia</var>) or where its configuration files point,
@@ -291,6 +294,7 @@ tagsets are used.
     falls back to looking under <var>PIA_HOME</var>, and searches <i> there
     </i> for the file or for configuration pointers. </p>
 
+
 <p> <strong> This process can sometimes lead to confusion; be aware that
     files may not be written or read where you first expect. </strong>  The
     least confusing approach is to create and modify all files directly under
@@ -299,7 +303,10 @@ tagsets are used.
 
 
 
+
+
 <h2><a name="Files"></a>File Names and Access</h2>
+
 
 <p> This section describes the conventions for naming files, and for
     specifying files inside of active tags.
@@ -380,8 +387,6 @@ tagsets are used.
 
 
 
-<h3>Configuration Files</h3>
-
 <p> The PIA uses a fairly small number of standard files to determine its
     configuration.
 </p>
@@ -422,6 +427,7 @@ tagsets are used.
       </td>
       <td> conventional name for an application's local tagset file.
       </td>
+
   </tr>
 </table>
 
@@ -509,10 +515,14 @@ tagsets are used.
       <td> included by the default version of <code>help.xh</code>.
       </td>
   </tr>
+  <tr><th> .xml </th> <td> depends on usage. </td>
+      <td> Ordinary XML </td>
+  </tr>
 </table>
 
 
 <h3>File Access</h3>
+
 
 <p> Locations passed to the PIA in URL's are always looked up in the site
     resource tree.  Relative filenames always have the current base (pathname)
@@ -577,14 +587,15 @@ tagsets are used.
        ``<code>file:</code>'' prefix.
 </ol>
 
+
 <p> When the <code>file:</code> prefix is not present, paths are in ``URL
     format'':  slash characters are converted, if necessary, to the
     operating system's file separator.  So <var>../MyApp/home.xh</var> will be
     converted (on DOS/Windows) to <var>..\MyApp\home.xh</var>.
 </p>
 
-
 <h2><a name="Code">Programming issues</a></h2>
+
 
 <blockquote>
 <p><em>non-programmers can safely skip this section.</em>
@@ -633,12 +644,6 @@ style in particular: </p>
 
 <h3>Uniform Look and Feel</h3>
 
-<p> Use tagsets to give a family of related applications a similar
-    appearance. The PIA uses <code>&lt;header&gt;</code>,
-    <code>&lt;subhead&gt;</code>, and <code>&lt;footer&gt;</code> in this way;
-    almost every application XHTML page includes the code which expands into a
-    standardized heading.
-</p>
 
 <p> Use ``include'' files and application-specific entities to customize
     inherited pages.  The standard <code>include</code> files currently
@@ -931,7 +936,8 @@ Manual</a>.</p>
    Valley</a>.</b> 
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: author.html,v 1.17 1999-10-15 23:13:01 steve Exp $</i><br>
+<i>$Id: author.html,v 1.18 1999-10-19 00:29:43 bill Exp $</i><br>
 </body>
 </html>
+
 
