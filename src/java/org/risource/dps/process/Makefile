@@ -1,5 +1,5 @@
 ###### dps/handle/Makefile:	Active document tag handlers
-# 	$Id: Makefile,v 1.5 1999-07-20 20:56:53 steve Exp $
+# 	$Id: Makefile,v 1.6 1999-09-22 00:36:37 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,8 +27,7 @@ TOPDIR=../../../..
 
 FILES = \
 	BasicProcessor.java \
-	TopProcessor.java \
-	ActiveDoc.java 
+	TopProcessor.java 
 
 include $(TOPDIR)/makefiles/file.make
 
@@ -39,6 +38,7 @@ BasicProcessor.class: ../Processor.java ../Context.java \
 	../util/ContextStack.java
 TopProcessor.class: BasicProcessor.java ../TopContext.java \
 	../Processor.java ../Context.java ../util/ContextStack.java
+
 ActiveDoc.class: BasicProcessor.java  TopProcessor.java ../TopContext.java\
 	../Processor.java ../Context.java ../util/ContextStack.java \
 	../../pia/Agent.java ../../pia/Pia.java ../../pia/Transaction.java \

@@ -1,5 +1,5 @@
 ////// TopProcessor.java: Top-level Document Processor class
-//	$Id: TopProcessor.java,v 1.13 1999-07-14 20:21:03 steve Exp $
+//	$Id: TopProcessor.java,v 1.14 1999-09-22 00:36:37 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,6 +49,8 @@ import org.risource.dps.namespace.BasicNamespace;
 import org.risource.dps.namespace.EntityWrap;
 import org.risource.dps.namespace.NamespaceWrap;
 
+import org.risource.site.*;
+
 import org.risource.ds.List;
 import org.risource.ds.Tabular;
 
@@ -64,7 +66,7 @@ import org.risource.ds.Tabular;
  *	may be done in order to insert a sub-document into the processing
  *	stream, or to switch to a different tagset.
  *
- * @version $Id: TopProcessor.java,v 1.13 1999-07-14 20:21:03 steve Exp $
+ * @version $Id: TopProcessor.java,v 1.14 1999-09-22 00:36:37 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -73,9 +75,10 @@ import org.risource.ds.Tabular;
 public class TopProcessor extends BasicProcessor implements TopContext
 {
   protected Tagset tagset;
-  protected String documentBase;
-  protected String documentName;
-  protected URL    documentLocation = null;
+  protected Document document = null;
+  protected Resource location = null;
+
+  protected URL documentLocation = null;
 
   /************************************************************************
   ** State accessors:
@@ -94,6 +97,39 @@ public class TopProcessor extends BasicProcessor implements TopContext
     // === but doing it in the constructor does work.
     //    if (tagset != null && input instanceof ProcessorInput) 
     //  ((ProcessorInput)input).setTagset(tagset);
+  }
+
+  /** Obtain the current Document resource. */
+  public Document getDocument() { return document; }
+
+  /** Set the current Document resource. */
+  public void setDocument(Document doc) { 
+    document = doc;
+    if (doc != null && location == null) location = doc.getContainer();
+  }
+
+  public void setLocation(Resource loc) {
+    if (loc != null && !loc.isContainer()) {
+      document = loc.getDocument();
+      location = loc.getContainer();
+    } else {
+      location = loc;
+    }
+  }
+
+  /** Get the current Document's location. */
+  public Resource getDocumentLoc() { return location;  }
+
+  /** Get the current Document's configuration. */
+  public Namespace getDocConfig() {
+    Resource doc = getDocument();
+    return (doc == null)? null : doc.getProperties();
+  }
+
+  /** Get the current location's configuration. */
+  public Namespace getLocConfig() {
+    Resource loc = getDocumentLoc();
+    return (loc == null)? null : loc.getProperties();
   }
 
   /** Return the current ProcessorInput, if there is one. */
@@ -184,37 +220,16 @@ public class TopProcessor extends BasicProcessor implements TopContext
   ** External Entities:
   ************************************************************************/
 
-  /** The prefix (<code>protocol://host:port/</code>) that makes the
-   *	<code>documentBase</code> into a URL.
-   *
-   * <p> If documents are local, <code>documentLocation</code> will be null.
-   *	 That does not necessarily mean that <code>documentBase</code> is
-   *	 an absolute path, however.
+  /** Locate a resource relative to the Document being processed.
+   * @param path a path.
+   * @param forWriting <code>true</code> if the Resource is intended to 
+   *		be written into. 
    */
-  public URL  getDocumentLocation() { return documentLocation; }
-  public void setDocumentLocation(URL u) { documentLocation = u; }
-
-  /** The base path of the current document.  It always ends with 
-   *	``<code>/</code>'' if non-null.
-   *
-   * <p> If <code>documentBase</code> starts with ``<code>/</code>'', it
-   *	 indicates an absolute path to the base directory; otherwise is
-   *	 is relative to some other root, for example the URL started by
-   *	 <code>documentLocation</code>.
-   *
-   * <p> Inside a PIA or other server the base path is <em>not</em> a path 
-   *	 from the filesystem root, but rather is relative to the server's
-   *	 document root.  Any special handling required for this occurs in 
-   *	<code>locateSystemResource</code> .
-   */
-  public String getDocumentBase() { return documentBase; }
-  public void   setDocumentBase(String s) { documentBase = s; }
-
-  /** The file name of the current document. 
-   *	May be null if the current document is a string. 
-   */
-  public String getDocumentName() { return documentName; }
-  public void   setDocumentName(String s) { documentName = s; }
+  public Resource locateResource(String path, boolean forWriting) {
+    if (location == null) return null;
+    return location.locate(path, forWriting,
+			   forWriting? new List() : null);
+  }
 
   /** Determine whether a resource name is local or remote. */
   public boolean isRemotePath(String path) {
@@ -237,16 +252,20 @@ public class TopProcessor extends BasicProcessor implements TopContext
    */
   public InputStream readExternalResource(String path)
     throws IOException {
-    if (isSpecialPath(path)) return readSpecialResource(path);
-    if (documentLocation == null && !isRemotePath(path)) {
-      File f = locateSystemResource(path, false);
-      if (f != null) {
-	return new java.io.FileInputStream(f);
-      }
-    } else {
+    if (isSpecialPath(path)) {
+      return readSpecialResource(path);
+    } else if (isRemotePath(path)) {
       URL u = locateRemoteResource(path, false);
       if (u != null) {
 	return u.openStream();
+      }
+    } else if (document != null) {
+      Resource r = document.locate(path, false, null);
+      if (r != null) return r.getDocument().documentInputStream();
+    } else {
+      File f = locateSystemResource(path, false);
+      if (f != null) {
+	return new java.io.FileInputStream(f);
       }
     }
     return null;
@@ -262,18 +281,23 @@ public class TopProcessor extends BasicProcessor implements TopContext
 					    boolean createIfAbsent,
 					    boolean doNotOverwrite)
     throws IOException {
-    if (isSpecialPath(path))
+    if (isSpecialPath(path)) {
       return writeSpecialResource(path, append, createIfAbsent, doNotOverwrite);
-    if (documentLocation == null && !isRemotePath(path)) {
+    } else if (isRemotePath(path)) {
+      URL u = locateRemoteResource(path, true);
+      if (u != null) {
+	return null; // === writeExternalResource remote unimplemented
+      }
+    } else if (document != null) {
+      Resource r = document.locate(path, true, null);
+      Document d = r.getDocument();
+      // === worry about createIfAbsent/doNotOverwrite
+      return d.documentOutputStream(append);
+    } else {
       File f = locateSystemResource(path, true);
       if (f != null) {
 	// === worry about createIfAbsent/doNotOverwrite here!
 	return new java.io.FileOutputStream(f.getAbsolutePath(), append);
-      }
-    } else {
-      URL u = locateRemoteResource(path, true);
-      if (u != null) {
-	return null; // === writeExternalResource remote unimplemented
       }
     }
     return null;
@@ -294,7 +318,6 @@ public class TopProcessor extends BasicProcessor implements TopContext
     } else {
       // Path not starting with "/" is relative to documentBase.
       if (path.startsWith("./")) path = path.substring(2);
-      if (documentBase != null) path = documentBase + path;
       return new File(path);
     }
   }
@@ -388,9 +411,14 @@ public class TopProcessor extends BasicProcessor implements TopContext
     getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
   }
 
+  /** Make an entity-table entry for a Namespace. */
+  public void define(String n, Namespace ns) {
+    getLocalNamespace().setBinding(n, new EntityWrap(n,  ns));
+  }
+
   /** Make an entity-table entry for a node. */
   public void define(String n, ActiveNode v) {
-    getLocalNamespace().setBinding(n, v);
+    if (v != null) getLocalNamespace().setBinding(n, v);
   }
 
   /** Make an entity-table entry for a lookup table with a tag. */
@@ -458,6 +486,9 @@ public class TopProcessor extends BasicProcessor implements TopContext
   public void initializeEntities() {
     entities = new BasicNamespace("DOC"); // top level is called "DOC"
 
+    define("LOC", getLocConfig());
+    define("PROPS", getDocConfig());
+
     // Extract formatted information from today's Date.
     initializeDateEntities(new Date());
 
@@ -484,6 +515,11 @@ public class TopProcessor extends BasicProcessor implements TopContext
 
   public TopProcessor() {
     top = this;
+  }
+
+  public TopProcessor(Resource doc) {
+    top = this;
+    setLocation(doc);
   }
 
   public TopProcessor(Tagset ts, boolean defaultEntities) {
@@ -515,6 +551,15 @@ public class TopProcessor extends BasicProcessor implements TopContext
     setTagset(ts);
     if (tagset != null && input instanceof ProcessorInput) 
       ((ProcessorInput)input).setTagset(tagset);
+  }
+
+  public TopProcessor(Input in, Context prev, Output out, Tagset ts, 
+		      Resource doc) {
+    this(in, prev, out, (Namespace)null);
+    setTagset(ts);
+    if (tagset != null && input instanceof ProcessorInput) 
+      ((ProcessorInput)input).setTagset(tagset);
+    setLocation(doc);
   }
 
 }
