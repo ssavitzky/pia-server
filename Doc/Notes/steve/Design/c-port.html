@@ -27,14 +27,22 @@
 <ul>
   <li> <a href="http://www.jclark.com/">James Clark</a>'s SP parser and its
        derivatives.  It's written in C++ and has an event-oriented interface.
-       Clark also has an XML parser called Expat.
+       SP is under a BSD-type license. 
   <li> <a href="http://www.jclark.com/">James Clark</a>'s Jade, a C++
-       implementation of the DSSSL style-sheet language for SGML.
-  <li> The <a href="http://www.apache.org/">Apache</a> web server.
+       implementation of the DSSSL style-sheet language for SGML.  Jade is
+       also under a BSD-type license, and includes SP as a subset.
+  <li> <a href="http://www.jclark.com/">James Clark</a>also has an XML parser
+       called Expat written in C.  Expat is under the <a
+       href="http://www.mozilla.org/MPL/">MPL</a>.  Note that Expat has a
+       callback for passing references to unparsed external entities to the
+       application, and also is able to pass <em>all</em> entity references to
+       the application. 
+  <li> The <a href="http://www.apache.org/">Apache</a> web server, which is
+       under a BSD-type license.
 </ul>
 
 
-<h2>Alternative Designs</h2>
+<h2>Design Sketch</h2>
 
 <p> There are two plausible approaches:
 
@@ -42,37 +50,103 @@
   <li> Implement the DPS using Jade.  This involves writing the bulk of the
        DPS in DSSSL, which is basically an extension of Scheme.  This is
        likely to be unfamiliar territory for C programmers, and may result in
-       an inefficient implementation.
-  <li> Implement the DPS directly in C or C++.  This can be done quite
-       efficiently if we give up the sub-elements of &lt;extract&gt; that
-       modify structure.
+       an inefficient implementation.  Also, Jade is rather bulky, weighing in
+       at over 6MB of source code.  About half of that is SP.
+  <li> Implement the DPS directly in C or C++ using Expat as the parser.
+       This can be done quite efficiently if we give up the sub-elements of
+       &lt;extract&gt; that modify structure, somewhat less efficiently if we
+       don't.  If an HTML parser is needed, it can be implemented using
+       Expat's tokenizer as a base. 
 </ol>
 
-<h3>Jade</h3>
+<p> In view of Jade's size and complexity, it seems best to implement the DPS
+    in C starting with Expat.  The design sketch follows:
 
-
-<h3>Direct Implementation</h3>
+<h3>Storage Format</h3>
 
 <p> What I have in mind is an implementation that stores trees, not as
     individual nodes connected by pointers, but as flattened arrays of
-    characters.  Each node would have a binary header and trailer that include
-    the length of its contents.  The only place pointers would be used would
-    be in namespaces.
+    characters.  Each node would have a binary header and trailer that
+    includes the length of its contents.  The only place pointers would be
+    necessary would be in namespaces.
 
 <p> The advantages of a flattened tree are that, although navigation is nearly
     as fast as a linked tree, depth-first traversal is actually faster, and
     storage-management is trivial.  In addition, by padding strings to some
     reasonable length (8 bytes comes to mind), one could ensure that numeric
-    fields always start on word boundaries, and would also allow the
+    fields always start on word boundaries; this would also allow the
     occasional pointer for things like handlers.
 
+<p> Note that storage management for a flat, compact array of what amount to
+    strings is particularly simple, although keeping the array compact does
+    involve copying.  In the most common case, where input is from events and
+    output is to a stream, holes will only occur when a variable is set inside
+    of something being expanded.
+
 <p> Some kind of interleaving scheme (with "skip" spans as well as "content"
-    spans) would allow variables to be written into as well as intermediate
-    (processed content) parse trees. 
+    spans) would allow variables to be written into at the same time as
+    intermediate (processed content) parse trees.  (Variables would end up as
+    something akin to comment nodes.)  This is only an issue, of course, when
+    something like a repeat or extract is embedded in something else, e.g. a
+    set, that constructs a nodelist.
+
+<p> It may be best, though, to do the initial implementation with ordinary
+    nodes to avoid unnecessary complexity.
+
+<p> Note also that in embedded applications it will often be possible to
+    pre-parse files, and even embed them in the server in the form of
+    initialized C data structures.  Constructing the C can be done using a
+    tagset.  In particular, we can reasonably expect that <em>tagsets</em>
+    will be preloaded in this way.
+
+<h3>Apache Module Interface</h3>
+
+<p> Apache includes a ``transaction-oriented'' storage-allocation model: all
+    storage associated with a transaction is kept together, and returned when
+    the transaction is completed.  This makes things very simple.
+
+<p> One problem with Apache is that documents are served out of multiple,
+    single-threaded processes.  This makes it difficult to share data at the
+    ``Agent'' or ``PIA'' (global) level.  If this is necessary we could make
+    yet another process, running as a kind of ``nano-PIA'' server, to manage
+    the shared entities.  (This is similar to what <code>mod_java</code> does,
+    for example.)  Alternatively we could use the file system for shared data,
+    but there are locking issues involved in that approach.
+
+<p> Note that the ``flattened tree'' binary format is almost ideal for
+    communicating with the ``nano-PIA'' entity server. 
+
+<h2>Implementation Plan</h2>
+
+<ol>
+  <li> Incorporate <code>expat</code> into the tree (as
+       <code>src/c/com/jclark/expat</code>) and build it.
+  <li> Design data structures and interfaces for a minimal set of DPS
+       components: Node, NodeList, Input, Output, Processor, Context,
+       Namespace, and a few others.  Use <code>expat</code> as a style guide. 
+  <li> Write a pair of drivers: a  C main program equivalent to
+       <code>process</code>, and another that works as a CGI.  Implement a
+       simple <code>mod_pia</code> if it's easy.
+  <li> Implement a skeleton version of Processor that simply copies input to
+       output. 
+  <li> Implement those handlers that can operate in pass-through mode without
+       constructing an intermediate parse tree.  These include
+       <code>if</code>, <code>hide</code>, and <code>protect</code>.
+  <li> Implement the linked-list parse-tree representation.
+  <li> Implement Processor, building parse trees for active nodes that can't
+       be run in pass-through mode.
+  <li> Implement the rest of the handlers.  There are about 40 top-level
+       handler classes in the DPS, and about twice that many sub-handlers.  A
+       few will be unnecessary; others can easily be postponed.
+  <li> Implement the flat-file parse-tree representation.  This may fall out
+       of what Mark is doing on the storage system.
+  <li> Implement a simple shared-variable server for use with
+       <code>mod_pia</code> in Apache.
+</ol>
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: c-port.html,v 1.2 1999-06-29 01:01:36 steve Exp $</b><br>
+<b>$Id: c-port.html,v 1.3 1999-07-02 00:14:28 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
