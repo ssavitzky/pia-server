@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.13 1999-10-26 22:57:24 steve Exp $
+#	$Id: pia_wrapper,v 1.14 1999-12-14 18:29:00 steve Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -102,7 +102,7 @@ if [ `/bin/pwd` = `(cd $PIA_HOME/src/java; /bin/pwd)` ]; then
 else
     old_classpath=$CLASSPATH
     [ -z "$CLASSPATH" ] || CLASSPATH=":$CLASSPATH"
-    CLASSPATH=$PIA_CLASSES$CLASSPATH
+    CLASSPATH=$PIA_HOME/lib:$PIA_CLASSES$CLASSPATH
     [ -d $PIA_SRC ] && CLASSPATH=$PIA_SRC/java:$CLASSPATH
     export CLASSPATH
     if [ -z "$1" ] ; then
