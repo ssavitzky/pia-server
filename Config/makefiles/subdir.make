@@ -1,5 +1,5 @@
 ### subdir.make -- makefile template for subdirectories
-#   $Id: subdir.make,v 1.4 1999-10-14 18:05:24 steve Exp $
+#   $Id: subdir.make,v 1.5 1999-12-14 23:12:11 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,17 +44,17 @@
 #	setup	initialize Makefile and other essential files
 
 all::
-	for p in `ls -d $(SUBDIRS)`; do ( cd $$p; if test -f Makefile; \
+	for p in $(SUBDIRS); do test -d $$p && ( cd $$p; if test -f Makefile; \
 		then $(MAKE) PIADIR=$(SUBPIADIR) VPATH=$(VPATH)/$$p; fi ); \
 	done
 
 doc::
-	@@for p in `ls -d $(SUBDIRS)`; do ( cd $$p; if test -f Makefile; \
+	@@for p in $(SUBDIRS); do test -d $$p && ( cd $$p; if test -f Makefile;\
 		then $(MAKE) PIADIR=$(SUBPIADIR) doc; fi); \
 	done
 
 clean::
-	@@for p in `ls -d $(SUBDIRS)`; do ( cd $$p; if test -f Makefile; \
+	@@for p in $(SUBDIRS); do test -d $$p && ( cd $$p; if test -f Makefile;\
 		then $(MAKE) PIADIR=$(SUBPIADIR) clean; fi); \
 	done
 
@@ -70,7 +70,7 @@ setup::
 
 setupSub: 
 	echo   '### Makefile for' $(MYPATH) 			 > Makefile
-	echo   '#	$$Id: subdir.make,v 1.4 1999-10-14 18:05:24 steve Exp $$	'				>> Makefile
+	echo   '#	$$Id: subdir.make,v 1.5 1999-12-14 23:12:11 steve Exp $$	'				>> Makefile
 	echo   '# 	COPYRIGHT 1999, Ricoh Silicon Valley' 	>> Makefile
 	echo    						>> Makefile
 	[ -z $(ABSPIA) ] || echo 'ABSPIA=$(ABSPIA)'		>> Makefile
