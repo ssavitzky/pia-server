@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.29 2000-04-14 23:06:16 steve Exp $
+// $Id: Pia.java,v 1.30 2000-06-09 16:56:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -71,7 +71,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.29 2000-04-14 23:06:16 steve Exp $
+  * @version $Id: Pia.java,v 1.30 2000-06-09 16:56:02 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -1042,12 +1042,18 @@ public class Pia implements Tabular {
     case 0:
       break;
     case 1:
-      if (pia.get("site") != null) {
-	System.err.println("filename argument taken as -site;"
-			   + " can't specify both.");
+      if (pia.get("site") == null) { // try site
+	pia.setProperty("site", config.otherArguments.at(0).toString());
+      } else if (pia.get("root") == null) { // try root
+	pia.setProperty("root",  config.otherArguments.at(0).toString());
+      } else if (pia.get("vroot") == null) { // try vroot
+	pia.setProperty("vroot",  config.otherArguments.at(0).toString());
+      } else {
+	System.err.println("Can't figure out what the filename argument" +
+			   "is supposed to be.\n" +
+			   "   site, root, vroot are already specified." );
 	System.exit(1);
       }
-      pia.setProperty("site", config.otherArguments.at(0).toString()) ;
       break;
     default: 
       System.err.println("Too many extra arguments specified.");
