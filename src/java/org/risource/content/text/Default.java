@@ -1,5 +1,5 @@
 //  Default.java
-// $Id: Default.java,v 1.5 1999-04-29 17:31:13 wolff Exp $
+// $Id: Default.java,v 1.6 1999-04-29 17:48:47 pia Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -119,7 +119,7 @@ public class Default extends StreamingContent {
   }
 
   public void source(Reader in) {
-    source=in;  // getSource just returns this
+      //source=(InputStream)in;  // getSource just returns this
     cReader = in;	   
     enterState(START);
   }
@@ -215,6 +215,9 @@ public class Default extends StreamingContent {
 
     public InputStream getSource() {
 	return source;
+    }
+    public Reader getReader() {
+	return cReader;
     }
 
 
