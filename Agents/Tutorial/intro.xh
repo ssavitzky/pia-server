@@ -245,7 +245,7 @@
        <p> Having verified it by printing it out, you can then pass it to the
 	   other tag, like this: </p>
          
-       <p>
+
        <pre><code>
         &lt;extract>
            &lt;from>
@@ -254,7 +254,7 @@
 	   ...
 	   ...
         &lt;/extract>
-        </code></pre></p>
+        </code></pre>
 	   
       <li>
        <p><i>[Experts only] </i>Another big source of confusion occurs when
