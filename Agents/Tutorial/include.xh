@@ -1,0 +1,16 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body><!-- Grabs the home page from Yahoo and
+            extracts image tags from it.-->
+
+<extract> 
+    <from>
+        <include src="http://www.yahoo.com/" />
+    </from>
+    <name all="all">img</name>
+</extract>
+
+</body>
+</html>  
+

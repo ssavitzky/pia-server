@@ -1,0 +1,12 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body><!-- Prints "Hello" three times, with index at left. -->
+
+<repeat start="1" stop='3' entity="index">
+   <get name='index'/> Hello World Wide Web <br/>
+</repeat>
+
+</body>
+</html>  
+

@@ -1,0 +1,1 @@
+<edit demo-name="aboutPrimes.xh"><extract><from><include src="primes.xh" quoted="yes"/></from><name all="all">body</name><content/></extract></edit>

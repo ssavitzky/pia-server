@@ -1,0 +1,48 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Error-test demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+     <tr><td>  <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editErrorTest.xh"/>
+            <td><input  type="submit" value="Try error-test demo"/>
+         </form></td>
+   
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+         <td><a href='home2.xh' target="_top">  More demos menu</a></td>
+   </tr>
+</table>
+
+    <h2> <a name="intro">The Error-test Demo</a></h2>
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="errorTest.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> There is a tag called <code>&lt;show-errors></code> which shows in red
+	some (but not all!) of the errors found by the PIA processor up to
+	that point in a document.  In this example, we introduce a deliberate
+	error by trying to <code>include</code> a file which doesn't exist.</p>
+
+    <p> You can also introduce end-tag errors by deleting the &lt;/set>
+	end-tag in the text box, and processing.  (We can't do that for you,
+	because the PIA processor automatically creates missing end-tags in
+	the process of loading the source code into your editor box.)</p>
+
+    <p> (These errors will also appear as text on a console of the PIA server,
+	but in this case that machine resides at Ricoh Silicon Valley and is
+	not visible to remote users like you.  Sorry...)</p>
+
+    <p> You may note that the error message appears twice.  The first time is
+	from the <code>&lt;show-errors></code> tag you see above; the second
+	is from another <code>&lt;show-errors></code> tag we have hidden away
+	in the processing wrapper (along with the <code>&lt;html></code> and
+	<code>&lt;body></code> tags), to ensure that you can get error
+	messages in all the other demos too. </p>
+
+
+
+</body>
+</html>  
+

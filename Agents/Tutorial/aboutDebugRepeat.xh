@@ -1,0 +1,49 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the debug/display demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+       <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editDebugRepeat.xh"/>
+            <td><input  type="submit" value="Try debug demo"/>
+         </form></td>
+
+        <td> <a href='home.xh' target="_top">  Demo menu</a></td>
+        <td> <a href='home2.xh' target="_top">  More demos menu</a></td>
+  </tr>
+</table>
+
+    <h2> <a name="intro">The Debug Display Demo</a></h2>
+
+    <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="debugRepeat.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> This demo shows how to use a special-purpose debugging tag to display
+	your source as the browser or the PIA processor may see it. (It's
+	similar to the <code>&lt;pretty></code> tag described above, but not
+	as pretty...).
+
+    <p> The demo encloses the familiar "Hello WWW" source in two different
+	ways : first in a simple <code>&lt;debug></code> tag, and second in
+	nested <code>&lt;debug>&lt;protect></code> tags.
+
+    <p> The <code>&lt;debug></code> tag displays its contents as an indented
+	tree of descriptions and elements, so in the simple first case that
+	contents is the (already processed) Hello WWW demo, i.e. three lines
+	of numbers and text.  So all three lines are shown in the the final
+	display, as the browser would see it, while the
+	<code>&lt;repeat></code> and <code>&lt;get></code> tags have been
+	replaced by their processed results.
+
+    <p> The second part has a <code>&lt;protect></code> tag inside the
+	<code>&lt;debug></code> tag, preventing the <code>&lt;repeat></code>
+	tag from being processed.  Hence the output here shows the "raw"
+	source code, as the PIA processor sees it, containing the
+	<code>&lt;get></code> and <code>&lt;repeat></code> tags, but no
+	numbers and only one (not three) "Hello's."
+</body>
+</html>  
+

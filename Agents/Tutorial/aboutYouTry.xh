@@ -1,0 +1,27 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the You-try demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+       <tr><td>  <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editYouTry.xh"/>
+            <td><input  type="submit" value="Try you-try demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+        </tr>
+</table>
+
+    <h2> <a name="intro">Your own demo...</a></h2>
+
+    <p> Yup, this is just what it looks like: an invitation for you to create
+	a demo yourself, demonstrating either the wonders of the PIA language
+	or just your own cleverness. We'll try our best to post it.  Have fun!
+	</p>
+
+    <p> That number again, <code>pia-demos@risource.org</code>... call before
+	midnight tomorrow!
+
+</body>
+</html>  
+

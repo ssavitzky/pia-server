@@ -1,0 +1,70 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Form demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+        <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editForm.xh"/>
+            <td><input  type="submit" value="Try form demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+
+    <h2> <a name="intro">The Form Demo</a></h2>
+
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="form.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> This is a page which both presents and processes a form; no CGI
+	scripts needed!  But because this page does two different things, it
+	has to figure out which of the two things it is doing at any one time.
+
+    <p> The top section uses the <code>&lt;if></code> tag to check whether
+	something (an "entity") called "submitNameButton" has been assinged a
+	value (if you check the lower section of code, you'll see the
+	assignment occuring when the "submit" input is given.)  The
+	test occurs as follows:  the <code>&lt;get></code> tag looks for the
+	"FORM:submitNameButton" value; if it finds one, it "returns"
+	(i.e. substitutes for itself) that value.  The value itself doesn't
+	matter in this case; all the <code>&lt;if></code> tag cares about is
+	whether the returned string is empty or not.  If the value hasn't been
+	assigned (the case the very first time you see the page),  the stuff
+	inside the <code>&lt;else></code> tag will be processed (i.e. printing
+	out the line "Type your name in the box").
+
+   <p> But if the "submitNameButton" does in fact have a (non-empty) value,
+	that is taken as evidence that the form has been submitted, and the
+	alternative <code>&lt;then></code> path is processed... which
+	involves printing out "The name submitted was" along with the value
+	submitted in boldface, using <code>&lt;get...></code> as before.
+
+    <p> The lower part of the code is a pure HTML form, with the exception
+	that the form's action "instantiate.xh" is a very peculiar construct
+	which takes the code-to-be-executed from a weirdly semi-hidden field
+	of the form itself, rather than by reading a file.... this is
+	necessary so you can process your modified code without having to
+	write anything to our disk, and may explain the odd text-area you see
+	at the right.  But please don't ask how we did it... ;-)
+
+     <p> <h3> Stuff to try </h3>
+
+    <p> You can change the size or type of the form's fields, add more fields,
+	and add multiple if/then clauses to the processing depending on the
+	input data.  You can even add fancier processing, such as printing out
+	the sum or product of various numbers submitted as input (see the <a
+	href="aboutFactorial.xh">factorial demo</a> for numeric processing),
+	or sorting a list of submitted names (see the <a
+	href="aboutSort2.xh">sort demo</a> for sorting).
+
+        But if you try changing "instantiate.xh" all bets are off.
+
+
+</body>
+</html>  
+

@@ -1,0 +1,6 @@
+<!DOCTYPE AGENT SYSTEM "Tutorial-agent">
+<!-- $Id: AGENT.xml,v 1.1 1999-07-13 22:59:14 bill Exp $ -->
+
+<AGENT name='Tutorial' path='/' type='Tutorial' pathName='/Tutorial' tagset='Tutorial-xhtml.ts'>
+  <bind name='onStart'>on</bind>
+</AGENT>

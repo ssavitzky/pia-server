@@ -1,0 +1,11 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head> 
+<title>Tutorial</title>
+</head>
+<frameset rows='30%,70%'>
+  <frame src='instantiate.xh' name='instantiation'>
+  <frame src='&FORM:demoName;' name='editor-window'>
+</frameset>
+</html>
+

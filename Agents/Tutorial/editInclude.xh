@@ -1,0 +1,2 @@
+<edit demo-name="aboutInclude.xh"><extract><from><include src="include.xh" quoted="yes"/></from>
+<name all="all">body</name><content/></extract> </edit>

@@ -1,0 +1,330 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body bgcolor="&mybgcolor;">
+    <table cellspacing="5">
+      <tr>
+       <td> <a    href="intro.xh"> Introduction </a> </td>
+        <td><a   href='http://www.risource.org/PIA/Doc/Tagsets/basic.html'> Manual </a></td>
+        <td><a  href='http://www.risource.org/PIA/Doc/Tagsets/basic.html#quick'>Active-tag table</a></td>
+
+        <td><a href='http://www.risource.org/PIA'> PIA home page</a></td>
+        <td><a href='home.xh'> Demo menu </a></td>
+        </tr>
+    </table>
+
+    <h2> <a name="intro">Introduction to "hackable", download-free PIA demos</a></h2>
+
+    <b> Contents </b> <br/>
+    <a href="#pia_background">The PIA Web Language</a> <br/>
+    <a href="#demos">The demos</a> <br/>
+    <a href="#hacking">Suggestions for hacking</a> <br/>
+    <a href="#troubleshoot">Troubleshooting</a> <br/>
+    <a href="#other">Other cool stuff</a> <br/><br/>
+
+    <a name="pia_background"><b>The PIA Web Language</b></a> <br/>
+
+    <p> There are two kinds of tagging/markup languages, HTML and XML.  HTML
+	has tags which describe some elementary document processing, like
+	tables, typefonts, mailto, and forms.  XML (Extensible Markup
+	Language) allows much more general tag definition (author, title,
+	product-ID), but was originally intended for marking-up static
+	documents rather than for processing them.</p>
+
+     <p> The PIA tag language combines these two features: it follows the
+	 strict annotation syntax of XML, but also has tags (both pre-defined
+	 and user-defined) which implement powerful processing.  The
+	 processing can modify both a document's display (like HTML) and its
+	 content, so that a PIA document (= eXtented HTML = XHTML) can
+	 automatically process forms, include other documents, make decisions
+	 based on them, calculate, iterate, substitute, and otherwise do
+	 things which are usually reserved for CGI scripts.</p>
+
+     <p> Because of the PIA's ancestry in markup languages, a passing
+	 familiarity with HTML syntax and elementary tags is useful for
+	 understanding these demos.  We hope that the syntax of the PIA tags
+	 will become self-evident in that context.</p>
+
+     <p> The PIA differs in one crucial respect from conventional programming
+	 languages like Perl or C: a proper PIA "program" (i.e. document) must
+	 be composed of properly-nested tags, i.e. </p>
+
+         <pre>
+         Good: <code>
+                     &lt;tag1>
+                        &lt;tag2>
+                           contents
+                        &lt;/tag2>
+                     &lt;/tag1> </code>
+
+         Bad:  <code>
+                     &lt;tag1>
+                        &lt;tag2>
+                           contents
+                        &lt;/tag1>
+                     &lt;/tag2> </code>
+         </pre>
+
+      <p> Proper nesting is an XML requirement, and can have some
+	  counterintuitive consequences.  For example, you cannot use an
+	  <code>&lt;if></code> tag to decide whether to place some other
+	  start- or end-tag, because that would violate nesting. Such a
+	  misguided attempt might occur if you want to end a row in a table
+	  when the value of <code>EOF</code> is true: </p>
+
+         <pre>
+         Bad:  <code>
+                     &lt;if>&lt;get name="EOF"/>
+                        &lt;then>
+                            &lt;/tr>
+                        &lt;/then>
+                     &lt;/if> </code>
+         </pre>
+
+         Such syntactic restrictions may chafe, but they have a big advantage:
+         any properly-nested PIA document is guaranteed, upon processing, to
+         yield a properly-nested HTML or XML document.  So there is no risk
+         (as there is with ordinary CGI scripts) that a perfectly legal
+         program will produce illegal HTML.
+
+
+<p>   <a name="demos"><b> The demos </b></a> </p>
+
+    <p> The best way to understand a language is to see it in action and to
+	try using it in simple ways.  So these demos allow you not only to see
+	"live" running examples, but to modify the source-code yourself and
+	see the effects of your modifications instantly.  We don't want to
+	hassle you with downloading and installing the whole processing system
+	first, so we are providing a demonstration environment which lets you
+	submit your code over the web for us to process and return. (Of
+	course, we would be delighted if you decided to download and use the
+	PIA on your own machine(s) as well!)</p>
+
+     <p> The hackable demo environment is a two-frame window, with
+	 source-code in a text-area of the lower half and the processed
+	 results appearing in the upper half. You are encouraged to change
+	 anything you want in the text area and try to "Process" it (the worst
+	 that can happen is that it won't work; nothing is supposed to crash).</p>
+
+     <p> You can even clip sections of code from one demo and run them in the
+         window "belonging to" another, mixing and matching as you see fit.
+         We are not aware of any limit on the size of  examples you can run,
+         besides the cumbersome nature of the fixed text-editing region.</p>
+
+     <p> Of course, these few demos don't begin to represent the couple dozen
+	 active tags (and many dozen attributes) in the PIA's <a
+        href='http://www.risource.org/PIA/Doc/Tagsets/basic.html'> Basic
+        Tagset</a>, nor the nearly infinite number of other active tags you
+        could create yourself out of those primitives.  These demos are just
+        to familiarize you with the PIA approach. </p>
+
+    <b> <a name="hacking"> <b> Suggestions for hacking </b></a></b>
+
+     <p> Each demo has both a brief explanatory comment in the source code and
+	 also an "About this demo" link which explains how that specific demo
+	 code, and its constituent tags, should operate.  That page usually
+	 also has a "Stuff to try" section with advice on modifications
+	 specific to that demo.</p>
+
+     <p> In general, for any demo, an obvious first step is to add some small
+	 text (like your name) to an interesting part of the code and see
+	 where it winds up upon processing.  If there are numerical values,
+	 you can modify them and see what occurs.  Don't worry about wrecking
+	 the code irretrievalby; there is a "Restore" link which will put the
+	 original code back into the text-editing box.</p>
+
+     <p> If you decide to add new tags, or remove existing ones, we
+	 <b>strongly</b> suggest double-checking that each start-tag
+	 (<code>&lt;tag></code>)is exactly matched with an end-tag
+	 (<code>&lt;/tag></code>), indenting tags clearly, and verifying that
+	 tags are properly nested, so that no start/end pair contains any
+	 stray unmatched tag (XML is much stricter about this than is HTML, so
+	 improperly-matched tags are a primary cause of mysterious errors).
+	 </p>
+
+     <p> Also, be careful that self-ending tags are properly ended (use
+	 <code>&lt;include/></code>, not <code>&lt;include></code>), and that
+	 all quotation marks are properly matched.</p>
+
+     <p> While one of the most exciting aspects of the PIA language is the
+	 user's ability to define new processing tags in terms of existing
+	 ones (much as programmers define new subroutines), we have
+	 unfortunately had to disable that functionality for security reasons.
+	 So the <code>&lt;define></code> tag, along with the
+        <code>&lt;output></code> and <code>&lt;connect></code> tags, are not
+        functional in this online demo environment (but they will work fine if
+        you install the PIA on your own machine).</p>
+
+    <b> <a name="quirks"> <b>Quirks</b> </a></b>
+
+      <p> Many attributes are set to "true" by having non-empty values
+        (e.g. <code>&lt;text sort="yes"></code>). But you could get the same
+        results with <i>any</i> value, even <code>&lt;text sort="no"></code>.
+        Weird, huh?</p>
+
+
+      <p> You aren't allowed to set attributes using tags: "no tags inside
+	  angle-brackets."</p>
+         <pre>
+         Good: <code>
+                     &lt;include src="repeat.xh"/>
+               </code>
+
+         Bad:  <code>
+                     &lt;include src="&lt;get name='FORM:whichFile'/>" />
+               </code>
+         </pre>
+
+       <p> But what if you actually need to set an attribute
+	   (e.g. <code>src</code>) to a looked-up value
+	   (e.g. <code>FORM:whichFile</code>)?  We have a kludge for that
+	   using XML's "entity substitution" syntax, e.g. </p>
+          <pre>
+         OK:  <code> &lt;include src="&amp;FORM:whichFile;" />
+               </code>
+         </pre>
+       <p> This alternate method of looking up an entity's value (<code>
+           &amp;entity-name;</code> instead of <code>&lt;get
+           name="entity-name"/></code>) works fine, and is very
+           convenient... for now, it does exactly the same on-the-fly lookup
+           as the <code>&lt;get/> </code> tag when using the PIA
+           parser/processor. </p>
+
+        <p> But such lookups are in violation of strict XML syntax, which
+           requires that <code>&amp;entity-name;</code> lookups be done <i>
+           before</i> rather than during processing.  So a "normal" XML parser
+           will treat them differently than does the PIA parser/processor.  We
+           are presently creating a truly XML-compliant solution using "node
+           constructors," so watch this space for the final answer.  </p>
+
+
+    <b> <a name="troubleshoot"> <b>Troubleshooting </b> </a></b>
+     <ul>
+       <li> The most likely source of errors or confusion is improperly
+	     matched start/end tags and quotes (as explained above); when
+	     in doubt, double-check and indent.</li>
+	    
+      <li> If the PIA processors sees unmatched start and end tags---even
+          perfectly legal ones , like <code>&lt;br></code> or
+          <code>&lt;td></code> in isolation---it will try to create a match.
+          So anytime you see a tag you didn't write, take that as a hint that
+          you probably <i>did</i> create an unmatched tag somewhere before.
+          You may want to systematically end every tag (e.g. , use
+          <code>&lt;br/></code>) just to avoid such oddities. </li>
+
+      <li>
+       In case of confusion about what is occurring, you can try
+	  right-clicking on the upper frame of the window (the "results"
+	  area), and choosing "View Frame Source" to see what HTML came out of
+	  the PIA server to your browser.  This of course doesn't show how the
+	  server produced that HTML from the XHTML you gave it, but it can
+	  help, and it sometimes includes error messages in comment tags.  Be
+	  sure to look for "missing" end-tags which the processor may have
+	  automatically inserted; they won't be visible in your edited source,
+	  but will appear in the "Frame Source" window.</li>
+
+      <li> If a get-tag (<code>&lt;get name="foo"/></code>) cannot find what it
+	  is trying to get (<code>foo</code>), it will return nothing, and the
+	  problem will be "invisible" to the browser. One solution is to use
+	  separate start- and end-tags, and to fill the content in-between
+	  with some text, which will be printed out only if
+	  <code>&lt;get/></code> is unsuccessful.  For example,  use
+         <pre>
+	       <code>&lt;get name="foo">Foo not found&lt;/get></code>
+	 </pre> </li>
+
+      <li>
+          If there is a problem in nested tags (such as a
+	  <code>&lt;include></code> inside an <code>&lt;extract></code>), you
+	  can perform the innermost one first and assign it to an entity
+	  (i.e. a temporary variable).  For example, first do this:</li>
+
+       <p><code>&lt;set name="fooIncluded">&lt;include
+       src="fooSrc.xh"/>&lt;/set></code> </p>
+
+       <p> Having verified it by printing it out, you can then pass it to the
+	   other tag, like this: </p>
+         
+       <p>
+       <pre><code>
+        &lt;extract>
+           &lt;from>
+              &lt;get name="fooIncluded"/>
+           &lt;/from>
+	   ...
+	   ...
+        &lt;/extract>
+        </code></pre></p>
+	   
+      <li>
+       <p><i>[Experts only] </i>Another big source of confusion occurs when
+	  dealing with the differerent states in which some content might
+	  exist: parsed, unparsed, and expanded.  There are tags or attributes
+	  which can convert content from one form to another
+	  (<code>&lt;parse>, &lt;expand>, &lt;protect
+	  markup="yes"></code>) or prevent such conversion
+	  (<code>quoted="yes",  &lt;protect>, &lt;hide></code>), and often
+	  they need to be used in combinations. For example, </p>
+
+      <p> <code>&lt;protect markup="yes"> &lt;include src="repeat.xh"/>
+	   &lt;/protect></code> </p>
+
+      <p> will convert the file "repeat.xh" to text instead of processing it,
+	  in effect showing you the source file as it would look in a text
+	  editor (but uglier). On the other hand, wrapping that line with a
+	  <code>&lt;parse></code> tag will undo the <code>&lt;protect></code>
+	  tag,  turn the text back into processed
+	  output: </p>
+
+      <p> <code>&lt;parse>&lt;protect markup="yes"> &lt;include
+	   src="repeat.xh"/> &lt;/protect>&lt;/parse></code> </p></li>
+
+     </ul>
+
+      <b> <a name="other"> <b>Other cool stuff</b> </a></b>
+
+      <p> Perhaps the most useful feature of the PIA is one that we can't let
+	  you try out on these demo pages: the <code>&lt;define></code> tag.
+	  This tag allows you to do two very useful things: </p>
+     <ul>
+       <li> You can define your own processing tags, in terms of other tags,
+	    much as a computer program can define subroutines in terms of
+	    other routines.  So you can "offload" large chunks of processing
+	    detail--making tables, calculating values, etc.--away from the
+	    interior of the document, either to the top of the document page
+	    or to anther file entirely. </li>
+
+       <li> You can override or augment existing HTML tags in your present
+	    documents with new ones of your own choosing.  That could be as
+	    simple as redefining the <code>&lt;h1></code> tag to act like the
+	    <code>&lt;h2></code> tag, or as complex as adding the current date
+	    to the bottom of the <code>&lt;body></code> in all of your
+	    docuemnts, like this: </li>
+	    
+           <pre><code>
+	    &lt;define element="body">
+               &lt;action mode="append">
+                 Today is &lt;get name="dayname"/>,
+	         &lt;get name="month"/> &lt;get name="day"/>
+                 &lt;get name="year"/>
+               &lt;/action>
+            &lt;/define>
+            </code></pre>
+	</ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

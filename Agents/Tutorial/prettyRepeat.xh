@@ -1,0 +1,22 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body>
+   <!-- First shows a pretty-print of output, then of source -->
+<pretty>
+   <b> <td> <i> <h2>
+      Hello WWW on <get name='dayname'/> in the year <get name="year"/>!! <br/>
+   </h2></i></b>
+</pretty>
+<hr/>
+<pretty>
+  <protect>
+   <b> <td> <i> <h2>
+      Hello WWW on <get name='dayname'/> in the year <get name="year"/>!! <br/>
+   </h2></i></b>
+  </protect>
+</pretty>
+
+</body>
+</html>  
+

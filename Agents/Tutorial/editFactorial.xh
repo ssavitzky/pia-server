@@ -1,0 +1,1 @@
+<edit demo-name="aboutFactorial.xh"><extract><from><include src="factorial.xh" quoted="yes"/></from><name all="all">body</name><content/></extract></edit>

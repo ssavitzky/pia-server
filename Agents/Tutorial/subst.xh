@@ -1,0 +1,12 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body> <!-- Substitutes "dog" with "penguin" in the "quick brown fox" text -->
+
+<subst match="dog"  result="PENGUIN">
+    The quick brown fox jumped over the lazy dog. 
+</subst>
+
+</body>
+</html>  
+

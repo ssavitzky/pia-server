@@ -1,0 +1,15 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body> <!-- Creates and detects a deliberate error. -->
+
+   <include src="nonexistent-file"/>
+
+   <table>
+     <set name="foo">bar</set> <!-- remove end tag to create an error-->
+   </table>
+
+   <show-errors/>
+</body>
+</html>  
+

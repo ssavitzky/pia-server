@@ -1,0 +1,26 @@
+<define element="form">
+  <action mode="append" >
+    <div align="right"><small>(ignore)</small>
+      <textarea name="code-text" rows="4" cols="40">
+        <get name="FORM:code-text"/> 
+      </textarea>
+     </div>
+  </action>
+</define>
+
+<define element="define">
+   <action>
+     <br/><font color="crimson">
+     Sorry, the "define" element has been disabled in the demos for
+     security reasons.  To use it, please download and install the PIA
+     on your own host. </font><br/>
+   </action>
+</define>
+
+<display><get name='FORM:code-text'/></display>
+
+
+
+
+
+

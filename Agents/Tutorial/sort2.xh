@@ -1,0 +1,14 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body> <!-- Sorts and separates the "quick brown fox" text -->
+
+<text join="yes"  sep=" - ">
+   <text sort="yes">
+       The quick brown fox jumped over the lazy dog. 
+   </text>
+</text>
+
+</body>
+</html>  
+

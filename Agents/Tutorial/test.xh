@@ -1,0 +1,74 @@
+
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html> 
+<head> <title> Test demo</title> </head>
+<body>
+
+
+<set name="raw"> <p>
+    hello there <br>
+    hi again   </p>
+</set>
+
+<set name="coded"><text encode="base64"><get name="raw"/></text></set>
+
+<set name="decoded"><text decode="base64"><get name="coded"/></text></set>
+
+raw text = <get name="raw"/>  <br><hr><br>
+
+encode text = <get name="coded"/>  <br><hr><br>
+
+
+decoded text = <get name="decoded"/>  <br><hr>
+
+<show-errors/>
+
+
+
+
+
+<pretty white-tag="hello" hide-above-depth="2" hide-below-tag="mid">
+
+<protect>
+<table bgcolor='green'>
+    <hello>
+    <get name='foo.xh' />
+    <td>
+        Hi there from format on
+        &day;
+        , which is today
+        <pre>
+            <pre>
+                <mid>
+                    <post>
+                        same line
+                         some indent;
+                         same indent but with <get name="foo"/> here
+                         more indent;
+                               most indent;
+                         some indent;
+                    </post>
+                </mid>
+            </pre>
+        </pre>
+        Here is some text, in
+        <b>
+            bodlface
+        </b>
+        and
+        <i>
+            italics
+        </i>
+        .
+    </td>
+</table>
+
+</protect>
+</pretty>
+
+
+
+</body>
+
+</html>
+

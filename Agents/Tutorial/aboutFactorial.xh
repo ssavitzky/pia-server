@@ -1,0 +1,71 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the factorial demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+        <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editFactorial.xh"/>
+            <td><input  type="submit" value="Try factorial demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+    <h2> <a name="intro">The Factorial Demo</a></h2>
+
+ <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="factorial.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> The first line of this demo uses the <code>&lt;set></code> tag to
+	create an "entity" (like a variable) called "numList."  Because the
+	tag has empty contents, it has a name but no value (but it could have
+	been initialized to have a value of 5, or of "foo", by using
+	<code>&lt;set name="numList">5&lt;/set></code> or <code>&lt;set
+	name="numList">foo&lt;/set></code>).  At this point, it isn't really a
+	list; in fact, even when we later append it, it <i>still</i> isn't a
+	list, but a series of strings separated by whitespace (which can be
+	later <i>interpreted</i> as a list by the appropriate tags).
+
+    <p> Inside the <code>&lt;repeat></code> tag (as explained in the <a
+	href="aboutRepeat.xh">Hello WWW demo</a>), three events happen in
+	sequence for each iteration of the <code> repeat.</code>:
+    <ol>
+       <li> Another item is added to the list.  This occurs inside a
+	    <code>&lt;set></code> tag, whose contents are two things: the old
+	    list (obtained through <code>&lt;get name="numList"/></code>, and
+	    the item to be appended (the iteration number, obtained through
+	    <code>&lt;get name="n"/></code>).  So the <code>&lt;set></code> tag
+	    sees as its contents a now-longer list, which becomes the new
+	    <code>numList</code>.
+       <li> The contents of the list (again obtained through
+	    <code>&lt;get></code>) are interpreted numerically, inside a
+	    <code>&lt;numeric></code> tag.  The non-empty value of the
+	    tag's "product" attribute mean that the <code>&lt;numeric></code> tag
+	    will calculate and return the product of the numbers found, rather
+	    than just returning a list of numbers.  This product is what is
+	    printed out at the left of each line.
+
+	<li> The current list itself is printed out as a joined text string,
+              (i.e. inside a <code>&lt;text></code> tag), with a separator of
+              " x ".  </ol>
+
+
+	<p><h3>  Stuff to try </h3>
+	    
+        <p> Try inititalizing the list to a string value ("foo"), and observe
+	    that the computed results don't change, because
+	    <code>&lt;numeric></code> ignores all non-numeric contents.
+
+	<p> Try changing the start/stop/step values of the
+	    <code>&lt;repeat></code> tag, and see what lists result.
+
+	<p> Try changing the "product" attribute to "sum", "difference,"
+	    "quotient", or even "sort."  See what happens.
+
+	    
+</body>
+</html>  
+

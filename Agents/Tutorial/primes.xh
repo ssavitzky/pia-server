@@ -1,0 +1,37 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>Primes demo </title> </head>
+<body>
+  <!-- Augments a list of primes by checking new candidates for divisibility
+       by existing primes -->
+  
+<set name="primeList">2</set>
+<repeat start="2" stop="20" entity="candidate">
+	
+      <set name="divisible"></set>
+      <repeat  >
+	    <foreach><get name="primeList"/></foreach>
+	    <if>  	                   
+	       <test zero="yes">  <!-- testing candidate/li for remainder --> 
+		  <numeric remainder="yes">
+		     <get name="candidate"/> <get name="li"/>
+		  </numeric>
+	       </test>
+	       <then><set name="divisible">yes</set></then>
+	     </if>                <!-- label candidate as divisible -->
+      </repeat>
+
+      <if><get name="divisible"/>
+	 <else>
+	     <set name="primeList">  <!-- append candidate to primeList -->
+		<get name="primeList"/> <get name="candidate"/>
+	     </set>
+	 </else>
+      </if>
+
+      Tested candidate <get name="candidate"/>; now primes are <get name="primeList"/>
+      <br/>
+</repeat>
+</body>
+</html>  
+

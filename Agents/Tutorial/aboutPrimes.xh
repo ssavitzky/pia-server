@@ -1,0 +1,80 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Prime-search demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+        <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editPrimes.xh"/>
+            <input  type="submit" value="Try prime-search demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+    <h2> <a name="intro">The Prime-search Demo</a></h2>
+
+ <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="primes.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> <b>Searching for prime numbers is a truly perverse application of the
+	active tag language,</b> but it illustrates the use of two tags:
+	<code> &lt;foreach> </code> and <code> &lt;test> </code>.  Besides,
+        some people like playing with perverse code...</p>
+
+    <p> The list of primes, <code>primeList</code>, is initialized to just the
+	lowest prime (2), but will be augmented as new primes are found.  To
+	find new ones, The outer <code>&lt;repeat></code> tag iterates over an
+	index (or entity), <code>candidate</code>, from 2 through 20, each
+	value of which is tested for prime-ness and added to the list if it
+	turns out to be a prime. </p>
+
+    <p> The "testing" part occurs in the inner <code>&lt;repeat></code> loop,
+	which tries to divide the candidate by each prime in turn.  This
+	<code>&lt;repeat></code> loop does not iterate over a integer index,
+	but uses the enclosed <code>&lt;foreach></code> tag to get each
+	element from <code>primeList</code> in turn and store it in the loop
+	variable <code>li</code>. </p>
+
+    <p> The test itself is nested three layers deep, like this: </p>
+    <pre><code>
+            &lt;if>                           
+               &lt;test zero='yes'>
+                  &lt;numeric remainder='yes'>
+                     &lt;get name='candidate' /> &lt;get name='li' />
+                  &lt;/numeric>
+               &lt;/test>
+               ...
+            &lt;/if>
+    </code></pre>
+
+     <p> The two numbers involved are <code>candidate</code> and the current
+	 value of <code>li</code>. They are inside a <code>&lt;numeric></code>
+	 tag, which is instructed to divide the first by the second and
+	 "return" (i.e. substitute for itself) the remainder.  That remainder
+	 is inside a <code>&lt;test></code> tag, which (in this case) returns
+	 a non-empty value (e.g. <code>1</code>) if its contents are
+	 numerically equal to zero.... hence, a remainder of zero means that
+	 <code>candidate</code> was indeed divisible by <code>li</code> and
+	 the test is true... hence the <code>&lt;then></code> clause will be
+	 evaluated, which sets the entity called <code> divisible</code> to
+	 the non-empty vaue <code>yes</code>. </p>
+
+     <p> The <code>&lt;if></code> clause following the
+	 <code>&lt;repeat></code> loop checks whether <code>divisible</code>
+	 was ever set to a non-empty value, i.e. whether the number
+	 <code>candidate</code> was divisible by any of the numbers in
+	 <code>primeList</code>.  If not, it uses the <code>&lt;else></code>
+	 clause to append <code>candidate</code> to <code>primeList</code>,
+	 and the newly appended <code>primeList</code> is used for testing the
+	 next candidate. </p>
+
+     <p> It's easy to see that this process could go on indefinitely, although
+	 why you would want to do so is anybody's guess. </p>
+
+</body>
+<show-errors/>
+</html>  
+

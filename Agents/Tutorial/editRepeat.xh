@@ -1,0 +1,2 @@
+<edit demo-name="aboutRepeat.xh"><extract><from><include src="repeat.xh" quoted="yes"/></from>
+<name all="all">body</name><content/></extract> </edit>

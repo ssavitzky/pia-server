@@ -1,0 +1,1 @@
+<edit demo-name="aboutSubst.xh"><extract><from><include src="subst.xh" quoted="yes"/></from><name all="all">body</name><content/></extract></edit>

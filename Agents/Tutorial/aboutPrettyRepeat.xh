@@ -1,0 +1,70 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the pretty-print demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+  <tr>
+       <td>   <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editPrettyRepeat.xh"/>
+            <td><input  type="submit" value="Try pretty-print demo"/>
+         </form></td>
+
+        <td> <a href='home.xh' target="_top">  Demo menu</a></td>
+  </tr>
+</table>
+
+    <h2> <a name="intro">The Pretty-print Demo</a></h2>
+
+    <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="prettyRepeat.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> This demo shows how to use pretty-printing tag to display your source
+	as the browser or the PIA processor sees it, with properly indented
+	and colorized nesting, and with missing tags inserted. </p>
+
+    <p> The demo encloses some deeply nested text in two
+	ways : first in a simple <code>&lt;pretty></code> tag, and second in
+	nested <code>&lt;pretty>&lt;protect></code> tags. </p>
+
+    <p> The <code>&lt;pretty></code> tag displays its contents as an indented
+	tree of elements, so in the simple first case that contents is the
+	"hello" text, in which the entities "dayname" and "year" in the
+	<code>&lt;get></code> tags have been replaced by their processed
+	results. </p>
+
+    <p> The second part has a <code>&lt;protect></code> tag inside the
+	<code>&lt;pretty></code> tag, preventing the <code>&lt;get></code>
+	tags from being processed.  Hence the output here shows the "raw"
+	source code, as the PIA processor sees it, containing the
+	<code>&lt;get></code> tags, but no numbers. </p>
+
+    <p> Note that the <code>&lt;td></code> tag does <b>not</b> have a matched
+	closing tag in the source, but that the processor has inserted one (in
+	the proper place, fortunately). Also note that the single line of text
+	has been broken up, so that each separate chunk (or "node") has its
+	own line: three nodes of text, and two of <code>&lt;get></code>
+	tags. </p>
+
+    <p> <h3> Stuff to try </h3> </p>
+
+    <p> Try clipping out the lower, <code>protect</code>-ed code from the
+	browser window, pasting it into the edit-text box inside the
+	<code>&lt;protect></code> tags, and re-processing... it ought to
+	reproduce itself. (This is a poor-man's "Structured XML Editor" which
+	also understands active tags; it can be very useful for analyzing
+	confusingly-nested documents and debugging mismatched tags). </p>
+
+    <p>Try adding the <code>white-tag</code> attribute (i.e. <code>&lt;pretty
+	yellow-tag="get"></code>), and watch that tag become highlighted in
+	yellow (there is also a <code>white-tag</code> attribute). Or add the
+	attribute <code>hide-below-tag="td"</code>, which will prevent display
+	of anything below the <code>&lt;td></code> tag.  Or the attributes
+        <code>hide-below-depth="4"</code> and
+        <code>hide-above-depth="2"</code>, which will prevent display of
+        anything below or above those respective depths. </p>
+
+</body>
+</html>  
+

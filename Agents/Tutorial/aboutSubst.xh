@@ -1,0 +1,30 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About substitution  demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+   <tr>
+        <td> <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editSubst.xh"/>
+            <td><input  type="submit" value="Try substituion demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+   </tr>
+</table>
+
+  <h2> <a name="intro">The Substitution Demo</a></h2>
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="subst.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> The substitution demo takes a string and replaces any matching text
+	with the "result" text provided.  There is nothing else you can do
+	with this tag; it's pretty simple.
+
+
+</body>
+</html>  
+

@@ -1,0 +1,20 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> Form demo</title> </head>
+<body> <!-- Presents a form to collect a name, and processes it upon 
+    return. -->
+
+<if>  <get name="FORM:submitNameButton"/>
+   <then>  The name submitted was <b><get name="FORM:inputName"/></b></then>
+   <else>  Type your name in the box</else>
+</if>
+
+<form action="instantiate.xh" method="get">
+   <input name="inputName" value="your name here" size="15"/>
+   <input name="submitNameButton" type="submit" value="Submit name"/>
+</form>
+
+</body>
+</html>
+
+

@@ -1,0 +1,57 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the Sort  demo </title> </head>
+<body bgcolor="&mybgcolor;">
+<table>
+   <tr>
+       <td>  <form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editSort2.xh"/>
+            <td><input  type="submit" value="Try sort demo"/>
+         </form></td>
+
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+   </tr>
+</table>
+
+    <h2> <a name="intro">The Sort Demo</a></h2>
+
+  <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="sort2.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+    <p> The sort demo takes a list of strings, sorts it, and separates them.
+
+    <p> The innermost <code>&lt;text></code> tag takes the "quick brown fox"
+	text provided, interprets it as a list of separate strings, and sorts
+	them (because its "sort" attribute was set to the non-empty value
+	"yes"; but "ok", "foo", or even "no" would work as well).  Finally,
+	having sorted the list, the tag substitutes that sorted list for
+	itself.
+
+    <p> Then the outer <code>&lt;text></code> tag---which "sees" its contents
+	to be that sorted list---joins that list into a single string, while
+	inserting the given separator between list-elements.
+
+    <p> <h3> Stuff to try </h3>
+
+    <p> You can easily change the text, or the separator, to confirm that the
+	code works as advertised.  Or, if you remove the outer
+	<code>&lt;text></code> tag, you will see the sorted list all smashed
+	together without separators.  You can also try a reverse-sort
+	(<code>&lt;text sort="yes" reverse="yes"> The quick
+	brown... &lt;/text></code>).
+
+    <p> There are lots of other ways of playing
+	with <code>&lt;text></code> (you can set attributes for
+	regular-expression matching, splitting, padding and so on, just as
+	"sort" was set above); see the <a
+	href='http://www.risource.org/PIA/Doc/Tagsets/basic.html'
+	target="_top"> Manual</a> or the <a
+	href='http://www.risource.org/PIA/Doc/Tagsets/basic.html#quick'
+	target="_top"> Active-tag table</a> for details.
+
+
+</body>
+</html>  
+

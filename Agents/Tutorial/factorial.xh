@@ -1,0 +1,26 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>Factorial demo </title> </head>
+<body> <!-- Creates an initially-empty list of integers,
+   incrementally adds to it, and shows both the product
+   and the list itself. -->
+
+<set name='numList' />
+<repeat start='2' stop='12' step='2' entity='index'>
+    <set name='numList'>
+        <get name='numList' />
+        <get name='index' />
+    </set>
+    <numeric product='yes'>
+        <get name='numList' />
+    </numeric>
+    =
+    <text join='yes' sep=' * '>
+        <get name='numList' />
+    </text>
+    <br />
+</repeat>
+
+</body>
+</html>  
+

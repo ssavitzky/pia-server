@@ -1,0 +1,78 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head> 
+<title>Demo menu</title>
+</head>
+  <body bgcolor="&mybgcolor;">
+   <table cellspacing='5'>
+    <tr>
+        <td>
+            <a href='intro.xh'>
+                Introduction
+            </a>
+        </td>
+        <td>
+            <a href='http://www.risource.org/PIA/Doc/Tagsets/basic.html'>
+                Manual
+            </a>
+        </td>
+        <td>
+            <a href='http://www.risource.org/PIA/Doc/Tagsets/basic.html#quick'>
+                Active-tag table
+            </a>
+        </td>
+        <td>
+            <a href='http://www.risource.org/PIA'>
+                PIA home page
+            </a>
+        </td>
+        <td>
+            <a href='http:home.xh'>
+                Demo menu
+            </a>
+        </td>
+    </tr>
+</table>
+<h2>
+    More hackable demos...
+</h2>
+<table color='white' cellspacing='1'>
+    <tr>
+        <form action='tutorial.xh' name='getDemo'>
+            <input type='hidden' name='demoName' value='editErrorTest.xh' />
+            <td>
+                <input type='submit' value='try' checked='checked' />
+            </td>
+        </form>
+        <td>
+            <i>
+                Show errors
+            </i>
+        </td>
+        <td>
+            <a href='aboutErrorTest.xh'>
+                about
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <form action='tutorial.xh' name='getDemo'>
+            <input type='hidden' name='demoName' value='editDebugRepeat.xh' />
+            <td>
+                <input type='submit' value='try' checked='checked' />
+            </td>
+        </form>
+        <td>
+            <i>
+                Debug diplay
+            </i>
+        </td>
+        <td>
+            <a href='aboutDebugRepeat.xh'>
+                about
+            </a>
+        </td>
+    </tr>
+</table>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title>About the repeat/Hello WWW demo </title> </head>
+<body bgcolor="&mybgcolor;">
+
+ <table><tr>
+         <td><form action="tutorial.xh" name="getDemo">
+            <input type="hidden" name="demoName" value="editRepeat.xh"/>
+            <td><input  type="submit" value="Back to Hello demo"  checked/>
+         </form></td>
+         <td><a href='home.xh' target="_top">  Demo menu</a></td>
+        </tr>
+ </table>
+
+    <h2> <a name="intro">The Hello WWW Demo</a></h2>
+
+    <code><pre><protect markup="yes" result="yes"><extract><from>
+    <include src="repeat.xh" quoted="yes"/></from>
+    <name all="yes">body</name></extract></protect></pre>
+    </code>
+
+
+    <p> The enclosing <code>&lt;repeat></code> tag iterates the value of its
+	loop variable (here <code>index</code>, but <code>n</code> is the
+	default) from a start through a stop value.  Whatever lies inside that
+	tag gets repeated.
+
+    <p> The <code> &lt;get></code> tag substitutes the value of
+        <code>index</code> for itself (in technical terms, it substitutes the
+        value of whatever entity is designated by its name attribute).
+
+        <p>In this case, the <code>&lt;repeat></code> tag is used like a
+        "for-loop," with a preset number of iterations and an entity
+        (<code>index</code>) which gives the iteration number.  But it can
+        also be used to loop through elements of a list, by putting the
+        contents of the list in a &lt;foreach> sub-tag.  In that case the
+        iteration entity, named "li", is the list-item itself (instead of an
+        integer).  For example, you can try clipping and processing the code
+        below, which prints "I say" before each of three elements in a list of
+        hello's:
+
+        <code><pre>
+         &lt;repeat>
+             &lt;foreach>
+                 first-hello second-hello third-hello
+             &lt;/foreach>
+             I say: &lt;get name="li"/> &lt;br/>
+         &lt;/repeat>
+         </pre></code>
+
+     <p> The <code>&lt;show-errors></code> tag at the bottom is there to help
+	 you catch (some of) the errors you may make in modifying the code; it
+	 has no other effects. 
+</body>
+</html>  
+

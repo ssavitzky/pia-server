@@ -1,0 +1,22 @@
+<!doctype html public "-//IETF//DTD HTML//EN//2.0">
+<html>
+<head> <title> </title> </head>
+<body>
+   <!-- First shows a debug-display of output, then of source -->
+<debug>
+   <repeat start="1" stop='3'>
+      <get name='n'/> Hello World Wide Web <br/>
+   </repeat>
+</debug>
+
+<debug>
+  <protect>
+   <repeat start="1" stop='3'>
+      <get name='n'/> Hello World Wide Web <br/>
+   </repeat>
+  </protect>
+</debug>
+
+</body>
+</html>  
+
