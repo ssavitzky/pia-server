@@ -795,13 +795,33 @@ If 4th node is there, returns "four".
        This means that closing the Writer you gave it doesn't necessarily
        flush the buffer!  Probably ought to have <code>Writer.close()</code>.
        (1999-05-10) <br>
-       -- 5/10 checked for close with fgrep. 
+       -- 5/10 checked for close with fgrep
+
+  <li> 1999-05-11 <b>Bug</b> submitHandler needs defaults <br>
+       Need to supply defaults for method (GET) and URL base.
+       (1999-05-11) <br>
+
+  <li> 1999-05-14 <b>Hole:</b> &lt;has-attr&gt; in &lt;extract&gt;. <br>
+       (1998-09-08)<br>
+
+  <li> 1999-05-14 <b>Bug</b> Then and Else both getting expanded. <br>
+       Something about expanding the content, presumably.  Handle like
+       logical.  Only shows up if there are side-effects.  If really needs to
+       be quoted, like repeat.
+       (1999-05-14) <br>
+       -- Actually it looks as though this was a mistaken theory, but the
+	  handler changes improve efficiency anyway, by making &lt;if&gt; and
+	  its sub-elements all quoted. 
+
+  <li> 1999-05-14 <b>Impr</b> Need &lt;replace node&gt;. <br>
+       Want to be able to replace a whole node in its parent. 
+       (1999-05-14) <br>
 
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.12 1999-05-11 01:31:04 steve Exp $</b><br>
+<b>$Id: done.html,v 1.13 1999-05-18 20:31:30 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
