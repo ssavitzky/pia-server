@@ -1,5 +1,5 @@
 // Version.java
-// $Id: Version.java,v 1.12 2000-02-26 01:23:38 steve Exp $
+// $Id: Version.java,v 1.13 2000-03-02 04:44:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ package org.risource;
  *
  * <p> Note that this is currently not changed from PIA/Makefile
  *
- * @version $Id: Version.java,v 1.12 2000-02-26 01:23:38 steve Exp $
+ * @version $Id: Version.java,v 1.13 2000-03-02 04:44:56 steve Exp $
  * @see org.risource.pia.Setup
  */
 public interface Version {
@@ -45,10 +45,10 @@ public interface Version {
   public static final int    RELEASE    = 2;
 
   /** The "major version number". */
-  public static final int    MAJOR      = 0;
+  public static final int    MAJOR      = 1;
 
   /** The "minor version number".  If 0, it may be omitted. */
-  public static final int    MINOR      = 9;
+  public static final int    MINOR      = 1;
 
   /** The version-number suffix, e.g. "A" or "beta" */
   public static final String SUFFIX     = ""; // e.g. beta1 or whatever
@@ -65,5 +65,5 @@ public interface Version {
 
   /** The CVS revision of this file. */
   public static final String CVS_REV    =
-    "$Id: Version.java,v 1.12 2000-02-26 01:23:38 steve Exp $";
+    "$Id: Version.java,v 1.13 2000-03-02 04:44:56 steve Exp $";
 }
