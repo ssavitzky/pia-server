@@ -77,13 +77,13 @@
   </tr>
 </table>
 
-<index-bar name="Notes">Notes Files HEADER</index-bar>
-
 <hide>
     <!-- Create a new note:  have to do this before listing the directory -->
 
     <if> <get name="FORM:create" />
-	 <then><!-- create new note -->
+	 <then>
+	   <if> <status item="exists" src="&FORM:label;.ww" />
+	        <else><!-- create new note -->
 	    <output dst="&FORM:label;.ww"><make name="note">
 		<make name="title"><get name="FORM:title" /></make>
 		<make name="created">&dateString;</make>
@@ -95,15 +95,28 @@
 		</make>
 </make><!-- note created using quick form -->
 </output>
+		</else>
+	   <if>
 	 </then>
     </if>
 
     <doc> Now locate the files.  Note that we don't need <code>&amp;tail;</code>
 	  here because we're browsing around in the source directories, which
-	  are all perfectly real.
+	  are all perfectly real (though referred to as ``virtual'').
     </doc>
     <listNoteFiles>&LOC:path;</listNoteFiles>
 </hide>
+
+<if> <status item="exists" src="HEADER.ww" />
+     <then>
+	<set name="haveHeader">yes</set>
+	<load-note>HEADER.ww</load-note>
+	<hr />
+	<displayNoteAsHeader />
+     </then>
+</if>
+
+<index-bar name="Notes">Notes Files HEADER</index-bar>
 
 <form action="&xloc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
@@ -155,6 +168,8 @@
 	       	   <option><uniquify>wish</uniquify></option>
 	       	   <option><uniquify>see-also</uniquify></option>
 	       	   <option>&date;-&hour;&minute;</option>
+	       	   <option>&date;</option>
+	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
 	  </select><br />
  	  <input name="create" value="Create Note" type="submit" />
        </td>
@@ -321,5 +336,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.11 2000-06-29 01:56:46 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.12 2000-06-30 00:07:37 steve Exp $" />
 </body></html>

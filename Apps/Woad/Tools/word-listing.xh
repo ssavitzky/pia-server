@@ -89,11 +89,9 @@
   <set name="decoratedPath">
 	<decoratePath base="&wroot;">[WORDS]&etail;</decoratePath></set>
 </hide>
-<!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
-    xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
-    tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
-    title="&pageTitle;"<br />
--->
+
+<if> <get name="etail" />
+     <then>
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
   <tr> <td>
 	     <table><!-- the nested table shrink-wraps its contents     -->
@@ -107,25 +105,33 @@
 		      </big>
 		   </th>
 	       </tr>
+	   <hide><!-- === don't really want this on word listings === -->
 	       <tr>
 		 <td align="right">-&gt;&nbsp;</td>
 		 <td> <a href="/.Woad/help.xh#words">[help]</a>
 		 </td>
 		</tr>
+	   </hide>
 	     </table>
 	</td>
     </tr>
 </table>
-
-<!-- === at this point, include content of a HEADER.ww if there is one. -->
-
-<index-bar name="Notes">Notes Links Lookup</index-bar>
+     <else> <set name="ltitle">Keyword:</set>
+	<header>index
+		<form  action="/.words/">
+	   	  <input name="word" />
+		</form>
+	</header>
+     </else>
+</if>
 
 <hide>
     <!-- Create a new note:  have to do this before listing the directory -->
 
     <if> <get name="FORM:create" />
-	 <then><!-- create new note -->
+	 <then>
+	   <if> <status item="exists" src="&xloc;/&FORM:label;.ww" />
+	        <else><!-- create new note -->
 	    <output dst="&xloc;/&FORM:label;.ww"><make name="note">
 		<make name="title"><get name="FORM:title" /></make>
 		<make name="created">&dateString;</make>
@@ -137,12 +143,27 @@
 		</make>
 </make><!-- note created using quick form -->
 </output>
+		</else>
+	   <if>
 	 </then>
     </if>
 
     <doc> Now set the files, noteFiles, and indexFiles variables </doc>
-    <listNoteFiles>&LOC:path;&tail;</listNoteFiles>
+    <listNoteFiles>&xloc;</listNoteFiles>
 </hide>
+
+<!-- === at this point, include content of a HEADER.ww if there is one. -->
+
+<if> <status item="exists" src="&xloc;/HEADER.ww" />
+     <then>
+	<set name="haveHeader">yes</set>
+	<load-note>&xloc;/HEADER.ww</load-note>
+	<hr />
+	<displayNoteAsHeader />
+     </then>
+</if>
+
+<index-bar name="Notes">Notes Links Lookup</index-bar>
 
 <form action="&xloc;/" method="GET"><!-- === PIA isn't passing POST === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
@@ -175,7 +196,7 @@
 		<a href="&f;"><code>&label;</code></a>
        </td>
        <td colspan="2" valign="top">
-		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
+		 <describeNote>&xloc;/&f;</describeNote>
        </td>
   </tr>
 </repeat>
@@ -193,6 +214,8 @@
 	       	   <option><uniquify>definition</uniquify></option>
 	       	   <option><uniquify>see-also</uniquify></option>
 	       	   <option>&date;-&hour;&minute;</option>
+	       	   <option>&date;</option>
+	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
 	  </select><br />
  	  <input name="create" value="Create Note" type="submit" />
        </td>
@@ -222,7 +245,8 @@
   <tr>
     <td bgcolor="#99ccff">
     </td>
-    <td> Use this form to look up a word or phrase.
+    <td> Use this form to look up a word or phrase.  Typing ``[enter]'' will
+	 submit the form -- a separate button is not necessary.
     </td>
   </tr>
 </table>	  
@@ -289,5 +313,5 @@
 </table>
 
 
-<short-footer cvs-id="$Id: word-listing.xh,v 1.1 2000-06-29 01:56:46 steve Exp $" />
+<short-footer cvs-id="$Id: word-listing.xh,v 1.2 2000-06-30 00:07:37 steve Exp $" />
 </body></html>

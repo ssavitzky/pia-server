@@ -28,10 +28,7 @@
        </logical>
        <then><set name="tail">/<get name="tail"/></set></then>
   </if>
-</hide>
-<title>&npath;&tail; : Woad annotations</title>
-</head><body bgcolor="#99ccff">
-<hide>
+
   <doc> Compute &amp;decoratedPath;, the path of the current directory
 	``decorated'' with ".." links to the directories above "."
   </doc>
@@ -56,7 +53,19 @@
        </else>
   </if>
   <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
+
+  <!-- Ensure that form submissions don't get redirected!  -->
+  <set name="formLoc">
+    <if> <test match="\/$">&xloc;</test>
+         <then>&xloc;</then>
+         <else>&xlic;/</else>
+    </if>
+  </set>
 </hide>
+
+<title>&npath;&tail; : Woad annotations</title>
+</head><body bgcolor="#99ccff">
+
 <!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
     xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
     tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
@@ -98,15 +107,13 @@
     </tr>
 </table>
 
-<!-- === at this point, include content of a HEADER.ww if there is one. -->
-
-<index-bar name="Notes">Notes Links Images Source Listing</index-bar>
-
 <hide>
     <!-- Create a new note:  have to do this before listing the directory -->
 
     <if> <get name="FORM:create" />
-	 <then><!-- create new note -->
+	 <then>
+	   <if> <status item="exists" src="&FORM:label;.ww" />
+	        <else><!-- create new note -->
 	    <output dst="&FORM:label;.ww"><make name="note">
 		<make name="title"><get name="FORM:title" /></make>
 		<make name="created">&dateString;</make>
@@ -118,6 +125,8 @@
 		</make>
 </make><!-- note created using quick form -->
 </output>
+		</else>
+	   </if>
 	 </then>
     </if>
 
@@ -125,7 +134,20 @@
     <listNoteFiles>&LOC:path;&tail;</listNoteFiles>
 </hide>
 
-<form action="&xloc;" method="GET"><!-- === PIA isn't passing POST again === -->
+<!-- === at this point, include content of a HEADER.ww if there is one. -->
+
+<if> <status item="exists" src="&xloc;/HEADER.ww" />
+     <then>
+	<set name="haveHeader">yes</set>
+	<load-note>&xloc;/HEADER.ww</load-note>
+	<hr />
+	<displayNoteAsHeader />
+     </then>
+</if>
+
+<index-bar name="Notes">Notes Links Images Source Listing</index-bar>
+
+<form action="&formLoc;" method="GET"><!-- === PIA isn't passing POST again === -->
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
 <table bgcolor="white">
   <!-- First list the indices -->
@@ -175,6 +197,8 @@
 	       	   <option><uniquify>wish</uniquify></option>
 	       	   <option><uniquify>see-also</uniquify></option>
 	       	   <option>&date;-&hour;&minute;</option>
+	       	   <option>&date;</option>
+	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
 	  </select><br />
  	  <input name="create" value="Create Note" type="submit" />
        </td>
@@ -231,7 +255,7 @@
 			      <eval />
 	  </extract>
 	</foreach>
-	<subst match="\#.*$" result="">&li;</subst>
+	<subst match="[#?&].*$" result="">&li;</subst>
       </repeat>
     </sort-unique>
   </set>
@@ -422,5 +446,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.13 2000-06-29 01:56:46 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.14 2000-06-30 00:07:37 steve Exp $" />
 </body></html>
