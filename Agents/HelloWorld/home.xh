@@ -1,42 +1,35 @@
+<?-- the tag definitions below can be incorporated into a "tagset" if
+      desired --?>
+
+<define element="todaytag" >
+  <doc> This sample tag expands to show today's date </doc>
+  <action>
+     Today is &dayname; , &monthname; &day; &year;
+  </action>
+</define>
+
+<define element="myfont">
+   <doc>Wraps a user-selected font around text. </doc>
+   <action>
+      <font size="+4" color="green"><b> &content; </b></font>
+    </action>
+</define>
+
+
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html> <head> 
 <title>Sample File-handling Demo</title>
 </head>
-<body bgcolor='#ffffff' >
+<<<<<<< home.xh
+
+<myfont> I am the Hello World demo</myfont>
+
+<br />
+
+<todaytag />
 
 
-<h2> I am a sample file-handler</h2> 
-
-<set name="dirname">&user.name;</set>
-
-<set name="filename">&dayname;</set>
-
-This page writes a directory called &dirname; [now] <br />
-
-<output dst="&dirname;" directory="yes" /> <hr />
-
-and writes into it a file called &filename; [now]. <br/>
-
-<output dst="&dirname;/&filename;" > This file was written on &dayname;
-&monthname; &day; &year;.  Enjoy! </output>
-
-<hr />
-
-Then it reads that file [now]. <br />
-
-<include src="&dirname;/&filename;" />
-
-<hr />
-
-Finally, just for kicks, it tries reading a non-existent file, to show two
-ways the include tag can  deal with such situations. <br />
-
-<include src="dirname/no-such-file" />  
-<show-errors />
- 
-User-supplied error message: <br/>
-<include src="dirname/no-such-file" ><i>Oops, file not there.</i></include>
-
-
+<!-- here is a comment which will appear in the browser -->
+<?-- here is a comment which won't appear in the browser --?>
 
 </body></html> 
