@@ -17,6 +17,39 @@
 
 
 <h2><A NAME="announce">Release Announcements</A></h2>
+<h3>Release 2.0.4</h3>
+
+<p> This release marks some major improvements in DOM compatibility, plus a
+    number of bug fixes.
+
+<p> Changes since 2.0.3:
+
+<ol>
+  <li> The internal representation for parse trees in
+       <code>org.risource.dps</code> is now fully compliant to the interfaces
+       (though not yet all of the behavior) of the current version of the <a
+       href="http://www.w3.org/">W3C</a>'s Document Object Model, as specified
+       in <a href="http://www.w3.org/TR/REC-DOM-Level-1/"
+       >REC-DOM-Level-1-19981001</a>.
+
+  <li> The local extensions to the DOM interfaces can be found in the <a
+       href="../../src/java/org/risource/dps/active/"
+       >org.risource.dps.active</a> package; the implementation classes are in
+       <a href="../../src/java/org/risource/dps/tree/"
+       >org.risource.dps.tree</a>.  A local copy of the DOM Java bindings can
+       be found in <a href="../../src/java/org/w3c/dom/" >org.w3c.dom</a>; the
+       old version of the DOM interfaces has been removed.
+
+  <li> A number of bugs introduced in 2.0.3 by the new agent naming scheme
+       have been fixed.  Most of these had been manifested as broken links in
+       agent code.  Item 4. in release 2.0.3 (below) proved remarkably
+       prescient. 
+
+  <li> A few minor improvements to the tag language have been made, most
+       notably the &lt;insert&gt; sub-element of &lt;extract&gt;.
+
+</ol>
+
 <h3>Release 2.0.3</h3>
 
 <p> This is the second patch to Release 2.0; things are beginning to
@@ -197,7 +230,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.15 1999-04-03 00:48:43 pgage Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.16 1999-04-13 18:32:43 steve Exp $</b><br>
 </body></html>
 
 
