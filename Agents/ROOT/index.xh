@@ -16,13 +16,7 @@
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr>
-  <th width=170>
-    <table cellspacing=0 cellpadding=0 border=0>
-      <tr><th>
-	<if><read info interform file="insert.if">
-            <then><include src="insert.if"></then>
-        </if></tr>
-    </table>
+  <th width=170><img src="/Icon/logo100.gif" height=100 width=111 alt=" ">
   <td valign=top>
     <table cellspacing=0 cellpadding=0 border=0 valign=top>
     <tr><th valign=top align=right width=170>

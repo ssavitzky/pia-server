@@ -10,15 +10,16 @@ Casual browsers will be most interested in the <a
 href="/PIA/Doc/demos.html">Demos</a>.
 
 <hr>
-	The PIA group announces the initial alpha release of the "Personal
+<p>	The PIA group announces the initial alpha release of the "Personal
 	Information Agency", a proxy web server that enables a
 	new way of using the web.  Sun and Linux users can begin using the
-	PIA immediately by executing the command below:<p>
-<dt> <code><strong>pia</strong></code>
-	<p><b>Caution</b>: 
+	PIA immediately by executing the command below:
+
+<p> <code><strong>pia</strong></code>
+
+<p><b>Caution</b>: 
 	This release still contains some rough edges and is intended for 
 	experimental use.  Constructive criticisms is greatly appreciated.
-<p>
+	Report bugs to the PIA group.
 
-<img src="/PIA/Doc/Graphics/ball-glass-green.gif">Please report bugs through <a href="/Agency/bug.if"><strong>Bug submission</strong></a><br><br>
 <!-- public-welcome.inc,v 1.1 1999/02/04 17:44:01 steve Exp -->
