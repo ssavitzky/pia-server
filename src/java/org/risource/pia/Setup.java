@@ -1,5 +1,5 @@
 // Setup.java
-// $Id: Setup.java,v 1.5 1999-03-12 19:29:37 steve Exp $
+// $Id: Setup.java,v 1.6 1999-06-17 01:06:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,13 +36,7 @@
 package org.risource.pia;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Properties;
 
 import org.risource.pia.Pia;
@@ -80,13 +74,8 @@ class Setup extends Configuration {
     "-version", "pia.print-version",  "bool", 	null,
   };
 
-  /* Perl options: ================================================
-	-s PIA_DIR	source dir: (.:~/pia/src:/pia1/pia/src)
-	-u USR_DIR	(~/.PIA)
+  /* options from old version: ============================================
 	-l logfile
-	-p port		(8888)
-	-port port	(8888) the port reported in URL's.
-	-real port	(8888) the port actually listened to
 	-c command
 	-v		verbose
 	-q		quiet
