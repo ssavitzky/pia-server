@@ -1,4 +1,4 @@
-###### crc/Makefile:	Ricoh California Research Center's Java classes.
+###### org/risource/Makefile:	RiSource.org's Java classes.
 #	Makefile,v 1.22 1999/03/02 00:46:08 pgage Exp
 
 ############################################################################### 
@@ -27,22 +27,22 @@ ADOCDIR = $(PIADIR)/Doc/Manuals/Api/JavaDoc
 
 PACKAGES= \
 	misc \
-	org \
-	crc
+	org
 
 ### These are the names of all the packages in the PIA.
 ###	We need these because javadoc does _not_ operate recursively.
 
 PIAPACKAGENAMES= \
-	crc.content crc.content.text \
-	crc.dom \
-	crc.dps crc.dps.handle crc.dps.input crc.dps.output crc.dps.parse \
-	crc.dps.active crc.dps.util \
-	crc.ds \
-	crc.gnu.regexp \
-	crc.pia crc.pia.agent \
-	crc.tf \
-	crc.util \
+	org.risource.content org.risource.content.text \
+	org.risource.dom \
+	org.risource.dps org.risource.dps.handle \
+	org.risource.dps.input org.risource.dps.output org.risource.dps.parse \
+	org.risource.dps.active org.risource.dps.util \
+	org.risource.ds \
+	org.risource.gnu.regexp \
+	org.risource.pia org.risource.pia.agent \
+	org.risource.tf \
+	org.risource.util \
 	misc
 
 ### These are the names of the classes in the JDK that the PIA uses.  
@@ -78,7 +78,7 @@ pia_class.toc::
 		find `echo $$p` -name "*.class" -print >> pia_class.toc; \
 	done
 
-crc.zip: pia_class.toc
+org.risource.zip: pia_class.toc
 	$(BINDIR)/jarcrc
 	for p in $(PACKAGES); do \
 		(cd `echo $$p`; make clean) ; \
