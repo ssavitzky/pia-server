@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.19 1999-10-06 17:27:49 bill Exp $
+//	$Id: extractHandler.java,v 1.20 1999-10-06 23:39:12 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.19 1999-10-06 17:27:49 bill Exp $
+ * @version $Id: extractHandler.java,v 1.20 1999-10-06 23:39:12 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -69,6 +69,9 @@ public class extractHandler extends GenericHandler {
     TreeEntity extracted = new TreeEntity("list");
     ents.setBinding("list", extracted);
 
+    /** new addition for tm_like tag */
+    TreeEntity template = new TreeEntity("likelist");
+    ents.setBinding("likelist", template);
 
     // put the below stuff into sub-method which  uses an alraedy-filled list
 
@@ -164,6 +167,11 @@ public class extractHandler extends GenericHandler {
    */
   public ActiveNodeList getExtracted(Context cxt) {
     return cxt.getValueNodes("list", true);
+  }
+
+    /** new addition for tm_like tag */
+  public ActiveNode getTemplateEntity(Context cxt) {
+    return cxt.getBinding("likelist", true);
   }
 
   /** Handle a numeric item. */
@@ -1337,3 +1345,339 @@ class insertHandler extends extract_subHandler {
   insertHandler() { super(true, false); }
 }
 
+
+/** &lt;from&gt; simply sets the current set to its (expanded) content. */
+class tm_likeHandler extends extract_subHandler {
+    protected void action(Input in, Context aContext, Output out, 
+			  ActiveAttrList atts, ActiveNodeList content) {
+	// default is keeping things like this, unless set otherwise
+	boolean keepLike = true;
+	if ( atts.hasTrueAttribute("nokeep") )
+	     keepLike = false;
+
+	ActiveNodeList likeContent = new TreeNodeList(ListUtil.getListItems(content));
+
+
+
+
+
+        // load the content into the template entity
+	TreeEntity  template = (TreeEntity) getTemplateEntity(aContext) ;
+	template.setValueNodes( likeContent );
+	ActiveNodeList templateList = (ActiveNodeList)template.getValueNodes();
+
+	/*
+	// try putting template to output
+	putList(out, template.getValueNodes(aContext) );
+	ActiveNode hrNode = new TreeElement("hr");
+	out.putNode( hrNode);
+	*/
+
+      //  copy input to output as a default (copied from nameHandler)
+	ActiveNodeList treematched = getExtracted(aContext);
+	if (treematched == null) {
+	    reportError(in, aContext, "No input list: <tm_like> should be second tag");
+	    return;  
+	}
+	if (template == null) {
+	    reportError(in, aContext, "No template list: <tm_like> needs content");
+	    return;  
+	}
+
+    
+	// do tree-matching of template vs treematched
+	// call treematch recursively
+	if (keepLike == true){
+	    boolean checking = false;
+	    int gotOne =  treematch(treematched, templateList,
+				    checking, keepLike, out);
+	}
+	else{  // run through top-level nodes only, keeping each one 
+	    // which doesn't match
+	    int len = treematched.getLength();
+	    for (int nodeIdx = 0; nodeIdx < len; nodeIdx ++){
+		ActiveNode outItem = treematched.activeItem(nodeIdx).deepCopy();
+		// check match for this one node by passing it in as the sole
+		// entry on a list
+		ActiveNodeList oneItemList = new TreeNodeList();
+		oneItemList.append( outItem );
+		boolean checking = true;
+		int gotOne =  treematch(oneItemList, templateList,
+					checking, keepLike, out);
+		// only non-matches get kept
+		if (gotOne == 0)
+		    out.putNode(outItem);
+	    }
+
+	}
+
+	/*
+	  // finally, copy input nodes onto output for diagnostics
+	ActiveNode hrNode2 = new TreeElement("hr");
+	out.putNode( hrNode2);
+	putList(out, treematched);  // cannablized from fromHandler 
+	*/
+    }
+    tm_likeHandler() { super(true, false); }
+
+    // diagnostic routine only
+    void showList(ActiveNodeList testList, String title){
+	if (testList == null)
+	    return;
+	int len = testList.getLength();
+	System.out.println(">> " + title);
+	for (int i = 0; i < len; i++){
+	    ActiveNode keyItem = testList.activeItem( i );	
+	    String keyName = getNodeName(keyItem, false /* case */);
+	    String keyText = keyItem.toString().trim();
+	    System.out.println("i = " +i+ " item = " +keyItem+ 
+			       " name = " + keyName + " string: " + keyText +
+			       " length = " + keyText.length() );
+	}
+	System.out.println( "<< " + title);
+    }
+
+    // returns true if nodex match by name, attributes, etc.
+    boolean compareNodes(ActiveNode keyNode, ActiveNode srcNode){
+	if (keyNode == null || srcNode == null)
+	    return false;
+	String nodeName = getNodeName(srcNode, false);
+	String keyName = getNodeName(keyNode, false);
+	if (keyName == null || nodeName == null)
+	    return false;
+
+	if ( !keyName.equalsIgnoreCase(nodeName)  )
+	    return false;
+
+	// !!! named non-elements (e.g. entities) might fall through here
+
+	
+	// to get here, both nodes must be elements with same name
+	ActiveElement keyElt = (ActiveElement)keyNode;
+	ActiveElement srcElt = (ActiveElement)srcNode;
+	
+	ActiveAttrList keyAtts = (ActiveAttrList)keyElt.getAttributes();
+	ActiveAttrList srcAtts = (ActiveAttrList)srcElt.getAttributes();
+	if ( keyAtts != null){
+	    // if the key has attributes, make sure the
+	    // source has the same ones with same values; otherwise no match
+	    for (int idx = 0; idx < keyAtts.getLength(); idx++){
+		String attName =  keyAtts.item(idx).getNodeName();
+		if ( !keyAtts.getAttribute(attName).
+		      equals( srcAtts.getAttribute(attName) ) ){
+		    return false;
+		}
+	    }
+	    
+	}
+
+	return true;									   
+    }
+
+    protected int nextNonNullIdx(ActiveNodeList testList, int startIdx){
+	int len = testList.getLength();
+	int outIdx = startIdx;
+
+	while ( outIdx < len  && 
+		(testList.activeItem( outIdx )).toString().trim().length() <= 0 ){
+	    outIdx ++;
+	}
+	return outIdx;
+	// warning:  this is capable of returning an out-of-range index (i.e.
+	// == getLength() ); requester needs to check
+    }
+
+    // treematch can either look for the top of a candiate tree 
+    // (checking==null), or check whether an already-found top in fact
+    // matches.  
+
+    protected int treematch(ActiveNodeList treematched,
+			    ActiveNodeList templateList, 
+			    boolean checking, boolean keepLike, Output out) {
+	int gotSome = 0;
+      
+	// empty keylist matches anything by default
+	if ( templateList == null || templateList.getLength() == 0 )
+	    return 1;
+
+	// empty source with non-empty keylist is no match
+	if ( treematched == null || treematched.getLength() == 0 )
+	    return 0;
+
+	int len = treematched.getLength();
+
+	boolean myChecking  = true;
+
+	int myKey = nextNonNullIdx (templateList, 0);
+
+	if (myKey == templateList.getLength() ){
+	    // over-range check
+	    return 1;
+	}
+
+	int goodStartNode = -1; // Is this ok for first on list?
+	int goodStopNode = -1; // Is this ok for last on list?
+	int keyLen = templateList.getLength();
+
+	int doDepthSearch = 0;
+	if (checking == false )
+	    doDepthSearch = 1;
+
+	for (int depthSearch = 0; depthSearch <= doDepthSearch; depthSearch++){
+	    for (int i = 0; i < len; ++i) {
+
+		ActiveNode keyItem  = templateList.activeItem( myKey );	
+
+		String keyName = getNodeName(keyItem, false /* case */);
+
+
+		String keyText = "";
+		if (keyName == null){  // only load keyText if no node name
+		    keyText = keyItem.toString().trim();
+		    if (keyText.length() == 0 ){ // no  name exists ?!?
+			System.out.println("Empty key name/text in treematch");
+			return 0;
+		    }
+		    else
+			keyName = ""; // no null pointer, just empty
+		}
+
+		// get content item and name
+		ActiveNode item = treematched.activeItem(i);
+
+                if (checking == false)
+		    System.out.println("------------ TOP-level search, checking = false");
+
+		System.out.println("TRYING " + i +"/" + len + 
+                                  " keyItem=" + keyItem + 
+                                  " and item = " + item );
+
+		String nodeName = getNodeName(item, false);
+		String nodeText = "";
+		if (nodeName == null){  // only load nodeText if no node name
+		    nodeText = item.toString().trim();
+		}
+		int itemResult = 0;
+
+		// don't match two empty text strings; make one different
+		if (keyText.equals("") && nodeText.equals("") )
+		    keyText = "?";
+
+
+
+
+		    System.out.println("before test block; depthsearch= "
+				           + depthSearch);
+
+
+		    System.out.println("compareNodes = " + 
+		      compareNodes(keyItem, item)  );
+
+		    System.out.println("keyNametest = " + 
+		     keyName.equalsIgnoreCase("any-tag") );
+
+		    System.out.println("text index of = " + 
+                   			nodeText.indexOf(keyText)  );
+
+
+
+		if ( depthSearch == 0 && 
+		     !( compareNodes(keyItem, item) || 
+			keyName.equalsIgnoreCase("any-tag") ||
+			nodeText.indexOf(keyText) >= 0 )  ){
+
+
+		    if (checking == true){
+			// look inside this tag for a match, once top one found
+			ActiveNodeList oneKeyList = new TreeNodeList();
+			oneKeyList.append( keyItem );
+
+
+			itemResult =  treematch( item.getContent(), 
+						 oneKeyList,
+						 myChecking, keepLike, out);
+		    }
+
+
+		   if (itemResult == 0){
+		       System.out.println(" failure; try again" );
+		       continue; 
+		       // no match if depth-first still doesn't find it
+		   }
+		   else{
+		       System.out.println(" Success!" );
+		   }
+		}
+                
+		// got a candidate! ... keep track of node, whether to
+		// check below it, and next key to next check against
+
+		// pass on keyList and itemList (empty or not);
+		// nonzero result means a true  or default match
+		if (depthSearch == 0){
+		    System.out.println("before tm, itemResult = " +
+				       itemResult );
+		    itemResult +=   treematch( item.getContent(), 
+					   keyItem.getContent(),
+					   myChecking, keepLike, out);
+
+		    System.out.println("just got itemResult = " +
+				       itemResult );
+		}
+		else // dropping the whole topNode search down a level,
+		    // using whole template and source-item's contents.
+		    // Record whole nodes outputted, not piecemeal matching;
+		    // don't advance myKey.
+		    gotSome +=   treematch( item.getContent(), 
+					   templateList,
+					   false, keepLike, out);
+
+		if (itemResult > 0 && depthSearch == 0){
+
+		    System.out.println("GOT a match; keyItem=" + keyItem + 
+                                  " and item = " + item +
+                                  " depthSearch = " + depthSearch);
+
+		    // matched! ==> look for next key
+		    myKey = nextNonNullIdx( templateList, myKey + 1);
+		    if ( goodStartNode < 0 ) { // first matching node
+			goodStartNode = i;
+		    }
+		}
+		
+		// Have we already found the last node in key?
+		if ( myKey == keyLen && depthSearch == 0 ){ 
+		    if (checking == false){
+			goodStopNode = i;	
+			// put all matching nodes,
+			// from start to now (=stop),  onto output
+			for (int goodNodes = goodStartNode; 
+			     goodNodes <= goodStopNode; goodNodes ++){
+			    ActiveNode outItem = treematched.activeItem(i).deepCopy();
+	
+			    // keepLike says to keep nodes like this
+			    // (as opposed to keeping all but those
+			    // like this)
+			    if (keepLike)
+				out.putNode(outItem);
+			}
+			gotSome ++;
+
+			// reset start/stop/key and start search afresh on
+			// remaining nodes
+			myKey = nextNonNullIdx( templateList, 0);
+			goodStartNode = -1;
+			goodStopNode = -1;
+		    }
+		    else{  // if checking, only need one match for ok
+			return 1;
+		    }
+
+		}// end if-myKey
+
+	    }// end ii < len loop
+	} // end depthSearch loop
+	return gotSome;
+    }// end treematch()
+
+}// end tm_likeHandler

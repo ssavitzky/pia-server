@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $
+//	$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version $Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $
+ * @version $Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -109,6 +109,7 @@ class text_sort extends textHandler {
   public void action(Input in, Context aContext, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
 
+      // args is a list of *associations*, not just text items!
     List args = TextUtil.getTextList(content, caseSens);
     Enumeration argsEnum = args.elements();
 
@@ -451,7 +452,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -627,7 +628,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.7 1999-07-13 20:25:49 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */
