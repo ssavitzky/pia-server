@@ -1,5 +1,5 @@
 ### Makefile for lib
-#	$Id: Makefile,v 1.4 1999-12-14 18:26:57 steve Exp $
+#	$Id: Makefile,v 1.5 2000-06-08 23:18:23 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ TAGSET_DOCS = $(TAGSETS:.ts=.html)
 TAGSET_TSSS = $(TAGSETS:.ts=.tss)
 
 all:: 	basic.tss tsstrip.tss tagset.tss tsdoc.tss
-	@echo "done"
+all::	.cvsignore
 
 clean::
 	rm *.tss
@@ -60,12 +60,19 @@ doc::	ts-doc
 ts-doc:: $(TAGSET_DOCS)
 	cp $? $(TSDOCDIR)
 
-all::	.cvsignore
 
 .cvsignore:: Makefile
 	for f in $(TAGSET_DOCS); do \
 	    grep -s -q $$f .cvsignore /dev/null || echo $$f >> .cvsignore ; \
 	done
+	touch .cvsignore
+
+### JAR file:
+###	This is NOT made by default
+
+#all::	pia.jar
+pia.jar::	../src/java/all_classes.toc
+	cd ../src/java; $(MAKE) jarfile
 
 ### Tagset dependencies:
 
