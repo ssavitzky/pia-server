@@ -1,6 +1,6 @@
 
 // Utilities.java
-// $Id: Utilities.java,v 1.5 1999-07-13 20:29:09 bill Exp $
+// $Id: Utilities.java,v 1.6 1999-07-14 20:26:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -558,14 +558,11 @@ public class Utilities {
    */
   public static synchronized String unescape (String s) {
 
-    org.risource.pia.Pia.debug( "The input string-->"+s);
-
 	StringBuffer digitBuf = null;
 	int hb = -1;
 	int lb = -1;
 	StringBuffer sbuf = new StringBuffer () ;
 	int len  = s.length() ;
-	org.risource.pia.Pia.debug( "The string len is-->"+ Integer.toString( len ));
 	int ch = -1 ;
 
 	for (int i = 0 ; i < len ; i++) {
@@ -596,7 +593,6 @@ public class Utilities {
 	    sbuf.append ((char) ch) ;
 	  }
 	}
-	org.risource.pia.Pia.debug( "The out string-->"+sbuf.toString());
 	return sbuf.toString() ;
   }
 
