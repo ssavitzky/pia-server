@@ -1,0 +1,105 @@
+<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Edit PIA Configuration Settings</title>
+<link rev='made' href='mailto:steve@rsv.ricoh.com' />
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header show-date='yes'>Edit PIA Configuration Settings</header>
+<sub-head page='configure' />
+<hr />
+This page lets you edit PIA configuration variables.  The default values are 
+found in <code><var>PIA_DIR</var>/Config/pia.props</code>.  If you choose
+to edit any of these values, they will be written to 
+<code><var>USR_DIR</var>/Config/pia.props</code>.
+
+<if><get name='FORM:submission' /> <then>
+	<!--  Create the directory if it does not already exist  -->
+	<output directory='directory' dst='/~/Config'></output>
+	<output dst='/~/Config/pia.props'>
+		pia.root=&FORM:piaroot;
+		pia.usrroot=&FORM:piausrroot;
+		pia.port=&FORM:piaport;
+		pia.debug=&FORM:piadebug;
+		pia.verbose=&FORM:piaverbose;
+		pia.logger=&FORM:pialogger;
+		pia.reqtimeout=&FORM:piareqtimeout;
+	</output>
+	<!-- Set values to user entries -->
+	<set name='proot'>&FORM:piaroot;</set>
+	<set name='puroot'>&FORM:piausrroot;</set>
+	<set name='pport'>&FORM:piaport;</set>
+	<set name='pdebug'>&FORM:piadebug;</set>
+	<set name='pverbose'>&FORM:piaverbose;</set>
+	<set name='plogger'>&FORM:pialogger;</set>	
+	<set name='preqtimeout'>&FORM:piareqtimeout;</set>
+</then>
+<else>
+	<!-- Set variables to PIA namespace values -->
+	<set name='proot'>&PIA:pia.piaroot;</set>
+	<set name='puroot'>&PIA:pia.usrroot;</set>
+	<set name='pport'>&PIA:pia.port;</set>
+	<set name='pdebug'>&PIA:pia.debug;</set>
+	<set name='pverbose'>&PIA:pia.verbose;</set>
+	<set name='plogger'>&PIA:pia.logger;</set>
+	<set name='preqtimeout'>&PIA:pia.reqtimeout;</set>
+</else>
+</if>
+
+<form action='/Admin/config' method='POST'>
+<TABLE cols='2'>
+<TR>
+<TH align='right'><B><U>Property</U></B></TH>
+
+<TH align='left'><B><U>Value</U></B></TH>
+</TR>
+
+<TR>
+<TD align='right'>pia.root</TD>
+
+<TD><input type='text' name='piaroot' value='&proot;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.usrroot</TD>
+
+<TD><input type='text' name='piausrroot' value='&puroot;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.port</TD>
+
+<TD><input type='text' name='piaport' value='&pport;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.debug</TD>
+
+<TD><input type='text' name='piadebug' value='&pdebug;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.verbose</TD>
+
+<TD><input type='text' name='piaverbose' value='&pverbose;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.logger</TD>
+
+<TD><input type='text' name='pialogger' value='&plogger;' /></TD><TD></TD>
+</TR>
+
+<TR>
+<TD align='right'>pia.reqtimeout</TD>
+
+<TD><input type='text' name='piareqtimeout' value='&preqtimeout;' /></TD><TD></TD>
+</TR>
+</TABLE>
+
+<CENTER>
+<input type='submit' name='submission' value='Submit' /> 
+</CENTER>
+</form>
+
+
+<footer cvsid='$Id: config.xh,v 1.1 1999-04-01 01:25:29 pgage Exp $' />
+</body></html>
