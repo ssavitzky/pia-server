@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="pia-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: pia-xhtml.ts,v 1.8 2000-06-09 16:56:42 steve Exp $</cvs-id>
+<cvs-id>$Id: pia-xhtml.ts,v 1.9 2000-06-17 14:10:39 steve Exp $</cvs-id>
 
 <h1>PIA XHTML Tagset</h1>
 
@@ -339,6 +339,24 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<define element="view-source">
+  <doc> Expands into a ``view source'' link to the WOAD tree.  Should be
+	passed the path of the document to be viewed in the content.
+  </doc>
+  <action><hide>
+    <!-- === really ought to check for existance of woad tree === -->
+    <!-- <if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>
+        <then><a href="&PIA:rootPath;Agents/View/source?url=&content;">view
+              source</a></then> </if> -->
+    <let name="piaroot">
+      <if><test exact match="/">&PIA:rootPath;</test>
+          <else>&PIA:rootPath;</else>
+      </if>
+    </let>
+    </hide><a href="&piaroot;&SITE:sourcePrefix;&content;">view source</a>
+  </action>
+</define>
+
 <define element="footer" syntax="empty">
   <doc> This expands into a standard footer, including a ``navigation bar''.
 	Go to some lengths to extract the year the file was modified from the
@@ -368,8 +386,7 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
-<!-- <a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a>-->
-<a href="&PIA:rootPath;.Tree&docPath;">view source</a>
+<view-source><get name="docPath" /></view-source>
   </action>
 </define>
 
@@ -399,11 +416,7 @@ Note that we only need these inside the PIA.
 <b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
-<!-- === really ought to check for existance of woad tree === -->
-<a href="&PIA:rootPath;.Tree&docPath;">view source</a>
-<!-- <if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>
-    <then><a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view
-    source</a></then> </if> -->
+<view-source><get name="docPath" /></view-source>
   </action>
 </define>
 
