@@ -1,0 +1,66 @@
+<form-template type="vacation">
+
+<html>
+<head><title>Vacation Request Form</title></head>
+
+<body bgcolor="white">
+
+<include src="../heading.inc" />
+
+
+
+<h1>Vacation Request Form </h1>
+
+
+
+<form-section id="mainsection">
+
+Your name:  <user-input  > </user-input>
+<br/><br/>
+
+Accrued vacation hours (from last pay stub): <numeric-input
+name="hoursleft" required="yes" > 0 </numeric-input> 
+<br/><br/>
+
+Request vacation from 
+<textoptions-input name="from-month" options="January February March 
+April May June July August September October November December"> </textoptions-input>
+
+<textoptions-input name="from-day" options="1 2 3 4 5 6 7 8 9 10 11 12 13 14
+15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31"> </textoptions-input>
+ to
+<textoptions-input name="to-month" options="January February March 
+April May June July August September October November December"> </textoptions-input>
+
+<textoptions-input name="to-day" options="1 2 3 4 5 6 7 8 9 10 11 12 13 14
+15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31"> </textoptions-input>
+ 
+
+<br/><br/>
+Statement of Understanding: <br />
+
+An employee who has completed their 90 day introductory employment period
+may with manager's approval take vacation time in advance of earning the
+vacation benefit. The amount of such advance vacation time shall not exceed
+the employee's current annual vacation accrual. In the event an employee who
+resigns or is terminated has a negative vacation balance (i.e. the employee
+has used more vacation time than was accrued through the date of
+termination), the amout due the company will be deducted from any monies due
+the employee. Should the amount due the company exceed the amount due the
+employee, the employee shall refund the excess to the company.
+
+</form-section>
+
+<br/><br/>
+
+
+ <signature signer_type="manager" > 
+______________________</signature> <br />
+
+
+
+</body>
+</html>
+
+</form-template>
+

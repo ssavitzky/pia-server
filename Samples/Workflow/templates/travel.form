@@ -1,0 +1,87 @@
+<form-template type="travel">
+
+<html>
+<head><title>Travel Form</title></head>
+
+<body bgcolor="white">
+
+<include src="../heading.inc" />
+
+
+
+<h1>Travel Form </h1>
+
+
+
+<form-section id="mainsection">
+
+<h3>Your name:</h3>  <user-input  > </user-input> 
+<br/><br/>
+
+<table border="1" bgcolor="#DDDDDD">
+<tr>
+<th>From </th>
+<th>Departure date</th>
+<th>Time</th>
+<th>To</th>
+<th>Arrival date</th>
+<th>Time</th>
+<th>Rental car?</th>
+</tr>
+<tr>
+<td><text-input name="dep1" required="."> </text-input></td>
+<td><text-input name="depdate1" required="." size="8" ></text-input></td>
+<td><numeric-input name="deptime1" size="4" > </numeric-input></td>
+<td><text-input name="to1" required="."> </text-input></td>
+<td><text-input name="todate1" required="." size="8" ></text-input></td>
+<td><numeric-input name="totime1" size="4" > </numeric-input></td>
+<td><textoptions-input name="rental1" options="- yes no">
+</textoptions-input></td>
+</tr>
+<tr>
+<td><text-input name="dep2" > </text-input></td>
+<td><text-input name="depdate2"  size="8" ></text-input></td>
+<td><numeric-input name="deptime2" size="4" > </numeric-input></td>
+<td><text-input name="to2" > </text-input></td>
+<td><text-input name="todate2"  size="8" ></text-input></td>
+<td><numeric-input name="totime2" size="4" > </numeric-input></td>
+<td><textoptions-input name="rental2" options="- yes no">
+</textoptions-input></td>
+</tr>
+<tr>
+<td><text-input name="dep3" > </text-input></td>
+<td><text-input name="depdate3"  size="8" ></text-input></td>
+<td><numeric-input name="deptime3" size="4" > </numeric-input></td>
+<td><text-input name="to3" > </text-input></td>
+<td><text-input name="todate3"  size="8" ></text-input></td>
+<td><numeric-input name="totime3" size="4" > </numeric-input></td>
+<td><textoptions-input name="rental3" options="- yes no">
+</textoptions-input></td>
+</tr>
+<tr>
+<td><text-input name="dep4" > </text-input></td>
+<td><text-input name="depdate4"  size="8" ></text-input></td>
+<td><numeric-input name="deptime4" size="4" > </numeric-input></td>
+<td><text-input name="to4" > </text-input></td>
+<td><text-input name="todate4"  size="8" ></text-input></td>
+<td><numeric-input name="totime4" size="4" > </numeric-input></td>
+<td><textoptions-input name="rental4" options="- yes no">
+</textoptions-input></td>
+</tr>
+
+
+</form-section>
+
+<br/><br/>
+
+
+ <signature signer_type="manager" > 
+______________________</signature> <br />
+
+
+
+</body>
+</html>
+
+</form-template>
+

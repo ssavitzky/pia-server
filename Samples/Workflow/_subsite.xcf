@@ -1,0 +1,33 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 2000-02-29 01:12:51 bill Exp $ -->
+
+<Container>
+  <!-- configure the workflow template directory -->
+  <!-- these are the special tag that may be used in forms in addition to any
+  other tags.  Input tags will be properly substituted whether for data
+  entry or form population. -->
+  <Ext name="form"		type="text/html"
+  tagset="Workflow-template"/>
+  <Ext name="xh"		type="text/html" 
+  tagset="Workflow-template"/>
+
+
+  <verifiers>ben mrbill </verifiers>
+
+  <!-- If /etc/passwd exists, use it (and hence your Unix password) to
+	authenticate access to the this agent.  Disable this if you're using
+	shadow passwords!  For windows machines, use the appropriate
+	filename here.  And don't forget to configure sendmail for this agent!
+    -->
+
+   
+ <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin"
+         authenticate="/etc/passwd" >
+
+     <initialize>
+        <user-message>Workflow agent initialized with /etc/passwd
+        </user-message>
+     </initialize>
+  </AGENT>        
+
+</Container>

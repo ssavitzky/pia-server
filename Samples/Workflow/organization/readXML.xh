@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>XML orgchart extraction</title>
+</head>
+<body>
+<h1>Extracting from XML org-chart</h1>
+
+
+
+    <!-- count how many types of authorizers there are, to create the right
+         number of columns in the members category -->
+    
+    <set name="orgchart"><include src="organization.xml" /></set>
+    <br />
+
+    <set name="auths"><text trim="yes">
+	<extract>
+	   <from> &orgchart; </from>
+	   <name all="yes">authorizer</name>
+	   <attr>type</attr>
+	   <eval />
+	</extract>
+    </text></set>
+
+    <set name="VAR:uniqueAuths"> </set>
+    <repeat> <foreach>&auths;</foreach>
+	  <if><test match="&li;">&VAR:uniqueAuths;</test>
+	     <else>  
+		 <set name="VAR:uniqueAuths"><get name="VAR:uniqueAuths" /> &li;</set>
+	     </else>
+	  </if>
+    </repeat>
+
+    <?-- making a custom member table with a column for each unique auth --?>
+    <set name="memberquery"> CREATE TABLE members ( surname VARCHAR(30),
+		    given_name VARCHAR(30), 
+		    deptid VARCHAR(30),
+		    memberid VARCHAR(30) NOT NULL,</set>
+    <repeat><foreach>&VAR:uniqueAuths;</foreach>
+         <set name="memberquery">&memberquery; &li;_auth VARCHAR(30), </set>
+    </repeat>
+
+    <set name="memberquery">&memberquery; PRIMARY KEY(memberid))</set>
+
+  <br/>
+
+  GOT query=(&memberquery;)<br/>
+
+
+   <!-- Blow away old tables -->
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">DROP TABLE members</sql>
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">DROP TABLE depts</sql>
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">DROP TABLE authorizers</sql>
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">DROP TABLE signatures</sql>
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">DROP TABLE notifications</sql>
+
+   <!-- (re)creating table -->
+   
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">&memberquery;</sql>
+
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">
+                    CREATE TABLE depts ( deptname VARCHAR(30),
+		     parent_dept VARCHAR(30),
+		     deptid VARCHAR(30) NOT NULL, PRIMARY KEY(deptid)) </sql>
+
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">
+                    CREATE TABLE authorizers ( auth_type VARCHAR(30),
+		     dept VARCHAR(30),
+		     authid VARCHAR(30) NOT NULL,
+                     idx INT NOT NULL AUTO_INCREMENT,  PRIMARY KEY(idx))
+                     </sql>
+
+
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">
+        create table signatures ( owner VARCHAR(30), url VARCHAR(150),
+	 signed_by VARCHAR(30), to_be_signed_by VARCHAR(30), 
+	 signer_type VARCHAR(30), idx INT NOT NULL
+	  AUTO_INCREMENT, PRIMARY KEY (idx) ); 
+                     </sql>
+
+   <sql database="jdbc:mysql:///orgdb"
+       user="root" password="root">
+        create table notifications (signer VARCHAR(30) NOT NULL,
+	 when_notified DATETIME NOT NULL,  PRIMARY KEY (signer) ); 
+                     </sql>
+
+
+    <!-- creat topmost dept too -->
+    <!-- make the sql insert-query from extracted data -->
+          <set name="subname"><text trim="yes">
+	      <extract>
+		 <from> &orgchart; </from>
+		 <name>department</name>
+                 <content />
+		 <name>description</name>
+                 <content />
+	      </extract>
+          </text></set>
+
+          <set name="subid"><text trim="yes">
+	      <extract>
+		 <from> &orgchart; </from>
+		 <attr>id</attr>
+                 <eval />
+	      </extract>
+          </text></set>
+
+    <sql database="jdbc:mysql:///orgdb"
+	      user="root" password="root">
+                      insert into depts VALUES ("&subname;",
+                     "NULL", "&subid;") </sql>
+
+    <set name="topmembers">
+	<extract>
+	   <from> &orgchart;</from>
+	   <name all="yes">department</name>
+	</extract>
+    </set>
+    
+
+    <repeat>
+       <foreach>&topmembers;</foreach>
+           <set name="topname">
+	       <extract>
+		 <from>&li;</from>
+		 <content />
+		 <name>description</name>
+	       </extract>
+           </set>
+           <set name="topid">
+	       <extract>
+		 <from>&li;</from>
+		 <attr>id</attr>
+                 <eval />
+	       </extract>
+           </set>
+           <br />
+
+           <unpack-depts deptname="&topname;" deptid="&topid;">&li;</unpack-depts>
+           <unpack-authorizers deptname="&topname;"
+           deptid="&topid;">&li;</unpack-authorizers>
+
+           <unpack-members deptname="&topname;"
+                        deptid="&topid;">&li;</unpack-members>
+
+       <hr />
+    </repeat>
+
+
+
+</body></html>

@@ -1,0 +1,39 @@
+<department id="RSV"> 
+ <description>Ricoh Silicon Valley</description>
+ <authorizer type="president" memberid="peter" />
+ <department id="pia">
+    <description>PIA</description>
+    <authorizer type="manager" memberid="greg"/>
+    <authorizer type="coding" memberid="savitsky" />
+    <member id="greg"> 
+          <surname>Wolff</surname>
+          <givenname>Greg</givenname> 
+    </member>
+    <member id="savitsky"> 
+          <surname>Savitsky</surname>
+          <givenname>Steve</givenname> 
+    </member>
+    <member id="mrbill"> 
+                        <surname>Softky</surname>
+			  <givenname>Bill</givenname> 
+    </member>
+    <member id="johnb"> 
+                        <surname>Barrus</surname>
+			  <givenname>John</givenname> 
+    </member>
+    <department id="children"> 
+      <description>Bill's children </description>
+      <authorizer type="manager" memberid="eliz" />
+
+      <member id="eliz"> <surname>Softky</surname>
+                            <givenname>Elizabeth</givenname> 
+      </member>
+      <member id="sophia"> <surname>Softky</surname>
+                            <givenname>Sophia</givenname> 
+      </member>
+      <member id="ben"> <surname>Softky</surname>
+                            <givenname>Benjamin</givenname> 
+      </member>
+    </department>
+ </department>
+</department>

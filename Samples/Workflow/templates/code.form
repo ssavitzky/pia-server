@@ -1,0 +1,8 @@
+
+
+<text encode="base64">The quick brown fox jumped over the blah blah blah</text>
+
+<text decode="base64"> <text encode="base64">The quick brown fox jumped
+over the blah blah blah</text></text>
+
+

@@ -1,0 +1,36 @@
+<department id="org0"> 
+ <description>The main organization</description>
+ 
+ <member manager="yes" title="president" >
+     <surname>Cheese</surname>
+     <givenname>Big</givenname>
+ </member>
+ <member manager="no" title="sycophant" >
+     <surname>Burns</surname>
+     <givenname>(listen)</givenname>
+ </member>
+
+ <department id="dept001">
+    <description>A department</description>
+      <member accouting="yes" manager="no"> <surname>Doe</surname>
+                            <givenname>Jane</givenname> 
+      </member>
+      <member manager="yes" accounting="no"> <surname>Doe</surname>
+                            <givenname>Joe</givenname> 
+      </member>
+      <member manager="no" accounting="no"> <surname>Cheese</surname>
+                            <givenname>Small</givenname> 
+      </member>
+
+    <department id="dept011"> 
+      <description>A lower department </description>
+      <authorizor type="Manager">george</authorizor>
+      <member manager="yes" acounting="yes"> <surname>Jungle</surname>
+                            <givenname>George</givenname> 
+      </member>
+      <member manager="no" accounting="no"> <surname>Splicer</surname>
+                            <givenname>Gene</givenname> 
+      </member>
+    </department>
+ </department>
+</department>

@@ -1,0 +1,23 @@
+<include src="../heading.inc" />
+
+<html>
+<head><title>Forms Menu</title></head>
+
+<body bgcolor="white">
+
+<h1> Menu </h1>
+
+<br/>
+<h3>
+<P><a href="../templates/vacation.form?edit=yes">Vacation Request</a>
+<P><a href="../templates/vacDemo.form?edit=yes">
+<font color=red>Vacation Demo Request </font></a>
+<p><a href="../templates/purchreq.form?edit=yes">Purchase Request</a>
+<p><a href="../templates/expense.form?edit=yes">Expense</a>
+<p><a href="../templates/kiansho.form?edit=yes">Kiansho</a>
+<p><a href="../templates/travel.form?edit=yes">Travel</a>
+</h3>
+
+
+</body>
+</html>

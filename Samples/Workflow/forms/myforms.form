@@ -1,0 +1,113 @@
+
+<html>
+<head><title>My Forms</title></head>
+
+<body bgcolor="white">
+
+<include src="../heading.inc" />
+
+
+<h1>Forms for &REQ:AuthenticatedUser; </h1>
+
+	   <?-- find all forms to-be-signed by this person --?>
+           <set name="query">SELECT * FROM 
+		signatures  WHERE to_be_signed_by="&REQ:AuthenticatedUser;"
+		ORDER BY url DESC</set>
+           <set name="dbresult"><sql database="jdbc:mysql:///orgdb"
+                user="root" password="root">&query;</sql></set>
+           <set name="dbresult"><extract><from>&dbresult;</from>
+                  <content /></extract></set>
+
+
+
+	   <table border="1">
+             <tr> <th>owner</th>
+	     <th>Forms awaiting &REQ:AuthenticatedUser;'s signature</th>		</tr>
+           
+           <set name="nowurl">  </set>
+	   <repeat> <foreach> &dbresult;</foreach><text trim="yes">
+	      <set name="nowurl"><extract><from>&li;</from><name
+	      all="yes">url</name><content /></extract></set>
+	      <set name="owner"><extract><from>&li;</from><name
+	      all="yes">owner</name><content /></extract></set>
+              <tr> <td>&owner;</td>
+	      <td>
+	      <a href="&nowurl;?sign=&REQ:AuthenticatedUser;">&nowurl;</a></td>
+                      </tr>
+           </text></repeat>
+           </table>
+
+           <?-- give explanatory message if nothing there --?>
+           <if><test not="yes">&nowurl;</test>
+              <then><i>(no forms match)</i></then></if>
+<hr/>
+
+
+	  <?-- find all unsigned  forms owned by this person --?>
+           <set name="query">SELECT * FROM 
+		signatures  WHERE  to_be_signed_by IS NOT NULL
+		AND owner="&REQ:AuthenticatedUser;" ORDER BY url</set>
+           <set name="dbresult"><sql database="jdbc:mysql:///orgdb"
+                user="root" password="root">&query;</sql></set>
+           <set name="dbresult"><extract><from>&dbresult;</from>
+                  <content /></extract></set>
+
+	   <b>&REQ:AuthenticatedUser;'s forms awaiting someone else's
+	   signature </b>  (click to sign):<br/>
+	   <br/>
+
+           <set name="tempurl">  </set>
+	   <set name="urllist">'dummy'</set>
+	   <repeat> <foreach> &dbresult;</foreach>
+	      <set name="nowurl"><extract><from>&li;</from><name
+	      all="yes">url</name><content /></extract></set>
+	      <set name="urllist"> &urllist;, '&nowurl;'</set>
+	      <set name="signer"><extract><from>&li;</from><name
+	      all="yes">to_be_signed_by</name><content/></extract></set>
+	      <set name="signer_type"><extract><from>&li;</from><name all="yes">signer_type</name><content/></extract></set>
+              <if><test match="&nowurl;">&tempurl;</test>
+                 <then>&signer; (&signer_type;)</then>
+                 <else><br/><a href="&nowurl;">&nowurl;</a> by  &signer; (&signer_type;) </else>
+              </if>
+              <set name="tempurl"><get name="nowurl" /></set>
+           </repeat>
+	   
+           <?-- give explanatory message if nothing there --?>
+           <if><test not="yes">&tempurl;</test>
+              <then><i>(no forms match)</i></then></if>
+<hr/>
+
+	  <?-- find all SIGNED  forms owned by this person --?>
+           <set name="query">SELECT url FROM 
+		signatures  WHERE  to_be_signed_by IS  NULL
+		AND owner="&REQ:AuthenticatedUser;" 
+		AND url NOT IN ( &urllist;) GROUP BY url LIMIT 10 </set>
+           <set name="dbresult"><sql database="jdbc:mysql:///orgdb"
+                user="root" password="root">&query;</sql></set>
+           <set name="dbresult"><extract><from>&dbresult;</from>
+                  <content /></extract></set>
+
+
+	   <table border="1">
+             <tr><th> Signed forms for &REQ:AuthenticatedUser; (click to verify)</th></tr>
+           <set name="nowurl"></set>
+	   <repeat> <foreach> &dbresult;</foreach><text trim="yes">
+	      <set name="nowurl"><extract><from>&li;</from><name
+	      all="yes">url</name><content /></extract></set>
+	      <set name="owner"><extract><from>&li;</from><name
+	      all="yes">owner</name><content /></extract></set>
+              <tr><td><a href="&nowurl;?sig_verify=yes">&nowurl;</a></td></tr>
+           </text></repeat>
+           </table>
+
+           <?-- give explanatory message if nothing there --?>
+           <if><test not="yes"><get name="nowurl" /></test>
+              <then><i>(no forms match)</i></then></if>
+<hr/>
+
+<?-- Offer a chance to change this user's password --?>
+<change-passwd user="&REQ:AuthenticatedUser;" />
+
+  <hr />
+</body>
+</html>

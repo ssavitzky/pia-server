@@ -1,0 +1,108 @@
+
+<form-template type="purchreq">
+<html>
+<head><title>Purchase Request Form</title></head>
+
+<body bgcolor="white">
+<include src="../heading.inc" />
+
+
+<h1>Purchase Request Form </h1>
+
+
+<form-section id="mainsection">
+
+Requestor: <user-input name="user1" > </user-input>
+<br/><br/>
+
+Suggested supplier:<text-input name="supplier" required="."> </text-input>
+<br/><br/>
+
+Contact Information:  <textarea-input name="contact" rows="3" cols="40" > </textarea-input>
+<br/><br/>
+
+<table border="1" >
+  <tr> 
+    <th>Description</th> 
+    <th>Product Code</th> 
+    <th>Quantity</th> 
+    <th>Cost/unit</th> 
+    <th>Net cost</th> 
+  </tr>
+  <tr> 
+    <td><text-input name="description1" required="."> </text-input></td> 
+    <td><text-input name="product1"  required="."> </text-input> </td> 
+    <td><numeric-input name="quantity1" required="yes"> </numeric-input> </td>
+    <td><numeric-input name="unitcost1"  required="yes" size="5"> </numeric-input></td> 
+    <td><multiply name="net1" src1="quantity1" src2="unitcost1" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="description2" > </text-input></td> 
+    <td><text-input name="product2" > </text-input> </td> 
+    <td><numeric-input name="quantity2" > </numeric-input> </td>
+    <td><numeric-input name="unitcost2" size="5"> </numeric-input></td> 
+    <td><multiply name="net2" src1="quantity2" src2="unitcost2" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="description3" > </text-input></td> 
+    <td><text-input name="product3" > </text-input> </td> 
+    <td><numeric-input name="quantity3" > </numeric-input> </td>
+    <td><numeric-input name="unitcost3" size="5"> </numeric-input></td> 
+    <td><multiply name="net3" src1="quantity3" src2="unitcost3" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="description4" > </text-input></td> 
+    <td><text-input name="product4" > </text-input> </td> 
+    <td><numeric-input name="quantity4" > </numeric-input> </td>
+    <td><numeric-input name="unitcost4" size="5"> </numeric-input></td> 
+    <td><multiply name="net4" src1="quantity4" src2="unitcost4" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td></td> 
+    <td></td> 
+    <td></td> 
+    <td>TOTAL</td> 
+    <td><subtotal  name="total" src="net1 net2 net3 net4"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+Special Instructions:  <textarea-input name="contact" rows="3" cols="40" > </textarea-input>
+<br/><br/>
+
+Related Material: (Enter URL of Kiansho for fixed assets greater than $1000 or expenses greater than
+$5,000):<text-input name="kiansho"  size="60"> </text-input>
+<br/>
+
+<br/><br/>
+
+</form-section>
+
+ <signature signer_type="manager" > 
+______________________</signature> <br/>
+
+<conditional threshold="5000" input="total">  
+    <signature signer_type="coding">
+     ______________________</signature>  <br/>
+
+</conditional>
+
+<conditional threshold="100000" input="total">  
+    <signature signer_type="president">
+     ______________________</signature>  <br/>
+
+</conditional>
+
+</body>
+</html>
+
+</form-template>
+
+
+
+

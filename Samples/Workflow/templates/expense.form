@@ -1,0 +1,261 @@
+
+<form-template type="expense">
+<html>
+<head><title>Expense Form</title></head>
+
+<body bgcolor="white">
+<include src="../heading.inc" />
+
+
+<h1>Expense Form</h1>
+
+
+<form-section id="mainsection">
+
+Name: <user-input name="user1" > </user-input>
+<br/><br/>
+
+Personal Auto (currently reimbursed at $0.50 / mile)
+<table border="1" bgcolor="#DDDDDD" >
+  <tr> 
+    <th>Date</th> 
+    <th>Departure/Dest.</th> 
+    <th>Miles</th> 
+    <th>Cost</th> 
+  </tr>
+  <tr> 
+    <td><text-input name="date1" > </text-input></td> 
+    <td><text-input name="dest1"  > </text-input> </td> 
+    <td><numeric-input name="miles1" > </numeric-input> </td>
+    <td><multiply name="milescost1" src1="miles1" src2="none" dflt2="0.5" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="date2" > </text-input></td> 
+    <td><text-input name="dest2"  > </text-input> </td> 
+    <td><numeric-input name="miles2"> </numeric-input> </td>
+    <td><multiply name="milescost2" src1="miles2" src2="none" dflt2="0.5" >
+       </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="date3" > </text-input></td> 
+    <td><text-input name="dest3"  > </text-input> </td> 
+    <td><numeric-input name="miles3"> </numeric-input> </td>
+    <td><multiply name="milescost3" src1="miles3" src2="none" dflt2="0.5" >
+       </multiply></td>
+  </tr>
+
+  <tr> 
+    <td></td>     
+    <td>TOTAL</td> 
+    <td><subtotal  name="totalMiles" src="miles1 miles2 miles3"> </subtotal></td>
+    <td><subtotal  name="totalMilesCost" src="milescost1 milescost2 milescost3"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+
+
+Hotel
+<table border="2" bgcolor="#DDDDDD" >
+  <tr> 
+    <th>Hotel</th> 
+    <th>Nightly Rate</th> 
+    <th># Nights</th> 
+    <th>Cost</th> 
+  </tr>
+  <tr> 
+    <td><text-input name="hotel1" > </text-input></td> 
+    <td><text-input name="rate1"  > </text-input> </td> 
+    <td><numeric-input name="nights1" > </numeric-input> </td>
+    <td><multiply name="hotelcost1" src1="rate1" src2="nights1" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="hotel2" > </text-input></td> 
+    <td><text-input name="rate2"  > </text-input> </td> 
+    <td><numeric-input name="nights2" > </numeric-input> </td>
+    <td><multiply name="hotelcost2" src1="rate2" src2="nights2" >
+         </multiply></td>
+  </tr>
+  <tr> 
+    <td><text-input name="hotel3" > </text-input></td> 
+    <td><text-input name="rate3"  > </text-input> </td> 
+    <td><numeric-input name="nights3" > </numeric-input> </td>
+    <td><multiply name="hotelcost3" src1="rate3" src2="nights3" >
+         </multiply></td>
+  </tr>
+
+  <tr> 
+    <td></td>     
+    <td>TOTAL</td> 
+    <td><subtotal  name="totalNights" src="nights1 nights2 nights3"> </subtotal></td>
+    <td><subtotal  name="totalHotelCost" src="hotelCost1 hotelCost2 hotelCost3"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+
+
+Per Diem
+<table border="2" bgcolor="#DDDDDD" >
+  <tr> 
+    <th>Country</th> 
+    <th># Days</th> 
+    <th>Cost</th> 
+  </tr>
+  <tr> 
+    <td><textoptions-input name="country1" options="US Japan other">
+          </textoptions-input></td> 
+    <td><numeric-input name="days1" > </numeric-input> </td>
+    <td><option-multiply name="perdiem1" src="days1" optsrc="country1" 
+              US="37" Japan="60"    other="47" >
+         </option-multiply></td> 
+  </tr>
+  <tr> 
+    <td><textoptions-input name="country2" options="US Japan other">
+          </textoptions-input></td> 
+    <td><numeric-input name="days2" > </numeric-input> </td>
+    <td><option-multiply name="perdiem2" src="days2" optsrc="country2" 
+              US="37" Japan="60"    other="47" >
+         </option-multiply></td> 
+  </tr>
+  <tr> 
+    <td><textoptions-input name="country3" options="US Japan other">
+          </textoptions-input></td> 
+    <td><numeric-input name="days3" > </numeric-input> </td>
+    <td><option-multiply name="perdiem3" src="days3" optsrc="country3" 
+              US="37" Japan="60"    other="47" >
+         </option-multiply></td> 
+  </tr>
+  <tr> 
+    <td>TOTAL</td> 
+    <td><subtotal  name="totalNights" src="days1 days2 days3"> </subtotal></td>
+    <td><subtotal  name="totalPerdiem" src="perdiem1 perdiem2 perdiem3"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+
+
+
+Note: Per Diems are paid only on travel of more than 50 miles from your office. Per diem rates are broken down by meal as
+shown below. For partial day per diem claims please use the published rates for your area of travel and enter in the "other
+expense" section below.
+
+<br/><br/>
+Domestic: B-fast = $7, Lunch = $9, Dinner = $18 Total = $34 <br>
+Int'l (non-Japan): B-fast = $8, Lunch = $14, Dinner = $25 Total = $47 <br>
+Japan: B-fast = $12, Lunch = $18, Dinner = $30 Total = $60 <br>
+
+<br>
+
+Business Meals
+<table border="2" bgcolor="#DDDDDD" >
+  <tr> 
+    <th>Guests</th> 
+    <th>Purpose</th> 
+    <th>Cost</th> 
+  </tr>
+  <tr> 
+    <td><text-input name="meal1" ></td> 
+    <td><text-input name="purpose1" ></td> 
+    <td><numeric-input name="mealcost1" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td><text-input name="meal2" ></td> 
+    <td><text-input name="purpose2" ></td> 
+    <td><numeric-input name="mealcost2" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td><text-input name="meal3" ></td> 
+    <td><text-input name="purpose3" ></td> 
+    <td><numeric-input name="mealcost3" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td> </td>
+    <td>TOTAL</td> 
+    <td><subtotal  name="totalMealcost" src="mealcost1 mealcost2 mealcost3"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+
+Other Expenses
+<table border="2" bgcolor="#DDDDDD" >
+  <tr> 
+    <th>Description</th> 
+    <th>Type</th> 
+    <th>Cost</th> 
+  </tr>
+  <tr> 
+    <td><text-input name="exp1" /></td> 
+    <td><textoptions-input name="exptype1"  options="Misc
+     OfficeSupplies Software   Experimental Peripherals Telephone Travel 
+       FixedAsset Bill_OSDC"></td> 
+    <td><numeric-input name="expcost1" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td><text-input name="exp2" /></td> 
+    <td><textoptions-input name="exptype2"  options="Misc OfficeSupplies Software 
+        Experimental Peripherals Telephone Travel FixedAsset Bill_OSDC" ></td> 
+    <td><numeric-input name="expcost2" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td><text-input name="exp3" /></td> 
+    <td><textoptions-input name="exptype3"  options="Misc OfficeSupplies Software 
+        Experimental Peripherals Telephone Travel FixedAsset Bill_OSDC" ></td> 
+    <td><numeric-input name="expcost3" > </numeric-input> </td>
+  </tr>
+  <tr> 
+    <td> </td>
+    <td>TOTAL</td> 
+    <td><subtotal  name="totalExpcost" src="expcost1 expcost2 expcost3"> </subtotal></td>
+  </tr>
+
+
+</table>
+<br/><br/>
+
+
+
+Related info (e.g. URL of IM3 receipt copies):<text-input name="related" 
+            size="60">
+  </text-input><br/><br/>
+
+Expense total: <subtotal  name="allCost" src="totalMilesCost totalHotelCost
+             totalPerdiem totalMealcost totalExpcost">
+    </subtotal></td>
+
+
+<br/><br/>
+
+</form-section>
+
+ <signature signer_type="manager" > 
+______________________</signature> <br/>
+
+<conditional threshold="5000" input="totalExpcost">  
+    <signature signer_type="coding">
+     ______________________</signature>  <br/>
+
+</conditional>
+
+<conditional threshold="100000" input="totalExpcost">  
+    <signature signer_type="president">
+     ______________________</signature>  <br/>
+
+</conditional>
+
+</body>
+</html>
+
+</form-template>
+
+
+
+

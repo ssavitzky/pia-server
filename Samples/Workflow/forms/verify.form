@@ -1,0 +1,152 @@
+
+
+<html>
+<head><title>Verify Forms</title></head>
+
+<body bgcolor="white">
+
+<include src="../heading.inc" />
+
+<h1> Verification of Forms </h1>
+
+Only those who sign  forms may verify them
+ (in addition to &Workflow:verifiers;).  To see forms you own, use the
+<i> &REQ:AuthenticatedUser;'s Forms</i> link above.
+<br/><br/>
+
+	   <?-- find all forms already signed by this person --?>
+           <set name="query">SELECT * FROM 
+		signatures  WHERE signed_by="&REQ:AuthenticatedUser;"
+		ORDER BY url</set>
+           <set name="dbresult"><sql database="jdbc:mysql:///orgdb"
+                user="root" password="root">&query;</sql></set>
+           <set name="dbresult"><extract><from>&dbresult;</from>
+                  <content /></extract></set>
+
+
+
+	   <table border="1">
+             <tr> <th>Owner</th>
+	     <th>Forms signed by &REQ:AuthenticatedUser; </th></tr>
+           
+           <set name="nowurl">  </set>
+	   <repeat> <foreach> &dbresult;</foreach><text trim="yes">
+	      <set name="nowurl"><extract><from>&li;</from><name
+	      all="yes">url</name><content /></extract></set>
+	      <set name="owner"><extract><from>&li;</from><name
+	      all="yes">owner</name><content /></extract></set>
+              <tr> <td>&owner;</td>
+	          <td><a href="&nowurl;?sig_verify=yes">&nowurl;</a></td>
+                      </tr>
+           </text></repeat>
+           </table>
+
+           <?-- give explanatory message if nothing there --?>
+           <if><test not="yes">&nowurl;</test>
+              <then>(no forms match)</then></if>
+
+<br />
+
+
+         <if><test match="&REQ:AuthenticatedUser;">&Workflow:verifiers;</test>
+            <then>
+               <?-- allow this user to verify any forms --?>
+	     
+             <form action="&url;" method="get" >
+
+                <if><test not="yes"><get name="FORM:verify" /></test>
+                   <then>
+                       Verify forms for the following 
+		       owner/signer/signer-type (blank matches all):
+		       <br />
+		      <input name="owner" />owner 
+                              (e.g. &REQ:AuthenticatedUser;)<br />
+		      <input name="signer" />signer
+                              (e.g. &REQ:AuthenticatedUser;)<br />
+		      <input name="signer_type" />signer-type
+                              (e.g. manager)<br />
+		      <input name="verify" type="submit" value="Verify" />
+		      <br />
+                   <then>
+		   <else>
+
+		      <?-- construct query from form fields, appending --?>
+		      <set name="query">SELECT * FROM  signatures </set>
+
+                      <if><get name="FORM:owner" />
+                         <then>
+              		      <set name="query"> &query;
+		               WHERE owner="&FORM:owner;"</set>
+                         </then>
+                         <else>
+              		      <set name="query"> &query;
+		               WHERE 1=1 </set>
+                         </else>
+                      </if>
+                      <if><get name="FORM:signer" />
+                         <then>
+              		      <set name="query"> &query;
+		               AND  signed_by="&FORM:signer;"</set>
+                         </then>
+                      </if>
+                      <if><get name="FORM:signer_type" />
+                         <then>
+              		      <set name="query"> &query;
+		               AND signer_type="&FORM:signer_type;"</set>
+                         </then>
+
+                      </if>
+
+                      <?-- do the db query --?>
+		      <set name="dbresult"><sql database="jdbc:mysql:///orgdb"
+			   user="root" password="root">&query; ORDER BY url</sql></set>
+		      <set name="dbresult"><extract><from>&dbresult;</from>
+			     <content /></extract></set>
+
+
+		      <table border="1">
+			<tr>
+                      <th>Owner</th>
+		      <th>Signed form</th>
+		      <th>Signer</th>
+		      <th>Signer type</th>
+		      </tr>
+
+		      <set name="tempurl">  </set>
+		      <set name="nowurl"></set>
+		      <repeat> <foreach> &dbresult;</foreach><text trim="yes">
+			 <set name="nowurl"><extract><from>&li;</from><name
+			 all="yes">url</name><content /></extract></set>
+			 <set name="owner"><extract><from>&li;</from><name
+			 all="yes">owner</name><content /></extract></set>
+			 <set name="signer"><extract><from>&li;</from><name
+			 all="yes">signed_by</name><content /></extract></set>
+			 <set name="signer_type"><extract><from>&li;</from><name
+			 all="yes">signer_type</name><content /></extract></set>
+			 <tr>
+			 <td>&owner;</td>
+                         <td><a 
+			 href="&nowurl;?sig_verify=yes">&nowurl;</a></td>
+                 	<td>&signer;</td>
+			<td>&signer_type;</td></tr>
+		      </text></repeat>
+		      </table>
+
+
+		      <?-- give explanatory message if nothing there --?>
+		      <if><test not="yes">&nowurl;</test>
+			 <then>(no forms match)</then></if>
+		     
+		      <input name="again" type="submit" value="Try again" />
+                   </else>
+                </if>
+             </form>
+
+
+            </then>
+         </if>
+
+
+  <hr />
+</body>
+</html>

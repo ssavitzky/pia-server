@@ -1,0 +1,46 @@
+<form-template type="kiansho">
+
+<html>
+<head><title>Kiansho Form</title></head>
+
+<body bgcolor="white">
+
+<include src="../heading.inc" />
+
+
+
+<h1>Kiansho Form </h1>
+
+
+
+<form-section id="mainsection">
+
+<h3>Your name:</h3>  <user-input  > </user-input> 
+<h3>Amount:</h3><numeric-input name="amount" required="." size="8">0</numeric-input>
+<br/><br/>
+
+<h3>Subject:</h3>
+  <textarea-input name="subject" rows="3" cols="60" > </textarea-input>
+<h3>Explanation:</h3>
+  <textarea-input name="explanation" rows="3" cols="60" > </textarea-input>
+<h3>Effect:</h3>
+  <textarea-input name="effect" rows="3" cols="60" > </textarea-input>
+
+<h3>Expenditure details:</h3>
+  <textarea-input name="expenditure" rows="3" cols="60" > </textarea-input>
+
+</form-section>
+
+<br/><br/>
+
+
+ <signature signer_type="manager" > 
+______________________</signature> <br />
+
+
+
+</body>
+</html>
+
+</form-template>
+
