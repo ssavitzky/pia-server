@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.4 2000-08-22 23:51:59 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.5 2000-08-26 00:38:01 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -114,15 +114,21 @@
   <doc> Word definition
   </doc>
   <action><hide>
-    <let name="cxt"><get name="attributes:context"/></let>
-    <let name="word"><get name="attributes:word"/></let>
-    <let name="id"><get name="attributes:id"><get name="word"/></get></let>
-    <let name="path"><get name="attributes:path"/></let></hide>
-    <tr> <td rowspan="2"> <a href="&id;">&word;</a>
+      <let name="cxt"><get name="attributes:context"/></let>
+      <let name="word"><get name="attributes:word"/></let>
+      <let name="id"><get name="attributes:id"><get name="word"/></get></let>
+      <let name="path"><get name="attributes:path"/></let>
+      <let name="line"><get name="attributes:line"/></let>
+    </hide>
+    <tr> <td rowspan="2" valign="top"> <a href="&id;">&word;</a>
 <!-- === wrong: word needs to link to .words/&context;/&word; if outside
      === the context directory -->
 	 </td>
-	 <td> <a href="&path;">&path;</a>
+	 <td> <a href="&sourcePrefix;&path;">&path;</a>
+	      <if> &line;
+	           <then> <a href="&sourcePrefix;&path;#&line;">(&line;)</a>
+	           </then>
+	      </if>
 	 </td>
     </tr>
     <tr> <td> &nbsp;&nbsp;&nbsp; <get name="content" />
@@ -146,7 +152,7 @@
 <html><head>
 <title>&DOC:path;</title>
 </head><body bgcolor="99ccff">
-<header>&DOC:name; Index file</header>
+<header><subst match="\.[^.]*$" result="">&DOC:name;</subst> Index file</header>
 <set name="notesPrefix">
     <if> <test exact="yes" match="/"><get name="SITE:notesPrefix"/></test>
          <else><get name="SITE:notesPrefix"/></else>
@@ -163,7 +169,7 @@
 <expand><get name="content"/></expand>
 </table>
 <hr />
-<h5><em>This file is automatically maintained and cannot be edited.</em></h5>
+<h5><em>This file is automatically maintained and should not be edited by hand.</em></h5>
 
 </body></html>
   </action>

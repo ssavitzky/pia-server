@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.7 2000-08-23 00:03:04 steve Exp $
+#	$Id: woad-index.pl,v 1.8 2000-08-26 00:38:34 steve Exp $
 # Create WOAD index files.
 #
 
@@ -474,11 +474,20 @@ sub indexMarkupFile {
 	    $title = "Tagset \"$1\"";
 	    indexDef($1, 'tagset', $path, $line, $1, $_);
 	}
+
+	# Here we go looking for declarations embedded in web pages.
+	#   This category includes not only PIA tag definitions but
+	#   PHP function and class declarations.  It's easily extended
+	#   to other embedded-language active-page schemes.
+	#
 	if (/\<define\s+element=["']($xid)['"]/) {
 	    indexDef($1, 'tag', $path, $line, "$1", $_);
 	    $element = "$1";
 	} elsif (/\<define\s+attribute=["']($xid)['"]/) {
+	    # === not entirely clear how to treat attribute defs.
 	    indexDef($1, 'tag', $path, $line, "$element.$1", $_);
+	} elsif (/\s+function $id/) {	# PHP function
+	    indexDef($1, 'func', $path, $line, $1, $_);
 	}
 
 	# === ought to be able to identify javadoc/tsdoc documentation ===
@@ -511,13 +520,21 @@ sub indexCodeFile {
 	# The following is a very sorry excuse for parsing -- note that
 	# we don't know what the programming language is at this point.
 	# Amazingly enough, we don't really care!  This "parse" is loose
-	# enough to catch the majority of interesting cases.
+	# enough to catch the majority of interesting cases with  
+	# surprisingly small false-positive and false-negative rates
+	# It will almost certainly fail on obfuscated C code.
 	
 	if (/^\s*\/\/|^\s*\#|^\s*\/\*.+\*\/\s+$/) { # C/Perl comment
 	    # Only skip comment if it occupies the entire line.
 	} elsif (/\s+sub $id/) {	# PERL function
 	    indexDef($1, 'func', $path, $line, $1, $_);
-	} elsif (/^\s*($id\s+)class\s+$id\s*\(/) { # C++/Java class decl.
+	} elsif (/\s+function $id\s*[^a-zA-Z\s]/) {# PHP or shell function
+	    indexDef($1, 'func', $path, $line, $1, $_);
+	} elsif (/\s+def $id/) {	# Python function
+	    indexDef($1, 'func', $path, $line, $1, $_);
+	} elsif (/^\s*class\s+($id)/) {	# C++/Java/Python class decl.
+	    indexDef($1, 'class', $path, $line, "$1", $_);
+	} elsif (/\s+class\s+($id)/) {  # C++/Java/Python class decl
 	    indexDef($1, 'class', $path, $line, "$1", $_);
 	} elsif (/$id\s*\(/) {	# possible C/C++/Java function decl.
 	    # may not eliminate uninitialized function-valued variables
@@ -564,7 +581,7 @@ sub indexDef {
 
     my $entry = "<Def word='$word' path='$path' line='$line' "
 	      . (($ident eq $word)? '' : "id='$ident' ")
-	      . "name='$name'>$def</Def>\n";
+	      . "name='$name'>$def</Def>\n\n";
     $defs{$context} .= $entry;
     # === Append to $context/$word/defs.wi as well ===
     # === it's possible, even likely, that a database _would_ be better ===
@@ -577,7 +594,7 @@ sub indexDoc {
     my ($word, $context, $path, $line, $name, $def) = (@_);
     $def = stringify($def);
     $docs{$context} .= "<Doc word='$word' path='$path' line='$line' "
-	             . "name='$name'>$def</Def>\n";
+	             . "name='$name'>$def</Def>\n\n";
 }
 
 ### indexUse(word, context, file, lineNr, name)
@@ -587,7 +604,7 @@ sub indexDoc {
 sub indexUse {
     my ($word, $context, $path, $line, $name) = (@_);
     $uses{$context} .= "<Ref word='$word' path='$path' line='$line' "
-	             . "name='$name' />\n";
+	             . "name='$name' />\n\n";
     
 }
 
@@ -599,8 +616,10 @@ sub indexUse {
 #
 sub globalIndices {
     my ($context);
+    my @entries;
+    my ($entry, $i, $c);
 
-    # === LOSES HUGELY if there are newlines in entries! ===
+    # === LOSES HUGELY if there are empty lines in entries! ===
 
     mkdir ("$root$project$words", 0777);
     for (my @keys = sort(keys(%defs)), my $k = 0; $k < @keys; ++$k) {
@@ -609,8 +628,24 @@ sub globalIndices {
 	print STDERR "defs for $context -> $dir/defs.wi\n";
 	mkdir ($dir, 0777);
 	open (INDEX, ">$dir/defs.wi");
-	print INDEX join ("\n", sort(split /\n/, $defs{$context}));
+	@entries = sort(split /\n\n/, $defs{$context});
+	print INDEX join ("\n", @entries);
 	close (INDEX);
+	for ($i = 0; $i < 27; ++$i) {
+	    $c = substr('0ABCDEFGHIJKLMNOPQRSTUVWXYZ', $i, 1);
+	    if (-f "$dir/defs-$c-.wi") { unlink "$dir/defs-$c-.wi"; }
+	}
+	$c = '';
+	for ($i = 0; $i < @entries; ++$i) {
+	    $entries[$i] =~ /word\=\'(.)/; 
+	    $c = uc($1);
+	    if ($c !~ /[a-zA-Z]/) { $c = '0'; }
+
+	    # Should really take advantage of sortedness to avoid extra opens
+	    open (INDEX, ">>$dir/defs-$c-.wi");
+	    print INDEX $entries[$i] . "\n";
+	    close (INDEX);
+	}
     }
     for (my @keys = sort(keys(%docs)), my $k = 0; $k < @keys; ++$k) {
 	$context = $keys[$k];
@@ -706,6 +741,6 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.7 2000-08-23 00:03:04 steve Exp $ ';		# put this last because the $'s confuse emacs.
+    return q'$Id: woad-index.pl,v 1.8 2000-08-26 00:38:34 steve Exp $ ';		# put this last because the $'s confuse emacs.
 }
 

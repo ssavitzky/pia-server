@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.22 2000-08-10 17:28:38 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.23 2000-08-26 00:38:01 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -578,12 +578,8 @@ Note that we only need these inside the PIA.
 	 <then> <p align="center"><big><strong><note-title /></strong></big></p>
 	 </then>
     </if>
-    <if> <note-content />
-	 <then> <blockquote><note-content /></blockquote>
-	 </then>
-	 <else> <blockquote><note-summary /></blockquote>
-	 </else>
-    </if>
+    <blockquote><note-summary /></blockquote>
+    <blockquote><note-content /></blockquote>
   </action>
 </define>
 
@@ -701,26 +697,66 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
+<define element="indexTableRow">
+  <action><hide>
+      <let name="f">&attributes:f;</let>
+      <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+    </hide>
+    <tr><td align="left" valign="top">
+            <a href="&f;"><code>&label;</code></a>
+	</td>
+	<td colspan="2" valign="top">
+      	    <if> &content;
+      		 <then>
+      			<repeat> <foreach entity="g">&content;</foreach>
+       			   <let name="lbl">
+      				<subst match="\.[^.]*$" result="">&g;</subst>
+      			   </let>
+       			   <let name="lbl">
+      				<subst match="^[^-]*" result="">&lbl;</subst>
+      			   </let>
+            		   <a href="&g;"><code>&lbl;</code></a>
+     			</repeat>
+		        <a href="/.Woad/help.xh#&label;">[help]</a>
+      		 </then>
+      		 <else>
+      			<describeIndex>&f;</describeIndex>
+      		 </else>
+	</td>
+    </tr>
+  </action>
+</define>
+
 <define element="indexTableRows">
   <doc> This expands into a sequence of table rows listing index
 	files, together with their heading row.  The content is the list of
-	filenames to tabulate. 
+	filenames to tabulate.  Files with names of the form
+	<code><em>prefix</em>-<em>X</em>-</code> are listed in a single row.
+	<em>At the moment the file <code>prefix.wi</code> must also exist.</em>
   </doc>
   <action>
     <tr> <th bgcolor="#cccccc" width="150"> indices </th>
 	 <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
 	 help </th> 
-    </tr>
+    </tr> <let name="index"></let><let name="subs"></let>
     <repeat>
       <foreach entity="f">&indexFiles;</foreach>
-      <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-      <tr> <td align="left" valign="top">
-		    <a href="&f;"><code>&label;</code></a>
-	   </td>
-	   <td colspan="2" valign="top">
-		     <describeIndex>&f;</describeIndex>
-	   </td>
-      </tr>
+      <if> <test match="-\.">&f;</test>
+    	   <then><doc> we have a sub-index file.  Add it to subs.  Note the
+	               use of <code>set</code> here -- we're inside a
+	               <code>repeat</code>, which has its own context.
+    		 </doc>
+    		 <set name="subs"><get name="subs"/> &f;</set>
+	   </then>
+           <else><doc> ok, it's not a sub-index.  Do the row, taking advantage
+	               of the fact that ``<code>-</code>'' sorts before
+	               ``<code>.</code>'', so if any sub-indices existed we
+	               would already have seen them.
+    		 </doc>
+    		 <indexTableRow f="&f;">&subs;</indexTableRow>
+    		 <set name="subs"></set>
+           </else>
+      </if>
     </repeat>
   </action>
 </define>
@@ -1235,6 +1271,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.22 2000-08-10 17:28:38 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.23 2000-08-26 00:38:01 steve Exp $ -->
 </tagset>
 

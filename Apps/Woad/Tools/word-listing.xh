@@ -116,12 +116,8 @@
 	</td>
     </tr>
 </table>
-     <else> <set name="ltitle">Keyword:</set>
-	<header>index
-		<form  action="/.words/">
-	   	  <input name="word" />
-		</form>
-	</header>
+     <else> <set name="ltitle">Keyword</set>
+	<header>Context Index</header>
      </else>
 </if>
 
@@ -172,7 +168,9 @@
      </then>
      <else>
 	<yellow-note> This table lists all words for which <ss>WOAD</ss>
-		      annotations or indices exist in this context.
+		      annotations exist in this context. <red> There is
+		      currently no good way to add new words to the
+		      list. </red> 
 	</yellow-note>
      </else>
 </if>
@@ -281,5 +279,5 @@
 </table>
 
 
-<short-footer cvs-id="$Id: word-listing.xh,v 1.6 2000-08-23 00:00:04 steve Exp $" />
+<short-footer cvs-id="$Id: word-listing.xh,v 1.7 2000-08-26 00:38:24 steve Exp $" />
 </body></html>
