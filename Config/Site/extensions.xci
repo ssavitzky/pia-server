@@ -1,26 +1,26 @@
-<!-- $Id: extensions.xci,v 1.2 1999-09-24 00:24:23 steve Exp $ -->
+<!-- $Id: extensions.xci,v 1.3 1999-10-04 17:29:39 steve Exp $ -->
 
-  <Map ext="html"	type="text/html"				/>
-  <Map ext="htm"	type="text/html"				/>
+  <Ext name="html"	type="text/html"				/>
+  <Ext name="htm"	type="text/html"				/>
 
-  <Map ext="txt"	type="text/plain"				/>
+  <Ext name="txt"	type="text/plain"				/>
 
-  <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
+  <Ext name="xh" 	type="text/html"	tagset="pia-xhtml"	/>
 
-  <Map ext="png"	type="image/png"				/>
-  <Map ext="jpeg"	type="image/jpeg"				/>
-  <Map ext="jpg"	type="image/jpeg"				/>
-  <Map ext="xbm"	type="image/x-xbitmap"				/>
-  <Map ext="gif"	type="image/gif"				/>
+  <Ext name="png"	type="image/png"				/>
+  <Ext name="jpeg"	type="image/jpeg"				/>
+  <Ext name="jpg"	type="image/jpeg"				/>
+  <Ext name="xbm"	type="image/x-xbitmap"				/>
+  <Ext name="gif"	type="image/gif"				/>
 
   <!-- Note that we do not flag .gz files as compressed: we assume that the
        user will decompress them explicitly, rather than letting the browser
        do it behind his back. 
     -->
-  <Map ext="exe"	type="application/octet-stream"			/>
-  <Map ext="tgz"	type="application/octet-stream"			/>
-  <Map ext="tar"	type="application/octet-stream"			/>
-  <Map ext="gz"		type="application/octet-stream"			/>
+  <Ext name="exe"	type="application/octet-stream"			/>
+  <Ext name="tgz"	type="application/octet-stream"			/>
+  <Ext name="tar"	type="application/octet-stream"			/>
+  <Ext name="gz"	type="application/octet-stream"			/>
 
   <!-- Note that the order of extensions in this file becomes the order of
        the search list when an extension is missing.  To keep an extension
