@@ -1,5 +1,5 @@
 ////// weekdayHandler.java: <weekday> Handler implementation
-//	$Id: weekdayHandler.java,v 1.6 1999-10-11 21:40:40 steve Exp $
+//	$Id: weekdayHandler.java,v 1.7 1999-10-11 21:52:47 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally by
  *	Abraham Savitzky.
  *
- * @version $Id: weekdayHandler.java,v 1.6 1999-10-11 21:40:40 steve Exp $
+ * @version $Id: weekdayHandler.java,v 1.7 1999-10-11 21:52:47 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -93,6 +93,10 @@ public class weekdayHandler extends GenericHandler {
       : 28;
   }
 
+  /** Origin for Unix dates (``The Epoch'').
+   *	We do our own date calculations, because some versions of Java
+   *	get it wrong on some versions of libc. 
+   */
   static long origin = Julian.jday(1970, 1, 1);
 
   /************************************************************************
@@ -177,13 +181,15 @@ public class weekdayHandler extends GenericHandler {
 	month = Julian.month(j) - 1;
 	day   = Julian.day(j);
 	year  = Julian.year(j);
-	if (month != theDay.get(Calendar.MONTH)) 
-	  System.err.println("Java computes wrong month");
-	if (day != theDay.get(Calendar.DAY_OF_MONTH)) 
-	  System.err.println("Java computes wrong day");
-	if (year != theDay.get(Calendar.YEAR)) 
-	  System.err.println("Java computes wrong year");
-	//System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
+	if (cxt.getVerbosity() > 1) {
+	  if (month != theDay.get(Calendar.MONTH)) 
+	    System.err.println("Java computes wrong month");
+	  if (day != theDay.get(Calendar.DAY_OF_MONTH)) 
+	    System.err.println("Java computes wrong day");
+	  if (year != theDay.get(Calendar.YEAR)) 
+	    System.err.println("Java computes wrong year");
+	  //System.out.println(" " + unixdate + "=" + year + "/" + month + "/" + date);
+	}
     }
 
     // Calendar in 1.1.3 is totally broken -- there is no way to recompute the 
@@ -214,7 +220,7 @@ public class weekdayHandler extends GenericHandler {
 
     long longDay = jday - origin;
 
-    if (unixDay != longDay) {
+    if (unixDay != longDay && cxt.getVerbosity() > 1) {
       System.err.println("Warning: unixday=" + unixDay + " longDay=" + longDay);
     }
     String wkday = (String)dayNames.at( wday );
