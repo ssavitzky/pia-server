@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Site: To-Do List</title>
+</head><body>
+<h1>Site: To-Do List</h1>
+
+<blockquote><em>
+  This file contains pending tasks for the DPS system. 
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="done.html">Completed tasks</a>
+  <li> <a href="#Keywords">Keywords</a>
+  <li> <a href="#end">Oldest Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> <b>Hole</b> load config files.  <br>
+       This is half of the biggest pending hole:  getting the files loaded in
+       the first place.
+       (1999-08-20) <br>
+
+  <li> <b>Hole</b> process config elements.  <br>
+       This is the other half of the biggest pending hole:  processing the XML
+       once it's been loaded.  Need to extract child configurations, extension
+       mapping, and the default search path.
+
+  <li> <b>Note</b> search paths. <br>
+       Note that typically the search path will have three components: the
+       real location, the virtual location and the defaults. 
+       (1999-08-20) <br>
+
+  <li> <b>Note</b> Document should set up Processor somehow. <br>
+       There's no good way now to negotiate between a Processor and a Document
+       to set up the <em>optimum</em> kind of Input or to decide whether the
+       Document wants to drive the Processor as an Output. 
+       (1999-08-20) <br>
+
+  <li> <b>Impr</b> Generate metadata from extension <br>
+       The tagset stuff should eventually be considered a special case of
+       mapping metadata from a file's extension.
+       (1999-08-20) <br>
+
+  <li> <b>Hole</b> Metadata becomes entity bindings. <br>
+       The DOC: namespace for a resource probably ought to be
+       <em>precisely</em> its XML metadata, with the configuration added in
+       using some application-specific mapping (i.e. it needs to be different
+       for WebDAV).
+       (1999-08-20) <br>
+
+  <li> <b>Hole</b> An Agent is a Document. <br>
+       The metadata associated with an agent (e.g. AGENT.XML) really needs to
+       be <em>just</em> a Document.  Whenever the agent's state changes it
+       just writes itself out.
+       (1999-08-20) <br>
+
+  <li> <b>Impr</b> generate README on realize <br>
+       Note that when a container is realized, one typically wants to
+       construct a README file pointing to its virtual source.  This might
+       actually be done using an agent!  (Which implies that they're
+       <em>not</em> just for the PIA, so a <code>pia</code> Agent might be an
+       extension of a <code>site</code> Agent.)
+       (1999-08-20) <br>
+
+  <li> <b>Impr</b> tagset for directories. <br>
+       Generating the index for a container that doesn't have a
+       <code>home.xh</code> document ought to be done by applying a tagset to
+       the container's configuration element.
+       (1999-08-20) <br>
+
+  <li> <b>Hole</b> utility to retrieve a processed document <br>
+       This would correspond to ``<code>cat</code>'' the way <code>List</code>
+       corresponds to ``<code>ls</code>''.
+       (1999-08-20) <br>
+       
+</ol>
+
+
+<a name="end">(End of list)</a>
+
+<h2><a name="Keywords">Description of Keywords</a></h2>
+
+(Listed in order of decreasing urgency.)
+
+<dl>
+  <dt> <b>Bug</b>
+  <dd> A (typically small) problem with a simple, unambiguous description of
+       its symptoms.
+  <dt> <b>Hole</b>
+  <dd> A piece of missing, but important, functionality.
+  <dt> <b>Goal</b>
+  <dd> A target capability (includes a date)
+  <dt> <b>Check</b>
+  <dd> Something to check for; a potential stumbling block or place where the
+       implementor may have cut corners in the heat of the moment.  For
+       example, Y2K problems.
+  <dt> <b>Impr</b>ovement
+  <dd> A desirable improvement.
+  <dt> <b>Prop</b>osal
+  <dd> A proposal that will need to be discussed further.
+  <dt> <b>Wish</b>
+  <dd> A desired improvement of low priority.
+</dl>
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: to-do.html,v 1.1 1999-08-21 01:07:07 steve Exp $</b><br>
+</body></html>

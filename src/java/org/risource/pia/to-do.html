@@ -28,6 +28,20 @@ See also:
 
 <h2>Main List</h2>
 <ol>
+  <li> <b>Hole</b> Use <code>site</code> to simplify Agent. <br>
+       Mainly, everything in <code>Agent</code> related to
+       <code>findDocument</code> and agent naming goes away.  Almost
+       everything, in other words!  Even <code>respond</code>, etc. can go
+       away, because <code>HTTPRequest.toMachine</code> can do the document
+       lookup.  Agents can still specify handling by setting the request's
+       <code>toMachine</code> field.
+
+       <p>The Resolver gets simpler, too.  <code>agentFromPath</code> moves to
+       Root (the only place where it's called) and then goes away.
+       (1999-08-20) <br>
+
+       <p>
+
   <li> <b>Impr</b> PIA should use XML for default extension map. <br>
        PIA should use GenericAgent's mechanism for the default mappings;
        changing PIA's map should make all agents reprocess their maps.
@@ -156,7 +170,7 @@ See also:
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.21 1999-07-20 20:58:31 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.22 1999-08-21 01:07:04 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
