@@ -1,5 +1,5 @@
 ////// Create.java: Utilities for Creating nodes.
-//	$Id: Create.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+//	$Id: Create.java,v 1.5 1999-07-15 17:17:29 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,7 +38,7 @@ import java.util.Enumeration;
 /**
  * Node Creation utilities (static methods) for a Document Processor. 
  *
- * @version $Id: Create.java,v 1.4 1999-04-07 23:22:15 steve Exp $
+ * @version $Id: Create.java,v 1.5 1999-07-15 17:17:29 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -101,6 +101,8 @@ public class Create {
       return new TreeEntityRef(name);
     case Node.ELEMENT_NODE:
       return new TreeElement(name);
+    case Node.DOCUMENT_FRAGMENT_NODE:
+      return new TreeFragment();
     case Node.DOCUMENT_TYPE_NODE:
       return new TreeDocType(name, data);
       //    case Node.DECLARATION:
@@ -128,6 +130,8 @@ public class Create {
       return new TreeEntityRef(name);
     case Node.ELEMENT_NODE:
       return new TreeElement(name);
+    case Node.DOCUMENT_FRAGMENT_NODE:
+      return new TreeFragment();
     case Node.DOCUMENT_TYPE_NODE:
       return new TreeDocType(name, null); // really an error.
       //    case Node.DECLARATION:

@@ -932,9 +932,14 @@ If 4th node is there, returns "four".
        Should take tagname and attribute list, not element node. 
        (1999-06-16) <br>
 
+  <li> <b>Bug</b> Something can't handle a DocumentFragment on output. <br>
+       Gives a comment containing the node type. 
+       (1999-07-14) <br>
+       -- TreeFragment didn't have toString methods.  Improved error reporting
+	  in TreeNode.
 </ol>
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.22 1999-07-14 20:19:58 steve Exp $</b><br>
+<b>$Id: done.html,v 1.23 1999-07-15 17:17:10 steve Exp $</b><br>
 </body></html>

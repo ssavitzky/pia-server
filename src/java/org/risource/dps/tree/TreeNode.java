@@ -1,5 +1,5 @@
 // TreeNode.java
-// $Id: TreeNode.java,v 1.5 1999-06-04 22:40:43 steve Exp $
+// $Id: TreeNode.java,v 1.6 1999-07-15 17:17:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -337,7 +337,8 @@ public class TreeNode implements ActiveNode, Serializable {
    *  to return appropriate start tag.
    */
   public String startString(){
-    return "<!--";
+    return "<!-- " + getClass().getName() +
+      " has no toString method for nodeType=";
   }
   
   /** Return the String equivalent of this node type's content or data.
