@@ -1,5 +1,5 @@
 ###### servlet/Makefile:	PIA Servlet interfaces
-#	$Id: Makefile,v 1.1 2000-03-29 17:35:49 steve Exp $
+#	$Id: Makefile,v 1.2 2000-03-29 21:30:44 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,9 +24,19 @@
 PACKAGE=org.risource.servlet
 TOPDIR=../../..
 
+REQUIRED=javax.servlet.Servlet
+CLASSTEST=CLASSPATH=$(CLASSPATH) java $(REQUIRED) 2>&1 | grep NoClassDefFound
+
+ifeq (, $(shell $(CLASSTEST)))
 FILES = \
 	PIAServlet.java \
-	DPSServlet.java
+	DPSServlet.java \
+	ServletDoc.java
+else
+FILES=
+all:: 
+	@echo "$(REQUIRED) not in CLASSPATH -- build skipped"
+endif
 
 include $(TOPDIR)/makefiles/file.make
 #include $(TOPDIR)/makefiles/package.make
