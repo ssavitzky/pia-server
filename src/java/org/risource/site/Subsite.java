@@ -1,5 +1,5 @@
 ////// subsite.java -- standard implementation of Resource
-//	$Id: Subsite.java,v 1.9 1999-09-22 23:51:14 steve Exp $
+//	$Id: Subsite.java,v 1.10 1999-09-24 00:28:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import java.util.Enumeration;
  *	very efficient -- the second time around.  There <em>is</em> a
  *	need to check timestamps, which is not addressed at the moment.
  *
- * @version $Id: Subsite.java,v 1.9 1999-09-22 23:51:14 steve Exp $
+ * @version $Id: Subsite.java,v 1.10 1999-09-24 00:28:02 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see java.io.File
  * @see java.net.URL 
@@ -259,6 +259,11 @@ public class Subsite extends ConfiguredResource implements Resource {
     childConfigCache.at(name, e);
   }
 
+  /** Handle a &ltMap&gt element. 
+   *
+   * <p> === has problems dealing with items that are already on the 
+   *	 === extSearch list.  Ideally need separate hidden flag, too.
+   */
   protected void configMapItem(String tag, ActiveElement e) {
     String ext = e.getAttribute("extension");
     if (ext == null) ext = e.getAttribute("ext");
@@ -269,12 +274,15 @@ public class Subsite extends ConfiguredResource implements Resource {
     if (ts == null) ts = "";
 
     if (tagsetMap == null) tagsetMap = new Table();
-    tagsetMap.put(ext, ts);
     if (mimeTypeMap == null) mimeTypeMap = new Table();
     mimeTypeMap.put(ext, type);
     if (! ts.startsWith("#")) {
+      tagsetMap.put(ext, ts);
       if (extSearch == null) extSearch = new List();
       extSearch.push(ext);
+    } else {
+      // tagset name starting with # means don't search for this ext. 
+      tagsetMap.put(ext, ts.substring(1));
     }
   }
 
