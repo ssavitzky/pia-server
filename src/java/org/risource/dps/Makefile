@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.9 1999-05-21 00:58:14 steve Exp $
+# 	$Id: Makefile,v 1.10 1999-05-21 16:11:08 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -69,13 +69,12 @@ all:: Filter.class
 #	even stripping pia-xhtml saves only about .5 second.
 all::	tagset/basic.tss 
 
-# Note that $(MAKE) works wrong in these rules when working recursively,
-#	because the recursion defines TOPDIR on the command line. 
+# Note that we have to redefine TOPDIR on the command line in a recursion. 
 tagset/basic.tss: tagset/basic.ts tagset/tsstrip.ts
-	cd tagset; make basic.tss
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. basic.tss
 
 tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
-	cd tagset; make pia-xhtml.tss
+	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. pia-xhtml.tss
 
 ### Dependencies:
 ###	Compiling a class will automatically build the classes it
