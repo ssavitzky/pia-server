@@ -12,7 +12,7 @@
     management functions.  You can find out about its implementation from the
     <a href="/PIA/Doc/Manuals/Api/index.html">API</a> (Application Programming
     Interface) Manual, and by directly studying the <a
-    href="/PIA/src/java/crc">source code</a>, all of which is online.
+    href="/PIA/src/java/org/risource">source code</a>, all of which is online.
 
 <p> You can find out more about the PIA framework and its role in information
     applications from the online documentation described in the table below,
@@ -22,4 +22,4 @@
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
 
 <p>
-<!-- $Id: welcome.inc,v 1.2 1999-03-12 19:22:47 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.3 1999-03-15 20:01:28 pgage Exp $ -->

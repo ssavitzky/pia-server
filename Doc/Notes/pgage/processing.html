@@ -80,7 +80,7 @@ The following methods enable the agent to tap into the <code>Resolver</code> alg
 
 This method sets the criteria that will be matched against in the <code>Resolver</code>.  The <code>static Criterion.toMatch</code> method is used to specify the features to match against.  For example, an agent that wants to intercept all pages that are of type html will use the <code>Criterion.toMatch(&quot;IsHtml&quot;, true)</code>.  A number of criteria can be specified in this manner; however, it should be noted that these will be and'ed together, so it is important that they do not cancel each other out.  </P>
 
-A list of available features to match on are located in the <code>pia/src/java/crc/tf</code> subdirectory.  They are <code>UnaryFunctor</code> subclasses that work essentially as function pointers would in C++.  It is straightforward to extend this collection of classes as the need arises.  Standard features to match against are either the <code>IsRequest</code> or <code>IsResponse</code> feature, depending on which part of the processing cycle you wish to intercept.</P>
+A list of available features to match on are located in the <code>pia/src/java/org/risource/tf</code> subdirectory.  They are <code>UnaryFunctor</code> subclasses that work essentially as function pointers would in C++.  It is straightforward to extend this collection of classes as the need arises.  Standard features to match against are either the <code>IsRequest</code> or <code>IsResponse</code> feature, depending on which part of the processing cycle you wish to intercept.</P>
 </DIV>
 <DIV>
 <H4 CLASS="Heading3">

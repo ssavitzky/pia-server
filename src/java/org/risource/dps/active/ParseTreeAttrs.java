@@ -1,5 +1,5 @@
 // ParseTreeAttrs.java
-// $Id: ParseTreeAttrs.java,v 1.3 1999-03-12 19:25:33 steve Exp $
+// $Id: ParseTreeAttrs.java,v 1.4 1999-03-15 20:01:39 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -110,7 +110,7 @@ public class ParseTreeAttrs extends ParseNodeTable
   
   /**
    * Deep copy of all attributes in the given list.
-   * If an attribute is foreign -- not in crc/dom, just
+   * If an attribute is foreign -- not in org/risource/dom, just
    * refers to it.
    */
   protected void initialize(AttributeList l){

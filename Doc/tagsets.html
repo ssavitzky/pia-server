@@ -105,7 +105,7 @@ data files to exist in the same namespace as classes. Resources
 can be shipped around in JAR files, downloaded from the Internet,
 and, in most cases, obtained from directories in the <code>CLASSPATH</code>.
 This means that common tagsets can be defined in the same directory
-as the classes of the <code>crc.dps.tagset</code> package. </p><p>Tagsets
+as the classes of the <code>org.risource.dps.tagset</code> package. </p><p>Tagsets
 and other resources (including external entities) can exist either
 as Java resources or as files located relative to the document being
 processed. They can also be located in the DPS, in an internal namespace. </p><p>When
@@ -121,7 +121,7 @@ if the name contains slashes it is considered to be a file located
 relative to the current document; otherwise if it contains periods
 it is considered to be a resource. Tagsets with neither are sought
 first in the current directory (the explicit namespace <code>file:</code>), then
-in the package <code>crc.dps.tagset</code> in the explicit namespace <code>DPS:</code>.
+in the package <code>org.risource.dps.tagset</code> in the explicit namespace <code>DPS:</code>.
    </li>
 <li>If the namespace is specified explicitly, it performs the lookup.
    </li>
