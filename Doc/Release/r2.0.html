@@ -3,11 +3,65 @@
 <title>Release Notes for R2.0</title>
 <link rev="made" href="mailto:pia@rsv.ricoh.com">
 </head><body>
-<h1>Release Notes for PIA Release 2.0.1A</h1>
+<h1>Release Notes for PIA Release 2.0.2</h1>
 
+<p> Release 2.0 is the first external open source release of the PIA.  It is
+    intended for developers working on the PIA internals.  This is NOT a
+    stable release: the system does work, but there are still bugs, broken
+    links, and other anomalies.  Release 2.1 will be the first stable release.
+
+<p> We suggest that persons who wish to use the PIA to develop applications
+    but are not interested in debugging/programming the core engine wait for
+    2.1.  Subscribe to <a href=mailto:PIA-announce-request@risource.org>
+    PIA-announce@RiSource.org</a> to be notified of new releases.
 
 
 <h2><A NAME="announce">Release Announcements</A></h2>
+<h3>Release 2.0.2</h3>
+
+<p>
+This is the first patch to the first external open source release of the PIA.
+It is <em>still</em> intended primarily for developers.  Several directories
+have been moved, and a few obsolete ones have been removed.  This trend can be
+expected to continue for a while.
+
+<p> Major changes since 2.0.1A:
+
+<ul>
+  <li> The Java directory structure has been revised to conform to current
+       naming conventions. What was once <code>src/java/crc</code> is now
+       <code>src/java/org/risource</code>.  The RegEx package and the subset
+       of the Jigsaw classes that we are actually using have been brought up
+       to date and moved to their proper places in the package hierarchy.
+
+  <li> CVS ID's had lost their all-important <code>$Id: r2.0.html,v 1.8 1999-03-13 01:08:08 steve Exp $</code> due to an
+       ill-advised ``export''.  They're back.
+
+  <li> HTML document types now refer to the correct public identifier,<br>
+       "-//W3C//DTD HTML 4.0 Transitional//EN".  It is possible (likely?) that
+       some documents do not validate yet.  The document types in
+       <code>.xh</code> files are passed through the document processor
+       unmodified, so they refer to the DTD of the <em>output</em>, not of the
+       input file.  This will be fixed eventually.
+
+  <li> The Toolbar, History, and Cache agents, all of which operate by
+       proxying through the PIA, have been gathered underneath the (new)
+       ``Proxie'' agent.  The agent namespace still isn't right, but this is
+       at least useable.  If you made yourself a custom START-UP.html file,
+       make a new one.  Proxie is poorly-documented at the moment.  Your
+       browsing history (in <a href="/~History">/~History</a>) will be
+       unaffected by these and future changes. 
+
+  <li> The obsolete directories <code>Agents/Logo</code> and
+       <code>Doc/Graphics</code> have been removed.
+
+  <li> The interface <code>org.risource.Version</code> has been added to
+       contain version-number constants.  Running <code>pia -version</code>
+       prints out the version string.
+</ul>
+
+
+
 <h3>Release 2.0.1A</h3>
 <p>
 
@@ -96,7 +150,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.7 1999-03-12 19:23:33 steve Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.8 1999-03-13 01:08:08 steve Exp $</b><br>
 </body></html>
 
 

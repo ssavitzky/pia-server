@@ -1,5 +1,5 @@
 ### Makefile for pia
-#	$Id: Makefile,v 1.5 1999-03-12 23:16:46 steve Exp $
+#	$Id: Makefile,v 1.6 1999-03-13 01:08:05 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -31,13 +31,56 @@ include $(MF_DIR)/file.make
 include $(MF_DIR)/subdir.make
 
 ### The following is unique to the top level ###
+###
+###   Make targets:
+###	update-version		patch files that depend on version number
+###	cvs_rtag		tag repository with version number
+
+### Version information:
+
+VENDOR_TAG  = PIA
+RELEASE     = 2
+MAJOR       = 0
+MINOR       = 2
+SUFFIX      = 
+
 
 ### Commands:
 
 # === GNU tar required ===
 TAR=/usr/local/bin/tar
 
+### Operations involving version number:
+###
+###	update-version		updates files that depend on the version #
+VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
+VERSION    = $(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
+
+RISOURCE=src/java/org/risource
+RELNOTES=Doc/Release
+
+update-version:: $(RISOURCE)/Version.java\
+	$(RELNOTES)/r$(RELEASE).$(MAJOR).html
+
+$(RISOURCE)/Version.java:: Makefile
+	perl -p -i -e 's/[0-9]+;/$(RELEASE);/ if /RELEASE/;' \
+		 -e 's/[0-9]+;/$(MAJOR);/ if /MAJOR/;' \
+		 -e 's/[0-9]+;/$(MINOR);/ if /MINOR/;' \
+		 -e 's/\"[^"]*\"/\"$(SUFFIX)\"/ if /SUFFIX/;' \
+		$(RISOURCE)/Version.java
+
+$(RELNOTES)/r$(RELEASE).$(MAJOR).html:: Makefile
+	perl -p -i -e 's/[0-9.a-zA-Z]+\</$(VERSION)\</ if /\<h1\>/;' \
+		 -e 's/[0-9]+;/$(MAJOR);/ if /MAJOR/;' \
+		 -e 's/[0-9]+;/$(MINOR);/ if /MINOR/;' \
+		 -e 's/\"[^"]*\"/\"$(SUFFIX)\"/ if /SUFFIX/;' \
+		$(RELNOTES)/r$(RELEASE).$(MAJOR).html
+
+
 ### Common cvs operations 
+
+version_id::
+	echo $(VERSION) `date` > version_id
 
 cvs_tag::
 	cvs tag $(VERSION_ID)
@@ -48,23 +91,19 @@ cvs_rtag::
 foobar::
 	echo $(VERSION_ID)
 
+###
+### Old stuff.
+###
+###	Everything after this point is _probably_ obsolete; it is being kept
+###	around because at some point we may go back and revise our procedures
+###	to use it again.
+###
 
 ### Stuff for making a CD-ROM
 
 CD_ROM_SRC_DIR	= cd_rom_src_dir
 CD_ROM_DEST_DIR	= cd_rom_dest_dir
 CD_ROM_PUB      = Ricoh Silicon Valley
-
-VENDOR_TAG  = PIA
-RELEASE         = 2
-MAJOR           = 1
-MINOR           = 0
-SUFFIX          = 
-VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
-VERSION    = $(VENDOR_TAG)$(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
-
-version_id::
-	echo $(VERSION) `date` > version_id
 
 cd_rom:		$(CD_ROM_SRC_DIR) $(CD_ROM_DEST_DIR) version_id
 	mkisofs -f -R -T \
@@ -103,10 +142,6 @@ prep_rel::
 	cd $(CLASSDIR);make pia.zip; make alldoc
 	cd $(CLASSDIR);rm -fr java
 
-cp_build_noa::
-	cp /pia1/home/wolff/pia/Doc/Papers/BuildingNOA/BuildingNOA.ps $(DOCPAPER)/BuildingNOA
-	cp -R /pia1/home/wolff/pia/Doc/Papers/BuildingNOA/BuildingNOA $(DOCPAPER)/BuildingNOA
-
 ### add crln
 crfixbat:: 
 	cd $(PIABINDIR); cp pia.bat pia.bak; cp_ascii < pia.bak > pia.bat
@@ -131,7 +166,7 @@ pia_bin.toc::
 	    | grep -v pia_src.tgz | grep -v pia.toc \
 	    | grep -v src > PIA/pia_bin.toc 
 
-pia_bin.tar:	rm_bin_tar prep_rel crfixbat cp_build_noa pia_bin.toc
+pia_bin.tar:	rm_bin_tar prep_rel crfixbat pia_bin.toc
 	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
 
 ### Source release
@@ -147,11 +182,11 @@ pia.toc::
 	    | grep -v Config/Demos | grep -v Doc/Papers \
 	    | grep -v pia_bin.tgz | grep -v pia_bin.toc > PIA/pia.toc 
 
-pia.tar:	rm_pia_tar prep_rel crfixbat cp_build_noa pia.toc
+pia.tar:	rm_pia_tar prep_rel crfixbat pia.toc
 	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
 
 ### Binary and source release
-pia_bin_src: 	rm_bin_tar rm_pia_tar prep_rel crfixbat cp_build_noa pia_bin.toc pia.toc
+pia_bin_src: 	rm_bin_tar rm_pia_tar prep_rel crfixbat pia_bin.toc pia.toc
 	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
 	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
 
