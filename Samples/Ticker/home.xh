@@ -1,0 +1,60 @@
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
+<html><head>
+<title>Current Ricoh Stock Price</title>
+</head><body>
+<i>Ricoh Stock Ticker</i>
+
+<set name="sourcefile"><include tagset=HTML src="http://quote.yahoo.co.jp/q?s=7752.T&d=t" /></set>
+
+<set name="goodrow">
+<extract>
+  <from>&sourcefile;</from>
+  <tm_like>
+           <tr align="center" valign="center">
+             <td>
+              <b>
+              </b>
+             </td>
+           </tr>
+  </tm_like>
+</extract>
+</set>
+
+
+<table>
+  <tr>
+    <th>Current price</th>  
+    <th>Change</th>
+    <th>History</th>
+  </tr>
+
+  <tr>
+    <td>
+       <extract>
+	  <from>&goodrow;</from>
+          <tm_like>
+             <td colspan="2"> </td>
+          </tm_like>
+	 <name all="yes" case="insens">b</name>
+       </extract>
+       &yen;
+     </td>
+     <td>
+       <extract>
+	  <from>&goodrow;</from>
+          <name all="yes" case="insens">td</name>
+          <match>%</match>
+          <content />
+       </extract>
+     </td>
+
+     <td>
+        <img border="0" width="192" height="96"
+           src="http://chart.yahoo.co.jp/chart/0b/7/7752.t.gif" />
+     </td>
+   </tr>
+</table>
+
+<short-footer />
+
+</body></html>
