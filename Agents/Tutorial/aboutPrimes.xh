@@ -10,6 +10,7 @@
          </form></td>
 
          <td><a href='home.xh' target="_top">  Demo menu</a></td>
+        <td> <a href='home2.xh' target="_top">  More demos menu</a></td>
   </tr>
 </table>
     <h2> <a name="intro">The Prime-search Demo</a></h2>

@@ -1,4 +1,4 @@
-<!DOCTYPE tagset SYSTEM "tagset.dtd">
+<!DOCTYPE tagset SYSTEM "tagset.dtd" >
 <!-- ---------------------------------------------------------------------- -->
 <!-- The contents of this file are subject to the Ricoh Source Code Public  -->
 <!-- License Version 1.0 (the "License"); you may not use this file except  -->
@@ -15,11 +15,12 @@
 <!-- Copyright (C) 1995-1999.  All Rights Reserved.                         -->
 <!--                                                                        -->
 <!-- Contributor(s): paskin@rsv.ricoh.com                                   -->
+<!--                 bill@rsv.ricoh.com                                     -->
+<!--                                                                        -->
 <!-- ---------------------------------------------------------------------- -->
 
-
 <tagset name=Tutorial-agent parent=xhtml recursive>
-<cvs-id>$Id: Tutorial-xhtml.ts,v 1.2 1999-07-29 21:55:10 bill Exp $</cvs-id>
+<cvs-id>$Id: Tutorial-xhtml.ts,v 1.3 1999-08-02 22:46:51 bill Exp $</cvs-id>
 
 <define entity="mybgcolor">
    <value>white</value>
@@ -33,7 +34,7 @@
      on your own host. </font><br>
   </action>
 </define>
-
+ 
 <define element="connect" >
   <action>
      <br><font color="crimson">
@@ -42,7 +43,6 @@
      on your own host. </font><br>
   </action>
 </define>
-
 
 
 <define element='display'>
@@ -87,7 +87,7 @@
                     href='http://www.risource.org/PIA/Doc/Tagsets/basic.html#quick'
                     target="_top"> Active-tag table</a></td>
               <td><a href='home.xh' target="_top">  Demo menu</a></td>
-            </table>
+            </table></td>
             </tr>
 
             <tr><td>Click  <b>Process</b> to see the PIA server process the
@@ -125,9 +125,7 @@
 <define element="widgetJavaScript">
   <action>
 
-     <SCRIPT LANGUAGE="JavaScript">
-
-    <!--  hide this stuff 
+     <SCRIPT LANGUAGE="JavaScript"> <!--  hide this from browser display 
 
      function isaPosNum(s) {
 	return (parseInt(s) > 0)
@@ -155,11 +153,10 @@
 	   alert("Sorry, order invalid... try again.")
 	   return false
 	}
-     }
-     -->
+     }           end hiding -->
      </SCRIPT>
 
-  <action>
+  </action>
 </define>
 
 <define element="widgetForm">
@@ -168,7 +165,7 @@
      How many widgets do you want today?
        (min=&attributes:min; max=&attributes:max;) 
      <INPUT TYPE="text" NAME="quantity"  />
-     <BR> 
+     <BR/> 
      <INPUT TYPE="button" VALUE="Enter Order"
      onClick="validateAndSubmit(this.form, &attributes:min;, &attributes:max;)">
      </FORM>

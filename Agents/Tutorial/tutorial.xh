@@ -4,8 +4,8 @@
 <title>Tutorial</title>
 </head>
 <frameset rows='40%,60%'>
-  <frame src='instantiate.xh' name='instantiation'>
-  <frame src='&FORM:demoName;' name='editor-window'>
+  <frame src='instantiate.xh' name='instantiation'/>
+  <frame src='&FORM:demoName;' name='editor-window'/>
 </frameset>
 </html>
 

@@ -220,22 +220,23 @@
             </font>
         </td>
         <form action='tutorial.xh' name='getDemo'>
-            <input type='hidden' name='demoName' value='editPrimes.xh' />
+            <input type='hidden' name='demoName' value='editJavascript.xh' />
             <td>
                 <input type='submit' value='try' checked='checked' />
             </td>
         </form>
         <td>
             <i>
-                Prime-number search
+                Javascript wrapper
             </i>
         </td>
         <td>
-            <a href='aboutPrimes.xh'>
+            <a href='aboutJavascript.xh'>
                 about
             </a>
         </td>
     </tr>
+
     <tr>
         <td>
             <font size='2' color='crimson'>

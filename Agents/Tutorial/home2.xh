@@ -37,24 +37,31 @@
     More hackable demos...
 </h2>
 <table color='white' cellspacing='1'>
+
     <tr>
+        <td>
+            <font size='2' color='crimson'>
+                |
+            </font>
+        </td>
         <form action='tutorial.xh' name='getDemo'>
-            <input type='hidden' name='demoName' value='editJavascript.xh' />
+            <input type='hidden' name='demoName' value='editPrimes.xh' />
             <td>
                 <input type='submit' value='try' checked='checked' />
             </td>
         </form>
         <td>
             <i>
-                Javascript wrapper
+                Prime-number search
             </i>
         </td>
         <td>
-            <a href='aboutJavascript.xh'>
+            <a href='aboutPrimes.xh'>
                 about
             </a>
         </td>
     </tr>
+
     <tr>
         <form action='tutorial.xh' name='getDemo'>
             <input type='hidden' name='demoName' value='editErrorTest.xh' />

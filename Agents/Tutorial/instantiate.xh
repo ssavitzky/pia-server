@@ -17,9 +17,6 @@
      on your own host. </font><br/>
    </action>
 </define>
-ls
-
-
 
 <display><get name='FORM:code-text'/></display>
 
