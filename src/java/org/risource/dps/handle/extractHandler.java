@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.13 1999-05-18 20:17:50 steve Exp $
+//	$Id: extractHandler.java,v 1.14 1999-05-18 20:34:30 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.13 1999-05-18 20:17:50 steve Exp $
+ * @version $Id: extractHandler.java,v 1.14 1999-05-18 20:34:30 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -669,7 +669,7 @@ class attrHandler extends extract_subHandler {
 }
 
 /** &lt;has-attr&gt;<em>n</em>&lt;/&gt; extracts every Element with given attr.
- */
+ */ 
 class hasAttrHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
