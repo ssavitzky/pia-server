@@ -47,18 +47,20 @@
 		  <get name="foo"/></do>
             </repeat><br>
         </td></tr>
-    <if><agent-running name="History"/><then>
-	    <tr><th valign="top" align="right">
+  <if><agent-running name="History"/><then>
+    <tr><th valign="top" align="right">
 		    <a href="/~History"><b>History:</b></a>&nbsp;
-		</th>
-	        <td valign="top"> 
-		    [<a href="/~/History">All</a> | 
-		     <a href="/~/History/&year;/">&year;</a>/<a href="/~/History/&year;/&month;/">&month;</a>/<a href="/~/History/&year;/&month;/&day;.html">&day;</a>]
-	        </td>
-	    </tr>
-	</then>
-        <else><tr><td>&nbsp;</td><td></td></tr>
-        </else></if>
+	</th>
+	<td valign="top"> 
+	    [<a href="/~History/DATA/">All</a> | 
+	     <a href="/~History/DATA/&year;/">&year;</a> /
+	     <a href="/~History/DATA/&year;/&month;/">&month;</a> /
+	     <a href="/~History/DATA/&year;/&month;/&day;.html">&day;</a>]
+	</td>
+    </tr>
+  </then>
+  <else><tr><td>&nbsp;</td><td></td></tr>
+  </else></if>
     <tr><td width="170">&nbsp;</td><td></td></tr>
   </table>
 </td></tr></table>
@@ -67,5 +69,5 @@
 <hr />
 <include src="&PIA:url;/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.14 2000-04-18 18:59:48 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.15 2000-04-18 19:18:00 steve Exp $" />
 </p></body></html>
