@@ -2,22 +2,25 @@
 <html><head>
 <title>Mozilla Enhancements</title>
 <script language="JavaScript"> 
-
+  <make type="comment">
    // From http://developer.netscape.com/docs/manuals/browser/sidebar/
    // The usual trick of enclosing the script in a comment suppresses
-   // PIA entity substitution.  If needed, you can use a "make" tag.
+   // PIA entity substitution, but the && gets munged if we don't,
+   // so &lt;make&gt; the comment after expanding entities.
 
    function addSidebar() { 
       if ((typeof window.sidebar == "object")
-          && (typeof window.sidebar.addPanel == "function")) 
-      { 
-         window.sidebar.addPanel (
-           "PIA index", 
-           "&PIA:url;/sidebar.html",""); 
+          && (typeof window.sidebar.addPanel == "function")) { 
+         window.sidebar.addPanel("PIA index", 
+           			 "&PIA:url;/sidebar.html",""); 
+      } else {
+         var rv =
+	    window.confirm("This page is enhanced for use with Netscape 6.  " 
+			   + "Would you like to upgrade now?");
+         if (rv) document.location.href = "http://home.netscape.com";
       }
-      // the "else" clause Netscape had here didn't work.
    } 
-
+  // </make>
 </script> 
 </head>
 <body bgcolor="#ffffff" link='#c40026' vlink='#e40026'>
@@ -31,9 +34,8 @@
 
 <table>
   <tr>
-    <td>
-	 <a href="javascript:addSidebar();"><img SRC="http://developer.netscape.com/docs/manuals/browser/sidebar/add-button.gif"
-	 align=left alt="add to sidebar" BORDER=0 height=45 width=100></a>
+    <td> <a href="javascript:addSidebar();"><img src="http://developer.netscape.com/docs/manuals/browser/sidebar/add-button.gif"
+	 align="left" alt="add to sidebar" border=0 height=45 width=100></a>
     </td>
     <td> Add the frame version of the PIA's directory index to ``my
 	 sidebar''. -- see
@@ -44,8 +46,21 @@
   </tr>
 </table>
 
+<hr />
+
+<table border="2">
+  <caption>Button Source Code</caption>
+  <tr>
+    <td> <small><pre><protect result markup><extract>
+	   <from><include quoted="yes" tagset="/Apps/Woad/Tools/proc-xhtml"
+	 		  src="&DOC:path;" /></from>
+	   <name recursive="yes">script</name>
+	 </extract> </protect></pre></small>
+    </td>
+  </tr>
+</table>
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: mozilla.xh,v 1.1 2000-04-25 23:59:51 steve Exp $</b><br>
+<b>$Id: mozilla.xh,v 1.2 2000-10-13 22:22:16 steve Exp $</b><br>
 </body></html>
