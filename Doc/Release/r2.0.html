@@ -10,19 +10,57 @@
     stable release: the system does work, but there are still bugs, broken
     links, and other anomalies.  Release 2.1 will be the first stable release.
 
-<p> We suggest that persons who wish to use the PIA to develop applications
+<p> We suggest that people who wish to use the PIA to develop applications
     but are not interested in debugging/programming the core engine wait for
     2.1.  Subscribe to <a href=mailto:PIA-announce-request@risource.org>
     PIA-announce@RiSource.org</a> to be notified of new releases.
 
 
 <h2><A NAME="announce">Release Announcements</A></h2>
+<h3>Release 2.0.5</h3>
+
+<p> This release includes saving and restoring Agent state in XML.  
+
+<h4>Changes since 2.0.4:</h4>
+
+<ol>
+  <li> The &lt;AGENT&gt; tag has been implemented in the PIA, allowing entire
+       agents, and even groups of agents, to be saved in XML files and read
+       back.  This has the side-effects of both simplifying and speeding up
+       start-up.  It also ensures that agents are installed in a user-defined
+       sequence. 
+
+  <li> The old-style agent checkpoint files, and the default <code><a
+       href="/Admin/START-UP.html">Admin/START-UP.html</a></code>, have been
+       eliminated.  If you have a customized <code>START-UP.html</code> file,
+       the best thing to do is to submit the forms for any custom agents
+       manually, browse to those agents' <code>options</code> page, and
+       <!-- === this will probably change before release. === -->
+       cut-and-paste the XML data into files called <code>AGENT.xml</code> in
+       the appropriate user directories.  Then add the filenames to a
+       customized <code>Agents/Admin/agent-files.xml</code> in your user
+       directory.
+
+  <li> The &lt;namespace&gt; and &lt;bind&gt; tags have been added; these
+       allow arbitrary collections of name-value pairs to be saved in and
+       restored from files.
+
+  <li> The parser has been sped up by roughly a factor of two, mainly by going
+       to a <code>BufferedReader</code> for input.  Combined with XML agent
+       loading and the ``stripped'' version of <code>basic.ts</code> (which is
+       now built by default, and gives an additional factor of two), this
+       makes initialization <em>significantly</em> faster.
+
+  <li> Bugs in &lt;logical and&gt;, &lt;text trim&gt;, and &lt;extract&gt;
+       have been fixed.
+</ol>
+
 <h3>Release 2.0.4</h3>
 
 <p> This release marks some major improvements in DOM compatibility, plus a
     number of bug fixes.
 
-<p> Changes since 2.0.3:
+<h4>Changes since 2.0.3:</h4>
 
 <ol>
   <li> The internal representation for parse trees in
@@ -242,7 +280,7 @@ The PIA Group (Greg, Steve, Marko, Pam)
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>r2.0$Id: r2.0.html,v 1.18 1999-04-13 23:42:17 wolff Exp $</b><br>
+<b>r2.0$Id: r2.0.html,v 1.19 1999-05-07 23:26:09 steve Exp $</b><br>
 </body></html>
 
 
