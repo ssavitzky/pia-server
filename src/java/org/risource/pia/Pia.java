@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.14 1999-09-22 23:51:03 steve Exp $
+// $Id: Pia.java,v 1.15 1999-09-23 00:09:40 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,7 +64,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.14 1999-09-22 23:51:03 steve Exp $
+  * @version $Id: Pia.java,v 1.15 1999-09-23 00:09:40 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -801,8 +801,6 @@ public class Pia implements Tabular {
       System.err.println("Cannot open initialization file " + siteConfigPath);
       System.exit(-1);
     }
-    System.err.println("Site config path = " + siteConfigPath + " " + 
-		       ((cfgFile == null)? "-" : cfgFile.getPath()));
 
     rootResource = new PiaSite(usrRootStr, piaRootStr, null, 
 			       configFileName, "pia-config");
