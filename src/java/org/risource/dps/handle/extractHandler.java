@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.11 1999-04-23 00:21:40 steve Exp $
+//	$Id: extractHandler.java,v 1.12 1999-05-06 20:39:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -47,7 +47,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.11 1999-04-23 00:21:40 steve Exp $
+ * @version $Id: extractHandler.java,v 1.12 1999-05-06 20:39:06 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -181,6 +181,11 @@ public class extractHandler extends GenericHandler {
       ActiveNode node = extracted.activeItem(i);
       String nn = getNodeName(node, true);
       if (nn != null && nn.equals(name)) out.putNode(node);
+      else if (node instanceof Namespace) {
+	Namespace ns = (Namespace) node;
+	ActiveNode n = ns.getBinding(name);
+	if (n != null) out.putNode(n);
+      }
     }
   }
 
@@ -348,6 +353,10 @@ class childHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     Enumeration terms = ListUtil.getTextItems(content);
     int termsHandled = 0;
@@ -380,6 +389,10 @@ class nodesHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     Enumeration terms = ListUtil.getTextItems(content);
     int termsHandled = 0;
 
@@ -397,6 +410,10 @@ class nameHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     String name = content.toString();
     if (name != null) name = name.trim();
     if (name == null) {
@@ -431,6 +448,10 @@ class name_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String key = content.toString();
@@ -482,6 +503,10 @@ class keyHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     String sep = atts.getAttribute("sep");
     String key = content.toString();
@@ -511,6 +536,10 @@ class key_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     String  sep = atts.getAttribute("sep");
     boolean all = atts.hasTrueAttribute("all");
@@ -543,6 +572,10 @@ class idHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     String id = content.toString();
     if (id != null) id = id.trim();
@@ -571,6 +604,10 @@ class id_recursive extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     boolean all = atts.hasTrueAttribute("all");
     String  id = content.toString();
@@ -603,6 +640,10 @@ class attrHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     String name = content.toString();
     if (name != null) name = name.trim();
@@ -632,6 +673,10 @@ class matchHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     String match = content.toString();
     // === WARNING: match is not being trimmed! ===
@@ -658,6 +703,10 @@ class xptrHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     boolean caseSens = atts.hasTrueAttribute("case");
     unimplemented(in, aContext);		// === xptr
   }
@@ -669,6 +718,10 @@ class parentHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     Node previous = null;
 
     int len = extracted.getLength();
@@ -689,6 +742,10 @@ class contentHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
 
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
@@ -704,6 +761,10 @@ class nextHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
@@ -719,6 +780,10 @@ class prevHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
@@ -734,6 +799,10 @@ class evalHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
@@ -762,6 +831,10 @@ class replaceHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     String name = atts.getAttribute("name");
     boolean caseSens = atts.hasTrueAttribute("case");
 
@@ -816,6 +889,10 @@ class removeHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
@@ -834,6 +911,10 @@ class uniqueHandler extends extract_subHandler {
   protected void action(Input in, Context aContext, Output out, 
 			ActiveAttrList atts, ActiveNodeList content) {
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     List textAssoc = TextUtil.getTextList(extracted, false);
     Enumeration textAssocEnum = textAssoc.elements();
 
@@ -883,6 +964,10 @@ class appendHandler extends extract_subHandler {
     boolean children = atts.hasTrueAttribute("children");
 
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside < extract >");
+      return;
+    }
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
       ActiveNode item = extracted.activeItem(i);
@@ -915,6 +1000,10 @@ class insertHandler extends extract_subHandler {
 			ActiveAttrList atts, ActiveNodeList content) {
     int child = MathUtil.getInt(atts, "child", -1);
     ActiveNodeList extracted = getExtracted(aContext);
+    if (extracted == null) {
+      reportError(in, aContext, "No list: possibly not inside <extract>");
+      return;
+    }
 
     int len = extracted.getLength();
     for (int i = 0; i < len; ++i) {
