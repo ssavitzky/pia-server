@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.11 1999-03-27 01:36:47 steve Exp $
+// $Id: GenericAgent.java,v 1.12 1999-03-31 23:06:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -1046,15 +1046,23 @@ public class GenericAgent implements Agent, Registered, Serializable {
     return path;
   }
 
+  /** Remove the agent's pathname from the given path. */
+  public String stripAgentPath(String path) {
+    String mypath = pathName();
+    if (path.startsWith(mypath)) {
+      path = path.substring(mypath.length());
+    } else if (path.startsWith("/" + name())) {
+      // === For the moment accept a path starting with just name()
+      path = path.substring(name().length() + 1);
+    }
+    return path;
+  }
+
   /**
    * Find a filename relative to this Agent.
    */
   public String findDocument(String path){
-    if ( path == null ) return null;
-
-    // Really ought to handle leading /~/ here to give correct search path ===
-
-    return findDocument(path, pathName(), documentSearchPath(), null);
+    return findDocument(path, null, false);
   }
 
   /**
@@ -1073,67 +1081,35 @@ public class GenericAgent implements Agent, Registered, Serializable {
   public String findDocument(String path, String suffixPath[],
 			     boolean forWriting) {
     if ( path == null ) return null;
-    List if_path = forWriting? dataSearchPath(): documentSearchPath();
-    String found =  findDocument(path, pathName(), if_path, suffixPath);
+
+    if (path.startsWith("/~")) {	// old-style data path
+      path = "/" + path.substring(2);
+      path = stripAgentPath(path);
+      if (path.startsWith(HOME)) path = path.substring(HOME.length());
+      path = "~" + path;
+    } else if (path.startsWith("/")) {	// Absolute path
+      path = stripAgentPath(path);
+      // Treat /PATH/NAME~ same as /PATH/NAME -- agent handles if different.
+      if (path.startsWith(HOME)) path = path.substring(HOME.length());
+      path = path.substring(1);
+    }
+    // OK: at this point we have a relative path.
+
+    if (path.startsWith(DATA)) {
+      path = path.substring(DATA.length());
+      if (suffixPath == null) suffixPath = dataSearch;
+      return findDataFile(path, suffixPath, forWriting);
+    }
+
+    if (suffixPath == null) suffixPath = codeSearch;
+    List dirPath = forWriting? dataSearchPath(): documentSearchPath();
+    String found =  FileAccess.findFile(path, dirPath, suffixPath);
     if (found != null) return found;
     if (forWriting) { // Didn't find anything, but it may be ok to create it.
-      // === this will fail for files with a leading pathName or /~/ ===
-      // === should really return systemPath(userDirFile.getPath(), path)
-      return NameUtils.systemPath(dataDirectory(), path);       
+      return NameUtils.systemPath(userDirFile.getPath(), path);
+      // === return NameUtils.systemPath(dataDirectory(), path);       
     }
     return null;
-  }
-
-  /**
-   * Find a filename relative to an arbitrary agent.  
-   *	Note that the path separator <em>must</em> be ``<code>/</code>'',
-   *	i.e. the path must follow the conventions for a URL.
-   */
-  public String findDocument(String path, String mypath,
-			      List if_path, String suffixPath[]){
-    if ( path == null ) return null;
-    Pia.debug(this, "  path on entry -->"+ path);
-
-    boolean hadName = false;	// these might be useful someday.
-    boolean wasData = false;
-
-    // Remove a leading /~, indicating the data directory, from the path
-    //	This indicates the agent's data directory.
-    if (path.startsWith("/~/")) {
-      path = path.substring(2);
-      wasData = true;
-    } else  if (path.startsWith("/~")) {
-      path = "/" + path.substring(2);
-      wasData = true;
-    }
-
-    // Remove agent's pathName from the given path.
-    if (path.startsWith(mypath)) {
-      path = path.substring(mypath.length());
-      hadName = true;
-    } else if (path.startsWith("/" + name())) {
-      // === For the moment accept a path starting with just name()
-      path = path.substring(name().length() + 1);
-      hadName = true;
-    }
-
-    if (path.startsWith(HOME)) {
-      path = path.substring(HOME.length());
-    }
-    if (path.startsWith("/" + DATA )) {
-      path = path.substring(DATA.length() + 1);
-      wasData = true;
-    }
-
-    if (path.startsWith("/")) path = path.substring(1);
-    if (wasData) {
-      if_path = new List();
-      if_path.push(dataDirectory());
-    }
-    
-    if (suffixPath == null) suffixPath = wasData? dataSearch : codeSearch;
-    
-    return FileAccess.findFile(path, if_path, suffixPath);
   }
 
   /** 
