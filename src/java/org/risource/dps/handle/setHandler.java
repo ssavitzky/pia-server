@@ -1,5 +1,5 @@
 ////// setHandler.java: <set> Handler implementation
-//	$Id: setHandler.java,v 1.7 1999-07-08 21:38:42 bill Exp $
+//	$Id: setHandler.java,v 1.8 1999-11-17 18:33:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -37,11 +37,25 @@ import org.risource.dps.tree.TreeNodeList;
  * <p>	This is an approximation to the legacy &gt;set&gt;; it lacks many
  *	of the old extraction modifiers, which have moved to &lt;extract&gt;.
  *
- * @version $Id: setHandler.java,v 1.7 1999-07-08 21:38:42 bill Exp $
+ * @version $Id: setHandler.java,v 1.8 1999-11-17 18:33:50 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
 public class setHandler extends GenericHandler {
+
+  public static final Namespace namespaceContent(ActiveNodeList content) {
+    if (content == null || content.getLength() != 1) return null;
+    ActiveNode item = content.activeItem(0);
+    return (item instanceof Namespace)? (Namespace)item : null;
+  }
+
+  public static final String contentName(ActiveNodeList content) {
+    if (content == null || content.getLength() != 1) return null;
+    ActiveNode item = content.activeItem(0);
+    if (item instanceof Namespace) return ((Namespace)item).getName();
+    String nm = item.getNodeName();
+    return (nm.startsWith("#"))? null : nm;
+  }
 
   /************************************************************************
   ** Semantic Operations:
@@ -51,13 +65,17 @@ public class setHandler extends GenericHandler {
   public void action(Input in, Context aContext, Output out, 
   		     ActiveAttrList atts, ActiveNodeList content) {
     // Actually do the work. 
+    if (content == null) content = new TreeNodeList();
+    if (! atts.hasTrueAttribute("notrim")) content = TextUtil.trim(content);
+
     String name = atts.getAttribute("name");
+    //if (name == null) name = contentName(content);
     if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "<set> with null name; setting to "+content, 0, true);
       return;
     }
-    if (content == null) content = new TreeNodeList();
+
     Index.setIndexValue(aContext, name, content);
   }
 

@@ -1,5 +1,5 @@
 ////// dateHandler.java: <date> Handler implementation
-//	$Id: dateHandler.java,v 1.1 1999-11-16 18:48:36 steve Exp $
+//	$Id: dateHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -70,7 +70,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally 
  *	written in FORTRAN IV by Abraham Savitzky.
  *
- * @version $Id: dateHandler.java,v 1.1 1999-11-16 18:48:36 steve Exp $
+ * @version $Id: dateHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -138,6 +138,7 @@ public class dateHandler extends GenericHandler {
     long mstime = now.getTime(); 	// Java time in milliseconds
     long seconds = mstime/1000; 	// Unix time in seconds
     long jday = epoch + seconds / seconds_per_day;
+    boolean dmy = false;	// day/month/year specified
 
     // get subelements
     // 	 We're looking for either <day> + <month> + <year>,
@@ -245,6 +246,7 @@ public class dateHandler extends GenericHandler {
       jday = Julian.jday(year, month + 1, day);
       seconds  = (jday - epoch) * seconds_per_day;
       mstime   = seconds * 1000;
+      dmy = true;
     }
 
     // Calendar in 1.1.3 is totally broken -- there is no way to recompute the 
@@ -308,6 +310,7 @@ public class dateHandler extends GenericHandler {
 	return;
     } else if (atts.hasTrueAttribute("monthname") ){
       fmt = new SimpleDateFormat("MMMM");
+      if (dmy) fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
       putText(out, cxt, fmt.format(theDate));
 
      //String monthName = (String)monthNames.at( month );
@@ -325,15 +328,18 @@ public class dateHandler extends GenericHandler {
       fmt = new SimpleDateFormat(format);
       putText(out, cxt, fmt.format(theDate));
     } else if (atts.hasTrueAttribute("gmt")) {
-      fmt = new SimpleDateFormat("d MMM yyyy HH:mm:ss 'GMT'",
-						  Locale.US);
+      fmt = new SimpleDateFormat("d MMM yyyy HH:mm:ss 'GMT'");
       fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
       putText(out, cxt, fmt.format(theDate));
     } else if (tag.equals("weekday")) {
       fmt = new SimpleDateFormat("EEEE");
+      if (dmy) fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
       putText(out, cxt, fmt.format(theDate));
     } else {
-      fmt = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy");
+      fmt = new SimpleDateFormat(dmy
+				 ? "EEE MMM dd HH:mm:ss yyyy"
+				 : "EEE MMM dd HH:mm:ss zzz yyyy");
+      if (dmy) fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
       putText(out, cxt, fmt.format(theDate));
     }
   }

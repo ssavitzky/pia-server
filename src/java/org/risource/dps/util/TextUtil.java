@@ -1,5 +1,5 @@
 ////// TextUtil.java: Text-Processing Utilities 
-//	$Id: TextUtil.java,v 1.11 1999-11-04 22:34:07 steve Exp $
+//	$Id: TextUtil.java,v 1.12 1999-11-17 18:34:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,6 +33,8 @@ import org.risource.dps.output.*;
 import org.risource.dps.input.*;
 import org.risource.dps.tree.TreeEntity;
 import org.risource.dps.tree.TreeText;
+import org.risource.dps.tree.TreeNodeList;
+
 import org.risource.dps.namespace.BasicEntityTable;
 
 import org.risource.ds.Table;
@@ -51,7 +53,7 @@ import java.net.*;
  *	Many of these utilities operate on Text nodes in NodeLists, as well
  *	as (or instead of) on strings. 
  *
- * @version $Id: TextUtil.java,v 1.11 1999-11-04 22:34:07 steve Exp $
+ * @version $Id: TextUtil.java,v 1.12 1999-11-17 18:34:02 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
@@ -245,6 +247,10 @@ public class TextUtil {
     return results.elements();
   }
 
+
+  public static ActiveNodeList trim(ActiveNodeList nl) {
+    return new TreeNodeList(trimListItems(nl));
+  }
 
   /** Pad the text to the specified width with the specified
     * alignment. The default is left, meaning that spaces are

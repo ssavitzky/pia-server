@@ -16,6 +16,14 @@ See also:
 </ul>
 
 <ol>
+  <li> <b>Bug</b> New attributes of &lt;date&gt; undocumented. <br>
+       (1999-11-17) <br>
+
+  <li> <b>Bug</b> Storing a Namespace in a Namespace needs an entity <br>
+       But on the other hand, storing a list in a PropertyTable needs an
+       element.  Really needs to be handled in addBinding.
+       (1999-11-17) <br>
+
   <li> <b>Bug</b> Entity def's aren't available in a tagset <br>
        Therefore set's, etc. won't work.
        (1999-11-11) <br>
@@ -145,10 +153,6 @@ See also:
        for http://blackroot.crc.ricoh.com:8888/Demo/demo_text.xh
        (1999-06-14 Pfafman) <br>
        
-  <li> <b>Impr</b> Namespace attr for get, set, bind. <br>
-       Note that this would allow sidestepping of XML namespace issues.
-       (1999-06-11) <br>
-
   <li> <b>Bug</b> &lt;text encode&gt; badly broken <br>
        Should be &lt;text encode=entity&gt; not &lt;encode entity&gt;.
        Also, it seems to be doing bad things to an entity in its contents, in
@@ -441,12 +445,6 @@ Results: &lt;pre&gt;cat                                                         
         </pre>
 	(1998-10-19)<br>
 
-  <li> <b>Impr</b> Simplify Namespace and Context ops. <br>
-       getEntityValue, etc. should be removed from Context; the more general
-       operations in Index should be used to give a single point of
-       definition. 
-       (1998-10-12) <br>
-
   <li> <b>Bug:</b> subst has trouble with matches that get to the end. <br>
        This is a generic problem with the regexp stuff.
        (1998-10-9) <br>
@@ -469,11 +467,6 @@ Results: &lt;pre&gt;cat                                                         
        xptr is the only one left.
        (1998-09-08)<br>
        -- this can easily be deferred
-
-  <li> <b>Bug:</b> Passive Entities needed. <br>
-       Passive entities (character entities) and some normal entities have to
-       be defined in the DTD.  Passive entities untested. 
-       (1998-08-13) <br>
 
   <li> <b>Hole:</b> Parser work needed. <br>
        Literals, CDATA sections, parent, content models, declaration and PI
@@ -544,21 +537,11 @@ Results: &lt;pre&gt;cat                                                         
        (1998-06-29) <br>
        -- Actually it might be best to use a ParseTreeTable as a wrapper.
 
-  <li> <b>Bug:</b> appending to undefined entity fails. <br>
-       &lt;set name=foo&gt;&lt;get name=foo&gt;...&lt;/set&gt; leaves
-       <code>foo</code> undefined.  There must be an explanation...
-       (1998-06-26) <br>
-
   <li> <b>Impr:</b> Upgrade <code>handle</code> methods. <br>
        The static <code>handle(<em>element</em>)</code> methods in handler
        subclasses should pick up a static instance if possible, rather than
        just calling <code>new</code>.  (See also ''Impr'' of 1998-06-15.)
        (1998-06-25) <br>
-
-  <li> <b>Hole:</b> <code>ToParseTree</code> should take a tagset <br>
-       Tagset is needed to attach actions to constructed nodes.
-       (1998-06-22) <br>
-       -- probably just needs working shallow copy.
 
   <li> <b>Impr:</b> Tagset should extend EntityTable, or reference one. <br>
        This will make it easier to define entities and tags in the same DTD.
@@ -629,5 +612,5 @@ Results: &lt;pre&gt;cat                                                         
 
 <hr>
 <b>Copyright &copy; 1998-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.42 1999-11-11 18:32:46 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.43 1999-11-17 18:33:46 steve Exp $</b><br>
 </body></html>

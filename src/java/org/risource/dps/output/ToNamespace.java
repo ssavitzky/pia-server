@@ -27,7 +27,7 @@ import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
 import org.risource.dps.tree.TreeNodeList;
-import org.risource.dps.namespace.BasicNamespace;
+import org.risource.dps.namespace.*;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Namespace.<p>
  *
- * @version $Id: ToNamespace.java,v 1.4 1999-07-14 20:20:45 steve Exp $
+ * @version $Id: ToNamespace.java,v 1.5 1999-11-17 18:33:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  */
@@ -139,13 +139,17 @@ public class ToNamespace extends ActiveOutput implements Output {
       namespace.setBinding(binding.getNodeName(), binding);
       break;
     case Node.ELEMENT_NODE:
+      if (binding instanceof Namespace) {
+	Namespace ns = (Namespace) binding;
+	namespace.setBinding(ns.getName(), new EntityWrap(ns.getName(), ns));
+      } else
       if (bindingTag != null && !bindingTag.equals(binding.getNodeName())) {
 	if (bypass != null) bypass.putNode(aNode);
-	return;
-      } 
-      namespace.setValueNodes(context,
-			      binding.asElement().getAttribute(nameAttr),
-			      binding.getValueNodes(context));
+      } else {
+	namespace.setValueNodes(context,
+				binding.asElement().getAttribute(nameAttr),
+				binding.getValueNodes(context));
+      }
       break;
     default: 
       if (bypass != null) bypass.putNode(aNode);

@@ -1,5 +1,5 @@
 ////// Index.java: Utilities for handling index expressions
-//	$Id: Index.java,v 1.8 1999-10-14 23:55:59 steve Exp $
+//	$Id: Index.java,v 1.9 1999-11-17 18:34:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,8 +31,7 @@ import org.risource.dps.Tagset;
 import org.risource.dps.active.*;
 import org.risource.dps.output.*;
 import org.risource.dps.tree.TreeNodeList;
-import org.risource.dps.namespace.BasicNamespace;
-import org.risource.dps.namespace.BasicEntityTable;
+import org.risource.dps.namespace.*;
 
 import org.risource.ds.Table;
 import org.risource.ds.Association;
@@ -42,11 +41,17 @@ import java.util.Enumeration;
 /**
  * Index Expression Utilities.
  *
- * @version $Id: Index.java,v 1.8 1999-10-14 23:55:59 steve Exp $
+ * @version $Id: Index.java,v 1.9 1999-11-17 18:34:01 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  */
 public class Index {
+
+  public static final ActiveNode namespaceContent(ActiveNodeList content) {
+    if (content == null || content.getLength() != 1) return null;
+    ActiveNode item = content.activeItem(0);
+    return (item instanceof Namespace)? item : null;
+  }
 
   /************************************************************************
   ** Front End:
@@ -72,7 +77,9 @@ public class Index {
     } else if (i >= 0) {
       setValue(c, index.substring(0, i), index.substring(i+1), value);
     } else {
-      c.setValueNodes(index, value, false);
+      ActiveNode ns = namespaceContent(value);
+      if (ns != null) c.setBinding(index, new EntityWrap(index, ns), false);
+      else c.setValueNodes(index, value, false);
     }
   }
 

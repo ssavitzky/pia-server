@@ -27,6 +27,7 @@ import org.risource.dps.*;
 import org.risource.dps.util.*;
 import org.risource.dps.active.*;
 import org.risource.dps.tree.TreeNodeList;
+import org.risource.dps.tree.TreeGeneric;
 import org.risource.dps.namespace.PropertyTable;
 
 import org.w3c.dom.Node;
@@ -35,7 +36,7 @@ import org.w3c.dom.NodeList;
 /**
  * Output to a Properties.<p>
  *
- * @version $Id: ToProperties.java,v 1.1 1999-11-06 01:14:49 steve Exp $
+ * @version $Id: ToProperties.java,v 1.2 1999-11-17 18:33:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Namespace
  */
@@ -120,7 +121,11 @@ public class ToProperties extends ActiveOutput implements Output {
 			      binding.getValueNodes(context));
       break;
     case Node.ELEMENT_NODE:
-      namespace.setBinding(binding.getNodeName(), binding);
+      String name = (aNode instanceof TreeGeneric)
+	? ((TreeGeneric)aNode).getName()
+	: aNode.getNodeName();
+
+      namespace.setBinding(name, binding);
       break;
     default: 
       if (bypass != null) bypass.putNode(aNode);

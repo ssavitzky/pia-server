@@ -1,5 +1,5 @@
 ////// letHandler.java: <let> Handler implementation
-//	$Id: letHandler.java,v 1.1 1999-06-26 00:44:43 steve Exp $
+//	$Id: letHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -38,11 +38,11 @@ import org.risource.dps.tree.TreeNodeList;
  *	&lt;bind&gt in that the content is expanded, and from &lt;set&gt;
  *	in that the name is bound in the most-local current namespace.
  *
- * @version $Id: letHandler.java,v 1.1 1999-06-26 00:44:43 steve Exp $
+ * @version $Id: letHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
-public class letHandler extends GenericHandler {
+public class letHandler extends setHandler {
 
   /************************************************************************
   ** Semantic Operations:
@@ -56,14 +56,22 @@ public class letHandler extends GenericHandler {
     ActiveAttrList attrs = in.getActive().getAttrList();
     ActiveNodeList content = Expand.getProcessedContent(in, aContext);
     if (content == null) content = new TreeNodeList();
+    if (! attrs.hasTrueAttribute("notrim")) content = TextUtil.trim(content);
+
     // Actually do the work. 
     String name = attrs.getAttribute("name");
+    //if (name == null) name = contentName(content);
     if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "Binding null name to "+content, 0, true);
       return;
     }
-    aContext.setValueNodes(name, content, true);
+    Namespace ns = namespaceContent(content);
+    if (ns != null) {
+      aContext.setBinding(name, (ActiveNode)ns, true);
+    } else {
+      aContext.setValueNodes(name, content, true);
+    }
   }
 
    

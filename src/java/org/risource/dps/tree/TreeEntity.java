@@ -1,5 +1,5 @@
 ////// TreeEntity.java -- implementation of ActiveEntity
-//	$Id: TreeEntity.java,v 1.5 1999-07-14 20:21:14 steve Exp $
+//	$Id: TreeEntity.java,v 1.6 1999-11-17 18:33:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.risource.dps.util.Copy;
  * An implementation of the ActiveEntity interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreeEntity.java,v 1.5 1999-07-14 20:21:14 steve Exp $
+ * @version $Id: TreeEntity.java,v 1.6 1999-11-17 18:33:57 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.active.ActiveNode
  */
@@ -135,12 +135,29 @@ public class TreeEntity extends TreeValue implements ActiveEntity {
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
+    boolean notrim = false;
+
+    ActiveNodeList v = getValueNodes();
+    if (v != null && v.getLength() > 0) {
+      ActiveNode item = v.activeItem(0);
+      if (item.getNodeType() == Node.TEXT_NODE &&
+	  item.getNodeValue().charAt(0) <= ' ') notrim = true;
+      else {
+	item = v.activeItem(v.getLength() -1);
+	if (item.getNodeType() == Node.TEXT_NODE &&
+	    item.getNodeValue().charAt(item.getNodeValue().length()-1) <= ' ')
+	  notrim = true;
+      }
+    }	
+
+    // === really ought to use "let" if content is a namespace ===
     return ("<bind name='"
-	    + getName()
+	    + getName() + "'"
 	    + ((publicId == null)? "" : " publicId='" + publicId + "'")
 	    + ((systemId == null)? "" : " systemId='" + systemId + "'")
 	    + ((notationName == null)? "" : " notation='" + notationName + "'")
-	    + "'>");
+	    + (notrim? " notrim='notrim'" : "")
+	    + ">");
   }
 
   /** Return the String equivalent of the Node's content or

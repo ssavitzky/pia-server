@@ -1,5 +1,5 @@
 ////// bindHandler.java: <bind> Handler implementation
-//	$Id: bindHandler.java,v 1.1 1999-04-30 23:37:00 steve Exp $
+//	$Id: bindHandler.java,v 1.2 1999-11-17 18:33:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,11 +39,11 @@ import org.risource.dps.tree.TreeNodeList;
  *	Bind must be an immediate child of a Namespace, and entities are 
  *	not expanded in its attributes.  
  *
- * @version $Id: bindHandler.java,v 1.1 1999-04-30 23:37:00 steve Exp $
+ * @version $Id: bindHandler.java,v 1.2 1999-11-17 18:33:49 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
-public class bindHandler extends GenericHandler {
+public class bindHandler extends setHandler {
 
   /************************************************************************
   ** Semantic Operations:
@@ -57,14 +57,23 @@ public class bindHandler extends GenericHandler {
     ActiveAttrList attrs = in.getActive().getAttrList();
     ActiveNodeList content = Expand.getContent(in, aContext);
     if (content == null) content = new TreeNodeList();
+    if (! attrs.hasTrueAttribute("notrim")) content = TextUtil.trim(content);
+
     // Actually do the work. 
     String name = attrs.getAttribute("name");
+    //if (name == null) name = contentName(content);
     if (name != null) name = name.trim();
     if (name == null || name.equals("")) {
       aContext.message(-2, "Binding null name to "+content, 0, true);
       return;
     }
-    aContext.setValueNodes(name, content, true);
+
+    Namespace ns = namespaceContent(content);
+    if (ns != null) {
+      aContext.setBinding(name, (ActiveNode)ns, true);
+    } else {
+      aContext.setValueNodes(name, content, true);
+    }
   }
 
    
