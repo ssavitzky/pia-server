@@ -43,7 +43,7 @@ cvs_tag::
 	cvs tag $(VERSION_ID)
 
 cvs_rtag::
-	cvs rtag $(VERSION_ID) pia
+	cvs rtag $(VERSION_ID) PIA
 
 foobar::
 	echo $(VERSION_ID)
@@ -122,22 +122,22 @@ crfixbat::
 ### Binary release
 
 pia_bin.toc:: 
-	cd ..; find pia \! -type d -print \
+	cd ..; find PIA \! -type d -print \
 	    | grep -v CVS \
 	    | grep -v Config/CDRW | grep -v Config/Demos \
 	    | grep -v Config/MB3 \
 	    | grep -v Config/Photo | grep -v Config/Printer \
 	    | grep -v Config/WebWort | grep -v Config/cdrom \
 	    | grep -v pia_src.tgz | grep -v pia.toc \
-	    | grep -v src > pia/pia_bin.toc 
+	    | grep -v src > PIA/pia_bin.toc 
 
 pia_bin.tar:	rm_bin_tar prep_rel crfixbat cp_build_noa pia_bin.toc
-	cd ..; $(TAR) cfT pia/pia_bin pia/pia_bin.toc ;  /bin/gzip -S .tgz pia/pia_bin
+	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
 
 ### Source release
 
 pia.toc:: 
-	cd ..;	find pia \! -type d -print \
+	cd ..;	find PIA \! -type d -print \
 	    | grep -v CVS \
 	    | grep -v src/app/webfax | grep -v src/perl \
 	    | grep -v src/tex \
@@ -145,15 +145,15 @@ pia.toc::
 	    | grep -v Config/Photo | grep -v Config/Printer \
 	    | grep -v Config/WebWort | grep -v Config/cdrom \
 	    | grep -v Config/Demos | grep -v Doc/Papers \
-	    | grep -v pia_bin.tgz | grep -v pia_bin.toc > pia/pia.toc 
+	    | grep -v pia_bin.tgz | grep -v pia_bin.toc > PIA/pia.toc 
 
 pia.tar:	rm_pia_tar prep_rel crfixbat cp_build_noa pia.toc
-	cd ..; $(TAR) cfT pia/pia_src pia/pia.toc ;	/bin/gzip -S .tgz pia/pia_src
+	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
 
 ### Binary and source release
 pia_bin_src: 	rm_bin_tar rm_pia_tar prep_rel crfixbat cp_build_noa pia_bin.toc pia.toc
-	cd ..; $(TAR) cfT pia/pia_bin pia/pia_bin.toc ;  /bin/gzip -S .tgz pia/pia_bin
-	cd ..; $(TAR) cfT pia/pia_src pia/pia.toc ;	/bin/gzip -S .tgz pia/pia_src
+	cd ..; $(TAR) cfT PIA/pia_bin PIA/pia_bin.toc ;  /bin/gzip -S .tgz PIA/pia_bin
+	cd ..; $(TAR) cfT PIA/pia_src PIA/pia.toc ;	/bin/gzip -S .tgz PIA/pia_src
 
 pia_cdrom::	pia_bin_src
 	cp pia_bin.tgz $(CDROMDIR); cp pia_src.tgz $(CDROMDIR)
