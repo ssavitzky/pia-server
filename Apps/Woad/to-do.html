@@ -5,6 +5,23 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Impr</b> Navigation buttons in index files <br />
+       Implement as part of the wrapper element.  See, e.g., the <a
+       href="http://www.tuxedo.org/~esr/jargon/">Jargon File</a>.
+       (2000-08-28)
+  </li>
+  <li> <b>Bug</b> query form of word lookup breaks index links <br />
+       (but notes are OK) This probably breaks indexing in source code,
+       too.  The right way to handle word queries is redirect, but PIA can't
+       do that yet.
+       (2000-08-25)
+  </li>
+  <li> <b>Impr</b> save startup parameters <br />
+       The <code>woad</code> command should save its command line in the root;
+       then <code>woad&nbsp;<em>root</em></code> should restart it.  Implies
+       that the filename parameter should be always (usually?) be the root.
+       (2000-08-24)
+  </li>
   <li> <b>Impr</b> other word sources <br />
        Some locations are too big to index.  Jargon file is marginal.  Online
        dictionaries like <a href="http://www.m-w.com/">Merriam-Webster</a> are
@@ -33,7 +50,8 @@
        Would provide for versioning and recovery from both unintentional
        damage and intentional vandalism.  Could also be used for other
        historical metadata and for sharing annotation among widely-separated
-       sites.  Suggestion from Amy Bruckman.
+       sites.  Also allows for e-mail notification.  Suggestion from Amy
+       Bruckman. 
        (2000-08-10) 
   </li>
   <li> <b>Impr</b> preference-based ordering for sections <br />
@@ -249,5 +267,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.17 2000-08-22 23:58:51 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.18 2000-08-30 23:22:09 steve Exp $</b><br>
 </body></html>
