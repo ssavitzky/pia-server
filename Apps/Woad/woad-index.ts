@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.2 2000-07-19 00:44:34 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.3 2000-08-10 17:30:28 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -79,6 +79,7 @@
     </tr>
   </action>
 </define>
+
 <define element="File">
   <doc> Source File reference.  Path in content.
   </doc>
@@ -109,6 +110,24 @@
   </action>
 </define>
 
+<define element="Def">
+  <doc> Word definition
+  </doc>
+  <action><hide>
+    <let name="cxt"><get name="attributes:context"/></let>
+    <let name="word"><get name="attributes:word"/></let>
+    <let name="path"><get name="attributes:path"/></let></hide>
+    <tr> <td rowspan="2"> <a href="&path;">&word;</a>
+	 </td>
+	 <td> <a href="&path;">&path;</a>
+	 </td>
+    </tr>
+    <tr> <td> &nbsp;&nbsp;&nbsp; &content;
+	 </td>
+    </tr>
+  </action>
+</define>
+
 
 <define element="index" syntax="quoted">
   <doc> This element wraps the index
@@ -122,9 +141,7 @@
     </if>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title><extract><from><get name="content"/></from>
-		note title <content />
-       </extract></title>
+<title>&DOC:path;</title>
 </head><body bgcolor="99ccff">
 <header>&DOC:name; Index file</header>
 <set name="notesPrefix">
