@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.22 1999-04-14 23:09:23 pgage Exp $
+#	$Id: Makefile,v 1.23 1999-06-02 21:49:05 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -24,11 +24,6 @@ PIADIR=.
 MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=pia
 MYPATH=
-REL_DIR	    = $(HOME)/src_release
-REL_PIA_DIR = $(HOME)/src_release/PIA
-DEST_DIR    = /pia1/pia
-TAR_NAME    = pia_src$(VERSION)
-CREATE_CVS_TAG = 0
 
 SUBDIRS= src bin lib Doc
 
@@ -46,13 +41,27 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 4
+MINOR       = 5
 SUFFIX      = 
 
-### Commands:
+### Release directories and file names: 
 
-# === GNU tar required ===
-TAR=/usr/local/bin/tar
+REL_DIR	    = $(HOME)/src_release
+DEST_DIR    = /pia1/pia
+TAR_NAME    = pia_src$(VERSION)
+CREATE_CVS_TAG = 1
+
+### How to make a source release:
+###
+#   1. Set make macros RELEASE, MAJOR, MINOR, and SUFFIX as appropriate.
+#   2. If the version number has changed, commit the Makefile NOW.
+#	Building includes a "cvs checkout"
+#   2. "make prep_checkout" : this updates _and_commits_ Version.java.
+#   3. DO THIS MANUALLY:  
+#	cd /pia1/CvsRoot ; rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
+#   4. "make src.tar"
+
+### Commands:
 
 ### Operations involving version number:
 ###
@@ -63,8 +72,11 @@ VERSION    = $(RELEASE).$(MAJOR).$(MINOR)$(SUFFIX)
 RISOURCE=src/java/org/risource
 RELNOTES=Doc/Release
 
-update-version:: $(RISOURCE)/Version.java\
-	$(RELNOTES)/r$(RELEASE).$(MAJOR).html
+report-version::
+	echo $(VERSION_ID)
+
+update-version:: $(RISOURCE)/Version.java
+	echo version updated to $(VERSION_ID)
 
 $(RISOURCE)/Version.java:: Makefile
 	perl -p -i -e 's/[0-9]+;/$(RELEASE);/ if /RELEASE/;' \
@@ -72,19 +84,18 @@ $(RISOURCE)/Version.java:: Makefile
 		 -e 's/[0-9]+;/$(MINOR);/ if /MINOR/;' \
 		 -e 's/\"[^"]*\"/\"$(SUFFIX)\"/ if /SUFFIX/;' \
 		$(RISOURCE)/Version.java
+	cvs commit -m 'Update to version $(VERSION)' $@
 
+# Hack the release notes file.  Does not appear to be needed.
 $(RELNOTES)/r$(RELEASE).$(MAJOR).html:: Makefile
 	perl -p -i -e 's/[0-9.a-zA-Z]+\</$(VERSION)\</ if /\<h1\>/;' \
-		 -e 's/[0-9]+;/$(MAJOR);/ if /MAJOR/;' \
-		 -e 's/[0-9]+;/$(MINOR);/ if /MINOR/;' \
-		 -e 's/\"[^"]*\"/\"$(SUFFIX)\"/ if /SUFFIX/;' \
 		$(RELNOTES)/r$(RELEASE).$(MAJOR).html
-
-
-### Common cvs operations 
+	cvs commit -m 'Update to version $(VERSION)' $@
 
 version_id::
 	echo $(VERSION) `date` > version_id
+
+### Common cvs operations 
 
 cvs_tag::
 	cvs tag $(VERSION_ID)
@@ -92,42 +103,44 @@ cvs_tag::
 cvs_rtag::
 	cvs rtag $(VERSION_ID) PIA
 
-foobar::
-	echo $(VERSION_ID)
-
-# Make a source release
 export::
 	cvs export -r $(VERSION_ID)
 
+
+### Release preparation
+
 prep_src_rel::
-	make clean ; make; make doc
+	make clean ; make all version_id doc
 
 prep_rel_dir::
 	rm -rf $(REL_DIR); mkdir $(REL_DIR)
 
 prep_checkout::
-	update-version
-	make prep_rel_dir
-	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; fi
+	$(MAKE) update-version
+	$(MAKE) prep_rel_dir
+	if [ $(CREATE_CVS_TAG) -gt 0 ]; then $(MAKE) cvs_rtag; fi
 
-# Build a source release.  Before building:
-#   check all variables and set to appropriate values.  If the version number
-#   has changed, update it in this Makefile and check in the Makefile _before_
-#   starting the build.
-#   Do a make prep_checkout
-#   DO THIS MANUALLY:  cd /pia1/CvsRoot ;  /usr/local/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/
-#   Do a make src.tar
-#   NOTE:  this has not been field tested!
+### Make a tar file.  >>> REQUIRES GNU tar <<<
+###
+###	A complete "cvs checkout" is done from the PUBLIC SERVER.
+###	Then the entire directory is tarred up.
+###
+#   Notes by steve@rsv.ricoh.com 1999-06-02
+#	1. removed "make cvs_rtag" because prep_checkout does it.
+#	   This means that we can leave CREATE_CVS_TAG = 1
+#	2. create tarfile directly in $(DST_DIR) instead of moving it; 
+#	   moving will be very expensive if $(HOME) and $(DST_DIR) are in 
+#	   different filesystems. 
 src.tar:	
-	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
-	 	cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA ; \
-	else \
-		cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA ; \
-	fi
-	cd $(REL_PIA_DIR) ;  make prep_src_rel
-	cd $(REL_DIR) ; tar czf $(TAR_NAME).tgz PIA ; mv $(TAR_NAME).tgz $(DEST_DIR)
+	tar --version || (echo "You don't have GNU tar"; false)
+	cd $(REL_DIR) ; \
+	  cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA
+	cd $(REL_DIR)/PIA ;  make prep_src_rel
+	cd $(REL_DIR) ; tar czf $(DEST_DIR)/$(TAR_NAME).tgz PIA
 	cd $(DEST_DIR) ;  rm pia_src.tgz ; ln -s $(TAR_NAME).tgz pia_src.tgz
 	cd $(DEST_DIR) ; mkdir src_release$(VERSION) ; cp -r $(REL_DIR)/PIA src_release$(VERSION)
+
+
 
 # test making parts of a release
 test:	
