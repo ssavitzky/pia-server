@@ -115,12 +115,13 @@
 		   </text></repeat>
 	       </tr>
 	    </repeat>
+	    <tr><th colspan="7">&nbsp;</th></tr>
          </table>
        </td>
      </repeat></tr></table>
     </repeat>
     <show-errors />
 
-    <short-footer cvsid="$Id: year.xh,v 1.4 1999-10-12 06:14:59 steve Exp $"/>
+    <short-footer cvsid="$Id: year.xh,v 1.3 1999-10-12 06:10:49 steve Exp $"/>
   </body>
 </html>
