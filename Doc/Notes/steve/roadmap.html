@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Roadmap</title>
+</head><body>
+<h1>Roadmap</h1>
+
+<blockquote>
+  This document describes, at a very high level, where I think the PIA ought
+  to be going over the next few months.  
+</blockquote>
+
+<dl>
+  <dt> <b>See also:</b> <a href="projects.html">projects.html</a>
+  <dd> Goes into considerable depth (including design details) on some of the
+       projects mentioned here.  In particular, see:
+       <ul>
+	 <li> <a href="projects.html#XML-rep">XML Representations</a> of PIA
+	      internal objects.
+	 <li> <a href="projects.html#DOM">PIA Document Object Models</a>
+       </ul>
+</dl>
+
+<h2>Tags ``All the Way Down''</h2>
+
+<blockquote>
+  <p> ``The world is supported on the backs of four elephants standing on 
+      the shell of a giant turtle.''
+  <p> ``And what is the turtle standing on?''
+  <p> ``You're very clever, young man, but it's turtles all the way down.''
+  <p> -- <em>told of William James, Bertrand Russel, and others; see <a
+      href='http://www.celenet.org/usedtobe.htm'>here</a> and
+      <a href="http://home.earthlink.net/~mageist/turtle.html">here</a>.
+</em>
+</blockquote>
+
+<dl>
+  <dt> <b>See also:</b>
+  <dd> <a href="projects.html#XML-rep">XML Representations</a> of PIA internal
+       objects.
+</dl>
+
+<p> The goal here is to represent as many PIA internal objects as possible in
+    XML.  This is comparatively easy:  we have an interface, ActiveElement,
+    that satisfies both DOM and DPS requirements, and an implementation for it
+    (currently called <code>ParseTreeGeneric</code>) that is easy to
+    subclass. 
+
+<p> The parser is already capable of building elements with classes other than
+    the default ParseTreeElement, but this capability has not been tested and
+    more work needs to be done.
+
+<p> There are two main ways to represent PIA objects as XML: make them
+    subclasses of an existing ActiveElement implementation, or make them
+    independent implementations.  It is significantly easier to put them into
+    existing structures if they inherit from the same base class as our
+    existing parse trees, and it simplifies the implementation as well.
+
+<p> A third technique exists: to <em>wrap</em> the PIA objects.  This is
+    presently being done with Agent (using NamespaceWrap), but although it
+    makes it possible to put the wrapped objects into an XML document, it
+    means that you have to build a separate handler to do the construction.
+
+<h3>Benefits</h3>
+
+<p> Some of the benefits that would result from an XML representation are:
+
+<ul>
+  <li> When something is represented as XML, i.e. as a parse tree, it becomes
+       much easier to manipulate it using our XXML tag language.
+  <li> XML objects are more efficient to construct.  Currently, in order to
+       initialize something like a tagset, we have to:
+       <ul>
+	 <li> parse a document containing &lt;define&gt; tags
+	 <li> call on the <code>defineHandler</code> to interpret those tags
+	 <li> initialize the object by calling specialized methods known only
+	      to <code>defineHandler</code>
+       </ul>
+       <p> An XML representation would eliminate all but the first step:
+	   constructing the parse tree would <em>in itself</em> construct the
+	   object.
+  <li> XML objects can be written out in a form that can be read back in.
+       Currently agents, tagsets and namespaces can't easily be converted to
+       an external form, because they don't map directly into XML. 
+  <li> XML-represented objects can easily be manipulated by other tools.
+</ul>
+
+<h3>Targets</h3>
+
+<p> Some of the objects that could be represented in XML (in approximate order
+    of increasing complexity of implementation):
+
+<dl>
+  <dt> Tagsets and Namespaces
+  <dd> Actually, BasicTagset and BasicNamespace <em>already</em> inherit from
+       ParseTreeGeneric.  The only difficulty is that there is no set of
+       handlers to construct them directly from XML documents, and writing
+       them out doesn't produce something that could be read back in because
+       the implementation is incomplete.  The &lt;define&gt; tag imposes an
+       extra layer of indirection.
+  <dt> Agents
+  <dd> Presently these are simply wrapped as namespaces; it might work better
+       if some components (<code>name</code>, <code>path</code>, and the
+       directories, for example) were attributes.  Not essential, though.
+       There is a complexity for agents: if you don't know <em>both</em> the
+       home and user directories at initialization time, you don't know where
+       to look for the XML metadata.
+  <dt> Match Criteria
+  <dd> Presently an agent's criteria are initialized by means of a rather
+       simpleminded conversion from strings.  It would be easier if
+       they were real XML.
+  <dt> Transactions
+  <dd> There's a lot of complexity in Transaction and its subclasses that
+       might go away if they were XML.  There would be the further advantage
+       that many of the computations that need to be done on them could be
+       done via XXML rather than Java.  It's not <em>entirely</em> clear that
+       this would be a good idea, however.
+  <dt> Features 
+  <dd> The little objects that compute transaction features could
+       <em>also</em> be XML code, but this is probably <em>not</em> a good
+       idea, since it would be very inefficient.  It's not unreasonable to
+       surface the features themselves as attributes, however.
+</dl>
+
+<p> Note that this list is <em>not</em> in order of implementation priority;
+    it's not clear whether to do tagsets or agents first. 
+
+<h3>Advanced: XML serialization of arbitrary objects</h3>
+
+<p> There's actually a straightforward way to represent <em>any</em> Java
+    object as an XML element:
+
+<ul>
+  <li> Represent all numeric, boolean, and String instance variables as
+       attributes. 
+  <li> Represent all other instance variables as sub-elements. 
+  <li> Use the class name as the tagname.
+</ul>
+
+<p> It wouldn't surprise me much if there were already code available to do
+    this.  It has some problems:  since it doesn't map easily into the DOM,
+    one can't directly manipulate such an object from XXML code.  Also,
+    without some additional metadata, linked structures get <em>very</em> ugly
+    and don't map into the most obvious XML representation.
+
+
+<h2>Improved Document Representation</h2>
+
+<blockquote>
+  World <em>dom</em>ination.
+  <br>--<em>Linus Torvalds (emphasis added)</em>
+</blockquote>
+
+<dl>
+  <dt> <b>See also:</b>
+  <dd> <a href="projects.html#DOM">PIA Document Object Models</a>
+</dl>
+
+<h3>The Two Great World Systems</h3>
+
+<h4>The DOM</h4>
+
+<p> The DOM presently DOMinates the field of Java representations for XML
+    documents (parse trees).  Essentially, it's the only game in town.
+    Unfortunately it has some problems:
+
+<ul>
+  <li> Live NodeList's are notoriously hard to implement efficiently. 
+  <li> DOM Level 2's Iterator interface is defined as throwing an exception
+       when the structure it is iterating over is modified.
+  <li> The obvious representation as doubly-linked trees has quite a lot of
+       storage and processing overhead. 
+  <li> There is simply no way to move a node from one document to another, or
+       to have an isolated node that is not part of a document.
+  <li> There is no representation for element or attribute definitions in the
+       DocumentType interface, so a DTD cannot be completely represented. 
+  <li> Information about quote characters, implied end tags (in HTML), and so
+       on is lost.  It is impossible to reconstruct a document from its DOM
+       representation.  
+</ul>
+
+<p> Also, there is no place in the DOM for the kind of metadata (e.g.,
+    handlers) that the DPS needs in order to do its job.  This by itself is
+    enough to require the PIA to have its own implementation of the DOM.
+
+<h4>Cursors</h4>
+
+<p> The DPS notion of a Cursor evolved out the (subsequently abandoned) DOM
+    interface TreeIterator.  The basic idea is that a Cursor allows the DPS to
+    <em>traverse</em> a DOM tree, or what <em>appears to be</em> a DOM tree,
+    without actually looking at the DOM nodes themselves.
+
+<p> Presently there is a lot of leakage between the DOM and the DPS, and the
+    current version of Cursor actually <em>does</em> allow (and in fact
+    require) access to the DOM node.  This can be fixed, however.
+
+<p> The result would be a purely ``cursorial'' interface to documents,
+    <em>completely</em> independent of the DOM's ``arboreal'' interfaces.
+
+<blockquote>
+<dl>
+  <dt> Linguistic side-note:
+  <dd> In paleontology, ``cursorial'' refers to the hypothesis that dinosaurs
+       evolved into birds by running after flying insects with their
+       (feathered) forelimbs outstretched.  This contrasts with the
+       ``arboreal'' hypothesis, that wings evolved to improve dinosaurs'
+       ability to jump out of trees.
+</dl>
+</blockquote>
+
+<h3>Benefits</h3>
+
+A split model, DOM + Cursors, would have several advantages:
+
+<ul>
+  <li> By reducing the number of things in the PIA that actually depend on the
+       DOM interfaces, it would be easier to transition the PIA from the old
+       DOM interfaces it is using now to the current, official ones.
+  <li> Any DOM could be ``dropped in'' by providing suitable cursors. 
+  <li> The PIA can operate by side-stepping the DOM's interfaces rather than
+       by abusing them, as it presently does.
+  <li> The PIA is free to evolve away from the DOM's object model to something
+       perhaps lighter-weight and less restrictive.  
+  <li> It becomes easier to ``wrap'' non-DOM data structures, since the
+       wrapper doesn't have to look like a DOM tree.  In fact, it is not
+       necessary to modify the wrapped object at all -- just provide a cursor
+       for it.
+</ul>
+
+<h3>Getting there</h3>
+
+<p> There are two distinct routes to a split model with an upgraded DOM:
+
+<ol>
+  <li> Upgrade the PIA's DOM implementation to the current standard, then
+       upgrade Cursor and the DPS to eliminate direct use of the DOM's
+       interfaces.
+  <li> Upgrade Cursor and the DPS to be totally DOM-independent, then fix the
+       DOM implementation. 
+</ol>
+
+<p> The second path is basically cleaner, but the first would get us to DOM
+    compliance more quickly, and integrates better with the other near-term
+    goal of an XML representation for Agents. 
+
+<hr>
+<h2>Language Improvements</h2>
+
+<blockquote>
+
+ <p> `When I use a word,' Humpty Dumpty said in rather a scornful tone, `it
+     means just what I choose it to mean -- neither more nor less.' 
+
+ <p> `The question is,' said Alice, `whether you <em>can</em> make words mean
+     so many different things.'  
+
+ <p> `The question is,' said Humpty Dumpty, `which is to be master - - that's
+     all.'  
+  <p> -- <em>Lewis Carrol</em>
+</blockquote>
+
+<h3>XML compliance</h3>
+
+<p> For better or for worse, XML has moved farther apart from HTML.  Its
+    proponents would like to drag HTML along for the ride, and use strict XML
+    for <em>everything</em> on the Web.  I don't necessarily hold with this
+    view, but as long as the PIA has been touted as an XML-based system we
+    have to go along at least part of the way, and make our language as
+    strictly XML-compliant as we can.
+
+<p> At this point there are really only two places where we differ from XML:
+
+<ol>
+  <li> Our use of namespaces diverges a great deal from XML's, to the point
+       where an XML application that is aware of namespaces might not be able
+       to deal with our <code>.xh</code> files.  On the other hand it might;
+       XML doesn't appear to recognize namespaces in entity names.
+  <li> Our language was designed with SGML attribute minimization in mind.
+       The resulting constructs (e.g. ``<code>foo="foo"</code>'' are often
+       particularly ugly in XML.
+</ol>
+
+<h3>Namespaces</h3>
+
+<p> In order to accomodate XML namespaces, we may want to use  a different
+    character as our namespace separator.  Dash, period, and underscore are
+    available; period would seem to be the best substitute.  
+
+<h3>Attributes</h3>
+
+<p> SGML allows attributes to be minimized in two different ways:
+<ol>
+  <li> an attribute with no value specified evaluates to its name
+  <li> by requiring that enumerated values be unique across all the attributes
+       of an element, an enumerated value can be assigned to its proper
+       attribute
+</ol>
+
+<p> HTML makes use only of the first but, as we will see below, we can take
+    advantage of the second in writing a cleanup tagset.
+
+<p> There are basically five ways to ``pretty-up'' attributes:
+
+<ol>
+  <li> Move the offending attributes into tag names.  In other words, use
+       &lt;test.zero&gt; instead of &lt;test zero&gt;.
+  <li> Turn them from attribute names to values.  For example, transform
+       &lt;numeric sum&gt; into &lt;numeric op="sum"&gt;.
+  <li> Give their value a useful meaning.
+  <li> Move from two attributes, one of which is boolean, to two attributes
+       with values, one of which is optional.  An example from the
+       <em>old</em> language was &lt;read file=<em>filename</em>&gt;
+       vs. &lt;read href=<em>url</em>&gt;.
+  <li> Move data from attributes to sub-elements.  We did that when we moved
+       from &lt;repeat list=<em>list</em>&gt; to
+       &lt;repeat&gt;&lt;foreach&gt;<em>list</em>
+       &lt;/foreach&gt;&lt;/repeat&gt;.  
+</ol>
+
+<p> Most likely, some combination of all of these will be required in order to
+    redesign the language so that it is both fully XML-compliant and easily
+    human-readable.
+
+<h4>Implementation Note</h4>
+
+<p> <code>GenericHandler</code> already has a method called
+    <code>dispatch</code> that can handle the first three methods above:  it
+    will recognize a keyword either as an attribute name, the value of a
+    specified attribute, or a suffix to the tag name.
+
+
+
+<hr>
+<b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
+<b>$Id: roadmap.html,v 1.1 1999-03-30 23:39:54 steve Exp $</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>
