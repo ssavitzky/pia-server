@@ -4,6 +4,7 @@
 
 <body>
 <center><h1>Installing the PIA</h1></center>
+<big>
 
 <p>This manual describes how to install the Platform for Information
    Applications (PIA).  Developers intending to create applications should
@@ -35,6 +36,8 @@
     <code>http://www.risource.org/PIA/Downloading.shtml</code></a>.
 </p>
 
+<blockquote><small>
+
 <p> You should unpack the <code>tar</code> archive inside the directory
     where you want the PIA to be installed; typically this will be your home
     directory, or possibly <code>/usr/local</code> or a subdirectory of
@@ -55,6 +58,8 @@
     is the PIA's ``home directory,'' and in the documentation that follows we
     will refer to it as <code>$PIA_HOME</code>.
 </p>
+
+</small></blockquote>
 
 <h3>Directory Structure</h3>
 
@@ -129,8 +134,8 @@ utility applications.</td>
 
 <h3>The PIA's Directories</h3>
 
-<p> The PIA uses two directories, which can (optionally) be set up using
-    environment variables:</p>
+<p> The PIA uses two very similar directories, which can (optionally) be set
+    up using environment variables:</p>
 <ul>
   <li> <var>PIA_HOME</var> indicates the location where the PIA files were
        installed.</li> 
@@ -140,28 +145,45 @@ utility applications.</td>
        files.</li> 
 </ul>
 
-<p> The PIA also has a ``virtual root'' directory which <em>overlays</em> the
-    ``real root'' (<var>PIA_ROOT</var>).  Whenever a PIA application needs to
-    write a file it does so under the real root; the virtual root could even
-    be on a CD-ROM.  Similarly, whenever the PIA <em>serves</em> a file to a
-    browser, it looks first under the real root.
+<blockquote><small>
 
-<p> The default virtual root for the PIA, in its standard configuration, is
-    <code>PIA_HOME</code>, the PIA's home directory.  In this way, we keep
-    the PIA's files, which you have just downloaded and which can be
-    automatically updated using CVS, separate from any application data and
-    personal customizations you may have done.
+<p> Why two directories?  So one of them can be shared by many users and
+    updated frequently (via CVS), while the other is personalized by each user
+    and not overwritten by the updates. </p>
+
+<p> The PIA's ``virtual root'' (usually <var>PIA_HOME</var>) directory
+    <em>parallels</em> the ``real root'' (<var>PIA_ROOT</var>), but the real
+    root has priority.  Whenever a PIA application needs to write a file it
+    does so under the real root; similarly, whenever the PIA <em>serves</em> a
+    file to a browser, it looks first under the real root.
+
+<p> But if the PIA can't find a file in the real root, it then looks in the
+    virtual root (because the PIA <em>never</em> tries to write files there,
+    the virtual root could even be a CD-ROM!). The standard default virtual
+    root for the PIA is <code>PIA_HOME</code>, the PIA's home directory.  In
+    this way, we keep the PIA's files, which you have just downloaded and
+    which can be automatically updated using CVS, separate from any
+    application data and personal customizations you may have done.
+
+</small></blockquote>
 
 <p> As a consequence of this arrangement, <strong> we recommend you don't edit
     <i>anything</i> in <var>PIA_HOME</var>, which is automatically
-    updated/overwritten by <code>cvs update,</code> unless you plan on
+    updated/overwritten by CVS, unless you plan on
     contributing to the PIA codebase via RiSource.org.</strong>
+    Instead, write everything under <var>PIA_ROOT</var>
+    (e.g. <kbd>~/.pia</kbd>). </p>
+
+
+<p> Usually the directory-setup process is invisible to you,
+    especially if you are running the pia from <code>PIA/bin</code> and/or you
+    have not set <var>PIA_HOME</var> as an environment variable.</p>
+
+<blockquote><small>
 
 <p> The execution scripts (e.g. <code>PIA/bin/pia</code>) attempt to set the
     <var>PIA_HOME</var> variable based on the location of the script or the
-    current working directory. Usually this process is invisible to you,
-    especially if you are running the pia from <code>PIA/bin</code> and/or you
-    have not set <var>PIA_HOME</var> as an environment variable. But if you
+    current working directory. But if you
     want to run the pia from a different location, or run a different version,
     you may have to explicitly set this variable to the location of the PIA
     directory you just installed (e.g. <code>PIA_HOME=~/PIA</code>).
@@ -174,9 +196,7 @@ utility applications.</td>
     default location for <var>PIA_ROOT</var> is <kbd>~/.pia</kbd>.  On
     Windows, the default directory is
     <code>c:\PIAUSERS\<var>username</var></code> (if a username is not
-    available <code> nobody</code> is used). <strong> These are where you
-    should create and edit all your active pages.</strong> (except those you
-    wish to contribute back to RiSource.org).
+    available <code> nobody</code> is used).
 </p>
 
 <p> If you use the <kbd>-root</kbd> or <kbd>-home</kbd> command line option to
@@ -184,6 +204,10 @@ utility applications.</td>
     precedence over the one you specify in the corresponding environment
     variable.
 </p>
+
+</small></blockquote>
+
+<blockquote><small>
 
 <p>It is convenient to put the directory <code>$PIA_HOME/bin</code>, which
 contains scripts (including the one that implements the <code>pia</code>
@@ -205,8 +229,14 @@ the following into your <code>~/.bash_profile</code> file: </p>
     <code>$<em>PIA_HOME</em>/src/java</code> in your <code>CLASSPATH</code>;
     the wrapper script <em>is</em> smart enough to add it for you.
 </p>
+</small></blockquote>
 
 <h2><a name="Running">Running the PIA </a></h2>
+
+<p> It is easiest to launch the  PIA with the command
+    <code>PIA/bin/pia</code>.<p>
+
+<blockquote><small>
 
 <p>On UNIX or Linux, once you have set up the <code><var>PIA_HOME</var></code>
 and <code><var>PIA_ROOT</var></code> environment variables you can launch the
@@ -226,12 +256,18 @@ on Unix.</p>
     manual <a href="using.html">Using the PIA</a>.
 </p>
 
+</small></blockquote>
+
 <h2>Using the PIA</h2>
 
 <p> The PIA acts as a Web server.  Assuming you have gotten the PIA to run in
     its default configuration, you should now be able to browse to <code><a
     href="http://localhost:8888/">http://localhost:8888/</a></code> in order
-    to access the PIA's own web pages.  If the default configuration is
+    to access the PIA's own web pages. </p>
+
+<blockquote><small>
+
+<p>If the default configuration is
     different and you have run the PIA from a command line, it will have
     printed out a line like:
 </p>
@@ -255,6 +291,7 @@ on Unix.</p>
     PIA</a>.
 </p>
 
+</small></blockquote>
 
 <h2><a name="Questions">Questions, Problems, or Comments</a></h2>
 
@@ -271,6 +308,8 @@ href="mailto:pia-bugs@risource.org">PIA-bugs@risource.org</a></code>.  </p>
    Valley</a>.</b>
    Open Source at &lt;<b><a href="http://RiSource.org/">RiSource.org</a>/<a
                          href="http://RiSource.org/PIA">PIA</a></b>&gt;.<br>
-<i>$Id: install.html,v 1.12 1999-10-19 19:52:01 steve Exp $</i><br>
+<i>$Id: install.html,v 1.13 1999-10-19 23:41:40 bill Exp $</i><br>
+
+</big>
 
 </body></html>
