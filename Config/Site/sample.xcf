@@ -1,15 +1,18 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.4 1999-10-13 18:19:04 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.5 1999-10-13 21:50:22 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
 <Container>
 
-  <!-- These properties affect the configuration process.  They must be set
-       before you attempt to do anything (for example an ``include'') that can
-       cause subsites to be created (and hence configured.)
+<!-- These properties affect the configuration process.  They must be set
+     before you attempt to do anything (for example an ``include'') that can
+     cause subsites to be created (and hence configured.)
+  -->
+
+  <!-- Per-directory configuration file name.  Can be set on the command line
+       using the ``-configfile'' option.
     -->
-  <HomeDocumentName>home</HomeDocumentName>
   <ConfigFileName>_subsite.xcf</ConfigFileName>
 
   <!-- You can include arbitrary XXML in a configuration file, but you have to
@@ -47,23 +50,32 @@
      </DOCUMENT>
   </Resource>
 
-  <!-- You can set many of the PIA's ``properties'' this way.
-	They are currently disabled and are only included to show the options
-	available.  Enable the ones you need to change by moving them outside
-	the if tag.
-    -->
 
+<!-- You can set many of the PIA's ``properties'' this way.
+     These are the default values.
+-->
+  <verbosity>0</verbosity><!-- verbosity of message output -->
+  <req_timeout>60000</req_timeout><!-- timeout in milliseconds -->
+  <initialize>initialize</initialize><!-- initialization file -->
+
+<!-- The following properties can be set on a per-directory basis. -->
+
+  <!-- The name of the ``home document'' in this subtree -->
+  <HomeDocumentName>home</HomeDocumentName>
+
+<!-- The following properties are currently disabled, because the
+     defaults used will depend on the OS system environment.
+     Enable the ones you need to change by moving them outside the if tag.
+-->
   <if> <then>
-    <verbosity>0</verbosity><!-- verbosity of message output -->
-    <req_timeout>60000</req_timeout><!-- timeout in milliseconds -->
+    <configfile>_subsite.xcf</configfile><!-- per-directory config file -->
     <realport>8888</realport><!-- the port the PIA listens on -->
     <port>8888</port><!-- the port the PIA reports to the browser -->
     <host>localhost</host><!-- the host the PIA reports -->
-    <initialize>initialize</initialize><!-- initialization file -->
-    <configfile>_subsite.xcf</configfile><!-- per-directory config file -->
     <http_proxy>http://gateway:80</http_proxy>
     <no_proxy>localhost www.nytimes.com</no_proxy>
   </then></if>
+
 
   <!-- If /etc/passwd exists, use it (and hence your Unix password) to
 	authenticate access to the Admin agent.  Disable this if you're using
@@ -73,6 +85,7 @@
       <then><authenticate>/etc/passwd</authenticate></then>
   </if>
 
+  <!-- Create an agent. -->
  <if> true <then><!-- This demonstrates that if, etc. work in config files! -->
    <AGENT criteria="request">
      <initialize><user-message>report-request agent initialized</user-message>
