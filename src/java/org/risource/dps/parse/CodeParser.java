@@ -1,5 +1,5 @@
-////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.4 2000-10-06 00:30:46 steve Exp $
+////// CodeParser.java: parser for "code" (non-SGML) files
+//	$Id: CodeParser.java,v 1.1 2000-10-06 00:30:45 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,27 +48,26 @@ import java.io.InputStream;
 import java.io.IOException;
 
 /**
- * A shallow parser for text files. 
+ * A parser for non-SGML (code) files. 
  *
- * <p>	TextParser is designed to add ``virtual markup'' to text files; this 
- *	includes both English text and text containing markup.  It is able
- *	to recognize ``code'' of various kinds embedded in the text or markup.
+ * <p>	CodeParser is designed to add ``virtual markup'' to "code" files;
+ *	i.e. source code in various programming languages.  
  *
- * <p>	Code parsing is controlled by attributes of the tagset.  If they 
+ * <p>	Parsing is controlled by attributes of the tagset.  If they 
  *	are not specified, reasonable defaults are used that correspond
  *	roughly to Unix shell-script conventions.
  *
- * <p>	TextParser is similar to CodeParser except that it does a better
- *	job of recognizing and handling markup, and is able to recognize
- *	a variety of ways of embedding code in markup.
+ * <p>	Unlike TextParser, CodeParser has only a limited ability to recognize
+ *	markup (and in fact the initial implementation can't recognize markup
+ *	at all).
  *
- * @version $Id: TextParser.java,v 1.4 2000-10-06 00:30:46 steve Exp $
+ * @version $Id: CodeParser.java,v 1.1 2000-10-06 00:30:45 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
- * @see org.risource.dps.parse.CodeParser
+ * @see org.risource.dps.parse.TextParser
  */
 
-public class TextParser extends AbstractParser {
+public class CodeParser extends AbstractParser {
 
   /************************************************************************
   ** State Constants:
@@ -110,26 +109,11 @@ public class TextParser extends AbstractParser {
   /** State outside of a tag. */
   protected int outsideTag = 0;
 
-  /** string that will end current markup */
-  protected String markupEnd = null;
-  protected char   markupEndChar = 0;
-
   /** Character that will end the current string */
   protected char currentStringDelim = 0;
 
   /** Escape character for the current string */
   protected char currentStringEscape = 0;
-
-  protected void markupEnd(String s) {
-    markupEnd = s;
-    if (s != null) markupEndChar = s.charAt(0);
-  }
-
-  protected void markup(String end, String tag) {
-    markupEnd = end;
-    
-  }
-
 
   /************************************************************************
   ** parse Parameters:
@@ -243,15 +227,8 @@ public class TextParser extends AbstractParser {
    *	<li> Other identifiers are tagged as &lt;id&gt;
    *	<li> Comments are tagged as &lt;rem&gt;
    *	<li> Strings are tagged as &lt;str&gt;
-   *	<li> Start tags are tagged as &lt;tag&gt;; end tags as &lt;etag&gt;
+   *	<li> &lt;&gt;
    *</ul>
-   *
-   *<p> A distinction is made between TEXT and CODE states.  TEXT may contain
-   *	markup, and may also contain ``stopwords'' that are never cross-indexed.
-   *	CODE may contain ``keywords'' which are not cross-indexed, but 
-   *	<em>are</em> specially tagged, and may also contain strings and 
-   *	comments.  Comments are considered TEXT.  Strings are TEXT-like, but 
-   *	do not contain markup.
    */
   protected ActiveNode getToken() throws IOException {
     String id = null;
@@ -269,45 +246,7 @@ public class TextParser extends AbstractParser {
       next = createActiveElement("line", null, true);
     } else if (last <= ' ') {		// generic whitespace
       eatSpacesInLine();
-    } else if (false && state == IN_TEXT && last == '<') { // tag
-
-      // === BUGGY! === falsed out for the moment. 
-
-      // we skip over the "<" for the moment and look at the next char:
-      last = in.read();
-      if (last < 0) {		// unexpected EOF
-	buf.append('<');
-      } else if (last == '/') {	// end tag.
-	if (eatIdent()) {
-	  
-	}
-
-      } else if (last == '?') {	// processing instruction
-	buf.append("<?"); 
-	last = 0;
-	markup("?>", "pi");
-	
-      } else if (last == '!') {	// declaration or comment
-	buf.append(last);
-	last = in.read();
-	if (last == '-') {
-	  last = in.read();
-	  if (last == '-') {
-	    markup("-->", "comment");
-	  } else {
-	    buf.append("-");
-	  }
-	} else {
-	  markup(">", "decl");
-	}
-
-      } else if (idc[last] == 0) { // stray '<'
-	buf.append('<');
-      } else {
-	markup(">", "tag");
-	//state = IN_TAG;
-      }
-    }  else if (state == IN_CODE && stringDelim(last) != null) {
+    } else if (state == IN_CODE && stringDelim(last) != null) {
       String delims = stringDelim(last);
       currentStringDelim = delims.charAt(0);
       currentStringEscape= (delims.length() > 1)? delims.charAt(1) : 0;
@@ -324,10 +263,8 @@ public class TextParser extends AbstractParser {
     } else if (state == IN_STRING && last == currentStringEscape) {
       buf.append((char)last);
       last = in.read();
-      if (last > 0) {
-	buf.append((char)last);
-	last = in.read();
-      }
+      buf.append((char)last);
+      last = in.read();
     } else if (state == IN_STRING && 0 == idc[last]) {
       while (last > ' ' && idc[last] == 0 && last != currentStringEscape
 	     && last != currentStringDelim) {
@@ -342,12 +279,13 @@ public class TextParser extends AbstractParser {
       }
       // Check for start of comment terminated by EOL. 
       // === for now, just start comment with # or // as first nonblank.
-      if (state == IN_CODE && clength > 0 && lookingAt(comment, clength) ) {
+      if (state != IN_COMMENT && state != IN_DELIMITED_COMMENT
+	  && clength > 0 && lookingAt(comment, clength) ) {
 	state = IN_COMMENT;
 	next = createActiveText(buf.toString(), false);
 	return createActiveElement("rem", null, false);
-      } else if (state == IN_CODE
-		 && cblength > 0 && lookingAt(cbegin, cblength) ) {
+      } else if (state != IN_COMMENT && state != IN_DELIMITED_COMMENT
+	  && cblength > 0 && lookingAt(cbegin, cblength) ) {
 	state = IN_DELIMITED_COMMENT;
 	next = createActiveText(buf.toString(), false);
 	return createActiveElement("rem", null, false);
@@ -447,7 +385,7 @@ public class TextParser extends AbstractParser {
     clength = (comment != null)? comment.length() : 0;
     cblength = (cbegin != null)? cbegin.length() : 0;
     
-    state = IN_TEXT;
+    state = IN_CODE;
 
     next = createActiveElement("line", null, true);
     super.initialize();
@@ -457,15 +395,15 @@ public class TextParser extends AbstractParser {
   ** Construction:
   ************************************************************************/
 
-  public TextParser() {
+  public CodeParser() {
     super();
   }
 
-  public TextParser(InputStream in) {
+  public CodeParser(InputStream in) {
     super(in);
   }
 
-  public TextParser(Reader in) {
+  public CodeParser(Reader in) {
     super(in);
   }
 

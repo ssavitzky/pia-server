@@ -1,5 +1,5 @@
 ###### dps/parse/Makefile:	Active document parsers
-# 	$Id: Makefile,v 1.5 2000-09-21 17:15:05 steve Exp $
+# 	$Id: Makefile,v 1.6 2000-10-06 00:30:45 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,10 +27,11 @@ TOPDIR=../../../..
 FILES = \
 	AbstractParser.java \
 	BasicParser.java \
+	HTMLParser.java \
 	LineParser.java \
 	ShallowParser.java \
 	TextParser.java \
-	HTMLParser.java
+	CodeParser.java
 
 include $(TOPDIR)/makefiles/file.make
 
