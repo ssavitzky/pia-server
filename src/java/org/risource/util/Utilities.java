@@ -1,6 +1,6 @@
 
 // Utilities.java
-// $Id: Utilities.java,v 1.7 1999-12-14 18:45:22 steve Exp $
+// $Id: Utilities.java,v 1.8 2000-01-07 22:45:23 bill Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -368,15 +368,20 @@ public class Utilities {
 
     byte bytes[] = input.getBytes();
 
-    int l = bytes.length * 3 / 4;
+    //    int l = bytes.length * 3 / 4;
+    int lOrig = bytes.length;
 
-    if (l == 0)
+    if (lOrig == 0)
 	return null;
 
 
     //  check for padding
-    if(bytes[l-1] == '=') l--;
-    if(bytes[l-1] == '=') l--;
+    //    if(bytes[l-1] == '='){ System.out.println("decrem 1"); l--;}
+    //if(bytes[l-1] == '=') { System.out.println("decrem 2"); l--;}
+    if(bytes[lOrig - 1] == '='){ lOrig--;}
+    if(bytes[lOrig - 1] == '=') { lOrig--;}
+    int l = lOrig * 3 / 4;
+
     byte result[] =  new byte[l];
     for(int limit = 0; limit <= bytes.length - 4; limit += 4){
       for( int i =0; i< 4; i++) 
