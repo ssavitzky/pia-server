@@ -5,58 +5,110 @@
 <TITLE>Building the PIA Source Release Tar File </TITLE></HEAD>
 <BODY BGCOLOR="#ffffff" link="#c40026" vlink="#e40026">
 
-<h2>Building the PIA Source Release Tar File</h2>
+<h1>Building the PIA Source Release Tar File</h1>
 
-<p>
-The build is done from your CVS working directory; however, the script
-does a clean checkout into a separate directory, <code>$REL_DIR</code>, which is set
-to <code>$(HOME)/src_release</code> by default.  The actual release build is done
-in this directory, not your working directory.
-</p><p>
-The release directory is copied over to /pia/pia1 as src_release<em>version_number</em>.
-Old src_release directories can just be deleted.
-</p><p>
-Here are the build steps:
+<p> The build is done from your CVS working directory; however, the script
+    does a clean checkout into a separate directory, <code>$REL_DIR</code>,
+    which is set to <code>$(HOME)/src_release</code> by default.  The actual
+    release build is done in this directory, not your working directory.
 </p>
+
+<p> The release directory is copied over to <code>/pia/pia1</code> as
+    <code>src_release<em>version_number</em></code>.
+    Old src_release directories can just be deleted.
+</p>
+
+<h3>The Build Steps</h3>
+
 <ol>
-<li>Before doing the build, update these variables in the <code>$PIA_DIR/Makefile</code>:
-<pre>
+  <li> Before doing the build, update these variables in 
+       <code>PIA/Makefile</code>: 
+       <pre>
        RELEASE     = 2
        MAJOR       = 0
-       MINOR       = 3
-       SUFFIX      = 
+       MINOR       = 5
+       SUFFIX      = a </pre></li>
+
+  <li> <code>CVS commit Makefile </code><br />
+
+       The build does a clean checkout from the repository and will use the
+       version of the Makefile that is checked out, not the version in your
+       working directory.
+      </li>
+
+  <li> <code>make prep-checkout</code> <br />
+       This updates the pia version numer,
+       removes the previous release directory, and tags the respository
+       if <code>CREATE_CVS_TAG</code> has been set to 1.  This is fairly
+       expensive; if you are only changing the minor version number, consider
+       doing <code>make update-version</code> instead.
+       </li>
+
+  <li> <code>make rsync-cvs</code> -- synchronize CVS repositories<br />
+
+       This uses <code>rsync</code> to synchronize the internal and external
+       cvs respositories.  You have to be running under <code>ssh-agent</code>
+       for this to work.  Otherwise, you'll have to do it manually, so
+       <code>ssh</code> can prompt you for your passphrase:
        
-       If you want to tag the version in the CVS repository, also set 
-       CREATE_CVS_TAG = 1
+     <pre>
+cd /pia1/CvsRoot
+rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ </pre>
+     
+     </li>
 
-       Set back to 0 when the build is complete.
-</pre></li>
+  <li><code>make src-release</code> -- This does the rest of the build. <br />
 
-<li>Do a <code>CVS commit</code> on the Makefile after these have been set.  The build does a clean
-checkout from the repository and will use the version of the Makefile
-that is checked out, not the version in your working directory.
-</li>
+       The following table gives the make targets for the individual build
+       steps in case you need to re-do any of them.  They all operate on the
+       build directory, so you don't have to <code>cd</code> if you don't want
+       to.  The build no longer involves a <code>make&nbsp;clean</code>, so 
+       a minor release can be made without a complete rebuild.
 
-<li><code>make prep_checkout</code>.  This updates the pia version numer,
-removes the previous release directory, and tags the respository
-if <code>CREATE_CVS_TAG</code> has been set to 1.</li>
+     <table>
+       <tr><td><code>do_checkout</code></td>
+           <td>check out the release <em>from the public server</em>.</td></tr>
+       <tr><td><code>build_release</code></td>
+           <td>Build the code and documentation</td></tr>
+       <tr><td><code>tar_file</code></td>
+           <td>Make a compressed tar file in /pia1/pia.</td></tr>
+       <tr><td><code>&nbsp;</code></td>
+           <td>Link the tar file to pia_src.tgz.</td></tr>
+       <tr><td><code>copy_src_dir</code></td>
+           <td>Copy the src_release directory to /pia1/pia.</td></tr>
+       <tr><td><code>&nbsp;</code></td>
+           <td> This may not be strictly necessary, but it lets you check
+		quickly what was in the last release.  <code>rsync</code> is
+		used in case you need to do it again. </td></tr>
+     </table>
 
-<li>Manually rsync the internal and external cvs respositories.</li>
+  <li> Check for errors. <br />
 
-<li><code>make src.tar</code>
-<p>
-This should do everything else that needs to be done:
-</p>
-<ul>
-<li>Build the source code.</li>
-<li>Build the documentation.</li>
-<li>Make a tar file and compress it.</li>
-<li>Copy the tar file to /pia1/pia.</li>
-<li>Link the tar file to pia_src.tgz.</li>
-<li>Copy the src_release directory to /pia1/pia.  This may not be strictly
-necessary, but it lets you check quickly what was in the last release.</li>
-</ul>
+       The most common one is a <code>javadoc</code> failure; you can
+       partially fix this with
+
+       <pre>
+       cd ~/src_release/PIA/src/java
+       make jdoc</pre>
+       This doesn't build the indices, unfortunately.
+
+  <li> Update the <code>www.RiSource.org</code> website.  This is best done via
+       the <code>ssh</code> (secure shell) and <code>scp</code> (secure copy)
+       commands. 
+       <ul>
+	 <li> Edit <code>RiSource.org/PIA/latest.html</code> (the ``what's new''
+	      page) and copy it to
+	      <code>/home/web/risource-htdocs/PIA</code>
+	 <li> Copy the newly-created <code>.tgz</code> file to
+	      <code>/home/ftp/PIA</code>
+	 <li> Make <code>/home/ftp/PIA/pia_src.tgz</code> a symbolic link to the
+	      new <code>.tgz</code> file. 
+       </ul>
+
 </ol>
 
+<blockquote>
+  This file contains some updates by &lt;steve@rsv.ricoh.com&gt;.
+</blockquote>
 </body>
 </html>
