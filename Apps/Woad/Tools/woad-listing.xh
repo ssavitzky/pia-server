@@ -109,41 +109,13 @@
 
 <hide>
     <!-- Create a new note:  have to do this before listing the directory -->
-
-    <if> <get name="FORM:create" />
-	 <then>
-	   <if> <status item="exists" src="&FORM:label;.ww" />
-	        <else><!-- create new note -->
-	    <output dst="&FORM:label;.ww"><make name="note">
-		<make name="title"><get name="FORM:title" /></make>
-		<make name="created">&dateString;</make>
-		<make name="summary">
-		    <parse><get name="FORM:summary" /></parse>
-		</make>
-		<make name="content">
-		    <parse><get name="FORM:content" /></parse>
-		</make>
-</make><!-- note created using quick form -->
-</output>
-		</else>
-	   </if>
-	 </then>
-    </if>
-
-    <doc> Now set the files, noteFiles, and indexFiles variables </doc>
+    <handleNoteCreation />
+    <!-- Now set the files, noteFiles, and indexFiles variables -->
     <listNoteFiles>&LOC:path;&tail;</listNoteFiles>
 </hide>
 
-<!-- === at this point, include content of a HEADER.ww if there is one. -->
-
-<if> <status item="exists" src="&xloc;/HEADER.ww" />
-     <then>
-	<set name="haveHeader">yes</set>
-	<load-note>&xloc;/HEADER.ww</load-note>
-	<hr />
-	<displayNoteAsHeader />
-     </then>
-</if>
+<!-- at this point, include content of HEADER.ww if there is one. -->
+<displayHeaderIfPresent>&notePath;HEADER.ww</displayHeaderIfPresent>
 
 <index-bar name="Notes">Notes Links Images Views Listing</index-bar>
 
@@ -151,61 +123,21 @@
   <input type="hidden" name="path" value="&LOC:path;/&tail;" />
 <table bgcolor="white" border="2">
   <!-- First list the indices -->
-  <tr> <th bgcolor="#cccccc" width="150"> indices </th>
-       <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
-       help </th> 
-  </tr>
-<repeat>
-  <foreach entity="f">&indexFiles;</foreach>
-  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top">
-		<a href="&f;"><code>&label;</code></a>
-       </td>
-       <td colspan="2" valign="top">
-		 <describeIndex>&f;</describeIndex>
-       </td>
-  </tr>
-</repeat>
-
+  <indexTableRows>&indexFiles;</indexTableRows>
+  
   <!-- Next, list the notes -->
-  <tr> <th bgcolor="#cccccc" width="150"> page notes </th>
-       <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
-  </tr>
-<repeat>
-  <foreach entity="f">&noteFiles;</foreach>
-  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top" bgcolor="yellow">
-		<a href="&f;"><code>&label;</code></a>
-       </td>
-       <td colspan="2" valign="top" bgcolor="yellow">
-		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
-       </td>
-  </tr>
-</repeat>
-	
-  <!-- Finally, the form for creating a new note (the easy way) -->
-  <tr> <th bgcolor="#cccccc" width="150"> new note </th>
-       <th bgcolor="#cccccc" colspan="2" align="left">
-    	    Enter note text or use &nbsp;&nbsp;&nbsp;
-    	    <a href="/.Woad/Tools/new-note?path=&xloc;">[advanced form]</a> 
-       </th>
-  </tr>
-  <tr> <td valign="top">
-    	  <select name="label"> 
-	       	   <option selected="selected"><uniquify>note</uniquify></option>
-	       	   <option><uniquify>bug</uniquify></option>
-	       	   <option><uniquify>wish</uniquify></option>
-	       	   <option><uniquify>see-also</uniquify></option>
-	       	   <option>&date;-&hour;&minute;</option>
-	       	   <option>&date;</option>
-	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
-	  </select><br />
- 	  <input name="create" value="Create Note" type="submit" />
-       </td>
-       <td valign="top" colspan="2">
-	  <textarea name="summary" cols="60" rows="4" wrap="wrap"></textarea>
-       </td>
-  </tr>
+  <noteTableRows heading="page notes">&noteFiles;</noteTableRows>
+  
+  <!-- Finally, the short form for creating a new note -->
+  <noteCreationForm> 
+    <option selected="selected"><uniquify>note</uniquify></option>
+    <option><uniquify>bug</uniquify></option>
+    <option><uniquify>wish</uniquify></option>
+    <option><uniquify>see-also</uniquify></option>
+    <option><uniquifyIfNeeded>&date;</uniquifyIfNeeded></option>
+    <option>&date;-&hour;&minute;</option>
+    <if>&haveHeader;<else><option>HEADER</option></else></if>
+  </noteCreationForm>
 </table>
 </form>
 
@@ -434,5 +366,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.17 2000-07-21 22:48:23 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.18 2000-07-25 22:18:52 steve Exp $" />
 </body></html>

@@ -19,7 +19,7 @@
 
 <tagset name="src-wrapper" tagset="woad-xhtml" >
 
-<cvs-id>$Id: src-wrapper.ts,v 1.1 2000-07-21 22:48:22 steve Exp $</cvs-id>
+<cvs-id>$Id: src-wrapper.ts,v 1.2 2000-07-25 22:18:51 steve Exp $</cvs-id>
 
 <h1>WOAD source-file document wrapper</h1>
 
@@ -132,42 +132,13 @@
 
 <hide>
     <!-- Create a new note:  have to do this before listing the directory -->
-
-    <if> <get name="FORM:create" />
-	 <then>
-	   <if> <status item="exists"
-    		        src="&LOC:path;&note-tail;&FORM:label;.ww" />
-	        <else><!-- create new note -->
-	    <output dst="&LOC:path;&note-tail;&FORM:label;.ww"><make name="note">
-		<make name="title"><get name="FORM:title" /></make>
-		<make name="created">&dateString;</make>
-		<make name="summary">
-		    <parse tagset="HTML"><get name="FORM:summary" /></parse>
-		</make>
-		<make name="content">
-		    <parse tagset="HTML"><get name="FORM:content" /></parse>
-		</make>
-</make><!-- note created using quick form -->
-</output>
-		</else>
-	   </if>
-	 </then>
-    </if>
-    <doc> Now locate the files.  Note that we don't need <code>&amp;tail;</code>
-	  here because we're browsing around in the source directories, which
-	  are all perfectly real (though referred to as ``virtual'').
-    </doc>
+    <handleNoteCreation>&LOC:path;&note-tail;</handleNoteCreation>
+    <!-- List the note files -->
     <listNoteFiles>&LOC:path;&note-tail;</listNoteFiles>
 </hide>
 
-<if> <status item="exists" src="HEADER.ww" />
-     <then>
-	<set name="haveHeader">yes</set>
-	<load-note>HEADER.ww</load-note>
-	<hr />
-	<displayNoteAsHeader />
-     </then>
-</if>
+<!-- at this point, include content of HEADER.ww if there is one. -->
+<displayHeaderIfPresent>&notePath;HEADER.ww</displayHeaderIfPresent>
 
 <index-bar name="Notes">Notes Views Listing</index-bar>
 
@@ -175,99 +146,24 @@
   <input type="hidden" name="path" value="&LOC:path;&note-tail;" />
 <table bgcolor="white" border="2">
   <!-- First list the indices -->
-<if>&indexFiles;<then>
-  <tr> <th bgcolor="#cccccc" width="150"> indices </th>
-       <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
-       help </th> 
-  </tr>
-</then></if>  
-<repeat>
-  <foreach entity="f">&indexFiles;</foreach>
-  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top">
-		<a href="&f;"><code>&label;</code></a>
-       </td>
-       <td colspan="2" valign="top">
-		 <describeIndex>&f;</describeIndex>
-       </td>
-  </tr>
-</repeat>
+  <if>&indexFiles;
+      <then><indexTableRows>&indexFiles;</indexTableRows></then>
+  </if>
 
-  <!-- Next, list the notes -->
-  <tr> <th bgcolor="#cccccc" width="150"> source notes </th>
-       <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
-  </tr>
-<repeat>
-  <foreach entity="f">&noteFiles;</foreach>
-  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-  <tr> <td align="left" valign="top" bgcolor="yellow">
-		<a href="&LOC:path;&note-tail;/&f;"><code>&label;</code></a>
-       </td>
-       <td colspan="2" valign="top" bgcolor="yellow">
-		 <describeNote>&LOC:path;&note-tail;/&f;</describeNote>
-       </td>
-  </tr>
-</repeat>
-	
-
-<if>&npath;
-  <then>
-    <hide>
-      <set name="VAR:nfiles">
-        <text sort><status item="files" src="&npath;" /></text>
-      </set>
-      <set name="VAR:nnoteFiles">
-        <repeat><foreach entity="f">&nfiles;</foreach>
-	   <if><rejectNote>&f;</rejectNote>
-	       <else>&f;</else>
-	   </if>
-        </repeat>
-     </set>
-    </hide>
-  <!-- list the corresponding URL annotations, if any -->
-  <if>&nnoteFiles; <then>
-    <tr> <th bgcolor="#cccccc" width="150"> page notes </th>
-	 <th bgcolor="#cccccc" colspan="2" align="left"> <em>(From the URL
-	 annotations for <a href="&npath;">&npath;</a>)</em></th>
-    </tr>
-  </then></if>
-  <repeat>
-    <foreach entity="f">&nnoteFiles;</foreach>
-    <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
-    <tr> <td align="left" valign="top" bgcolor="#99ccff">
-		  <a href="&npath;/&f;"><code>&label;</code></a>
-	 </td>
-	 <td colspan="2" valign="top" bgcolor="#99ccff">
-		   <describeNote>&npath;/&f;</describeNote>
-	 </td>
-    </tr>
-  </repeat>
-  </then>
-</if>
+  <!-- Next, list the notes (including page notes)-->
+  <noteTableRows heading="source notes">&noteFiles;</noteTableRows>
+  <pageNoteRows>&npath;</pageNoteRows>
 
   <!-- Finally, the form for creating a new note (the easy way) -->
-  <tr> <th bgcolor="#cccccc" width="150"> new note </th>
-       <th bgcolor="#cccccc" colspan="2" align="left">
-    	    Enter note text or use &nbsp;&nbsp;&nbsp;
-    	    <a href="/.Woad/Tools/new-note?path=&xloc;">[advanced form]</a> 
-       </th>
-  </tr>
-  <tr> <td valign="top">
-    	  <select name="label"> 
-	       	   <option selected="selected"><uniquify>note</uniquify></option>
-	       	   <option><uniquify>bug</uniquify></option>
-	       	   <option><uniquify>wish</uniquify></option>
-	       	   <option><uniquify>see-also</uniquify></option>
-	       	   <option>&date;-&hour;&minute;</option>
-	       	   <option>&date;</option>
-	       	   <if>&haveHeader;<else><option>HEADER</option></else></if>
-	  </select><br />
- 	  <input name="create" value="Create Note" type="submit" />
-       </td>
-       <td valign="top" colspan="2">
-	  <textarea name="summary" cols="60" rows="4" wrap="wrap"></textarea>
-       </td>
-  </tr>
+  <noteCreationForm> 
+    <option selected="selected"><uniquify>note</uniquify></option>
+    <option><uniquify>bug</uniquify></option>
+    <option><uniquify>wish</uniquify></option>
+    <option><uniquify>see-also</uniquify></option>
+    <option><uniquifyIfNeeded>&date;</uniquifyIfNeeded></option>
+    <option>&date;-&hour;&minute;</option>
+    <if>&haveHeader;<else><option>HEADER</option></else></if>
+  </noteCreationForm> 
 </table>
 </form>
 

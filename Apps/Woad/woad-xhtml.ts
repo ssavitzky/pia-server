@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.17 2000-07-21 22:50:14 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.18 2000-07-25 22:19:18 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -117,6 +117,18 @@ Note that we only need these inside the PIA.
   </define>
   <action><subst match="^&attributes:prefix;" result="">&content;</subst><hide>
   </hide></action>
+</define>
+
+<define element="forceTrailingSlash">
+  <doc> Force the content, a path, to end in a slash so that it can be
+	prefixed to a filename.  An empty path is not affected.
+  </doc>
+  <action><if>&content;
+	      <then><if><test match="/$">&content;</test>
+		        <then>&content;</then>
+		        <else>&content;/</else>
+  	      </if></then>
+  </if></action>
 </define>
 
 <define element="mapSrcToTarget">
@@ -464,7 +476,7 @@ Note that we only need these inside the PIA.
 
 <h2>Note-listing components</h2>
 
-<!-- $Id: woad-xhtml.ts,v 1.17 2000-07-21 22:50:14 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.18 2000-07-25 22:19:18 steve Exp $ -->
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing
@@ -544,16 +556,30 @@ Note that we only need these inside the PIA.
 </define>
 
 <define element="displayNoteAsHeader">
-  <doc> The currently-loaded note is displayed as a page header.
+  <doc> The note whose path is passed in the content is displayed as a page
+	header if present.
   </doc>
   <action>
     <if> <note-title /> <note-content />
 	 <then> <if> <note-title />
-		     <then> <big><strong><note-title /></strong></big><br />
-		     </then>
+			 <then> <big><strong><note-title /></strong></big>
+			 </then>
 		</if>
 		<blockquote><note-content /></blockquote>
-	</then>
+	 </then>
+    </if>
+  </action>
+</define>
+
+<define element="displayHeaderIfPresent">
+  <action>
+    <if> <status item="exists" src="&content;" />
+	 <then>
+	    <set name="VAR:haveHeader">yes</set>
+	    <load-note>&content;</load-note>
+	    <hr />
+	    <displayNoteAsHeader />
+	 </then>
     </if>
   </action>
 </define>
@@ -573,12 +599,32 @@ Note that we only need these inside the PIA.
   </hide></action>
 </define>
 
+<define element="uniquifyIfNeeded">
+  <doc> Append a numeric suffix to the name in the content to make it unique,
+	but only if the name already exists without a suffix.  Takes file list
+	in <code>&amp;files;</code>.
+  </doc>
+  <action><if><extract><from>&files;</from>
+		 <key>&content;.ww</key></extract>
+	      <then><uniquify>&content;</uniquify></then>
+	      <else>&content;</else>
+  </if></action>
+</define>
+
 <define element="listNoteFiles">
-  <doc> This element sets the entities <code>files</code>,
+  <doc> This element sets the variables <code>files</code>,
 	<code>indexFiles</code>, and <code>noteFiles</code>.  The content is
-	the path to the directory containing the notes.
+	the path to the directory containing the notes.  It sets the variable
+	<code>notePath</code> to the note directory's path, and forces it to
+	end with a slash.
   </doc>
   <action>
+    <set name="VAR:notePath">
+	 <forceTrailingSlash>&content;</forceTrailingSlash>
+    </set>
+    <set name="VAR:notePath">
+         <subst match="\/\/" result="/">&VAR:notePath;</subst>
+    </set>
     <set name="VAR:files">
       <text sort><status item="files" src="&content;" /></text>
     </set>
@@ -598,6 +644,173 @@ Note that we only need these inside the PIA.
 </define>
 		     
 <h2>Page Components</h2>
+
+<h3>Annotation Table and its Components</h3>
+
+<doc> The elements in this section are used to build the table of indices and
+      notes that appears at the top of every Woad listing page.  In general
+      they assume that <code>VAR:xloc</code> is the path of the directory that
+      contains the notes.
+</doc>
+
+<!-- we can define the note and index stanzas iff xloc is ALWAYS the
+     correct annotation directory.  It will probably need a fixup if it's /;
+     forceTrailingSlash will work now.
+-->
+
+<define element="handleNoteCreation">
+  <doc> This expands into the code that <em>creates</em> a note using the note
+	creation form.  The content is the path to the directory that will
+	contain the new note; it may be empty if we can guarantee that
+	<code>LOC:path</code> is correct.
+  </doc>
+  <action>
+    <if> <get name="FORM:create" />
+	 <then>
+	   <if> <status item="exists" src="&content;&FORM:label;.ww" />
+	        <else><!-- create new note -->
+	    <output dst="&content;&FORM:label;.ww"><make name="note">
+		<make name="title"><get name="FORM:title" /></make>
+		<make name="created">&dateString;</make>
+		<make name="summary">
+		    <parse><get name="FORM:summary" /></parse>
+		</make>
+		<make name="content">
+		    <parse><get name="FORM:content" /></parse>
+		</make>
+</make><!-- note created using quick form -->
+</output>
+		</else>
+	   </if>
+	 </then>
+    </if>
+  </action>
+</define>
+
+<define element="indexTableRows">
+  <doc> This expands into a sequence of table rows listing index
+	files, together with their heading row.  The content is the list of
+	filenames to tabulate. 
+  </doc>
+  <action>
+    <tr> <th bgcolor="#cccccc" width="150"> indices </th>
+	 <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
+	 help </th> 
+    </tr>
+    <repeat>
+      <foreach entity="f">&indexFiles;</foreach>
+      <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+      <tr> <td align="left" valign="top">
+		    <a href="&f;"><code>&label;</code></a>
+	   </td>
+	   <td colspan="2" valign="top">
+		     <describeIndex>&f;</describeIndex>
+	   </td>
+      </tr>
+    </repeat>
+  </action>
+</define>
+
+<define element="noteTableRows">
+  <doc> This expands into a sequence of table rows listing notes.  The content
+	is the list of filenames to tabulate.  The heading row is <em>not</em>
+	displayed, since it may vary considerably depending on context. 
+  </doc>
+  <define attribute="path">
+    <doc> If present, this overrides <code>xloc</code> as the path to the
+	  notes. 
+  </define>
+  <define attribute="color">
+    <doc> Specifies the background color for the table cells.
+  </define>
+  <define attribute="heading">
+    <doc> If present, this is the content to display in the left column of a
+	  heading row.  If absent, no heading row is displayed.
+  </define>
+  <action><hide>
+      <let name="color"><get name="attributes:color">yellow</get></let>
+      <let name="path"><get name="attributes:path">&notePath;</get></let>
+    </hide>
+    <if><get name="attributes:heading"/><then>
+      <tr> <th bgcolor="#cccccc" width="150"> <get name="attributes:heading"/>
+	   </th>
+	   <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
+      </tr>
+    </then></if>
+    <repeat>
+      <foreach entity="f">&content;</foreach>
+      <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+      <tr> <td align="left" valign="top" bgcolor="&color;">
+		    <a href="&path;&f;"><code>&label;</code></a>
+	   </td>
+	   <td colspan="2" valign="top" bgcolor="&color;">
+		     <describeNote>&path;&f;</describeNote>
+	   </td>
+      </tr>
+    </repeat>
+  </action>
+</define>
+
+<define element="pageNoteRows">
+  <doc> Expands into the code that checks for and displays the page (URL)
+	notes corresponding to the source page being displayed.  The content
+	is the path to the notes. 
+  <doc>      
+  <action>
+    <if>&content;
+      <then>
+	<hide>
+	 <set name="npath">
+      	      <forceTrailingSlash>&content;</forceTrailingSlash>
+         </set>
+	  <set name="VAR:nfiles">
+	    <text sort><status item="files" src="&content;" /></text>
+	  </set>
+	  <set name="VAR:nnoteFiles">
+	    <repeat><foreach entity="f">&nfiles;</foreach>
+	       <if><rejectNote>&f;</rejectNote>
+		   <else>&f;</else>
+	       </if>
+	    </repeat>
+	 </set>
+	</hide>
+      <!-- list the corresponding URL annotations, if any -->
+      <!-- === Link needs to be corrected if npath="/" === -->
+      <if>&nnoteFiles; <then>
+	<tr> <th bgcolor="#cccccc" width="150"> page notes </th>
+	     <th bgcolor="#cccccc" colspan="2" align="left"> <em>(From the URL
+	     annotations for <a href="&npath;">&npath;</a>)</em></th>
+	</tr>
+	<noteTableRows path="&npath;" color="#99ccff">&nnoteFiles;</noteTableRows>
+      </then></if>
+      </then>
+    </if>
+  <action>
+</define>
+
+<define element="noteCreationForm">
+  <doc> This expands into the note creation form and its header line.  The
+	content must be the list of &lt;option&gt; elements that specify the
+	label.
+  </doc>
+  <action>
+    <tr> <th bgcolor="#cccccc" width="150"> new note </th>
+	 <th bgcolor="#cccccc" colspan="2" align="left">
+	      Enter note text or use the
+	      <a href="/.Woad/Tools/new-note?path=&xloc;">[advanced form]</a> 
+	 </th>
+    </tr>
+    <tr> <td valign="top">
+	    <select name="label"> <get name="content" />
+	    </select><br />
+	    <input name="create" value="Create Note" type="submit" />
+	 </td>
+	 <td valign="top" colspan="2">
+	    <textarea name="summary" cols="60" rows="4" wrap="wrap"></textarea>
+	 </td>
+    </tr>
+  </action>
+</define>
 
 <h3>Utility tags for use in page components</h3>
 

@@ -11,24 +11,48 @@
 </p>
 
 <h2>Annotated Contents</h2>
-<h3>Directories</h3>
+<h3>Tagsets</h3>
 <dl>
-  <dt> <a href=""></a>
-  <dd> 
+  <dt> <a href="src-file.ts">src-file.ts</a>
+  </dt>
+  <dd> Tagset for listing "generic" source code.  Also handles
+       <code>.wl</code> files, which are normally derived from source files
+       either by ``lister'' programs, or by hand-annotation.
+  </dd>
+  <dt> <a href="src-html.ts">src-html.ts</a>
+  </dt>
+  <dd> Tagset for listing HTML files and such derivatives as <code>.php</code>
+       and <code>.shtml</code> files.
+  </dd>
+  <dt> <a href="src-wrapper.ts">src-wrapper.ts</a>
+  </dt>
+  <dd> Meant for inclusion: this contains only definition of the ``wrapper''
+       element <code>&lt;-document-&gt;</code>.
+  </dd>
+  <dt> <a href="src-xhtml.ts">src-xhtml.ts</a>
+  </dt>
+  <dd> Tagset for listing PIA <code>.xh</code> (xhtml) files.  Adds the tags
+       in <code>basic.ts</code>
+  </dd>
 </dl>
 <h3>Documents</h3>
 <dl>
   <dt> <a href="src-listing.xh">src-listing.xh</a> </dt>
-  <dd> Source-code listing file.
+  <dd> Source-code directory-listing file.
   </dd>
   <dt> <a href="word-listing.xh">word-listing.xh</a> </dt>
-  <dd> Keyword listing file.
+  <dd> Keyword directory-listing file.
   </dd>
   <dt> <a href="word-listing.xh">word-listing.xh</a> </dt>
-  <dd> Default (annotation) listing file.
+  <dd> Default (annotation) directory-listing file.
+  </dd>
+  <dt> <a href="new-note.xh">new-note.xh</a>
+  </dt>
+  <dd> ``advanced'' form for creating new notes: allows such things as the
+       filename (``label'') and author to be specified.
   </dd>
 </dl>
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: HEADER.html,v 1.2 2000-06-21 01:07:22 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.3 2000-07-25 22:18:51 steve Exp $</b>
 <a name="files"><hr /></a>

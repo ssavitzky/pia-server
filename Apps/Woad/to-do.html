@@ -5,6 +5,24 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Impr</b> Authors and user preferences <br />
+       Probably cookies are the simplest implementation.
+       (2000-07-20)
+  </li>
+  <li> <b>Impr</b> standard wordlists in PIA/Apps/Woad <br />
+       Possibly aliased in rather than directly in Woad/.word, but in any case
+       we should index such standard sources as the Jargon File, Sun's Java
+       documentation, the Apache manual, PHP, Perl, HTML, and so on.  It
+       should be easy to map lists in and out depending on the target app.
+       (2000-07-20)
+  </li>
+  <li> <b>Bug</b> don't follow links to directories when indexing. <br />
+       Sometimes you need to, but in most cases this will just get you into
+       trouble.  One alternative might be to check dates on dirIndex files;
+       another might be to keep a database of visited directories and
+       abspaths. 
+       (2000-07-20)
+  </li>
   <li> <b>Impr</b> frameset with WOAD controls <br />
        Assuming you can tell what page is being displayed, you can add
        controls that go to the corresponding WOAD server page.
@@ -114,8 +132,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.15 2000-07-20 02:07:54 steve Exp $</b><br>
-<address><a href="http://rsv.ricoh.com/~steve/"
-         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
-         >steve@rsv.ricoh.com</a>&gt;</address>
+<b>$Id: to-do.html,v 1.16 2000-07-25 22:19:47 steve Exp $</b><br>
 </body></html>
