@@ -1,90 +1,3 @@
-<define element="split-query">
-   <doc> Take a query and chops it into key=val pairs with spaces </doc>
-   <action><parse>
-     <text split="yes" sep="&">
-	 <subst match="\?" result="">
-             <subst match="&" result=" "><subst match="amp;" result=" ">
-	     &content;
-	 </subst></subst></subst>
-     </text>&</parse>
-   </action>
-</define>
-
-<define element="prune-query">
-   <doc> Tag for removing duplicate entries from a query string, leaving only
-         the last of each type </doc>
-
-   <action><parse><text trim="yes"><subst match="&attributes:swapname;=.*\&"
-               result="">&content;</subst></text></parse></action>
-
-
-<?--                <subst match="&attributes:swapname;=.*\&"
-               result="">&content;</subst></text></action> --?>
-</define>
-
-<define element="fontwrap">
-   <doc>Changes the appearance  of a font according to local
-        variables </doc>
-   <action>
-      <if>&fonttype;
-         <then>
-            <font color="&myfont;" face="sans-serif">&content;</font>
-         </then>
-         <else>
-            <font color="&myfont;" face="serif">&content;</font>
-         </else>
-      </if>
-   </action>
-</define>
- 
-<define element="la">
-   <doc> Liquid-document reference (analagous to &lt;a&gt;)
-         Attribute "lref" gives doc name; attribute "flag" used as name of
-         attribute to test for open/closed state.</doc>
-
-   <action>
-      <let name="myfont"><extract>
-               <from>&fontcolor;</from>
-               0
-      </extract></let>
-      <let name="fontcolor"><subst match="&myfont;" result="">&fontcolor;
-           </subst></let>
-      <if>&fonttype;
-           <then><let name="fonttype"></let></then>
-           <else><let name="fonttype">ital</let></else>
-      </if>
-
-      <set name="flagname"><get name="attributes:flag" /></set>
-      <set name="flagval"><get name="FORM:&flagname;" /></set>
-
-      <if><test match="open">&flagval;</test>
-
-         <?-- if open, show href to close, plus include content of the ref --?>
-         <then>
-            <set name="newquery"><prune-query
-            swapname="&flagname;">&keyvals;</prune-query></set>
-            <set name="newflag">home.xh?&flagname;=close&</set>
-            <a
-               href="&newflag;&newquery;">
-                 <font color="&myfont;">&content;</font></a><br/>
-            <fontwrap >
-            <font color="&myfont;"><blockquote>
-               <include src="&attributes:lref;" />
-            </blockquote></font>
-            </fontwrap>
-         </then>
-         <?-- if closed, just show a regular href to open it--?>
-         <else>
-            <set name="newquery"><prune-query
-            swapname="&flagname;">&keyvals;</prune-query></set>
-            <set name="newflag">home.xh?&flagname;=open&</set>
-            <a href="&newflag;&newquery;">&content;</a>
-         </else>
-       </if>
-
-
-   </action>
-</define>
 
 
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -102,7 +15,7 @@
 This is a paragraph describing the uses of <la lref="fluid.xh" flag="fluid">
 Liquid Documents.</la>  Such documents may revolutionize the display of text
 information by allowing the user to choose which links to follow without
-opening new pages or losing track of where they were. </p>
+opening new pages or losing track of where he was. </p>
 
 <p>
 Liquid documents were first proposed by <la lref="xerox.xh" flag="xerox">Xerox
@@ -113,11 +26,27 @@ to preserve context when reading a document; it is no longer necessary to
 full of details to ensure the details are at hand.
 </p>
 
+
 <p> This demonstration is a work-in-progress, and may have bugs (e.g. in
 dealing with multiple references to the same liquid link).  Please be patient,
 and inform us of any problems or observations! (<a
 href="mailto:bill@rsv.ricoh.com">bill@rsv.ricoh.com</a>).</p>
 
+
+<p> This paragraph tests an alternate method for documentation, the
+
+   <lc  flag="liqcomment" atext="liquid comment.">
+       Liquid comments look just like
+       liquid anchors, but their text is in-line rather than kept in a separate
+       file.  In fact, liquid comments can be
+       <lc flag="nested" atext="nested,">
+           Nesting allows one comment to lie within the other
+       </lc>
+       although it makes the document look a bit odd at first.
+    </lc>
+
+    Both alternatives ought to present the same results, but they
+    are composed differently on the page. </p>
 <show-errors />
 <footer />
 </body></html> 
