@@ -37,6 +37,7 @@ PACKAGES = \
 	tf \
 	pia
 
+FILES = Version.java
 
 include $(TOPDIR)/makefiles/package.make
 include $(TOPDIR)/makefiles/file.make
