@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.20 1999-04-14 00:16:34 pgage Exp $
+#	$Id: Makefile,v 1.21 1999-04-14 00:17:50 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -111,10 +111,10 @@ src.tar:	update-version
 	make prep_rel_dir
 	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; \
 		cd /pia1/CvsRoot ; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
-	 	cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA \
+	 	cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout -r $(VERSION_ID) PIA ; \
 	else \
 		cd /pia1/CvsRoot ; /usr/bin/rsync -e ssh -a --numeric-ids --delete -v PIA cvs.risource.org:/home/cvsroot/ \
-		cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA \
+		cd $(REL_DIR) ; cvs -d :pserver:anonymous@cvs.risource.org:/home/cvsroot checkout PIA ; \
 	fi
 	cd $(REL_PIA_DIR) ;  make prep_src_rel
 	cd $(REL_DIR) ; tar czf $(TAR_NAME).tgz PIA ; mv $(TAR_NAME).tgz $(DEST_DIR)
