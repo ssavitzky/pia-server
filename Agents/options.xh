@@ -1,0 +1,57 @@
+<!DOCTYPE    html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>Generic Options Page for &agentName;</title>
+<link rev='made' href='mailto:wolff@crc.ricoh.com' />
+</head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
+<header>&agentType; agent</header>
+<sub-head page='options' />
+
+<hr />
+
+
+<set entity='entity' name='title'>Options Page</set>
+
+<if><test exact='exact' match='&amp;agentType'>&agentName;</test>
+    <then><set name='agentPath'>&agentName;</set></then>
+    <else><set name='agentPath'>&agentType;/&agentName;</set></else>
+</if>
+
+<p>
+
+These links locate the directories typically associated with an agent.  The home
+directory is considered to be the main agent directory; however a user
+directory may have been created to make modifications to the the main agent.
+In this case, it is the modified version that will be loaded at system
+start-up.  The data directory is the default location for writing any
+data files that are output from the agent.
+</p>
+
+<table width='90%' align='center' cols='2' cellspacing='10'>
+<tr><th align='left'>Link</th><th align='left'>Destination</th></tr>
+<tr><td><a href='/&AGENT:name;~'>/&AGENT:name;~</a></td>
+<td>Agent home directory:  </td>
+</tr>
+<tr><td> <a href='&AGENT:name;/~/'>&AGENT:name;/~/</a></td>
+<td>Agent data directory.  This will be empty if no
+data directory has been created for &AGENT:name;.</td>
+</tr>
+<tr><td><a href='~'>~</a></td>
+<td>Agent user directory.  This will be empty if no
+user directory has been created for &AGENT:name;.</td>
+</tr>
+</table>
+
+<if><get name='AGENT:do-not-remove' /><then>
+<hr />
+<dl>
+  <dt> Note:
+  </dt><dd> This page does not have an option for removing the
+       <a href='home'>&agentName;</a> agent.  It is required for the proper
+       functioning of this application.
+</dd></dl>
+</then></if>
+
+
+<footer cvsid='$Id: options.xh,v 1.1 1999-04-01 22:50:46 pgage Exp $' />
+
+</body></html>
