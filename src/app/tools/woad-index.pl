@@ -1,7 +1,20 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.17 2000-10-13 23:21:50 steve Exp $
+#	$Id: woad-index.pl,v 1.18 2000-11-22 22:58:25 steve Exp $
 # Create WOAD index files.
 #
+
+### Notes: 
+#
+# See /usr/local/lxr for how to tie a database file to a hash:
+# 	reading: /usr/local/lxr/http/lib/LXR/Common.pm
+#	writing: /usr/local/lxr/bin/genxref
+#
+# 	This would be used to reduce memory and disk requirements for the
+#	identifier usage cross-ref.  The wrapper in woad-index.ts would have
+#	to invoke it, of course.  Simply map identifier -> space-separated
+#	list of path#line's.
+#
+# Internally, using an array of ref's for use would save much space.
 
 ### usage() -- print usage summary
 
@@ -11,6 +24,7 @@ sub usage {
     print "	-l		local (no recursion)\n";
     print "	-v		Print version string and exit\n";
     print "	-q		Quiet\n";
+    print "	-n		index only the notes (AllNotesByTime)\n";
     print "	-x		also produce cross-reference index\n";
     print "	-y		xref definitions only (faster)\n";
     print "	-root <dir>	Woad annotations (default ~/.woad)\n";
@@ -30,6 +44,7 @@ $root 		= "$ENV{HOME}/.woad";
 $recursive 	= 1 ;
 $project	= "";
 
+$notesOnly	= 0;
 $xref		= 0;
 $yref		= 0;
 $quiet		= 0;
@@ -229,6 +244,8 @@ for ($i = 0; $i < @ARGV; ++$i) {
 	exit(0);
     } elsif ($arg eq '-root') {
 	$root = $ARGV[++$i];
+    } elsif ($arg eq '-n') {
+	$notesOnly = 1;
     } elsif ($arg eq '-x') {
 	$xref = 1;
 	$yref = 1;
@@ -260,8 +277,12 @@ for ($i = 0; $i < @ARGV; ++$i) {
 
 }
 
-if ($source eq "")	{ die "No source directory specified."; }
-if (! -d $source) 	{ die "Source must be a directory."; }
+if (! $notesOnly) {
+    if ($source eq "")	{ die "No source directory specified."; }
+    if (! -d $source) 	{ die "Source must be a directory."; }
+
+    $roots[0] = getRealDirPath($source);
+}
 
 if ($project ne "" && $project !~ /^\//) {
     $project = "/" . $project;
@@ -269,24 +290,25 @@ if ($project ne "" && $project !~ /^\//) {
 
 $rec = $recursive? "/..." : "";
 
-$roots[0] = getRealDirPath($source);
-
 print STDERR "indexing $source$rec -> $root$project \n" unless ($quiet);
 print STDERR "    abs: " . $roots[0] . "\n" unless ($quiet);
 
 ###### Do the Work ######################################################
 
 ## Index the source tree
-open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
-indexDir($source, "/");
-close (PATHINDEX);
+if (! $notesOnly) {
+    open (PATHINDEX, ">$root$project/sourcePathIndex.wi");
+    indexDir($source, "/");
+    close (PATHINDEX);
+}
 
 ## Index the WOAD tree, mainly looking for notes.
 indexWoadDir("$root$project", "/");
 
 ## Now output the global definition and documentation indices
 #	Afterwards we throw most of the information away to save space.
-globalIndices();
+globalIndices() unless ($notesOnly);
+listNotesByTime();
 
 ## Increment $pass and re-index the sources looking for references
 if ($xref) {
@@ -675,8 +697,9 @@ sub indexCodeFile {
 		}
 	    } elsif ($def =~ /^(if|for|else|elsif|while|until|void)$/) {
 		# certain keywords can be followed by "("
-	    } elsif (/^\s*(case|else|return)/) {
+	    } elsif (/^\s*(case|if|elsif|else|return)/) {
 		# some other keywords can be followed by "$id ("
+		# if qualifies in php, for example, where parens aren't needed
 	    } elsif (/^\s*($id[*&+:\s]+)+$id\s*\(/) {
 		# Ought to be in class or top level, but it seems
 		# amazingly reliable nevertheless.
@@ -794,7 +817,7 @@ sub indexWoadNote {
     $type = "markup";
 
     # === indexMarkupFile is probably wrong for notes.
-    indexMarkupFile($absPath, \%entry);
+    indexMarkupFile($absPath, \%entry) unless ($notesOnly);
 
     # Convert entry to xml format:	=== this is probably wrong
     my $ent = "<Wfile";
@@ -825,7 +848,8 @@ sub indexDef {
     # We have to distinguish the original word from the wordified XML id,
     # but only waste the space (word=, id=) if they're different.
 
-    my $entry = "<Def word=\"$word\" path=\"$path\" line=\"$line\" "
+    my $entry = "<Def word=\"$word\" path=\"$path\" "
+	      . ($line?  "line=\"$line\" " : '')
 	      . (($ident eq $word)? '' : "id=\"$ident\" ")
 	      . "context=\"$context\" "
 	      . "name=\"$name\">$def</Def>\n\n";
@@ -927,7 +951,12 @@ sub globalIndices {
 	close (INDEX);
     }
     %docs = ();
+}
 
+### listNotesByTime()
+#	output the chronological list of notes
+#
+sub listNotesByTime {
     # Here we do the chronological notes index
     open (INDEX, ">$root$project/AllNotesByTime.wi");
     @keys = sort(keys(%notesByTime));
@@ -1104,7 +1133,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.17 2000-10-13 23:21:50 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.18 2000-11-22 22:58:25 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 
