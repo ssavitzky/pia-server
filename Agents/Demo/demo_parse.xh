@@ -1,7 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <title>Parse Handler Demo</title>
-</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+</head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Parse Handler Demo</header>
 
 <h2>Parse Handler Examples:</h2>
 The <b><a name="parse_demo">parse demo</a></b> shows how to use the parse handler.
@@ -31,7 +33,7 @@ This example does not work.<br><br>
 <b>File:</b> <a href="/Root/&filePath;">&filePath;</a>
 <hr>
 <b>Copyright &copy; 1997 Ricoh California Research Center</b><br>
-<b>$Id: demo_parse.xh,v 1.2 1999-03-12 19:22:13 steve Exp $</b><br>
+<b>$Id: demo_parse.xh,v 1.3 1999-03-12 23:15:50 pgage Exp $</b><br>
 
 </body></html>
 

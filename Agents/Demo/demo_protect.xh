@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Protect Handler Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+
+<header>Protect Handler Demo</header>
 
 <h2>Protect Handler Demo</h2>
 
@@ -28,6 +30,6 @@ way.
 <p>
 <b> Result: </b> <protect result>Silicon Valley is <em>the</em> place to program.</protect>
 <p>
-<footer>
+<footer />
 
 </body></html>

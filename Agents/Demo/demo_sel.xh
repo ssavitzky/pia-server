@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Extract Handler Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Extract Handler Demo</header>
+
 
 <h2>Extract Handler Demo</h2>
  
@@ -16,7 +18,7 @@ extract:  <a href="#sel_text">extracting by node type</a>, <a href="#sel_child">
 
 
 <hr>
-<a name="sel_text"><h3> Extract a Text Node </h3></a>
+<h3><a name="sel_text">Extract a Text Node</a></h3>
 <b> Description:</b> Returns all nodes of type "text" from the parse tree.  
 In the following example, there is a single text node.
 <p>
@@ -25,7 +27,7 @@ In the following example, there is a single text node.
 <b> Result:     </b><extract><from>Single text node</from> #text </extract>
 <hr>
 
-<a name="sel_septext"><h3> Extract Text Nodes and Add Separator </h3></a>
+<h3><a name="sel_septext">Extract Text Nodes and Add Separator</a></h3>
 <b> Description:</b> Returns all text nodes from the parse tree.  In the following example, a 
 separator has been added to separate the nodes when printed out.  This example
 returns the two text nodes: text1 and text2.  It does not return the text from the marked up
@@ -36,7 +38,7 @@ node bold1.
 <b> Result:     </b><extract sep=", "><from>text1 <b>bold1</b> text2 </from> #text </extract>
 <hr>
 
-<a name="sel_child"><h3> Extract a Child Node</h3></a>
+<h3><a name="sel_child">Extract a Child Node</a></h3>
 <b> Description:</b> This example shows a different ways of extracting a child node from the 
 document parse tree.  The first example extracts a child by specifying its position in the tree;
 the second example specifies the element type.
@@ -51,18 +53,18 @@ the second example specifies the element type.
 <p>
 <hr>
 
-<a name="sel_all"><h3> Extract All Nodes </h3></a>
+<h3><a name="sel_all">Extract All Nodes</a></h3>
 <b> Description:</b>Use the "all" node type.  As the name suggests, it extracts all nodes, regardless
 of type. 
 <p>
-<b> Input: </b> &lt;extract from&gt;&lt;body&gt;&lt;i&gt;italic1 &lt;/i&gt;&lt;b&gt;bold1 &lt;/b&gt;&lt;strong&gt;strong1 &lt;/strong&gt; plain1 &lt;/body&gt;&lt;/from&gt;#all&lt;/extract&gt;
+<b> Input: </b> &lt;extract from&gt;&lt;U&gt;&lt;i&gt;italic1 &lt;/i&gt;&lt;b&gt;bold1 &lt;/b&gt;&lt;strong&gt;strong1 &lt;/strong&gt; plain1 &lt;/U&gt;&lt;/from&gt;#all&lt;/extract&gt;
 <p>
-<b> Result:  </b><extract from><body><i>italic1 </i><b>bold1 </b><strong>strong1 </strong> plain1 </body></from>#all</extract>
+<b> Result:  </b><extract from><U><i>italic1 </i><b>bold1 </b><strong>strong1 </strong> plain1 </U></from>#all</extract>
 <p>
 <hr>
 
-<a name="sel_ent"><h3> Using the &list Entity</h3></a> <b>
-Description:</b>When a "extract" is expanded, it implicitly defines a
+<h3><a name="sel_ent">Using the &list Entity</a></h3>
+<b>Description:</b>When a "extract" is expanded, it implicitly defines a
 local namespace containing a number of entities.  An example of the
 use of one of these: &list is given below.  In this example, a
 list of space-separated words is formatted into a numbered list. Input
@@ -84,7 +86,7 @@ variable.
 <p>
 <p>
 
-<footer>
+<footer />
 
 </body></html>
 

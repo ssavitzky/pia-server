@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Test Handler Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 
+<header>Test Handler Demo</header>
 
 <h2>Test Handler Demo</h2>
 
@@ -22,7 +23,7 @@ href="#match"> a matching string </a>, <a href="#null"> null content
 list </a>, and how to <a href="#notnum">negate a test with not</a>.  
 <p>
 
-<a name="zero"><h3>Test for Zero</h3></a>
+<h3><a name="zero">Test for Zero</a></h3>
 <b> Description:</b>Test zero returns true when passed whitespace or 0; false when handed a text string or a number other than zero.
 <p>
 <b> Input:      </b>&lt;test zero&gt;0&lt;/test&gt;
@@ -44,35 +45,35 @@ list </a>, and how to <a href="#notnum">negate a test with not</a>.
 
 <hr>
 
-<a name="pos"><h3>Test for a Positive Number</h3></a>
+<h3><a name="pos">Test for a Positive Number</a></h3>
 <b> Description:</b>The following examples test for a positive number.
 <p>
-<b> Input:      </b></b>&lt;test positive&gt;-1&lt;/test&gt;
+<b> Input:      </b>&lt;test positive&gt;-1&lt;/test&gt;
 <p>
-<b> Result:     <test positive>-1</test>
+<b> Result:     </b><test positive>-1</test>
 
 <p>
-<b> Input:      </b></b>&lt;test positive&gt;1&lt;/test&gt;
+<b> Input:      </b>&lt;test positive&gt;1&lt;/test&gt;
 <p>
-<b> Result:     <test positive>1</test>
+<b> Result:     </b><test positive>1</test>
 <hr>
 
 
-<a name="neg"><h3>Test for a Negative Number</h3></a>
+<h3><a name="neg">Test for a Negative Number</a></h3>
 <b> Description:</b>The following examples test for a negative number.
 <p>
 <b> Input:      </b>&lt;test negative&gt;-1&lt;/test&gt;
 <p>
-<b> Result:     <test negative>-1</test>
+<b> Result:     </b><test negative>-1</test>
 
 <p>
-<b> Input:      </b></b>&lt;test negative&gt;0&lt;/test&gt;
+<b> Input:      </b>&lt;test negative&gt;0&lt;/test&gt;
 <p>
-<b> Result:     <test negative>0</test>
+<b> Result:     </b><test negative>0</test>
 <hr>
 
 
-<a name="match"><h3> Test for a Match on a String </h3></a>
+<h3><a name="match">Test for a Match on a String</a></h3>
 <b> Description:</b>The following examples test for exact and case insensitive matches on text strings.
 <p>
 <b> Input:      </b> &lt;test match="cat"&gt;Match the Category&lt;/test&gt;
@@ -84,7 +85,7 @@ list </a>, and how to <a href="#notnum">negate a test with not</a>.
 <b> Result:     </b><test case match="cat">Match the Category</test>
 <hr>
 
-<a name="null"><h3>Test for null Content </h3></a>
+<h3><a name="null">Test for null Content</a></h3>
 <b> Description:</b> The following examples test for null on an empty node (one without text or whitespace) and on a node containing whitespace.
 <p>
 <b> Input:      </b>&lt;test null&gt;&lt;/test&gt;
@@ -97,7 +98,7 @@ list </a>, and how to <a href="#notnum">negate a test with not</a>.
 <hr>
 
 
-<a name="num"><h3>Test for a Number </h3></a>
+<h3><a name="num">Test for a Number</a></h3>
 <b> Description:</b>  The following examples test for numeric content.
 <p>
 <b> Input:      </b>&lt;test numeric&gt;999&lt;/test&gt;
@@ -110,7 +111,7 @@ list </a>, and how to <a href="#notnum">negate a test with not</a>.
 <hr>
 
 
-<a name="notnum"><h3>Test for Not a Number </h3></a>
+<h3><a name="notnum">Test for Not a Number</a></h3>
 <b> Description:</b>  This example shows the use of not.  While this test should
 fail, if it is negated, it will return true.
 <p>
@@ -120,7 +121,7 @@ fail, if it is negated, it will return true.
 <hr>
 
 
-<a name="sorted"><h3>Test a Sorted List</h3></a>
+<h3><a name="sorted">Test a Sorted List</a></h3>
 <b> Description:</b>Test that a sorted list is sorted.  Should return true.
 <p>
 <b> Input:      </b>&lt;test sorted&gt;Ants Bats Toads&lt;/test&gt;
@@ -129,6 +130,7 @@ fail, if it is negated, it will return true.
 <hr>
 <h3>Test an Unsorted List</h3>
 <b> Description:</b>Test that an unsorted list is sorted.  Should return false.
+If it returns true, it is a bug.
 <p>
 <b> Input:      </b>&lt;test sorted&gt;bats ants toads&lt;/test&gt;
 <p>
@@ -142,7 +144,7 @@ fail, if it is negated, it will return true.
 <p>
 <b> Result:     </b><test case sorted>Bats ants toads</test>
 <p>
-<footer>
+<footer />
 
 </body></html>
 

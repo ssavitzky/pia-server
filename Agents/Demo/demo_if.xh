@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>If Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>If Demo</header>
+
 
 <h2>If Demo</h2>
 
@@ -18,7 +20,7 @@ elsf is provided as a synonym for else-if.  Below are some "if" examples.
 <b> Description:</b> defines a variable "tomorrow", sets it to a value, then tests for its 
 existence.
 <p>
-<b>Input: </b> &lt;define entity=tomorrow&gt;&lt;value&gt;Saturday&lt;/define&gt;
+<b>Definition: </b> &lt;define entity=tomorrow&gt;&lt;value&gt;Saturday&lt;/define&gt;
 
 <define entity=tomorrow><value>Saturday</define>
 <p>
@@ -50,7 +52,7 @@ variable "teeshirt", sets it to "large" then performs a series of tests on this 
 return value is the "then" statement associated with the successful test.
 <p>
 
-<b>Input: </b> &lt;define entity=teeshirt&gt;&lt;value&gt;large&lt;/define&gt;
+<b>Definition: </b> &lt;define entity=teeshirt&gt;&lt;value&gt;large&lt;/define&gt;
 <p>
 
 <define entity=teeshirt><value>large</define>
@@ -113,7 +115,7 @@ return value is the "then" statement associated with the successful test.
 </if> 
 <p>
 
-<footer>
+<footer />
 
 </body></html>
 

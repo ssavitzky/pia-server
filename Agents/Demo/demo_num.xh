@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Numeric Handler Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Numeric Handler Demo</header>
 
 <h2>Numeric Handler Demo</h2>
 
@@ -11,7 +12,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <p>
 
 <hr>
-<a name="sum"><h3> Sum Numbers Separated by Whitespace </h3></a>
+<h3><a name="sum">Sum Numbers Separated by Whitespace</a></h3>
 <b> Description:</b> Adds the numbers: 10 20 30 40 9.5, and returns the result.<br>
 <br>
 <b> Input:      </b>&lt;numeric sum&gt;10 20 30 40 9.5&lt;/numeric&gt;<br>
@@ -30,7 +31,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <hr>
 
 
-<a name="diff"><h3> Using the Difference Attribute </h3></a>
+<h3><a name="diff">Using the Difference Attribute</a></h3>
 <b> Description:</b> Compute the difference between 14 and 17.  This should return -3.<br>
 <br>
 <b> Input:</b>&lt;numeric difference&gt; 14 17 &lt;/numeric&gt;<br>
@@ -39,7 +40,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <hr>
 
 
-<a name="prod"><h3> Using the Product Attribute </h3></a>
+<h3><a name="prod">Using the Product Attribute</a></h3>
 
 <b> Description:</b> Compute the product of 9 and 9.<br>
 <br>
@@ -48,7 +49,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <b>Result:</b><numeric product>9 9</numeric>
 <hr>
 
-<a name="quot"><h3> Using the Quotient Attribute</h3></a>
+<h3><a name="quot">Using the Quotient Attribute</a></h3>
 <b> Description:</b> Compute the quotient of 20 and 10.<br>
 <br>
 <b>Input: </b>&lt;numeric quotient&gt;20 10&lt;/numeric&gt;<br>
@@ -56,7 +57,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <b>Result: </b><numeric quotient>20 10</numeric>
 <hr>
 
-<a name="rem"><h3> Using Remainder Attribute </h3></a>
+<h3><a name="rem">Using Remainder Attribute</a></h3>
 <b> Description:</b> Compute the remainder of 17 and 10.<br>
 <br>
 <b>Input:</b>&lt;numeric remainder&gt;17 10&lt;/numeric&gt;<br>
@@ -64,7 +65,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <b>Result:</b><numeric remainder>17 10</numeric>
 <hr>
 
-<a name="sort"><h3> Sort a List of Numbers in Ascending Order</h3></a>
+<h3><a name="sort">Sort a List of Numbers in Ascending Order</a></h3>
 
 <b> Description:</b> Sort 88 77 11 99 in ascending order.<br>
 <br>
@@ -81,7 +82,7 @@ The <a name="numeric_demo">numeric handler demo</a> shows how to use the followi
 <br>
 <b>Result:</b><ul><numeric sort reverse><li>88<li>77<li>11<li>99</numeric></ul>
 <p>
-<footer>
+<footer />
 
 </body></html>
 

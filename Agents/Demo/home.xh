@@ -4,19 +4,19 @@
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 <header>Home Page</header>
 <sub-head page=home >
-    <tr><th><td> <a href=demo_define.xh>Define Element and Attribute Examples</a>
-    <tr><th><td> <a href=demo_text.xh>Text Examples</a>
-    <tr><th><td> <a href=demo_num.xh>Numeric Examples</a>
-    <tr><th><td> <a href=demo_if.xh>If and Sub-component Examples</a>
-    <tr><th><td> <a href=demo_logic.xh>Logical And/Or Examples</a>
-    <tr><th><td> <a href=demo_subst.xh>Substitute Examples</a>
-    <tr><th><td> <a href=demo_rep.xh>Repeat Examples</a>
-    <tr><th><td> <a href=demo_getset.xh>Get and Set Variable Examples</a>
-    <tr><th><td> <a href=demo_protect.xh>Protect Markup Examples</a>
-    <tr><th><td> <a href=demo_sel.xh>Extract Examples</a>
-    <tr><th><td> <a href=demo_test.xh>Test Handler Examples</a>
-    <tr><th><td> <a href="&IFman;">PIA InterForm Manual</a>
-		 <a href="/Agency/debug">[debug]</a>
+    <tr><th><td> <a href="demo_define.xh">Define Element and Attribute Examples</a>
+    <tr><th><td> <a href="demo_text.xh">Text Examples</a>
+    <tr><th><td> <a href="demo_num.xh">Numeric Examples</a>
+    <tr><th><td> <a href="demo_if.xh">If and Sub-component Examples</a>
+    <tr><th><td> <a href="demo_logic.xh">Logical And/Or Examples</a>
+    <tr><th><td> <a href="demo_subst.xh">Substitute Examples</a>
+    <tr><th><td> <a href="demo_rep.xh">Repeat Examples</a>
+    <tr><th><td> <a href="demo_getset.xh">Get and Set Variable Examples</a>
+    <tr><th><td> <a href="demo_protect.xh">Protect Markup Examples</a>
+    <tr><th><td> <a href="demo_sel.xh">Extract Examples</a>
+    <tr><th><td> <a href="demo_test.xh">Test Handler Examples</a>
+    <tr><th><td> <a href="hello-world.xh">Hello World Example</a>
+    <tr><th><td> <a href="/PIA/Doc/tagsets.html">Tagset Manual</a>
 </sub-head>
 
 
@@ -28,6 +28,6 @@ formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid="$Id: home.xh,v 1.2 1999-03-12 19:22:20 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.3 1999-03-12 23:15:53 pgage Exp $"></footer>
 </body></html>
 

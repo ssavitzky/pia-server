@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Get and Set Handler Demo</title>
 </head>
-
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Get and Set Handler Demo</header>
 
 <h2>Get and Set Handler Demo</h2>
 
@@ -20,9 +20,9 @@ this value using the get handler.
 <b> Input: </b>&lt;set name=today&gt;Friday&lt;/set&gt;
 <set name=today>Friday</set>
 <p>
-<b> Input: </b>&lt;get name=today&gt;
+<b> Input: </b>&lt;get name=today&gt;&lt;/get&gt;
 <p>
-<b> Result: </b> <get name=today>
+<b> Result: </b> <get name=today></get>
 <p>
 <hr>
 
@@ -30,20 +30,11 @@ this value using the get handler.
 <b> Description:</b> Attempt to "get" a value from a variable that has not been set.
 Returns nothing.
 <p>
-<b> Input: </b>&lt;get name=whatever&gt;
+<b> Input: </b>&lt;get name=whatever&gt;&lt;/get&gt;
 <p>
-<b> Result: </b> <get name=whatever>
+<b> Result: </b> <get name=whatever></get>
 <p>
-<footer>
+<footer />
 
 
 </body></html>
-
-
-
-
-
-
-
-
-

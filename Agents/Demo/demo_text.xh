@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
-<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
-<header>
+<title>Text Handler Demo</title>
 </head>
+<body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Text Handler Demo</header>
 
 <h2>Text Handler Demo</h2>
 
@@ -17,7 +18,7 @@ handler attributes:  <a href="#sort">sort</a>, <a href="#split">split </a>, <a h
 <p>
 
 <hr>
-<a name="sort"><h3> Sort a List of Names </h3></a>
+<h3><a name="sort">Sort a List of Names</a></h3>
 <b> Description:</b> sorts the list, Tea Cocoa Coffee Espresso Mocha into alphabetical order.
 Markup is preserved.
 <p>
@@ -43,7 +44,7 @@ Markup is preserved.
 <b>Result: </b><ul><text sort reverse><li>gummi bears<li>jelly beans<li>chocolate<li>peanut brittle</text></ul>
 <hr>
 
-<a name="split"><h3> Split Text and Marked Up Nodes</h3></a>
+<h3><a name="split">Split Text and Marked Up Nodes</a></h3>
 <b> Description:</b> splits a list of words on whitespace, and also extracts any words that are within html markup.
 <p>
 <b>Input: </b>&lt;text split extract&gt;very very very &lt;em&gt;very&lt;/em&gt; good&lt;/text&gt;
@@ -52,7 +53,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="join"><h3> Join Path Elements with "/" as Separator </h3></a>
+<h3><a name="join">Join Path Elements with "/" as Separator</a></h3>
 <b> Description:</b> splits a list of words on whitespace and adds a "/" separator between each word.
 <p>
 <b>Input: </b> &lt;text join sep="/"&gt;/home pgage pia src java&lt;/text&gt;
@@ -61,7 +62,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="pad"><h3>Pad and Align Right</h3></a>
+<h3><a name="pad">Pad and Align Right</a></h3>
 <b>Description: </b>Pad text on the left hand side so that it is right justified.
 <p>
 <b>Input: </b>&lt;text pad align left width=20&gt;cat&lt;/text&gt;
@@ -70,7 +71,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="trim"><h3>Trim Spaces from Right and Left</h3></a>
+<h3><a name="trim">Trim Spaces from Right and Left</a></h3>
 <b>Description: </b>Trim spaces from the right and left sides of a text string.
 <p>
 <b>Input: </b>&lt;text trim&gt;            &lt;em&gt;     rat    &lt;/em&gt;    &lt;/text&gt;
@@ -79,7 +80,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="eurl"><h3> Encode URL Special Symbols </h3></a>
+<h3><a name="eurl">Encode URL Special Symbols</a></h3>
 <b>Description: </b> Encode special symbols used in URLs, such as "/" and ":" using URL encoding.
 <p>
 <b>Input: </b> <text decode url>http://one;two?three:four@five&six=seven+eight</text>
@@ -88,7 +89,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="durl"><h3> Decode URL Special Symbols</h3></a>
+<h3><a name="durl">Decode URL Special Symbols</a></h3>
 <b>Input: </b><text encode url>http://www.dejanews.com/[ST_chan=art]/dnquery.xp?QRY=Faulkner&VW=arts.hum.lit.authors.d_e_f&noreg=1&maxhits=25&format=terse&showsort=score&ST=QS&LNG=ALL</text>
 <p>
 <b>Result: </b><text decode url>http:%2f%2fwww.dejanews.com%2f[ST_chan%3dart]%2fdnquery.xp%3fQRY%3dFaulkner%26VW%3darts.hum.lit.authors.d_e_f%26noreg%3d1%26maxhits%3d25%26format%3dterse%26showsort%3dscore%26ST%3dQS%26LNG%3dALL</text>
@@ -98,7 +99,7 @@ Markup is preserved.
 <b>Result: </b><text decode url>http%3A%2F%2Fone%3Btwo%3Fthree%3Afour%40five%26amp%3Bsix%3Dseven%2Beight </text>
 <hr>
 
-<a name="b64enc"><h3> base64 Encode Text and Special Symbols</h3></a>
+<h3><a name="b64enc">base64 Encode Text and Special Symbols</a></h3>
 
 <b>Description: </b> use base64 encoding for text and special symbols: "/:;?@&=+".
 <p>
@@ -108,7 +109,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="b64dec"><h3> Decode base64 Text and Special Symbols</h3></a>
+<h3><a name="b64dec">Decode base64 Text and Special Symbols</a></h3>
 
 <b>Description: </b>decode base64 encoded text which includes the special symbols: "/:;?@&=+".
 <p>
@@ -118,7 +119,7 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="entenc"><h3> Entity Encode </h3></a>
+<h3><a name="entenc">Entity Encode</a></h3>
 <b>Description: </b>Use entity encoding to preserve an "&" as text in an XML document.
 <p>
 <b>Input: </b>&lt;text encode entity&gt;& Co.&lt;/text&gt;
@@ -127,14 +128,14 @@ Markup is preserved.
 <p>
 <hr>
 
-<a name="decent"><h3> Entity Decode</h3></a>
+<h3><a name="decent">Entity Decode</a></h3>
 <b>Description: </b>Use entity decoding to decode an "&" that has been preserved as text in an XML document.
 <p>
 <b>Input: </b>&lt;text decode entity&gt;&amp; Co. &lt;/text&gt;
 <p>
 <b>Result: </b><text decode entity>&amp; Co.</text>
 <p>
-<footer>
+<footer />
 
 </body></html>
 
