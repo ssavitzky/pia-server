@@ -7,10 +7,13 @@
 </p>
 
 <p> This directory contains icons and other images that are shared widely
-    throughout the PIA.  Icons that are agent-specific should go into the
-    Agent's home directory.  It is expected that the top-level site
+    throughout the PIA.  Icons that are application-specific should go into
+    that application's home directory.  Icons and images used in documentation
+    (i.e. in <a href="../../../Doc/">/Doc</a>) should be local to the <a
+    href="../../../Doc/">/Doc</a> subtree, since it is occasionally separated
+    from the rest of the PIA.  It is expected that the top-level site
     configuration file will make this directory available at the root level as
-    <code>/Icon/</code>. 
+    <code>/Icon/</code>.
 </p>
 
 <dl>
@@ -24,10 +27,11 @@
        ``<code>pia24.png</code>'' indicates a logo attached to the letters
        ``PIA''.  The number in all cases is the height in pixels.
   <dt> <b>GIF's</b>
-  <dd> GIF images have been removed from the PIA and replaced with PNG images,
+  <dd> GIF images have been removed from the PIA and replaced with PNG images
        to avoid patent licensing problems.  Besides, PNG's are smaller.  GIF's
        can still be found in /Doc/API/javadoc/images -- these came from Sun,
-       and we're presuming that they're ok.
+       and we're presuming that they're ok.  It's worth noting, though, that
+       they are no longer used by recent versions of Javadoc.
 </dl>
 
 <h2>Acknowledgements:</h2>
@@ -41,6 +45,6 @@
 
 <hr>
 <b>Copyright &copy; 1997-2000 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.6 2000-04-20 23:31:20 steve Exp $</b><br>
+<b>$Id: HEADER.html,v 1.7 2000-04-25 23:43:45 steve Exp $</b><br>
 <a name="files"><hr></a>
 
