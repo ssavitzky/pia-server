@@ -325,7 +325,7 @@
 </p>
 
 <hr />
-<h2> <a name="section-6">6:</a> WOAD Tree Structure</h2>
+<h2> <a name="section-6">6:</a> <a name="parameters">WOAD Tree Structure</a></h2>
 
 <p> There are actually <em>four</em> sets of URL's involved in a
     Woad-organized application:
@@ -364,32 +364,6 @@
     <em>not</em> to end with one.
     (Note that the current ones are misnamed.)
 </p>
-
-<p> OLD parameters (mostly phased out by now):
-</p>
-<ul>
-  <li> <code>sourcePrefix</code> -> <code>notesPrefix</code> OR
-       <code>sourcePrefix</code> depending on usage.
-       <code>sourcePrefix</code> is more likely.  sourceOffset and
-       sourcePrefix were getting concatenated.; this is no longer true.
-  </li>
-  <li> <code>targetPrefix</code> [prefix] -> <code>docOffset</code> [offset]
-  </li>
-  <li> <code>sourceOffset</code> [offset] -> <code>sourcePrefix</code>
-  </li>
-  <li> <code>vroot</code> -> <code>sourceRoot</code>
-  </li>
-  <li> <code>.Woad</code> -> <code>woadPrefix</code>
-  </li>
-  <li> <code>mapToTarget</code> -> <code>mapSrcToTarget</code>; add
-       <code>mapNoteToTarget</code>, <code>mapNoteToSrc</code>,
-       <code>mapSrcToNote</code>. 
-  </li>
-</ul>
-we pretty much end up swapping <code>offset</code> and <code>prefix</code>
-when those are used as variables.
-
-
 
 <ul>
   <li> <code>notesPrefix</code> 
@@ -456,7 +430,7 @@ when those are used as variables.
            under <code>wordMap</code>
        </p>
        <blockquote>
-       <p> <code>sourcePrefix</code> defaults to ``<code>.words</code>''.
+       <p> <code>wordPrefix</code> defaults to ``<code>.words</code>''.
        </p>
        </blockquote>
   </li>
@@ -475,6 +449,31 @@ when those are used as variables.
        another.
   </dd>
 </dl>
+
+
+<p> OLD parameters (mostly phased out by now):
+</p>
+<ul>
+  <li> <code>sourcePrefix</code> -> <code>notesPrefix</code> OR
+       <code>sourcePrefix</code> depending on usage.
+       <code>sourcePrefix</code> is more likely.  sourceOffset and
+       sourcePrefix were getting concatenated.; this is no longer true.
+  </li>
+  <li> <code>targetPrefix</code> [prefix] -> <code>docOffset</code> [offset]
+  </li>
+  <li> <code>sourceOffset</code> [offset] -> <code>sourcePrefix</code>
+  </li>
+  <li> <code>vroot</code> -> <code>sourceRoot</code>
+  </li>
+  <li> <code>.Woad</code> -> <code>woadPrefix</code>
+  </li>
+  <li> <code>mapToTarget</code> -> <code>mapSrcToTarget</code>; add
+       <code>mapNoteToTarget</code>, <code>mapNoteToSrc</code>,
+       <code>mapSrcToNote</code>. 
+  </li>
+</ul>
+we pretty much end up swapping <code>offset</code> and <code>prefix</code>
+when those are used as variables.
 
 <h3><a name="section-6.1">6.1:</a> Keywords</h3>
 
@@ -976,6 +975,9 @@ when those are used as variables.
        Woad Page</a> --  ``A page devoted to the Woad plant <em>Isatis
        tinctoria</em> and its uses.'' 
   </li>
+  <li> <a href="http://www.gallica.co.uk/dyes.htm">Gallica</a> has an
+       excellent drawing of the Woad plant.
+  </li>
   <li> <a href="http://www.iacr.bbsrc.ac.uk/lars/depts/plantsci/woad.html">
        Woad</a> under
        <a href="http://www.iacr.bbsrc.ac.uk/lars/depts/plantsci/tdyeplant.html">
@@ -995,6 +997,6 @@ when those are used as variables.
 
 <hr />
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br />
-<b>$Id: about.html,v 1.5 2000-06-17 00:03:05 steve Exp $</b><br />
+<b>$Id: about.html,v 1.6 2000-06-21 01:11:05 steve Exp $</b><br />
 <address><a href="http://rsv.ricoh.com/~steve/">Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com">steve@rsv.ricoh.com</a>&gt;</address>
 </body></html>
