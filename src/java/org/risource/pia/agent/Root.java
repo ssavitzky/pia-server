@@ -1,5 +1,5 @@
 // Root.java
-// $Id: Root.java,v 1.4 1999-03-23 23:32:43 steve Exp $
+// $Id: Root.java,v 1.5 1999-05-06 20:46:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -182,8 +182,9 @@ public class Root extends GenericAgent {
   /**
    * Constructor.
    */
-  public Root(String name, String type){
-    super(name, type);
+  public Root(String name, String userRoot){
+    super(name, null);
+    put(data_dir_name, userRoot);
   }
 
   /** Default constructor. */

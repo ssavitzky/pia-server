@@ -1,5 +1,5 @@
 ////// AgentBuilder.java: <namespace> Handler implementation
-//	$Id: AgentBuilder.java,v 1.1 1999-04-30 23:38:04 steve Exp $
+//	$Id: AgentBuilder.java,v 1.2 1999-05-06 20:46:58 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -43,7 +43,7 @@ import org.risource.ds.Tabular;
  * <p>	Expand the content in a context that constructs a new Agent. 
  *	Install the Agent. 
  *
- * @version $Id: AgentBuilder.java,v 1.1 1999-04-30 23:38:04 steve Exp $
+ * @version $Id: AgentBuilder.java,v 1.2 1999-05-06 20:46:58 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -61,17 +61,17 @@ public class AgentBuilder extends GenericHandler {
     String name = atts.getAttribute("name");
     if (name != null) name = name.trim();
 
-    org.risource.pia.agent.Admin admin = null;
-    try {
-      admin = (org.risource.pia.agent.Admin) env.getAgent();
-    } catch (Exception e) {
+    // Security check:  the current agent must be Admin.
+    //	 we make an exception if the Admin agent hasn't been started yet.
+    Agent admin = env.getAgent();
+    if (!(admin instanceof Admin) && Admin.installed) {
       reportError(in, cxt, "only works in the Admin agent");
       return;
     }
 
     Agent agent = makeAgent(in, cxt, name, atts);
     agent.loadFrom(in, cxt, (Tabular)atts);
-    admin.installAgent(agent);
+    Pia.instance().resolver().registerAgent( agent );
     out.putNode((ActiveNode)agent);
   }
 

@@ -1,5 +1,5 @@
 // Admin.java
-// $Id: Admin.java,v 1.4 1999-03-23 23:32:32 steve Exp $
+// $Id: Admin.java,v 1.5 1999-05-06 20:46:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -49,6 +49,13 @@ import org.risource.pia.Machine;
 import org.risource.pia.HTTPRequest;
 
 public class Admin extends GenericAgent {
+  /**
+   * This flag is set when the Admin agent is installed. 
+   *	It exists so that certain handlers that depend on Admin can run
+   *	before Admin exists, e.g. in order to load it.
+   */
+  static boolean installed = false;
+
   /**
    * Uninstall (unRegister) an agent.
    */
@@ -128,11 +135,13 @@ public class Admin extends GenericAgent {
    */
   public Admin(String name, String type){
     super(name, type);
+    installed = true;
   }
 
   /** Default constructor. */
   public Admin() {
     super();
+    installed = true;
   }
 
   /**
