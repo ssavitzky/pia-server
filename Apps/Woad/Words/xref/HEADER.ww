@@ -1,0 +1,12 @@
+<note><title>Cross-reference listings</title>
+
+  <summary> This context contains a cross-reference file for every word
+	    (identifier) defined in the source tree.
+  </summary>
+
+  <content> The cross-reference files, one per word, are contained in
+	    subdirectories corresponding to the initial letters.  Note that
+	    the filenames are lowercased. 
+  </content>
+</note>
+		
