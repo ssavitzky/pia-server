@@ -1,5 +1,5 @@
 ////// TreePI.java -- implementation of ActivePI
-//	$Id: TreePI.java,v 1.2 1999-06-04 22:40:46 steve Exp $
+//	$Id: TreePI.java,v 1.3 1999-11-09 01:20:22 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,7 @@ import org.risource.dps.*;
  * An implementation of the ActivePI interface, suitable for use in 
  *	DPS parse trees.
  *
- * @version $Id: TreePI.java,v 1.2 1999-06-04 22:40:46 steve Exp $
+ * @version $Id: TreePI.java,v 1.3 1999-11-09 01:20:22 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.w3c.dom.Node
  */
@@ -104,7 +104,7 @@ public class TreePI extends TreeNode implements ActivePI {
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
-    return ">";
+    return "?>";
   }
 
 
