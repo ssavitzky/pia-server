@@ -1,5 +1,5 @@
 ###### tf/Makefile:	Transaction Feature computation classes
-# 	$Id: Makefile,v 1.6 1999-06-25 01:12:23 wolff Exp $
+# 	$Id: Makefile,v 1.7 1999-09-22 00:19:02 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -29,7 +29,6 @@ FILES = \
 	 Agent.java \
 	 AgentName.java \
 	 AgentPath.java \
-	 AgentType.java \
          IsAgentRequest.java \
 	 IsAgentResponse.java \
 	 IsClientNetscape.java \

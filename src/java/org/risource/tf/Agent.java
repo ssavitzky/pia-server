@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.6 1999-05-20 20:18:17 steve Exp $
+// $Id: Agent.java,v 1.7 1999-09-22 00:19:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ public class Agent extends TFComputer {
   public Object computeFeature(Transaction trans) {
     if (trans == null) return null;
     org.risource.pia.Agent agent = computeAgentFeatures(trans);
-    return (agent == null)? "" : agent.pathName();
+    return (agent == null)? "" : agent.name();
   }
 
   /** Compute features associated with a transaction's agent.
@@ -63,11 +63,10 @@ public class Agent extends TFComputer {
       Pia.resolver().agentFromPath(path);
 
     if (agent != null) {
-      trans.assert("agent", agent.pathName());
-      trans.assert("agent-pathname", agent.pathName());
-      trans.assert("agent-type", agent.type());
+      trans.assert("agent", agent.name());
+      trans.assert("agent-pathname", agent.getHomePath());
       trans.assert("agent-name", agent.name());
-      trans.assert("agent-path", agent.path());
+      trans.assert("agent-path", agent.getHomePath());
     }
 
     return agent;

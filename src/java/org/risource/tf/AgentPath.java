@@ -1,5 +1,5 @@
 // AgentPath.java
-// $Id: AgentPath.java,v 1.1 1999-03-24 20:49:56 steve Exp $
+// $Id: AgentPath.java,v 1.2 1999-09-22 00:19:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -41,7 +41,7 @@ public final class AgentPath extends Agent {
   public Object computeFeature(Transaction trans) {
     if (trans == null) return null;
     org.risource.pia.Agent agent = computeAgentFeatures(trans);
-    return (agent == null)? "" : agent.path();
+    return (agent == null)? "" : agent.getHomePath();
   }
 }
 
