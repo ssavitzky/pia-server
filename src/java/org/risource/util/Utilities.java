@@ -1,5 +1,5 @@
 // Utilities.java
-// $Id: Utilities.java,v 1.3 1999-03-12 19:31:09 steve Exp $
+// $Id: Utilities.java,v 1.4 1999-05-07 23:37:20 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -233,59 +233,6 @@ public class Utilities {
     }
   }
 
-
-    /* Apparently obsolete.  Delete when this is clear */
-  /** Copy a file, replacing keys in the <code>subst</code> table with their
-   *	values.  Look for keys only after an instance of <code>beg</code>
-   *	and end them with <code>end</code>. 
-   */
-    /*
-  public static synchronized void substFile( File src, File dst,
-					     org.risource.sgml.Attrs subst, char beg, char end)
-       throws IOException
-  {
-
-    //System.err.println("Substituting "+src.getPath() + "->" + dst.getPath());
-    //System.err.println("Table = " +subst.toString());
-
-    FileWriter destination = null;
-    FileReader source      = null;
-    StringBuffer buf 	   = new StringBuffer(100);
-
-    try{
-      source      = new FileReader( src );
-      destination = new FileWriter( dst );
-      for (int i = source.read(); i != -1; i = source.read()) {
-	if (i == (int)beg) {
-	  buf.setLength(0);
-	  for (i = source.read();
-	       i != -1 && i != (int)end;
-	       i = source.read()) {
-	    buf.append((char)i);
-	  } 
-	  Object o = (buf.length() == 0)? null : subst.attr(buf.toString());
-	  //System.err.println("`"+beg+buf.toString()+end+"'->"+o);
-	  if (o != null) {
-	    destination.write(o.toString());
-	  } else {
-	    destination.write(beg);
-	    destination.write(buf.toString());
-	    if (i != 0) destination.write((char)i);
-	  }
-	} else {
-	  destination.write((char)i);
-	}
-      }
-      destination.flush();
-    }catch(IOException e1){
-      // either from open or write.
-      throw e1;
-    }finally{
-      if (source != null)      source.close();
-      if (destination != null) destination.close();
-    }
-  }
-    */
 
   /**
    * Convert a String to a ByteArrayOutputStream
