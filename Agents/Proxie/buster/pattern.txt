@@ -4,5 +4,5 @@ ads\.lycos.com
 /ads/
 /[Bb]anners?/
 adverts
-promo
+
 	   
