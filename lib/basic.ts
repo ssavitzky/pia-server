@@ -19,7 +19,7 @@
 
 <tagset name="basic" tagset="tagset">
 <title>Basic Tagset</title>
-<cvs-id>$Id: basic.ts,v 1.4 2000-06-29 01:55:17 steve Exp $</cvs-id>
+<cvs-id>$Id: basic.ts,v 1.5 2000-07-19 00:46:02 steve Exp $</cvs-id>
 
 <doc>
 This file contains the XML definition for the Basic tagset.  It is essentially
@@ -195,6 +195,23 @@ href="tagset.ts"><code>tagset</code></a> tagset.
 	  content.  In XML an empty element may have an end tag or be
 	  terminated with "<code>/&gt;</code>''; in HTML and generic SGML the
 	  end tag is simply omitted.
+    </doc>
+  </define>
+
+  <define attribute="implicitly-ends" optional="optional">
+    <doc> Indicates that the element being defined cannot occur within any of
+	  the space-separated list of elements specified in the value.
+	  <code>implicitly-ends</code> can be used to express most, if not
+	  all, of the cases where the parser needs to implicitly insert end
+	  tags in HTML.
+    </doc>
+  </define>
+  <define attribute="parent" optional="optional">
+    <doc> Indicates that the element being defined must be a child of one of
+	  the space-separated list of elements specified in the value.  This
+	  is not particularly useful except for obligatory components of
+	  active elements such as <tag>if</tag>; otherwise it can prevent the
+	  element being defined from occurring inside such structures.
     </doc>
   </define>
 
