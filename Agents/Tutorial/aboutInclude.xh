@@ -39,6 +39,13 @@
      <p><div align="center"> <code>&lt;img> stuff, more stuff
          &lt;/img></code>. </div>
 
+
+     <p> Did you see a red "Errors:" message below the images?  Those result
+	 from our <a href="aboutErrorTest.xh"> show-errors
+	 tag </a> detecting missing end-tags in Yahoo's home page (which
+	 occurs because their HTML is not as strict about using end-tags as
+	 XML is).  So don't worry....</p>
+
      <p> <h3> Stuff to try </h3>
 
      <p>If the string "img" were changed to the string "a" in the extraction,

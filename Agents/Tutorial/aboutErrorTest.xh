@@ -20,7 +20,7 @@
     <name all="yes">body</name></extract></protect></pre>
     </code>
 
-    <p> There is a tag called <code>&lt;show-errors></code> which shows in red
+    <p> There is a tag called <code>&lt;show-errors/></code> which shows in red
 	some (but not all!) of the errors found by the PIA processor up to
 	that point in a document.  In this example, we introduce a deliberate
 	error by trying to <code>include</code> a file which doesn't exist.</p>

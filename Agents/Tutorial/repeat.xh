@@ -1,7 +1,7 @@
 <!doctype html public "-//IETF//DTD HTML//EN//2.0">
 <html>
 <head> <title> </title> </head>
-<body><!-- Prints "Hello" three times, with index at left. -->
+<body><!-- Prints "Hello" six times, with index at left. -->
 
 <table bgcolor="mistyrose">
   <repeat start="1" stop='6' entity="index">

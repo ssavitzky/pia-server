@@ -56,12 +56,12 @@
 	also understands active tags; it can be very useful for analyzing
 	confusingly-nested documents and debugging mismatched tags.). </p>
 
-    <p>Try adding the <code>white-tag</code> attribute (i.e. <code>&lt;pretty
+    <p>Try adding the <code>yellow-tag</code> attribute (i.e. <code>&lt;pretty
 	yellow-tag="get"></code>), and watch that tag become highlighted in
 	yellow (there is also a <code>white-tag</code> attribute). Or add the
 	attribute <code>hide-below-tag="td"</code>, which will prevent display
-	of anything below the <code>&lt;td></code> tag.  Or the attributes
-        <code>hide-below-depth="4"</code> and
+	of anything below the <code>&lt;td></code> tag.  Or the combined
+	attributes <code>hide-below-depth="4"</code> and
         <code>hide-above-depth="2"</code>, which will prevent display of
         anything below or above those respective depths. </p>
 

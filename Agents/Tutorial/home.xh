@@ -190,29 +190,7 @@
             </a>
         </td>
     </tr>
-    <tr>
-        <td>
-            <font size='2' color='crimson'>
-                |
-            </font>
-        </td>
-        <form action='tutorial.xh' name='getDemo'>
-            <input type='hidden' name='demoName' value='editForm.xh' />
-            <td>
-                <input type='submit' value='try' checked='checked' />
-            </td>
-        </form>
-        <td>
-            <i>
-                Active form
-            </i>
-        </td>
-        <td>
-            <a href='aboutForm.xh'>
-                about
-            </a>
-        </td>
-    </tr>
+
     <tr>
         <td>
             <font size='2' color='crimson'>
@@ -232,6 +210,30 @@
         </td>
         <td>
             <a href='aboutJavascript.xh'>
+                about
+            </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <font size='2' color='crimson'>
+                |
+            </font>
+        </td>
+        <form action='tutorial.xh' name='getDemo'>
+            <input type='hidden' name='demoName' value='editForm.xh' />
+            <td>
+                <input type='submit' value='try' checked='checked' />
+            </td>
+        </form>
+        <td>
+            <i>
+                Active form
+            </i>
+        </td>
+        <td>
+            <a href='aboutForm.xh'>
                 about
             </a>
         </td>

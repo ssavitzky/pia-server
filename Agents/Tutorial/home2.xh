@@ -39,11 +39,6 @@
 <table color='white' cellspacing='1'>
 
     <tr>
-        <td>
-            <font size='2' color='crimson'>
-                |
-            </font>
-        </td>
         <form action='tutorial.xh' name='getDemo'>
             <input type='hidden' name='demoName' value='editPrimes.xh' />
             <td>
