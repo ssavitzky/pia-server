@@ -26,31 +26,49 @@
 <h2>Configuration</h2>
 
 <p> So far, PIAServlet has only been tested in Apache-JServ.  Because
-    <code>PIAServlet</code> is still <em>highly</em> experimental, it needs to
-    be configured with a path to a file that it uses as a log file, and
-    <code>mod_rewrite</code> or the equivalent needs to be used to map
-    pathnames onto the PIA servlet (since JServ effectively requires each
-    servlet to be a subdirectory). 
+    <code>PIAServlet</code> is still <em>highly</em> experimental, it should
+    be configured with a path to a file that it uses as a log file.
 </p>
+
+<p> The biggest problem with PIAServlet so far is that a Servlet is
+    effectively a subdirectory, and JServ has no way to ``mount'' a Servlet
+    on the server's root.  There are two main ways of dealing with this:
+</p>
+
+<ol>
+  <li> Use <code>mod_rewrite</code> or the equivalent to map
+       pathnames onto the PIA servlet.
+  </li>
+  <li> Use the <code>PIA:url</code> and <code>PIA:rootPath</code> entities to
+       refer to the Servlet root.  The entities are defined correctly both in
+       the standalone PIA and in the PIAServlet, but are currently not used in
+       the XML code, which is therefore not portable between the two
+       environments.
+  </li>
+</ol>
 
 <h2>To-Do list</h2>
 
 <ul>
-  <li> <b>Bug</b> No PIA namespace in PIAServlet<br />
-       (2000-04-05)
-  </li>
-  <li> <b>Bug</b> Site cannot be a subdirectory.<br />
-       currently need to use <code>mod_rewrite</code> to map <code>/xxx</code>
-       to <code>/PIA/xxx</code>. 
-       (2000-04-05)
-  </li>
   <li> <b>Bug</b> Logging uses a PrintStream. <br />
        really need to have a logger class that can pass the buck to the
        servlet.  There should be a static pointer to it, i.e. Log.logger, so
        that classes like tagset.Loader and TopProcessor can find it.
        (2000-04-05)
   </li>
-  <li> <b>Bug</b> DPSServlet has no tagset mapping.<br />
+</ul>
+
+<h3>done</h3>
+<ul>
+  <li> 2000-04-13 <b>Bug</b> No PIA namespace in PIAServlet<br />
+       (2000-04-05)
+  </li>
+  <li> 2000-04-14 <b>Bug</b> Site cannot be a subdirectory.<br />
+       currently need to use <code>mod_rewrite</code> to map <code>/xxx</code>
+       to <code>/PIA/xxx</code>. 
+       (2000-04-05)
+  </li>
+  <li> 2000-04-12 <b>Bug</b> DPSServlet has no tagset mapping.<br />
        Should take <code>tagset.<em>ext</em>=<em>tsname</em></code> and
        <code>type.<em>ext</em>=<em>mime-type</em></code> initialization
        parameters. 
@@ -62,5 +80,5 @@
 
 <hr />
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br />
-<i>$Id: about.html,v 1.2 2000-04-05 18:54:20 steve Exp $</i><br />
+<i>$Id: about.html,v 1.3 2000-04-14 23:22:35 steve Exp $</i><br />
 </body></html>
