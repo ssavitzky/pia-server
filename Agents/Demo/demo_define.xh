@@ -1,4 +1,4 @@
-<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Define Elements and Entities Demo</title>
 </head>
@@ -115,7 +115,7 @@ how it may be used in an XML document.
 <br />
 <br />
 
-<footer cvsid='$Id: demo_define.xh,v 1.5 1999-03-27 02:29:28 pgage Exp $' />
+<footer cvsid='$Id: demo_define.xh,v 1.6 1999-11-23 18:40:48 steve Exp $' />
 </p></body></html>
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE    html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Generic Options Page for &agentName;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -116,7 +116,7 @@
 			      </then>
 			  </if>
 	                  <output dst="&saveFile;">
-<!DOCTYPE AGENT SYSTEM "Admin-agent">
+<make type=DOCTYPE>AGENT SYSTEM "Admin-agent"</make>
 &AGENT;
 </output><!-- newline is required after AGENT element. -->
 		      <br /><status src="&saveFile;" item=path />&nbsp;WRITTEN
@@ -478,5 +478,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.1 1999-09-22 23:43:48 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.2 1999-11-23 18:41:44 steve Exp $' />
 </body></html>

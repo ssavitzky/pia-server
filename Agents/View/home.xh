@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE> html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>View application</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -25,5 +25,5 @@
 </repeat>
 
 <p>
-<footer cvsid='$Id: home.xh,v 1.5 1999-10-25 16:39:29 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.6 1999-11-23 18:41:40 steve Exp $' />
 </p></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>&user.name;'s &AGENT:name;: Home Page</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -73,5 +73,5 @@ and directories accesses directly accessed by URLs
 of the form <code>http://piaHost:piaPort/agent-name</code>.  See 
 <a href="/Doc/naming.html">naming conventions</a> for details.
 
-<footer cvsid='$Id: home.xh,v 1.15 1999-10-19 22:10:50 bill Exp $' />
+<footer cvsid='$Id: home.xh,v 1.16 1999-11-23 18:40:36 steve Exp $' />
 </body></html>

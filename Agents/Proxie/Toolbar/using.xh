@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Using &AGENT:type; Agents</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -71,5 +71,5 @@ The toolbar normally also refers to the following items in the <a href='/History
   </dt><dd> <a href='/History/~/last.html'>/History/~/last.html</a>
 </dd></dl>
 
-<footer cvsid='$Id: using.xh,v 1.6 1999-11-05 01:12:06 steve Exp $' />
+<footer cvsid='$Id: using.xh,v 1.7 1999-11-23 18:41:04 steve Exp $' />
 </p></body></html>

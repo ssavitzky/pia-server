@@ -1,4 +1,4 @@
-<!doctype  html public "-//IETF//DTD HTML//EN//2.0"><HTML>
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make><HTML>
 <html><head>
 <title>Bug Report Home Page</title>
 </head>
@@ -27,7 +27,7 @@ Currently, this page lets you navigate to the other Bug Report pages.
 </li>
 </ul>
 
-<footer cvsid='$Id: home.xh,v 1.2 1999-10-20 00:10:27 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.3 1999-11-23 18:40:41 steve Exp $' />
 </p></body>
 </html>
 </HTML>

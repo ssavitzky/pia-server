@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>PIA test file</title>
 </head><body>
@@ -51,5 +51,5 @@ location: <a href="&locPath;">&locPath;</a>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: test.xh,v 1.5 1999-10-18 15:41:53 steve Exp $</b><br>
+<b>$Id: test.xh,v 1.6 1999-11-23 18:41:48 steve Exp $</b><br>
 </body></html>

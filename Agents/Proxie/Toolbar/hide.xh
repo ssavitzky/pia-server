@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Hide/Show &AGENT:name; toolbar</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -60,5 +60,5 @@
 </form>
 </else></if>
 
-<footer cvsid='$Id: hide.xh,v 1.4 1999-03-27 02:29:40 pgage Exp $' />
+<footer cvsid='$Id: hide.xh,v 1.5 1999-11-23 18:41:03 steve Exp $' />
 </body></html>

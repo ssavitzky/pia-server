@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Parse Handler Demo</title>
 </head>
@@ -28,7 +28,7 @@ This example does not work.<br /><br />
 <b>File:</b> <a href='/Root/&filePath;'>&filePath;</a>
 <hr />
 <b>Copyright &copy; 1997 Ricoh California Research Center</b><br />
-<b>$Id: demo_parse.xh,v 1.5 1999-10-04 17:07:33 steve Exp $</b><br />
+<b>$Id: demo_parse.xh,v 1.6 1999-11-23 18:40:50 steve Exp $</b><br />
 
 </body></html>
 

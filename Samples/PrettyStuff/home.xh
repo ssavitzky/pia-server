@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Prototype Home Page</title>
 </head>
@@ -45,6 +45,6 @@
 <!-- pia-xhtml tagset. It provides the navigation bar at the bottom of 
 <!-- the page, along with a copyright notice.
 <!-- ===================================================================  -->
-<footer cvsid='$Id: home.xh,v 1.2 1999-11-05 01:12:51 steve Exp $'></footer>
+<footer cvsid='$Id: home.xh,v 1.3 1999-11-23 18:42:05 steve Exp $'></footer>
 </body>
 </html>

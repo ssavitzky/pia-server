@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Agent/Application Index</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -8,5 +8,5 @@
 <nav-bar />
 <hr/>
 <agent-index />
-<footer cvsid='$Id: list-agents.xh,v 1.6 1999-09-24 22:07:10 steve Exp $' />
+<footer cvsid='$Id: list-agents.xh,v 1.7 1999-11-23 18:40:37 steve Exp $' />
 </body></html>

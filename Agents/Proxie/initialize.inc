@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Proxie Initialization file</title>
 </head><body>
@@ -24,5 +24,5 @@
 
 <hr/>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: initialize.inc,v 1.1 1999-10-20 00:09:47 steve Exp $</b><br/>
+<b>$Id: initialize.inc,v 1.2 1999-11-23 18:40:55 steve Exp $</b><br/>
 </body></html>

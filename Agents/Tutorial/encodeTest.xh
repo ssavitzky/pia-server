@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title></title>
 </head><body>
@@ -28,7 +28,7 @@ decoded text = <get name="decoded"/>  <br><hr>
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: encodeTest.xh,v 1.1 1999-07-29 21:55:13 bill Exp $</b><br>
+<b>$Id: encodeTest.xh,v 1.2 1999-11-23 18:41:32 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~bill/"
          ></a> &lt;<a href="mailto:bill@rsv.ricoh.com"
          >bill@rsv.ricoh.com</a>&gt;</address>

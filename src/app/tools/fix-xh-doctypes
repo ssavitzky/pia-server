@@ -1,0 +1,14 @@
+#!/bin/sh
+#	$Id: fix-xh-doctypes,v 1.1 1999-11-23 18:42:13 steve Exp $
+#	Hack to replace <!doctype...> statements with <make> tags
+# NOTE: This will fail if the doctype isn't all on one line.
+
+pat1='\<\!doctype[^>]+\>'
+doctype1='<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>'
+
+pat='\<\!DOCTYPE +([^>]+)\>'
+doctype='<make type=DOCTYPE>$1</make>'
+
+find .  '(' -name '*.xh' -o -name '*.inc' ')' -type f \
+    -exec perl -p -i -e "s@$pat1@$doctype1@;"  -e "s@$pat@$doctype@;" {} \;  \
+    -exec grep 'DOCTYPE' {} /dev/null \; 

@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Home Page for &AGENT:name;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -80,5 +80,5 @@
 <b>URL:</b> &lt;<a href='&url;'>&url;</a>&gt;<br />
 <b>Source:</b> <a href='/~View/xml?url=&filePath;'>&fileName;</a>
 <b>File:</b> <a href='/&filePath;'>&filePath;</a>
-<footer cvsid='$Id: home.xh,v 1.8 1999-09-24 18:49:15 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.9 1999-11-23 18:40:55 steve Exp $' />
 </body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 
 <html><head>
 <title>Debug Handler Demo</title>
@@ -44,7 +44,7 @@ are now children of item one.  This provides a hint that element one may not be 
 </p><p>
 <b> Debug Result: </b><debug><ul><i>oneone<li>two</li><li>three</li></i></ul></debug>
 
-<footer cvsid='$Id: demo_debug.xh,v 1.4 1999-04-13 19:53:50 pgage Exp $' />
+<footer cvsid='$Id: demo_debug.xh,v 1.5 1999-11-23 18:40:48 steve Exp $' />
 
 </p></body></html>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
   <title>&user.name;'s Agency on &PIA:host;</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -63,5 +63,5 @@
 <hr />
 <include src='/ROOT/doc-grid.inc'> </include>
 <p>
-<short-footer cvsid='$Id: index.xh,v 1.9 1999-11-05 01:12:16 steve Exp $' />
+<short-footer cvsid='$Id: index.xh,v 1.10 1999-11-23 18:41:08 steve Exp $' />
 </p></body></html>

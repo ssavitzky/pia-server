@@ -1,11 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
-<title></title>
+<title>Current Ricoh Stock Price</title>
 </head><body>
 <i>Ricoh Stock Ticker</i>
 
-<set name="sourcefile"><include src="http://quote.yahoo.co.jp/q?s=7752.T&d=t" /></set>
-
+<set name="sourcefile"><include tagset=HTML src="http://quote.yahoo.co.jp/q?s=7752.T&d=t" /></set>
 
 <set name="goodrow">
 <extract>

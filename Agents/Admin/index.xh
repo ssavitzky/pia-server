@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>&AGENT:name; Index</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -19,6 +19,6 @@
        <then>appliance</then><else>Personal Information Agency</else></if>.
 </dd></dl>
 
-<footer cvsid='$Id: index.xh,v 1.4 1999-10-04 17:05:56 steve Exp $' />
+<footer cvsid='$Id: index.xh,v 1.5 1999-11-23 18:40:37 steve Exp $' />
 </body></html>
 

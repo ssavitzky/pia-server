@@ -1,4 +1,4 @@
-<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Control the PIA</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
@@ -78,7 +78,7 @@
 	    <set name="text"><strong><code>agent-files.xml</code>
 	         written.</strong></set> 
 	    <output dst="agent-files.xml">
-<!DOCTYPE agent-files SYSTEM "Admin-xhtml">
+<make type=DOCTYPE>agent-files SYSTEM "Admin-xhtml"</make>
 <!-- Written by control.xh -->
 &AGENT:agent-files;
 </output>
@@ -337,5 +337,5 @@
   </p>
 </verbosePage>
 
-<footer cvsid='$Id: control.xh,v 1.4 1999-07-09 22:06:10 steve Exp $' />
+<footer cvsid='$Id: control.xh,v 1.5 1999-11-23 18:40:36 steve Exp $' />
 </body></html>

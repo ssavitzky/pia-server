@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 
 <html><head>
 <title>Text Handler Demo</title>
@@ -140,7 +140,7 @@ entity decoding is useful in its current form.
 </p><p>
 <b>Result: </b><text decode='decode' entity='entity'>&amp; Co.</text>
 </p><p>
-<footer cvsid='$Id: demo_text.xh,v 1.8 1999-04-13 19:53:55 pgage Exp $' />
+<footer cvsid='$Id: demo_text.xh,v 1.9 1999-11-23 18:40:51 steve Exp $' />
 
 </p></body></html>
 

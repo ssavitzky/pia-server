@@ -1,4 +1,4 @@
-<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html><head>
 <title>Edit PIA Configuration Settings</title>
 <link rev='made' href='mailto:steve@rsv.ricoh.com' />
@@ -109,5 +109,5 @@
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.5 1999-10-04 17:05:55 steve Exp $' />
+<footer cvsid='$Id: config.xh,v 1.6 1999-11-23 18:40:36 steve Exp $' />
 </body></html>

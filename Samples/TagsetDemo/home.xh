@@ -2,7 +2,7 @@
  <?-- the special-purpose tags are defined in the TagsetDemo-xhtml.ts
        tagset file--?>
 
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<make type=DOCTYPE>html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"</make>
 <html> <head> 
 
 <title>Tagset Demo</title>
