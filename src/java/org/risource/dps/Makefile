@@ -1,5 +1,5 @@
 ###### dps/Makefile:	Document Processing System package.
-# 	$Id: Makefile,v 1.10 1999-05-21 16:11:08 steve Exp $
+# 	$Id: Makefile,v 1.11 1999-07-16 23:26:48 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -23,6 +23,7 @@
 
 PACKAGE=org.risource.dps
 TOPDIR=../../..
+REL_DIR = $(PIADIR)/Doc/Release
 
 PACKAGES = \
 	active \
@@ -75,6 +76,12 @@ tagset/basic.tss: tagset/basic.ts tagset/tsstrip.ts
 
 tagset/pia-xhtml.tss: tagset/pia-xhtml.ts tagset/basic.ts tagset/tsstrip.ts
 	cd tagset; $(MAKE) TOPDIR=$(TOPDIR)/.. pia-xhtml.tss
+
+# Documentation: copy to-do file to the release directory
+doc:: $(REL_DIR)/to-do.dps.html
+
+$(REL_DIR)/to-do.dps.html: to-do.html
+	cp $? $@
 
 ### Dependencies:
 ###	Compiling a class will automatically build the classes it

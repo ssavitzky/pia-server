@@ -1,5 +1,5 @@
 ###### pia/Makefile:	Platform for Information Appliances
-#	$Id: Makefile,v 1.4 1999-03-12 22:58:13 steve Exp $
+#	$Id: Makefile,v 1.5 1999-07-16 23:26:51 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -23,6 +23,7 @@
 
 PACKAGE=org.risource.pia
 TOPDIR=../../..
+REL_DIR = $(PIADIR)/Doc/Release
 
 PACKAGES = \
 	agent \
@@ -62,6 +63,12 @@ FILES = \
 
 include $(TOPDIR)/makefiles/file.make
 include $(TOPDIR)/makefiles/package.make
+
+# Documentation: copy to-do file to the release directory
+doc:: $(REL_DIR)/to-do.dps.html
+
+$(REL_DIR)/to-do.dps.html: to-do.html
+	cp $? $@
 
 ### Dependencies:
 
