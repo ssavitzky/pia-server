@@ -81,10 +81,28 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 </ul>
 
+<h3>Processor and Cursor Interfaces</h3>
+
+<ul>
+  <li> With a suitably node-free implementation for Cursor and a SAX-like
+       event-driven interface to Processor, it may be possible to re-implement
+       most (not all) primitives in a fully-cursorial, event-driven form.
+  <li> The main exceptions, which will require nodes, are extract and repeat.
+  <li> Text operations will require nodes as well, unless we extend Cursor to
+       handle strings specially, as <em>virtual</em> Text nodes (maybe not a
+       good idea, but possible). 
+</ul>
+
 <h3>Available Resources</h3>
 <ul>
   <li> Mozilla<br>
        Has a DOM in C++ (unfortunately), along with XML and HTML parsers.
+
+  <li> A C DOM interface exists in the form of a header file.
+
+  <li> The James Clark  parser is probably the one to use.  It's possible that
+       a SAX-style interface exists for it.
+
   <li> Other XML parsers exist.
        <ul>
 	 <li> An XML parser would have to be extended slightly to handle tags
@@ -282,7 +300,7 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: porting.html,v 1.4 1999-03-23 20:36:58 steve Exp $</b><br>
+<b>$Id: porting.html,v 1.5 1999-06-09 01:13:02 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
