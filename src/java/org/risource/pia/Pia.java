@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.18 1999-10-11 21:53:24 steve Exp $
+// $Id: Pia.java,v 1.19 1999-10-13 21:59:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,6 +54,8 @@ import org.risource.ds.List;
 import org.risource.site.*;
 import org.risource.pia.site.*;
 
+import org.risource.dps.tagset.Loader;
+
 import org.risource.dps.namespace.*;
 
 import org.risource.pia.Configuration;
@@ -66,7 +68,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.18 1999-10-11 21:53:24 steve Exp $
+  * @version $Id: Pia.java,v 1.19 1999-10-13 21:59:26 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -700,11 +702,19 @@ public class Pia implements Tabular {
       warningMsg("Cannot locate or create root directory " + piaRootPath);
     }
 
-    if (piaRootPath == null && piaHomePath == null) {
-      report(-2, "Either a PIA home or a valid root must be specified.");
+    if (piaRootPath == null && piaHomePath == null && siteConfigPath == null) {
+      report(-2, "Either a PIA home, a configuration file, "
+	     + "or a valid root directory must be specified.");
       System.exit(1);
     }
 	
+    if (piaHomePath != null) {
+      String tsHome = piaHomePath + filesep + "src" + filesep + "java"
+	+ filesep + "org" + filesep + "risource" + filesep + "dps"
+	+ filesep + "tagset";
+      Loader.setTagsetHome(tsHome);
+    }
+
     // Now set the properties that had to be computed.
 
     setInteger("verbosity", verbosity);
