@@ -1,0 +1,616 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>Done</title>
+<link rev="made" href="mailto:steve@rsv.ricoh.com">
+</head><body>
+<h1>Done</h1>
+
+<blockquote><em>
+  This file contains completed tasks. 
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="to-do.html">Pending tasks</a><p>
+  <li> <a href="#end">Most Recent Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> 1998-06-12 <b>Bug:</b>  true branch of &lt;if&gt; failing. <br>
+       (1998-06-11) <br>
+       -- This turned out to be due to the fact that, unlike
+          <code>java.util.Enumeration</code>, a <code>NodeEnumerator</code>
+          skips the first item if you start with <code>getNext</code> instead
+          of <code>getFirst</code>.
+
+  <li> 1998-06-12 <b>Check:</b>  Loops with NodeEnumerator <br>
+       Loops involving a <code>NodeEnumerator</code> have to
+       start with <code>getFirst</code> -- <code>getNext</code> skips the
+       first element (unlike a <code>java.util.Enumeration</code>)!
+       (1998-06-12)
+       
+  <li> 1998-06-12 <b>Bug:</b> <code>testHandler</code> <br>
+       &lt;test&gt;foo&lt;/test&gt; returns 11 -- extra put, perhaps.
+       (1998-06-11) <br>
+       -- Missing return, actually, after the test for null attribute list.
+
+  <li> 1998-06-15 <b>Bug:</b> entity substitution <br>
+       &amp;date; not getting substituted (i.e. not getting looked up) in
+       running text, but substituted correctly in attributes.
+       (1998-06-11) <br>
+       -- Caused by AbstractHandler not checking for NodeType == ENTITY.
+
+  <li> 1998-06-15 <b>Bug:</b> nested &lt;if&gt; <br>
+       The correct branch is selected, but appears twice in the output.
+       (1998-06-12) <br>
+       -- [copying a node that actually has children should just do a putNode
+	  and not recurse.]
+
+  <li> 1998-06-15 <b>Bug:</b> &lt;if text&gt; <br>
+       any element in the condition appears to be considered true.
+       (1998-06-12) <br>
+       -- Incorrect dispatching:  wasn't dispatching if no subtype attr.
+          This meant that <code>text</code>, specifically, wasn't handled.
+
+  <li> 1998-06-15 <b>Hole:</b> <code>Filter</code> parse tree output <br> 
+       parse tree input &amp; output should use serialized object streams.
+       (1998-06-15) <br>
+       -- The <code>-n</code> option was added to permit parsing but not
+          expanding an input file.
+
+  <li> 1998-06-16 <b>Hole:</b> get/set)IndexValue  <br>
+       Should do this using utils in <code>crc.dps.aux.Index</code>.
+
+  <li> 1998-06-17 <b>Hole:</b> <code>crc.dps.active</code> as DOM <br>
+       Fairly soon we will want to expand ParseTree* to a full DOM
+       implementation, and make it completely independent from the
+       implementations in <code>crc.dom</code>. <br>
+       -- completed 6/17 with some bugs remaining, and no impl. of Document.
+
+  <li> 1998-06-17 <b>Impr:</b> <code>AbstractActiveNode</code> deepCopy <br>
+       <code>deepCopy</code> should use a method in the abstract parent to
+       copy the children.  The reason it doesn't now is that the existing
+       method meant for that purpose is in <code>crc.dom.AbstractNode</code>,
+       and doesn't constructive active nodes.  It uses <code>clone</code>, and
+       it's broken. <br>
+       -- fixed with the re-parenting of the <code>ParseTree</code> classes.
+
+  <li> 1998-06-18 <b>Bug:</b> Bugs with independent ParseTree DOM <br>
+       After making ParseTreeElement, etc. descend from ParseTreeNode, empty
+       elements are not identified, and &lt;test match&gt; produces odd
+       results.  Start tags are getting replaced by end tags in some cases!
+       (1998-06-17) <br>
+       -- <code>isEmptyElement</code> is never getting set.  Do it in
+	  <code>AbstractParser</code>'s <code>createActiveElement</code> and
+	  <code>correctActiveElement</code>. 
+
+  <li> 1998-06-18 <b>Impr:</b>  <code>EntityHandler</code> needed <br>
+       having a specific handler for expandable entities would help a lot.
+       It is expected that this would result in a substantial speedup.
+       (1998-06-15) <br>
+       -- In all about 5 seconds (15%) off parsing from other improvements,
+          and 6 off processing from this one.
+
+  <li> 1998-06-18 <b>Impr:</b>  <code>TextHandler</code> needed <br>
+       -- no noticable speed improvement.
+
+  <li> 1998-06-18 <b>Impr:</b>  Remove debugging code from inner loops. <br>
+       -- Removing debug calls in <code>processNode</code> and
+	  <code>additionalAction</code> saves another 30%! (sick.)
+
+  <li> 1998-06-18 <b>Hole:</b> PUT_NODE action code needed <br>
+       Passive node with no children -- just put it. 
+       (1998-06-18) <br>
+
+  <li> 1998-06-18 <b>Hole:</b> ParseTreeNode must allow extra action on
+       addChild, insertBefore, and initialization. <br>
+       This will allow insertion methods to be extended.  Only the protected
+       dispatch method <code>doInsert</code> needs to be extended.
+       (1998-06-19) <br>
+
+  <li> 1998-06-18 <b>Hole:</b> Tagset and Handler must be generic. <br>
+       Sometimes we may need them to be elements, sometimes declarations.
+       (1998-06-18) <br>
+
+  <li> 1998-06-18 <b>Hole:</b> Tagset and EntityTable must be lists as
+       well. <br> 
+       The items defined must be their content, not their attributes.
+       This will greatly simplify the loading of tagsets, DTD's, etc.
+       (1998-06-19) <br>
+
+  <li> 1998-06-22 <b>Impr:</b> Define syntax flags in
+       <code>crc.dps.Syntax</code> <br> 
+       (They are currently defined in BasicTagset, which makes them mostly
+       inaccessible.)
+       (1998-06-18) <br>
+
+  <li> 1998-06-23 <b>Bug:</b> entities and attributes broken <br>
+       Something broke when we went to values not being children.  Values are
+       set, but cannot be retreived.  Several places seem to still be using
+       getChildren instead of getValue.
+       (1998-06-23) <br>
+       -- tested old value for null instead of new, in <code>putValue</code>.
+
+  <li> 1998-06-23 <b>Bug:</b> &lt;test match&gt; produces odd results.  <br>
+       &lt;test match&gt; produces odd results sometimes in <code>t2.if</code>
+       (1998-06-17) <br>
+       -- due to attributes being broken, of course.
+
+  <li> 1998-06-24 <b>Bug:</b> Nested &lt;if&gt; loses &lt;then&gt; content. <br>
+       The children of a second-level then are getting lost instead of copied.
+       (1998-06-23) <br>
+       -- declaring <code>int action</code> instead of
+          <code>int actionCode</code>
+
+  <li> 1998-06-24 <b>Impr:</b> &lt;test&gt; should be ended by &lt;then&gt; <br>
+       (1998-06-18) <br>
+
+  <li> <b>Check:</b>  copying <br>
+       Non-processed parse trees (e.g. &lt;else&gt;) should never be copied.
+       Copying should use <code>putNode</code> if the node actually has
+       children; recursion if the children are unparsed.
+       (1998-06-15)<br>
+
+  <li> 1998-06-25 <b>Impr:</b> Dispatching: create fewer instances <br>
+       Dispatching should create a new handler instance only when necessary;
+       normally it should cache instances with standard attributes.
+       (1998-06-15) <br>
+       -- <code>handle(<em>element</em>)</code> method in place; usage needs
+	  to be checked.
+
+  <li> 1998-06-25 <b>Query:</b>  &lt;test zero&gt; non-number&lt;/&gt; = ?<br>
+       Not clear whether non-numerics should test as zero or not.  The most
+       consistant thing would be for whitespace to return <code>true</code>,
+       non-whitespace to return <code>false</code>.
+       (1998-06-15)
+       -- At the moment, whitespace is zero.
+       
+  <li> 1998-06-26 <b>Bug:</b> Empty actor def's fail. <br>
+       (1998-06-25) <br>
+       -- Empty def. handled by defining as null string. 
+
+  <li> 1998-06-27 <b>Bug:</b> Actors defined inside &lt;if&gt; fail. <br>
+       One can no longer expect an actor defined inside quotes to be visible
+       there (because of pre-parsing), but it <em>should</em> be visible
+       <em>outside</em>. 
+       (1998-06-25) <br>
+       -- <code>ParseTreeText</code> wasn't getting cloned correctly; a
+	  hangover from when it descended from BasicText.
+
+  <li> 1998-06-27 <b>Bug:</b> Parsing:  Lots of trouble with implicit end.<br>
+       &lt;tr&gt; ends the previous &lt;th&gt;, but neither the expected
+       &lt;/tr&gt; nor the &lt;tr&gt; show up.  An entity before an inserted
+       &lt;/td&gt; also causes havoc -- it turns into a comment! (probably bad
+       node type).  Missing &lt;/then&gt; also loses.
+       (1998-06-26) <br>
+       -- Not putting token back into <code>next</code> in
+	  <code>advanceParser</code>.
+
+  <li> 1998-06-27 <b>Goal:</b> (7-1) Able to process slides <br>
+       Be able to process <code>.../Reviews/slides-199807.html</code> in time
+       to show it at the review.  Requires &lt;actor&gt;
+       (1998-06-24) <br>
+
+  <li> 1998-07-05 <b>Impr:</b> <code>Tagset</code> should not extend
+       <code>DOMFactory</code>. <br>
+       Besides; DOMFactory is going away.
+       (1998-06) <br>
+
+  <li> 1998-07-07 <b>Impr:</b> Pre-load tagset and handler classes. <br>
+       Probably best done by having explicit tagset and handler cache classes.
+       (1998-07-07) <br>
+
+  <li> 1998-07-09 <b>Hole:</b> PIA transition from old to new interp. <br>
+       Agents need to know which interpretor (and tagset, of course) they
+       should be using.  Hooks can be distinguished by type.
+       (1998-06-18) <br>
+
+  <li> 1998-07-08 <b>Hole:</b> PIA Content in push mode. <br>
+       <code>crc.pia.Content</code> currently operates in pull mode, expecting
+       to read from an input stream.  For the DPS it needs to run in push
+       mode, giving the DPS a suitable output stream and letting it run.
+       (1998-06-18) <br>
+       -- (Actually, Content always did the right thing; it was just
+	  <code>StreamContent</code> that didn't.  The alternative, though,
+	  never handled insertions correctly.)
+
+  <li> 1998-07-15 <b>Impr:</b> &lt;test iftrue/iffalse&gt; not needed. <br>
+       The <code>iftrue</code> and <code>iffalse</code> attributes are both
+       unnecessary and unused.
+       (1998-07-15) <br>
+
+  <li> 1998-07-17 <b>Impr:</b> Move Processor implementations to subdir. <br>
+       (1998-07-08) <br>
+       -- moved to <code>crc.dps.process</code>
+      
+  <li> 1998-07-20 <b>Bug?:</b> XML PI's need to end in `<code>?&gt;</code>' <br>
+       present parser ends them with `<code>&gt;</code>'.
+       (1998-07-16)<br>
+       -- This may be a misunderstanding.  Certainly in generic SGML, PI's end
+	  with plain `<code>&gt;</code>', and even some XML documentation so
+	  specifies.  The XML identifier, however, definitely does require a ?.
+       <p>
+
+  <li> <b>Wish:</b> <code>ParseTreeGenericNode</code> <br>
+       Eventually there should be a ParseTreeGenericNode, basically Token, so
+       that we can build trees with arbitrary node types.
+       <br>
+
+  <li> 1998-07-22 <b>Bug:</b> XML names include extra characters. <br>
+       XML names may contain `<code>"." | "-" | "_" | ":"</code>' in addition
+       to anything Unicode defines as a letter, combining character, or
+       extender.  Colon is the namespace delimiter, and the prefix "xml" is
+       reserved.  HTML4.0 has these, too.
+       (1998-07-16)<br>
+
+  <li> 1998-07-22 <b>Hole:</b> Parser must call createElement with attr list. <br>
+       <code>correctActiveElement</code> is evil.
+       (1998-07-22)<br>
+
+  <li> 1998-07-31 <b>Hole:</b> need HookProcessor to run Agent hooks. <br>
+       (1998-07-08) <br>
+
+  <li> 1998-08-10 <b>Bug:</b> need to give an error on missing handlers. <br>
+       (1998-08-04) <br>
+
+  <li> 1998-08-11 <b>Impr:</b> tag handler classes need loader methods <br>
+       Tagset shouldn't have to know how to load classes for handlers.  Having
+       static methods for this would allow tag handlers to manage their own
+       name spaces. 
+       (1998-06-16) <br>
+
+  <li> 1998-08-11 <b>Hole:</b> New Handlers <br>
+       A significant amount of language design is needed here.
+       <br>
+       The language design is done and the basics are working; missing
+       handlers are now at the level of bugs.
+
+  <li> 1998-08-11 <b>Hole:</b> Loading Tagset from file <br>
+       <br>
+       The language design is done and the basics are working; missing
+       handlers are now at the level of bugs.
+
+  <li> 1998-08-11 <b>Bug:</b> Tagset files don't have search path. <br>
+       Need to check <code>.tss</code> and <code>.tso</code> files.
+       (1998-08-11) <br>
+
+  <li> 1998-08-12 <b>Bug:</b> Tagsets don't handle bad <code>.tso</code> files. <br>
+       Need to try a separate load so we can fall back on <code>.tss</code> or
+       <code>.ts</code> if the <code>.tso</code> file causes exceptions.
+       (1998-08-11) <br>
+
+  <li> 1998-08-12 <b>Bug:</b> Tagsets not loaded from resources. No search path. <br>
+       Need to be able to use class loader; check <code>.tss</code> and
+       <code>.tso</code> files.
+       (1998-08-11) <br>
+
+  <li> 1998-08-12 <b>Bug:</b> <code>implied</code> -&gt; <code>optional</code> <br>
+       Check the semantics of <code>implied</code> in SGML.  In any case it's
+       not clear; ``optional'' is better. 
+       (1998-08-12) <br>
+
+  <li> 1998-08-13 <b>Prop:</b> New InterForm extensions (?). <br>
+       (of course, one really obvious one is <code>.dpml</code> -- Document
+       Processing Markup Language. (6-29)
+       <dl>
+	 <dt> .xh (mh?)
+	 <dd> ``eXecutable HTML'' (``Meta-HTML'') -- resulting in a MIME type of
+	      <code>text/html</code> 
+	 <dt> .xx (mx?)
+	 <dd> ``eXecutable SML (``Meta-XML'') -- resulting in a MIME type
+	      appropriate for XML. 
+	 <dt> .xm (md?) [not done yet]
+	 <dd> ``eXecutable MIME'' (``Meta-Data'') -- the MIME header is
+	      returned as part of the document
+       </dl>
+       (1998-06-18) <br>
+
+  <li> 1998-08-13 <b>Hole:</b> Namespaces in Entities, Get, Set. <br>
+       Easy thing is to make an entity with a name ending in colon a namespace
+       entity.  Look them up as usual.  As long as a namespace implements
+       NamedNodeList we're cool (except that in fact AttributeList doesn't).
+       (1998-08-12)<br>
+       -- The code is written, but may be flaky.
+	  <code>crc.dps.Namespace</code> needed for clean implementation.
+
+  <li> 1998-08-13 <b>Hole:</b> Must define tags at parse time to cache trees. <br>
+       In order to parse correctly, you have to have the whole DTD in advance.
+       Yet another argument for the position that a tagset is a DTD.
+       (1998-06-25) <br>
+       -- This is handled by recursive tagsets. 
+
+  <li> 1998-08-13 ~ <b>Goal:</b> (8-1) Run Most Agents <br>
+       Be able to run all of the agents in (my) daily use (i.e. history, etc.,
+       but not the wacko stuff in the form server).
+       (1998-06-24) <br>
+       -- superceded by the push to revise the language rather than work on
+	  the legacy tagset, which may never be completed.
+
+  <li> 1998-08-?? <b>Bug:</b> Flag unimplemented legacy options. <br>
+       Unimplemented legacy options in &lt;get&gt; etc. have to be brought to
+       the user's attention with error messages.  Requires a mode flag or,
+       better, dispatching via the legacy handler first.
+       (1998-06-24)<br>
+       -- Note that static caching allows the correct handler class to be
+	  loaded without having to hack the search order in
+	  <code>loadHandler</code>. 
+
+  <li> 1998-08-?? <b>Bug:</b> replaceChild when redefining entity or handler<br>
+       BasicTagset and BasicEntityTable have to do a replaceChild when
+       replacing a binding.
+       (1998-06-26)<br>
+       -- There are problems with sharing. 
+
+  <li> 1998-08-13 ~ <b>Impr:</b> Character Entities should be defined in tagset <br>
+       Should have defined value; copy value into references to short-circuit
+       lookup.  <code>TextUtil.expandCharacterEntities</code> can then make
+       use of this.
+       (1998-06-22) <br>
+       -- Superceded by passive entities and the need to define entities in
+	  tagsets. 
+
+  <li> 1998-08-13 ~ <b>Impr:</b> Entities need to be initialized by the Tagset. <br>
+       The justification for this is that strictly speaking entities are
+       defined in the DTD.
+       (1998-06-18) <br>
+       -- Superceded by the need to define entities in tagsets. 
+
+  <li> 1998-08-13 <b>Hole:</b> Passive [character+] entity class, handler <br>
+       Having a separate node class and handler class for character entities
+       would simplify inserting and expanding them.  Would break some legacy
+       code, though.
+       (1998-06-19) <br>
+       -- Code present but may not be debugged.
+
+  <li> 1998-08-13 ~  <b>Wish:</b> <code>toNextNode</code>  <br>
+       Might want flag in Input's that tells whether the current node has been
+       processed yet.  (really relevant only for toNextNode, to keep track of
+       whether we've enumerated the children yet)
+       <br>
+       -- probably a bad idea.
+
+  <li>  Should eliminate the ``7-argument'' action. <br>
+       At this point there is nothing using all of its arguments, so it's
+       wasteful.  Should have methods on BasicHandler to get attrs, content or
+       content string, etc.  Only substHandler and testHandler use cstring.
+       (1998-08-12)<br>
+       -- methods on BasicHandler not needed, since they are all in Expand.
+
+  <li> 1998-08-25 <b>Bug:</b> Test.trueValue, etc. need context. <br>
+       otherwise there is no way to tell whether an entity has a value.
+       (1998-08-25)<br>
+
+  <li> 1998-08-27 <b>Bug:</b> Parser.getNextSibling must parse children. <br>
+       If current node has unparsed children, the parser must consume them in
+       order to get over to the next sibling. 
+       (1998-08-27)<br>
+       -- Required adding sawChildren flag to CursorStack.
+
+  <li> 1998-09-02 <b>Hole:</b> Sorting unimplemented. <br>
+       (1998-08-12)<br>
+       -- implemented by Pam
+       
+  <li> 1998-09-03 <b>Hole:</b> Need a Namespace interface <br>
+       This will greatly simplify Index.  Also should have a method
+       <code>Context.getNamespace</code>.  It would look at not only the
+       entities in each context, but the name of the EntityTable nodes.
+       (1998-08-12)<br>
+       -- Some testing needs to be done.
+
+  <li> 1998-09-03 <b>Bug:</b> Numeric repeat has problems <br>
+       Doesn't use &amp;n; for iteration var; not recognized if
+       <code>stop</code> is only attribute present.
+       (1998-09-03)<br>
+
+  <li> 1998-09-03 <b>Bug: </b> Test as condition in if is always true. <br>
+       (1998-09-03) <br>
+       -- This was introduced when rewriting &lt;if&gt; to use the
+	  three-argument <code>action</code> method. 
+
+  <li> 1998-09-04 <b>Hole:</b> &lt;select&gt; unimplemented. <br>
+       Needs to implement everything in XPointer spec, at least.
+       (1998-08-12)<br>
+
+  <li 1998-09-08> <b>Hole:</b> Namespace changes needed. <br>
+       Tagset wants to extend Namespace (sigh).  Index -&gt; namespace.
+       Changes in &lt;get&gt;, &lt;set&gt;, etc.
+       (1998-08-05)<br>
+
+  <li> 1998-09-09 <b>Bug:</b> XML empty flag not recognized <br>
+       At least on &lt;for&gt; elements.  Not checking in
+       <code>AbstractHandler.isEmptyElement</code>
+       (1998-09-04) <br>
+       -- Needs space to keep from being taken as part of an attribute value.
+
+  <li> 1998-09-11 <b>Hole:</b> <code>isChildOf</code> unused in parser. <br>
+       (1998-08-12)<br>
+
+  <li> 1998-09-18 <b>Check:</b> entity-reference termination in InterForms <br>
+       The old parser accepts entity references without a closing semicolon.
+       The new one doesn't.
+       (1998-07-23)<br>       
+       -- <code>strictEntities</code>flag added 
+
+  <li> 1998-09-21 <b>Bug:</b> Loading tagset from file should use resource. <br>
+       <code>ClassLoader.getSystemResource</code> should do the right thing.
+       (1998-08-12)<br>
+
+  <li> 1998-10-02 <b>Bug:</b> Problems with literals <br>
+       <code>eatUntil</code> broken (<em>both</em> parsers);
+       <code>Output</code> to external form needs not to entity-encode
+       characters.  
+
+  <li> 1998-10-08 <b>Bug:</b> checkpointing fails: Agency not serializable. <br>
+       (1998-10-8) <br>
+
+  <li> 1998-10-09 <b>Bug:</b> Agency-xhtml not loaded.<br>
+       (1998-10-8) <br>
+
+  <li> 1998-10-11 <b>Bug:</b> &amp;attributes:foo; doesn't work as namelist.<br>
+       (1998-10-8) <br>
+       -- was using <code>instanceof</code> instead of testing
+	  <code>asNamelist() != null</code>.  Entities test their value for
+	  being a namelist.
+
+  <li> 1998-10-12 <b>Bug</b> indexed names incorrect in attrs. <br>
+       Either they're not getting defined correctly or, more likely, not
+       getting expanded under certain circumstances.  The symptom shows up
+       in <code>&lt;a href="&AGENT:foo;"&gt;&AGENT:foo;&lt;/&gt;</code>
+       (1998-10-11) <br>
+       -- Expand.expandEntity: checking for period instead of colon.
+       
+  <li> 1998-10-12 <b>Hole:</b> PIA datatype transition. <br>
+       During the transition Agent and Transaction need to be able to
+       return both SGML and DOM data as needed.  Fortunately most of the
+       namespaces contain only strings; it's really only hooks that differ.
+       (1998-06-18) <br>
+       -- uses <code>Tabular</code> interface.
+
+  <li> 1998-10-12 <b>Bug:</b> Rename TextHandler to avoid case conflict. <br>
+       Rename to TextNodeHandler to avoid Windows conflict with textHandler.
+       (1998-08-07)<br>
+
+  <li> 1998-11-03 <b>Hole:</b> Legacy Handlers <br>
+       <code>cd <a href="../interform/handle">../interform/handle</a>;
+       make dps-check </code> for report.
+       (1998-06-15) <br>
+       -- officially abandoned.
+
+  <li> <b>Hole:</b> Need <code>lookupFile(fn, write)</code> in TopContext. <br>
+       (1998-07-08) <br>
+
+  <li> 1998-11-03 <b>Wish:</b> <code>ParseTreeIterator</code> <br>
+       We will want a ParseTreeIterator that implements both Input and
+       Output (and of course TreeIterator).  The main use would be
+       constructing an node and then processing it.
+       <br>
+       -- Officially delayed until it reappears in the new DOM.
+
+  <li>1998-11-17 <b>Hole</b> &lt;submit-forms&gt; <br>
+       It turns out submit_forms was not defined as a legacy handler.  A new
+       tag has been put into the <code>pia-xhtml</code> tagset (in
+       <code>./tagset/pia-xhtml.ts</code>), and a 
+       handler class created in <code>crc.dps.handle</code>.
+       (1998-11-09) <br>
+
+  <li> 1998-11-17 <b>Hole</b> findInterform with suffixes, forWriting <br>
+       Needed for <code>locateSystemResource</code>
+       (1998-11-17) <br>
+
+  <li> 1998-11-19 <b>Bug</b> Setting AGENT:xxx to null gives null pointer exc.
+       <br>
+       <pre>java.lang.NullPointerException
+          at java.util.Hashtable.put(Hashtable.java)
+          at crc.ds.Table.put(Table.java:107)
+          at crc.pia.GenericAgent.put(GenericAgent.java:901)</pre>
+       (1998-11-17) <br>
+
+  <li> 1998-11-23 <b>Bug:</b> tsdoc fails when loaded from
+       <code>.tso</code>. <br> 
+       Attribute lists are missing.  Possibly due to entities being hooked up
+       with the wrong namespace, except I can't see a mechanism for that.
+       (1998-10-8) <br>
+       -- Turned out to be a bug in serializing ArrayNodeList.  GAAK!
+
+  <li> 1998-11-19 <b>Hole:</b> Entity definitions. <br>
+       &lt;define entity&gt; unimplemented.
+       (1998-09-03) <br>
+
+  <li> 1998-11-25 <b>Bug:</b> not propagating verbosity from pia to dps <br>
+       (1998-10-9) <br>
+
+  <li> 1998-12-04 <b>Hole</b> &lt;put&gt; operation <br>
+       <code>&lt;put&gt;&lt;name&gt;...&lt;value&gt;...</code> -- this can
+       work with the existing bindings of &lt;name&gt; and &lt;value&gt;
+       (1998-11-02)<br>
+       -- -&gt; output
+
+  <li> 1998-12-11 <b>Note</b> External Entities. <br>
+       <code>crc.dps.active.ParseTreeExternal</code> is supposed to correspond
+       to an external entity.  &lt;define entity=<em>foo</em>
+       system=<em>url</em>&amp;... should define one.  See
+       <code>basic.ts</code> for the relevant attributes: <code>mode</code>,
+       and <code>write-mode</code>.
+       (1998-11-09) <br>
+
+  <li> 1998-12-11 <b>Hole</b> &lt;connect&gt; and &lt;status&gt;<br>
+       It seems pretty clear at this point that &lt;connect&gt; needs to use an
+       external entity as a ``file handle''.  The &lt;status&gt; tag can then
+       return the status of the connection, or of an external entity defined
+       using &lt;define entity=<em>name</em> external=<em>url</em>&gt;.
+       (1998-11-09) <br>
+
+  <li> <b>Impr</b> piaUSER, etc should become PIA:user, etc. <br>
+       (1998-10-11) <br>
+       -- done, but the old names are still around for a while.
+
+  <li> 1998-12-14 <b>Bug:</b> Need constructor for stripped tagsets. <br>
+       Best done with a predefined tagset (STRIP_ts). 
+       (1998-08-07)<br>
+
+  <li> <b>Bug</b> GenericAgent.findInterform needs extension list. <br>
+       Actually, finding files ought to be in a utility class, because you
+       need to get out: the file pathname, the URL path, and the part of the
+       URL after the file that was found (which gets passed to the
+       interform). 
+       (1998-10-13) <br>
+       
+  <li> 1998-12-16 <b>Bug</b> Problems finding HEADER.html file <br>
+       was finding Header.java instead!
+       (1998-12-16) <br>
+       
+  <li> 1998-12-16 <b>Bug</b> not finding agent data directory in DPS <br>
+       (1998-12-16) <br>
+       -- This will need more attention later.  
+       
+  <li> 1998-12-15 <b>Impr</b> need <code>tsstrip.ts</code> <br>
+       (1998-12-15) <br>
+       -- very good, it turns out, for identifying missing end tags in tagset
+	  files. 
+       
+  <li> 1998-12-16 <b>Impr</b> move agent-specific tag handlers.  <br>
+       moved to <code>crc.pia.agent</code> directory, with the agent classes. 
+       (1998-12-16) <br>
+       
+  <li> 1998-12-18 <b>Hole:</b> Some &lt;select&gt; subs unimplemented. <br>
+       id, xptr, replace; some attributes (e.g. <code>recursive</code>)
+       (1998-09-08)<br>
+       -- all but xptr
+
+  <li> 1998-12-18 <b>Note:</b> The official package name is
+         <code>org.w3c.dom</code> <br>
+       Not clear at this point exactly what use to make of this.
+       (1998-07-16)<br>
+       -- imported into CVS tree under src/java/org
+
+  <li> 1999-02-02 <b>Bug</b> append element<br>
+       &lt;append children&gt; seems able to be able to append text, but not
+       elements.
+       (1999-02-02) <br>
+       -- was calling super(true, true) in constructor instead of (true,
+	  false). 
+
+  <li> 1999-02-22 <b>Hole</b> remove legacy tagset <br>
+
+  <li> 1999-02-23 <b>Bug</b> HTML tag and attribute names not case-insensitive. <br>
+       (1998-02-23) <br>
+
+  <li> 1999-02-24 <b>Bug</b> HTML attribute names not case-insensitive. <br>
+       (1998-11-17) <br>
+
+  <li> 1999-02-24 <b>Bug</b> Passive actors needed <br>
+       Need a way of defining tags that self-insert, and are executed purely
+       for side-effects or for an effect on the content.
+       (1999-02-17) <br>
+       -- &lt;action mode=XXX&gt; where XXX includes replace-element,
+	  replace-content, append-content, silent, delete.
+
+</ol>
+<a name="end">End of list.</a>
+<hr>
+<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
+<b>done.html,v 1.31 1999/03/02 20:26:03 pgage Exp</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

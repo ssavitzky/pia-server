@@ -1,0 +1,174 @@
+#!/bin/sh
+# 	makeconfig,v 1.4 1997/07/21 20:57:02 rithy Exp
+# 	Generate property file for the PIA
+#
+# Usage: 
+#	makeconfig
+
+HOST=$(uname -n)
+#determine if we have proxy environment variable
+if [ -n "$http_proxy" ] ; then
+    HPROXENV=$http_proxy
+elif [ -n "$HTTP_PROXY" ] ; then
+    HPROXENV=$HTTP_PROXY
+else
+    HPROXENV="http://int-gw.crc.ricoh.com:80/"
+fi
+
+#if not override and environment variable does not exist
+if [ -z $PIA_DIR ] ; then
+    BINDIR=$(pwd)
+    PIA_HOME=${BINDIR%/*}
+    echo $PIA_HOME
+else
+    PIA_HOME=$PIA_DIR
+fi
+
+#if not override and environment variable does not exist
+if [ -z $USR_DIR ] ; then
+    USRPIA=$HOME/.pia
+    if [ ! -d "$USRPIA" ] ; then
+	mkdir $USRPIA
+    fi
+    echo $USRPIA
+else
+    USRPIA=$USR_DIR
+fi
+
+if [ ! -e "$USRPIA/Config" ] ; then
+    mkdir $USRPIA/Config
+fi
+
+#property file name
+PIAPROPFILE=$USRPIA/Config/pia.props
+
+
+OPTIONS="Http_proxy Http_no_proxy Pia_root Port Debug Verbose Request_timeout User_dir Write Quit"
+PROXY="crc.pia.proxy_http=$HPROXENV"
+NOPROXY="crc.pia.no_proxy=$HOST"
+ROOT="crc.pia.root=$PIA_HOME"
+PORT="crc.pia.port=8888"
+DEBUG="crc.pia.debug=true"
+VERBOSE="crc.pia.verbose=false"
+REQTIMEOUT="crc.pia.reqtimeout=4000"
+USRDIR="crc.pia.usrroot="
+
+function spitData()
+{
+clear
+echo $PROXY
+echo $NOPROXY
+echo $ROOT
+echo $PORT
+echo $DEBUG
+echo $VERBOSE
+echo $REQTIMEOUT
+echo $USRDIR
+echo
+}
+
+function write()
+{
+spitData
+echo -n 'Write (yes) ?'
+read REPLY
+if [ $REPLY = "yes" ] ; then
+cat > $PIAPROPFILE << EOF
+$PROXY
+$NOPROXY
+$ROOT
+$PORT
+$DEBUG
+$VERBOSE
+$REQTIMEOUT
+$USRDIR
+EOF
+fi
+}
+
+function process()
+{
+    echo "process: $*"
+    case $1 in
+	1 ) echo -n "value ( ${PROXY##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		PROXY="${PROXY%%=*}=$REPLY"
+	    fi
+	    echo $PROXY;;
+	2 ) echo -n "value ( ${NOPROXY##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		NOPROXY="${NOPROXY%%=*}=$REPLY"
+	    fi
+	    echo $NOPROXY;;
+	3 ) echo -n "value ( ${ROOT##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		ROOT="${ROOT%%=*}=$REPLY"
+	    fi
+	    echo $ROOT;;
+	4 ) echo -n "value ( ${PORT##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		PORT="${PORT%%=*}=$REPLY"
+	    fi
+	    echo $PORT;;
+	5 ) echo -n "value ( ${DEBUG##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		DEBUG="${DEBUG%%=*}=$REPLY"
+	    fi
+	    echo $DEBUG;;
+	6 ) echo -n "value ( ${VERBOSE##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		VERBOSE="${VERBOSE%%=*}=$REPLY"
+	    fi
+	    echo $VERBOSE;;
+	7 ) echo -n "value ( ${REQTIMEOUT##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		REQTIMEOUT="${REQTIMEOUT%%=*}=$REPLY"
+	    fi
+	    echo $REQTIMEOUT;;
+	8 ) echo -n "value ( ${USRDIR##*=} ) :"
+	    read REPLY
+	    if [ -n "$REPLY" ] ; then
+		USRDIR="${USRDIR%%=*}=$REPLY"
+	    fi
+	    echo $USRDIR;;
+	9 ) echo "writing"
+	    write;;
+	10 )
+	    exit 0;;
+    esac
+}
+
+echo 'Select a number:'
+done=false
+
+while [ $done = false ]; do
+    do=true
+    num=1
+    spitData
+    for opt in $OPTIONS; do
+	echo $num $opt
+	num=$((num+1))
+    done
+echo -n 'Please select a number?'
+read REPLY
+
+    if [ $REPLY -lt $num ] && [ $REPLY -gt 0 ]; then
+	SELECTION=$REPLY
+	process $SELECTION 
+    else
+	echo 'invalid selection.'
+    fi
+done
+
+
+
+
+
+

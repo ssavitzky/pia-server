@@ -1,0 +1,145 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>PIA: To-Do List</title>
+</head><body>
+<h1>To-Do List</h1>
+
+<blockquote><em>
+  This file contains pending tasks for the <code>crc.pia</code> package
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="done.html">Completed tasks</a>
+  <li> <a href="#Keywords">Keywords</a>
+  <li> <a href="#end">Oldest Entry</a> (at end.)
+</ul>
+
+<h2>Cleanup and refactoring</h2>
+<ol>
+  <li> Move Piaproperties to <code>ds</code>; rename.
+  <li> Make a generic Tabular wrapper similar to Piaproperties.  Use for,
+       e.g., attribute lists.
+  <li> Rename Tabular to StringMap
+  <li> Use StringMap interface for headers, etc.
+  <li> <b>Hole</b> Simplify the Pia class and initialization.
+</ol>
+
+<h2>Main List</h2>
+<ol>
+  <li> <b>Bug</b> Agent.put("criteria", v) must split <br>
+       Need to split <code>v</code> on whitespace.
+       (1999-02-22)
+
+  <li> <b>Bug</b> Directory uses redirect for index.html. <br>
+       Redirection breaks when the system name is not what
+       <code>hostname</code> returns (e.g., <code>localhost</code>).  There
+       are only two choices here: redirect and hope the full URL is in the
+       headers, or returning the file and fixing the links.  
+       (1999-02-19) <br>
+
+  <li> <b>Hole</b> Regexp and Jigsaw must go! (<b>critical</b>) <br>
+       (1999-02-09) <br>
+
+  <li> <b>Hole</b> Better agent naming conventions. <br>
+       specified using the following attributes on Agent:
+       <ul>
+	 <li> <code>name</code> the base name.
+	 <li> <code>base</code> the agent's ``mount point''
+	 <li> <code>path</code> the full path relative to the PIA's document
+	      root: <code>base/name</code> -- this is the unique key for
+	      looking up the agent. 
+       </ul>
+       (1998-12-22) <br>
+
+  <li> <b>Bug</b> need per-agent InterForm and data directories <br>
+       This would have two good effects: avoid searching in the obsolete
+       <code>src/Agents</code>, and allow agents to be anywhere.  Actually the
+       InterForm search path should be a real path; data is just a single
+       dir.  Should have the following attributes on Agent:
+       <ul>
+	 <li> <code>codeDir</code> the code directory.  Default is
+	      <code>Agents/<em>path</em></code>.  
+	 <li> <code>userDir</code> user's overrides
+	 <li> <code>dataDir</code> the data; <em>always</em> using
+	      <code>~</code> 
+       </ul>
+       Note that currently the <code>if_root</code> attribute preceeds the
+       default paths, but does not override them.  Similarly, many possible
+       roots and paths are currently searched. 
+       (1998-12-17) <br>
+       -- Note that as of 1999-02-09 this is mostly, if not completely, done
+       
+  <li> <b>Bug</b> Header parsing exception handling <br>
+       In a response, parseInitializationString should set defaults instead of
+       throwing an exception, so that the browser at least gets the page.
+       Ideally it should insert a suitable error message at the top of the
+       page.
+       (1998-11-16) <br>
+
+  <li> <b>Impr</b> InterForm lookup should be in a utility class <br>
+       Possibly both FileAccess and the InterForm stuff should be in a "util"
+       sub-package. 
+       (1998-11-02)<br>
+
+  <li> <b>Hole</b> Namespaces needed: PIA, ENV, LOG, AGENTS <br>
+       PIA: PiaProperties; basically everything on the Pia class.
+       ENV: the environment (Java system props)
+       LOG: User messages.  names include "debug", "message", "verbose", ...
+       AGENTS: Resolver's agent table.  Initialize an agent with
+       <code>&lt;set name=AGENTS:foo&gt;options&lt;/&gt;</code>.
+       (1998-11-02)<br>
+
+  <li> <b>Hole</b> Interface Cleanup <br>
+       Make most attributes conform to get/set convention instead of the
+       legacy perl convention.  Remove most convenience methods,
+       e.g. the ones that set criteria, etc.
+
+  <li> <b>Bug</b> no namespace for all installed agents. <br>
+       (1998-10-12) <br>
+       
+  <li> <b>Bug:</b> ProcessedContent doesn't do insertions. <br>
+       Neither does its predecessor, InterFormContent.
+       (1998-07-08) <br>
+
+  <li> <b>Impr:</b> ISO 8601 date representation (dashes) <br>
+       See <a href="http://www.ft.uni-erlangen.de/~mskuhn/iso-time.html">this
+       summary</a>.  The main things needing fixing are the entity table
+       initialization, and dates as presented by the History agent's hook.
+       (1998-06-18) <br>
+       -- Should add timezone and UTC time/date as well.
+</ol>
+
+<a name="end">(End of list)</a>
+
+<h2><a name="Keywords">Description of Keywords</a></h2>
+
+(Listed in order of decreasing urgency.)
+
+<dl>
+  <dt> <b>Bug</b>
+  <dd> A (typically small) problem with a simple, unambiguous description of
+       its symptoms.
+  <dt> <b>Hole</b>
+  <dd> A piece of missing, but important, functionality.
+  <dt> <b>Goal</b>
+  <dd> A target capability (includes a date)
+  <dt> <b>Check</b>
+  <dd> Something to check for; a potential stumbling block or place where the
+       implementor may have cut corners in the heat of the moment.  For
+       example, Y2K problems.
+  <dt> <b>Impr</b>ovement
+  <dd> A desirable improvement.
+  <dt> <b>Prop</b>osal
+  <dd> A proposal that will need to be discussed further.
+  <dt> <b>Wish</b>
+  <dd> A desired improvement of low priority.
+</dl>
+
+<hr>
+<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
+<b>to-do.html,v 1.13 1999/03/02 20:26:23 pgage Exp</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

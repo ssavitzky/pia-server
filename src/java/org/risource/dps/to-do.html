@@ -1,0 +1,452 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>DPS: To-Do List</title>
+</head><body>
+<h1>To-Do List</h1>
+
+<blockquote><em>
+  This file contains pending tasks for the DPS system. 
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="done.html">Completed tasks</a>
+  <li> <a href="#Keywords">Keywords</a>
+  <li> <a href="#end">Oldest Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> <b>Bug</b> XML attribute names not case-sensitive. <br>
+       (1999-02-24) <br>
+
+  <li><b>Bug</b>The value sub-entity is ignored when using the define entity system attribute.
+  For example, the value "whatever" never gets written to file.: 
+  <pre>
+  &lt;define entity=pgroup system=per-group mode=create&gt;&lt;value&gt;whatever&lt;/value&gt;&lt;/define&gt;
+  &pgroup;
+  </pre><br>
+  (1999-02-23)
+  
+</li>
+
+  <li> <b>Bug</b> Test atributes not all given in <code>basic.ts</code><br>
+       Also, the "sorted" attribute appears to be buggy.  Perhaps it is doing
+       a numeric sort instead of an alphabetic one, or not doing a split.
+       (1999-02-17) <br>
+
+  <li> <b>Bug</b> &amp;agents; is static, not dynamic<br>
+       ...so the header is wrong when agentRemove or agentInstall is used.
+       This is only a problem in Agency, so we can make AGENT:agents return
+       the up-to-date list.
+       (1999-02-02) <br>
+
+  <li> <b>Hole</b> Namespaces for tags <br>
+       Tags need namespaces.  The namespace defined by a tagset might not be
+       the same as its name; wellknown namespaces will include:
+       <dl>
+	 <dt> <code>dps:</code>
+	 <dd> all tags defined in the <code>basic</code>, <code>xxml</code>,
+	      and <code>xhtml</code> tagsets 
+	 <dt> <code>pia:</code>
+	 <dd> all tags defined in the <code>pia-xhtml</code> tagset.
+       </dl>
+       (1999-02-02) <br>
+
+
+  <li> <b>Bug</b>Connect<br>
+    When doing a "connect put" cannot specify src="/RHServer/persist.out"
+    from an agent.  It throws an exception.  src="persist.out" does not
+    throw an exception, but it does fail to write output to file.  The same
+    code run using process works fine.  "connect entity" requires 
+    "/RHServer/persist.out" when running from an agent.
+    (1999-01-26)
+  <li> <b>Bug</b> Recursive tags <br>
+       Need <code>recursive</code> attribute to &lt;define element&gt; to
+       allow the action to contain the new tag itself.  On second thought it
+       would work if we just re-use an existing Handler instead of creating a
+       new one. 
+       (1999-01-07) <br>
+
+  <li> <b>Hole</b> Constructing and editing elements. <br>
+       We want to be able to modify the attributes and content of an existing
+       element, or construct a new one out of pieces.  Probably by adding back
+       &lt;replace&gt; in &lt;select&gt;, and adding some new ones for value,
+       insertion, etc.
+       (1998-12-15) <br>
+
+  <li> <b>Impr</b> passthrough action for elements. <br>
+       Not at all clear how best to do this.  One possibility is lazy
+       evaluation of &amp;element;.
+       (1998-10-12) <br>
+
+  <li> <b>Hole</b> Data structure elements <br>
+       &lt;headers&gt;, &lt;url&gt;, etc.  need to convert text content to XML
+       format, and need to output as text.
+       (1998-12-14) <br>
+
+  <li> <b>Hole</b> lists as namespaces <br>
+       Need to support two things: list tags (e.g. &lt;dl&gt;) as namespaces,
+       and entities recognizing them when their value <em>contains</em> a
+       namespace or name.  Would be easier if there was a simple way for the
+       parser to construct arbitrary classes for elements.
+       (1998-12-04) <br>
+
+  <li> <b>Impr</b> force tagset reloading <br>
+       Is there a convenient way to force an Agent to reload its tagsets?
+       Checking last-modified dates would also work, but it could get slow.
+       (1998-12-04) <br>
+
+  <li> <b>Impr</b> Persistent namespaces <br>
+       There are actually two ways to make a namespace persistent:  make it
+       the value of an external entity, and make its bindings be external
+       entities.  In the latter case, cons up filenames from the entity
+       names with a prefix.
+       (1998-11-24) <br>
+
+  <li> <b>Note</b> Tagset for external entity. <br>
+       Note that an external entity can go up its parent chain to find its
+       tagset.  If not given a context explicitly, it can make its own
+       TopProcessor when needed.  Note that external entities do want a
+       tagset; it's basically the notation.
+       (1998-11-19) <br>
+       -- The problem here is that the entity needs to know what TopProcessor
+	  to use in order to open files; this needs to be passed at run time.
+
+  <li> <b>Note</b> Tagset should be able to create a Processor. <br>
+       They can already create their parser.  There are times when you want a
+       different processor type, but in most cases the right thing will happen.
+       (1998-11-19) <br>
+
+  <li> <b>Impr</b> Resource interface. <br>
+       Everything having to do with external resources (entities, connections,
+       and status) would be much simpler if we had a Resource interface.
+       Something like URLConnection only more versatile.
+       (1998-11-18) <br>
+
+  <li> <b>Bug</b> Assigning attributes to an entity should make namespace.<br>
+       Assigning an actual AttributeList works, but using &lt;set&gt;
+       doesn't.  Probably best to fix this in <code>setValue</code>.
+       (1998-11-18) <br>
+
+  <li> <b>Bug</b> Boolean attributes should eval. to name <br>
+       ...following the ancient SGML tradition.  Best done by fixing what the
+       parser does when no = is present. 
+       (1998-11-02)<br>
+       -- see BasicParser.java line 214.  Unfortunately it breaks some things
+	  (like handlers); this needs to be fixed.  The problem is that some
+	  handlers need to distinguish between an entity which is present but
+	  has no value, and one which is present with a non-default value.
+       
+  <li> <b>Impr</b> Pipelined &lt;select&gt; <br>
+       Should be possible to stream selection through a series of
+       processors.  Bind &amp;item; to current item; evaluate
+       &amp;selection; lazily as needed.  
+       (1998-10-21) <br>
+
+  <li> <b>Impr</b> shorthand for booleans in select. <br>
+       equivalent to test but with current item in content.
+       (1998-10-21) <br>
+ 
+  <li> <b>Bug</b> If/elsf/else handlers do not work correctly.  
+	elsf clause always returns true.  See demo_if.xh. (1998-10-19)<br>
+
+  <li> <b>Bug</b> Logical handler.  A space can change the result.  For example:
+	<pre>
+This version returns 1
+&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt;&lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
+
+This version returns 0
+&lt;logical and&gt;&lt;test match="abc"&gt;&name1;&lt;/test&gt; &lt;test match="bbc"&gt;&name2;&lt;/test&gt;&lt;/logical&gt;
+        </pre> 
+	(1998-10-19)<br>
+
+  <li> <b>Bug</b> Logical and.  Does not return correct (or consistent) values. With two 
+	nodes, returns false; with 3 it returns the last item.  With 4 nodes (and 4th empty)
+	returns nothing. If a fourth node is given, returns it.  Some examples:
+	<pre>
+Returns three
+&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;/logical&gt;
+
+Returns nothing
+&lt;logical and&gt;&lt;em&gt;one&lt;/em&gt;&lt;b&gt;&lt;/b&gt;&lt;b&gt;three&lt;/b&gt;&lt;em&gt;&lt;/em&gt;&lt;/logical&gt;
+
+If 4th node is there, returns "four".
+        </pre>
+	(1998-10-19)<br>
+
+  <li> <b>Bug</b> Test sorted.  Returns true on an unsorted list.  For example:
+	<pre>
+Input: &lt;test sorted&gt;bats ants toads&lt;/test&gt; 
+Result: 1 
+        </pre>
+	(1998-10-19)<br>
+
+	<li> <b>Bug</b> Pad only pads on the right (align left).  For example:
+<pre>
+Input: &lt;pre&gt;&lt;text pad align=center width=80&gt;cat&lt;/text&gt;&lt;/pre&gt;
+Results: &lt;pre&gt;cat                                                                             &lt;/pre&gt;
+</pre>
+(1998-11-11)<br>
+  <li> <b>Impr</b> Prevent infinite loops.  Here's one way to create one:
+	<pre>
+&lt;repeat foreach entity=x&gt;a b c d e f g&gt;&lt;repeat&gt;&lt;for&gt;&lt;start&gt;2&lt;/start&gt;&lt;stop&gt;5&lt;/stop&gt;&x;&lt;/for&gt;&lt;/repeat&gt;&lt;/repeat&gt;
+        </pre>
+	(1998-10-19)<br>
+
+  <li> <b>Bug</b> no way to get name of a node in &lt;select&gt;. <br>
+       We can select nodes <em>by</em> name, but not <em>get</em> their
+       names. 
+       (1998-10-12) <br>
+       
+  <li> <b>Bug</b> no namespace for all installed agents. <br>
+       Best done by making a specialized Entity that knows it's in a
+       NamespaceWrap.  
+       (1998-10-12) <br>
+       
+  <li> <b>Impr</b> Simplify Namespace and Context ops. <br>
+       getEntityValue, etc. should be removed from Context; the more general
+       operations in Index should be used to give a single point of
+       definition. 
+       (1998-10-12) <br>
+
+  <li> <b>Impr</b> the convertToString methods are unused. <br>
+       We should either use them, or drop them.
+       (1998-10-11) <br>
+
+  <li> <b>Bug:</b> NamespaceWrap doesn't return NodeList for bindings <br>
+       (1998-10-11) <br>
+
+  <li> <b>Bug:</b> subst has trouble with matches that get to the end. <br>
+       This is a generic problem with the regexp stuff.
+       (1998-10-9) <br>
+
+  <li> <b>Bug:</b> literal element not properly terminated. <br>
+       (1998-10-2) <br>
+
+  <li> <b>Bug:</b> addMarkup has to insert real markup now. <br>
+       ...because Text now converts markup characters to entities.
+       (1998-10-2) <br>
+
+  <li> <b>Impr:</b> Use match to split on regexp. <br>
+       &lt;text split match=<em>re</em>&gt; should convert content to a single
+       string, then split on the given regexp.  This solves the problem of
+       how to make <code>sep</code> consistent between <code>split</code> and
+       <code>join</code>.
+       (1998-09-15) <br>
+
+  <li> <b>Impr:</b> XML / interacts with unquoted attribute values. <br>
+       Solutions include requiring a space or requiring non-ID values to be
+       quoted.  The latter is more correct.  Quoting strictness should be a
+       parser parameter for maximum versatility.
+       (1998-09-09) <br>
+
+  <li> <b>Hole:</b> Some &lt;select&gt; subs unimplemented. <br>
+       xptr is the only one left.
+       (1998-09-08)<br>
+       -- this can easily be deferred
+
+  <li> <b>Bug:</b> Passive Entities needed. <br>
+       Passive entities (character entities) and some normal entities have to
+       be defined in the DTD.  Passive entities untested. 
+       (1998-08-13) <br>
+
+  <li> <b>Hole:</b> Parser work needed. <br>
+       Literals, CDATA sections, parent, content models, declaration and PI
+       parsing, optionally splitting text into tokens, optional case-munging.
+       (1998-08-13) <br>
+       -- <code>retainTree</code> implemented 08-27 but untested.
+          parent stuff (no error checking) 09-11.  literals 09-18/10-1.
+
+  <li> <b>Hole:</b> Attribute definitions. <br>
+       Attribute types, implied/fixed/etc., default values, handlers.
+       Dispatch table for attrs with handlers.  Lazy evaluation(?) 
+       (1998-08-13)
+
+  <li> <b>Impr:</b> Interface to push-mode parsers <br>
+       Most parsers operate in push mode -- they read their input and call a
+       semantic handler for each ``event''.  This requires running the
+       Processor in a separate thread.
+       (1998-08-13)<br>
+
+  <li> <b>Hole:</b> Text Substitution<p>
+       Needs to be done using either &lt;select&gt; or its own &lt;subst&gt;
+       element with appropriate sub-elements.
+       (1998-08-12)<br>
+       -- (1998/08/26) handler written but no sub-elements yet.
+
+  <li> <b>Bug:</b> Tagsets don't hack resource names correctly. <br>
+       Need to decide between Class and ClassLoader conventions.  ClassLoader
+       requires slashes; Class prepends module name.  Need the prepend, then
+       change dots to slashes (probably in <code>crc.util.NameUtils</code>).
+       (1998-08-12)<br>
+
+  <li> <b>Bug:</b> Can't <em>use</em> a tagset. <br>
+       The &lt;tagset&gt; tag only really works in a tagset definition file.
+       (1998-08-11)<br>
+       -- Possibly best done using a separate useTagset handler.
+
+  <li> <b>Bug:</b> Handler class hierarchy problems. <br>
+       There are two many places where we assume that all real handlers
+       inherit from BasicHandler.  Fix one way or the other.
+       (1998-08-13)<br>
+
+  <li> <b>Hole:</b> Functional programming tools. <br>
+       See <a href="http://www.python.org/doc/tut/functional.html">Python</a>
+       (1998-08-05)<br>
+
+  <li> <b>Hole:</b> Major changes needed for new DOM. <br>
+       Do this after Level 1 stabilizes.
+       <ul>
+	 <li> Use <code>org.w3c.dom</code> for the <em>official</em>
+	      interfaces, of course.
+	 <li> Move <code>Active*</code> interfaces from
+	      <code>crc.dps.active</code> to <code>crc.dom</code>
+	 <li> Move implementation classes to <code>crc.dom.impl</code>
+	 <li> Keep <code>crc.dps.active</code> for DPS-specific classes.
+       </ul>
+       (1998-08-05)<br>
+
+  <li> <b>Hole:</b> PI comments <br>
+       Comments of the form <code>&lt;?-- text ?&gt;</code> should be discarded
+       by the processor rather than being copied.
+       (1998-07-15)<br>
+
+  <li> <b>Hole:</b> PI and declaration actions <br>
+       Need to assign separate actions to PI's and declarations by name.
+       As a desirable side effect, this will allow loading tagsets and
+       interpreting DTD's.  Strictly speaking the name is the name of an
+       application, not of an operation.  PI's may have to be handled <em>even
+       when passively copying</em>!
+       (1998-07-15)<br>
+       <p>
+
+  <li> <b>Bug:</b> Node construction <em>must</em> set handler. <br>
+       All new nodes have to have their handler set properly; this means
+       replacing almost all <code>new ParseTree<em>Whatever</em></code> with
+       <code>create<em>Whatever</em></code> operations on the current
+       Tagset. Easily enforced by eliminating constructors without handlers.
+       (1998-07-10)<br>
+
+  <li> <b>Bug:</b> ProcessedContent doesn't insert controls. <br>
+       Neither does its predecessor, InterFormContent.
+       (1998-07-08) <br>
+
+  <li> <b>Impr:</b> Add ActiveNode operations to <code>Input</code>, etc. <br>
+       Fully supporting <code>ActiveNode</code> as well as <code>Node</code>
+       everywhere in the DPS would give faster, simpler code.  It is already
+       impossible to use ordinary DOM Nodes in a Processor.
+       (1998-07-07) <br>
+
+  <li> <b>Impr:</b> Parser should put text in <code>next</code> <br>
+       (instead of putting it in <code>nextText</code> and increasing the
+       number of tests per token).
+       (1998-06-29) <br>
+
+  <li> <b>Hole:</b> Ought to have <code>NamedChildList</code> <br>
+       for the children of things like <code>EntityTable</code> and
+       <code>Tagset</code>.
+       (1998-06-29) <br>
+       -- Actually it might be best to use a ParseTreeTable as a wrapper.
+
+  <li> <b>Bug:</b> appending to undefined entity fails. <br>
+       &lt;set name=foo&gt;&lt;get name=foo&gt;...&lt;/set&gt; leaves
+       <code>foo</code> undefined.  There must be an explanation...
+       (1998-06-26) <br>
+
+  <li> <b>Impr:</b> Upgrade <code>handle</code> methods. <br>
+       The static <code>handle(<em>element</em>)</code> methods in handler
+       subclasses should pick up a static instance if possible, rather than
+       just calling <code>new</code>.  (See also ''Impr'' of 1998-06-15.)
+       (1998-06-25) <br>
+
+  <li> <b>Hole:</b> <code>ToParseTree</code> should take a tagset <br>
+       Tagset is needed to attach actions to constructed nodes.
+       (1998-06-22) <br>
+       -- probably just needs working shallow copy.
+
+  <li> <b>Impr:</b> Tagset should extend EntityTable, or reference one. <br>
+       This will make it easier to define entities and tags in the same DTD.
+       (1998-06-19) <br>
+
+  <li> <b>Impr:</b> PUT_VALUE action code needed <br>
+       Get a value for the node and put that.  Needs a corresponding
+       <code>putValue(<em>node, context, output</em>)</code> in Action; the
+       default should be to copy the node.  Could be used for entity expansion
+       in attributes.
+       (1998-06-18) <br>
+
+  <li> <b>Hole:</b> <code>ParseTreeDocument</code>, DTD, &amp; XML nodes. <br>
+       ...are still unimplemented. 
+       (1998-06-18) <br>
+
+  <li> <b>Impr:</b> Caching for subProcess stack <br>
+       ContextStack should have a <code>free</code> link to a free
+       sub-processor, to be used instead of allocating one.
+       (1998-06-18) <br>
+       -- <code>subProcess</code> clears <code>free</code>; caller does
+	  <code>p.cleanup()</code> when finished to restore it.
+
+  <li> <b>Hole:</b> NamedNodeList wrapping a Table <br>
+       Want to be able to wrap a Table as a NamedNodeList.  This will provide
+       the DPS equivalent of <code>crc.sgml.AttrWrap</code>.
+       (1998-06-16) <br>
+
+  <li> <b>Impr:</b> <code>Filter</code> parse tree input <br> 
+       Filter should  be able to read a serialized parse tree.
+       (1998-06-15) <br>
+       -- It should do so if the input file ends in ``<code>.xho</code>'' or
+          ``<code>.xxo</code>''.
+       
+  <li> <b>Check:</b> attribute and tag case sensitivity <br>
+       Nothing is careful about cannonical attribute and tag names yet.
+
+  <li> <b>Impr:</b> <code>NamedActiveNode</code> values <br>
+       Named nodes should have defined, assigned and default values. Only
+       defined value should be the children; it would be used for the
+       <em>definition</em> of a name.  Want to be able to share assigned
+       values; the NodeList of an assigned value would be a copy (just like we
+       presently do for attribute lists, and for the same reason). 
+
+  <li> <b>Impr:</b> <code>ParseTreeElement</code> hasActiveAttributes <br>
+       ParseTreeElement should keep information about whether any of its
+       attributes contain entities that need to be expanded.  Should be much
+       faster, since most don't and it's known at parse time.
+       The other possibility is lazy evaluation -- don't even look at them
+       until they're needed when converting an attribute's value to a string.
+       <br>
+
+</ol>
+
+<a name="end">(End of list)</a>
+
+<h2><a name="Keywords">Description of Keywords</a></h2>
+
+(Listed in order of decreasing urgency.)
+
+<dl>
+  <dt> <b>Bug</b>
+  <dd> A (typically small) problem with a simple, unambiguous description of
+       its symptoms.
+  <dt> <b>Hole</b>
+  <dd> A piece of missing, but important, functionality.
+  <dt> <b>Goal</b>
+  <dd> A target capability (includes a date)
+  <dt> <b>Check</b>
+  <dd> Something to check for; a potential stumbling block or place where the
+       implementor may have cut corners in the heat of the moment.  For
+       example, Y2K problems.
+  <dt> <b>Impr</b>ovement
+  <dd> A desirable improvement.
+  <dt> <b>Prop</b>osal
+  <dd> A proposal that will need to be discussed further.
+  <dt> <b>Wish</b>
+  <dd> A desired improvement of low priority.
+</dl>
+
+<hr>
+<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
+<b>to-do.html,v 1.44 1999/03/02 20:26:04 pgage Exp</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

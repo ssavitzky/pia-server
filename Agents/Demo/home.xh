@@ -1,0 +1,33 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>The &AGENT:name; agent home page</title>
+</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Home Page</header>
+<sub-head page=home >
+    <tr><th><td> <a href=demo_define.xh>Define Element and Attribute Examples</a>
+    <tr><th><td> <a href=demo_text.xh>Text Examples</a>
+    <tr><th><td> <a href=demo_num.xh>Numeric Examples</a>
+    <tr><th><td> <a href=demo_if.xh>If and Sub-component Examples</a>
+    <tr><th><td> <a href=demo_logic.xh>Logical And/Or Examples</a>
+    <tr><th><td> <a href=demo_subst.xh>Substitute Examples</a>
+    <tr><th><td> <a href=demo_rep.xh>Repeat Examples</a>
+    <tr><th><td> <a href=demo_getset.xh>Get and Set Variable Examples</a>
+    <tr><th><td> <a href=demo_protect.xh>Protect Markup Examples</a>
+    <tr><th><td> <a href=demo_sel.xh>Extract Examples</a>
+    <tr><th><td> <a href=demo_test.xh>Test Handler Examples</a>
+    <tr><th><td> <a href="&IFman;">PIA InterForm Manual</a>
+		 <a href="/Agency/debug">[debug]</a>
+</sub-head>
+
+
+<h2>About This Agent:</h2>
+
+The <b><a href="/&agentName;/">&agentName;</a></b> agent is intended as a
+demonstration and testbed for the PIA's InterForm markup language and its
+formatter/interpreter. Select any of the above demo pages to see examples
+of PIA tags.
+<p>
+
+<footer cvsid="home.xh,v 1.7 1999/03/02 20:24:49 pgage Exp">
+</body></html>
+

@@ -1,0 +1,10 @@
+#!/bin/sh
+#	Display the names of files that contain a "hole"
+#	files-with-holes,v 1.1 1997/08/12 22:51:50 steve Exp
+
+re="${1-[^=]===[^=]|unimplemented|eventually}"
+
+find . '(' -name '*.java' -o -name '*htm?' -o -name '*.if' -o -name '*.tex' \
+        -o -name '*.p[lm]' -o -name '*.inc' -o -name '*akefile' ')' -type f  \
+	\! -path '*JavaDoc*' \! -path '*/other/*' \
+    -exec egrep -i -l "$re" {} \; 

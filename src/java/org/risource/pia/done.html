@@ -1,0 +1,82 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>Done</title>
+</head><body>
+<h1>Done</h1>
+
+<blockquote><em>
+  This file contains completed tasks. 
+</em></blockquote>
+
+See also:
+<ul>
+  <li> <a href="to-do.html">Pending tasks</a><p>
+  <li> <a href="#end">Most Recent Entry</a> (at end.)
+</ul>
+
+<ol>
+  <li> 1998-10-?? <b>Bug</b> GenericAgent.findInterform needs extension list.
+       <br>
+       Actually, finding files ought to be in a utility class, because you
+       need to get out: the file pathname, the URL path, and the part of the
+       URL after the file that was found (which gets passed to the
+       interform). 
+       (1998-10-13) <br>
+       
+  <li> 1998-10-30 <b>Hole:</b> PIA datatype transition. <br>
+       During the transition Agent and Transaction need to be able to
+       return both SGML and DOM data as needed.  Fortunately most of the
+       namespaces contain only strings; it's really only hooks that differ.
+       (1998-06-18) <br>
+       -- Make Agent and Transaction implement an interface with methods
+	  like <code>getObjectAt</code> and <code>getStringAt</code>,
+	  etc. instead of the Attr interface; sort it out in the handlers.
+       
+  <li> 1998-10-30 <b>Bug</b> DPS hooks aren't executed <br>
+       (1998-10-28)<br>
+
+  <li> 1999-01-04 <b>Hole</b> <code>handle</code> subdir for tag handlers <br>
+       Agent-specific handlers are in Agent. 
+       (1998-12-17) <br>
+
+  <li> 1999-02-09 <b>Bug</b> ~ doesn't work in some cases. <br>
+       ~Agent/ works, but ~Agent doesn't. In general, a directory only gets
+       found if a / is present.  Sounds like a redirection bug.
+       (1999-02-05) <br>
+       -- fixed by a cleanup of the redirection code, and more use of
+	  urlDecode. 
+
+  <li> 1999-02-09 <b>Bug</b> Agent~ doesn't work at all. <br>
+       (1999-02-05) <br>
+       -- findInterform was removing the agent name while mistaking it for the
+	  type. 
+
+  <li> 1999-02-10 <b>Bug</b> /~/dir doesn't work. <br>
+       ~/HEADER.html works, but ~/Admin doesn't.  ROOT/~/Admin does. ~/Config
+       does. 
+       (1999-02-09) <br>
+       -- Due to the fact that Admin is an agent and Config isn't.  The
+	  problem is in Resolver.agentFromPath().
+
+  <li> 1999-02-?? <b>Hole</b> remove Interform interpretor completely <br>
+
+  <li> 1999-02-19 <b>Bug</b> Directory uses &lt;base&gt;. <br>
+       Instead, it should use absolute paths for its links, and <em>fix</em>
+       any relative links in HEADER.html.  The problem is that the base breaks
+       when the system name is not what <code>hostname</code> returns (e.g.,
+       <code>localhost</code>).  There is no choice but redirection or link
+       fixup if an <code>index.html</code> exists.
+       (1999-02-19) <br>
+       -- done except for fixing the redirect problem.
+
+  <li> 1999-02-22 <b>Hole</b> remove legacy tagset <br>
+
+</ol>
+<a name="end">End of list.</a>
+<hr>
+<b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
+<b>done.html,v 1.8 1999/03/02 20:26:22 pgage Exp</b><br>
+<address><a href="http://rsv.ricoh.com/~steve/"
+         >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
+         >steve@rsv.ricoh.com</a>&gt;</address>
+</body></html>

@@ -1,0 +1,10 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>Agent Index</title>
+</head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
+<header>Agent Index</header>
+<sub-head page=agents />
+<p>
+<agent-index/>
+<footer cvsid="list-agents.xh,v 1.2 1999/03/02 20:24:30 pgage Exp">
+</body></html>

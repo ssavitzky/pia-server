@@ -1,0 +1,10 @@
+#!/bin/sh
+#	Display lines that indicate a "hole"
+#	hole-report,v 1.2 1997/09/19 23:20:04 steve Exp
+
+re="${1-[^=]===[^=]|unimplemented|eventually}"
+
+find . '(' -name '*.java' -o -name '*htm?' -o -name '*.if' -o -name '*.tex' \
+        -o -name '*.p[lm]' -o -name '*.inc' ')' -type f  \
+	\! -path '*JavaDoc*' \! -path '*/other/*' \
+    -exec egrep -i -n -s "$re" {} xxx \; 

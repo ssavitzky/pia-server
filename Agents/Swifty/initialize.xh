@@ -1,0 +1,21 @@
+<!doctype html public "-//IETF//DTD HTML//EN//3.2">
+<html><head>
+<title>Initialize the &agentName; agent</title>
+</head><body>
+<h1>Initialize the &agentName; agent</h1>
+
+<!-- =================================================================== -->
+<!-- This is the first file that is loaded by PIA for an agent.  Here,
+<!-- it is used to initialize the entity variables used by Swifty to
+<!-- reasonable initial values.
+<!-- =================================================================== -->
+<user-message>Initializing &agentName; from &filePath;</user-message>
+
+<set name="AGENT:fname">&piaUSER;</set>
+<set name="AGENT:links">No links selected yet</set>
+<set name="AGENT:ynews">No news initialized</set>
+
+<hr>
+<b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br>
+<b>initialize.xh,v 1.3 1999/03/02 20:24:37 pgage Exp</b><br>
+</body></html>
