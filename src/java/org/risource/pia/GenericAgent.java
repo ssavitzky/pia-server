@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.14 1999-04-13 00:56:18 steve Exp $
+// $Id: GenericAgent.java,v 1.15 1999-04-17 01:21:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -83,7 +83,8 @@ import org.w3c.www.http.HTTP;
  *
  *	@see org.risource.pia.Agent
  */
-public class GenericAgent implements Agent, Registered, Serializable {
+public class GenericAgent // extends org.risource.dps.tree.TreeGeneric
+  implements Agent, Registered, Serializable {
   
   /** Standard option (entity) names. */
 
@@ -129,7 +130,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
   /**
    * Attribute table for storing options
    */
-  protected Table attributes = new Table();
+  protected Table itemsByName = new Table();
 
   /**
    * Attribute index - name of this agent
@@ -281,16 +282,19 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
     String n = name();
     String t = type();
+    if (t != null && ! t.equals(name()) && ! t.startsWith("/")) {
+      t = "/" + t;
+      type(t);
+    }
     put("name", n);
     put("type", t);
     put("path", path());
     put("pathName", pathName());
 
-    String url = "/" + n + "/" + "initialize.xh";
-    if (! n.equals(t)) url = "/" + t + url;
-
     // Fake a request for the initialization file. 
-    //    We might not need it, in which case this is a waste.
+    //    We might not need it, in which case this is a waste, 
+    //	  but we need a processor in order to load tagsets.
+    String url = pathName() + "/" + "initialize.xh";
     Transaction req = makeRequest(machine(), "GET", url, (String)null, null);
 
     ActiveDoc   proc = null;
@@ -840,11 +844,11 @@ public class GenericAgent implements Agent, Registered, Serializable {
 
   /** Return the number of defined. */
   public synchronized int size() {
-    return attributes.size();
+    return itemsByName.size();
   }
 
-  /** Retrieve an attribute by name.  Returns null if no such
-   *	attribute exists. Accepts attributes in other agents. */
+  /** Retrieve an item by name.  Returns null if no such item
+   *	exists.  Accepts items in other agents (ugly). */
   public synchronized Object get(String name) {
     int i = name.indexOf(":");
     if (i > 0) {
@@ -857,16 +861,16 @@ public class GenericAgent implements Agent, Registered, Serializable {
     if (name.equals("criteria")) {
 	return (criteria() == null)? "" : criteria().toString();
     }
-    return attributes.get(name.toLowerCase());
+    return itemsByName.get(name.toLowerCase());
   }
 
   /** Returns an enumeration of the table keys */
-  public java.util.Enumeration keys() {
-    return attributes.keys();
+  public Enumeration keys() {
+    return itemsByName.keys();
   }
 
-  /** Set an attribute. 
-   *	Attributes that correspond to class member veriables require 
+  /** Set an item. 
+   *	Items that correspond to class member variables require 
    *	special handling.  This is ugly, but there seems to be no good way
    *	to do it in Java.  (A switch would be better than the chained if's.)
    */
@@ -874,21 +878,20 @@ public class GenericAgent implements Agent, Registered, Serializable {
     if (name == null) return;
     name = name.toLowerCase();
     if (value != null) 
-      attributes.put(name, value);
+      itemsByName.put(name, value);
     else
-      attributes.remove(name);
+      itemsByName.remove(name);
 
-    if (name.equals("act-on") || name.equals("_act_on")) {
+    if (name.equals("act-on")) {
       actOnHook = value;
       Pia.debug(this, "Setting ActOn hook", ":="+value);
-    } else if (name.equals("handle") || name.equals("_handle")) {
+    } else if (name.equals("handle")) {
       handleHook = value;
       Pia.debug(this, "Setting handle hook", ":="+value);
     } else if (name.equals("criteria")) {
-      if (value == null) criteria = null;
+      if (value == null || value.equals("")) criteria = null;
       else criteria = new Criteria(value.toString());
-    } else if (name.equals("authentication")
-	       || name.equals("_authentication")) {
+    } else if (name.equals("authentication")) {
       if (authPolicy != null || value == null) {
 	//should only allow more stringent authentication
 	Pia.debug(this, "attempt to change authPolicy ignored");
@@ -905,7 +908,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
    *	that most install forms use it in place of <code>name</code>.
    *	=== eventually need agent= path+name ===
    */
-  public void parseOptions(Table hash){
+  public void parseOptions(Tabular hash){
     if (hash == null) return;
     Enumeration e = hash.keys();
     while( e.hasMoreElements() ){
@@ -913,7 +916,7 @@ public class GenericAgent implements Agent, Registered, Serializable {
       String key = (String)keyObj;
       // Ignore "agent", which is replaced by "name".
       if (key.equalsIgnoreCase("agent")) continue;
-      String value = (String)hash.get( keyObj );
+      String value = hash.get( key ).toString();
       put(key, value);
     }
   }

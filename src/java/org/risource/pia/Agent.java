@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.6 1999-03-26 01:29:07 steve Exp $
+// $Id: Agent.java,v 1.7 1999-04-17 01:21:06 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,6 @@ import org.risource.pia.Resolver;
 import org.risource.pia.Content;
 
 
-import org.risource.ds.Table;
 import org.risource.ds.List;
 import org.risource.ds.Criteria;
 import org.risource.ds.Criterion;
@@ -178,7 +177,7 @@ public interface Agent extends Tabular {
    * Set options with a hash table
    *
    */
-  public void parseOptions(Table hash);
+  public void parseOptions(Tabular hash);
 
   /************************************************************
   ** Directories:
