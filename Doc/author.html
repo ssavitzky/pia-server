@@ -166,6 +166,7 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
     (also called ``suffixes'' or, in Windows, ``filetypes'').  This makes it
     possible to refer to a document without revealing to the user whether it
     is an ordinary HTML file or is created on-the-fly from an active document.
+    It also makes URL's shorter (and hence easier to remember). 
 </p>
 
 <p> Documents in an agent's home and user directories are looked up with
@@ -189,14 +190,14 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
   <tr><th> .xx </th> <td> xxml </td>
       <td> Extended XML </td>
   </tr>
-  <tr><th> .xml </th> <td> from DOCTYPE </td>
-      <td> Ordinary XML </td>
-  </tr>
   <tr><th> .html </th> <td> html </td>
       <td> Ordinary HTML </td>
   </tr>
   <tr><th> .htm </th> <td> html </td>
       <td> Ordinary HTML </td>
+  </tr>
+  <tr><th> .xml </th> <td> <em>none</em> </td>
+      <td> Ordinary XML </td>
   </tr>
 
   <tr><th colspan=2>&nbsp;</th><th>&nbsp;</th></tr>
@@ -210,6 +211,9 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
   </tr>
   <tr><th> .ts </th> <td> tagset </td>
       <td> tagset files </td>
+  </tr>
+  <tr><th> .xml </th> <td> depends on usage. </td>
+      <td> Ordinary XML </td>
   </tr>
 </table>
 
@@ -232,7 +236,7 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
   <tr><td> <code>./</code></td>
       <td> (or any relative path) the PIA agent directory</td>
   <tr><td> <code>../</code></td>
-      <td> the PIA home directory <code>PIA_DIR</code></td>
+      <td> the PIA's root directory <code>PIA_DIR</code></td>
   <tr><td> <code>/~/</code></td>
       <td> The PIA user directory <code>USR_DIR</code></td>
   <tr><td> <code>/</code></td>
@@ -251,8 +255,8 @@ match="&amp;AGENT:name;&gt;"&amp;AGENT:type;&lt;/test&gt;</code></blockquote>
     additional prefix of <code>pia:</code> is used to distinguish between
     normal file lookup, as above, and agent-based lookup, which is the
     default.  In agent-based lookup, extensions and paths are handled
-    according to the agents naming rules, above.  In other words, anything
-    that looks like the file part of a URL is treated as if it was.
+    according to the agent's naming rules, above.  In other words, anything
+    that looks like the file part of a URL is treated as if it was:
 </p>
 
 <table>
@@ -305,18 +309,23 @@ Those files, listed below, are "inherited" from the root directory
      agent.  The default page is customized by including the agent-specific
      file <code>help.inc</code>, if present. </li>
 
-<li><code>options.xh</code>
-<br>
-Lists the agent's options. This page seldom requires
-customization.</li>
+<li> <code>options.xh</code><br>
+     Lists the agent's options.  This page seldom, if ever, requires
+     customization.  The <code>options</code> page also displays the agent's
+     data in XML format, suitable for use in an <code>AGENT.xml</code> file.
+     </li>
 
-<li><code>initialize.xh</code>
-<br>
-This XHTML file is invoked automatically when the agent is
-installed. It defines default values for any options and sets the
-"match criteria" for transactions that the agent acts on. This file
-does <em>not</em> have a default, but can be omitted if not
-needed.</li>
+<li> <code>AGENT.xml</code><br>
+     This XML file is <em>loaded</em> (read by the PIA) to initialize and
+     install the agent.  It contains all the information necessary for
+     constructing the agent.  A version of it can be written into the agent's
+     user directory to preserve user customizations. </li>
+
+<li> <code>initialize.xh</code><br>
+     This XHTML file is invoked automatically when the agent is created. It
+     defines default values for any options and sets the "match criteria" for
+     transactions that the agent acts on. This file does <em>not</em> have a
+     default, but it can be omitted if it is not needed.</li>
 </ul>
 
 
@@ -327,19 +336,18 @@ contains its options (stored as entities in the <code>AGENT</code>
 namespace) and the criteria that match features of the transactions
 in which the agent has registered interest.</p>
 
-<p>This object is normally an instance of the class <code>
-GenericAgent</code>. If a subclass of this class is defined in the
-package <code>org.risource.pia.agent</code>, and its name matches the
-agent's type (with the first character capitalized, the rest in
-lowercase, and all period (<code>.</code>) and hyphen
-(<code>-</code>) characters converted to underscore
-(<code>_</code>) characters), it is loaded automatically when the
-agent is installed.</p>
+<p> This object is normally an instance of the class
+    <code>GenericAgent</code>.  If a subclass of this class is defined in the
+    package <code>org.risource.pia.agent</code>, and its name matches the
+    agent's type (with the first character capitalized, the rest in lowercase,
+    and all period (<code>.</code>) and hyphen (<code>-</code>) characters
+    converted to underscore (<code>_</code>) characters), it is loaded
+    automatically when the agent is installed.</p>
 
 <p>It is sometimes necessary to use a different programming language from Java
 for part of an agent. (For example, PERL is good for text manipulation).  The
 best technique is to put the external code into a CGI script (with a
-<code>.cgi</code> extension). PERL is a popular choice for a scripting
+<code>.cgi</code> extension).  PERL is a popular choice for a scripting
 language because it is nearly as ubiquitous as Java. Be warned, though, that
 not all of its libraries or extensions are available on all systems.</p>
 
@@ -372,28 +380,33 @@ includes the code which expands into a standardized heading.</p>
 </p>
 
 <ul>
-<li><code>heading.inc</code>
-<br>
- The standard header</li>
+  <li><code>about.inc</code> <br>
+       Information "about" an agent. This information is similar to what
+       you might see on the "about" menu item on a Windows or Macintosh
+       application. This is displayed by the default <code>home.xh</code>
+       file just underneath the quick reference generated by the
+       <code>&lt;subhead&gt;</code> element.</li>
 
-<li><code>about.inc</code>
-<br>
- Information "about" an agent. This information is similar to what
-you might see on the "about" menu item on a Windows or Macintosh
-application. This is displayed by the default <code>home.xh</code>
-file just underneath the quick reference generated by the
-<code>&lt;subhead&gt;</code> element.</li>
-
-<li><code>insert.inc</code>
-<br>
- An image or set of links "inserted" in the normally-empty space to
-the left of the quick reference. On an application, this is often a
-link to the agent that serves as a control panel.</li>
+  <li><code>insert.inc</code> <br>
+       An image or set of links "inserted" in the normally-empty space to
+       the left of the quick reference. On an application, this is often a
+       link to the agent that serves as a control panel.</li>
 </ul>
 
-<p>You can also copy and extend the default <code>home.xh</code>
-file to get a slight extension or modification of one of the
-standard quick references.</p>
+<p> The other files that are frequently modified are: </p>
+
+<ul>
+  <li> <code>home.xh</code><br>
+       Almost every agent will benefit from a customized home page.
+       Agent-specific information is often put into the home page's 
+       <code>&lt;subhead&gt;</code> element, for example. 
+
+  <li> <code><em>Agent</em>-xhtml.ts</code><br>
+       An agent-specific tagset file.  This allows modified versions of tags
+       such as <code>&lt;header&gt;</code> and <code>&lt;subhead&gt;</code> to
+       be defined (redefining <code>&lt;subhead&gt;</code> is not uncommon),
+       as well as tags that are unique to the agent. </li> 
+</ul>
 
 <h3>Quick Reference Up Front</h3>
 
@@ -405,11 +418,13 @@ page as possible.</p>
 
 <p>There are two common formats for this. The first uses a single
 column of links near the right-hand side of the screen. The column
-just to the left contains a small number of labels.</p>
+just to the left contains a small number of labels.  This format is
+automatically generated by the  <code>&lt;subhead&gt;</code> tag; its contents
+can contain additional two-column table rows. </p>
 
-<p>The second format is used on the home pages of applications,
+<p>The second format is sometimes used on the home pages of applications,
 which typically have many functions. It consists of <em>three</em>
-columns of icons or of mixed icons and text.</p>
+columns of icons, or of mixed icons and text.</p>
 
 <h3>No Nasty Surprises</h3>
 
@@ -418,13 +433,13 @@ so have an ordinary-looking link or icon that is equivalent to
 submitting a form. In a PIA this can have drastic effects -- some of our
 prototype appliances included a form for shutting down the system!</p>
 
-<p>Many users experiment, clicking links at random. You may want to
-use a robot to build an index of your PIA, or to identify broken
-links. It's a good idea to make any irreversible actions the result
-of submitting a form, rather than just following a link. This also
-gives you a chance to ask the user for confirmation.</p>
+<p>Many users experiment, clicking links at random. You may also want to use a
+robot to build an index of your PIA, or to identify broken links.  It's a good
+idea to make any irreversible actions the result of submitting a form, rather
+than just following a link.  This also gives you a chance to ask the user for
+confirmation.</p>
 
-<blockquote>Eventually it is possible to use standard HTTP
+<blockquote>Eventually it will be possible to use standard HTTP
 authentication to keep unauthorized users away from agents or forms
 you do not want them to use.</blockquote>
 
@@ -451,7 +466,7 @@ installation form, especially if an agent has many options.</p>
 user's view--should be easily read, understood, and used. But so
 should the input--the author's view.</p>
 
-<p>Appropriate indentation makes for easier to read code. Indent
+<p>Appropriate indentation makes for easier-to-read code. Indent
 the content of elements such as lists and control structures.
 Comment the file as appropriate.</p>
 
@@ -464,19 +479,33 @@ developers).</p>
 
 <p>Remember, an agent's XHTML files are read not only by their
 author, but by any users who want to customize or extend them. If
-the agent is complicated, consider writing an "implementation
-details" document.</p>
+the agent is complicated, consider writing an ``implementation
+details'' document.</p>
+
+<p> The conventional names for documentation files in the PIA are: </p>
+
+<ul>
+  <li> <code>to-do.html</code><br>
+       ``to-do'' list, usually with the most recent entries at the top.
+
+  <li> <code>done.html</code><br>
+       completed items moved from the ``to-do'' list.
+
+  <li> <code>about.html</code><br>
+       an ``implementation details'' document, often including design
+       decisions and their motivations.
+</ul>
 
 <h4><a name="Directory">Directory Structure</a></h4>
 
 <p>Your Information Agency makes use of two directories:</p>
 
 <ul>
-<li><var>PIA_DIR</var> contains the code, documentation, agents and
-other files released by the PIA group.</li>
+  <li> <var>PIA_DIR</var> contains the code, documentation, agents and
+       other files released by the PIA group.</li>
 
-<li><var>USR_DIR</var> (typically <tt>~/.pia</tt> stores agent
-data and customized active documents.</li>
+  <li> <var>USR_DIR</var> (typically <tt>~/.pia</tt> on Unix) stores agent
+       data and customized active documents.</li>
 </ul>
 
 <p>By default, agents read and write their data files into <var>
@@ -630,8 +659,8 @@ name="data"&gt;  &lt;p&gt; &lt;/form&gt;
 agent and click on the ``<strong>Create</strong>'' button.</li>
 </ol>
 
-<p>You should now the able to see and interact with your <var>
-HelloWorld</var> agent.</p>
+<p>You should now the able to see and interact with your <var>HelloWorld</var>
+agent.</p> 
 
 <h5>What's Going On?</h5>
 
@@ -726,21 +755,29 @@ the interforms of agents that ship with the PIA.</p>
 
 <p>In order for the PIA Agency to know about a particular agent and
 direct requests to that agent appropriately, that agent must be
-installed. As agents are represented by persistent software
+installed.  As agents are represented by persistent software
 objects, agent installation creates the object that corresponds to
 the agent in question.</p>
 
-<p>On start-up, the Information Agency looks in the directory <var>
-USR_DIR</var> and then <var>PIA_DIR</var> for the subdirectory
-<code>/Admin/Agency/START-UP.html.</code> This file specifies those
-agents that should be installed. You should copy and modify this
-file to start your own agents.</p>
+<p>There are actually two ways to install an agent:  ``<em>loading</em>'' an
+XML definition file, and ``<em>creating</em>'' the agent by submitting an HTML
+form that specifies its attributes.  Loading is faster, but creating an agent
+is an easy way to install a <em>new</em> agent to experiment with or to
+extend. </p>
 
-<p>Each time an agent is started, the PIA loads its <tt>
-initialize.xh</tt> interform, if one exists. Consider creating such
-a file for your agent in <code>initialize.xh</code>. This file
-typically contains default values for variables are used by your
-agent.</p>
+<p>On start-up, the Information Agency looks in the directory
+<var>USR_DIR</var> and then <var>PIA_DIR</var> for the
+<code>/Admin/agent-files.xml</code>, which specifies the XML files that need
+to be loaded.  It also looks in <var>USR_DIR</var> for
+<code>/Admin/START-UP.html</code>, which contains HTML forms to submit in
+order to <em>create</em> agents.</p>
+
+<p>When an agent is created, the PIA loads its <tt>initialize.xh</tt>
+file, if one exists.  Consider creating such a file for your agent in
+<code>initialize.xh</code>. This file typically contains default values for
+variables are used by your agent, and may perform additional actions as well.
+When an agent is <em>loaded</em>, the PIA runs the ``hook'' contained in its
+<code>&amp;initialize;</code> attribute. </p>
 
 <h4>Entities</h4>
 
