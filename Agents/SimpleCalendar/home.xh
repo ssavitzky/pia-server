@@ -260,7 +260,7 @@
                        </repeat>
 		   </extract>
 
-                   <if><get name="intervalEntity">
+                   <if><get name="intervalEntity" />
                       <then>
                          <interval-evt-to-delete>&oldIntervalEvent;
                          </interval-evt-to-delete>
