@@ -1,5 +1,5 @@
 // T_dofs.java
-// $Id: T_dofs.java,v 1.4 1999-03-12 19:30:40 steve Exp $
+// $Id: T_dofs.java,v 1.5 1999-03-12 19:50:03 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -61,7 +61,7 @@ import JP.ac.osaka_u.ender.util.regex.RegExp;
 import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 import org.risource.util.Utilities;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 import org.risource.pia.agent.Dofs;
 import org.risource.pia.agent.Agency;
 import org.risource.pia.ThreadPool;

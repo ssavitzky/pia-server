@@ -1,5 +1,5 @@
 // Cache.java
-// $Id: Cache.java,v 1.3 1999-03-12 19:29:49 steve Exp $
+// $Id: Cache.java,v 1.4 1999-03-12 19:50:01 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -74,7 +74,7 @@ import org.risource.util.CacheTable;
 
 import org.risource.ds.Criterion;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 /** Caches each document fetched from outside the Agency.
   * Subsequent requests for the same document will be

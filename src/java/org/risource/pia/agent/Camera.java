@@ -1,5 +1,5 @@
 // Camera.java
-// $Id: Camera.java,v 1.3 1999-03-12 19:29:50 steve Exp $
+// $Id: Camera.java,v 1.4 1999-03-12 19:50:01 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import org.risource.pia.*;
 
 import org.risource.util.Utilities;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 public class Camera extends GenericAgent {
   /**

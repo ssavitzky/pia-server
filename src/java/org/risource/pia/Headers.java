@@ -1,5 +1,5 @@
 // Header.java
-// $Id: Headers.java,v 1.3 1999-03-12 19:29:22 steve Exp $
+// $Id: Headers.java,v 1.4 1999-03-12 19:49:57 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -28,11 +28,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import org.risource.ds.Table;
-import w3c.www.http.HttpEntityMessage;
-import w3c.www.http.HttpMessage;
-import w3c.www.mime.MimeType;
+import org.w3c.www.http.HttpEntityMessage;
+import org.w3c.www.http.HttpMessage;
+import org.w3c.www.mime.MimeType;
 
-import w3c.www.mime.MimeTypeFormatException;
+import org.w3c.www.mime.MimeTypeFormatException;
 
 import org.risource.pia.BadMimeTypeException;
 

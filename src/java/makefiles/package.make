@@ -1,5 +1,5 @@
 ### package.make
-# 	$Id: package.make,v 1.2 1999-03-12 19:24:00 steve Exp $
+# 	$Id: package.make,v 1.3 1999-03-12 19:49:52 pgage Exp $
 # 	COPYRIGHT 1997, Ricoh California Research Center
 # 	Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -58,7 +58,7 @@ jdoc::
 	done
 
 clean::
-	@@for p in `ls -d $(PACKAGES)`; do \
+	@@for p in `$(PACKAGES)`; do \
 		echo 'cleaning ' $(PACKAGE).$$p; \
 		(cd $$p ; $(MAKE) TOPDIR=../$(TOPDIR) PIADIR=../$(PIADIR) \
 		  clean) ; \

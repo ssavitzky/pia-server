@@ -1,5 +1,5 @@
 // Timer.java
-// $Id: Timer.java,v 1.3 1999-03-12 19:31:08 steve Exp $
+// $Id: Timer.java,v 1.4 1999-03-12 19:50:03 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -24,8 +24,8 @@
 
 package org.risource.util;
 import java.io.*;
-import w3c.tools.timers.EventManager;
-import w3c.tools.timers.EventHandler;
+import org.w3c.tools.timers.EventManager;
+import org.w3c.tools.timers.EventHandler;
 import org.risource.ds.UnaryFunctor;
 
 

@@ -1,5 +1,5 @@
 // Machine.java
-// $Id: Machine.java,v 1.3 1999-03-12 19:29:25 steve Exp $
+// $Id: Machine.java,v 1.4 1999-03-12 19:49:58 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import org.risource.util.Timer;
 import org.risource.ds.Table;
 import org.risource.ds.List;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 import org.risource.ds.UnaryFunctor;
 

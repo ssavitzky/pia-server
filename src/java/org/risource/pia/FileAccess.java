@@ -1,5 +1,5 @@
 // FileAccess.java
-// $Id: FileAccess.java,v 1.4 1999-03-12 19:29:06 steve Exp $
+// $Id: FileAccess.java,v 1.5 1999-03-12 19:49:53 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -63,7 +63,7 @@ import JP.ac.osaka_u.ender.util.regex.MatchInfo;
 import org.risource.util.Utilities;
 
 import java.util.Properties;
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 /** File-handling utilities.  
  *	All methods in this class are static. 

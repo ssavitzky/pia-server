@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.3 1999-03-12 19:29:10 steve Exp $
+// $Id: GenericAgent.java,v 1.4 1999-03-12 19:49:54 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -75,7 +75,7 @@ import java.util.Properties;
 import java.io.Serializable;
 
 // import org.risource.interform.Run;
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 /** The minimum concrete implementation of the Agent interface.  A
  *	GenericAgent is used if no specialized class can be loaded for
@@ -1015,7 +1015,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
     Transaction response = new HTTPResponse( Pia.instance().thisMachine,
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
-    response.setStatus(HTTP.MOVED_TEMPORARILY);
+    // Got a redirect message for all agency agents
+    // response.setStatus(HTTP.TEMPORARY_REDIRECT);
+    response.setStatus(HTTP.MOVED_PERMANENTLY);
     response.setContentLength( msg.length() );
     response.startThread();
     return true;

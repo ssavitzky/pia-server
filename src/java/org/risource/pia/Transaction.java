@@ -1,5 +1,5 @@
 // Transaction.java
-// $Id: Transaction.java,v 1.3 1999-03-12 19:29:39 steve Exp $
+// $Id: Transaction.java,v 1.4 1999-03-12 19:49:59 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -50,7 +50,7 @@ import org.risource.util.Utilities;
 import org.risource.tf.Registry;
 import org.risource.tf.TFComputer;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 /**
  * Transactions generalize the HTTP classes Request and Response.

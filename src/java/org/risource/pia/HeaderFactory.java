@@ -1,5 +1,5 @@
 // HeaderFactory.java
-// $Id: HeaderFactory.java,v 1.3 1999-03-12 19:29:21 steve Exp $
+// $Id: HeaderFactory.java,v 1.4 1999-03-12 19:49:57 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,10 +30,10 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import org.risource.pia.Headers;
 import org.risource.pia.Pia;
-import w3c.www.mime.MimeParserFactory;
-import w3c.www.mime.MimeParser;
-import w3c.www.http.HttpEntityMessage;
-import w3c.www.http.MimeParserMessageFactory; 
+import org.w3c.www.mime.MimeParserFactory;
+import org.w3c.www.mime.MimeParser;
+import org.w3c.www.http.HttpEntityMessage;
+import org.w3c.www.http.MimeParserMessageFactory; 
 
 /**  HeaderFactory
  * creates an appropriate header object from a HTTP stream

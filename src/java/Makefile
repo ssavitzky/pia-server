@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.5 1999-03-12 19:23:58 steve Exp $
+#	$Id: Makefile,v 1.6 1999-03-12 19:49:51 pgage Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,12 @@ PACKAGES= \
 REGEXPACKAGE= \
 	JP
 
+JIGSAWPACKAGE= \
+	org/w3c/tools \
+	org/w3c/util \
+	org/w3c/www \
+	org/w3c/dom
+
 ### These are the names of all the packages in the PIA.
 ###	We need these because javadoc does _not_ operate recursively.
 
@@ -59,8 +65,10 @@ SUNPACKAGENAMES= \
 	java.util
 
 MISCPACKAGENAMES= \
-	w3c.www.http \
-	w3c.www.mime \
+	org.w3c.tools.timers \
+	org.w3c.util \
+	org.w3c.www.http \
+	org.w3c.www.mime \
 	org.w3c.dom \
 	org.w3c.dom.html
 
@@ -83,11 +91,18 @@ pia_class.toc::
 		find `echo $$p` -name "*.class" -print >> pia_class.toc; \
 	done
 
-# make a separate jar file for regex package
+# make a toc file for the regex package
 regex_class.toc::
 	rm -f regex_class.toc
 	for p in $(REGEXPACKAGE); do \
 		find `echo $$p` -name "*.class" -print >> regex_class.toc; \
+	done
+
+# make a toc file for the jigsaw package
+jigsaw_class.toc::
+	rm -f jigsaw_class.toc
+	for p in $(JIGSAWPACKAGE); do \
+		find `echo $$p` -name "*.class" -print >> jigsaw_class.toc; \
 	done
 
 pia.zip: pia_class.toc
@@ -97,8 +112,14 @@ pia.zip: pia_class.toc
 	done
 	mv $@ $(LIBDIR)
 
+# make a separate jar file for regex package
 regexp.jar: regex_class.toc
 	jar cv0f regexp.jar `cat regex_class.toc`
+	mv $@ $(LIBDIR)
+
+# make a separate jar file for jigsaw subset package
+jigsaw_subset.jar: jigsaw_class.toc
+	jar cv0f jigsaw_subset.jar `cat jigsaw_class.toc`
 	mv $@ $(LIBDIR)
 
 ### Recursive documentation:

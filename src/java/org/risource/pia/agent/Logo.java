@@ -1,5 +1,5 @@
 // Logo.java
-// $Id: Logo.java,v 1.3 1999-03-12 19:29:55 steve Exp $
+// $Id: Logo.java,v 1.4 1999-03-12 19:50:02 pgage Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -57,7 +57,7 @@ import org.risource.pia.FileAccess;
 
 import org.risource.util.Utilities;
 
-import w3c.www.http.HTTP;
+import org.w3c.www.http.HTTP;
 
 public class Logo extends GenericAgent {
   /**
