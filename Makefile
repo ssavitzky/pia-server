@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.39 2000-04-21 21:28:36 steve Exp $
+#	$Id: Makefile,v 1.40 2000-04-25 23:43:25 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -196,6 +196,25 @@ upload::
 	ssh $(RMT_HOST) cd $(WEB_RMT) \; tar xzf $(FTP_RMT)/pia_src.tgz PIA/Doc
 	@echo 'Now fix RiSource.org/PIA/{latest.html, downloading.html}'
 	@echo 'They then need to be uploaded to $(WEB_RMT)/PIA'
+
+###
+### Directory index
+###
+###	First, make a list of all the directories, in all-dirs.log
+###	Then, make it into an HTML file that we can use as an index. 
+
+doc:: all-dirs.html sidebar.html
+
+index::  all-dirs.html sidebar.html
+
+all-dirs.html: all-dirs.log
+	perl src/app/tools/index-dirs.pl < all-dirs.log > all-dirs.html
+
+sidebar.html: all-dirs.log
+	COMPACT=1 perl src/app/tools/index-dirs.pl < all-dirs.log > sidebar.html
+
+all-dirs.log::
+	find . -type d \! -name CVS -print  | sort > all-dirs.log
 
 ###
 ### Old stuff.

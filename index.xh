@@ -11,7 +11,7 @@
 			    <then>An Information Appliance</then>
 	    		    <else>Personal Information Agency</else>
 			</if><br />
-	 &lt;<a href="&PIA:url;">&PIA:url;</a>&gt;</header>
+	 <a href="&PIA:url;">&lt;&PIA:url;&gt;</a></header>
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
@@ -23,14 +23,12 @@
         <td valign="top"></td></tr>
    <if><agent-running name="Admin"/><then>
     <tr><th valign="top" align="right" width="170">
-	    <a href="/~Admin"><b>Admin:</b></a>&nbsp;
+	    <a href="~Admin"><b>Admin:</b></a>&nbsp;
 	</th><td valign="top">
-	    <a href="/~Admin/list-agents">list</a> <if> <then>/
-	    <a href="/~Admin/installers">install</a> / 
-	    <a href="/~Admin/remove-agent">remove</a> </then></if>
-	    applications.<br />
+	    <a href="~Admin/list-agents">List apps</a> 
+	    <a href="frames">Browse tree</a><br />
 	    <if><test exact="exact" case="insens" match="pia">&user.name;</test>
-	      <then><a href="/~Admin/shutdown">shut down</a> appliance<br />
+	      <then><a href="~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
     </td></tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
@@ -90,5 +88,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.17 2000-04-19 23:52:16 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.18 2000-04-25 23:43:25 steve Exp $" />
 </p></body></html>
