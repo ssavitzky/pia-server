@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<hide>
+  <doc> Start by figuring out what word is being asked for:
+  </doc>
+
+  <set name="wpath">&LOC:path;</set>
+
+  <set name="tail"><if> <logical op="and">
+			  <get name="PATH_INFO"/>
+			  <test not="not" exact="yes" match="\/">&wpath;</test>
+			</logical>
+		        <then>/<get name="PATH_INFO"/></then>
+		        <else><get name="PATH_INFO"/></else>
+  </if></set>
+  <if> <logical op="and">
+	 <get name="tail" />
+	 <test not="not" match="^\/"><get name="tail"/></test>
+       </logical>
+       <then><set name="tail">/<get name="tail"/></set></then>
+  </if>
+
+  <set name="wroot">
+    <if>&SITE:wordPrefix;
+	<then>&SITE:wordPrefix;</then>
+	<else>/.words</else>
+    </if></set>
+
+  <if>  <get name="FORM:word" />
+	<then><set name="word"><get name="FORM:word" /></set></then>
+    <else-if> <get name="tail" />
+	<then><set name="word">
+		<subst result="" match="^\/">&tail;</subst></set>
+	</then>
+    </else-if>
+    <else-if> <test exact="yes" match="&wroot;">&wpath;</test>
+	<then><set name="word"> </set>
+	      <set name="atRoot">yes</set>
+	</then>
+    </else-if>
+    	<else><set name="word">
+		<subst result="" match="^&wroot;/">&wpath;</subst></set>
+	</else>
+  </if>
+
+  <doc> <code>xloc</code> is the directory where our annotations reside.
+	<code>xtail</code> is the directory suffix.
+  </doc>
+
+  <set name="xtail">
+    <if> <get name="word" />
+	 <then>/<get name="word" /></then>
+    </if>
+  </set>
+  <set name="xloc">&wroot;&xtail;</set>
+
+  <set name="wordFound">
+    <if> &atRoot;
+	 <else><status item="exists" src="&xloc;"/></else>
+    </if>
+  </set>
+
+  <doc> <code>etail</code> is the ``extended tail'' -- the word or phrase that
+	should appear in the heading.  If mapping has been done, etail will be
+	derived from an index file in the directory.  <code>eword</code> is
+	the corresponding ``extended word''.
+  </doc>
+
+  <set name="eword"><get name="word"/></set>
+  <set name="etail">
+    <if> <get name="eword" />
+	 <then>/<get name="eword" /></then>
+    </if>
+  </set>
+
+  <doc> === The above will have to change once we allow phrases and mapping.
+	In particular, we will need to distinguish directories that correspond
+	to <em>actual</em> words from directories that correspond to phrases
+	or that aggregate words.
+  </doc>
+
+</hide>
+<title>Woad keyword info <if>&eword; <then>for `&eword;'</then></if></title>
+</head><body bgcolor="#99ccff">
+<hide>
+  <doc> Compute &amp;decoratedPath;, the path of the current directory
+	``decorated'' with ".." links to the directories above "."
+  </doc>
+  <set name="decoratedPath">
+	<decoratePath base="&wroot;">[WORDS]&etail;</decoratePath></set>
+</hide>
+<!-- &urlPath; dir?<test not="not" match="\.[a-zA-Z0-9]+$">&npath;&tail;</test>
+    xloc=&xloc; npath="&npath;" tail="&tail;" npath;tail="&npath;&tail;"
+    tpath="&tpath;" LOC:path;tail="&LOC:path;&tail;<br />
+    title="&pageTitle;"<br />
+-->
+<table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
+  <tr> <td>
+	     <table><!-- the nested table shrink-wraps its contents     -->
+	            <!-- so it doesn't get spread out by the width=100% -->
+	       <tr><th align="left">
+		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
+		   </th>
+		   <th align=left>
+		      <big> <i>Keyword annotations:</i>
+			    &decoratedPath;
+		      </big>
+		   </th>
+	       </tr>
+	       <tr>
+		 <td align="right">-&gt;&nbsp;</td>
+		 <td> <a href="/.Woad/help.xh#words">[help]</a>
+		 </td>
+		</tr>
+	     </table>
+	</td>
+    </tr>
+</table>
+
+<!-- === at this point, include content of a HEADER.ww if there is one. -->
+
+<index-bar name="Notes">Notes Links Lookup</index-bar>
+
+<hide>
+    <!-- Create a new note:  have to do this before listing the directory -->
+
+    <if> <get name="FORM:create" />
+	 <then><!-- create new note -->
+	    <output dst="&xloc;/&FORM:label;.ww"><make name="note">
+		<make name="title"><get name="FORM:title" /></make>
+		<make name="created">&dateString;</make>
+		<make name="summary">
+		    <parse><get name="FORM:summary" /></parse>
+		</make>
+		<make name="content">
+		    <parse><get name="FORM:content" /></parse>
+		</make>
+</make><!-- note created using quick form -->
+</output>
+	 </then>
+    </if>
+
+    <doc> Now set the files, noteFiles, and indexFiles variables </doc>
+    <listNoteFiles>&LOC:path;&tail;</listNoteFiles>
+</hide>
+
+<form action="&xloc;/" method="GET"><!-- === PIA isn't passing POST === -->
+  <input type="hidden" name="path" value="&LOC:path;/&tail;" />
+<table bgcolor="white">
+  <!-- First list the indices -->
+  <tr> <th bgcolor="#cccccc" width="150"> indices </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> description / link to
+       help </th> 
+  </tr>
+<repeat>
+  <foreach entity="f">&indexFiles;</foreach>
+  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+  <tr> <td align="left" valign="top">
+		<a href="&f;"><code>&label;</code></a>
+       </td>
+       <td colspan="2" valign="top">
+		 <describeIndex>&f;</describeIndex>
+       </td>
+  </tr>
+</repeat>
+
+  <!-- Next, list the notes -->
+  <tr> <th bgcolor="#cccccc" width="150"> Notes </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> title / summary </th>
+  </tr>
+<repeat>
+  <foreach entity="f">&noteFiles;</foreach>
+  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
+  <tr> <td align="left" valign="top">
+		<a href="&f;"><code>&label;</code></a>
+       </td>
+       <td colspan="2" valign="top">
+		 <describeNote>&LOC:path;&tail;/&f;</describeNote>
+       </td>
+  </tr>
+</repeat>
+	
+  <!-- Finally, the form for creating a new note (the easy way) -->
+  <tr> <th bgcolor="#cccccc" width="150"> new note </th>
+       <th bgcolor="#cccccc" colspan="2" align="left">
+    	    Enter note text or use &nbsp;&nbsp;&nbsp;
+    	    <a href="/.Woad/Tools/new-note?path=&xloc;">[advanced form]</a> 
+       </th>
+  </tr>
+  <tr> <td valign="top">
+    	  <select name="label"> 
+	       	   <option selected="selected"><uniquify>note</uniquify></option>
+	       	   <option><uniquify>definition</uniquify></option>
+	       	   <option><uniquify>see-also</uniquify></option>
+	       	   <option>&date;-&hour;&minute;</option>
+	  </select><br />
+ 	  <input name="create" value="Create Note" type="submit" />
+       </td>
+       <td valign="top" colspan="2">
+	  <textarea name="summary" cols="60" rows="4"> </textarea>
+       </td>
+  </tr>
+</table>
+</form>
+
+<!-- ==================================================================== -->
+
+<index-bar name="Links">Notes Links Lookup</index-bar>
+
+<!-- === In the top level, replace this with Words, the word index. === -->
+
+<index-bar name="Lookup">Notes Links Lookup</index-bar>
+<p>
+<form  action="/.words/">
+<table cellpadding="5" cellspacing="0" >
+  <tr>
+    <th> Look up word:
+    </th>
+    <td>  <input name="word" />
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#99ccff">
+    </td>
+    <td> Use this form to look up a word or phrase.
+    </td>
+  </tr>
+</table>	  
+</p>
+
+<hr />
+<p> Debugging info: 
+</p>
+<table bgcolor="#ffffff">
+  <tr>
+    <th bgcolor="#cccccc"> variable </th>
+    <th bgcolor="#cccccc">value</th>
+    <th bgcolor="#cccccc">meaning</th>
+  </tr>
+  <tr>
+    <td> <code>LOC:path</code>
+    </td>
+    <td> <code>&LOC:path;</code>
+    </td>
+    <td> The path to the nearest directory that actually exists.
+    </td>
+  </tr>
+  <tr>
+    <td> <code>xloc</code>
+    </td>
+    <td> <code>&xloc;</code>
+    </td>
+    <td> The directory that represents this word; i.e. where notes go.
+    </td>
+  </tr>
+  <tr>
+    <td> <code>word</code>
+    </td>
+    <td> <code>&word;</code>&nbsp;
+    </td>
+    <td> The word or phrase that was actually looked up, before mapping.
+    </td>
+  </tr>
+  <tr>
+    <td> <code>eword</code>
+    </td>
+    <td> <code>&eword;</code>&nbsp;
+    </td>
+    <td> The word or phrase that should appear in headings, after mapping.
+    </td>
+  </tr>
+  <tr>
+    <td> <code>atRoot</code>
+    </td>
+    <td> <code><get name="atRoot">&nbsp;</get></code>&nbsp;
+    </td>
+    <td> non-null if we are at the word index rather than a word.
+    </td>
+  </tr>
+  <tr>
+    <td> <code>wordFound</code>
+    </td>
+    <td> <code><get name="wordFound">&nbsp;</get></code>&nbsp;
+    </td>
+    <td> non-null if a directory corresponds to this word
+    </td>
+  </tr>
+
+</table>
+
+
+<short-footer cvs-id="$Id: word-listing.xh,v 1.1 2000-06-29 01:56:46 steve Exp $" />
+</body></html>
