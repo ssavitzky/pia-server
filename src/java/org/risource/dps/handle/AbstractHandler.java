@@ -1,5 +1,5 @@
 ////// AbstractHandler.java: Node Handler abstract base class
-//	$Id: AbstractHandler.java,v 1.10 1999-08-31 21:30:29 steve Exp $
+//	$Id: AbstractHandler.java,v 1.11 2000-02-25 22:30:32 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *	BasicTagset is also an Element.
  *	<p>
  *
- * @version $Id: AbstractHandler.java,v 1.10 1999-08-31 21:30:29 steve Exp $
+ * @version $Id: AbstractHandler.java,v 1.11 2000-02-25 22:30:32 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -194,27 +194,52 @@ public abstract class AbstractHandler extends TreeGeneric implements Handler {
 
   /** Called from <code>getActionForNode</code> to determine whether
    *	dispatching should be done.  It returns true if the given Element
-   *	has the given <code>name</code> as either an attribute name or
-   *	a period-separated suffix of its tagname.
+   *	has an attribute with the given <code>name</code>.
    */
   public boolean dispatch(ActiveElement e, String name) {
-    return (e.getAttribute(name) != null)
-      || e.getTagName().endsWith("."+name);
+    return (e.getAttribute(name) != null);
   }
 
   /** Called from <code>getActionForNode</code> to determine whether
    *	dispatching should be done.  It returns true if the given Element
-   *	has the given <code>name</code> as either an attribute name,
-   *	the value of the attribute "attr", or a period-separated suffix 
-   *	of its tagname. 
+   *	has the given <code>name</code> either <em>as</em> an attribute
+   *	or as the value of the attribute <code>attr</code>.
    */
   public boolean dispatch(ActiveElement e, String name, String attr) {
     String v = e.getAttribute(attr);
     if (v != null) v = v.trim();
     // not clear whether to ignore case.  XML doesn't, so let's not.
     return (v != null && name.equals(v))
-      || (e.getAttribute(name) != null)
-      || e.getTagName().endsWith("."+name);
+      || (e.getAttribute(name) != null);
+  }
+
+  /** Called from various <code>action</code> routines to determine whether
+   *	dispatching should be done.  It returns true if the given AttrList
+   *	has the given <code>name</code> either <em>as</em> an attribute
+   *	or as the value of the attribute <code>attr</code>.
+   */
+  public boolean dispatch(ActiveAttrList atts, String name, String attr) {
+    String v = atts.getAttribute(attr);
+    if (v != null) v = v.trim();
+    // not clear whether to ignore case.  XML doesn't, so let's not.
+    return (v != null && name.equals(v))
+      || (atts.getAttribute(name) != null);
+  }
+
+  /** Check the value of a <code>case</code> attribute.
+   * 
+   * @return <code>true</code> if the operation is supposed to be 
+   *	case-sensitive. 
+   */
+  public boolean caseSensitive(ActiveAttrList atts) {
+    ActiveNode n = atts.getActiveAttr("case");
+    if (n == null) return true;
+    String v = n.getNodeValue();
+    if (v.startsWith("i") || v.startsWith("I")) return false;
+    if (v.equals("0")
+	|| v.equalsIgnoreCase("no")
+	|| v.equalsIgnoreCase("false")) return false;
+    return Test.trueValue(n);
   }
 
   /** If <code>true</code>, the content is expanded.

@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name="Admin-xhtml" parent="/Tagsets/pia-xhtml" recursive="yes">
-<cvs-id>$Id: Admin-xhtml.ts,v 1.21 1999-12-14 18:52:39 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.22 2000-02-25 22:29:40 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -63,7 +63,8 @@
     <doc> The agent's <code>pathName</code> </doc>
   </define>
   <define attribute="on-start" optional>
-    <doc> If set, load the agent automatically on startup.  </doc>
+    <doc> If set, load the agent automatically on startup. === obsolete ===
+    </doc>
   </define>
   <action>
     <set name="new"><do name="agent-file">
@@ -96,7 +97,7 @@
 	Admin-agent tagset.  Return the pathName of each agent loaded.
   </doc>
    <define attribute="register" optional>
-      <doc> If present, register the agent.
+      <doc> If present, register the agent. === obsolete ===
       </doc>
    </define>
   <action><text trim>
@@ -127,7 +128,7 @@
     <extract sep=' '>
 	<from><get name="loaded"/></from>
 	<name recursive>AGENT</name>
-	<attr>pathName</attr>
+	<attr case="insens">pathName</attr>
 	<eval />
     </extract>
   </text></action>
@@ -343,10 +344,10 @@
 <nav-bar/>
 <hr/>
 <a href="/&AGENT:name;"><get name="AGENT:name"/></a> agent on
-<if><test exact  match='pia'><get name="user.name"/></test>
+<if><test exact case="insens" match='pia'><get name="user.name"/></test>
     <then> the </then>
     <else> <get name="user.name"/>'s</else></if>
-<if><test exact match='pia'><get name="user.name"/></test>
+<if><test exact case="insens" match='pia'><get name="user.name"/></test>
     <then> information appliance </then>
     <else>Personal Information Agency</else></if><br>
 <b>URL:</b> &lt;<xlink>&url;</xlink>&gt;
@@ -363,6 +364,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.21 1999-12-14 18:52:39 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.22 2000-02-25 22:29:40 steve Exp $</b><br />
 </tagset>
 

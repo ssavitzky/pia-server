@@ -1,2 +1,2 @@
 <edit demo-name="aboutYouTry.xh"><extract><from><include src="youTry.xh" quoted="yes"/></from>
-<name all="all">body</name><content/></extract> </edit>
+<name all="all" case="insens">body</name><content/></extract> </edit>

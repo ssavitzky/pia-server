@@ -1,5 +1,5 @@
 ////// BasicNamespace.java: Node Lookup Table
-//	$Id: BasicNamespace.java,v 1.5 1999-11-09 01:18:50 steve Exp $
+//	$Id: BasicNamespace.java,v 1.6 2000-02-25 22:30:38 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import org.risource.ds.Table;
  *	restored as an XML data stream.
  *
  *
- * @version $Id: BasicNamespace.java,v 1.5 1999-11-09 01:18:50 steve Exp $
+ * @version $Id: BasicNamespace.java,v 1.6 2000-02-25 22:30:38 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -123,7 +123,7 @@ public class BasicNamespace extends AbstractNamespace {
   /** Returns an Enumeration of the entity names defined in this table. 
    */
   public Enumeration getNames() { 
-    return itemNames.elements();
+    return (itemNames == null)? null : itemNames.elements();
   }
 
   /************************************************************************

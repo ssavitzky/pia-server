@@ -8,7 +8,7 @@
     <from>
         <include src="http://www.yahoo.com/" />
     </from>
-    <name all="all">img</name>
+    <name all="all" case="insens">img</name>
 </extract>
 
 <hr/><font color="crimson">(the "errors" below result from Yahoo's HTML not

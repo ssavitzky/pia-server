@@ -18,13 +18,18 @@
 </p><h3>Useful Forms and Documents:</h3>
 <ul>
   <li> <a href='agents'>list running agents</a>
-  </li><li> <a href='installers'>install new agents</a>
-  </li><li> <a href='options'>view/change options</a>
-  </li><li> <a href='debug'>toggle debugging</a> (currently
+  </li>
+  <li> <a href='installers'>install new agents</a>
+  </li>
+  <li> <a href='options'>view/change options</a>
+  </li>
+  <li> <a href='debug'>toggle debugging</a> (currently
        <if><test zero='zero'><get pia='pia' name='PIA:debugging' /></test>
            <then>off</then><else>on</else></if>)
-  </li><li> <a href='remove-agent'> remove agent</a>
-</li></ul>
+  </li>
+  <li> <a href='remove-agent'> remove agent</a>
+  </li>
+</ul>
 
 <h3>Other Information:</h3>
 <ul>
@@ -56,5 +61,5 @@
        (your customizations and agent output)  <br />
 </li></ul>
 
-<footer cvsid='$Id: programming.xh,v 1.10 1999-12-15 21:47:12 steve Exp $' />
+<footer cvsid='$Id: programming.xh,v 1.11 2000-02-25 22:29:41 steve Exp $' />
 </body></html>

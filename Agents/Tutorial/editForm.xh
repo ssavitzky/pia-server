@@ -1,2 +1,2 @@
 <edit demo-name="aboutForm.xh"><extract><from><include src="form.xh" quoted="yes"/></from>
-<name all="all">body</name><content/></extract> </edit>
+<name all="all" case="insens">body</name><content/></extract> </edit>

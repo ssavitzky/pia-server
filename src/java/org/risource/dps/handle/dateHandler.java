@@ -1,5 +1,5 @@
 ////// dateHandler.java: <date> Handler implementation
-//	$Id: dateHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
+//	$Id: dateHandler.java,v 1.3 2000-02-25 22:30:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -70,7 +70,7 @@ import java.lang.StringBuffer;
  *	The rewrite involves 35-year-old Julian Day code originally 
  *	written in FORTRAN IV by Abraham Savitzky.
  *
- * @version $Id: dateHandler.java,v 1.2 1999-11-17 18:33:50 steve Exp $
+ * @version $Id: dateHandler.java,v 1.3 2000-02-25 22:30:33 steve Exp $
  * @author softky@rsv.ricoh.com
  * @see org.risource.util.Julian
  */
@@ -158,7 +158,7 @@ public class dateHandler extends GenericHandler {
 
 	if (name.equalsIgnoreCase("day")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    day = (int)( as.longValue() );
@@ -167,7 +167,7 @@ public class dateHandler extends GenericHandler {
 	} else
 	if (name.equalsIgnoreCase("month")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    // let people input month at 1-12, not 0-11
@@ -177,7 +177,7 @@ public class dateHandler extends GenericHandler {
 	} else
 	if (name.equalsIgnoreCase("year")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    year = (int)( as.longValue() );
@@ -186,7 +186,7 @@ public class dateHandler extends GenericHandler {
 	} else
 	if (name.equalsIgnoreCase("seconds")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    seconds =  as.longValue();
@@ -196,7 +196,7 @@ public class dateHandler extends GenericHandler {
 	} else
 	if (name.equalsIgnoreCase("mstime")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    mstime =  as.longValue();
@@ -206,7 +206,7 @@ public class dateHandler extends GenericHandler {
 	} else
 	if (name.equalsIgnoreCase("julian")){
 	    en = MathUtil.getNumbers( content.activeItem(i).getContent() );
-	    while( en.hasMoreElements() ){
+	    while( en != null && en.hasMoreElements() ){
 		as = (Association)en.nextElement();
 		if ( as.isIntegral() )
 		    jday =  as.longValue();
@@ -282,7 +282,8 @@ public class dateHandler extends GenericHandler {
       System.err.println("Warning: javaday=" + javaday + " longDay=" + longDay);
     }
 
-    // done with compuatation
+    // done with compuatation.  Examine attributes for result.
+    // === should have result="..."
 
     // look at attributes for date
     if (atts.hasTrueAttribute("lastday")) {

@@ -1,5 +1,5 @@
 ////// testHandler.java: <test> handler.
-//	$Id: testHandler.java,v 1.9 1999-07-08 21:38:43 bill Exp $
+//	$Id: testHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 /**
  * Handler for <test>  <p>
  *
- * @version $Id: testHandler.java,v 1.9 1999-07-08 21:38:43 bill Exp $
+ * @version $Id: testHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -70,17 +70,24 @@ public class testHandler extends GenericHandler {
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
 
-    if (dispatch(e, "zero")) 	 return test_zero.handle(e);
+    // The following tests only involve the content. 
+    //   Note that we <em>must</em> test for "sorted" before "numeric"
+    //   in order to resolve the ambiguity.
+
+    if (dispatch(e, "zero", "op")) 	return test_zero.handle(e);
+    if (dispatch(e, "positive", "op")) 	return test_positive.handle(e);
+    if (dispatch(e, "negative", "op")) 	return test_negative.handle(e);
+    if (dispatch(e, "null", "op")) 	return test_null.handle(e);
+    if (dispatch(e, "sorted", "op"))	return test_sorted.handle(e);
+    if (dispatch(e, "numeric", "op"))	return test_numeric.handle(e);
+    if (dispatch(e, "markup", "op"))	return test_markup.handle(e);
+
+    // The following test the content against the value of the attribute.
+
     if (dispatch(e, "equals")) 	 return test_equality.handle(e);
     if (dispatch(e, "greater"))  return test_greater.handle(e);
     if (dispatch(e, "less")) 	 return test_less.handle(e);
-    if (dispatch(e, "positive")) return test_positive.handle(e);
-    if (dispatch(e, "negative")) return test_negative.handle(e);
     if (dispatch(e, "match")) 	 return test_match.handle(e);
-    if (dispatch(e, "null")) 	 return test_null.handle(e);
-    if (dispatch(e, "numeric"))	 return test_numeric.handle(e);
-    if (dispatch(e, "sorted"))	 return test_sorted.handle(e);
-    if (dispatch(e, "markup"))	 return test_markup.handle(e);
 
     if (e.getAttributes() == null || e.getAttributes().getLength() == 0)
       return this;
@@ -312,21 +319,28 @@ class test_sorted extends testHandler {
     boolean result = true;
 
     reverse = atts.hasTrueAttribute("reverse");
-    caseSens = atts.hasTrueAttribute("case");
-    text = atts.hasTrueAttribute("text");
+    caseSens = caseSensitive(atts);
+    text = dispatch(atts, "text", "filter");
+    boolean numeric = dispatch(atts, "numeric", "keys");
 
-    if(text) {
-      List tl = TextUtil.getTextList(content, caseSens);
-      long len = tl.size();
+    List tl;
+    if (text) {			// text: filter out the markup
+      tl = TextUtil.getTextList(TextUtil.getText(content), caseSens);
+    } else if (numeric) {
+      tl = MathUtil.getNumericList(content);
+    } else {			// default: sort on markup's text key
+      tl = TextUtil.getTextList(content, caseSens);
+    }
       
-      for(int i = 1; i < len; i++) {
-	int c = ((Association)tl.at(i)).compareTo((Association)tl.at(i-1));
-	if ( (reverse && (c > 0)) || (!reverse && (c < 0)) ) {
-	  result = false;
-	  break;
-	}
+    long len = tl.size();
+    for(int i = 1; i < len; i++) {
+      int c = ((Association)tl.at(i)).compareTo((Association)tl.at(i-1));
+      if ( (reverse && (c > 0)) || (!reverse && (c < 0)) ) {
+	result = false;
+	break;
       }
     }
+
     returnBoolean(result, aContext, out);
   }
 
@@ -367,7 +381,7 @@ class test_match extends testHandler {
   public test_match(ActiveElement e) {
     super(e);
     exactMatch = e.hasTrueAttribute("exact");
-    caseSens   = e.hasTrueAttribute("case");
+    caseSens   = caseSensitive(e.getAttrList());
   }
   static Action handle(ActiveElement e) { return new test_match(e); }
 

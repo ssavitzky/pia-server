@@ -3,11 +3,11 @@
   <title>&user.name;'s Agency on &PIA:host;</title>
 </head><body bgcolor="#ffffff" link="#c40026" vlink="#e40026">
 
-<set name="ltitle"><if><test exact="exact" match="pia">&user.name;</test>
+<set name="ltitle"><if><test exact="exact" case="insens" match="pia">&user.name;</test>
 		     <then> </then>
 		     <else><a href="/~/">&user.name;'s</a> </else></if></set>
 <header show-date="yes" ltitle="&ltitle;">
-  <if><test exact="exact" match="pia">&user.name;</test>
+  <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 			    <then>An Information Appliance</then>
 	    		    <else>Personal Information Agency</else>
 			</if><br />
@@ -28,7 +28,7 @@
 	    <a href="/~Admin/installers">install</a> / 
 	    <a href="/~Admin/remove-agent">remove</a> </then></if>
 	    applications.<br />
-	    <if><test exact="exact" match="pia">&user.name;</test>
+	    <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 	      <then><a href="/~Admin/shutdown">shut down</a> appliance<br />
 	    </then></if>
     </td></tr></then></if>
@@ -42,7 +42,7 @@
         </td></tr>
     <tr><th valign="top" align="right" width="170"><a href="/Agents/"><b>Apps:</b></a>&nbsp;
 	</th><td valign="top"> 
-            <repeat><foreach entity="foo"><get name="agentnames"/></foreach>
+            <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
               <do name="a"><set name="href">/~<get name="foo"/>/</set>
 		  <get name="foo"/></do>
             </repeat><br>
@@ -67,5 +67,5 @@
 <hr />
 <include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.12 1999-12-14 19:01:19 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.13 2000-02-25 22:29:37 steve Exp $" />
 </p></body></html>

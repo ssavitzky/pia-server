@@ -95,7 +95,7 @@ should be '': '<test match='foo'> test match something  </test>' match
 should be '1': '<test match='foo'> test match foo something  </test>' match
 should be '': '<test exact='exact' match='foo'> test match foo something  </test>' exact
 should be '1': '<test exact='exact' match='foo'>foo</test>' exact
-should be '1': '<test match='foo'>this FOO stuff</test>' case-insens
+should be '1': '<test case="insens" match='foo'>this FOO stuff</test>' case-insens
 should be '': '<test case='case' match='foo'>this FOO stuff</test>' case-sens
 should be '1': '<test case='case' match='FOO'>this FOO stuff</test>' case-sens
 
@@ -288,5 +288,5 @@ Entity used as list for repeat; expanded in attribute:
 <hr />
 <b>Copyright &copy; 1997 Ricoh Silicon Valley</b><br />
 <!--  the following conditional keeps the id out of the results  --><if>
-<then><b>t6$Id: t6.xh,v 1.8 1999-11-24 22:43:03 steve Exp $</b><br /></then></if>
+<then><b>t6$Id: t6.xh,v 1.9 2000-02-25 22:30:42 steve Exp $</b><br /></then></if>
 </baz></body></html>

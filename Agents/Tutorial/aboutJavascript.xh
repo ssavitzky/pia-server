@@ -19,7 +19,7 @@
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="javascript.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
     <p> Custom-defined tags can "wrap"
@@ -31,7 +31,7 @@
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="Tutorial-xhtml.ts" quoted="yes"/></from>
-    <name all="yes">SCRIPT</name></extract></protect></pre>
+    <name all="yes" case="insens">SCRIPT</name></extract></protect></pre>
     </code>
 
     <p> The other tag above, <code>&lt;widgetForm/></code>, expands into the

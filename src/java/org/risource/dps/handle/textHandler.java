@@ -1,5 +1,5 @@
 ////// textHandler.java: <text> Handler implementation
-//	$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $
+//	$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -45,7 +45,7 @@ import java.util.Enumeration;
  *
  *	
  *
- * @version $Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $
+ * @version $Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -64,13 +64,13 @@ public class textHandler extends GenericHandler {
   /** This does the parse-time dispatching. */
   public Action getActionForNode(ActiveNode n) {
     ActiveElement e = n.asElement();
-    if (dispatch(e, "sort")) 	 return text_sort.handle(e);
-    if (dispatch(e, "trim")) 	 return text_trim.handle(e);
-    if (dispatch(e, "pad"))      return text_pad.handle(e);
-    if (dispatch(e, "split"))    return text_split.handle(e);
-    if (dispatch(e, "join"))     return text_join.handle(e);
-    if (dispatch(e, "decode"))   return text_decode.handle(e);
-    if (dispatch(e, "encode"))   return text_encode.handle(e);
+    if (dispatch(e, "sort", "op")) 	return text_sort.handle(e);
+    if (dispatch(e, "trim", "op")) 	return text_trim.handle(e);
+    if (dispatch(e, "pad", "op")) 	return text_pad.handle(e);
+    if (dispatch(e, "split", "op")) 	return text_split.handle(e);
+    if (dispatch(e, "join", "op")) 	return text_join.handle(e);
+    if (dispatch(e, "decode", "op")) 	return text_decode.handle(e);
+    if (dispatch(e, "encode", "op")) 	return text_encode.handle(e);
     return this;
   }
 
@@ -136,7 +136,7 @@ class text_sort extends textHandler {
     super(e);
     ActiveAttrList atts = (ActiveAttrList) e.getAttributes();
     reverse  = atts.hasTrueAttribute("reverse");
-    caseSens = atts.hasTrueAttribute("case");
+    caseSens = caseSensitive(atts);
     pairs    = atts.hasTrueAttribute("pairs");
   }
 
@@ -452,7 +452,7 @@ class text_join extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
   */
@@ -628,7 +628,7 @@ class text_decode extends textHandler {
    <BR><TT>&lt;b>Copyright &amp;copy; 1997 Ricoh Silicon Valley&lt;/b>&lt;br></TT>
    <BR><TT>&lt;!-- the following conditional keeps the id out of the results
    -->&lt;if></TT>
-   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.8 1999-10-06 23:39:12 bill Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
+   <BR><TT>&lt;then>&lt;b>$Id: textHandler.java,v 1.9 2000-02-25 22:30:34 steve Exp $&lt;/b>&lt;br>&lt;/then>&lt;/if></TT>
    <BR><TT>&lt;/body>&lt;/html></TT></UL>
    &nbsp;
 */

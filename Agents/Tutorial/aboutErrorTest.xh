@@ -19,7 +19,7 @@
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="errorTest.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
     <p> There is a tag called <code>&lt;show-errors/></code> which shows in red

@@ -1,6 +1,6 @@
 <!-- This heading is meant to be included using read. -*-html-helper-*- -->
 <!-- Copyright 1997 Ricoh Silicon Valley -->
-<if><test match=toolbar>&FORM.topic;</test>
+<if><test case="insens" match=toolbar>&FORM.topic;</test>
     <then>
 	You got here by clicking the 
 	``<a href="&pia;&agentPath;/help.if?topic=toolbar">[help]</a>'' link
@@ -43,4 +43,4 @@ information about how to customize their toolbars.</p>
     </then>
 </if>
 
-<!-- $Id: help.inc,v 1.4 1999-07-09 22:06:18 steve Exp $ -->
+<!-- $Id: help.inc,v 1.5 2000-02-25 22:29:48 steve Exp $ -->

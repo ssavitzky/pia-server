@@ -5,7 +5,7 @@
 <!--  Processed with /View/slides.xh  -->
 <set name='doc'><include src='&URL;' tagset='&FORM:tagset;' /></set>
 <extract><from>&doc;</from>
-         <name recursive='recursive'>head</name>
+         <name recursive='recursive' case="insens">head</name>
 	 <append children='children'><base href='&URL;' />
 </append></extract>
 
@@ -36,7 +36,7 @@
 <b>URL:</b> <input name='url' size='55' maxlength='200' value='&PIA:url;/' />
 </form>
 
-<footer cvsid='$Id: view.xh,v 1.6 1999-10-20 16:21:54 steve Exp $' />
+<footer cvsid='$Id: view.xh,v 1.7 2000-02-25 22:30:21 steve Exp $' />
 </body></html>
 </else>
 </if>

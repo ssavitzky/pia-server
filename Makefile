@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.36 1999-12-14 19:02:35 steve Exp $
+#	$Id: Makefile,v 1.37 2000-02-25 22:29:37 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ include $(MF_DIR)/subdir.make
 VENDOR_TAG  = PIA
 RELEASE     = 2
 MAJOR       = 0
-MINOR       = 8
+MINOR       = 9
 SUFFIX      = 
 
 VERSION_ID = $(VENDOR_TAG)$(RELEASE)_$(MAJOR)_$(MINOR)$(SUFFIX)
@@ -94,6 +94,7 @@ src-release:: do_checkout build_release tar_file
 ### Commands:
 
 RSYNC = rsync -a --numeric-ids --delete -v
+RSYNC_ND = rsync -a --numeric-ids -v
 
 ### Operations involving version number:
 ###
@@ -103,10 +104,10 @@ RISOURCE=src/java/org/risource
 RELNOTES=Doc/Release
 
 report-version::
-	echo $(VERSION_ID)
+	@echo $(VERSION_ID)
 
 update-version:: $(RISOURCE)/Version.java
-	echo version updated to $(VERSION_ID)
+	@echo version updated to $(VERSION_ID)
 
 $(RISOURCE)/Version.java:: Makefile
 	perl -p -i -e 's/[0-9]+;/$(RELEASE);/ if /RELEASE/;' \
@@ -124,7 +125,7 @@ $(RELNOTES)/r$(RELEASE).$(MAJOR).html:: Makefile
 
 # make a version ID file.  copy it to Doc as well.
 version_id:: Makefile
-	echo $(VERSION) built `date` by `whoami` > version_id
+	@echo $(VERSION) built `date` by `whoami` > version_id
 	cp version_id Doc
 
 ### Common cvs operations 
@@ -158,11 +159,11 @@ do_checkout::
 copy_src_dir::
 	-mkdir $(DEST_DIR)src_release$(VERSION)
 	$(RSYNC) $(REL_DIR)/PIA $(DEST_DIR)/src_release$(VERSION)
-# 	No trailing slash on src means delete everything but PIA in dest.
+#  !!!	No trailing slash on src means delete everything but PIA in dest !!!
 
 # Make a tar file.  >>> REQUIRES GNU tar <<<
 tar_file::
-	tar --version || (echo "You don't have GNU tar"; false)
+	@tar --version || (echo "You don't have GNU tar"; false)
 	cd $(REL_DIR)  ; tar czf $(DEST_DIR)/$(TAR_NAME).tgz PIA
 	cd $(DEST_DIR) ; rm -f pia_src.tgz ; ln -s $(TAR_NAME).tgz pia_src.tgz
 
@@ -174,9 +175,16 @@ tar_file::
 # rsync-cvs: synchronize the local and remote CVS trees.
 rsync-cvs::
 	$(RSYNC) -e ssh /pia1/CvsRoot/PIA/ $(RMT_HOST):$(CVS_RMT)/PIA
-# 	Trailing slash on src means other CVS modules on remote are allowed.
+#  !!!	Trailing slash on src means other CVS modules on remote are allowed.
 #	Without the trailing slash on src and /PIA on dst, anything else
 #	in the destination directory would be deleted by rsync.
+
+# rsync-cvs: synchronize selected files between the local and remote CVSROOT 
+# 	directories.  This should not have to be done very often.  Possibly,
+#	never again.
+rsync-cvs-root::
+	$(RSYNC_ND) -e ssh /pia1/CvsRoot/CVSROOT/cvsignore* \
+	            $(RMT_HOST):$(CVS_RMT)/CVSROOT
 
 # upload: upload the tar file, 
 #	  make a new symlink in the FTP directory
@@ -186,8 +194,8 @@ upload::
 	ssh $(RMT_HOST) rm -f $(FTP_RMT)/pia_src.tgz
 	ssh $(RMT_HOST) cd $(FTP_RMT) \; ln -s $(TAR_NAME).tgz pia_src.tgz
 	ssh $(RMT_HOST) cd $(WEB_RMT) \; tar xzf $(FTP_RMT)/pia_src.tgz PIA/Doc
-	echo 'Now fix RiSource.org/PIA/{latest.html, downloading.html}'
-	echo 'They then need to be uploaded to $(WEB_RMT)/PIA'
+	@echo 'Now fix RiSource.org/PIA/{latest.html, downloading.html}'
+	@echo 'They then need to be uploaded to $(WEB_RMT)/PIA'
 
 ###
 ### Old stuff.

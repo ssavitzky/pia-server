@@ -1,5 +1,5 @@
 ////// numericHandler.java: <numeric> Handler implementation
-//	$Id: numericHandler.java,v 1.9 1999-11-15 18:56:38 steve Exp $
+//	$Id: numericHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;numeric&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: numericHandler.java,v 1.9 1999-11-15 18:56:38 steve Exp $
+ * @version $Id: numericHandler.java,v 1.10 2000-02-25 22:30:34 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -377,7 +377,7 @@ class numeric_sort extends numericHandler {
     super(e);
     ActiveAttrList atts = (ActiveAttrList) e.getAttributes();
     reverse  = atts.hasTrueAttribute("reverse");
-    caseSens = atts.hasTrueAttribute("case");
+    caseSens = caseSensitive(atts);
     pairs    = atts.hasTrueAttribute("pairs");
   }
   static Action handle(ActiveElement e) { return new numeric_sort(e); }

@@ -1,5 +1,5 @@
 ////// extractHandler.java: <extract> Handler implementation
-//	$Id: extractHandler.java,v 1.23 1999-11-09 23:18:04 steve Exp $
+//	$Id: extractHandler.java,v 1.24 2000-02-25 22:30:33 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -48,7 +48,7 @@ import java.util.Enumeration;
 /**
  * Handler for &lt;extract&gt;....&lt;/&gt;  <p>
  *
- * @version $Id: extractHandler.java,v 1.23 1999-11-09 23:18:04 steve Exp $
+ * @version $Id: extractHandler.java,v 1.24 2000-02-25 22:30:33 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 public class extractHandler extends GenericHandler {
@@ -707,7 +707,7 @@ class sort_recursive extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     boolean all = atts.hasTrueAttribute("all");
     String key = TextUtil.trimCharData(content);
 
@@ -765,7 +765,7 @@ class keyHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     String sep = atts.getAttribute("sep");
     String key = TextUtil.trimCharData(content);
     if (key != null && !caseSens) key = key.toLowerCase();
@@ -797,7 +797,7 @@ class key_recursive extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     String  sep = atts.getAttribute("sep");
     boolean all = atts.hasTrueAttribute("all");
     String  key = TextUtil.trimCharData(content);
@@ -832,7 +832,7 @@ class idHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     String id = TextUtil.trimCharData(content);
     if (id != null && !caseSens) id = id.toLowerCase();
 
@@ -863,7 +863,7 @@ class id_recursive extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     boolean all = atts.hasTrueAttribute("all");
     String  id = TextUtil.trimCharData(content);
     if (id != null && !caseSens) id = id.toLowerCase();
@@ -898,7 +898,7 @@ class attrHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     String name = TextUtil.trimCharData(content);
     
     int len = extracted.getLength();
@@ -958,7 +958,7 @@ class matchHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     String match = TextUtil.getCharData(content);
     // === WARNING: match is not being trimmed! ===
     if (!caseSens) match = match.toLowerCase();
@@ -988,7 +988,7 @@ class xptrHandler extends extract_subHandler {
       reportError(in, aContext, "No list: possibly not inside < extract >");
       return;
     }
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     unimplemented(in, aContext);		// === xptr
   }
   xptrHandler() { super(true, true); }
@@ -1117,7 +1117,7 @@ class replaceHandler extends extract_subHandler {
       return;
     }
     String name = atts.getAttribute("name");
-    boolean caseSens = atts.hasTrueAttribute("case");
+    boolean caseSens = caseSensitive(atts);
     boolean wholeNode = atts.hasTrueAttribute("node");
 
     int len = extracted.getLength();

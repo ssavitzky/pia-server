@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.7 1999-10-20 16:21:37 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.8 2000-02-25 22:29:50 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -15,7 +15,7 @@
      <set name="fn">DATA/&year;/&month;/&day;.html</set>
      <output directory="directory" dst="DATA/&year;" /><!--   create dir. if necessary   -->
      <output directory="directory" dst="DATA/&year;/&month;/" /><!--   create dir. if necessary   -->
-     <if><test match="html">&ct;</test>
+     <if><test case="insens" match="html">&ct;</test>
 	 <then><set entity="entity" name="title"><get name="TRANS:title" /></set>
 	       <output append="append" dst="&fn;"><if><!--   dummy to suppress line brk   -->
 		  </if>&time; <a href="&url;">&url; : &title;</a><br />

@@ -218,7 +218,7 @@
 		       <from>
 		           <get name="rawfile" />
 		       </from>
-		       <name>event</name>
+		       <name case="insens">event</name>
                        <?-- go through events to find one to replace --?>
                        <?-- match most fields (delete if not replacing) --?>
                        <repeat>
@@ -331,8 +331,8 @@
                    <logical and="yes">
                       <get name="FORM:Edit" />
                       <test match="&myTime;"><get name="FORM:newTime"/></test>
-                      <test match="&myPlace;"><get name="FORM:newPlace"/></test>
-                      <test match="&myName;"><get name="FORM:newName"/></test>
+                      <test case="insens" match="&myPlace;"><get name="FORM:newPlace"/></test>
+                      <test case="insens" match="&myName;"><get name="FORM:newName"/></test>
                    </logical>
 
                    <then>

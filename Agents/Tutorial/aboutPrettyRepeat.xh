@@ -19,7 +19,7 @@
 
     <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="prettyRepeat.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
     <p> This demo shows how to use pretty-printing tag to display your source

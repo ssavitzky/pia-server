@@ -35,7 +35,7 @@
    <a href='/&li;'>&li;</a> <a href='/&li;/'><b> / </b></a></repeat>
 <hr />
 
-<if><test match='false'><get name='FORM:hide' /></test>
+<if><test case="insens" match='false'><get name='FORM:hide' /></test>
     <then><set agent='agent' name='hidden'></set>
 </then><else><if><get name='FORM:hide' />
     <then><set name='AGENT:hidden'>true</set>
@@ -62,5 +62,5 @@
 </form>
 </else></if>
 
-<footer cvsid='$Id: hide.xh,v 1.5 1999-11-23 18:40:55 steve Exp $' />
+<footer cvsid='$Id: hide.xh,v 1.6 2000-02-25 22:29:48 steve Exp $' />
 </body></html>

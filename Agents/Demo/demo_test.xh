@@ -75,19 +75,19 @@ list </a>, and how to <a href='#notnum'>negate a test with not</a>.
 </p><h3><a name='match'>Test for a Match on a String</a></h3>
 <b> Description:</b>The following examples test for case insensitive and case sensitive matches on text strings.  The last two examples test for an exact match.
 <p>
-<b> Input:      </b> &lt;test match='cat'&gt;Match the Category&lt;/test&gt;
+<b> Input:      </b> &lt;test case="insens" match='cat'&gt;Match the Category&lt;/test&gt;
 </p><p>
-<b> Result:     </b><test match='cat'>Match the Category</test>
+<b> Result:     </b><test case="insens" match='cat'>Match the Category</test>
 </p><p>
-<b> Input:      </b> &lt;test case='case' match='cat'&gt;Match the Category&lt;/test&gt;
+<b> Input:      </b> &lt;test case="sensitive"  match='cat'&gt;Match the Category&lt;/test&gt;
 </p><p>
-<b> Result:     </b><test case='case' match='cat'>Match the Category</test>
+<b> Result:     </b><test case="sensitive" match='cat'>Match the Category</test>
 </p><p>
-<b> Input:      </b> &lt;test exact='exact' match='cat'&gt;The cat sat on the mat&lt;/test&gt;
+<b> Input:      </b> &lt;test case="insens" exact='exact' match='cat'&gt;The cat sat on the mat&lt;/test&gt;
 </p><p>
-<b> Result:     </b><test exact='exact' match='cat'>The cat sat on the mat</test>
+<b> Result:     </b><test exact='exact' case="insens" match='cat'>The cat sat on the mat</test>
 </p><p>
-<b> Input:      </b> &lt;test exact='exact' match='cat'&gt;cat&lt;/test&gt;
+<b> Input:      </b> &lt;test exact='exact' case="insens" match='cat'&gt;cat&lt;/test&gt;
 </p><p>
 <b> Result:     </b><test exact='exact' match='cat'>cat</test>
 <hr />
@@ -151,7 +151,7 @@ If it returns true, it is a bug.
 </p><p>
 <b> Result:     </b><test case='case' sorted='sorted'>Bats ants toads</test>
 </p><p>
-<footer cvsid='$Id: demo_test.xh,v 1.7 1999-11-23 18:40:51 steve Exp $' /></p><p>
+<footer cvsid='$Id: demo_test.xh,v 1.8 2000-02-25 22:29:45 steve Exp $' /></p><p>
 
 </p></body></html>
 

@@ -19,7 +19,7 @@
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="sort2.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
     <p> The sort demo takes a list of strings, sorts it, and separates them.

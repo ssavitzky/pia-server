@@ -20,7 +20,7 @@
 
   <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="varatt.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
 <p>  <b>What happens?  </b> </p>

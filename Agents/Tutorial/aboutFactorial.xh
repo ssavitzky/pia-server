@@ -19,7 +19,7 @@
 
  <code><pre><protect markup="yes" result="yes"><extract><from>
     <include src="factorial.xh" quoted="yes"/></from>
-    <name all="yes">body</name></extract></protect></pre>
+    <name all="yes" case="insens">body</name></extract></protect></pre>
     </code>
 
     <p> The first line of this demo uses the <code>&lt;set></code> tag to

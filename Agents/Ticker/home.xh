@@ -35,14 +35,14 @@
           <tm_like>
              <td colspan="2"> </td>
           </tm_like>
-	 <name all="yes">b</name>
+	 <name all="yes" case="insens">b</name>
        </extract>
        &yen;
      </td>
      <td>
        <extract>
 	  <from>&goodrow;</from>
-          <name all="yes">td</name>
+          <name all="yes" case="insens">td</name>
           <match>%</match>
           <content />
        </extract>
