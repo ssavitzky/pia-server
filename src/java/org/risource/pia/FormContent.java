@@ -1,5 +1,5 @@
 // FormContent.java
-// $Id: FormContent.java,v 1.6 1999-09-22 00:28:55 steve Exp $
+// $Id: FormContent.java,v 1.7 2000-04-21 20:57:14 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -579,7 +579,8 @@ public class FormContent extends Properties implements InputContent {
       }
       
       // all data has been read but client may still have CRLF hanging
-      long skipped = body.skip(2);
+      long skipped = 0;
+      if (body.available() >= 2) skipped = body.skip(2);
       Pia.debug(this, "skipped over " + skipped + " characters in Post");
       
 
