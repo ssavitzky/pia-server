@@ -19,11 +19,12 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=SimpleCalendar-agent parent=pia-xhtml recursive>
-<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.11 1999-11-16 18:46:34 steve Exp $</cvs-id>
+<cvs-id>$Id: SimpleCalendar-xhtml.ts,v 1.12 1999-12-03 19:47:46 steve Exp $</cvs-id>
 
 <define element="soft-include">
    <doc> Check to see if an included file exists; if not, expands to nothing
-         rather than to an error message. </doc>
+         rather than to an error message.
+   </doc>
    <action>
       <if> <status src="&attributes:src;" item="exists" />
            <then>
@@ -65,41 +66,44 @@
 
 
 <define element="readoneevent">
-   <action>
+  <doc> This is used inside the <tag>eventtable</tag> tag's definition to set
+	some local variables (<code>myTime</code>, etc.) from the current
+	event, which is passed in the loop variable <code>&amp;li;</code>.
+  </doc>
+  <action>
+       <!-- assign names "my[---]" to values for easy testing -->
+       <set name="myTime"><text trim="yes">
+	   <extract><from>&li;</from>
+	       <name all="all">start-time</name>
+	       <content />
+	   </extract>
+       </text></set>
+       <set name="myPlace"><text trim="yes">
+	   <extract><from>&li;</from>
+	       <name all="all">place</name>
+	       <content />
+	   </extract>
+       </text></set>
+       <set name="myName"><text trim="yes">
+	   <extract><from>&li;</from>
+	       <name all="all">event-name</name>
+	       <content />
+	   </extract>
+       </text></set>
+       <set name="myDesc"><text trim="yes">
+	   <extract><from>&li;</from>
+	       <name all="all">description</name>
+	       <content />
+	   </extract>
+       </text></set>
 
-               <!-- assign names "my[---]" to values for easy testing -->
-	       <set name="myTime"><text trim="yes">
-		   <extract><from>&li;</from>
-		       <name all="all">start-time</name>
-		       <content />
-		   </extract>
-	       </text></set>
-	       <set name="myPlace"><text trim="yes">
-		   <extract><from>&li;</from>
-		       <name all="all">place</name>
-		       <content />
-		   </extract>
-	       </text></set>
-	       <set name="myName"><text trim="yes">
-		   <extract><from>&li;</from>
-		       <name all="all">event-name</name>
-		       <content />
-		   </extract>
-	       </text></set>
-	       <set name="myDesc"><text trim="yes">
-		   <extract><from>&li;</from>
-		       <name all="all">description</name>
-		       <content />
-		   </extract>
-	       </text></set>
-
-               <set name="longURL">home.xh?newDay=<text
-               encode="url">&myDay;</text>&newMonth=<text
-               encode="url">&myMonth;</text>&newYear=<text
-               encode="url">&myYear;</text>&newTime=<text
-               encode="url">&myTime;</text>&newPlace=<text
-               encode="url">&myPlace;</text>&newName=<text
-               encode="url">&myName;</text>&Edit=submit</set>
+       <set name="longURL">home.xh?newDay=<text
+       encode="url">&myDay;</text>&newMonth=<text
+       encode="url">&myMonth;</text>&newYear=<text
+       encode="url">&myYear;</text>&newTime=<text
+       encode="url">&myTime;</text>&newPlace=<text
+       encode="url">&myPlace;</text>&newName=<text
+       encode="url">&myName;</text>&Edit=submit</set>
    </action>
 </define>
 
@@ -164,20 +168,19 @@
 
 
 <define element="show-today" >
-    <doc> Show today's date as a link to editing that day </doc>
-
-    <action>
-       <!-- encapsulate whole date into a smaller package -->
-       <set name="todaypack">
+  <doc> Show today's date as a link to editing that day </doc>
+  <action>
+     <!-- encapsulate whole date into a smaller package -->
+     <set name="todaypack">
               <day>&day;</day><month>&month;</month><year>&year;</year>
-       </set>
-        <!-- show today's date as link to the day -->
+     </set>
+    <!-- show today's date as link to the day -->
 <h2> Today is  
           <weekday>&todaypack;</weekday>,
                  <a href="home.xh?newDay=&myDay;&newMonth=&myMonth;&newYear=&year;&Add=submit"><weekday monthname="yes">&todaypack;</weekday>
             &myDay;, &year; </a>  </h2> 
 
-    </action>
+  </action>
 </define>
 
 <define entity="month-name-list">
@@ -345,11 +348,11 @@
   </action>
 </define>
 
-     <define element="event-table">
-	 <doc> takes an event file and prints it in table form </doc>
+<define element="event-table">
+  <doc> takes an event file and prints it in table form </doc>
 
-	     <!-- sort the events for this day by start-time -->
-           <action><text trim="yes">
+  <!-- sort the events for this day by start-time -->
+  <action><text trim="yes">
 	     <set name="sortedlist">
 	       <extract>
 		  <from>&content;</from>
@@ -383,49 +386,48 @@
 		    </tr>
 		  </repeat>
 	     </table>
-	 </text></action>
-     </define>
+  </text></action>
+</define>
 
 
 
-     <define element="daycheck">
-       <action>
+<define element="daycheck">
+  <action>
 	 <logical and="yes">
 	    <test greater="0">&attributes:testday;</test>
 	    <test less="&attributes:lastday;"><numeric difference="yes"> &attributes:testday; 1</numeric></test>
 	 </logical>
-       </action>
-     </define>
+  </action>
+</define>
 
 
 
-     <define element="lookup">
-         <doc> reads out and sorts events for a given date from appropriate
-               sources.
-         </doc>
-         <action><hide>
-             <!-- get the file(s) -->
+<define element="lookup">
+  <doc> reads out and sorts events for a given date from appropriate
+        sources.
+  </doc>
+  <action><hide>
+        <!-- get the file(s) -->
+	<set name="filename">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;/Events</set>
 
-	     <set name="filename">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;/Events</set>
-
-	     <!-- read out file (possibly empty) -->
-	     <set name="eventfile" >
-		<extract>
+	<!-- read out file (possibly empty) -->
+	<set name="eventfile" >
+	        <extract>
 		    <from><soft-include src="&filename;"/></from>
 		    <name >event</name>
 		</extract>
-	     </set>
+	</set>
 
-             <!-- look for repeating events -->
-	     <set name="longdaytoday">
+          <!-- look for repeating events -->
+	<set name="longdaytoday">
 		    <weekday longday="yes">
 			  <day>&attributes:newday;
 			  </day><month>&attributes:newmonth;</month>
 			  <year>&attributes:newyear;</year>
 		    </weekday>
-	     </set>
+	</set>
 
-             <!-- by day, looping over 1-6 day intervals -->
+       <!-- by day, looping over 1-6 day intervals -->
        <set name="moreEvents" >
 	 <repeat start="1" stop="6" entity="days">
              <set name="repeatFile">
@@ -476,14 +478,12 @@
           </repeat>
        </set>
 
-
-
-             <!-- by week, looping over 1-4 week intervals -->
-	     <set name="wkdayname"><weekday>
+       <!-- by week, looping over 1-4 week intervals -->
+       <set name="wkdayname"><weekday>
 		    <day>&attributes:newday;
                     </day><month>&attributes:newmonth;</month>
                     <year>&attributes:newyear;</year>
-             </weekday></set>
+       </weekday></set>
 
        <set name="moreEvents" >
          <get name="moreEvents" />
@@ -636,16 +636,17 @@
               </extract>
           </set>
        
- </hide>
- <get name="eventfile" />
-        </action>
-    </define>
+    </hide>
+    <get name="eventfile" />
+  </action>
+</define>
 
-  <define element="find-event-file">
-        <doc> this does the workhorse lifting by locating the file in which
-          a given interval is stored; it expands to the desired filename </doc>
+<define element="find-event-file">
+  <doc> this does the workhorse lifting by locating the file in which
+        a given interval is stored; it expands to the desired filename
+  </doc>
 
-        <action><text trim="yes">
+  <action><text trim="yes">
     <hide>
 
         <!-- Everthing tries to fill up fileName -->
@@ -711,242 +712,231 @@
             </else-if>
 	 </if>
     </hide>
-
-        <get name="filedir" />
-
-        </text></action>
-  </define>
+  <get name="filedir" />
+  </text></action>
+</define>
 
         
-    <define element="new-interval-event">
-         <doc> Appends the interval in its contents to appropriate file.
-         </doc>
-         <action>
+<define element="new-interval-event">
+  <doc> Appends the interval in its contents to appropriate file.
+  </doc>
+  <action>
+	<set name="filedir"><text trim="yes">
+	     <find-event-file  newday="&attributes:newday;"
+		       newmonth="&attributes:newmonth;"
+		       newyear="&attributes:newyear;" >
+		 &content;
+	      </find-event-file>
+	 </text></set>
 
-             <set name="filedir"><text trim="yes">
-                  <find-event-file  newday="&attributes:newday;"
-			    newmonth="&attributes:newmonth;"
-			    newyear="&attributes:newyear;" >
-		      &content;
-                   </find-event-file>
-              </text></set>
-
-	      <output dst="&filedir;" directory="yes" />
-	      <output dst="&filedir;/Events" append="append">
-		  &content;
-	      </output>
-
-          </action>        
-    </define>
-
-
-
-
+	 <output dst="&filedir;" directory="yes" />
+	 <output dst="&filedir;/Events" append="append">
+	     &content;
+	 </output>
+  </action>        
+</define>
         
-    <define element="search-and-destroy">
-         <doc> Finds the interval in its contents in the appropriate file,
-               and deletes it.
-         </doc>
-         <action>
-             <set name="filedir"><text trim="yes">
-                  <find-event-file  newday="&attributes:newday;"
-			    newmonth="&attributes:newmonth;"
-			    newyear="&attributes:newyear;" >
-		      &content;
-                   </find-event-file>
-              </text></set>
+<define element="search-and-destroy">
+ <doc> Finds the interval in its contents in the appropriate file,
+       and deletes it.
+ </doc>
+ <action>
+     <set name="filedir"><text trim="yes">
+	  <find-event-file  newday="&attributes:newday;"
+		    newmonth="&attributes:newmonth;"
+		    newyear="&attributes:newyear;" >
+	      &content;
+	   </find-event-file>
+      </text></set>
 
-              <!-- find fields to be matched in the old interval-event -->
-              <set name="oldPlace"><text trim="yes">
-		 <extract>
-		   <from>&content;</from>
-		   <name all="yes">place</name>
-                   <content />
-		 </extract>
-              </text></set>
-              <set name="oldName"><text trim="yes">
-		 <extract>
-		   <from>&content;</from>
-		   <name all="yes">event-name</name>
-                   <content />
-		 </extract>
-              </text></set>
-              <set name="oldTime"><text trim="yes">
-		 <extract>
-		   <from>&content;</from>
-		   <name all="yes">start-time</name>
-                   <content />
-		 </extract>
-              </text></set>
-              <set name="oldStartday"><text trim="yes">
-		 <extract>
-		   <from>&content;</from>
-		   <name all="yes">startday</name>
-                   <content />
-		 </extract>
-              </text></set>
+      <!-- find fields to be matched in the old interval-event -->
+      <set name="oldPlace"><text trim="yes">
+	 <extract>
+	   <from>&content;</from>
+	   <name all="yes">place</name>
+	   <content />
+	 </extract>
+      </text></set>
+      <set name="oldName"><text trim="yes">
+	 <extract>
+	   <from>&content;</from>
+	   <name all="yes">event-name</name>
+	   <content />
+	 </extract>
+      </text></set>
+      <set name="oldTime"><text trim="yes">
+	 <extract>
+	   <from>&content;</from>
+	   <name all="yes">start-time</name>
+	   <content />
+	 </extract>
+      </text></set>
+      <set name="oldStartday"><text trim="yes">
+	 <extract>
+	   <from>&content;</from>
+	   <name all="yes">startday</name>
+	   <content />
+	 </extract>
+      </text></set>
 
-               <!-- read out whole day's events prior to overwriting,  -->
-	       <set name="allEvents">
-		   <extract>
-		       <from>
-                           <include src="&filedir;/Events" />
-		       </from>
-		       <name>event</name>
-                       <!-- go through events to find one to replace -->
-                       <!-- match most fields (delete if not replacing) -->
-                       <repeat>
-                          <foreach>&list;</foreach>
-                            <if>
-                               <logical and="yes">
-                                  <test match="&oldName;"><text
-                                  trim="yes">
-				     <extract>
-				       <from>&li;</from>
-				       <name all="yes">event-name</name>
-                                       <content />
-				     </extract>
-                                  </text></test>
-                                  <test match="&oldPlace;"><text
-                                  trim="yes">
-				     <extract>
-				       <from>&li;</from>
-				       <name all="yes">place</name>
-                                       <content />
-				     </extract>
-                                  </text></test>
-                                  <test match="&oldTime;"><text
-                                  trim="yes">
-				     <extract>
-				       <from>&li;</from>
-				       <name all="yes">start-time</name>
-                                       <content />
-				     </extract>
-                                  </text></test>
-                                  <test match="&oldStartday;"><text
-                                  trim="yes">
-				     <extract>
-				       <from>&li;</from>
-				       <name all="yes">startday</name>
-                                       <content />
-				     </extract>
-                                  </text></test>
-                               </logical>
-			       <then> </then>
-                               <else>&li;</else>
-                            </if>
-                       </repeat>
-		   </extract>
-	       </set>
+       <!-- read out whole day's events prior to overwriting,  -->
+       <set name="allEvents">
+	   <extract>
+	       <from>
+		   <include src="&filedir;/Events" />
+	       </from>
+	       <name>event</name>
+	       <!-- go through events to find one to replace -->
+	       <!-- match most fields (delete if not replacing) -->
+	       <repeat>
+		  <foreach>&list;</foreach>
+		    <if>
+		       <logical and="yes">
+			  <test match="&oldName;"><text
+			  trim="yes">
+			     <extract>
+			       <from>&li;</from>
+			       <name all="yes">event-name</name>
+			       <content />
+			     </extract>
+			  </text></test>
+			  <test match="&oldPlace;"><text
+			  trim="yes">
+			     <extract>
+			       <from>&li;</from>
+			       <name all="yes">place</name>
+			       <content />
+			     </extract>
+			  </text></test>
+			  <test match="&oldTime;"><text
+			  trim="yes">
+			     <extract>
+			       <from>&li;</from>
+			       <name all="yes">start-time</name>
+			       <content />
+			     </extract>
+			  </text></test>
+			  <test match="&oldStartday;"><text
+			  trim="yes">
+			     <extract>
+			       <from>&li;</from>
+			       <name all="yes">startday</name>
+			       <content />
+			     </extract>
+			  </text></test>
+		       </logical>
+		       <then> </then>
+		       <else>&li;</else>
+		    </if>
+	       </repeat>
+	   </extract>
+       </set>
 
-              <!-- finally, overwrite the repeat file with the new copy, in
-                   which the undesired event is missing -->
-	      <output dst="&filedir;/Events" >
-		  &allEvents;
-	      </output>
-              
-
-          </action>        
-    </define>
+      <!-- finally, overwrite the repeat file with the new copy, in
+	   which the undesired event is missing -->
+      <output dst="&filedir;/Events" >
+	  &allEvents;
+      </output>
+  </action>        
+</define>
 
 
 
 
-     <define element="store">
-         <doc> reads out and sorts events for a given date from appropriate
-               sources.
-         </doc>
-         <action>
-             <set name="newInterval">
-                       <extract>
-			  <from>&content;</from>
-			  <name>interval-evt-to-add</name>
-                          <content />
-                       </extract>
-             </set>
-             <set name="oldInterval">
-                       <extract>
-			  <from>&content;</from>
-			  <name>interval-evt-to-delete</name>
-                          <content />
-                       </extract>
-             </set>
+<define element="store">
+  <doc> reads out and sorts events for a given date from appropriate
+        sources.
+  </doc>
+  <action>
+     <set name="newInterval">
+	       <extract>
+		  <from>&content;</from>
+		  <name>interval-evt-to-add</name>
+		  <content />
+	       </extract>
+     </set>
+     <set name="oldInterval">
+	       <extract>
+		  <from>&content;</from>
+		  <name>interval-evt-to-delete</name>
+		  <content />
+	       </extract>
+     </set>
 
 
-             <if><logical or="yes">
-                   <get name="newInterval" />
-                   <get name="oldInterval" />
-                 </logical>
-                 <then>
-                     <if><get name="attributes:appendevent" />
-                        <else>
-			    <search-and-destroy newday="&attributes:newday;"
-			     newmonth="&attributes:newmonth;"
-			     newyear="&attributes:newyear;" >
-				 &oldInterval;
-			    </search-and-destroy>
-                        </else>
-                      </if>
-                      <new-interval-event newday="&attributes:newday;"
-                       newmonth="&attributes:newmonth;"
-                       newyear="&attributes:newyear;" >
-                           &newInterval;
-                      </new-interval-event>
-                 </then>
-             </if>
+     <if><logical or="yes">
+	   <get name="newInterval" />
+	   <get name="oldInterval" />
+	 </logical>
+	 <then>
+	     <if><get name="attributes:appendevent" />
+		<else>
+		    <search-and-destroy newday="&attributes:newday;"
+		     newmonth="&attributes:newmonth;"
+		     newyear="&attributes:newyear;" >
+			 &oldInterval;
+		    </search-and-destroy>
+		</else>
+	      </if>
+	      <new-interval-event newday="&attributes:newday;"
+	       newmonth="&attributes:newmonth;"
+	       newyear="&attributes:newyear;" >
+		   &newInterval;
+	      </new-interval-event>
+	 </then>
+     </if>
 
 
-             <!--overwrite nonrepeating file if oldinterval wasn't repeating -->
-             <if><test not="yes">
-                   <extract>
-                      <from><get name="oldInterval" /></from>
-                      <name all="yes">interval</name>
-                   </extract>
-                  </test>
-                 <then>
-		    <!-- store nonrepeating events in ordinary directories -->
-		    <set name="nonrepeating">
-		       <repeat>
-			  <foreach>&content;</foreach>
-			  <if>
-			      <extract>
-				 <from>&li;</from>
-				 <name all="yes">interval</name>
-			      </extract>
-			      <then> </then>
-			     <else> &li; </else>
-			  </if>
-		       </repeat>
-		    </set>
+     <!--overwrite nonrepeating file if oldinterval wasn't repeating -->
+     <if><test not="yes">
+	   <extract>
+	      <from><get name="oldInterval" /></from>
+	      <name all="yes">interval</name>
+	   </extract>
+	  </test>
+	 <then>
+	    <!-- store nonrepeating events in ordinary directories -->
+	    <set name="nonrepeating">
+	       <repeat>
+		  <foreach>&content;</foreach>
+		  <if>
+		      <extract>
+			 <from>&li;</from>
+			 <name all="yes">interval</name>
+		      </extract>
+		      <then> </then>
+		     <else> &li; </else>
+		  </if>
+	       </repeat>
+	    </set>
 
 
-		    <set name="filedir">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;</set>
+	    <set name="filedir">&attributes:newyear;/&attributes:newmonth;/&attributes:newday;</set>
 
-			 <!-- create output directory just in case -->
-			 <output dst="&filedir;" directory="yes" />
+		 <!-- create output directory just in case -->
+		 <output dst="&filedir;" directory="yes" />
 
-			 <!-- creating a whole new event ==> appending file -->
-			 <if>	<get name="attributes:appendevent" /> 
-			     <then>
-				 <!-- append new data to file -->
-				 <output dst="&filedir;/Events" append="append">
-				    <get name="nonrepeating" />
-				 </output>
-			     <then />
-			 </if>
-			 <if>	<get name="attributes:rewriteevent" /> 
-			     <then>
-				 <!--  overwrite file --> 
-				 <output dst="&filedir;/Events" >
-				   <get name="nonrepeating" />
-				</output>
-			    <then />
-			</if>
-                   </then>
-               </if>
-
-           </action>
-    </define>
+		 <!-- creating a whole new event ==> appending file -->
+		 <if>	<get name="attributes:appendevent" /> 
+		     <then>
+			 <!-- append new data to file -->
+			 <output dst="&filedir;/Events" append="append">
+			    <get name="nonrepeating" />
+			 </output>
+		     <then />
+		 </if>
+		 <if>	<get name="attributes:rewriteevent" /> 
+		     <then>
+			 <!--  overwrite file --> 
+			 <output dst="&filedir;/Events" >
+			   <get name="nonrepeating" />
+			</output>
+		    <then />
+		</if>
+	   </then>
+       </if>
+  </action>
+</define>
 
 </tagset>
 
