@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.6 1999-03-12 19:49:51 pgage Exp $
+#	$Id: Makefile,v 1.7 1999-03-18 21:16:23 pgage Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -118,8 +118,8 @@ regexp.jar: regex_class.toc
 	mv $@ $(LIBDIR)
 
 # make a separate jar file for jigsaw subset package
-jigsaw_subset.jar: jigsaw_class.toc
-	jar cv0f jigsaw_subset.jar `cat jigsaw_class.toc`
+jigsaw_s.jar: jigsaw_class.toc
+	jar cv0f jigsaw_s.jar `cat jigsaw_class.toc`
 	mv $@ $(LIBDIR)
 
 ### Recursive documentation:
