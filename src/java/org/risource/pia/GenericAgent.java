@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.5 1999-03-23 23:32:17 steve Exp $
+// $Id: GenericAgent.java,v 1.6 1999-03-24 17:32:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -508,9 +508,12 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   /**
-   * set type of agent
+   * set type of agent.
+   *	Force the type into path form if it contains a "/".
    */
   public void type(String type){
+    if (type == null) type = name();
+    else if (type.indexOf("/") > 0) type = "/" + type;
     this.agenttype = type;
   }
 

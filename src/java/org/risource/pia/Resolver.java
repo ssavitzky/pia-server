@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.4 1999-03-23 23:32:28 steve Exp $
+// $Id: Resolver.java,v 1.5 1999-03-24 17:32:07 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -61,15 +61,14 @@ import org.risource.ds.List;
 
 public class Resolver extends Thread {
   /**
-   * Attribute index - a collection of agents currently running.
+   * Attribute index - a collection of agents by name.
    */
-
-  protected  Table agentCollection;
+  protected  Table agentsByName = new Table();
 
   /**
-   * Attribute index - a collection of computational codes.
+   * Attribute index - a collection of agents by pathName.
    */
-  protected Table computers;
+  protected  Table agentsByPathName = new Table();
 
   /**
    * Attribute index - whether to stop running
@@ -150,62 +149,37 @@ public class Resolver extends Thread {
   ************************************************************************/
 
   /**
-   * Given agent and its name, store it.
-   */
-  protected void agent( String name, Agent agent ){
-    if( name != null && agent != null ){
-      agentCollection.put( name, agent );
-    }
-  }
-
-  /**
-   * Get agent collection in a Table
-   *
-   */
-  protected Table agent(){
-    return agentCollection;
-  }
-
-  /**
    * Register an agent with the resolver. 
    *
    */
   public void registerAgent( Agent agent ){
-    String name;
-
-    if ( agent != null ){
-      name = agent.name();
-      agent( name, agent );
+    if ( agent != null && agent.name() != null ){
+      agentsByName.put(agent.name(), agent);
+      agentsByPathName.put(agent.pathName(), agent);
     }
-
     agent.initialize();
-    
   }
 
   /**
-   * Unregister an agent by name, removing and returning it.
-   * @return null if no deletion is not successful.
+   * Unregister an agent by name or pathname, removing and returning it.
+   *	A name that contains a "/" is considered to be a pathname, and
+   *	is forced to start with a "/".
+   * @return null if deletion is not successful.
    */
   public Agent unRegisterAgent( String name ){
-    Agent deadAgent = null;
-
-    deadAgent = (Agent) agentCollection.remove( name );
-    return deadAgent;
+    if (name.indexOf("/") > 0) name = "/" + name;
+    return unRegisterAgent(agent(name));
   } 
 
   /**
    * Unregister an agent by reference, removing and returning it.
-   * @return null if no deletion is not successful.
+   * @return the unregistered agent.
    */
   public Agent unRegisterAgent( Agent agent ){
-    Agent deadAgent = null;
-    String name;
-
-    if( agent != null ){
-      name = agent.name();
-      deadAgent = (Agent) agentCollection.remove( name );
-    }
-    return deadAgent;
+    if (agent == null) return agent;
+    if (agent.name() != null) agentsByName.remove(agent.name());
+    agentsByPathName.remove(agent.pathName());
+    return agent;
   } 
 
   /**
@@ -213,7 +187,7 @@ public class Resolver extends Thread {
    * @return agents
    */
   public Enumeration agents(){
-    return agentCollection.elements();
+    return agentsByPathName.elements();
   }
 
   /**
@@ -221,19 +195,33 @@ public class Resolver extends Thread {
    * @return agents' names
    */
   public Enumeration agentNames(){
-    return agentCollection.keys();
+    return agentsByName.keys();
   }
 
   /**
-   * Find agent by name
+   * Agents' pathNames 
+   * @return agents' pathNames
+   */
+  public Enumeration agentPathNames(){
+    return agentsByPathName.keys();
+  }
+
+  /**
+   * Find agent by name OR pathname.  Pathname is tried first.
    * @return agent according to name
    */
   public Agent agent( String name ){
-    Object o = agentCollection.get( name );
+    int i = name.indexOf("/");
+    if (i > 0) name = "/" + name;
+    if (i >= 0)
+      return (Agent) agentsByPathName.get(name);
+
+    // If the name didn't have a "/", convert it to a pathname first.
+    Object o =  agentsByPathName.get("/" + name);
     if( o != null )
       return (Agent)o;
     else
-      return null;
+      return (Agent) agentsByName.get(name);
   }
 
   /** 
@@ -449,8 +437,6 @@ public class Resolver extends Thread {
   ************************************************************************/
 
   public Resolver(){
-    agentCollection = new Table();
-    computers       = new Table();
     transactions    = new Queue();
     this.start();
   }
