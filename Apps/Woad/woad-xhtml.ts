@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.16 2000-07-20 02:08:55 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.17 2000-07-21 22:50:14 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -57,8 +57,8 @@ Note that we only need these inside the PIA.
 <h3>Graphics and pseudo-graphics</h3>
 
 <define element="ss">
-  <action><font face="Verdana, Arial, Helvetica, sans-serif">&content;</font>
-  </action>
+  <action><font face="Verdana, Arial, Helvetica, sans-serif"
+	   >&content;</font></action>
 </define>
 
 <define element="red">
@@ -464,7 +464,7 @@ Note that we only need these inside the PIA.
 
 <h2>Note-listing components</h2>
 
-<!-- $Id: woad-xhtml.ts,v 1.16 2000-07-20 02:08:55 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.17 2000-07-21 22:50:14 steve Exp $ -->
 
 <define element="rejectNote">
   <doc> decide whether to omit a file from the notes listing
