@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.9 2000-06-23 17:31:22 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.10 2000-06-23 23:08:44 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -187,6 +187,50 @@ Note that we only need these inside the PIA.
   </if></action>
 </define>
 
+<define element="mapSourceToNote">
+  <doc> Map the annotation path in <code>&amp;content;</code> to the
+	corresponding <em>source</em> path.  The content needs to be a
+	full path, typically the one returned by <code>&amp;DOC:path;</code>.
+  </doc>
+  <action><hide>
+	<let name="nprefix"><get name="SITE:notesPrefix"/></let>
+	<let name="sprefix"><get name="SITE:sourcePrefix"/></let>
+	<let name="offset"><get name="SITE:docOffset"/></let>
+	<let name="path"><get name="content"/></let>
+	<if>&sprefix;
+	    <then><if><test match="^&sprefix;">&path;</test>
+		      <then><let name="path">
+				  <subst match="^&sprefix;" 
+				         result="">&path;</subst>
+			    </let>
+			    <if>&path;
+				<else><let name="path">/</let></else>
+			    </if>
+		      </then>
+		  </if>
+	    </then>
+	</if>
+	<if>&offset;
+	    <then><if><test match="^&offset;">&path;</test>
+		      <then><let name="path">
+				  <subst match="^&offset;" 
+				         result="">&path;</subst>
+			    </let>
+			    <if>&path;
+				<else><let name="path">/</let></else>
+			    </if>
+		      </then>
+		      <else><let name="nprefix"></let>
+			    <let name="path"></let>
+		      </else>
+		  </if>
+	    </then>
+	</if>
+     </hide><text op="trim">
+	&nprefix;&path;
+  </text></action>
+</define>
+
 <define element="mapNoteToTarget">
   <doc> Map the annotation path in <code>&amp;content;</code> to the
 	corresponding URL on the target server.  The content needs to be a
@@ -307,47 +351,6 @@ Note that we only need these inside the PIA.
 	  <else><get name="attributes:path"><get name="LOC:path" /></get><hide>
 	        </hide>/&content;</else>
   </if></action>
-</define>
-
-<define element="mapSourceToNote">
-  <doc> Map the annotation path in <code>&amp;content;</code> to the
-	corresponding <em>source</em> path.  The content needs to be a
-	full path, typically the one returned by <code>&amp;DOC:path;</code>.
-  </doc>
-  <action><hide>
-	<let name="nprefix"><get name="SITE:notesPrefix"/></let>
-	<let name="sprefix"><get name="SITE:sourcePrefix"/></let>
-	<let name="offset"><get name="SITE:docOffset"/></let>
-	<let name="path"><get name="content"/></let>
-	<if>&sprefix;
-	    <then><if><test match="^&sprefix;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&sprefix;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="path">/</let></else>
-			    </if>
-		      </then>
-		  </if>
-	    </then>
-	</if>
-	<if>&offset;
-	    <then><if><test match="^&offset;">&path;</test>
-		      <then><let name="path">
-				  <subst match="^&offset;" 
-				         result="">&path;</subst>
-			    </let>
-			    <if>&path;
-				<else><let name="nprefix"></let></else>
-			    </if>
-		      </then>
-		  </if>
-	    </then>
-	</if>
-     </hide><text op="trim">
-	&nprefix;&path;
-  </text></action>
 </define>
 
 <ul></ul><!-- reset === indentation column === -->
