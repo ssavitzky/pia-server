@@ -1,16 +1,16 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.3 1999-10-11 22:37:34 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.4 1999-10-12 15:55:28 steve Exp $ -->
 
 <Container>
 
   <Ext name="xh"	type="text/html" tagset="SimpleCalendar-xhtml"	/>
 
-  <AGENT name=SimpleCalendar criteria="false">
+  <AGENT name="Calendar" criteria="false">
      <initialize><user-message>SimpleCalendar agent initialized</user-message>
      </initialize>
      <!-- The content will never be expanded.  This agent exists only as a
-	  marker, so that ~SimpleCalendar works.  It might not hurt to rename
-	  the agent "Calendar".
+	  marker, so that ~Calendar works.  This illustrates that the names of
+	  an agent and its home directory need not be the same.
        -->
   </AGENT>
 
