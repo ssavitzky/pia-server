@@ -1,0 +1,54 @@
+<!DOCTYPE Container SYSTEM "pia-config">
+<!-- $Id: _subsite.xcf,v 1.1 1999-10-29 23:11:28 bill Exp $ -->
+
+<Container>
+ 
+  <?-- This line tells the PIA to run the code inside the <action> tag
+       every 23:01 daily,  forever. --?>
+  <AGENT name=Ticker minute="01" hour="23" repeat="-1">
+     <initialize><user-message>Ticker agent initialized at &time;</user-message>
+     </initialize>
+
+     <action>
+
+	  <set name="sourcefile"><include src="http://quote.yahoo.co.jp/q?s=7752.T&d=t" /></set>
+          <?-- This part gets the stock price --?>
+	  <set name="goodrow">
+	  <extract>
+	    <from>&sourcefile;</from>
+	    <tm_like>
+		     <tr align="right">
+			<b>
+			</b>
+		     </tr>
+	    </tm_like>
+	  </extract>
+	  </set>
+
+          <set name="yenval"><text trim="yes">
+          <extract>
+	      <from>&goodrow;</from>
+	      <name all="yes">b</name>
+              <content />
+	  </extract>
+          </text></set>
+
+         <?-- This part appends today's stock price to the files --?>
+	 <user-message>Stored Ricoh's stock price for &day; at &time;/&month;/&year;
+         </user-message>
+         <output dst="stockHistory.xml"
+         append="yes"><text trim="yes"><sample>
+                         <date>&day;/&month;/&year;</date>
+                         <yen>&yenval;</yen>
+</sample></text>
+</output>
+         <output dst="stockHistory.txt"
+         append="yes">&day;/&month;/&year;  &yenval;
+</output>
+
+
+     </action>
+  </AGENT>
+
+
+</Container>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title></title>
+</head><body>
+<i>Ricoh Stock Ticker</i>
+
+<set name="sourcefile"><include src="http://quote.yahoo.co.jp/q?s=7752.T&d=t" /></set>
+
+
+<set name="goodrow">
+<extract>
+  <from>&sourcefile;</from>
+  <tm_like>
+           <tr align="right">
+              <b>
+              </b>
+           </tr>
+  </tm_like>
+</extract>
+</set>
+
+<table>
+  <tr>
+    <th>Current price</th>  
+    <th>Change</th>
+    <th>History</th>
+  </tr>
+
+  <tr>
+    <td>
+       <extract>
+	  <from>&goodrow;</from>
+	 <name all="yes">b</name>
+       </extract>
+       &yen;
+     </td>
+     <td>
+       <font color="red">
+       <extract>
+	  <from>&goodrow;</from>
+	  <name all="yes">font</name>
+          0
+       </extract>
+       &yen;
+       (
+       <extract>
+	  <from>&goodrow;</from>
+	  <name all="yes">font</name>
+          1
+       </extract>
+       )
+       </font>
+     </td>
+
+     <td>
+        <img border="0" width="192" height="96"
+           src="http://chart.yahoo.co.jp/chart/0b/7/7752.t.gif" />
+     </td>
+   </tr>
+</table>
+
+<short-footer />
+
+</body></html>
