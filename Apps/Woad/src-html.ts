@@ -20,7 +20,7 @@
 <tagset name="src-html" parent="HTML" tagset="woad-xhtml"
         documentWrapper="-document-" >
 
-<cvs-id>$Id: src-html.ts,v 1.7 2000-06-17 00:03:06 steve Exp $</cvs-id>
+<cvs-id>$Id: src-html.ts,v 1.8 2000-06-23 17:31:21 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for HTML</h1>
 
@@ -59,37 +59,19 @@
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
-
-  <doc> The following crockery is used to compute &amp;decoratedPath;,
-	which is the path of the current directory ``decorated'' with
-	".." links to the directories above "."
-  </doc>
-  <set name="depth">0</set>
-  <set name="split"><subst match="/" result=" ">[SRC]&slpath;</subst></set>
-  <repeat>
-    <foreach><text split>&split;</text></foreach>
-    <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
-  </repeat>
-  <set name="d">2</set>
-  <set name="decoratedPath"><repeat><hide>
-    </hide><foreach entity="f"><text split>&split;</text></foreach><hide>
-    <set name="dots"><repeat><for start="&d;" stop="&depth;"/>../</repeat></set>
-    <set name="d"><numeric op="sum">1 <get name="d"/></numeric></set>
-    </hide><if> &dots;
-	  <then><a href="&dots;">&f;</a>/</then>
-	  <else><a href="../&f;">&f;</a>/</else>
-  </if></repeat>&DOC:name;</set>
+  <set name="sroot">
+    <if>&SITE:sourcePrefix;
+	<then>&SITE:sourcePrefix;</then>
+	<else></else>
+    </if></set>
+  <!-- === don't decorate the final component, which is the file being listed. -->
+  <set name="decoratedPath">
+	<decoratePath base="&sroot;">[SRC]&spath;</decoratePath></set>
 
   </hide>
   <head><title>&spath; -- WOAD listing</title>
   </head>
   <body bgcolor="#ffffff">
-    <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
-      <tr><th align="left">
-          <h1><code>&decoratedPath;</code></h1>
-          </th>
-      </tr>
-    </table>
 
     <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
       <tr> <td>
@@ -99,7 +81,7 @@
 		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
 		   </th>
 		   <th align=left>
-		      <big> &VAR:format; source listing</big>
+		      <big> source listing: <code>&decoratedPath;</code> </big>
 		   </th>
 	       </tr>
 	       <tr>
@@ -121,7 +103,7 @@
 		      </if>
 		      <if><get name="npath" />
 		          <then>
-		      	    <a href="&npath;">[notes]</a>
+		      	    <a href="&npath;">[URL annotations]</a>
 		          </then>
 		      </if>
 		      <if> &FORM:entities;<!-- this is wrong now. -->
@@ -139,39 +121,108 @@
 	   <td>&nbsp;</td>
       </tr>
     </table>
+    
+<index-bar name="Notes">Notes Server Listing</index-bar>
+<p>
+    <table bgcolor="yellow">
+      <tr> <td> There are no notes associated with this source file.
+	   </td>
+      </tr>
+    </table>
+   </p> 
+
+<index-bar name="Server">Notes Server Listing</index-bar>
+
+<if> &tpath;
+     <then>
+	<p> This page is a <ss>WOAD</ss> listing of the application source
+	    document <code>&spath;</code>
+	    <br />
+    	    It corresponds to the application URL <code>&tpath;</code>
+	</p>
+	<p> There are two options for viewing the associated application
+	    document: 
+	</p>
+	<table bgcolor="white" width="90%" cellpadding="5" border="2"
+	       align="center" >
+	  <tr>
+	    <td valign="top"> 
+		 <a href="&npath;">View [URL annotations].</a>
+	    </td>
+	    <td> This will show you the <ss>WOAD</ss> annotations associated
+		 with this URL.  It will also show you a listing, similar to
+		 this one, of the page <em>as it came from the server.</em>
+		 This can be useful for debugging an active document.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td valign="top"> 
+		 <a href="&tpath;">View page on &lt;server&gt;.</a>
+	    </td>
+	    <td> This is a link to this page <em>on the server</em> -- in
+		 other words, it's what a user will see if they browse to the
+		 url that corresponds to this document.  
+	    </td>
+	  </tr>
+	</table>	  
+     </then>
+     <else>
+	<p> This page is a <ss>WOAD</ss> source listing of
+	    <code>&spath;</code>. 
+	</p>
+	<table bgcolor="yellow">
+	  <tr> <td> There is no URL on the server that corresponds to this
+	            file. 
+	       </td>
+	  </tr>
+	</table>
+     </else>
+</if>
+<p> 
+</p>
+<index-bar name="Listing">Notes Server Listing</index-bar>
+
 <!-- ===================================================================== -->
 <if> &FORM:nested;	<!-- ====== nested =============================== -->
   <then>
-    <blockquote><em>
+<table border="2" width="90%" align="center">
+  <tr><td><em>
       This <tt>&VAR:format;</tt> listing is color-coded and indented to show
       the nesting level of the tags.  
 
       <red>Note that because of current limitations omitted end tags are
       shown, and linebreaks inside of tags are eliminated.  Missing end tags
-      may not be handled correctly.</red>
-</em></blockquote>
+      may not be handled correctly.</red> </em>
+  </td></tr>
+</table>
 <hr />
 <pretty>&content;</pretty>
   </then>
 <else-if> &FORM:raw;	<!-- ====== raw ================================== -->
   <then>
-<blockquote><em> This <tt>&VAR:format;</tt> listing shows the full contents of
-  the file with no alteration.
-</em></blockquote>
+<table border="2" width="90%" align="center">
+  <tr><td><em> This <tt>&VAR:format;</tt> listing shows the full contents of
+  the file with no alteration.</em>
+  </td></tr>
+</table>
+
 <hr />
 <pre><include src="&DOC:path;" quoted="true" tagset="" /></pre>
   </then></else-if>
 <else-if> &FORM:tsdoc;	<!-- ====== tagset =============================== -->
   <then>
-<blockquote><em> This <tt>&VAR:format;</tt> listing shows tagset
-  documentation. 
-</em></blockquote>
+<table border="2" width="90%" align="center">
+  <tr><td><em> This <tt>&VAR:format;</tt> listing shows tagset
+       documentation. </em>
+  </td></tr>
+</table>
+
 <hr />
 <include src="&DOC:path;" tagset="tsdoc" />
   </then></else-if>
 <else>			<!-- ====== processed ============================ -->
-    <blockquote><em>
-
+<table border="2" width="90%" align="center">
+  <tr><td><em>
       This <tt>&VAR:format;</tt> listing is color-coded and font-coded
       according to syntax.  The <tt><a href="&DOC:path;?wrap">wrapped</a></tt>
       format tends to be more compact than the normal <tt><a
@@ -180,8 +231,10 @@
 
       <red>Note that because of current limitations omitted end tags are
       shown, and linebreaks inside of tags are eliminated.  Missing end tags
-      may not be handled correctly.</red>
-    </em></blockquote>
+      may not be handled correctly.</red>  </em>
+  </td></tr>
+</table>
+
 <hr />
 <if>&wrap;
     <then><expand>&content;</expand></then>

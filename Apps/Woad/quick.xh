@@ -9,7 +9,8 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="Icon/dyerwoad.jpg" alt="WOAD" width=170 />
+  <th width="170" valign="bottom">
+  	<img src="Icon/dyerwoad.jpg" alt="WOAD" width=170 />
   </th>
   <td valign="top">
     <table cellspacing="0" cellpadding="0" border="0" valign="top">
@@ -41,7 +42,7 @@
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#running">Running <ss>Woad</ss></a> </td>
 	        </tr>
-	  	<tr> <td> <a href="#blue">Why blue?</a></td>
+	  	<tr> <td> <a href="#why">Why blue?</a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#Woad_Warrior"><ss>Woad Warrior</ss></a>
 		     </td>
@@ -50,6 +51,11 @@
 	</td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr> <td width="170" colspan="2">&nbsp;&lt;- 
+         <a href="http://www.net-link.net/~rowan/crafts/woad/woadpage.html">The
+      	    Woad plant</a>, <em>Isatis tinctoria</em>
+         <a href="quick#why">[why?]</a>
+         </td></tr>
   </table>
 </td></tr></table>
 <hr />
@@ -68,7 +74,9 @@
 </pre>
 
 <p> If that directory is visible on a server, add
-    ``<code>target=<em>host:port</em></code>'' to the command. 
+    ``<code>target=<em>host:port</em>&nbsp;sources=<em>directory</em></code>''
+    to the command.  <red>(The ``<code>sources=</code>'' is temporarily
+    required to get around a deficiency in command-line decoding.)</red>
 </p>
 
 <p> If the documents are in a subdirectory, e.g.,
@@ -76,13 +84,19 @@
     ``<code>prefix=/<em>subdir</em></code>''
 </p>
 
+<p> <ss>WOAD</ss>'s annotations and indices will normally be in your home
+    directory in a subdirectory called <code>.woad</code> -- This can be
+    changed by specifying ``<code>-root <em>directory</em></code>''.
+</p>
+
+
 <h4>Examples:</h4>
 
 <p> For example, if you have a typical Red Hat Linux installation, use:
 </p>
 
 <pre>
-    woad /home/httpd/html target=localhost:80
+    woad sources=/home/httpd/html target=localhost:80
 </pre>
 
 <p> If you want to see the <code>cgi-bin</code> and <code>icons</code>
@@ -90,7 +104,7 @@
 </p>
 
 <pre>
-    woad /home/httpd target=localhost:80 prefix=/html
+    woad sources=/home/httpd prefix=/html target=localhost:80 
 </pre>
 
 <p> On a Windows machine you currently have to substitute</p>
@@ -100,12 +114,17 @@
 
 
 <hr />
-<h2><a name="blue">Why Blue?</a></h2>
+<h2><a name="why">Why Blue?  Why Woad?</a></h2>
 
 <p> The short answer is that the plant <em>Isatis tinctoria</em>, common name
     Dyer's Woad, is a source of the same blue dye that comes from the tropical
     Indigo plant.  It was used for body decoration by the Pictish warriors of
-    ancient Britain.  More information about Woad can be found in the <a
+    ancient Britain, so when ``Web Oriented Application Development'' came up
+    in the search for an acronym, the analogy between ``Code Warrior'' and
+    ``Woad Warrior'' made it irresistable.
+</p>
+
+<p> More information about Woad can be found in the <a
     href="about.html#see_also">references</a> section of <a href="about.html">
     About <ss>WOAD</ss></a>.
 </p>
@@ -128,6 +147,20 @@
 </p>
 </blockquote>
 
+
+
+<hr /><!-- filler -->
+<table width="90%" align="center">
+  <tr><td align="center" height="1000">
+          <table><tr><td> This space intentionally left blank<br />
+	                  in order to force the last few items<br />
+                          to the top of the page when linked to.
+	       </td></tr>
+	  </table>
+      </td>
+  </tr>
+</table>
+
 <p>
-<short-footer cvsid="$Id: quick.xh,v 1.4 2000-06-09 16:58:18 steve Exp $" />
+<short-footer cvsid="$Id: quick.xh,v 1.5 2000-06-23 17:31:21 steve Exp $" />
 </p></body></html>

@@ -9,7 +9,8 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="Icon/dyerwoad.jpg" alt="WOAD" width="170" />
+  <th width="170" valign="bottom">
+  	<img src="Icon/dyerwoad.jpg" alt="WOAD" width="170" />
   </th>
   <td valign="top">
     <table cellspacing="0" cellpadding="0" border="0" valign="top">
@@ -64,11 +65,16 @@
         </td>
     </tr>
     <tr><td width="170">&nbsp;</td><td></td></tr>
+    <tr> <td width="170" colspan="2">&nbsp;&lt;- 
+         <a href="http://www.net-link.net/~rowan/crafts/woad/woadpage.html">The
+      	    Woad plant</a>, <em>Isatis tinctoria</em>
+         <a href="quick#why">[why?]</a>
+         </td></tr>
   </table>
 </td></tr></table>
 <hr />
 
 <include src="app-info.inc"> no application information </include>
 <p>
-<short-footer cvsid="$Id: woad.xh,v 1.5 2000-06-21 01:10:39 steve Exp $" />
+<short-footer cvsid="$Id: woad.xh,v 1.6 2000-06-23 17:31:22 steve Exp $" />
 </p></body></html>

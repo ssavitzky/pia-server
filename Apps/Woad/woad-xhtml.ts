@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.8 2000-06-18 17:40:51 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.9 2000-06-23 17:31:22 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -259,6 +259,56 @@ Note that we only need these inside the PIA.
   </text></action>
 </define>
 
+<hide><dl></dl></hide>
+
+<define element="decoratePath">
+  <doc> Turn a path into a sequence of links to its components.
+	=== later may want to add trailing "/" where appropriate, and not
+	    link the final path component. ===
+  </doc>
+  <define attribute="base">
+    <doc> The base path for the document.
+    </doc>
+  </define>
+  <action><hide>
+    <let name="split">
+	<subst match="/" result=" "><get name="content"/></subst>
+    </let>
+    <let name="xpath"><get name="attributes:base" /></let>
+    <let name="sep"></let></hide>
+    <repeat><foreach><text op="split">&split;</text></foreach><text op="trim">
+	<if><get name="sep" />
+	    <then><get name="sep" /><a href="&xpath;/&li;">&li;</a>
+		  <let name="xpath"><get name="xpath"/>/&li;</let>
+	    </then>
+	    <else><a href="&xpath;">&li;</a>
+		  <let name="sep">/</let>
+	    </else>
+        </if>
+    </text></repeat>
+  </action>
+</define>
+
+<define element="fixRelativePath">
+  <doc> Turn a relative path into an absolute path starting with
+	``<code>/</code>''.  Return null for a non-local URL.
+  </doc>
+  <define attribute="path">
+    <doc> The base path for the document.  If omitted, LOC:path is used.
+    </doc>
+  </define>
+  <action><if>
+        <test match="^[a-zA-Z]+[:]">&content;</test>
+	  <then></then>
+	<else-if><test match="^\.[/]?$">&content;</test>
+	  <then><get name="attributes:path"><get name="LOC:path" /></get>/</then></else-if>
+	<else-if><test match="^[/]">&content;</test>
+	  <then>&content;</then></else-if>
+	  <else><get name="attributes:path"><get name="LOC:path" /></get><hide>
+	        </hide>/&content;</else>
+  </if></action>
+</define>
+
 <define element="mapSourceToNote">
   <doc> Map the annotation path in <code>&amp;content;</code> to the
 	corresponding <em>source</em> path.  The content needs to be a
@@ -457,13 +507,11 @@ Note that we only need these inside the PIA.
     <let name="text">
 	<get name="attributes:text"><get name="attributes:name"/></get>
     </let>
-    <if><do name="test">
-	    <set name="match"><get name="name"/></set>
-	    <get name="content"/></do>
+    <if><test match="&attributes:name;"><get name="content"/></test>
 	<then><b><get name="text"/></b></then>
-	<else><do name="a">
-		  <set name="href">#<get name="name"/></set>
-		  <get name="text"/></do></else>
+	<else><make name="a">
+		  <let name="href">#<get name="name"/></let>
+		  <get name="text"/></make></else>
     </if>
   </action>
 </define> 
@@ -634,6 +682,7 @@ Note that we only need these inside the PIA.
 	<repeat>
 	  <foreach><text op="trim"><get name="content"/></text></foreach>
 	  <xan name="&li;"><get name="attributes:name"/></xan>
+	</repeat>
       </td></tr>
     </table>
   </action>
@@ -689,7 +738,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
+<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Silicon Valley.</b>
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br />
 <em><get name="attributes:cvsid" /></em>
 <a href="&PIA:rootPath;Agents/View/source?url=&docPath;">view source</a>
@@ -719,7 +768,7 @@ Note that we only need these inside the PIA.
           <nodes><get name="dateIndex"/></nodes>
         </extract> </subst> </set>
     </hide>
-<b>Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
+<b><ss>WOAD</ss> Copyright &copy; <get name="myear"/> Ricoh Silicon Valley</b>.
    Open Source at &lt;<b>&RiSource.org;/&RiSource.org.pia;</b>&gt;.<br>
 <em><get name="attributes:cvsid" /></em>
 <if><status src="&PIA:rootPath;Agents/View/source.xh" item="exists"/>

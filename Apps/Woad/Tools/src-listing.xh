@@ -7,9 +7,14 @@
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
+  <set name="sroot">
+    <if>&SITE:sourcePrefix;
+	<then>&SITE:sourcePrefix;</then>
+	<else></else>
+    </if></set>
 </hide>
 <title>&spath; : Woad source listing</title>
-</head><body>
+</head><body bgcolor="#ffffff">
 <hide>
   <set name="VAR:format"><if> &FORM:all; <then>complete</then>
     <else-if>&FORM:detail;<then>detail</then></else-if>
@@ -18,38 +23,14 @@
   <set name="tail"><if><get name="PATH_INFO"/>
 		       <then>/<get name="PATH_INFO"/></then>
   </if></set>
+  <set name="decoratedPath">
+	<decoratePath base="&sroot;">[SRC]&spath;/&tail;</decoratePath></set>
 
-  <doc> The following crockery is used to compute &amp;decoratedPath;,
-	which is the path of the current directory ``decorated'' with
-	".." links to the directories above "."
-  </doc>
-  <set name="depth">0</set>
-  <set name="split"><subst match="/" result=" ">[SRC]&spath;</subst></set>
-  <repeat>
-    <foreach><text split>&split;</text></foreach>
-    <set name="depth"><numeric op="sum">1 <get name="depth"/></numeric></set>
-  </repeat>
-  <set name="d">2</set>
-  <set name="decoratedPath"><repeat><hide>
-    </hide><foreach entity="f"><text split>&split;</text></foreach><hide>
-    <set name="dots"><repeat><for start="&d;" stop="&depth;"/>../</repeat></set>
-    <set name="d"><numeric op="sum">1 <get name="d"/></numeric></set>
-    </hide><if> &dots;
-	  <then><a href="&dots;">&f;</a>/</then>
-	  <else>&f;</else>
-  </if></repeat></set>
-
-  <doc> Set other variables.
-  </doc>
   <set name="tpath"><mapSrcToTarget>&LOC:path;&tail;</mapSrcToTarget></set>
   <set name="npath"><mapSourceToNote>&LOC:path;&tail;</mapSourceToNote></set>
 </hide>
 
 <table bgcolor="#99ccff" cellspacing="0" border="0" width="100%">
-  <tr><th align="left">
-    <h1><code>&decoratedPath; &tail;</code></h1>
-    </th>
-  </tr>
   <tr> <td>
 	     <table><!-- the nested table shrink-wraps its contents     -->
 	            <!-- so it doesn't get spread out by the width=100% -->
@@ -57,8 +38,8 @@
 		      <big> &nbsp;<ss><a href="/.Woad/">WOAD</a></ss></big>
 		   </th>
 		   <th align=left>
-		      <big> <get name="VAR:format"/> source directory
-			    listing</big> 
+		      <big> directory listing:
+		 	    <code>&decoratedPath; &tail;</code></big> 
 		   </th>
 	       </tr>
 	       <tr>
@@ -73,7 +54,7 @@
 		      </if>
 		      <if><get name="npath" />
 		          <then>
-		      	    <a href="&npath;">[notes]</a>
+		      	    <a href="&npath;">[URL annotations]</a>
 		          </then>
 		      </if>
 		      <a href="/.Woad/help.xh#views">[help]</a>
@@ -85,6 +66,18 @@
 </table>
 
 <index-bar name="Notes">Notes Files HEADER</index-bar>
+
+<if> &npath;
+     <then>
+       <table bgcolor="yellow" width="80%" align="center" >
+	 <tr> <td> <b>Note:</b> This is a source directory listing.  If
+		   there's a page here called <code>index.html</code>, that's
+		   probably what the browser will show for it.
+	      </td>
+	 </tr>
+       </table>
+     </then>
+</if>
 
 <doc> Look for notes.
 </doc>
@@ -107,17 +100,27 @@
   </action>
 </define>
 
+<define element="summarize">
+  <action>
+    <extract><from><include  tagset="/.Woad/woad-web.ts" quoted src="&content;" /></from>
+	     <name all="all">summary</name> <content /></extract>
+  </action>
+</define>
+
 <define element="describeNote">
   <doc> come up with a good description for a note.
   </doc>
   <action>
     <if> <test match="\.wi$">&content;</test>
-	 <then><ss>WOAD</ss> <subst match="\.wi$" result="">&content;</subst>
-		file
+	 <then> <let name="basename">
+		     <subst match="\.wi$" result="">&content;</subst>
+		</let>( <ss>WOAD</ss>
+			<a href="/.Woad/help.xh#&basename;">&basename;</a>
+			file ) 
 	 </then>
 	 <else> <logical op="or">
 		  <extract-title>&attributes:src;/&content;</extract-title>
-	 	  <ss>WOAD</ss> note (untitled)
+	 	  ( <ss>WOAD</ss> annotation: untitled )
 	 	</logical>
 	 </else>
     </if>
@@ -125,36 +128,57 @@
 </define>
 
 
-<table bgcolor="white">
+<form action="/.Woad/src-note" method="post">
+  <input type="hidden" name="path" value="&LOC:path;" />
+<table bgcolor="white" width="90%">
+  <tr> <th bgcolor="#cccccc" width="150"> label </th>
+       <th bgcolor="#cccccc" colspan="2"> title / summary </th>
+  </tr>
 <repeat>
   <foreach entity="f">
      <text sort>
   	<status item="files" src="&LOC:path;&tail;" />
      </text>
   </foreach>
+  <let name="label"><subst match="\.[^.]*$" result="">&f;</subst></let>
   <if><rejectNote>&f;</rejectNote>
       <else>
-  	<tr><th align="left"><a href="&f;">&f;</a></td>
-	    <td> <describeNote src="&LOC:path;&tail;">&f;</describeNote>
+  	<tr><th align="left"><a href="&f;">&label;</a></th>
+	    <td colspan="2">
+	  	<describeNote src="&LOC:path;&tail;">&f;</describeNote>
 	    </td>
+	<let name="summary"><summarize>&LOC:path;&tail;/&f;</summarize></let>
+	<if><get name="summary" />
+	    <then> <tr> <td align="right" valign="top">
+	      		    <a href="&f;">[more]</a>
+	      		</td>
+		        <td colspan="2"> <get name="summary" /> </td>
+		   </tr>
+	    </then>
+	</if>
 	</tr>
       </else>
   </if>	  
 </repeat>
+  <tr> <th bgcolor="#cccccc" width="150"> select label </th>
+       <th bgcolor="#cccccc" colspan="2" align="left"> click to create note
+       </th>
+  </tr>
+  <tr> <td valign="top">
+    	  <select> <option selected="selected">(other)</option>
+	       	   <option>bug</option>
+	       	   <option>note</option>
+	       	   <option>suggestion</option>
+	  </select>
+       </td>
+       <td valign="top" align="left">
+    	  <input name="op" value="Create New Note" type="submit" />
+       </td>
+       <td valign="top"> Existing notes can be viewed and edited by clicking
+          on their label. 
+       </td>
+  </tr>
 </table>
-
-<form action="/.Woad/src-note" method="post">
-  <input type="hidden" name="path" value="&LOC:path;" />
-  <table cellpadding="0" cellspacing="2" border="0" bgcolor="white">
-    <tr> <th bgcolor="#cccccc"> Name </th> 
-	 <th bgcolor="#cccccc"> Title </th> 
-	 <th bgcolor="#cccccc"> [help] </th>
-    </tr>
-    <tr> <td> &nbsp;<input name="name" size="8" /> </td>
-	 <td> &nbsp;<input name="title" size="30" /> </td>
-	 <td> &nbsp;<input name="op" value="Add Note" type="submit" /> </td>
-    </tr>
-  </table>
 </form>
 
 <index-bar name="Files">Notes Files HEADER</index-bar>
@@ -168,12 +192,24 @@
   <action>
     <tr> <td> <a href="&attributes:name;"><code>&attributes:name;</code></a>
 	 </td>
-	 <td> <logical op="or">
+	 <td> &nbsp;
+	      <logical op="or">
 	        <get name="attributes:title"/>
 	        <get name="attributes:dscr"/>
-	        <get name="attributes:tdscr"/>
+	        <em><if> <get name="attributes:tdscr" />
+	      	    <then> <get name="attributes:tdscr" />
+	      	 	   <if> <test match="file">
+	      			  <get name="attributes:tdscr" /></test>
+	      			<test match="directory">
+	      			  <get name="attributes:tdscr" /></test>
+	      			<else>file</else>
+	      		   </if>	      	    </then>
+	      	    <else>(unknown; probably text)</else>
+	        </if></em>
+	      </logical>
 	 </td>
     </tr>
+  </action>
 </define>
 
 <set name="dirIndex"><include src="&LOC:path;/dirIndex.wi"/></set>
@@ -203,10 +239,10 @@
     </then>
   <else-if>&dirIndex;
     <then> 
-	<table bgcolor="white">
+	<table bgcolor="white" border="3">
 	  &dirIndex;
 	</table>
-    <then>
+    </then>
   </else-if>
     <else>
 	<table bgcolor="white">
@@ -265,5 +301,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.5 2000-06-21 01:07:22 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.6 2000-06-23 17:32:44 steve Exp $" />
 </body></html>

@@ -43,12 +43,17 @@
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#Woad_Trees"><ss>Woad</ss> Trees</a> </td>
 	        </tr>
+	  	<tr> <td> &nbsp;</td>
+		     <td> &nbsp;&nbsp;&nbsp; </td>
+		     <td> <a href="#woadFiles"><ss>Woad</ss> Files</a>
+		     </td>
+	        </tr>
 	  	<tr> <td> <a href="#modes">operating modes</a></td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#Woad_Cmd">The <code>woad</code> Command</a>
 		     </td>
 	        </tr>
-	  	<tr> <td> <a href="#"></a></td>
+	  	<tr> <td> &nbsp;</td>
 		     <td> &nbsp;&nbsp;&nbsp; </td>
 		     <td> <a href="#Woad_Warrior"><ss>Woad Warrior</ss></a>
 		     </td>
@@ -123,16 +128,37 @@
 <pre>    pia -site %PIA_HOME%/Apps/Woad/woad.xcf <em>directory</em>
 </pre>
 
+<p> The following command starts a <ss>Woad</ss> server with a given source
+    directory and target server, and specifies the subdirectory of the source
+    directory that contains the server's documents:
+</p>
+
+<pre>    woad target=<em>host:port</em> sources=<em>dir</em> offset=<em>/path</em>
+</pre>
+
 <h4>Options</h4>
 
 <p> In both cases, you can add the following parameters
 </p>
 
 <dl>
+  <dt> <code>-root <em>directory</em></code> (default <code>$HOME/.woad</code>)
+  </dt>
+  <dd> sets the ``annotation root'' directory, which is where the notes and
+       index files go.  If this <ss>Woad</ss> server is going to be shared by
+       several users, it is probably best to create a new pseudo-user to own
+       this directory.
+  </dd>
   <dt> <code>target=<em>host:port</em></code>
   </dt>
   <dd> sets the ``<em>target server</em>'' -- the server on which the web
        application is running.
+  </dd>
+  <dt> <code>sources=<em>directory</em></code>
+  </dt>
+  <dd> This specifies the directory where the source code resides.  It is
+       <em>required</em> if the target is specified.  <red>(This is temporary,
+       caused by  a deficiency in command-line decoding.)</red>
   </dd>
   <dt> <code>prefix=<em>path</em></code>
   </dt>
@@ -145,11 +171,10 @@
   </dd>
   <dt> <code>offset=<em>path</em></code>
   </dt>
-  <dd> Sets the ``<em>source offset</em>'' -- the path, relative to an
-       application's root directory, at which <em>its own <ss>Woad</ss>
-       Tree</em> (source tree) is located.  Typically, for example in the PIA
-       running with its default configuration, this is
-       ``<code>/.Tree</code>''.
+  <dd> Sets the ``<em>document offset</em>'' -- the path, relative to the
+       sources, at which the actual documents are located.
+       <red>(<ss>WOAD</ss> cannot yet properly map URL's into virtual source
+       directories, e.g. <code>cgi-bin</code>.)</red>
   </dd>
 </dl>
 
@@ -218,6 +243,36 @@
 </p>
 
 <hr />
+<h2><a name="woadFiles"><ss>WOAD</ss> Index and Annotation Files</a></h2>
+
+<h3><a name="urlIndex"><code>urlIndex.wi</code></a></h3>
+
+<p> This index contains all pages at the same level of the target URL tree. 
+</p>
+
+<p> <red> currently unimplemented </red> -- the plan is to build these either
+    on-the-fly while browsing the URL tree, or by crawling the site with an
+    indexing program, possibly started in parallel with the server by the
+    <code>woad</code> command.
+</p>
+
+<h3><a name="dirIndex"><code>dirIndex.wi</code></a></h3>
+
+<p> This index contains all files and directories in the source directory it
+    is associated with.  It is constructed by the <code>woad-index.pl</code>
+    command, which can be found in the <code>PIA/src/app/tools/</code>
+    directory.
+</p>
+
+<h3><a name="sourcePathIndex"><code>sourcePathIndex.wi</code></a></h3>
+
+<p> This index contains <em>all</em> files and directories in the source,
+    including their path from the source root.  It is constructed by the
+    <code>woad-index.pl</code> command, which can be found in the
+    <code>PIA/src/app/tools/</code> directory.
+</p>
+
+<hr />
 <h2>Forms and Tables</h2>
 
 
@@ -259,5 +314,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.6 2000-06-17 00:03:06 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.7 2000-06-23 17:31:21 steve Exp $" />
 </p></body></html>

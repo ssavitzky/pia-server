@@ -5,10 +5,16 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
-  <li> <b>Bug</b> (site) suspect isn't propagated. <br />
-       home document and tagsets getting loaded from config file.  Possibly
-       <code>base</code> isn't getting set early enough.
-       (2000-05-19)
+  <li> <b>Bug</b> fix command-line decoding <br />
+       Check for presence of target, sources; set <code>vroot</code>
+       appropriately. 
+       (2000-06-23)
+  </li>
+  <li> <b>Hole</b> site indexing; links TO pages <br />
+       There are two ways to do it: incrementally while browsing the URL tree,
+       and offline using a crawler (similar to woad-index.pl).  It's going to
+       be slow unless we use a namespace.  (Maybe SITE:siteMap.) 
+       (2000-06-21)
   </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things: proper tagging of identifiers in context,
@@ -18,13 +24,56 @@
        tags.
        (2000-06-07)
   </li>
+  <li> <b>Hole</b> note editing and creation <br />
+       "label" = filename base.  When creating a new note, suffix a number to
+       the chosen label. 
+       (2000-06-22)
+  </li>
+  <li> <b>Bug</b> Allow arbitrary links, text on index bar <br />
+       This requires using &lt;xan&gt; etc. tags, with some modifications.
+       (2000-06-22)
+  </li>
+  <li> <b>Hole</b> regenerate source dirIndex incrementally <br />
+       can be done by invoking the perl script as a CGI.
+  </li>
+  <li> <b>Impr</b> don't index last component of path in decoratePath <br />
+       A little tricky.  Either count first, or stay one step behind and add
+       an end marker.
+  </li>
+  <li> <b>Impr</b> (pia) optional redirect on extension path <br />
+       Optionally redirect on locating a document with an extension supplied
+       from the path.
+       (2000-06-22)
+  </li>
+  <li> <b>Bug</b> (site) <code>locate</code> should fix pathinfo <br />
+       <code>locate</code> needs to chop ``<code>.</code>'' and
+       ``<code>..</code>'' segments from the pathinfo before passing it to the
+       listing document.
+       (2000-06-22)
+  </li>
+  <li> <b>Impr</b> support for woadProject under root <br />
+       (subdirectory of <code>~/.woad</code>) to allow multiple WOAD servers to
+       keep out of one anothers' way. -- it would also provide an alternative
+       to [TOP].
+       (2000-06-21)
+  </li>
+  <li> <b>Wish</b> support for multiple source directories <br />
+       <code>woad-index.pl</code> needs to take multiple source files.
+       (2000-06-21)
+  </li>
+  <li> <b>Bug</b> (site) suspect isn't propagated. <br />
+       home document and tagsets getting loaded from config file.  Possibly
+       <code>base</code> isn't getting set early enough.
+       (2000-06-19)
+  </li>
   <li> <b>Bug</b> prefixes not robust <br />
        Need to explicitly force prefixes to have or not have leading slash.
        (2000-06-16)<br />
   </li>
   <li> <b>Hole</b> annotation tagset. <br />
-       
-       (2000-06-07)
+       We may actually need several: url-space notes / source notes / indices.
+       (2000-06-07)<br />
+       -- (2000-6-21) in progress 
   </li>
   <li> <b>Bug</b> (site) <code>file:</code> in <code>.xcf</code> file <br />
        Need to be able to make virtual links to absolute paths, and it works,
@@ -60,7 +109,7 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.8 2000-06-21 01:12:17 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.9 2000-06-23 17:31:21 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
