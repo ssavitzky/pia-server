@@ -166,9 +166,10 @@
     <table cellspacing=0 cellpadding=0 border=0>
     <tr><th align=left nowrap width=170>&blank-170x1;<td><br>
     <tr><th align=right><xopt page="&attributes:page;"
-			      pages="home index help options">&blue-dot;</xopt>
+			      pages="home index config help options">&blue-dot;</xopt>
 	<td> <xa href="home" page="&attributes:page;">Home</xa>
     	     <xa href="index" page="&attributes:page;">Index</xa>
+    	     <xa href="config" page="&attributes:page;">Configure</xa>
     	     <xa href="help" page="&attributes:page;">Help</xa>
 	     <xa href="options" page="&attributes:page;">Options</xa>
     <tr><th align=right>
