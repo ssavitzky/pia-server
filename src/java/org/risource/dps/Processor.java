@@ -1,5 +1,5 @@
 ////// Processor.java: Document Processor interface
-//	$Id: Processor.java,v 1.5 1999-04-17 01:18:53 steve Exp $
+//	$Id: Processor.java,v 1.6 1999-10-14 21:44:53 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -35,7 +35,7 @@ package org.risource.dps;
  *  <p>	A TopContext (q.v.) is a specialized Processor with links to its
  *	current Tagset and, possibly, Parser.
  *
- * @version $Id: Processor.java,v 1.5 1999-04-17 01:18:53 steve Exp $
+ * @version $Id: Processor.java,v 1.6 1999-10-14 21:44:53 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Context
@@ -92,6 +92,10 @@ public interface Processor extends Context {
   /** Process the current Node by expanding its attributes,
    *	then processing its children. */
   public void expandCurrentNode();
+
+  /** Copy the current Node and its content without expansion.
+   */
+  public void copyCurrentNode();
 
   /** Process the children of the current Node.
    *
