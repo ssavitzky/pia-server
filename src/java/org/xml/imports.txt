@@ -1,0 +1,17 @@
+# imports.txt $Id: imports.txt,v 1.1 1999-07-12 23:42:12 steve Exp $
+# This file contains shell-script snippets that document the original
+# location of various imported packages.
+#
+
+### org/xml/sax
+
+#   download and unarchive files
+ncftp http://www.megginson.com/SAX/saxjava-1.0.zip
+mkdir sax; cd sax; unzip ../saxjava-1.0.zip
+#   remove generated archives and documentation subdirectories
+rm -rf org javadoc *.jar *.class	# these are generated -- not needed.
+#   import
+cvs import -m "import from meggison.com" PIA/src/java/org/xml/sax meggison-com on990712
+#   preserve old CVS keywords in code files
+cd ~/PIA/src/java/org/xml; cvs update -d; cd sax
+cvs admin -ko *.java
