@@ -63,15 +63,16 @@
     as fast as a linked tree, depth-first traversal is actually faster, and
     storage-management is trivial.  In addition, by padding strings to some
     reasonable length (8 bytes comes to mind), one could ensure that numeric
-    fields always start on word boundaries, which would allow the occasional
-    pointer for things like handlers.
+    fields always start on word boundaries, and would also allow the
+    occasional pointer for things like handlers.
 
 <p> Some kind of interleaving scheme (with "skip" spans as well as "content"
-    spans) would allow 
+    spans) would allow variables to be written into as well as intermediate
+    (processed content) parse trees. 
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: c-port.html,v 1.1 1999-06-29 00:52:59 steve Exp $</b><br>
+<b>$Id: c-port.html,v 1.2 1999-06-29 01:01:36 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>
