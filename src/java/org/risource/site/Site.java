@@ -1,5 +1,5 @@
 ////// Site.java -- implementation of Root
-//	$Id: Site.java,v 1.8 1999-12-14 18:44:00 steve Exp $
+//	$Id: Site.java,v 1.9 2000-04-05 18:09:02 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -44,7 +44,7 @@ import java.util.Enumeration;
  * <p> All real container resources that descend from a Site can be 
  *	assumed to be Subsite objects. 
  *
- * @version $Id: Site.java,v 1.8 1999-12-14 18:44:00 steve Exp $
+ * @version $Id: Site.java,v 1.9 2000-04-05 18:09:02 steve Exp $
  * @author steve@rsv.ricoh.com 
  */
 
@@ -54,8 +54,8 @@ public class Site extends Subsite implements Root {
   ** State:
   ************************************************************************/
 
-  protected int verbosity = 0;
-  protected PrintStream log = System.err;
+  protected static int verbosity = 0;
+  protected static PrintStream log = System.err;
   protected URL serverURL = null;
   protected String configFileName = "_subsite.xcf";
   protected String configTagsetName = "xxml";
@@ -244,8 +244,9 @@ public class Site extends Subsite implements Root {
   ** Initialization:
   ************************************************************************/
 
-  public void setVerbosity(int v) { verbosity = v; }
-  public void setReporting(PrintStream s) { log = s; }
+  public static void setVerbosity(int v) { verbosity = v; }
+  public static void setReporting(PrintStream s) { log = s; }
+
   public void setServerURL(URL u) { serverURL = u; }
 
   public String getConfigFileName() { return configFileName; }
