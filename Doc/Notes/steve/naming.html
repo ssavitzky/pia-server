@@ -222,12 +222,12 @@
 
        <p>
 
-  <dt> <b>codeDIR</b>
+  <dt> <b>home-dir</b>
   <dd> the <em>full</em> path to the code <em>directory</em>.  Specifies
        <em>only</em> the agent's code directory, not the user directory.
-  <dt> <b>userDIR</b>
+  <dt> <b>user-dir</b>
   <dd> the path to the user directory.  Probably <em>very</em> rarely used.
-  <dt> <b>dataDIR</b>
+  <dt> <b>data-dir</b>
   <dd> the path to the data directory.
 </dl>
 
@@ -236,6 +236,8 @@
 <dl compact>
   <dt> <code>~/</code>
   <dd> The user's home directory (currently the only one allowed)
+  <dt> <code>./</code>
+  <dd> (or any relative path) the PIA agent directory
   <dt> <code>../</code>
   <dd> the PIA home directory <code>&amp;piaDIR;</code>, as in
        <code>../Contrib/...</code> 
@@ -245,7 +247,7 @@
 
 <p> Currently, an agent's ``name'' has to be unique.  Under this scheme, it
     only has to be unique with the path prefix.  This changes
-    <code>findInterform</code> somewhat.
+    <code>findDocument</code> somewhat.
 
 <p> Considerable effort will be involved in this change, because presently the
     <code><em>name</em></code> is used as the key for the agent table.
@@ -272,7 +274,7 @@ Tagsets need a <code>prefix</code> (namespace) attribute as well as a
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: naming.html,v 1.5 1999-03-12 19:23:24 steve Exp $</b><br>
+<b>$Id: naming.html,v 1.6 1999-03-23 20:36:56 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

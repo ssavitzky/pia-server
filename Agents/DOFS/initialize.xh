@@ -5,7 +5,7 @@
 <h1>DOFS default initialization</h1>
 By default we  look at requests only for local files (a caching instantiation
 of this agent probably would have different initialization ..  such agents
-should use a different root directory for their interforms).
+should use a different root directory for their active documents).
 
 <!-- really, the only reason to have this init. file is the following: -->
 <user-message>Initializing &agentType;<if>
@@ -14,5 +14,5 @@ should use a different root directory for their interforms).
     <else>/&agentName; with root=&AGENT:root;</if></user-message>
 
 <hr>
-<short-footer cvsid="$Id: initialize.xh,v 1.2 1999-03-12 19:22:09 steve Exp $">
+<short-footer cvsid="$Id: initialize.xh,v 1.3 1999-03-23 20:35:02 steve Exp $">
 </body></html>

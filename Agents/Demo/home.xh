@@ -23,11 +23,11 @@
 <h2>About This Agent:</h2>
 
 The <b><a href="/&agentName;/">&agentName;</a></b> agent is intended as a
-demonstration and testbed for the PIA's InterForm markup language and its
+demonstration and testbed for the PIA's active document markup language and its
 formatter/interpreter. Select any of the above demo pages to see examples
 of PIA tags.
 <p>
 
-<footer cvsid="$Id: home.xh,v 1.4 1999-03-15 23:12:48 steve Exp $"></footer>
+<footer cvsid="$Id: home.xh,v 1.5 1999-03-23 20:35:04 steve Exp $"></footer>
 </body></html>
 

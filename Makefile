@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.9 1999-03-18 22:57:36 pgage Exp $
+#	$Id: Makefile,v 1.10 1999-03-23 20:34:51 steve Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -161,7 +161,6 @@ SRCDIR=src/java/org/risource
 CLASSDIR=src/java
 PIALIBDIR=lib/java
 PIABINDIR=bin
-INTERFORM=
 DOCRELEASE=Doc/Release
 DOCPAPER=Doc/Papers
 CDROMDIR=../cdrom

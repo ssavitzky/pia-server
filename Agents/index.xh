@@ -16,7 +16,7 @@
   <then>
     <tr><th><td><a href="options">Options</a>
 	    	      <a href="initialize">[re-initialize]</a></then></if>
-    <tr><th><td><a href="/PIA/Agents/&agentPath;/">InterForms</a>
+    <tr><th><td><a href="/PIA/Agents/&agentPath;/">Agent documents</a>
 	        <a href="/~/Agents/&agentPath;/">(Customized)</a>
   </if>
   <if>&AGENT:criteria;<then>
@@ -95,7 +95,7 @@
   initialization file,
   <code><a href="/PIA/Agents/&agentPath;/initialize"
   >/PIA/Agents/&agentPath;/initialize.??</a></code>,
-  and putting it in your personal InterForm directory,
+  and putting it in your personal Agents directory,
   <code><a href="/~/Agents/&agentPath;/"
   >~/.pia/Agents/&agentPath;/</a></code>
   (Replace <code>??</code> in the names above with the current one of
@@ -107,6 +107,6 @@
 </then></if>
 
 
-<footer cvsid="$Id: index.xh,v 1.2 1999-03-12 19:21:54 steve Exp $">
+<footer cvsid="$Id: index.xh,v 1.3 1999-03-23 20:34:56 steve Exp $">
 </body></html>
 

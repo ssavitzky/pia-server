@@ -1,5 +1,5 @@
 ### Makefile for /Doc
-#	$Id: Makefile,v 1.3 1999-03-12 19:23:10 steve Exp $	
+#	$Id: Makefile,v 1.4 1999-03-23 20:35:24 steve Exp $	
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -26,7 +26,7 @@ MF_DIR=$(PIADIR)/Config/makefiles
 MYNAME=Doc
 MYPATH=Doc
 
-SUBDIRS=Manuals Notes
+SUBDIRS=API Tagsets Notes
 
 include $(MF_DIR)/file.make
 include $(MF_DIR)/subdir.make 

@@ -69,9 +69,9 @@
   This is the code that <a href="/&agentType/&agentName;">&agentName;</a> runs
   whenever its match criteria are satisfied.  
   It can be customized by making an edited copy of the initialization
-  InterForm, <code><a href="/PIA/Agents/&agentType;/&agentName;/initialize"
+  document, <code><a href="/PIA/Agents/&agentType;/&agentName;/initialize"
   >/PIA/Agents/&agentType;/&agentName;/initialize.??</a></code>, and putting
-  it in your personal InterForm directory as <code><a
+  it in your personal &AGENT:name; Agent document directory as <code><a
   href="/~/Agents/&agentType;/&agentName;/initialize"
   >~/.pia/Agents/&agentType;/&agentName;/initialize.??</a></code> or <code><a
   href="/~/Agents/&agentName;/initialize"
@@ -89,5 +89,5 @@
 <b>URL:</b> &lt;<a href="&url;">&url;</a>&gt;<br>
 <b>Source:</b> <a href="/PIA/Agents/&agentName;/&fileName;">&fileName;</a>
 <b>File:</b> <a href="/Root/&filePath;">&filePath;</a>
-<footer cvsid="$Id: home.xh,v 1.2 1999-03-12 19:22:25 steve Exp $">
+<footer cvsid="$Id: home.xh,v 1.3 1999-03-23 20:35:07 steve Exp $">
 </body></html>

@@ -10,7 +10,7 @@
 <p> You can find out more about this <em>particular</em> PIA server from the
     <a href="/Admin">Admin</a> agent, which is used to perform server
     management functions.  You can find out about its implementation from the
-    <a href="/Doc/Manuals/Api/index.html">API</a> (Application Programming
+    <a href="/Doc/API/internals.html">API</a> (Application Programming
     Interface) Manual, and by directly studying the <a
     href="/PIA/src/java/org/risource">source code</a>, all of which is online.
 
@@ -22,4 +22,4 @@
     href="http://www.RiSource.org/"><code>www.RiSource.org</code></a>.
 
 <p>
-<!-- $Id: welcome.inc,v 1.4 1999-03-15 23:12:58 steve Exp $ -->
+<!-- $Id: welcome.inc,v 1.5 1999-03-23 20:35:20 steve Exp $ -->

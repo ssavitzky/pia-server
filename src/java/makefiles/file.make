@@ -1,5 +1,5 @@
 ### file.make
-# $Id: file.make,v 1.6 1999-03-18 21:16:42 pgage Exp $
+# $Id: file.make,v 1.7 1999-03-23 20:37:48 steve Exp $
 # COPYRIGHT 1997, Ricoh California Research Center
 # Portions COPYRIGHT 1997, Sun Microsystems
 
@@ -32,29 +32,39 @@ CLASSDIR= $(TOPDIR)
 PIADIR=$(TOPDIR)/../..
 LIBDIR=$(PIADIR)/lib/java
 BINDIR=$(PIADIR)/bin
-DOCDIR=$(PIADIR)/Doc/Manuals/Api/JavaDoc
-
-LIBCLASSES= $(LIBDIR)/pia.zip:$(LIBDIR)/regexp.jar:$(LIBDIR)/jigsaw_s.jar
+DOCDIR=$(PIADIR)/Doc/API/javadoc
 
 ##javac wrapper should find these  .. specify explicitly if problem
 JAVACLASSES= /usr/local/java/lib/classes.zip
 #JAVACLASSES=
-JAVASOURCE=  /usr/local/java/src
 
-CLASSPATH=$(JAVACLASSES)
-
-# S is the path separator: it needs to be ";" on Windows machines.
-S=:
-BUILDCLASSES=$(CLASSDIR)$S$(JAVACLASSES)$S$(LIBCLASSES)$S$(CLASSPATH)
 
 ## Set this on the command line to see warnings about deprecated API's
 # JAVAFLAGS=-deprecation
 
 .SUFFIXES: .java .class
 
+## Rule to compile Java class files.  
+#  Note that either of the two techniques below will work:  
+#  1. adding $(CLASSDIR) to $(CLASSPATH)
+#	This works well if $(CLASSPATH) is already set, 
+#	AND it contains the current Java class library.
+#  2. cd'ing to $(CLASSDIR) and not setting $(CLASSPATH). 
+#	This works only if $(CLASSPATH) is not set, OR it contains "."
+#	It will fail miserably on Windows, because cd works differently there. 
+
+ifeq ($(CLASSPATH),)
 .java.class:
-#	javac -d $(CLASSDIR) -classpath "$(BUILDCLASSES)" $(JAVAFLAGS) $<
-	javac -d $(CLASSDIR) -classpath $(BUILDCLASSES) -g $(JAVAFLAGS) $<
+	export dir=`pwd`; cd $(CLASSDIR); javac  -g $(JAVAFLAGS) $$dir/$<;
+else
+# S is the path separator: it needs to be ";" on Windows machines.
+S=:
+BUILDCLASSES=$(CLASSDIR)$S$(CLASSPATH)
+.java.class:
+	javac -d $(CLASSDIR) -classpath $(BUILDCLASSES) -g $(JAVAFLAGS) $<;
+endif
+
+### Beginning of make targets:
 
 all:: $(FILES:.java=.class)
 

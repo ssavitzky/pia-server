@@ -176,10 +176,6 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <h3>What can be Left Out?</h3>
 <ul>
-  <li> Everything in <code>crc.interform</code> -- this is the old InterForm
-       interpretor, and is completely replaced by <code>crc.dps</code>, the
-       new Document Processing System.  We are in the process of removing it,
-       since it will not be part of the released code. 
   <li> Certainly, any agents (in <code>pia/Agents</code> and
        <code>crc.pia.agent</code>) that you don't need.  Probably the only
        ones you'll need are <code>Admin</code>, <code>Root</code> and
@@ -226,11 +222,6 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
   <li> <code>crc.pia.GenericAgent</code> is far too complex; it needs to be
        split up and simplified:
        <ul>
-	 <li> The file lookup code in <code>crc.pia.GenericAgent</code>
-	      (including <code>findInterformFile</code> and so on) needs to
-	      get moved to a separate utility class.  Compare
-	      <code>crc.pia.FileAccess</code>, which is probably where it
-	      should go.
 	 <li> The methods in <code>crc.pia.GenericAgent</code> that put
 	      together various kinds of response transaction could also go
 	      into a utility class.
@@ -291,7 +282,7 @@ href="http://www.cygnus.com/gnupro/">GNUPro</a>.  It may not support the SH3.
 
 <hr>
 <b>Copyright &copy; 1999 Ricoh Silicon Valley</b><br>
-<b>$Id: porting.html,v 1.3 1999-03-12 19:23:26 steve Exp $</b><br>
+<b>$Id: porting.html,v 1.4 1999-03-23 20:36:58 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

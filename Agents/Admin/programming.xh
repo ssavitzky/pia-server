@@ -15,7 +15,7 @@
 </dl>
 <hr>
 
-<h3>Useful Interforms:</h3>
+<h3>Useful Forms and Documents:</h3>
 <ul>
   <li> <a href=agents>list running agents</a>
   <li> <a href="installers">install new agents</a>
@@ -32,15 +32,16 @@
        <if><agent-running name=PIA>
            <then>
        <ul>
-	 <li> <a href="/Doc/Tutorial">Tutorial</a>
+	 <li> <a href="/Doc/doclist.html">Complete list</a>
 	 <li> <a href="/Doc/Release">Release Notes</a>
-	 <li> <a href="/Doc/Manuals">Manuals</a>
+	 <li> <a href="/Doc/API">API</a>
+	 <li> <a href="/Doc/Tagsets">Tagsets</a>
        </ul>
            </then>
            <else><a href="installers#PIA"><em>install
                  needed!</em></a></else></if>
   <li> <a href="entities">list defined entities</a>
-  <li> <a href="/Demo">InterForm demonstration agent</a>
+  <li> <a href="/Demo">Active Document demo agent</a>
        <if><agent-running name="Demo"><then></then>
        <else><a href="installers#Demo"><em>install
        needed!</em></a></else></if> 
@@ -58,7 +59,7 @@
        If things are set up correctly, this should also be reachable as
        <a href="/~/">/~/</a>, the <a href="/ROOT">ROOT</a> agent's data
        directory. 
-  <li> Customized InterForms: <code>&usrDIR;/Agents</code>
+  <li> Customized Documents: <code>&usrDIR;/Agents</code>
 </ul>
 
 <h3>Miscellaneous files...normally not accessed directly</h3>
@@ -71,5 +72,5 @@
 	  (This file gets "executed" when a new &AGENT:name; agent is created)
 </ul>
 
-<footer cvsid="$Id: programming.xh,v 1.4 1999-03-15 23:12:45 steve Exp $">
+<footer cvsid="$Id: programming.xh,v 1.5 1999-03-23 20:35:00 steve Exp $">
 </body></html>

@@ -29,7 +29,8 @@
 
 In order to <em>customize</em> a <a href="/&agentType;">&agentType;</a> agent,
 all you have to do is create an personal copy of the
-<code>initialize.xh</code> InterForm file.  The original can be found in
+<code>initialize.xh</code> initialization document.
+The original can be found in 
 
 <pre>
  .../pia/Agents/&agentType;/<em>agentName</em>/initialize.xh
@@ -48,10 +49,10 @@ You need to install this in your personal agent customization directory:
 
 <h3>Customizing the Banner</h3>
 
-In the <code>initialize.xh</code> file, you will find a block of InterForm
+In the <code>initialize.xh</code> file, you will find a block of 
 code that starts out:
 <pre>
-  &lt;set agent hook name="act-on"&gt;&lt;protect&gt;
+  &lt;set name="AGENT:act-on"&gt;&lt;protect&gt;
   &lt;trans-control&gt;
 </pre>
 
@@ -64,9 +65,9 @@ and ends with:
 
 The part inside the <code>&lt;trans-control&gt;</code> element is the banner.  It's usually
 this that you will want to customize.  Consult the <a
-href="/Doc/Manuals/InterForm">InterForm Programming Manual</a> for
-detailed information on what you can do here.  In many cases all you will want
-to do is add a link.<p>
+href="/Doc/Tagsets">Tagsets</a> documentation for
+detailed information on the tags you can use here.  In many cases all you will
+want to do is add a link.<p>
 
 Notice that the History portion of the banner is obtained from the <a
 href="/History">History</a> agent itself, using the code fragment:
@@ -116,5 +117,5 @@ rule (&lt;hr&gt;) tag, unless it consists of just one or two small icons.<p>
 The logo icons used by the <a href="/&agentType;/fbi">fbi</a> and <a
 href="/&agentType;/cia">cia</a> are 24 pixels high.
 
-<footer cvsid="$Id: writing.xh,v 1.3 1999-03-15 23:12:49 steve Exp $">
+<footer cvsid="$Id: writing.xh,v 1.4 1999-03-23 20:35:08 steve Exp $">
 </body></html>

@@ -26,9 +26,9 @@
     </td> <td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>
-	<a href="/Doc/Manuals/">Manuals:</a>
+	<a href="/Doc">Documentation:</a>
     <td>
-	<a href="/Doc/doclist.html">Documentation List</a>
+	<a href="/Doc/doclist.html">Index</a>
     </td> <td bgcolor=silver>&nbsp; 
   <tr>	 <td>&nbsp;
     <th align=right valign=top bgcolor=silver>
@@ -37,4 +37,4 @@
     </td> <td bgcolor=silver>&nbsp; 
   <tr> <td>&nbsp; <td bgcolor=silver colspan=3>&nbsp;
 </table>
-<inc-footer cvsid="$Id: doc-grid.inc,v 1.4 1999-03-15 23:12:56 steve Exp $">
+<inc-footer cvsid="$Id: doc-grid.inc,v 1.5 1999-03-23 20:35:19 steve Exp $">

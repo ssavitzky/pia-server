@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.7 1999-03-18 21:16:23 pgage Exp $
+#	$Id: Makefile,v 1.8 1999-03-23 20:37:45 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -23,7 +23,7 @@
 
 TOPDIR=.
 
-ADOCDIR = $(PIADIR)/Doc/Manuals/Api/JavaDoc
+ADOCDIR = $(PIADIR)/Doc/API/javadoc
 
 PACKAGES= \
 	misc \

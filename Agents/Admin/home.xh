@@ -14,7 +14,7 @@ without a final slash leads to the agent's <em>home page</em>.  With the slash
 you get a generic <em><a href="index">index</a></em> page.
 <hr>
 <table><tr><td width=340 valign=top>
-<h3>Useful Interforms:</h3>
+<h3>Useful Documents and Forms:</h3>
 <ul>
   <li> <a href=/&AGENT:name;/list-agents>list running agents</a>
   <li> <a href="/&AGENT:name;/installers">install new agents</a>
@@ -38,7 +38,6 @@ you get a generic <em><a href="index">index</a></em> page.
        <ul>
 	 <li> <a href="/Doc/doclist.html">Complete list</a>
 	 <li> <a href="/Doc/Release">Release Notes</a>
-	 <li> <a href="/Doc/Manuals">Manuals</a>
 	 <li> <a href="/Doc/Notes">Notes</a>
        </ul>
   <li> <a href="/&AGENT:name;/programming">Programming information</a>
@@ -77,5 +76,5 @@ generic index is linked from the ``<code>/</code>'' <em>after</em> the name.
 </dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.4 1999-03-15 23:12:42 steve Exp $'>
+<footer cvsid='$Id: home.xh,v 1.5 1999-03-23 20:34:58 steve Exp $'>
 </body></html>
