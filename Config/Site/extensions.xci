@@ -1,14 +1,28 @@
-<!-- $Id: extensions.xci,v 1.1 1999-09-23 00:08:17 steve Exp $ -->
+<!-- $Id: extensions.xci,v 1.2 1999-09-24 00:24:23 steve Exp $ -->
 
   <Map ext="html"	type="text/html"				/>
   <Map ext="htm"	type="text/html"				/>
-  <Map ext="gif"	type="image/gif"				/>
-  <Map ext="jpeg"	type="image/jpeg"				/>
-  <Map ext="jpg"	type="image/jpeg"				/>
-  <Map ext="png"	type="image/png"				/>
-  <Map ext="xbm"	type="image/x-xbitmap"				/>
-  <Map ext="exe"	type="application/octet-stream"			/>
-  <Map ext="tgz"	type="application/octet-stream"			/>
+
+  <Map ext="txt"	type="text/plain"				/>
 
   <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
 
+  <Map ext="png"	type="image/png"				/>
+  <Map ext="jpeg"	type="image/jpeg"				/>
+  <Map ext="jpg"	type="image/jpeg"				/>
+  <Map ext="xbm"	type="image/x-xbitmap"				/>
+  <Map ext="gif"	type="image/gif"				/>
+
+  <!-- Note that we do not flag .gz files as compressed: we assume that the
+       user will decompress them explicitly, rather than letting the browser
+       do it behind his back. 
+    -->
+  <Map ext="exe"	type="application/octet-stream"			/>
+  <Map ext="tgz"	type="application/octet-stream"			/>
+  <Map ext="tar"	type="application/octet-stream"			/>
+  <Map ext="gz"		type="application/octet-stream"			/>
+
+  <!-- Note that the order of extensions in this file becomes the order of
+       the search list when an extension is missing.  To keep an extension
+       off the list, start the tagset attribute with "#".
+    -->

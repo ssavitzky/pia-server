@@ -1,19 +1,17 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: sample.xcf,v 1.1 1999-09-22 00:50:06 steve Exp $ -->
+<!-- $Id: sample.xcf,v 1.2 1999-09-24 00:24:23 steve Exp $ -->
 
 <Container>
-  <Map ext="html"	type="text/html"				/>
-  <Map ext="htm"	type="text/html"				/>
-  <Map ext="gif"	type="image/gif"				/>
-  <Map ext="jpeg"	type="image/jpeg"				/>
-  <Map ext="jpg"	type="image/jpeg"				/>
-  <Map ext="png"	type="image/png"				/>
-  <Map ext="xbm"	type="image/x-xbitmap"				/>
-  <Map ext="exe"	type="application/octet-stream"			/>
-  <Map ext="tgz"	type="application/octet-stream"			/>
+  <!-- You can include arbitrary XXML in a configuration file, but you have to
+       be careful about how you use it.  Something like the following will
+       cause subsites to be configured before their parent, which might be a
+       problem in some cases.
+    -->
+  <include src="Config/Site/extensions.xci"/>
 
-  <Map ext="xh" 	type="text/html"	tagset="pia-xhtml"	/>
-
+  <!-- On the other hand, the initialize file is not read until after the
+       configuration file has been completely processed.
+    -->
   <Resource	name="initialize.xh"	hidden="yes" />
 
   <!-- external virtual file (absolute path === broken ===) -->
@@ -42,6 +40,9 @@
  <if> true <then><!-- This demonstrates that if, etc. work in config files! -->
   <AGENT criteria="request">
      <initialize><user-message>report-request agent initialized</user-message>
+		 <!-- This agent has no name attribute, so it does not get
+		      registered as ~whatever at the top level.
+		   -->
      </initialize>
      <user-message>requesting: &url;</user-message>
   </AGENT>
