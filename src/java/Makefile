@@ -1,5 +1,5 @@
 ###### org/risource/Makefile:	RiSource.org's Java classes.
-#	$Id: Makefile,v 1.8 1999-03-23 20:37:45 steve Exp $
+#	$Id: Makefile,v 1.9 1999-04-14 19:09:55 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -44,11 +44,20 @@ JIGSAWPACKAGE= \
 PIAPACKAGENAMES= \
 	org.risource.content org.risource.content.text \
 	org.risource.dom \
-	org.risource.dps org.risource.dps.handle \
-	org.risource.dps.input org.risource.dps.output org.risource.dps.parse \
-	org.risource.dps.active org.risource.dps.util \
+	org.risource.dps \
+	org.risource.dps.active \
+	org.risource.dps.handle \
+	org.risource.dps.input \
+	org.risource.dps.output \
+	org.risource.dps.parse \
+	org.risource.dps.process \
+	org.risource.dps.tagset \
+	org.risource.dps.tree \
+	org.risource.dps.util \
 	org.risource.ds \
-	org.risource.pia org.risource.pia.agent \
+	org.risource.pia \
+	org.risource.pia.agent \
+	org.risource.pia.handle \
 	org.risource.tf \
 	org.risource.util \
 	misc
