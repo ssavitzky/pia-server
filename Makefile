@@ -1,5 +1,5 @@
 ###### Makefile for pia
-#	$Id: Makefile,v 1.11 1999-03-24 01:58:49 pgage Exp $
+#	$Id: Makefile,v 1.12 1999-03-26 22:56:50 pgage Exp $
 
 ############################################################################## 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -111,7 +111,7 @@ prep_rel_dir::
 # Build a source release.  Before building, check all variables and set to
 # appropriate values.
 src.tar:	prep_rel_dir
-	if [ $CREATE_CVS_TAG -gt 0 ]; then make cvs_rtag; fi
+	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; fi
 	cd $(REL_DIR); cvs export -r $(VERSION_ID) PIA
 	cd $(REL_PIA_DIR); make prep_src_rel
 	cd $(REL_DIR); tar czf $(TAR_NAME).tgz PIA; mv $(TAR_NAME).tgz $(DEST_DIR)
@@ -128,9 +128,11 @@ dated_src.tar:
 	cd $(DEST_DIR);  rm pia_src.tgz; ln -s $(TAR_NAME).tgz pia_src.tgz
 	cd $(DEST_DIR); mkdir src_release$(VERSION); cp -r $(REL_DIR) src_release$(VERSION)
 
-# this does not get latest version
-test:
-	cd $(REL_DIR); cvs export -f -D `date '+%D'` PIA
+# test making parts of a release
+test:	prep_rel_dir
+	if [ $(CREATE_CVS_TAG) -gt 0 ]; then make cvs_rtag; fi
+	cd $(REL_DIR); cvs export -f -D 12/12/99 PIA
+	cd $(REL_PIA_DIR); make clean; make; make doc
 
 ###
 ### Old stuff.
