@@ -1,5 +1,5 @@
-f//  Httprequest.java
-// $Id: HTTPRequest.java,v 1.11 1999-09-15 17:34:24 bill Exp $
+//  HTTPrequest.java
+// $Id: HTTPRequest.java,v 1.12 1999-09-22 00:28:56 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -586,10 +586,12 @@ public class  HTTPRequest extends Transaction {
       if( host != null ){
 	port = url.getPort();
 	String zport = Integer.toString( port );
-	if( host.equals( Pia.instance().host() ) && zport.equals( Pia.instance().port() ))
-	  toMachine = new AgentMachine( null );
-	else
+	if( host.equals( Pia.instance().host() )
+	    && zport.equals( Pia.instance().port() )) {
+	  toMachine = Pia.getSiteMachine();
+	} else {
 	  toMachine = new Machine( host, port );
+	}
       }
     }
     return toMachine;
@@ -638,7 +640,7 @@ public class  HTTPRequest extends Transaction {
     msg = errorMessage(code, msg);
     StringReader inputStream = new StringReader( msg );
     Content ct = new org.risource.content.text.html( inputStream, this );
-    Transaction response = new HTTPResponse( this, Pia.thisMachine(),
+    Transaction response = new HTTPResponse( this, Pia.getSiteMachine(),
 					     ct, false);    
     response.setStatus( code );
     response.setContentType( "text/html" );

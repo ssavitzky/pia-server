@@ -1,5 +1,5 @@
 ###### pia/Makefile:	Platform for Information Appliances
-#	$Id: Makefile,v 1.5 1999-07-16 23:26:51 steve Exp $
+#	$Id: Makefile,v 1.6 1999-09-22 00:28:57 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -27,15 +27,16 @@ REL_DIR = $(PIADIR)/Doc/Release
 
 PACKAGES = \
 	agent \
-	handle
+	handle \
+	site
 
 FILES = \
 	Athread.java \
 	HttpBuffer.java \
 	Accepter.java \
+	Resolver.java \
 	Transaction.java \
 	Machine.java \
-	Resolver.java \
 	Configuration.java \
 	Content.java \
 	InputContent.java \
@@ -44,7 +45,6 @@ FILES = \
 	CrontabEntry.java \
 	Agent.java \
 	ContentFactory.java \
-	GenericAgent.java \
 	Logger.java \
 	Pia.java \
 	Setup.java \
@@ -58,7 +58,6 @@ FILES = \
 	ThreadPool.java \
 	HTTPRequest.java \
 	HTTPResponse.java \
-	FileAccess.java \
 	Authenticator.java 
 
 include $(TOPDIR)/makefiles/file.make
@@ -72,5 +71,5 @@ $(REL_DIR)/to-do.dps.html: to-do.html
 
 ### Dependencies:
 
-GenericAgent.class: Agent.java
-Pia.class: ../Version.java
+Pia.class: ../Version.java \
+	../site/Root.java ../site/Site.java ../site/Resource.java

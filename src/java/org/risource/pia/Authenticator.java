@@ -1,5 +1,5 @@
 // Authenticator.java
-// $Id: Authenticator.java,v 1.4 1999-06-11 23:44:45 wolff Exp $
+// $Id: Authenticator.java,v 1.5 1999-09-22 00:28:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,7 +23,6 @@
 
 package org.risource.pia;
 
-import org.risource.pia.GenericAgent;
 import org.risource.pia.Transaction;
 import org.risource.pia.HTTPRequest;
 import org.risource.pia.HTTPResponse;

@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.30 1999-07-20 20:58:23 steve Exp $
+// $Id: GenericAgent.java,v 1.31 1999-09-22 00:28:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -662,7 +662,7 @@ public class GenericAgent extends BasicNamespace
     //    request.setContentLength( queryString.length() );
 
     // to machine should be gotten from url
-    //   request.toMachine( Pia.thisMachine() );
+
     request.setMethod( method );
     request.setRequestURL( url );
     return request;
@@ -1264,7 +1264,7 @@ public class GenericAgent extends BasicNamespace
     Pia.debug(this, msg);
 
     Content ct = new org.risource.content.text.html( new StringReader(msg) );
-    Transaction response = new HTTPResponse( Pia.thisMachine(),
+    Transaction response = new HTTPResponse( Pia.getSiteMachine(),
 					     req.fromMachine(), ct, false);
     response.setHeader("Location", redirUrlString);
     // Got a redirect message for all agency agents
@@ -1517,8 +1517,9 @@ public class GenericAgent extends BasicNamespace
     }
 
     proc.setTagset(ts);
-    Content c = new ProcessedContent(this, file, path, proc,
-				     trans, response, res);
+    proc.define("pathExt", path);
+
+    Content c = new ProcessedContent(file, null, proc);
     response.setStatus( 200 ); 
     response.setHeader("Server", Version.SERVER);
     response.setContentType( contentType(file) );

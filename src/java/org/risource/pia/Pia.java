@@ -1,5 +1,5 @@
 // Pia.java
-// $Id: Pia.java,v 1.12 1999-05-21 21:48:13 steve Exp $
+// $Id: Pia.java,v 1.13 1999-09-22 00:28:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -46,11 +46,13 @@ import org.risource.pia.Logger;
 import org.risource.pia.Transaction;
 
 import org.risource.pia.agent.Admin;
-import org.risource.pia.agent.Root;
 
 import org.risource.ds.Table;
 import org.risource.ds.Tabular;
 import org.risource.ds.List;
+
+import org.risource.site.*;
+import org.risource.pia.site.*;
 
 import org.risource.pia.Configuration;
 
@@ -62,7 +64,7 @@ import org.risource.pia.Configuration;
   * <p> At the moment, the Tabular interface is simply delegated to the 
   *	<code>properties</code> attribute.  This will change eventually.
   *
-  * @version $Id: Pia.java,v 1.12 1999-05-21 21:48:13 steve Exp $
+  * @version $Id: Pia.java,v 1.13 1999-09-22 00:28:57 steve Exp $
   * @see org.risource.pia.Setup
   */
 public class Pia implements Tabular {
@@ -155,27 +157,25 @@ public class Pia implements Tabular {
    */
   public static final String PIA_REQTIMEOUT = "pia.reqtimeout";
 
-  /**
-   * Property name of root agent name
+  /** 
+   * Property name of default configuration file name
    */
-  public static final String ROOT_AGENT_NAME = "pia.rootagent";
-
-  /**
-   * Property name of admin agent name
-   */
-  public static final String ADMIN_AGENT_NAME = "pia.adminagent";
+  public static final String CONFIG_FILE_NAME = "pia.cfgfile";
 
   /** 
-   * Property name of admin agent XML file
+   * Property name of site configuration file path
    */
-  public static final String ADMIN_AGENT_FILE = "pia.adminxml";
+  public static final String SITE_CONFIG_PATH = "pia.siteconfig";
 
+  /** 
+   * Property name of initialization document path
+   */
+  public static final String INIT_DOC_PATH = "pia.initdoc";
 
   /************************************************************************
   ** Private fields:
   ************************************************************************/
 
-  private Properties    piaFileMapping 	= null;
   private Piaproperties properties 	= null;
 
   private static Pia    instance	= null;
@@ -207,6 +207,10 @@ public class Pia implements Tabular {
 
   private String usrAgentsStr 	= null;
   private File   usrAgentsDir 	= null;
+
+  private String configFileName = "_subsite.xcf";
+  private String siteConfigPath = null;
+  private String initDocPath    = "initialize";
 
   // file separator
   private String filesep  = System.getProperty("file.separator");
@@ -242,55 +246,41 @@ public class Pia implements Tabular {
   protected ThreadPool threadPool;
 
   /**
-   *  Attribute index - this machine
-   */
-  protected Machine thisMachine;
-
-  /**
    *  Attribute index - resolver
    */
   protected Resolver resolver;
-
-  /**
-   *  Attribute index - Admin agent
-   */
-  protected Admin adminAgent;
-
-  /**
-   *  Attribute index - Root agent
-   */
-  protected Root rootAgent;
-
-  /**
-   *  Attribute index - Admin agent name
-   */
-  protected String adminAgentName = "Admin";
-
-  /**
-   *  Attribute index - Admin agent XML filename
-   */
-  protected String adminAgentFile = "./Admin/AGENT.xml";
-
-  /**
-   *  Attribute index - Root agent name
-   */
-  protected String rootAgentName = "ROOT";
 
   /** 
    *  the verbosity level.
    */
   protected static int verbosity = 0;
 
+  /**
+   * the site root.  
+   *
+   *<p> Note that this could easily be changed to have type Root
+   *	instead of Site, but at the moment there seems to be no 
+   *	good reason to do this, since Site is the only implementation.
+   */
+  protected static Site rootResource = null;
+
+  protected static SiteMachine siteMachine = null;
+
 
   /************************************************************************
   ** Access to Components:
   ************************************************************************/
 
-  /**
-   * @return file mapping for local file retrieval
-   */
-  public Properties piaFileMapping(){
-    return piaFileMapping;
+  /** Return the root of the site resource tree, typed as a Root. */
+  public static Root getRoot() { return rootResource; }
+
+  /** Return the root of the site resource tree, typed as a Site. */
+  public static Site getSite() { return rootResource; }
+
+  public static SiteMachine getSiteMachine() {
+    if (siteMachine == null && rootResource != null) 
+      siteMachine = new SiteMachine(instance.host, instance.port, rootResource);
+    return siteMachine;
   }
 
   /**
@@ -308,24 +298,10 @@ public class Pia implements Tabular {
   }
 
   /**
-   * @return this machine
-   */
-  public static Machine thisMachine(){
-    return instance.thisMachine;
-  }
-  
-  /**
    * @return resolver
    */
   public static Resolver resolver(){
     return instance.resolver;
-  }
-
-  /**
-   * @return admin agent
-   */
-  public static Admin adminAgent(){
-    return instance.adminAgent;
   }
 
   /** Set <code>true</code> after the Admin agent has been started. 
@@ -334,27 +310,6 @@ public class Pia implements Tabular {
    *	proceed in its absence. 
    */
   public static boolean adminStarted=false;
-
-  /**
-   * @return root agent
-   */
-  public static Agent rootAgent(){
-    return instance.rootAgent;
-  }
-
-  /**
-   * @return admin agent name
-   */
-  public String adminAgentName(){
-    return adminAgentName;
-  }
-
-  /**
-   * @return root agent name
-   */
-  public String rootAgentName(){
-    return rootAgentName;
-  }
 
   /**
    * @return the URL for the documentation
@@ -436,6 +391,11 @@ public class Pia implements Tabular {
   /** @return the verbose flag */
   public static boolean verbose() {
     return verbose;
+  }
+
+  /** @return the verbose flag */
+  public static int getVerbosity() {
+    return verbosity;
   }
 
   /**
@@ -536,15 +496,6 @@ public class Pia implements Tabular {
   }
 
   /**
-   * Fatal system error -- print message and throw runtime exception
-   *
-   */
-  public static void errSys(String msg){
-    System.err.println("Pia: " + msg);
-    throw new RuntimeException(msg);
-  }
-
-  /**
    * Print warning message
    *
    */
@@ -559,7 +510,6 @@ public class Pia implements Tabular {
   public static void warningMsg(Exception e, String msg ){
     System.err.println( msg );
     e.printStackTrace();
-    
   }
 
   /** 
@@ -774,9 +724,9 @@ public class Pia implements Tabular {
     loggerClassName 	= properties.getProperty(PIA_LOGGER, loggerClassName);
     docurl 		= properties.getProperty(PIA_DOCURL, docurl);
 
-    rootAgentName    = properties.getProperty(ROOT_AGENT_NAME, rootAgentName);
-    adminAgentName   = properties.getProperty(ADMIN_AGENT_NAME, adminAgentName);
-    adminAgentFile   = properties.getProperty(ADMIN_AGENT_FILE, adminAgentFile);
+    siteConfigPath   = properties.getProperty(SITE_CONFIG_PATH, siteConfigPath);
+    configFileName   = properties.getProperty(CONFIG_FILE_NAME, configFileName);
+    initDocPath	     = properties.getProperty(INIT_DOC_PATH, initDocPath);
 
     /* Set proxy tables from properties that end in "_proxy" */
     initializeProxies(); 
@@ -834,32 +784,42 @@ public class Pia implements Tabular {
     properties.setInteger(REAL_PORT, realPort);
     properties.setInteger(PIA_REQTIMEOUT, reqTimeout);
     properties.setProperty(PIA_LOGGER, loggerClassName);
+    properties.setProperty(SITE_CONFIG_PATH, siteConfigPath);
+    properties.setProperty(CONFIG_FILE_NAME, configFileName);
+    properties.setProperty(INIT_DOC_PATH, initDocPath);
 
     url = url();
   }
 
-  private void createPiaAgents() throws IOException{
-    thisMachine  = new Machine( host, port, null );
+  protected void createPiaSite() {
     threadPool   = new ThreadPool();
-
     resolver     = new Resolver();
     Transaction.resolver = resolver;
-    
-    // Create the Root agent, and make its data directory the USR_ROOT
-    rootAgent = new Root(rootAgentName, usrRootStr);
-    resolver.registerAgent( rootAgent );
 
-    String fn = rootAgent.findDocument(adminAgentFile);
-    if (fn != null) {
-      System.err.println("Loading /Admin from " + fn);
-      rootAgent.loadFile(fn, "./Admin/Admin-agent.ts");
-      adminAgent = (Admin) resolver.agent(adminAgentName);
-    } else {
-      // Create the Admin agent.  Its initialize.xh file loads everything else.
-      adminAgent = new Admin(adminAgentName, null);
-      resolver.registerAgent( adminAgent );
+    rootResource = new PiaSite(usrRootStr, piaRootStr, null, 
+			       configFileName, "pia-config", siteConfigPath);
+    rootResource.setVerbosity(getVerbosity());
+    if (siteConfigPath == null) rootResource.loadConfig();
+
+    Resource init = rootResource.locate(initDocPath, false, null);
+    Document initDoc = (init == null)? null : init.getDocument();
+    SiteDoc proc = getSiteMachine().getProcessor(initDoc);
+    if (proc != null) {
+      proc.setOutput(new org.risource.dps.output.DiscardOutput());
+      proc.run();
     }
-    adminStarted=true;
+  }
+
+  /** Start the PIA. 
+   *
+   *<ol>
+   *	<li> Create the Site
+   *	<li> Load the Agents
+   *	<li> Start the Accepter
+   *</ol>
+   */
+  protected void startup() {
+    createPiaSite();
 
     try{
       accepter = new Accepter( realPort );
@@ -871,20 +831,17 @@ public class Pia implements Tabular {
       System.exit(1);
     }
 
-    System.err.println("Point your browser to <URL: " + url + ">");
-
+    if (verbosity >= 0) 
+      System.err.println("Point your browser to <URL: " + url + ">");
   }
 
   /** Initialize the Pia from the properties.  Can be called again if the
    *	properties change.
    */
-  public boolean initialize() {
+  protected boolean initialize() {
     try{
       initializeProperties();
       initializeLogger();
-
-      String fileMap = properties.getProperty("pia.filemap");
-      loadFileMapping(fileMap);
 
       return true;
     }catch(Exception e){
@@ -971,45 +928,6 @@ public class Pia implements Tabular {
   }
 
 
-  /** Load the MIME type mappings.  */
-  protected Properties loadFileMapping( String where ){
-    if (where == null) where = properties.getProperty("pia.filemap");
-
-    Properties zFileMapping = new Properties();
-    File mapFile            = null;
-
-    try {
-      if ( where != null ) {
-	verbose ("loading file mapping from: " + where) ;
-	
-	File mapfile = new File( where ) ;
-	zFileMapping.load ( new FileInputStream( mapfile ) );
-
-	// convert everything to lowercase
-	Enumeration keys = zFileMapping.keys();
-	while( keys.hasMoreElements() ){
-	  String k = (String) keys.nextElement();
-	  String v = (String) zFileMapping.get( k );
-	  zFileMapping.remove( k );
-
-	  zFileMapping.put( k.toLowerCase(), v.toLowerCase() );
-	}
-      }
-    } catch (FileNotFoundException ex) {
-    } catch (IOException exp){
-    } finally{
-      if (zFileMapping.size() == 0){
-	zFileMapping.put("html", "text/html");
-	zFileMapping.put("gif", "image/gif");
-	zFileMapping.put("jpg", "image/jpeg");
-	zFileMapping.put("jpeg", "image/jpeg");
-      }
-    }
-
-   instance.piaFileMapping = zFileMapping;
-   return zFileMapping;
-  }
-
   static void reportProps(Properties p, String msg) {
     if (verbose) {
       if (msg != null) verbose(msg);
@@ -1066,14 +984,14 @@ public class Pia implements Tabular {
 
     verbose("PIA version " + org.risource.Version.VERSION);
     reportProps(instance.properties, "System Properties:");
-    reportProps(instance.piaFileMapping, "File (MIME type) mapping");
 
     try {
-      instance.createPiaAgents();
+      pia.startup();
       //new Thread( new Shutdown() ).start();
     }catch(Exception e){
       System.out.println ("===> Initialization failed, aborting !") ;
       e.printStackTrace () ;
+      System.exit(1);
     }
   }
 

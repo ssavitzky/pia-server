@@ -1,5 +1,5 @@
 // Resolver.java
-// $Id: Resolver.java,v 1.8 1999-06-18 23:48:02 wolff Exp $
+// $Id: Resolver.java,v 1.9 1999-09-22 00:28:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -64,24 +64,25 @@ import org.risource.ds.List;
  */
 public class Resolver extends Thread {
   /**
-   * Attribute index - a collection of agents by name.
+   * Attribute index - a collection of agents by name.  Note that not all
+   *	agents have a name; this collection only contains agents with 
+   *	homes accessible as ``<code>~<em>name</em></code>''.
    */
   protected  Table agentsByName = new Table();
 
   /**
-   * Attribute index - a collection of agents by pathName.
+   * Attribute index - a collection of agents by the pathname of their 
+   *	home resource.
    */
   protected  Table agentsByPathName = new Table();
 
   /** 
    * The order in which agents get to act on a transaction
-   * is determined by their order of start-up.  This is not ideal
+   * is determined by their order of start-up.  This is not ideal;
    * we should be able to assign a priority to each agent...
    * Just a temporary fix for now.
    */
-
   protected  List agentsInOrder = new List();
-
 
   /**
    * Attribute index - whether to stop running
@@ -101,6 +102,9 @@ public class Resolver extends Thread {
 
   /** Constant: one minute. */
   public static final long MINUTE = 60000;
+
+  /** The Crontab. */
+  protected Crontab crontab = new Crontab();
   
   /************************************************************************
   ** Transaction Queue:
@@ -164,14 +168,28 @@ public class Resolver extends Thread {
   /**
    * Register an agent with the resolver. 
    *
+   *<p> The agent is assumed to have either match criteria or a set of crontab
+   *	timing attributes.  An agent with <code>criteria="false"</code>, which
+   *	of course cannot match anything, can be used to register its home
+   *	resource as <code>~<em>name</em></code>.
    */
   public void registerAgent( Agent agent ){
     if ( agent != null && agent.name() != null ){
       agentsByName.put(agent.name(), agent);
-      agentsByPathName.put(agent.pathName(), agent);
-      agentsInOrder.push(agent);
+      agentsByPathName.put(agent.getHomePath(), agent);
     }
     agent.initialize();
+    if (agent.criteria() != null) {
+      if (!agent.getAttribute("criteria").equalsIgnoreCase("false"))
+	agentsInOrder.push(agent);
+    } else {
+      Table timings = CrontabEntry.getTimings(agent);
+      if (timings != null) {
+	crontab.makeEntry(agent, timings);
+      } else {
+	Pia.warningMsg("Agent with unknown function " + agent.startString());
+      }
+    }
   }
 
   /**
@@ -192,26 +210,24 @@ public class Resolver extends Thread {
   public Agent unRegisterAgent( Agent agent ){
     if (agent == null) return agent;
     if (agent.name() != null) agentsByName.remove(agent.name());
-    agentsByPathName.remove(agent.pathName());
+    agentsByPathName.remove(agent.getHomePath());
     agentsInOrder.remove(agent);
     return agent;
   } 
 
   /**
-   * agents 
-   * @return Enumeration of all agents
+   * agents that are able to match transactions.
+   * @return Enumeration of all agents with criteria.
    */
-  public Enumeration agents(){
-//    return agentsByPathName.elements();
+  public Enumeration matchingAgents(){
     return agentsInOrder.elements();
-    
   }
 
   /** 
-   * Table of all agents.
+   * Table of <em>all</em> agents.
    */
   public Tabular getAgentTable() {
-    return agentsByName;
+    return agentsByPathName;
   }
 
   /**
@@ -236,16 +252,12 @@ public class Resolver extends Thread {
    */
   public Agent agent( String name ){
     int i = name.indexOf("/");
-    if (i > 0) name = "/" + name;
-    if (i >= 0)
+    if (i >= 0) {
+      if (i > 0) name = "/" + name;
       return (Agent) agentsByPathName.get(name);
-
-    // If the name didn't have a "/", convert it to a pathname first.
-    Object o =  agentsByPathName.get("/" + name);
-    if( o != null )
-      return (Agent)o;
-    else
-      return (Agent) agentsByName.get(name);
+    }
+    // If the name didn't have a "/", look for it in agentsByName
+    return (Agent) agentsByName.get(name);
   }
 
   /** 
@@ -253,56 +265,47 @@ public class Resolver extends Thread {
    */
   public Agent agentFromPath(String path) {
 
-    // URL-decode path first to catch %7e
+    // URL-decode path first to catch tilde passed as %7e
     path = Utilities.urlDecode(path);
 
-    /* Empty path is handled by ROOT. */
+    // Check for leading "~"
 
-    if (path == null || path.equals("/") || path.equals("")) {
-      return agent(Pia.instance().rootAgentName());
+    if (path.startsWith("/~")) {
+      path = path.substring(2);
+      if (path.indexOf("/") > 0) {
+	path = path.substring(0, path.indexOf("/"));
+      }
+      return (Agent)agentsByName.at(path);
     }
 
-    // Remove leading "/" from the path. 
-    if (path.startsWith("/")) path = path.substring(1);
+    // See whether the path is an agent's home:
 
-    // Check for ~/ (ROOT)
-
-    if (path.equals("~") || path.startsWith("~/"))
-      return agent(Pia.instance().rootAgentName());
-
-    // Ignore leading ~ in ~Agent
-
-    if (path.startsWith("~")) path = path.substring(1);
-
-    // Split path on "/"
-    List pathList = new List(new java.util.StringTokenizer(path, "/"));
-    Agent agent = null;
+    if (path.lastIndexOf("/") > 0) {
+      path = path.substring(0, path.lastIndexOf("/"));
+    }
+    return (Agent) agentsByPathName.at(path);
+    
+    /* === The following no longer seems like the right behavior,
+    // === but we leave the code in for old times' sake.
 
     // Go through all the agents looking for the one
     // 	  whose pathName is the longest prefix of the path.
-    path =  "/" + path;
     int max = 0;
-    Enumeration e = agents();
+    Agent agent = null;
+    Enumeration e = agentsByPathName.keys();
     while( e.hasMoreElements() ){
-      Agent   a = (Agent) e.nextElement();
-      String pn = a.pathName();
+      String pn = e.nextElement().toString();
       if (path.startsWith(pn) && pn.length() > max) {
-	agent = a;
+	agent = (Agent)agentsByPathName.at(pn);
 	max = pn.length();
       }
     }
-    if (agent != null) return agent;
-
-    // Handle /name (possibly with trailing ~)
-    String name = pathList.at(0).toString();
-    if (name.endsWith("~")) name = name.substring(0, name.lastIndexOf("~"));
-    agent = agent(name);
     return agent;
+    */
   }
 
-  /** Run through the agentCollection and tell each Agent to run its
-   *	associated Crontab. */
-  public void runCrontabs() {
+  /** Run through the Crontab and run anything that needs running. */
+  public void runCrontab() {
 
     /* Ensure that this check and last check fall into different 1-minute
      *	buckets as measured since EPOCH. */
@@ -312,11 +315,7 @@ public class Resolver extends Thread {
 
     cronTime = thisTime;
     Pia.debug("Running crontabs at cronTime=" + cronTime);
-    Enumeration agents = agents();
-    while (agents.hasMoreElements()) {
-      Agent a = (Agent)agents.nextElement();
-      a.handleTimedRequests(cronTime);
-    }
+    crontab.handleRequests(cronTime);
 
   }
 
@@ -412,7 +411,7 @@ public class Resolver extends Thread {
       }
 
       if (System.currentTimeMillis() > cronTime + cronDELAY) 
-	runCrontabs();
+	runCrontab();
       
     }
     Pia.debug(this, "RUN thread EXITED");
@@ -432,7 +431,7 @@ public class Resolver extends Thread {
    */
 
   public int match( Transaction tran ){
-    Enumeration e = agents();
+    Enumeration e = matchingAgents();
     Agent agent;
     int matches = 0;
 

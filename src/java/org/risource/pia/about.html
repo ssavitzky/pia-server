@@ -54,16 +54,11 @@
     full control over the top-level namespace.
 
 <p> Even if an Agent has not registered its home directory at the top level it
-    will still have one: the directory in which the document that contains the
-    agent's state resides.  An Agent with persistent state will automatically
-    write out its state document whenever it changes.
-
-<p> It is the <code>SiteMachine</code>'s responsibility to track down the
-    agent associated with a directory URL and make it available as a
-    <code>Namespace</code> when executing the documents in that directory.
-    Multiple agents may share a home directory; their namespaces will
-    <em>all</em> be available under the agents' names (e.g.,
-    <code>History:</code> as well as the default <code>AGENT:</code>).
+    will still have one: the directory in which the forms that control the
+    agent reside.  An Agent used to be a namespace in its own right; this
+    function is now taken over by the ``properties'' of the agent's home
+    directory.  In fact, an Agent is now simply an <code>&lt;AGENT&gt;</code>
+    element in the configuration of its home Resource.
 
 
 <h3>Views</h3>
@@ -71,10 +66,10 @@
 <p> Because the top-level configuration file of a Site does not have to be
     part of the Site, it's easy to construct multiple views of a directory
     (for example, the PIA).  For example, simply making the PIA home directory
-    the root of the should give a purely passive view of the tree.  For a
-    server with agents, the root can be <code>PIA/Agents/ROOT</code>, with the
-    actual agent directories virtualized, and the documentation virtualized
-    read-only.  
+    the root should give a purely passive view of the tree.  For a server with
+    agents, the root can be <code>PIA/Agents/ROOT</code>, with the actual
+    agent directories virtualized, and the documentation virtualized
+    read-only.
 
 <h2>Philosophy</h2>
 
@@ -91,10 +86,62 @@
 
 
 
+<h2>Design Decisions</h2>
+
+<h3>Agent Alternativess</h3>
+
+<p> There are four plausible implementations for Agents:
+
+<ol>
+  <li> Each Agent has a ``state document'' (e.g. <code>AGENT.xml</code>) in
+       its home Resource.  Saving an Agent's state is fairly fast and simple.
+       Loading an Agent is <em>also</em> simple.  There are complications
+       involved in making the agent's namespace available to all documents in
+       its home, especially if multiple agents share the same home.
+       
+       <p>In this scheme it becomes the <code>SiteMachine</code>'s
+       responsibility to track down the agent associated with a directory URL
+       and make it available as a <code>Namespace</code> when executing the
+       documents in that directory.  Multiple agents may share a home
+       directory; their namespaces will <em>all</em> be available under the
+       agents' names (e.g., <code>History:</code> as well as the default
+       <code>AGENT:</code>).
+
+  <li> An Agent is a Namespace in its home Resource's configuration.  Loading
+       the agent becomes trivial.  Saving it requires nothing more than
+       <code>synchronize</code>, but will take longer if there's lots of other
+       metadata to save.  The &lt;AGENT&gt; tag would be defined in the
+       configuration tagset <code>pia-config</code>;
+       <code>AgentBuilder</code>'s existing tagset-switching method will be
+       sufficient to switch to the container's local tagset for the content.
+       There may, again, be naming issues if there are multiple agents; it
+       also means that the agent name and the namespace name will usually be
+       different, with the namespace name being <code>AGENT</code> and the
+       agent name being the name of the parent Container.
+
+  <li> An Agent <em>is</em> its home Resource's configuration.  This totally
+       eliminates naming issues.  We can preserve the &lt;AGENT&gt; tag, but
+       it no longer needs to have a <code>name</code> attribute -- in fact it
+       no longer even needs to be a namespace!  The <code>act-on</code> and
+       <code>criteria</code> could be separate properties, or we could make
+       <code>act-on</code> the content of &lt;AGENT&gt; and leave
+       <code>criteria</code> as an attribute.  This leads to:
+
+  <li> An Agent's <em>namespace</em> is its home Resource's properties.  A
+       Container (say, ``...<code>/toolbar</code>'') can easily have multiple
+       agents, because all they are is <code>&lt;AGENT&gt;</code> elements in
+       the configuration.  An Agent becomes <em>nothing</em> but a single XML
+       tag with some contents that get expanded, and attributes that say
+       <em>when</em> it gets expanded.  It can have optional sub-elements
+       <code>&lt;initialize&gt;</code> and <code>&lt;action&gt;</code>.
+</ol>
+
+<p> Listing them in this way made it obvious that the last option is the
+    correct one.
 
 <hr>
 <b>Copyright &copy; 1998 Ricoh Silicon Valley</b><br>
-<b>$Id: about.html,v 1.5 1999-09-10 23:34:46 steve Exp $</b><br>
+<b>$Id: about.html,v 1.6 1999-09-22 00:28:58 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
-f// FormContent.java
-// $Id: FormContent.java,v 1.5 1999-09-15 17:34:24 bill Exp $
+// FormContent.java
+// $Id: FormContent.java,v 1.6 1999-09-22 00:28:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public

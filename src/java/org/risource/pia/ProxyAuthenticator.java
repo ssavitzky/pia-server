@@ -1,5 +1,5 @@
 // ProxyAuthenticator.java
-// $Id: ProxyAuthenticator.java,v 1.1 1999-06-11 23:44:46 wolff Exp $
+// $Id: ProxyAuthenticator.java,v 1.2 1999-09-22 00:28:57 steve Exp $
 
 
 /*****************************************************************************
@@ -25,7 +25,6 @@
 package org.risource.pia;
 
 import org.risource.pia.Authenticator;
-import org.risource.pia.GenericAgent;
 import org.risource.pia.Transaction;
 import org.risource.pia.HTTPRequest;
 import org.risource.pia.HTTPResponse;

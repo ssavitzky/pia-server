@@ -1,5 +1,5 @@
 // Setup.java
-// $Id: Setup.java,v 1.6 1999-06-17 01:06:26 steve Exp $
+// $Id: Setup.java,v 1.7 1999-09-22 00:28:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -25,14 +25,14 @@
 /**
  * Setup is used to isolate the PIA's setup process: reading properties and
  *	environment variables, checking for the existance of the various
- *	directories, and adding the things we need to the system properties.<p>
+ *	directories, and adding the things we need to the system properties.
  *
- *	There is some hope that a sufficiently-clever runtime could
+ * <p>	There is some hope that a sufficiently-clever runtime could
  *	unload the code after it is needed.  Even if that proves
  *	impossible, the only class that depends on Setup is Pia, so
  *	changes in the setup code will not cause massive recompilation.
+ *	In contrast, almost <em>everything</em> depends on Pia.
  */
-
 package org.risource.pia;
 
 import java.io.File;
@@ -61,17 +61,18 @@ class Setup extends Configuration {
 
   /** PIA option table: */
   protected String[] piaOptTable = {
-    "-u",	"pia.usrroot",	"dir",		null,
-    "-p",	"pia.port",		"number",	"8888",
+    "-version", "pia.print-version",  "bool", 	null,
     "-d",	"pia.debug",	"bool",		null,
     "-v",	"pia.verbose",	"bool",		null,
-    "-port",	"pia.port",		"number",	"8888",
-    "-real",	"pia.realport", 	"number",	"8888",
+    "-u",	"pia.usrroot",	"dir",		null,
+    "-p",	"pia.port",	"number",	"8888",
+    "-port",	"pia.port",	"number",	"8888",
+    "-real",	"pia.realport", "number",	"8888",
     "-root",	"pia.piaroot",	"dir",		null,
     "-profile",	"pia.profile",	"file",		null,
-    "-filemap",	"pia.filemap",	"file",		null,
     "-host",	"pia.host", 	"name",		null,
-    "-version", "pia.print-version",  "bool", 	null,
+    "-config",	"pia.cfgfile",	"file",		"_subsite.xcf",
+    "-site",	"pia.sitecfg",	"file",		null,
   };
 
   /* options from old version: ============================================
@@ -193,25 +194,6 @@ class Setup extends Configuration {
       if (fileExists(profile) && mergeProperties(profile)) {
 	System.err.println("Loaded properties from "+profile);
       }
-    }
-
-    /* Make sure there's a filemap */
-
-    String fileMap = properties.getProperty("pia.filemap");
-    if (fileMap == null) {
-      path = new List();
-      if (usrRoot != null) path.push(usrRoot);
-      path.push(piaRoot);
-      fileMap = findFileInPath("Config" + filesep + "filemap.props",
-			       path.elements());
-      if (fileMap == null) {
-	System.err.println("Cannot locate Config/filemap.props.\n"
-			   + "  Please specify with the -filemap "
-			   + "option on the command line.");
-	return false;
-      }
-    } else {
-      properties.put("pia.filemap", fixFileName(fileMap));
     }
 
     return results;

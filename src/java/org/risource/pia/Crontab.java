@@ -1,5 +1,5 @@
 // Crontab.java
-// $Id: Crontab.java,v 1.3 1999-03-12 19:29:04 steve Exp $
+// $Id: Crontab.java,v 1.4 1999-09-22 00:28:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -69,43 +69,19 @@ public class Crontab extends List implements Serializable {
   ************************************************************************/
 
   /**
-   * Given a url string, content, and timing information, create a
-   *	Crontab entry.
+   * Given ann Agent and timing information, create a Crontab entry.
    *
    *	@param agent the Agent submitting the request.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
    *	@param times  a Tabular containing the timing information
    *
    *	@see org.risource.pia.CrontabEntry
    */
-  public void makeEntry(Agent agent, String method, String url,
-			String queryString, Tabular times) {
+  public void makeEntry(Agent agent, Tabular times) {
     // CrontabEntry will assume defaults for contentType, and will
     // convert queryString to a ByteArrayOutputStream
-    addRequest(new CrontabEntry(agent, method, url, queryString, times));
+    addRequest(new CrontabEntry(agent, times));
   }
 
-
-  /**
-   * Given a url string, content, and timing information, create a
-   *	Crontab entry.
-   *
-   *	@param agent the Agent submitting the request.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString content for a PUT or POST request.
-   *	@param contentType MIME type for the request content.
-   *	@param times  a Tabular containing the timing information
-   *
-   *	@see org.risource.pia.CrontabEntry
-   */
-  public void makeEntry(Agent agent, String method, String url,
-			String queryString, String contentType, Tabular times) {
-    addRequest(new CrontabEntry(agent, method, url, queryString,
-				contentType, times));
-  }
 
   /**
    * Make any requests that have come due since the last time.
@@ -118,7 +94,7 @@ public class Crontab extends List implements Serializable {
    *	The repeat count of each request is decremented; any request that
    *	``expires'' with a repeat count of zero is removed.<p>
    */
-  public void handleRequests(Agent agent, long time) {
+  public void handleRequests(long time) {
     long previousTime = lastTime;
     lastTime = time;
 
@@ -138,6 +114,10 @@ public class Crontab extends List implements Serializable {
   ************************************************************************/
 
   public Crontab() {
+  }
+
+  public Crontab(long time) {
+    lastTime = time;
   }
 
 }

@@ -1,5 +1,5 @@
 // Configuration.java
-// $Id: Configuration.java,v 1.4 1999-03-12 19:28:59 steve Exp $
+// $Id: Configuration.java,v 1.5 1999-09-22 00:28:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -169,7 +169,8 @@ class Configuration {
     o.println("options:");
 
     for (int i = 0; i < optTable.length; i += 4) {
-      String msg = "\t"+optTable[i]+"\t";
+      String msg = "  "+optTable[i]+"\t";
+      if (optTable[i].length() < 6) msg += "\t";
 
       if (!optTable[i+2].equals("bool")) {
 	msg += optTable[i+2];
@@ -179,6 +180,8 @@ class Configuration {
 
       if (optTable[i+3] != null) {
 	msg += "\t"+optTable[i+3];
+      } else if (properties.get(optTable[i+1]) != null) {
+	msg += "\t"+properties.get(optTable[i+1]);
       }
       o.println(msg);
     }
@@ -331,9 +334,3 @@ class Configuration {
   }
 
 }
-
-
-
-
-
-

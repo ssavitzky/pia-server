@@ -36,7 +36,7 @@ public interface InputContent extends Content {
   /** Return (if possible) the length of the
    * current content body as an integer
    *
-   * @see org.risource.pia.GenericAgent
+   * @see org.risource.pia.Agent
    */
   public int getCurrentContentLength() throws ContentOperationUnavailable;
 

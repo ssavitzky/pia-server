@@ -1,5 +1,5 @@
 // Agent.java
-// $Id: Agent.java,v 1.11 1999-07-20 20:58:17 steve Exp $
+// $Id: Agent.java,v 1.12 1999-09-22 00:28:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -32,9 +32,13 @@ import org.risource.pia.Machine;
 import org.risource.pia.Resolver;
 import org.risource.pia.Content;
 
-import org.risource.dps.Namespace;
+import org.risource.dps.active.ActiveElement;
 import org.risource.dps.Input;
 import org.risource.dps.Context;
+import org.risource.dps.Tagset;
+
+import org.risource.site.Subsite;
+import org.risource.site.Document;
 
 import org.risource.ds.List;
 import org.risource.ds.Criteria;
@@ -44,39 +48,26 @@ import org.risource.ds.Tabular;
 import org.risource.tf.UnknownNameException;
 
 /**
- * An agent is an object which maintains state and context and corresponds
- *	to a URL in the PIA server. 
+ * An agent is an XML element that can be expanded under various conditions.
  *
- * <p> Agents can receive requests directly (http://pia/AGENT:pathName/...);
- *	they can also operate on other transactions.  Direct requests are
- *	handled by the <code>respond</code> methods.  To operate on other
- *	transactions, Agents register with the resolver a set of criteria for
+ * <p>	An agent is associated with a ``home resource'' under
+ *	the PIA server's <code>Site</code>; this home resource provides the
+ *	context in which the Agent's code is expanded. 
+ *
+ * <p> Agents mainly exist to operate on transactions.  To do this,
+ *	Agents register with the resolver a set of criteria for
  *	transactions they are interested in.  When the resolver finds a
  *	matching transaction, the agent's actOn method is called.
  *
- * <p> An agent can completely handle a transaction by putting itself on the
- *	transaction's list of handlers -- which results in a call back to the
- *	agent's <code>handle</code> method.
- *
- * <p> Agent extends the <code>Tabular</code> interface, and all of its 
- *	attributes are also accessible through this interface.
+ * <p> Rather than a set of resolver criteria, an Agent can schedule itself
+ *	to be run at a particular time or at some regular interval.
  */
-public interface Agent extends Namespace {
+public interface Agent extends ActiveElement {
 
   /**
    * Default initialization; implementors may override
    */
   public void initialize();
-
-  /**
-   * Set options with a hash table, typically an attribute list.
-   */
-  public void parseOptions(Tabular hash);
-
-  /** 
-   * Load entities from an Input
-   */
-  public void loadFrom(Input in, Context cxt, Tabular opts);
 
   /************************************************************
   ** Access to attributes:
@@ -94,68 +85,46 @@ public interface Agent extends Namespace {
   /**
    * set name of agent
    */
-  public void name(String name);
+  public void setName(String name);
+
+  /** The Agent's ``home directory'' in the PIA's resource tree. 
+   *
+   *<p> By requiring this to be a Subsite, we guarantee that it will
+   *	stick around, in the sense that all attempts to locate it by
+   *	path will return the same object. 
+   */
+  public Subsite getHome();
 
   /**
-   * Return the Agent's ``type'': the pathname of an agent from which 
-   *	files are inherited.
-   *
-   * <p> If the agent inherits only from the root, the type will be equal
-   *	 to the agent's name.  Otherwise it will be a valid path, starting
-   *	 with "/".
-   *
-   * @return type of agent
+   * set home Resource of agent
    */
-  public String type();
+  public void setHome(Subsite home);
 
-  /**
-   * set type of agent
-   */
-  public void type(String type);
-
-  /** 
-   * Return the agent's parent in the agent type hierarchy.  This is, 
-   *	by definition, the agent whose pathName is <code>type()</code>.
-   */
-  public Agent typeAgent();
-
-  /**
-   * Return the agent's ``mount point'' in the PIA's URL hierarchy. 
-   * <p>
-   *	The path will always begin and end with "/", so that the Agent's
-   *	URL will always be <code>path() + name()</code>.
-   *
-   * @return agent's mount point in URL hierarchy.
-   */
-  public String path();
-
-  /**
-   * set path
-   */
-  public void path(String path);
-
-  /** Return the complete ``pathname'' of this agent: the file part of the
-   *	agent's root URL.
-   *
-   * <p> By definition, this is path + name, and is provided for convenience.
+  /** Return the complete pathname of the agent's home document.
    *
    * @return agent's root URL.
    */
-  public String pathName();
+  public String getHomePath();
 
+  /** Return the agent's tagset.
+   *	This is used for both parsing and processing the Agent's action.
+   */
+  public Tagset getTagset();
 
   /************************************************************
   ** operations for working with resolver:
   ************************************************************/
 
-  /**
+  /** The match criteria that cause the agent's action to be invoked.
+   * <p>
    * Agents maintain a list of feature names and expected values;
    * the features themselves are maintained by a Features object
    * attached to each transaction.
    */
   public Criteria criteria();
   
-  /**
+  /** The Machine the Agent uses to send and receive transactions.
+   * <p>
    * Agents are associated with a virtual machine which is an
    * interface for actually getting and sending transactionss.  Posts
    * explicitly to an agent get sent to the agent's machine (then  on to
@@ -180,154 +149,10 @@ public interface Agent extends Namespace {
    */
   public boolean handle(Transaction ts, Resolver res);
 
-  /************************************************************
-  ** Directories:
-  ************************************************************/
-
-  /** The agent's <em>home</em> directory: where its documents come from.
-   *	
-   * @return full path to the agent's home directory.
-   */
-  public String homeDirectory();
-
-  /** The agent's <em>user</em> (customization) document directory.
-   *
-   *	Documents in the user directory override those in the home directory,
-   *	allowing an individual user to customize documents belonging to a
-   *	shared agent.
-   *	
-   * @return full path to the agent's user directory.
-   */
-  public String userDirectory();
-
-  /** The agent's <em>data</em> directory.
-   *
-   *	Specifies the path to the directory used for the agent's data files.
-   *	This directory must be writable, and is created if necessary.
-   *	
-   * @return full path to the agent's user directory.
-   */
-  public String dataDirectory();
-
-
-  /** The agent's document directory search path. 
-   *
-   * @return a list of File objects refering to directories to search.
-   */
-  public List documentSearchPath();
-
-  /** The agent's document directory search path. 
-   *
-   * @return a list of File objects refering to directories to search.
-   */
-  public List documentSearchPath(boolean forWriting);
-
-
   /**
-   * Find a document, using a simple search path which allows for user
-   *	overrides of an agent's documents, and a crude kind of inheritance.  
+   * This method is called to handle a ``crontab'' agent.
    */
-  public String findDocument( String path );
-
-  /**
-   * Find an document, using an optional suffix search list and adjusting
-   *	the directory search path according to whether writing is required.
-   */
-  public String findDocument( String path, List suffixSearch, 
-			       boolean forWriting );
-
-  /**
-   * Find a data file using an optional suffix search list. 
-   */
-  public String findDataFile( String path, List suffixSearch, 
-			      boolean forWriting );
-
-  /** 
-   * Find a suitable content type for a path.
-   */
-  public String contentType(String path);
-
-
-  /************************************************************
-  ** Responding to direct requests:
-  ************************************************************/
-
-  /**
-   * Respond to a request directed at an agent.
-   * The document's url may be passed separately, since the agent may
-   * need to modify the URL in the request.  It can pass either a full
-   * URL or a path.
-   */
-  public void respond(Transaction trans, Resolver res)
-    throws PiaRuntimeException;
-
-  /**
-   * Given a url string and content create a request transaction.
-   *       The results are discarded.
-   *
-   * <p> This method is primarily used in initialization and in other cases
-   *	where a request is being made for its side effects rather than its
-   *	results.
-   *
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
-   *	@param contentType (optional) -- content type for a POST request.
-   */
-  public void createRequest(String method, String url,
-			    String queryString, String contentType);
-
-  /**
-   * Given a url string and content create a request transaction.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param content content object for a POST or PUT request.
-   *	@param contentType (optional) content type for a POST or PUT request.
-   */
-  public void createRequest(String method, String url,
-			    InputContent content, String contentType);
-
-  /**
-   * Given a url string and content, create a request transaction.
-   *       The results are discarded.
-   *
-
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
-   *	@param contentType (optional) -- content type for a POST request.
-   *	@param times a Tabular containing the timing information
-   */
-  public void createTimedRequest(String method, String url, String queryString,
-				 String contentType, Tabular times);
-
-
-  /** 
-   * Handle timed requests.  
-   *
-   * <p> This method is called periodically from the Resolver to handle any 
-   *	 timed requests that may have been registered with createTimedRequest.
-   *
-   * @param time the current time 
-   * @see org.risource.pia.Agent#createTimedRequest
-   * @see org.risource.pia.Resolver
-   */
-  public void handleTimedRequests(long time);
-
-  /** 
-   * Send an error message that includes the agent's name and type.
-   */
-  public void sendErrorResponse( Transaction req, int code, String msg );
-
-  /**
-   * Send error message for "document not found"
-   */
-  public void respondNotFound( Transaction req, String path);
-
-  /**
-   * Respond to a transaction with a stream of HTML.
-   */
-  public void sendStreamResponse ( Transaction trans, InputStream in );
+  public boolean act();
 
   /************************************************************
   ** Interface to content objects:

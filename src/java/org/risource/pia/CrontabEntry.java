@@ -1,5 +1,5 @@
 // CrontabEntry.java
-// $Id: CrontabEntry.java,v 1.3 1999-03-12 19:29:04 steve Exp $
+// $Id: CrontabEntry.java,v 1.4 1999-09-22 00:28:55 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,25 +23,17 @@
 
 package org.risource.pia;
 
-/** Crontab table entry for timed operations.
- *	The Crontab gets its name from the Unix <code>crontab</code> table,
- *	and has similar capabilities.
- */
-
-import org.risource.pia.Transaction;
 import org.risource.pia.Agent;
 import org.risource.pia.Resolver;
 
 import org.risource.ds.Registered;
 import org.risource.ds.List;
 import org.risource.ds.Tabular;
-
-// import org.risource.sgml.SGML;
-// import org.risource.sgml.Element;
-// import org.risource.sgml.Attrs;
-// import org.risource.sgml.Util;
+import org.risource.ds.Table;
 
 import org.risource.util.Utilities;
+
+import org.w3c.dom.Element;
 
 import java.io.Serializable;
 import java.io.OutputStream;
@@ -51,26 +43,18 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.text.DateFormat;
 
+/** Crontab table entry for timed operations.
+ *	The Crontab gets its name from the Unix <code>crontab</code> table,
+ *	and has similar capabilities.
+ */
 public class CrontabEntry implements Serializable {
 
   /************************************************************************
   ** Request Data:
   ************************************************************************/
 
-  /** The agent making the request. */
+  /** The agent to be run. */
   Agent agent;
-
-  /** The request method. */
-  String method;
-
-  /** The request URL. */
-  String url;
-
-  /** The request content (for POST or PUT). */
-  String content;
-
-  /** The request content type (for POST or PUT). */
-  String contentType;
 
   /** The minute at which to make the request.  Wildcard if negative. */
   int minute = -1;
@@ -111,41 +95,41 @@ public class CrontabEntry implements Serializable {
   public CrontabEntry() {  }
 
   /**
-   * Construct a Crontab entry.
-   *	@param agent the Agent submitting the request.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
-   *    @param contentType MIME type for the request content.
-   *	@param times a Tabular that contains the timing information.
+   * Construct a Crontab entry, taking the timing information from
+   *	the Agent's attribute list.
+   *	@param agent the Agent to be run
    */
-  public CrontabEntry(Agent agent, String method, String url,
-		      String queryString, Tabular times) {
-    // Convert query string to byte array
-    // Assume default content type
-    this(agent, method, url, queryString,
-	 "application/x-www-urlencoded", times);
+  public CrontabEntry(Agent agent) {
+    this(agent, getTimings(agent));
   }
 
-  
+  protected static String attrs[] = {
+    "hour", "minute", "day", "month", "year", "weekday", "repeat", "until",
+  };
+
+  public static Table getTimings(Element e) {
+    Table t = new Table();
+    int n = 0;
+
+    for (int i = 0; i < attrs.length; ++i) {
+      String s = e.getAttribute(attrs[i]);
+      if (s != null) {
+	++n;
+	t.at(attrs[i], s);
+      }
+    }
+    return (n == 0)? null : t;
+  }
+
   /**
    * Construct a Crontab entry.
-   *	@param agent the Agent submitting the request.
-   *	@param method (typically "GET", "PUT", or "POST").
-   *	@param url the destination URL.
-   *	@param queryString (optional) -- content for a POST request.
+   *	@param agent the Agent to be run
    *	@param times  a Tabular containing the timing information
    */
-  public CrontabEntry(Agent agent, String method, String url,
-		      String queryString,
-		      String contentType, Tabular itt) {
+  public CrontabEntry(Agent agent, Tabular itt) {
     this();			// initialize the times to wildcards
     
     this.agent 	 = agent;
-    this.method  = method;
-    this.url 	 = url;
-    this.content = queryString;
-    this.contentType = contentType;
 
     hour 	= entry(itt, "hour");
     minute 	= entry(itt, "minute");
@@ -208,8 +192,8 @@ public class CrontabEntry implements Serializable {
    *	@see #handleRequest
    */
   public boolean submitRequest() {
-    Pia.verbose("Submitting CrontabEntry " + method + " " + url);
-    agent.createRequest(method, url, content, contentType);
+    Pia.verbose("Submitting CrontabEntry " + agent.startString());
+    agent.act();
     if (repeat > 0) {
       if (--repeat == 0) {
 	Pia.verbose("--Maximal repeat count reached.");
@@ -251,7 +235,7 @@ public class CrontabEntry implements Serializable {
     
     // Check the expiration date. 
     if (checkExpired(min, h, d, m, y, wd)) {
-      Pia.verbose("Expired CrontabEntry " + method + " " + url);
+      Pia.verbose("Expired CrontabEntry " + agent.startString());
       repeat = 0;
       return true;
     }
