@@ -1,5 +1,5 @@
 ////// Test.java: Utilities for testing nodes and strings
-//	$Id: Status.java,v 1.7 1999-10-14 00:53:06 steve Exp $
+//	$Id: Status.java,v 1.8 1999-10-25 20:18:15 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -42,7 +42,7 @@ import java.net.*;
 /**
  * Utilities to determine the status (properties) of resources. 
  *
- * @version $Id: Status.java,v 1.7 1999-10-14 00:53:06 steve Exp $
+ * @version $Id: Status.java,v 1.8 1999-10-25 20:18:15 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -88,7 +88,10 @@ public class Status {
 
     if (name.equals("path")) return nodes(res.getPath()); 
     if (name.equals("name")) return nodes(res.getName()); 
-    //if (name.equals("absolute-path")) return nodes(res.getAbsolutePath());
+    if (name.equals("absolute-path")) {
+      File f = res.getDocument().documentFile();
+      return (f == null)? null : nodes(f.getAbsolutePath());
+    }
     //if (name.equals("cannonical-path")) return nodes(res.getCanonicalPath());
     if (name.equals("parent"))
       return nodes((res.getContainer()==null)
