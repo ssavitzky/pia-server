@@ -1,5 +1,5 @@
 ### Makefile for bin
-#	$Id: Makefile,v 1.2 1999-03-12 19:23:36 steve Exp $
+#	$Id: Makefile,v 1.3 1999-06-17 00:07:44 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,11 +28,14 @@ MYPATH=bin
 
 include $(MF_DIR)/file.make
 
-all:: jpia
-	@echo "scripts made"
+all:: 
+	@echo "No scripts to make"
 
 ### Executables 
+###	These are obsolete and unnecessary.  Retained for reference.
 
+clean::
+	rm -f jpia ppia
 
 # This constructs a shell script to run the Java PIA in this directory. 
 #	If there is no PIA_DIR in the environment, it overrides it.
