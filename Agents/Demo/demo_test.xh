@@ -1,4 +1,4 @@
-<!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE   html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html><head>
 <title>Test Handler Demo</title>
@@ -73,15 +73,23 @@ list </a>, and how to <a href='#notnum'>negate a test with not</a>.
 
 
 </p><h3><a name='match'>Test for a Match on a String</a></h3>
-<b> Description:</b>The following examples test for exact and case insensitive matches on text strings.
+<b> Description:</b>The following examples test for case insensitive and case sensitive matches on text strings.  The last two examples test for an exact match.
 <p>
-<b> Input:      </b> &lt;test match="cat"&gt;Match the Category&lt;/test&gt;
+<b> Input:      </b> &lt;test match='cat'&gt;Match the Category&lt;/test&gt;
 </p><p>
 <b> Result:     </b><test match='cat'>Match the Category</test>
 </p><p>
-<b> Input:      </b> &lt;test case match="cat"&gt;Match the Category&lt;/test&gt;
+<b> Input:      </b> &lt;test case='case' match='cat'&gt;Match the Category&lt;/test&gt;
 </p><p>
 <b> Result:     </b><test case='case' match='cat'>Match the Category</test>
+</p><p>
+<b> Input:      </b> &lt;test exact='exact' match='cat'&gt;The cat sat on the mat&lt;/test&gt;
+</p><p>
+<b> Result:     </b><test exact='exact' match='cat'>The cat sat on the mat</test>
+</p><p>
+<b> Input:      </b> &lt;test exact='exact' match='cat'&gt;cat&lt;/test&gt;
+</p><p>
+<b> Result:     </b><test exact='exact' match='cat'>cat</test>
 <hr />
 
 </p><h3><a name='null'>Test for null Content</a></h3>
@@ -143,7 +151,7 @@ If it returns true, it is a bug.
 </p><p>
 <b> Result:     </b><test case='case' sorted='sorted'>Bats ants toads</test>
 </p><p>
-<footer cvsid='$Id: demo_test.xh,v 1.5 1999-03-29 18:21:45 pgage Exp $'></footer>
+<footer cvsid='$Id: demo_test.xh,v 1.6 1999-04-02 01:03:52 pgage Exp $' /></p><p>
 
 </p></body></html>
 
