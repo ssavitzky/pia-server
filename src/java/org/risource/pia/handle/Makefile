@@ -1,5 +1,5 @@
 ###### pia/handle/Makefile:	DPS Tag handlers
-#	$Id: Makefile,v 1.3 1999-03-12 19:30:04 steve Exp $
+#	$Id: Makefile,v 1.4 1999-09-22 00:21:54 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -28,7 +28,8 @@ HANDLERS = \
 	agentList.java \
 	agentRunning.java \
 	transControl.java \
-	userMessage.java 
+	userMessage.java  \
+	submitHandler.java
 
 FILES=  $(HANDLERS)
 
