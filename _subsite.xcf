@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.17 2000-07-21 22:48:59 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.18 2000-07-28 23:06:01 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -91,15 +91,15 @@
     <Ext name="wi"	type="text/html" tagset="/.Woad/woad-index"	/>
 
     <!-- These are the tagsets used for formatting source code: -->
-    <Ext name="wl"	type="text/html" tagset="/.Woad/src-file"	/>
+    <Ext name="wl"	type="text/html" tagset="/.Woad/Tools/src-file"	/>
 
-    <Ext name="html"	type="text/html" tagset="/.Woad/src-html"	/>
-    <Ext name="xh"	type="text/html" tagset="/.Woad/src-xhtml"	/>
-    <Ext name="xcf"	type="text/html" tagset="/.Woad/src-xhtml"	/>
-    <Ext name="xci"	type="text/html" tagset="/.Woad/src-xhtml"	/>
-    <Ext name="xml"	type="text/html" tagset="/.Woad/src-xhtml"	/>
-    <Ext name="inc"	type="text/html" tagset="/.Woad/src-xhtml"	/>
-    <Ext name="ts" 	type="text/html" tagset="/.Woad/src-xhtml"	/>
+    <Ext name="html"	type="text/html" tagset="/.Woad/Tools/src-html"	/>
+    <Ext name="xh"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+    <Ext name="xcf"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+    <Ext name="xci"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+    <Ext name="xml"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+    <Ext name="inc"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+    <Ext name="ts" 	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
 
   </Container>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: woad.xcf,v 1.15 2000-07-21 22:49:04 steve Exp $ -->
+<!-- $Id: woad.xcf,v 1.16 2000-07-28 23:06:11 steve Exp $ -->
 
 <!-- WARNING: Restart the PIA after editing this file!       -->
 
@@ -103,11 +103,11 @@
   <Ext name="shtml"	type="text/html" tagset="/.Woad/Tools/src-html"	/>
   <Ext name="php"	type="text/html" tagset="/.Woad/Tools/src-html"	/>
   <Ext name="php3"	type="text/html" tagset="/.Woad/Tools/src-html"	/>
-  <Ext name="xh"	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
-  <Ext name="xcf"	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
-  <Ext name="xci"	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
-  <Ext name="xml"	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
-  <Ext name="inc"	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
-  <Ext name="ts" 	type="text/html" tagset="/.Woad/Tools/src-xhtml"	/>
+  <Ext name="xh"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+  <Ext name="xcf"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+  <Ext name="xci"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+  <Ext name="xml"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+  <Ext name="inc"	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
+  <Ext name="ts" 	type="text/html" tagset="/.Woad/Tools/src-xhtml" />
 
 </Container>
