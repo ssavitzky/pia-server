@@ -1,5 +1,5 @@
-// Agent.java
-// $Id: Agent.java,v 1.4 1999-03-24 20:49:53 steve Exp $
+// AgentName.java
+// $Id: AgentName.java,v 1.1 1999-03-24 20:49:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,7 +31,7 @@ import org.risource.pia.Pia;
 
 import org.risource.tf.TFComputer;
 
-public class Agent extends TFComputer {
+public final class AgentName extends Agent {
 
   /**
    * Get an agent's name in a request URL.
@@ -41,35 +41,7 @@ public class Agent extends TFComputer {
   public Object computeFeature(Transaction trans) {
     if (trans == null) return null;
     org.risource.pia.Agent agent = computeAgentFeatures(trans);
-    return (agent == null)? "" : agent.pathName();
-  }
-
-  /** Compute features associated with a transaction's agent.
-   * @param trans A transaction 
-   * @return the agent.
-   */
-  public org.risource.pia.Agent computeAgentFeatures(Transaction trans) {
-    if (trans.isResponse()) trans = trans.requestTran();
-    if (! trans.test("agent-request")) return null;
-
-    URL url = trans.requestURL();
-    if( url == null ) return null;
-
-    String path = url.getFile();
-    if( path == null ) return null;
-      
-    org.risource.pia.Agent agent =
-      Pia.instance().resolver().agentFromPath(path);
-
-    if (agent != null) {
-      trans.assert("agent", agent.pathName());
-      trans.assert("agent-pathname", agent.pathName());
-      trans.assert("agent-type", agent.type());
-      trans.assert("agent-name", agent.name());
-      trans.assert("agent-path", agent.path());
-    }
-
-    return agent;
+    return (agent == null)? "" : agent.name();
   }
 }
 

@@ -1,5 +1,5 @@
 // AgentType.java
-// $Id: AgentType.java,v 1.3 1999-03-12 19:30:44 steve Exp $
+// $Id: AgentType.java,v 1.4 1999-03-24 20:49:57 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -31,32 +31,17 @@ import org.risource.pia.Pia;
 
 import org.risource.tf.TFComputer;
 
-public final class AgentType extends TFComputer {
+public final class AgentType extends Agent {
 
   /**
    * Get an agent's type in a request URL.
-   * @param object A transaction 
+   * @param trans A transaction 
    * @return agent's name as an object if exists otherwise null
    */
   public Object computeFeature(Transaction trans) {
-
-    if (trans.isResponse()) trans = trans.requestTran();
     if (trans == null) return null;
-
-    if (! trans.test("agent-request")) return null;
-
-    URL url = trans.requestURL();
-    if( url == null ) return null;
-
-    String path = url.getFile();
-    if( path == null ) return null;
-      
-    org.risource.pia.Agent agent = Pia.instance().resolver().agentFromPath(path);
-
-    if (agent != null) 
-      trans.assert("agent", agent.name());
-
-    return (agent != null)? agent.type() : null;
+    org.risource.pia.Agent agent = computeAgentFeatures(trans);
+    return (agent == null)? "" : agent.type();
   }
 }
 

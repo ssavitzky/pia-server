@@ -1,5 +1,5 @@
 // Registry.java
-// $Id: Registry.java,v 1.3 1999-03-12 19:30:55 steve Exp $
+// $Id: Registry.java,v 1.4 1999-03-24 20:49:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -100,7 +100,10 @@ public class Registry {
     // Pairlist: name, classname.
     String[] names = {
       "agent",		"Agent",
+      "agent-pathname", "Agent",
       "agent-type",	"AgentType",
+      "agent-path",	"AgentPath",
+      "agent-name",	"AgentName",
       "agent-request",	"IsAgentRequest",
       "agent-response", "IsAgentResponse",
       "file-request",	"IsFileRequest",

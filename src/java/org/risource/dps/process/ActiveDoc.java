@@ -1,5 +1,5 @@
 ////// ActiveDoc.java: Top Processor for PIA active documents
-//	$Id: ActiveDoc.java,v 1.5 1999-03-24 19:05:51 steve Exp $
+//	$Id: ActiveDoc.java,v 1.6 1999-03-24 20:49:49 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -54,7 +54,7 @@ import org.risource.pia.Resolver;
 /**
  * A TopProcessor for processing active documents in the PIA.
  *
- * @version $Id: ActiveDoc.java,v 1.5 1999-03-24 19:05:51 steve Exp $
+ * @version $Id: ActiveDoc.java,v 1.6 1999-03-24 20:49:49 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.pia
@@ -180,22 +180,23 @@ public class ActiveDoc extends TopProcessor {
       if (transaction.test("agent-request") ||
 	   transaction.test("agent-response")) {
 
-	// === need agent-name, agent-type, agent-path features.
-	String aname = transaction.getFeatureString("agent");
+	String pname = transaction.getFeatureString("agent");
+	Agent  agent = resolver.agent(pname);
+
+	String aname = transaction.getFeatureString("agent-name");
+	String apath = transaction.getFeatureString("agent-path");
 	String atype = transaction.getFeatureString("agent-type");
 
+	define("TRANS-AGENT", agent);
 	define("transAgentName", aname);
 	define("transAgentType", atype);
-	// === this will cause problems:  need agent.
-	if (aname.equals(atype)) {
-	  define("transAgentPath", "/"+aname);
-	} else {
-	  define("transAgentPath", "/"+atype+"/"+aname);
-	}
+	define("transAgentPath", apath);
+	define("transAgentPathName", pname);
       } else {
 	define("transAgentName", (Object)null);
 	define("transAgentType", (Object)null);
 	define("transAgentPath", (Object)null);
+	define("transAgent", (Object)null);
       }
     }
 
@@ -219,16 +220,13 @@ public class ActiveDoc extends TopProcessor {
     define("AGENT", agent);
     define("agentName", agent.name());
     define("agentType", agent.type());
-    if (agent.name().equals(agent.type())) {
-      define("agentPath", "/"+agent.name());
-    } else {
-      define("agentPath", agent.pathName());
-    }
+    define("agentPath", agent.path());
+    define("agentPathName", agent.pathName());
 
-   define("agentNames", resolver.agentNames());
+    define("agentNames", resolver.agentNames());
 
-   define("entityNames", "");
-   define("entityNames", entities.entityNames());
+    define("entityNames", "");
+    define("entityNames", entities.entityNames());
   }
 
   /************************************************************************
