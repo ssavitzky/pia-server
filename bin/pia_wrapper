@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.12 1999-10-22 17:32:37 steve Exp $
+#	$Id: pia_wrapper,v 1.13 1999-10-26 22:57:24 steve Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -26,8 +26,8 @@ if [ ! -x "$JAVA_BIN" ] ; then
 fi
 
 if [ ! -x "$JAVA_BIN" ] ; then
-    echo "Cannot locate java or jre."
-    echo "Please put java's binary directory in your $PATH"
+    echo "Cannot locate java or jre." 1>&2
+    echo "Please put java's binary directory in your $PATH" 1>&2
     exit 1
 fi
 export JAVA_BIN
@@ -48,8 +48,8 @@ if [ -z "$PIA_HOME" ] ; then
   MY_BIN=`$0 --kludge $MY` >/dev/null 2>&1
   MY_BIN_DIR=`dirname $MY_BIN`
   if [ ! -x "$MY_BIN" ] ; then
-    echo "Cannot locate binary directory for $0."
-    echo "Please put the PIA's binary directory in your shell's PATH"
+    echo "Cannot locate binary directory for $0." 1>&2
+    echo "Please put the PIA's binary directory in your shell's PATH" 1>&2
     exit 1
   fi
 else
@@ -111,8 +111,8 @@ else
 	PIA_CLASS=$1
 	shift
     fi
-    [ -z "$old_classpath" ] && echo "CLASSPATH not set; using $CLASSPATH"
-    [ -z "$VERBOSE" ] || echo CLASSPATH=$CLASSPATH
+    [ -z "$old_classpath" ] && echo "CLASSPATH not set; using $CLASSPATH" 1>&2
+    [ -z "$VERBOSE" ] || echo CLASSPATH=$CLASSPATH 1>&2
     export CLASSPATH
     exec $JAVA_BIN $D $V $PIA_CLASS $V $ENV $*
 fi
@@ -126,6 +126,6 @@ else
     shift
 fi
 
-[ -z "$VERBOSE" ] || echo "$JAVA_BIN $V $PIA_CLASS $V $ENV $*"
+[ -z "$VERBOSE" ] || echo "$JAVA_BIN $V $PIA_CLASS $V $ENV $*" 1>&2
 exec $JAVA_BIN $D $V $PIA_CLASS $V $ENV $*
 
