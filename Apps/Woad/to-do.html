@@ -5,6 +5,25 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Bug</b> problems with word xref indices <br />
+       Uses of filenames don't seem to be properly xref'ed.  Should refrain
+       from calling the line that defines a word a "use".  Python doesn't
+       require parens after "if", so add that to the set of words that
+       suppress a c-like function def.
+       (2000-10-02)
+  </li>
+  <li> <b>Bug</b> problems with TextParser <br />
+       don't accept ":" or "." in identifiers.  
+       (2000-10-02)<br />
+       -- foo: works temporarily for Python.  Doesn't fix ".".
+  </li>
+  <li> <b>Wish</b> PIA links to public WOAD tree in dist. <br />
+       Instead of referring to a local WOAD tree, the distribution should
+       refer to the public one on <code>pia.rsv.ricoh.com</code>.  This should
+       be a global option in SITE:piaWoadTree, so users can change it.
+       <code>_subsite.xcf</code> should check for a top-level WOAD index file.
+       (2000-09-29)
+  </li>
   <li> <b>Wish</b> xref indices, parsers for man and info pages<br />
        (2000-09-29)
   </li>
@@ -19,23 +38,19 @@
        i.e. "processed", "wrapped", ...
        (2000-09-25)
   </li>
-  <li> <b>Bug</b> problems with word xref indices <br />
-       We may want a different expansion for Def and Ref in xrefs.  In any
-       case, there's no expansion for Ref at all.  Def needs to show, and link
-       to, context.  The word link is just plain wrong.
-       (2000-09-29)
-  </li>
   <li> <b>Goal</b> useable release by 9/30. <br />
        <ul>
 	 <li> Upload new PIA to <a href="http://pia.rsv.ricoh.com;">
 	      <code>pia.rsv.ricoh.com</code> </a>; release.
 	 </li>
-	 <li> Word cross-refs. (2000-09-29)
+	 <li> defer-content [performance improvement] (2000-10-05)
 	 </li>
 	 <li> Tagged source listings for non-SGML code files [either by
 	      shallow parsing, external taggers, or both] (2000-09-22) and
 	      shallow parsing for SGML files.<!-- === -->
 	      <!-- === ShallowParser nice, but could be postponed === -->
+	 </li>
+	 <li> Word cross-refs. (2000-09-29)
 	 </li>
 	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
 	      actual directories. (2000-09-26)
@@ -43,7 +58,9 @@
 	 <li> Cross-reference and chronological (newest-first) indices of
 	      notes (2000-09-25)
 	 </li>
-       </ul>
+       </ul><br />
+       -- internal release for TouchVerse 10/2.  Public release scheduled for
+	  10/6. 
   </li>
   <li> <b>Hole</b> linking of identifiers to annotation, docs. <br />
        This requires two things: proper tagging of identifiers in context,
@@ -312,5 +329,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.24 2000-09-30 00:16:07 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.25 2000-10-05 19:00:35 steve Exp $</b><br>
 </body></html>
