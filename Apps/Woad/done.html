@@ -199,13 +199,24 @@ See also:
        (2000-09-25)<br />
   </li>
 
+  <li> 2000-10-13 <b>Bug</b> word list uses too much memory <br />
+       The correct solution is to use a simple <em>set</em> (i.e. a Namespace
+       subclass that maps words to themselves using a Table) and compute the
+       links in &lt;id&gt; or else in the parser (simple for now, but
+       basically wrong).
+       (2000-10-07)<br />
+       -- the actual solution uses the xprefix attribute and a map that takes,
+	  e.g., <code>word</code> into <code>-W-/</code>.  The trailing slash
+	  tells the parser to append the word, lowercased. 
+  </li>
+
 </ol>
 
 
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.14 2000-10-12 23:11:08 steve Exp $</b><br>
+<b>$Id: done.html,v 1.15 2000-10-13 23:21:41 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

@@ -1,5 +1,5 @@
 ////// TextParser.java: parser for text (non-SGML) files
-//	$Id: TextParser.java,v 1.6 2000-10-06 17:42:47 steve Exp $
+//	$Id: TextParser.java,v 1.7 2000-10-13 23:21:54 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -62,7 +62,7 @@ import java.io.IOException;
  *	job of recognizing and handling markup, and is able to recognize
  *	a variety of ways of embedding code in markup.
  *
- * @version $Id: TextParser.java,v 1.6 2000-10-06 17:42:47 steve Exp $
+ * @version $Id: TextParser.java,v 1.7 2000-10-13 23:21:54 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Parser
  * @see org.risource.dps.parse.CodeParser
@@ -168,6 +168,10 @@ public class TextParser extends AbstractParser {
 
   /** cached reference to cross-reference namespace */
   protected Namespace xrefs = null;
+
+  /** Prefix for cross-references */
+  protected String xprefix = null;
+
   protected TopContext top = null;
 
   /************************************************************************
@@ -194,7 +198,11 @@ public class TextParser extends AbstractParser {
     }
     if (xrefs != null) {
       ActiveNodeList v = xrefs.getValueNodes(top, id);
-      return (v != null)? v.toString() : null;
+      if (v == null) return null;
+      String s = v.toString();
+      if (xprefix != null) s = xprefix + s;
+      if (s.endsWith("/")) s += id.toLowerCase();
+      return s;
     } else {
       return null;
     }
@@ -449,6 +457,7 @@ public class TextParser extends AbstractParser {
     cbegin  = tse.getAttribute("cbegin");
     cend    = tse.getAttribute("cend");
     xrefsName = tse.getAttribute("xrefs");
+    xprefix = tse.getAttribute("xprefix");
 
     wds = tse.getAttribute("string");
     if (wds == null) {

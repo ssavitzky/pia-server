@@ -20,7 +20,7 @@
 <tagset name="src-xref" parent="HTML" tagset="woad-xhtml"
         include="src-file src-wrapper"
 	parser="TextParser" comment="//" cbegin="/*" cend="*/"
-	xrefs="SITE:xref"
+	xrefs="SITE:xref" xprefix="/.words/xref/"
 	keywords="if else while until for switch case
 		  try catch throws implements instanceof new this super
 		  class interface static public private protected final 
@@ -28,7 +28,7 @@
 		  String return import export package include define"
 >
 
-<cvs-id>$Id: src-xref.ts,v 1.1 2000-10-06 00:27:43 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xref.ts,v 1.2 2000-10-13 23:21:46 steve Exp $</cvs-id>
 
 <h1>WOAD Cross-reference listing for HTML</h1>
 

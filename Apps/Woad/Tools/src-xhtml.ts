@@ -18,11 +18,11 @@
 <!-- ====================================================================== -->
 
 <tagset name="src-xhtml"  tagset="woad-xhtml" parser="TextParser"
-	xrefs="SITE:xref"
+	xrefs="SITE:xref" xprefix="/.words/xref/"
         include="src-wrapper src-html" documentWrapper="-document-"
 >
 
-<cvs-id>$Id: src-xhtml.ts,v 1.4 2000-10-06 17:40:53 steve Exp $</cvs-id>
+<cvs-id>$Id: src-xhtml.ts,v 1.5 2000-10-13 23:21:46 steve Exp $</cvs-id>
 
 <h1>WOAD Source-listing for XHTML</h1>
 

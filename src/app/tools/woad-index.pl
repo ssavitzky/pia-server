@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.16 2000-10-12 23:11:13 steve Exp $
+#	$Id: woad-index.pl,v 1.17 2000-10-13 23:21:50 steve Exp $
 # Create WOAD index files.
 #
 
@@ -9,11 +9,11 @@ sub usage {
     print "$0 [options] [parameters] [<dir>]\n";
     print "  options:\n";
     print "	-l		local (no recursion)\n";
-    print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "	-v		Print version string and exit\n";
     print "	-q		Quiet\n";
     print "	-x		also produce cross-reference index\n";
-    print "	-y		index definitions only (faster)\n";
+    print "	-y		xref definitions only (faster)\n";
+    print "	-root <dir>	Woad annotations (default ~/.woad)\n";
     print "  parameters: \n";
     print "	source=<dir>	source root\n";
     print "	root=<dir>	annotation root (same as -root <dir>)\n";
@@ -1010,14 +1010,16 @@ sub makeCrossReference {
 	    $d = $c;
 	}
 
+	# Write the entry for the top-level cross-reference namespace.
+	# The parser will fill in the prefix and the word.
+	my $xfile = "$dir/-$c-/$word.wi";
+	my $xlink = "-$c-/";	# was "$words/$context/-$c-/$word.wi";
+	print XREFS "<xref name=\"$word\">$xlink</xref>\n";
+	
 	# write the cross-reference file entry for the word
 	# We don't bother to sort the entries, which saves a little time.
 	# As we go, clear out entries in %xrefs to save both time and space
 
-	my $xfile = "$dir/-$c-/$word.wi";
-	my $xlink = "$words/$context/-$c-/$word.wi";
-	print XREFS "<xref name=\"$word\">$xlink</xref>\n";
-	
 	open (INDEX, ">$xfile");
 	print INDEX $xrefs{$word}; # we don't really have to sort.
 	## @entries = sort(split (/\n\n/, $xrefs{$word}));
@@ -1102,7 +1104,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.16 2000-10-12 23:11:13 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.17 2000-10-13 23:21:50 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 

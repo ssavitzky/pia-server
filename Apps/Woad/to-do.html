@@ -5,6 +5,12 @@
 <h1>To-Do list: WOAD</h1>
 
 <ol>
+  <li> <b>Bug</b> word xrefs still uses more memory than necessary <br />
+       The correct solution is to use a simple Table specified by a new
+       namespace-like tag.  TextParser wants a little cleverness to extract
+       the table if it exists.
+       (2000-10-13)<br />
+  </li>
   <li> <b>Hole</b> notes with names: lnNNNNNN for lines <br />
        "annotates" is, of course, easily computable.  &lt;id&gt; needs to
        check for existing note, and needs a link to create one.  Notes could
@@ -294,5 +300,5 @@
 
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: to-do.html,v 1.26 2000-10-12 23:11:09 steve Exp $</b><br>
+<b>$Id: to-do.html,v 1.27 2000-10-13 23:21:42 steve Exp $</b><br>
 </body></html>

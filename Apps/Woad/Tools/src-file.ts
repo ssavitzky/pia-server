@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="src-file" tagset="woad-xhtml" parser="CodeParser"
-	xrefs="SITE:xref"
+	xrefs="SITE:xref" xprefix="/.words/xref/"
 	include="src-wrapper" documentWrapper="-document-"
 	keywords="if else else: elsif elif while until for func sub switch case
 		  try catch throws throw implements instanceof new this self
@@ -28,7 +28,7 @@
 		  define open close split join def from try: except:" 
  >
 
-<cvs-id>$Id: src-file.ts,v 1.6 2000-10-06 00:27:42 steve Exp $</cvs-id>
+<cvs-id>$Id: src-file.ts,v 1.7 2000-10-13 23:21:46 steve Exp $</cvs-id>
 
 <h1>WOAD source-file listing for generic files</h1>
 
