@@ -8,6 +8,7 @@
  <a href="Config">Config</a>,
  <a href="Contrib">Contrib</a>,
  <a href="Doc">Doc</a>,
+ <a href="Tagsets">Tagsets</a>,
  <a href="bin">bin</a>,
  <a href="lib">lib</a>,
  <a href="src">src</a>
@@ -43,13 +44,22 @@
   <dt> <a href="Samples/">Samples/</a>
   <dd> This directory contains sample agents and applications that are
        meant to be copied and extended; they are not particularly useful by
-       themselves. 
+       themselves.
+  <dt> <a href="Tagsets/">Tagsets/</a>
+  <dd> This directory contains tagsets used in the PIA.  The names of tagsets
+       in this directory are normally prefixed with <code>/Tagsets/</code>
+       (i.e. they are relative to the top-level SubSite) to allow for user
+       customization. 
   <dt> <a href="bin/">bin/</a>
   <dd> Binaries (executable files).  In addition to the PIA, this directory
        includes some additional applications here for use on ``thin'' servers
        and other PIA-based appliances.
   <dt> <a href="lib/">lib/</a>
-  <dd> Libraries.  
+  <dd> Libraries.  This directory also contains the fundamental tagsets that
+       are not expected to be customized.  Tagsets in <code>lib</code> should
+       be prefixed with <code>pia:/lib/</code>, i.e. they are found relative
+       to <code>$<em>PIA_HOME</em></code>, which is common to all PIA-based
+       applications.
   <dt> <a href="src/">src/</a>
   <dd> Source code for the PIA and related utilities.
 </dl>
@@ -73,5 +83,5 @@
 
 <hr>
 <b>Copyright &copy; 1997-1999 Ricoh Silicon Valley</b><br>
-<b>$Id: HEADER.html,v 1.7 1999-10-14 18:07:28 steve Exp $</b>
+<b>$Id: HEADER.html,v 1.8 1999-12-14 19:00:51 steve Exp $</b>
 <a name="files"><hr></a>
