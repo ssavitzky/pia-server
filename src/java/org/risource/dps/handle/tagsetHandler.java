@@ -1,5 +1,5 @@
 ////// tagsetHandler.java: <tagset> Handler implementation
-//	$Id: tagsetHandler.java,v 1.10 1999-11-11 18:32:49 steve Exp $
+//	$Id: tagsetHandler.java,v 1.11 1999-12-14 18:49:26 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
  *
  *	
  *
- * @version $Id: tagsetHandler.java,v 1.10 1999-11-11 18:32:49 steve Exp $
+ * @version $Id: tagsetHandler.java,v 1.11 1999-12-14 18:49:26 steve Exp $
  * @author steve@rsv.ricoh.com
  */
 
@@ -150,11 +150,11 @@ public class tagsetHandler extends GenericHandler {
 
     } else {
       parentTagset = tproc.loadTagset(parentTSname);
-	//org.risource.dps.tagset.Loader.require(parentTSname);
       cxt.debug("Loading tagset=" + parentTSname + 
 		((parentTagset == null)? " FAILED" : " OK"));
       if (parentTagset == null) {
-	reportError(in, cxt, "Cannot load parent tagset " + parentTSname);
+	reportError(in, cxt, "Cannot load parent tagset " + parentTSname 
+		    + " of " + name );
       } else {
 	newTagset.setParent(parentTagset);
       }
@@ -166,7 +166,6 @@ public class tagsetHandler extends GenericHandler {
       while (inames.hasMoreElements()) {
 	String incN  = inames.nextElement().toString();
 	Tagset incTS = tproc.loadTagset(incN);
-	  // org.risource.dps.tagset.Loader.require(incN);
 	cxt.debug("Loading tagset=" + incN + 
 		   ((incTS == null)? " FAILED" : " OK"));
 	if (incTS == null) {
