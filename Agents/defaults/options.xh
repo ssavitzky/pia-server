@@ -121,7 +121,7 @@
 </output><!-- newline is required after AGENT element. -->
 		      <br /><status src="&saveFile;" item=path />&nbsp;WRITTEN
 		      <submit-forms><!-- register the saved agent -->
-			<form method="POST" action="&PIA:url;/Admin/load-agent.xh">
+			<form method="POST" action="&PIA:rootPath;Admin/load-agent.xh">
 			  <input name="a-path" value="&AGENT:pathName;">
 			  <input name="dst" value="&saveFile;">
 			  <input name="on-start" value="&AGENT:onStart;">
@@ -163,7 +163,7 @@
 	<tr><td bgcolor="silver">&nbsp;</td>
 	    <td valign="top">
 		You may need to use <code><a
-		href="&PIA:url;/Admin/control">/Admin/control</a></code> to save the
+		href="&PIA:rootPath;Admin/control">/Admin/control</a></code> to save the
 		agent list.
 	    </td>
 	    <td bgcolor="silver">&nbsp;</td>
@@ -428,7 +428,7 @@
 <h2><a name="xml-data">Agent XML Data</a></h2>
 
 <p> This is a ``dump'' of all of this Agent's data in XML format.  It can be
-    put in a file, edited, and ``<a href="&PIA:url;/Admin/load-agent">loaded</a>'' to
+    put in a file, edited, and ``<a href="&PIA:rootPath;Admin/load-agent">loaded</a>'' to
     create a new agent. 
 </p>
 
@@ -478,5 +478,5 @@ user directory has been created for &AGENT:name;.</td>
 </then></if>
 
 
-<footer cvsid='$Id: options.xh,v 1.4 2000-04-18 19:00:15 steve Exp $' />
+<footer cvsid='$Id: options.xh,v 1.5 2000-04-18 21:33:41 steve Exp $' />
 </body></html>

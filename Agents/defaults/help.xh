@@ -33,7 +33,7 @@
 <hr />
 
 <!--  Quietly see whether there's a "help" file for this agent.  -->
-<include src='help.inc'><include src="&PIA:url;/Agents/defaults/help.inc"/>
+<include src='help.inc'><include src="&PIA:rootPath;Agents/defaults/help.inc"/>
 </include>
 
 <hr />
@@ -46,5 +46,5 @@ links to the documentation and to many useful forms and active documents, can be
 found on the <a href='/Admin/'>Admin Agent's home page</a>.
 
 <hr />
-<footer cvsid='$Id: help.xh,v 1.6 2000-04-18 19:00:14 steve Exp $' />
+<footer cvsid='$Id: help.xh,v 1.7 2000-04-18 21:33:41 steve Exp $' />
 </body></html>

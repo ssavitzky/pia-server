@@ -3,8 +3,8 @@
 
 The fileTools Agent puts banners on top of pages that come from local files
 served by the PIA (in other words, from DOFS agents).
-This is indicated by the PIA logo (<img src="&PIA:url;/Icon/pia24.png" height=24
+This is indicated by the PIA logo (<img src="&PIA:rootPath;Icon/pia24.png" height=24
 width=43>) at the front of the banner, which is a link to the PIA's home page.
 <p>
 
-<inc-footer cvsid="$Id: about.inc,v 1.7 2000-04-18 19:00:02 steve Exp $">
+<inc-footer cvsid="$Id: about.inc,v 1.8 2000-04-18 21:33:28 steve Exp $">

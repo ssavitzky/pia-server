@@ -5,7 +5,7 @@
 
 <set name="ltitle"><if><test exact="exact" case="insens" match="pia">&user.name;</test>
 		     <then> </then>
-		     <else><a href="&PIA:url;/~/">&user.name;'s</a> </else></if></set>
+		     <else>&user.name;'s </else></if></set>
 <header show-date="yes" ltitle="&ltitle;">
   <if><test exact="exact" case="insens" match="pia">&user.name;</test>
 			    <then>An Information Appliance</then>
@@ -15,8 +15,9 @@
 
 <table cellspacing="0" cellpadding="0" border="0">
 <tr>
-  <th width="170"><img src="&PIA:url;/Icon/logo100.png" height="100" width="111" alt=" " />
-  </th><td valign="center">
+  <th width="170"><img src="&PIA:rootPath;Icon/logo100.png" height="100" width="111" alt=" " />
+  </th>
+  <td valign="center">
     <table cellspacing="0" cellpadding="0" border="0" valign="center">
     <tr><th valign="top" align="right" width="170"></th>
         <td valign="top"></td></tr>
@@ -34,19 +35,24 @@
     </td></tr></then></if>
     <!-- There was some hairy stuff here to check for a ``top agent''.  -->
     <!-- It is no longer necessary, since the config file can do it.    -->
-    <tr><th valign="top" align="right" width="170"><a href="&PIA:url;/-"><b>Files:</b></a>&nbsp;
-	</th><td valign="top"> <a href="&PIA:url;/Agents/">Applications</a>
-		<a href="&PIA:url;/Doc/doclist.html">Documents</a>
-		<a href="&PIA:url;/Tagsets">Tagsets</a>
-		<a href="&PIA:url;/src/">Source code</a>
+    <tr><th valign="top" align="right" width="170"><a href="&PIA:rootPath;-"><b>Files:</b></a>&nbsp;
+	</th><td valign="top"> <a href="&PIA:rootPath;Agents/">Apps</a>
+		<a href="&PIA:rootPath;Samples/">Samples</a>
+		<a href="&PIA:rootPath;Doc/doclist.html">Docs</a>
+		<a href="&PIA:rootPath;Tagsets">Tagsets</a>
+		<a href="&PIA:rootPath;src/">Sources</a>
         </td></tr>
-    <tr><th valign="top" align="right" width="170"><a href="&PIA:url;/Agents/"><b>Apps:</b></a>&nbsp;
+  <if><get name="agentNames"/><then>	
+    <tr><th valign="top" align="right" width="170">
+             <a href="&PIA:rootPath;Agents/"><b>Apps:</b></a>&nbsp;
 	</th><td valign="top"> 
             <repeat><foreach entity="foo"><get name="agentNames"/></foreach>
               <do name="a"><set name="href">/~<get name="foo"/>/</set>
 		  <get name="foo"/></do>
             </repeat><br>
         </td></tr>
+    </then>
+  </if>
   <if><agent-running name="History"/><then>
     <tr><th valign="top" align="right">
 		    <a href="/~History"><b>History:</b></a>&nbsp;
@@ -58,16 +64,25 @@
 	     <a href="/~History/DATA/&year;/&month;/&day;.html">&day;</a>]
 	</td>
     </tr>
-  </then>
-  <else><tr><td>&nbsp;</td><td></td></tr>
-  </else></if>
+    </then>
+    <else><tr><td>&nbsp;</td><td></td></tr>
+    </else>
+  </if>
+  <if><get name="PIA:servlet"/><then>
+    <tr> <th valign="top" align="right"><b>Servlet:</b>&nbsp;</th>
+	 <td> <font size="-1"><code><get name="PIA:servlet"/></code></font>
+	      <br /> mounted at:
+	      <a href="&PIA:rootPath;"><code>&PIA:rootPath;</code></a>
+	 </td>
+    </tr>
+  </if>
     <tr><td width="170">&nbsp;</td><td></td></tr>
   </table>
 </td></tr></table>
 <hr />
-<include src="welcome.inc"><include src="&PIA:url;/Agents/ROOT/welcome.inc"/></include>
+<include src="welcome.inc"><include src="/Agents/ROOT/welcome.inc"/></include>
 <hr />
-<include src="&PIA:url;/Agents/ROOT/doc-grid.inc"/>
+<include src="/Agents/ROOT/doc-grid.inc"/>
 <p>
-<short-footer cvsid="$Id: index.xh,v 1.15 2000-04-18 19:18:00 steve Exp $" />
+<short-footer cvsid="$Id: index.xh,v 1.16 2000-04-18 21:33:19 steve Exp $" />
 </p></body></html>

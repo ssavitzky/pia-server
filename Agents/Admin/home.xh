@@ -71,7 +71,7 @@
 Any application which has been initialized can have its home page, index,
 and directories accesses directly accessed by URLs
 of the form <code>http://piaHost:piaPort/agent-name</code>.  See 
-<a href="&PIA:url;/Doc/naming.html">naming conventions</a> for details.
+<a href="&PIA:rootPath;Doc/naming.html">naming conventions</a> for details.
 
-<footer cvsid='$Id: home.xh,v 1.18 2000-04-18 18:59:52 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.19 2000-04-18 21:33:22 steve Exp $' />
 </body></html>
