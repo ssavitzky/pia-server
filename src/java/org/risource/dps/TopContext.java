@@ -1,5 +1,5 @@
 ////// TopContext.java: Top Context interface
-//	$Id: TopContext.java,v 1.5 1999-05-20 20:26:03 steve Exp $
+//	$Id: TopContext.java,v 1.6 1999-09-22 00:33:36 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -30,6 +30,8 @@ import java.io.OutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import org.risource.site.*;
+
 import java.net.URL;
 
 /**
@@ -43,7 +45,7 @@ import java.net.URL;
  *	be done, for example, in order to insert a sub-document into the
  *	processing stream.  Even the ``root'' context may have a parent.
  *
- * @version $Id: TopContext.java,v 1.5 1999-05-20 20:26:03 steve Exp $
+ * @version $Id: TopContext.java,v 1.6 1999-09-22 00:33:36 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.risource.dps.Processor
@@ -60,6 +62,12 @@ public interface TopContext extends Processor {
 
   /** Set the current Tagset. */
   public void setTagset(Tagset bindings);
+
+  /** Obtain the current Document resource. */
+  public Document getDocument();
+
+  /** Set the current Document resource. */
+  public void setDocument(Document doc);
 
   /** Obtain the current ProcessorInput.  
    *
@@ -85,30 +93,12 @@ public interface TopContext extends Processor {
   ** External Entities:
   ************************************************************************/
 
-  /** The root URL of the document -- the server where it is located. 
-   *
-   * <p> This is null if the document is located on the same host as the
-   *	 DPS process, i.e. the document is accessible as a file.
+  /** Locate a resource relative to the Document being processed.
+   * @param path a path.
+   * @param forWriting <code>true</code> if the Resource is intended to 
+   *		be written into. 
    */
-  public URL getDocumentLocation();
-
-  /** The file path of the current document relative to its location
-   *	(i.e., the result of <code>getDocumentLocation</code>).
-   *
-   * <p> This will always be a file path (starting with ``<code>/</code>'') 
-   *	 following the URL convention of forward slashes for separators.
-   *	 In all cases it will end with a ``<code>/</code>''. 
-   *
-   * <p> Inside a PIA or other server the base path is need not be a path 
-   *	 from the filesystem root, but may be relative to the server's
-   *	 document root instead.
-   */
-  public String getDocumentBase();
-
-  /** The file name of the current document. 
-   *	May be null if the current document is a string. 
-   */
-  public String getDocumentName();
+  public Resource locateResource(String path, boolean forWriting);
 
   /** Read from a resource. 
    *	The given path always uses ordinary (forward) slashes as file
