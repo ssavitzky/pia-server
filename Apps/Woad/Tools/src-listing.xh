@@ -89,7 +89,7 @@
 
 <define element="extract-title">
   <action>
-    <extract><from><include src="&content;" /></from>
+    <extract><from><include src="&content;"> </include></from>
 	     <name all="all">title</name> <content /></extract>
   </action>
 </define>
@@ -225,12 +225,10 @@
   </action>
 </define>
 <set name="cvs-controlled"></set>
-  
 
 <if> &npath;
      <then>
-       <table bgcolor="yellow" width="90%" cellspacing="0" border="0"
-	      align="center" >
+       <table bgcolor="yellow" width="90%" cellspacing="0" border="1">
 	 <tr> <td valign="top"> <b>Note:</b>
 	      </td>
 	      <td> This is a source directory listing.  If
@@ -259,7 +257,7 @@
     </then>
   </else-if>
     <else>
-       <table bgcolor="yellow" width="90%" cellspacing="0" border="0">
+       <table bgcolor="yellow" width="90%" cellspacing="0" border="1">
 	 <tr> <td valign="top"> <b>Note:</b>
 	      </td>
 	      <td> This directory has not been indexed!  Indexing is done
@@ -324,5 +322,5 @@
      </then>
 </if>
 
-<short-footer cvs-id="$Id: src-listing.xh,v 1.7 2000-06-24 00:43:29 steve Exp $" />
+<short-footer cvs-id="$Id: src-listing.xh,v 1.8 2000-06-24 06:21:43 steve Exp $" />
 </body></html>

@@ -7,6 +7,9 @@
 	             result="">&LOC:path;</subst></then>
 	<else>&LOC:path;</else>
     </if></set>
+  <if> <get name="npath" />
+       <else><set name="npath">/</set></else>
+  </if>
   <set name="nroot">
     <if>&SITE:notesPrefix;
 	<then>&SITE:notesPrefix;</then>
@@ -29,9 +32,11 @@
   <set name="decoratedPath">
 	<decoratePath base="&nroot;">[SERVER]&npath;/&tail;</decoratePath></set>
   <doc> Set other path-related variables.
+	=== For some reason I have to use npath here, though LOC:path works in
+	=== src-listing.  Strange.
   </doc>
-  <set name="tpath"><mapNoteToTarget>&LOC:path;&tail;</mapNoteToTarget></set>
-  <set name="spath"><mapNoteToSource>&LOC:path;&tail;</mapNoteToSource></set>
+  <set name="tpath"><mapNoteToTarget>&npath;&tail;</mapNoteToTarget></set>
+  <set name="spath"><mapNoteToSource>&npath;&tail;</mapNoteToSource></set>
   <set name="xloc"><subst match="/[^/]*$" result="">&npath;&tail;</subst></set>
   <set name="xloc"><subst match="^//" result="/">&xloc;</subst></set>
 </hide>
@@ -204,10 +209,12 @@
       </extract></text></foreach><!-- FAKED!!!!! -->
       <let name="absPath">
   	<fixRelativePath path="&xloc;">&li;</fixRelativePath></let>
+      <let name="absLink">
+  	<fixRelativePath path="&LOC:path;">&li;</fixRelativePath></let>
       <if> &absPath;
   	   <then>
 	      <tr>
-		 <td> <a href="&abspath;">&abspath;</a> </td>
+		 <td> <a href="&absLink;">&absPath;</a> </td>
 		 <td> &nbsp;
 			   <!-- for descriptions, need full path. -->
 		 </td>   
@@ -335,5 +342,5 @@
   </tr>
 </table>
 
-<short-footer cvs-id="$Id: woad-listing.xh,v 1.6 2000-06-24 00:43:29 steve Exp $" />
+<short-footer cvs-id="$Id: woad-listing.xh,v 1.7 2000-06-24 06:21:43 steve Exp $" />
 </body></html>

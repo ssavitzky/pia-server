@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.10 2000-06-23 23:08:44 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.11 2000-06-24 06:21:42 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -283,6 +283,11 @@ Note that we only need these inside the PIA.
   <action><hide>
 	<let name="nprefix"><get name="SITE:notesPrefix"/></let>
 	<let name="sprefix"><get name="SITE:sourcePrefix"/></let>
+	<if> <get name="sprefix"/>
+	     <then><if> <test match="^\/">&sprefix;</test>
+			<else><let name="sprefix">/&sprefix;</let></else>
+	     </if></then>
+	</if>
 	<let name="offset"><get name="SITE:docOffset"/></let>
 	<let name="path"><get name="content"/></let>
 	<if>&nprefix;
