@@ -20,7 +20,7 @@
 <tagset name="woad-index" parent="woad-web" tagset="woad-xhtml"
         documentWrapper="index" >
 
-<cvs-id>$Id: woad-index.ts,v 1.8 2000-10-02 23:13:01 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-index.ts,v 1.9 2000-10-12 23:11:09 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Indices</h1>
 
@@ -243,10 +243,15 @@
     </if>
 </set>
 <hr />
+<a name="first">&nbsp;</a><a href="#last">&gt;last entry-&gt;</a><br />
+<hr />
 
 <table bgcolor="white" border="2" width="100%">    
 <expand><get name="content"/></expand>
 </table>
+
+<hr />
+<a name="last">&nbsp;</a><a href="#first">&lt;-first entry&lt;</a><br />
 <hr />
 <h5><em>This file is automatically maintained and should not be edited by hand.</em></h5>
 

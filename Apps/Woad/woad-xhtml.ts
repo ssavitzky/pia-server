@@ -18,7 +18,7 @@
 <!-- ====================================================================== -->
 
 <tagset name="woad-xhtml" parent="xhtml" include="pia-tags" recursive="yes">
-<cvs-id>$Id: woad-xhtml.ts,v 1.27 2000-10-05 19:00:25 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-xhtml.ts,v 1.28 2000-10-12 23:11:09 steve Exp $</cvs-id>
 
 <h1>WOAD XHTML Tagset</h1>
 
@@ -715,6 +715,17 @@ Note that we only need these inside the PIA.
 	</make>
 </make><!-- note created using quick form -->
 </output>
+<!-- === AllNotesByTime needs to go under &project; or something eventually -->
+<output dst="/AllNotesByTime.wi" append="yes">
+<make name="Wfile"><hide>
+   <let name="name">&FORM:label;.ww</let>
+   <let name="path">&dir;&FORM:label;.ww</let>
+   <let name="type">note</let>
+   <!-- let name="size"><status src="&path;" item="length" /></let -->
+   <let name="mtime"><status src="&path;" item="last-modified" /></let>
+   <if>&FORM:title;<then><let name="title">&FORM:title;</let></then></if>
+   </hide><parse tagset="HTML"><get name="FORM:summary" /></parse>
+</output>
 		</else>
 	   </if>
 	 </then>
@@ -1317,6 +1328,6 @@ Note that we only need these inside the PIA.
   </action>
 </define>
 
-<!-- $Id: woad-xhtml.ts,v 1.27 2000-10-05 19:00:25 steve Exp $ -->
+<!-- $Id: woad-xhtml.ts,v 1.28 2000-10-12 23:11:09 steve Exp $ -->
 </tagset>
 

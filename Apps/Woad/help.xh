@@ -207,9 +207,9 @@
   <dd> In this mode, the source is processed using a special parser and
        tagset.  It presents a verbatim view of the file, color-coded and
        font-coded according to syntax, with identifiers cross-referenced to
-       their definitions.  Note that links in the cross-referenced view do
-       <em>not</em> point directly to their target, but to a cross-reference
-       file.  This may be confusing. 
+       their definitions.  Lines are numbered.  Note that links in the
+       cross-referenced view do <em>not</em> point directly to their target,
+       but to a cross-reference file.  This may be a little confusing.
   </dd>
   <dt> <code>processed</code>
   </dt>
@@ -273,7 +273,9 @@
 <h3><a name="AllNotesByTime"><code>AllNotesByTime.wi</code></a></h3>
 
 <p> This index contains links to all Woad annotations, sorted with the most
-    recent notes first.  It is only found at the top level.
+    recent notes last (a convenient link to the end is provided).  It is only
+    found at the top level.  This index is automatically appended to every
+    time a note is created or edited.
 </p>
 
 <h3><a name="sourcePathIndex"><code>sourcePathIndex.wi</code></a></h3>
@@ -360,12 +362,19 @@
     ``<em>CIRCULAR</em> symlink'' -- this means that the directory is a
     symbolic link to (alias for) a directory which is already indexed
     someplace else in the tree.  <red> Unfortunately, at this point following
-    the link will <em>not</em> take you to the correct location, so the WOAD
-    annotation won't be visible. </red>
+    the link will <em>not</em> take you to the correct location in the
+    annotation tree, so the WOAD annotation won't be visible. </red>
 </p>
 
 <hr />
 <h2>Data Items and Links</h2>
+
+<blockquote>
+  <red> These mostly apply to <ss>WOAD Warrior</ss>, and so are currently not
+	used. 
+  </red>
+</blockquote>
+
 <h3><a name="prjname">Project Name</a></h3>
 
 <p> The <strong>project name</strong> is a short name that <em>you</em> assign
@@ -404,5 +413,5 @@
 </table>
 
 <p>
-<short-footer cvsid="$Id: help.xh,v 1.17 2000-10-06 18:08:53 steve Exp $" />
+<short-footer cvsid="$Id: help.xh,v 1.18 2000-10-12 23:11:08 steve Exp $" />
 </p></body></html>

@@ -144,13 +144,68 @@ See also:
        (2000-09-29)
   </li>
        
+  <li> 2000-10-06 <b>Goal</b> useable release by 9/30. <br />
+       <ul>
+	 <li> Upload new PIA to <a href="http://pia.rsv.ricoh.com;">
+	      <code>pia.rsv.ricoh.com</code> </a>; release. (20000-10-06)
+	 </li>
+	 <li> defer-content [performance improvement] (2000-10-05)
+	 </li>
+	 <li> Tagged source listings for non-SGML code files [either by
+	      shallow parsing, external taggers, or both] (2000-09-22) and
+	      shallow parsing for SGML files.<!-- === -->
+	      <!-- === ShallowParser nice, but could be postponed === -->
+	 </li>
+	 <li> Word cross-refs. (2000-09-29)
+	 </li>
+	 <li> Mapping of virtual URL's (e.g. <code>/cgi-bin</code>) into
+	      actual directories. (2000-09-26)
+	 </li>
+	 <li> Cross-reference and chronological (newest-first) indices of
+	      notes (2000-09-25)
+	 </li>
+       </ul><br />
+       -- internal release for TouchVerse 10/2.  Public release scheduled for
+	  10/6. 
+  </li>
+
+  <li> 2000-10-06 <b>Hole</b> linking of identifiers to annotation, docs. <br />
+       This requires two things: proper tagging of identifiers in context,
+       and figuring out where in the tree to link them.  Generally, each
+       identifier gets its own page, Wiki style.  In some cases the
+       context requires its own page, i.e. for Java identifiers or XHTML
+       tags.
+       (2000-06-07)<br />
+       -- (2000-06-28: annotation listing done.  Ready for indexing and
+	  linking.)  The simple thing was to give each identifier its own
+	  cross-reference page with an easily-computable URL derived from the
+	  identifier itself (lxr does the same).
+  </li>
+       
+  <li> 2000-10-12 <b>Bug</b> AllNotesByTime needs to be appendable <br />
+       so that new notes can be appended as they are created.  This means that
+       it needs to be oldest-first instead of newest-first, with a link to the
+       bottom.
+       (2000-10-11)<br />
+       -- links: 2000-10-11; woad-index.pl: ; create/edit: 
+  </li>
+
+  <li> 2000-10-12 <b>Bug</b> link from a note to the page it annotates. <br />
+       Noticeable especially in .sources, where there's an extraneous
+       <code>.notes</code> interpolated into the URL.  Obviously another
+       mapping function is needed.  Back button is fine, but doesn't work if
+       you got there from AllNotesByTime.  Could do this with
+       &lt;annotates&gt; tag.
+       (2000-09-25)<br />
+  </li>
+
 </ol>
 
 
 <a name="end">End of list.</a>
 <hr>
 <b>Copyright &copy; 2000 Ricoh Silicon Valley</b><br>
-<b>$Id: done.html,v 1.13 2000-10-05 19:00:35 steve Exp $</b><br>
+<b>$Id: done.html,v 1.14 2000-10-12 23:11:08 steve Exp $</b><br>
 <address><a href="http://rsv.ricoh.com/~steve/"
          >Stephen R. Savitzky</a> &lt;<a href="mailto:steve@rsv.ricoh.com"
          >steve@rsv.ricoh.com</a>&gt;</address>

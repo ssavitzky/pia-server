@@ -19,7 +19,7 @@
 
 <tagset name="woad-web" parent="woad-xhtml" tagset="woad-xhtml" >
 
-<cvs-id>$Id: woad-web.ts,v 1.8 2000-07-21 22:49:55 steve Exp $</cvs-id>
+<cvs-id>$Id: woad-web.ts,v 1.9 2000-10-12 23:11:09 steve Exp $</cvs-id>
 
 <h1>Tagset for WOAD Annotations</h1>
 
@@ -160,6 +160,14 @@
   <doc> This element delimits the entire note.
   </doc>
   <action><hide>
+    <set name="annotates">
+	<if> <test match="^&SITE:sourcePrefix;">&LOC:path;</test>
+	     <then><subst match="&SITE:sourceSuffix;"
+			  result="">&LOC:path;</subst>
+	     <then>
+	     <else>&LOC:path;</else>
+	</if>
+    </set>
     <if> <get name="FORM:update" />
 	 <then> <hide><get name="content"/></hide><!-- discard old content -->
 <set name="content">
@@ -174,6 +182,17 @@
   <get name="content"/>
 </make>
 		</output>
+<!-- === AllNotesByTime needs to go under &project; or something eventually -->
+		<output dst="/AllNotesByTime.wi" append="yes">
+<make name="Wfile"><hide>
+   <let name="name">&DOC:name;</let>
+   <let name="path">&DOC:path;</let>
+   <let name="type">note</let>
+   <!-- let name="size"><status src="&path;" item="length" /></let -->
+   <let name="mtime"><status src="&path;" item="last-modified" /></let>
+   <if>&FORM:title;<then><let name="title">&FORM:title;</let></then></if>
+   </hide><parse tagset="HTML"><get name="FORM:summary" /></parse>
+</output>
 	 </then>
     </if>
     <set name="title"><extract><from><get name="content"/></from>
@@ -220,13 +239,16 @@
 	       bgcolor="99ccff">
 	  <tr>
 	    <td> <a href="&DOC:path;?edit">[edit]</a>
+		 <a href="&annotates;">[annotates &annotates;]</a>
+	    </td>
+	    <td align="right">
+		 <code>&DOC:path;</code>
 	    </td>
 	  </tr>
 	</table>
      </else>
 </if>
 <hr />
-<code>&DOC:path;</code>	
 </body></html>
   </action>
 </define>

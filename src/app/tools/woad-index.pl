@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#	$Id: woad-index.pl,v 1.15 2000-10-06 00:28:11 steve Exp $
+#	$Id: woad-index.pl,v 1.16 2000-10-12 23:11:13 steve Exp $
 # Create WOAD index files.
 #
 
@@ -928,6 +928,13 @@ sub globalIndices {
     }
     %docs = ();
 
+    # Here we do the chronological notes index
+    open (INDEX, ">$root$project/AllNotesByTime.wi");
+    @keys = sort(keys(%notesByTime));
+    for ($k = 0; $k < @keys; ++$k) {
+	print INDEX $notesByTime{$keys[$k]};
+    }
+    close (INDEX);
 }
 
 ### makeCrossReference()
@@ -1020,14 +1027,6 @@ sub makeCrossReference {
     }
     close (XREFS);
     print STDERR "\n" unless ($quiet);
-
-    # Here we do the chronological notes index
-    open (INDEX, ">$root$project/AllNotesByTime.wi");
-    @keys = sort(keys(%notesByTime));
-    for ($k = @keys - 1; $k >= 0; --$k) {
-	print INDEX $notesByTime{$keys[$k]};
-    }
-    close (INDEX);
 }
 
 
@@ -1103,7 +1102,7 @@ sub stringify {
 }
 
 sub version {
-    return q'$Id: woad-index.pl,v 1.15 2000-10-06 00:28:11 steve Exp $ ';
+    return q'$Id: woad-index.pl,v 1.16 2000-10-12 23:11:13 steve Exp $ ';
     # put this last because the $'s confuse emacs.
 }
 
