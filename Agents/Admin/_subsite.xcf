@@ -1,9 +1,9 @@
 <!DOCTYPE Container SYSTEM "pia-config">
-<!-- $Id: _subsite.xcf,v 1.1 1999-09-22 00:46:07 steve Exp $ -->
+<!-- $Id: _subsite.xcf,v 1.2 1999-10-04 17:05:55 steve Exp $ -->
 
 <Container>
 
-  <Map ext="xh"		type="text/html"	tagset="Admin-xhtml"	/>
+  <Ext name="xh"	type="text/html"	tagset="Admin-xhtml"	/>
 
   <AGENT name=Admin criteria="false" class="org.risource.pia.agent.Admin">
      <initialize><user-message>Admin agent initialized</user-message>

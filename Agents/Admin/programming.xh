@@ -50,16 +50,10 @@
 <h3>Where Things Are:</h3>
 
 <ul>
-  <li> <code>PIA_DIR = &piaDIR; </code>
-       (parent of src, Doc, etc.) <br />
-       If things are set up correctly, this should also be reachable as
-       <a href='/PIA/'>/PIA/</a>
-  </li><li> <code>USR_DIR = &usrDIR;</code>
+  <li> <code>PIA_HOME = &PIA:home; </code>
+       (The PIA's installation directory.  Parent of src, Doc, etc.) <br />
+  </li><li> <code>PIA_ROOT = &PIA:root;</code>
        (your customizations and agent output)  <br />
-       If things are set up correctly, this should also be reachable as
-       <a href='/~/'>/~/</a>, the <a href='/ROOT'>ROOT</a> agent's data
-       directory. 
-  </li><li> Customized Documents: <code>&usrDIR;/Agents</code>
 </li></ul>
 
 <h3>Miscellaneous files...normally not accessed directly</h3>
@@ -72,5 +66,5 @@
 	  (This file gets "executed" when a new &AGENT:name; agent is created)
 </li></ul>
 
-<footer cvsid='$Id: programming.xh,v 1.7 1999-03-27 02:29:24 pgage Exp $' />
+<footer cvsid='$Id: programming.xh,v 1.8 1999-10-04 17:05:56 steve Exp $' />
 </body></html>

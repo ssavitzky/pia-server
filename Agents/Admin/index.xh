@@ -15,10 +15,10 @@
   <dt> Note:
   </dt><dd> This page does not have an option for removing the
        <a href='/&AGENT:name;'>&AGENT:name;</a> agent.  It is required for the
-       proper functioning of this <if><test exact='exact' match='pia'>&piaUSER;</test>
+       proper functioning of this <if><test exact='exact' match='pia'>&user.name;</test>
        <then>appliance</then><else>Personal Information Agency</else></if>.
 </dd></dl>
 
-<footer cvsid='$Id: index.xh,v 1.3 1999-03-27 02:29:21 pgage Exp $' />
+<footer cvsid='$Id: index.xh,v 1.4 1999-10-04 17:05:56 steve Exp $' />
 </body></html>
 

@@ -18,7 +18,7 @@
 <!-- ---------------------------------------------------------------------- -->
 
 <tagset name=Admin-xhtml parent=pia-xhtml recursive>
-<cvs-id>$Id: Admin-xhtml.ts,v 1.15 1999-09-24 18:49:11 steve Exp $</cvs-id>
+<cvs-id>$Id: Admin-xhtml.ts,v 1.16 1999-10-04 17:05:55 steve Exp $</cvs-id>
 
 <h1>Admin-XHTML Tagset</h1>
 
@@ -381,10 +381,10 @@
 <nav-bar/>
 <hr/>
 <a href="/&AGENT:name;"><get name="AGENT:name"/></a> agent on
-<if><test exact  match='pia'><get name="piaUSER"/></test>
+<if><test exact  match='pia'><get name="user.name"/></test>
     <then> the </then>
-    <else> <get name="piaUSER"/>'s</else></if>
-<if><test exact match='pia'><get name="piaUSER"/></test>
+    <else> <get name="user.name"/>'s</else></if>
+<if><test exact match='pia'><get name="user.name"/></test>
     <then> information appliance </then>
     <else>Personal Information Agency</else></if><br>
 <b>URL:</b> &lt;<xlink>&url;</xlink>&gt;
@@ -401,6 +401,6 @@
 
 <hr />
 <b>Copyright &copy; 1995-1999 Ricoh Silicon Valley</b><br />
-<b>$Id: Admin-xhtml.ts,v 1.15 1999-09-24 18:49:11 steve Exp $</b><br />
+<b>$Id: Admin-xhtml.ts,v 1.16 1999-10-04 17:05:55 steve Exp $</b><br />
 </tagset>
 

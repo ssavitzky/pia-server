@@ -1,5 +1,5 @@
 #!/bin/sh 
-#	$Id: pia_wrapper,v 1.9 1999-03-27 01:29:33 steve Exp $
+#	$Id: pia_wrapper,v 1.10 1999-10-04 17:05:01 steve Exp $
 # Pia launcher.  Also handles other classes in the PIA hierarchy.
 #	Always tacks on -p propertyFile, which may be a misfeature.
 #
@@ -43,7 +43,7 @@ fi
 
 ### Find out where this command is:
 
-if [ -z "$PIA_DIR" ] ; then
+if [ -z "$PIA_HOME" ] ; then
   MY=`type $0`
   MY_BIN=`$0 --kludge $MY` >/dev/null 2>&1
   MY_BIN_DIR=`dirname $MY_BIN`
@@ -53,7 +53,7 @@ if [ -z "$PIA_DIR" ] ; then
     exit 1
   fi
 else
-  MY_BIN_DIR=$PIA_DIR/bin
+  MY_BIN_DIR=$PIA_HOME/bin
 fi
 
 ### Process the "-v" flag specially 
@@ -74,17 +74,17 @@ fi
 ### Find out where the PIA is.
 #	The most likely candidate is the parent directory of $0.
 
-PIA_DIR="${PIA_DIR-$MY_BIN_DIR/..}"
-[ -d $PIA_DIR ] && PIA_DIR=`(cd $PIA_DIR && pwd)`
-export PIA_DIR
+PIA_HOME="${PIA_HOME-$MY_BIN_DIR/..}"
+[ -d $PIA_HOME ] && PIA_HOME=`(cd $PIA_HOME && pwd)`
+export PIA_HOME
 
 #The user's .pia directory:
-USR_DIR="${USR_DIR-$HOME/.pia}"
-export USR_DIR
+PIA_ROOT="${PIA_ROOT-$HOME/.pia}"
+export PIA_ROOT
 
 ### Build an environment string:
 
-ENV="PIA_DIR=$PIA_DIR USR_DIR=$USR_DIR HOME=$HOME USER=$USER"
+ENV="PIA_HOME=$PIA_HOME PIA_ROOT=$PIA_ROOT HOME=$HOME USER=$USER"
 
 for key in DISPLAY http_proxy ftp_proxy wais_proxy gopher_proxy no_proxy
 do
@@ -95,9 +95,9 @@ done
 ### Build a CLASSPATH if we are not in the PIA's code directory
 
 # The pia source directory.  (Later we will test for their existence)
-PIA_SRC=${PIA_SRC-$PIA_DIR/src}
+PIA_SRC=${PIA_SRC-$PIA_HOME/src}
 
-if [ `/bin/pwd` = `(cd $PIA_DIR/src/java; /bin/pwd)` ]; then
+if [ `/bin/pwd` = `(cd $PIA_HOME/src/java; /bin/pwd)` ]; then
     true
 else
     [ -z "$CLASSPATH" ] || CLASSPATH=":$CLASSPATH"

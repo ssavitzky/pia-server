@@ -1,5 +1,5 @@
 #!/bin/sh
-#	$Id: process,v 1.5 1999-04-13 23:40:54 wolff Exp $
+#	$Id: process,v 1.6 1999-10-04 17:05:01 steve Exp $
 # Process a document
 #	Process a document using the (new) Document Processing System
 #
@@ -27,8 +27,8 @@ if [ ! -x "$XXX_BIN" ] ; then
     echo "Please put the PIA's binary directory in your $PATH"
     exit 1
 fi
-PIA_DIR=${PIA_DIR-$PIA_BIN_DIR/..}
-export PIA_DIR
+PIA_HOME=${PIA_HOME-$PIA_BIN_DIR/..}
+export PIA_HOME
 
 ### Handle -v specially: 
 #	it has to be the first option in order for pia_wrapper to see it.

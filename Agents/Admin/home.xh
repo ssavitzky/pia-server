@@ -1,6 +1,6 @@
 <!DOCTYPE  html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
-<title>&piaUSER;'s &AGENT:name;: Home Page</title>
+<title>&user.name;'s &AGENT:name;: Home Page</title>
 </head><body bgcolor='#ffffff' link='#c40026' vlink='#e40026'>
 
 <set entity='entity' name='title'>Server administration</set>
@@ -32,7 +32,7 @@
   <li> <a href='list-agents'>list running applications</a></li>
   <li> <a href='installers'>install new agents</a></li>
   <li> <a href='options'>view/change options</a></li>
-<if><test not='not' exact='exact' match='pia'>&piaUSER;</test>
+<if><test not='not' exact='exact' match='pia'>&user.name;</test>
 <then>
   <li> <a href='debug'>control debugging</a>(currently
        <if><test zero='zero'><get name='PIA:debugging' /></test>
@@ -99,5 +99,5 @@
 </dl>
 
 
-<footer cvsid='$Id: home.xh,v 1.11 1999-09-24 18:49:11 steve Exp $' />
+<footer cvsid='$Id: home.xh,v 1.12 1999-10-04 17:05:56 steve Exp $' />
 </body></html>

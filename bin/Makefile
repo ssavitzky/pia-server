@@ -1,5 +1,5 @@
 ### Makefile for bin
-#	$Id: Makefile,v 1.3 1999-06-17 00:07:44 steve Exp $
+#	$Id: Makefile,v 1.4 1999-10-04 17:05:00 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -38,21 +38,21 @@ clean::
 	rm -f jpia ppia
 
 # This constructs a shell script to run the Java PIA in this directory. 
-#	If there is no PIA_DIR in the environment, it overrides it.
+#	If there is no PIA_HOME in the environment, it overrides it.
 
 jpia: Makefile 
-	echo '#!/bin/sh' 					   > jpia
-	echo test '"x$$PIA_DIR" != "x" ||' PIA_DIR=`(cd ..; pwd)` >> jpia
-	echo export PIA_DIR 					  >> jpia
-	echo exec '$$'PIA_DIR/bin/pia '$$*' 	  		  >> jpia
+	echo '#!/bin/sh' 					     > jpia
+	echo test '"x$$PIA_HOME" != "x" ||' PIA_HOME=`(cd ..; pwd)` >> jpia
+	echo export PIA_HOME 					    >> jpia
+	echo exec '$$'PIA_HOME/bin/pia '$$*' 	  		    >> jpia
 	chmod +x jpia
 
 ## This actually constructs a shell script to run the PERL PIA. 
-##	If there is no PIA_DIR in the environment, it overrides it.
+##	If there is no PIA_HOME in the environment, it overrides it.
 
 ppia: Makefile 
-	echo '#!/bin/sh' 					   > ppia
-	echo test '"x$$PIA_DIR" != "x" ||' PIA_DIR=`(cd ..; pwd)` >> ppia
-	echo export PIA_DIR 					  >> ppia
-	echo exec perl '$$'PIA_DIR/lib/perl/pia.pl '$$*' 	  >> ppia
+	echo '#!/bin/sh' 					     > ppia
+	echo test '"x$$PIA_HOME" != "x" ||' PIA_HOME=`(cd ..; pwd)` >> ppia
+	echo export PIA_HOME 					    >> ppia
+	echo exec perl '$$'PIA_HOME/lib/perl/pia.pl '$$*' 	    >> ppia
 	chmod +x ppia

@@ -6,10 +6,12 @@
 <header show-date='yes'>Edit PIA Configuration Settings</header>
 <sub-head page='config' />
 <hr />
+<p> === WARNING -- THIS NO LONGER WORKS!  PATHS HAVE CHANGED! ===</p>
+
 <p> This page lets you edit PIA configuration variables.  The default values
-    are found in <code><var>PIA_DIR</var>/Config/pia.props</code>.  If you
+    are found in <code><var>PIA_HOME</var>/Config/pia.props</code>.  If you
     choose to edit any of these values, they will be written to
-    <code><var>USR_DIR</var>/Config/pia.props</code>, and will be read in the
+    <code><var>PIA_ROOT</var>/Config/pia.props</code>, and will be read in the
     next time the PIA is started.  To change one of these values
     <em>immediately</em>, use the ``<a
     href="control"><code>control</code></a>'' page (but note that some
@@ -107,5 +109,5 @@
 </form>
 
 
-<footer cvsid='$Id: config.xh,v 1.4 1999-05-18 20:12:52 steve Exp $' />
+<footer cvsid='$Id: config.xh,v 1.5 1999-10-04 17:05:55 steve Exp $' />
 </body></html>

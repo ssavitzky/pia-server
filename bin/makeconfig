@@ -1,5 +1,5 @@
 #!/bin/sh
-# 	$Id: makeconfig,v 1.3 1999-03-15 23:11:03 steve Exp $
+# 	$Id: makeconfig,v 1.4 1999-10-04 17:05:00 steve Exp $
 # 	Generate property file for the PIA
 #
 # Usage: 
@@ -16,31 +16,27 @@ else
 fi
 
 #if not override and environment variable does not exist
-if [ -z $PIA_DIR ] ; then
+if [ -z $PIA_HOME ] ; then
     BINDIR=$(pwd)
     PIA_HOME=${BINDIR%/*}
     echo $PIA_HOME
-else
-    PIA_HOME=$PIA_DIR
 fi
 
 #if not override and environment variable does not exist
-if [ -z $USR_DIR ] ; then
-    USRPIA=$HOME/.pia
-    if [ ! -d "$USRPIA" ] ; then
-	mkdir $USRPIA
+if [ -z $PIA_ROOT ] ; then
+    PIA_ROOT=$HOME/.pia
+    if [ ! -d "$PIA_ROOT" ] ; then
+	mkdir $PIA_ROOT
     fi
-    echo $USRPIA
-else
-    USRPIA=$USR_DIR
+    echo $PIA_ROOT
 fi
 
-if [ ! -e "$USRPIA/Config" ] ; then
-    mkdir $USRPIA/Config
+if [ ! -e "$PIA_ROOT/Config" ] ; then
+    mkdir $PIA_ROOT/Config
 fi
 
 #property file name
-PIAPROPFILE=$USRPIA/Config/pia.props
+PIAPROPFILE=$PIA_ROOT/Config/pia.props
 
 
 OPTIONS="Http_proxy Http_no_proxy Pia_root Port Debug Verbose Request_timeout User_dir Write Quit"
