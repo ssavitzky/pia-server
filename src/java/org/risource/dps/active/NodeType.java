@@ -1,5 +1,5 @@
 ////// NodeType.java: Document Processor basic implementation
-//	$Id: NodeType.java,v 1.5 1999-07-14 20:12:32 steve Exp $
+//	$Id: NodeType.java,v 1.6 2000-06-07 19:11:05 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
  * <p> This type also performs type-related tests on nodes, partially
  *	compensating for the lack of inheritance in the DOM types.
  *
- * @version $Id: NodeType.java,v 1.5 1999-07-14 20:12:32 steve Exp $
+ * @version $Id: NodeType.java,v 1.6 2000-06-07 19:11:05 steve Exp $
  * @author steve@rsv.ricoh.com
  *
  * @see org.w3c.dom.Node
@@ -83,9 +83,9 @@ public class NodeType {
   public static String getName(int type) {
     return names[type-MIN_TYPE];
   }
-  public static int getType(String name) {
-    for (int i = 0; i < names.length; ++i) 
-      if (name.equalsIgnoreCase(names[i])) return (i + MIN_TYPE);
+  public static short getType(String name) {
+    for (short i = 0; i < names.length; ++i) 
+      if (name.equalsIgnoreCase(names[i])) return ((short)(i + MIN_TYPE));
     return UNDEFINED;
   }
 
