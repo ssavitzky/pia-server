@@ -30,6 +30,6 @@ way.
 </p><p>
 <b> Result: </b> <protect result='result'>Silicon Valley is <em>the</em> place to program.</protect>
 </p><p>
-<footer />
+<footer cvsid='$Id: demo_protect.xh,v 1.5 1999-03-29 18:21:43 pgage Exp $'></footer>
 
 </p></body></html>

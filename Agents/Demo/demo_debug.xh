@@ -44,7 +44,7 @@ are now children of item one.  This provides a hint that element one may not be 
 </p><p>
 <b> Debug Result: </b><debug><ul><i>oneone<li>two</li><li>three</li></i></ul></debug>
 
-<footer />
+<footer cvsid='$Id: demo_debug.xh,v 1.3 1999-03-29 18:21:40 pgage Exp $'></footer>
 
 </p></body></html>
 

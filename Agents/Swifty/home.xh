@@ -80,7 +80,7 @@
 <!-- pia-xhtml tagset. It provides the navigation bar at the bottom of 
 <!-- the page, along with a copyright notice.
 <!-- ===================================================================  -->
-<footer />
+<footer cvsid='$Id: home.xh,v 1.5 1999-03-29 18:22:51 pgage Exp $'></footer>
 <p>
 <code><A href='file:&piaDIR;/Agents/Swifty/home.txt' target='_blank'>View source code</A></code>
 
