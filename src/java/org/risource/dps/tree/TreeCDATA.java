@@ -1,5 +1,5 @@
-////// TreeText.java -- implementation of ActiveText
-//	$Id: TreeText.java,v 1.3 1999-06-25 00:18:04 steve Exp $
+////// TreeCDATA.java -- implementation of ActiveCDATA
+//	$Id: TreeCDATA.java,v 1.1 1999-06-25 00:18:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -26,95 +26,44 @@ package org.risource.dps.tree;
 
 import org.w3c.dom.*;
 import org.risource.dps.active.*;
+
 import org.risource.dps.*;
-import org.risource.dps.util.*;
+import org.risource.dps.util.Copy;
 
 /**
- * An implementation of the ActiveText interface, suitable for use in 
- *	DPS parse.
+ * An implementation of the ActiveCDATA interface, suitable for use in 
+ *	DPS parse trees.
  *
- * @version $Id: TreeText.java,v 1.3 1999-06-25 00:18:04 steve Exp $
+ * @version $Id: TreeCDATA.java,v 1.1 1999-06-25 00:18:00 steve Exp $
  * @author steve@rsv.ricoh.com 
- * @see org.risource.dps.Context
- * @see org.risource.dps.Processor
+ * @see org.risource.dps.active.ActiveNode
  */
-public class TreeText extends TreeCharData implements ActiveText {
+public class TreeCDATA extends TreeText implements ActiveCDATA {
 
-  public Text splitText(int offset) {
-    throw new DPSException(DOMException.NOT_SUPPORTED_ERR,
-			   "splitText unimplemented");
-  }
 
   /************************************************************************
   ** Construction:
   ************************************************************************/
 
   /** Construct a node with all fields to be filled in later. */
-  public TreeText() {
-    super(Node.TEXT_NODE, null);
+  public TreeCDATA() {
+    super(Node.CDATA_SECTION_NODE, null);
   }
 
-  public TreeText(short type, String data) { 
-    super(type, data);
+  public TreeCDATA(TreeCDATA n, boolean copyChildren) {
+    super(n, copyChildren);
   }
 
   /** Construct a node with given data. */
-  public TreeText(String data) {
-    super(Node.TEXT_NODE, data);
-  }
-
-  public TreeText(TreeText e, boolean copyChildren) {
-    super(e, copyChildren);
-    handler = e.handler;
-    action = e.action;
-    data = e.data;
-    ignorable = e.ignorable;
-    isWhitespace = e.isWhitespace;
-  }
-
-  /** Construct a node with a single character as data. */
-  public TreeText(char data) {
-    this(String.valueOf(data));
-  }
-
-  /** Construct a node with an integer value. */
-  public TreeText(long data) {
-    this(String.valueOf(data), false, false);
-  }
-
-  /** Construct a node with a floating-point value. */
-  public TreeText(double data) {
-    this(String.valueOf(data), false, false);
+  public TreeCDATA(String data) {
+    super(Node.CDATA_SECTION_NODE, data);
   }
 
   /** Construct a node with given data and handler. */
-  public TreeText(String data, Handler handler) {
-    this(data);
+  public TreeCDATA(String data, Handler handler) {
+    super(Node.CDATA_SECTION_NODE, data);
     setHandler(handler);
   }
-
-  /** Construct a node with given data, flags, and handler. */
-  public TreeText(String data, boolean isIgnorable,
-		       boolean isWhitespace, Handler handler) {
-    this();
-    this.data = data;
-    ignorable = isIgnorable;
-    this.isWhitespace = isWhitespace;
-    setHandler(handler);
-  }
-
-  /** Construct a node with given data, flags, and handler. */
-  public TreeText(String data, boolean isIgnorable,
-		       boolean isWhitespace) {
-    this(data, isIgnorable, isWhitespace, null);
-  }
-
-  /** Construct a node with given data, flags, and handler. */
-  public TreeText(String data, boolean isIgnorable) {
-    this(data);
-    setIsIgnorable(isIgnorable);
-  }
-
 
 
   /************************************************************************
@@ -125,7 +74,7 @@ public class TreeText extends TreeCharData implements ActiveText {
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
-    return "";		// insert character entities ===
+    return "<![CDATA[ ";
   }
 
   /** Return the String equivalent of the Node's content or
@@ -133,22 +82,21 @@ public class TreeText extends TreeCharData implements ActiveText {
    *	with special significance, such as ampersand.
    */
   public String contentString() {
-    return TextUtil.protectMarkup(getData()); // insert character entities
-    //return (getChildren() == null)? getData() : getChildren().toString();
+    return getData();
   }
 
   /** Return the String equivalent of the Node's end tag (for an element)
    *	or the part that comes after the <code>data()</code>.
    */
   public String endString() {
-    return "";
+    return "]]>";
   }
 
 
-  /** Convert the Node to a String.
+  /** Convert the Node to a String, in external form.
    */
   public String toString() {
-    return contentString();
+    return startString() + contentString() + endString();
   }
 
   /************************************************************************
@@ -159,7 +107,13 @@ public class TreeText extends TreeCharData implements ActiveText {
    *	copied, but children are not.
    */
   public ActiveNode shallowCopy() {
-    return new TreeText(this, false);
+    return new TreeCDATA(this, false);
   }
 
+  /** Return a deep copy of this Node.  Attributes and children are copied.
+   */
+  public ActiveNode deepCopy() {
+    return new TreeCDATA(this, true);
+  }
+ 
 }

@@ -1,5 +1,5 @@
 ////// TreeCharData.java -- implementation of ActiveCharData
-//	$Id: TreeCharData.java,v 1.3 1999-06-04 22:40:33 steve Exp $
+//	$Id: TreeCharData.java,v 1.4 1999-06-25 00:18:01 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -33,7 +33,12 @@ import org.risource.dps.util.*;
 /**
  * An implementation of the ActiveCharData and CharacterData interfaces.
  *
- * @version $Id: TreeCharData.java,v 1.3 1999-06-04 22:40:33 steve Exp $
+ * <p>	This class can also be used as a generic ``raw'' text node that does 
+ *	not perform entity conversion and is not marked in any way.  Such a
+ *	node cannot be read back in as XML, but is almost essential when
+ *	generating non-XML output.
+ *
+ * @version $Id: TreeCharData.java,v 1.4 1999-06-25 00:18:01 steve Exp $
  * @author steve@rsv.ricoh.com 
  * @see org.risource.dps.Context
  * @see org.risource.dps.Processor
@@ -168,8 +173,6 @@ public class TreeCharData extends TreeNode implements ActiveCharData {
     setIsIgnorable(isIgnorable);
   }
 
-
-
   /************************************************************************
   ** Presentation:
   ************************************************************************/
@@ -178,7 +181,7 @@ public class TreeCharData extends TreeNode implements ActiveCharData {
    *	or the part that comes before the <code>data()</code>.
    */
   public String startString() {
-    return "";		// insert character entities ===
+    return "";
   }
 
   /** Return the String equivalent of the Node's content or
@@ -186,7 +189,7 @@ public class TreeCharData extends TreeNode implements ActiveCharData {
    *	with special significance, such as ampersand.
    */
   public String contentString() {
-    return TextUtil.protectMarkup(getData()); // insert character entities
+    return getData(); 	// DO NOT insert character entities
     //return (getChildren() == null)? getData() : getChildren().toString();
   }
 

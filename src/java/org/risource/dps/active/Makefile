@@ -1,5 +1,5 @@
 ###### dps/active/Makefile:	DOM implementation classes
-# 	$Id: Makefile,v 1.4 1999-04-07 23:21:01 steve Exp $
+# 	$Id: Makefile,v 1.5 1999-06-25 00:17:31 steve Exp $
 
 ############################################################################### 
  # The contents of this file are subject to the Ricoh Source Code Public
@@ -32,6 +32,7 @@ INTERFACES = \
 	ActiveValue.java \
 	ActiveAttr.java \
 	ActiveCharData.java \
+	ActiveCDATA.java \
 	ActiveComment.java \
 	ActiveDecl.java \
 	ActiveDocument.java \
