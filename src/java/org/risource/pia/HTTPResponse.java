@@ -1,5 +1,5 @@
 // HTTPResponse.java
-// $Id: HTTPResponse.java,v 1.5 1999-03-24 22:06:55 pgage Exp $
+// $Id: HTTPResponse.java,v 1.6 1999-03-26 07:41:00 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import java.util.Vector;
 import java.util.StringTokenizer;
 
+import org.risource.Version;
 import org.risource.ds.Queue;
 import org.risource.ds.List;
 import org.risource.pia.Machine;
@@ -210,6 +211,7 @@ public class  HTTPResponse extends Transaction {
     Transaction response = new HTTPResponse( Pia.instance().thisMachine,
 					     toMachine(), ct, false);
     response.setStatus( code );
+    response.setHeader("Server", Version.SERVER);
     response.setContentType( "text/html" );
     response.setContentLength( msg.length() );
     Pia.debug(this, "The header : \n" + response.headersAsString() );

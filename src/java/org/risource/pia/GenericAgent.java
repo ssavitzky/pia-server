@@ -1,5 +1,5 @@
 // GenericAgent.java
-// $Id: GenericAgent.java,v 1.9 1999-03-26 01:29:09 steve Exp $
+// $Id: GenericAgent.java,v 1.10 1999-03-26 07:40:59 steve Exp $
 
 /*****************************************************************************
  * The contents of this file are subject to the Ricoh Source Code Public
@@ -23,10 +23,8 @@
 
 package org.risource.pia;
 
-import org.risource.tf.UnknownNameException;
 import java.io.File;
 import java.io.InputStream;
-import java.io.FileNotFoundException;
 import java.io.StringReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -251,7 +249,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
       if (piaXHTMLtagset == null) piaXHTMLtagset = proc.loadTagset("xhtml");
     }
 
-    ts  = proc.loadTagset(type()+"-" + name);
+    // Note: this will no longer pick up tagset from type.
+    //	as good a reason as any to drop the agent-name prefix.
+    ts  = proc.loadTagset(name()+"-" + name);
     if (ts == null && name.equals("xhtml")) ts = piaXHTMLtagset;
     if (ts == null) ts = proc.loadTagset("pia-" + name);
     if (ts == null) ts = proc.loadTagset(name);
@@ -339,21 +339,38 @@ public class GenericAgent implements Agent, Registered, Serializable {
   }
 
   protected void dumpDebugInformation() {
-    PrintStream stm = System.err;
-    String s = "Agent " + pathName() + " name=" + name() + " type=" + type();
-    s += "\n      home=" + homeDirectory();
-    s += "\n      user=" + userDirectory();
-    s += "\n      data=" + dataDirectory();
+    System.err.println(debugInformation());
+  }
 
+  protected String debugDir(String dir, File dirFile) {
+    return dirFile.exists()? dir : "(" + dirFile.getPath() + ")";
+  }
+
+  protected String debugInformation() {
+    String s = "Agent " + pathName() + " name=" + name() + " type=" + type();
+    s += "\n      home=" + debugDir(homeDirectory(), homeDirFile);
+    s += "\n      user=" + debugDir(userDirectory(), userDirFile);
+    s += "\n      data=" + debugDir(dataDirectory(), dataDirFile);
+    s += "\n";
     Enumeration e = keys();
     while (e.hasMoreElements()) {
       String key = e.nextElement().toString();
-      String value = getObjectString(key);
+      Object value = get(key);
+      if (value instanceof org.risource.dom.Node) value = "[Node]";
+      if (value instanceof org.risource.dom.NodeList) value = "[NodeList]";
       s += "\n      " + name() + ":" + key + "=" + value;
     }
-    stm.println(s);
+    return s;
   }
 
+
+  /** Make sure that directories get checked again. */
+  public void invalidatePaths() {
+    dataDirFile = null;
+    homeDirFile = null;
+    userDirFile = null;
+    documentFileList = null;
+  }
   /************************************************************************
   ** Registration and Unregistration:
   ************************************************************************/
@@ -1125,8 +1142,9 @@ public class GenericAgent implements Agent, Registered, Serializable {
   public void sendErrorResponse( Transaction req, int code, String msg ) {
     msg = "Agent=" + name()
       + (! name().equals(type())? " Type=" + type() : "")
-      + "<br>\n"
-      + msg ;
+      + "<br>\n"	+ msg
+      + "<pre>\n"      	+ debugInformation()	+ "</pre>"
+      + "\n";
     req.errorResponse(code, msg);
   }
 
